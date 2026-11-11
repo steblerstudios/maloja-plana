@@ -126,7 +126,7 @@ export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brut
 // Partner/in ohne Haushalt-Rechnung) und nur, wo ein Höchstbetrag belegt ist und das Einkommen unter der Grenze liegt.
 export const beitragImHaus = (data, r, isDarkMode, palette, kanton = data?.basis?.canton || '') => {
   if (!kanton || !r || r.anteil == null || r.mitPartner || !(r.einkommen > 0)) return null;
-  const hoechst = beitragHoechstMonat(mietzinsEinschaetzung(data, kanton));
+  const hoechst = beitragHoechstMonat(mietzinsEinschaetzung(data, kanton), data?.wohnen?.rooms);
   if (!hoechst) return null;
   return { anteil: Math.min(hoechst, r.kosten) / r.einkommen * 100, farbe: bereichFillColor('behoerden', isDarkMode) || palette.mid, hoechst };
 };

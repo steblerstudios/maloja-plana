@@ -304,7 +304,9 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   **Mietbeiträge als Szene** (11.11.2026, Stebler Studios: «im Haus weiter füllen, gestrichelt, Behörden-Farbe» und
   «Ja, so bauen»):
   - Im Drittel-Haus steht der mögliche Beitrag **oben in der Füllung, schraffiert und gestrichelt in Zwetschge**
-    (Behörden). Er gilt immer als «bis zu», mit dem kantonalen Höchstbetrag, gross und mittel.
+    (Behörden). Er gilt immer als «bis zu», gross und mittel. Gerechnet wird eine Obergrenze **für diesen Haushalt**,
+    nicht der kantonale Deckel. Heute gibt es sie nur für BS (Merkblatt 01.2026, Ziff. 7/11/13); eine Person mit
+    2 Zimmern kommt auf 929, nicht auf 1'060. GE (Jahreswert, keine Grenze), ZG und BL: keine Zahl im Haus.
   - Daneben das **Glas der IPV** (`Pegel`, `nurGlas`) für Einkommen gegen Grenze, nur wo die Grenze eine Zahl ist.
     Dieselbe Frage bekommt dieselbe Form, also kein neues Haus.
   - Das **Schild «möglich»** steht nur, wenn das Einkommen unter der Grenze liegt. Es sagt nie «Anspruch».

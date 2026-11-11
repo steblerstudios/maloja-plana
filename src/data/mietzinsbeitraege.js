@@ -66,14 +66,15 @@ const PROGRAMS = {
   // Wohnsitz; max. 1'400 CHF/Zimmer, höchstens halbe Miete. Quelle: ge.ch.
   // ⟨25.09.2026⟩ 1'000 statt 1'400 pro Zimmer: RGL I 4 05.01 Art. 24 Abs. 2 «au maximum de 1 000 francs
   // par pièce»; die 1'400 galten nur im Übergangsrecht Art. 90 Abs. 3 (1.4.2024–31.3.2025).
+  // benefitMaxRoom ist ein JAHRESbetrag je pièce (Genfer Zählung, Küche inbegriffen, Art. 1 Abs. 5), höchstens die halbe Miete.
   GE: { state: 'has', group: 'all', incomeLimit: null, residencyYears: 2, benefitMaxRoom: 1000,
         noteKey: 'mietzinsView.cantonNote_GE', stand: '2026',
         url: 'https://www.ge.ch/allocation-logement/allocation-logement-conditions-obligations' },
   // Zug — Mietzinszuschüsse (WFG). Einkommen nach dir. Bundessteuer ≤ 60'000 (+2'500/Kind;
   // die Basisgrenze gilt für ZWEI Erwachsene, erst ab der 3. erwachsenen Person +20'000 je
   // weitere — siehe mietzinsIncomeLimit `adults - 2`, belegt durch das ZG-Merkblatt
-  // Mietzinsbeiträge Sept. 2025: „Für mehr als zwei erwachsene Personen erhöht sich die
-  // Einkommensgrenze um CHF 20'000 je weitere Person."); Reinvermögen ≤ 144'000; Wohnung
+  // Mietzinsbeiträge Sept. 2025: «Bei mehr als zwei volljährigen Personen wird die Limite pro
+  // zusätzliche Person um Fr. 20'000.– erhöht.» (Wortlaut nachgelesen 11.11.2026)); Reinvermögen ≤ 144'000; Wohnung
   // max. 2 Zimmer mehr als Personen; min. 3 Jahre Wohnsitz/Arbeit; an Vermieter. Quelle: zg.ch.
   // einkommensBasis 'steuerbar': ZG vergleicht das steuerbare Einkommen (neuste definitive Veranlagung),
   // die App den Nettolohn — der liegt meist höher. Über der Grenze sagt die Ansicht das dazu.
@@ -124,7 +125,7 @@ export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 
   if (program.incomePerChild) limit += program.incomePerChild * minderjaehrig;
   if (program.incomePerAdult) {
     // ZG-Regel: Basisgrenze gilt für zwei Erwachsene, Zuschlag erst ab der 3. Person
-    // („Für mehr als zwei erwachsene Personen … +20'000 je weitere Person", ZG-Merkblatt).
+    // («Bei mehr als zwei volljährigen Personen wird die Limite pro zusätzliche Person um Fr. 20'000.– erhöht», ZG-Merkblatt Sept. 2025).
     const adults = Math.max(1, householdSize - childrenCount) + volljaehrig;
     limit += program.incomePerAdult * Math.max(0, adults - 2);
   }
@@ -246,11 +247,27 @@ export function mietzinsEinschaetzung(data, canton) {
     bsJungOffen, wfg, assessment };
 }
 
-// Höchstbetrag des Beitrags je Monat — nur, wo ein kantonaler Höchstbetrag belegt ist und die Einschätzung
-// «unter der Grenze» sagt. Das Haus zeigt ihn als «bis zu», nie als zugesagten Betrag.
-export function beitragHoechstMonat(e) {
+// Höchstbetrag des Beitrags je Monat — als OBERGRENZE für diesen Haushalt, nie als zugesagter Betrag. Nur wo ein
+// kantonaler Höchstbetrag belegt ist und die Einschätzung «unter der Grenze» sagt (Quellenprüfung swiss-precision-
+// pruefer 11.11.2026). Das Haus zeigt ihn als «bis zu».
+//   BS (Merkblatt Mietbeiträge 01.2026): Ziff. 11 «höchstens 12'720 Franken pro Jahr (entspricht 1'060 Franken pro
+//   Monat)»; Ziff. 13 Jahresbeitrag = 12 · 0.85 · anrechenbare Miete · Einkommensfaktor; anrechenbare Miete =
+//   min(Bruttomiete, Höchstmiete nach Zimmern, Ziff. 7) − (400 + 100 · (Zimmer − 1)); Faktor = 1 − (Einkommen −
+//   Grundeinkommen) / 36'000. Obergrenze hier: Höchstmiete statt eigener Miete (Bruttomiete mit Pauschale kennt die
+//   App nicht) und Einkommen 0 (massgebend ist nicht der Lohn) → Faktor = Grenze / 36'000. Ohne Zimmerzahl keine Zahl.
+//   Eine Einzelperson mit 2 Zimmern kommt so auf 929, nicht auf 1'060.
+//   GE: «Le montant annuel … au maximum de 1 000 francs par pièce; … ne peut dépasser la moitié du loyer effectif»
+//   (RGL I 4 05.01 Art. 24 Abs. 2) — ein JAHRESwert. GE hat keine Einkommensgrenze («effortBased»), darum keine
+//   Einschätzung «unter der Grenze» und hier keine Zahl. ZG und BL: kein Höchstbetrag belegt (Gemeinde/Anlagekosten).
+export const BS_HOECHSTMIETE = { 1: 960, 2: 1260, 3: 1660, 4: 1960, 5: 2360 };
+export function beitragHoechstMonat(e, zimmer) {
   if (!e || !e.hasProgram || e.assessment?.key !== 'likely') return null;
-  return Number(e.info?.benefitMaxMonth) > 0 ? Number(e.info.benefitMaxMonth) : null;
+  if (e.info?.limitFormel !== 'bs' || !(Number(e.incomeLimit) > 0)) return null;
+  const z = Math.min(5, Math.ceil(Number(String(zimmer ?? '').replace(',', '.'))));
+  if (!(z >= 1)) return null;
+  const anrechenbar = BS_HOECHSTMIETE[z] - (400 + 100 * (z - 1));
+  const faktor = Number(e.incomeLimit) / 36000;
+  return Math.round(Math.min(Number(e.info.benefitMaxMonth) || 1060, 0.85 * anrechenbar * faktor));
 }
 
 // Kantone mit einem in der App erfassten Programm (gefüllt auf der Kachelkarte).

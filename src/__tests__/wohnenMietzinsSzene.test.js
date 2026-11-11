@@ -91,10 +91,16 @@ describe('Kachelkarte', () => {
 
 describe('Haus: der Beitrag gestrichelt in der Behörden-Farbe, als «bis zu»', () => {
   const zwetschge = bereichFillColor('behoerden', false);
-  it('Höchstbetrag je Monat nur, wo belegt', () => {
-    expect(beitragHoechstMonat(mietzinsEinschaetzung(profil('BS'), 'BS'))).toBe(1060);
-    expect(beitragHoechstMonat(mietzinsEinschaetzung(profil('ZG', 3000, { wfgWohnung: 'ja' }), 'ZG'))).toBeNull();
-    expect(beitragHoechstMonat(mietzinsEinschaetzung(profil('ZH'), 'ZH'))).toBeNull();
+  it('Höchstbetrag je Monat: BS nach Merkblatt Ziff. 7/11/13 als Obergrenze, sonst keiner', () => {
+    const bs = (zimmer) => beitragHoechstMonat(mietzinsEinschaetzung(profil('BS', 3000, { rooms: zimmer }), 'BS'), zimmer);
+    expect(bs('3')).toBe(1060);       // 0.85 · (1660 − 600) · 51'750/36'000 = 1295 → Deckel 1'060
+    expect(bs('2')).toBe(929);        // 0.85 · (1260 − 500) · 1.4375 — Einzelperson erreicht 1'060 nie
+    expect(bs('1')).toBe(684);
+    expect(bs('')).toBeNull();        // ohne Zimmerzahl keine Zahl
+    expect(beitragHoechstMonat(mietzinsEinschaetzung(profil('BS', 9000), 'BS'), '3')).toBeNull(); // über der Grenze
+    expect(beitragHoechstMonat(mietzinsEinschaetzung(profil('ZG', 3000, { wfgWohnung: 'ja' }), 'ZG'), '3')).toBeNull();
+    expect(beitragHoechstMonat(mietzinsEinschaetzung(profil('GE'), 'GE'), '3')).toBeNull(); // Jahreswert, keine Grenze
+    expect(beitragHoechstMonat(mietzinsEinschaetzung(profil('ZH'), 'ZH'), '3')).toBeNull();
   });
   it('oben in der Füllung, Höhe = min(Beitrag, Wohnkosten) ÷ Einkommen', () => {
     const h = renderToStaticMarkup(React.createElement(DrittelHaus, { palette: LIGHT_PALETTE, anteil: 40, ueberDrittel: true, fuell: '#7a5', groesse: 'gross', beitrag: { anteil: 20, farbe: zwetschge } }));
