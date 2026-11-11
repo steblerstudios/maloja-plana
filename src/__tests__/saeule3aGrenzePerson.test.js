@@ -51,6 +51,13 @@ describe('istSelbstaendig — eine Regel für alle Rechner', () => {
     expect(zahltBeitraegeSelbst).toBe(istSelbstaendig);
   });
 
+  // Fachprüfung 11.11.2026: das Jahr im Grenz-Text folgt dem Tarif, statt fest «2026» zu sagen.
+  it('der 3a-Grenz-Text nennt das Tarifjahr, nicht ein festes Jahr', async () => {
+    const de = (await import('../i18n/de.js')).default;
+    expect(de.tax.grenze_pension3a).toContain('{jahr}');
+    expect(readFileSync(fileURLToPath(new URL('../TaxCalculator.jsx', import.meta.url)), 'utf8')).toContain('jahr: STEUER_DATA_VERSION');
+  });
+
   // Die Rechner dürfen die Frage nicht wieder selbst stellen — genau so entstand der Befund.
   it('Steuer- und Vorsorge-Rechner prüfen den Anstellungstyp nicht mehr von Hand', () => {
     for (const datei of ['../TaxCalculator.jsx', '../VorsorgeRechner.jsx']) {

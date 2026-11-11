@@ -107,7 +107,7 @@ function jahressteuer(steuerBaresEinkommen, tarifAbs2, ermaessigung) {
 // Berufsorientierte Aus- und Weiterbildung, direkte Bundessteuer: DBG Art. 33 Abs. 1 Bst. j, «bis zum
 // Gesamtbetrag von 13 000 Franken», sofern ein erster Abschluss auf Sekundarstufe II vorliegt oder das
 // 20. Lebensjahr vollendet ist. Fassung gemäss Art. 3 Abs. 3 der V des EFD vom 22.8.2024 über die kalte
-// Progression, in Kraft seit 1.1.2025 (AS 2024 479); vorher 12 000. Fedlex SR 642.11, Fassung 1.1.2026,
+// Progression, in Kraft seit 1.1.2025 (AS 2024 479). Fedlex SR 642.11, Fassung 1.1.2026,
 // abgerufen 11.11.2026. Nur die Bundesgrenze — die Kantone haben eigene Höchstbeträge.
 export const WEITERBILDUNG_MAX = 13000;
 

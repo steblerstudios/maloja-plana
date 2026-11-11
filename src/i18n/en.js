@@ -3341,7 +3341,7 @@ export default {
     maintenance: 'Maintenance payments',
     education: 'Education costs',
     otherDeductions: 'Other deductions',
-    grenze_pension3a: 'Legal maximum {max} (pillar 3a, tax year 2026)',
+    grenze_pension3a: 'Legal maximum {max} (pillar 3a, tax year {jahr})',
     grenze_education: 'Direct federal tax: at most {max}, subject to conditions (first upper-secondary qualification or from age 20). Cantons set their own maximums',
     gekappt: 'Limited to {max} for the estimate.',
     calculation: 'Calculation',

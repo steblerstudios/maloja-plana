@@ -3383,7 +3383,7 @@ export default {
     education: 'Fortbildung',
     otherDeductions: 'Sonstige Abzüge',
     // Kapitel 3 F3: nur gesetzliche Grenzen, Eingaben darüber werden gekappt.
-    grenze_pension3a: 'Gesetzlich höchstens {max} (Säule 3a, Steuerjahr 2026)',
+    grenze_pension3a: 'Gesetzlich höchstens {max} (Säule 3a, Steuerjahr {jahr})',
     grenze_education: 'Bei der direkten Bundessteuer höchstens {max}, unter Voraussetzungen (erster Abschluss auf Sekundarstufe II oder ab 20 Jahren). Die Kantone haben eigene Höchstbeträge',
     gekappt: 'Für die Schätzung auf {max} begrenzt.',
     calculation: 'Berechnung',
