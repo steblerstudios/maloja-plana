@@ -1694,6 +1694,7 @@ export default {
     ergebnisKeiner: 'Avec ces données, aucun droit financier clair n’apparaît — les pistes ci-dessous couvrent davantage ; la plupart ne dépendent pas uniquement du revenu.',
     ergebnisEiner: 'Avec ces données, une piste possible apparaît : {weg}.',
     ergebnisMehrere: 'Avec ces données, des pistes possibles apparaissent : {wege}.',
+    sozBewilligung: { sie: 'Sans passeport suisse, le recours à l’aide sociale peut avoir des conséquences sur l’autorisation de séjour ; faites-vous conseiller au préalable par un service de conseil ou par le service social.', du: 'Sans passeport suisse, le recours à l’aide sociale peut avoir des conséquences sur l’autorisation de séjour ; fais-toi conseiller au préalable par un service de conseil ou par le service social.' },
     markeNetto: 'Net {betrag} / mois',
     markeNettoGeschaetzt: 'Net ≈ {betrag} / mois (estimé)',
     markeMiete: 'Loyer {betrag}',

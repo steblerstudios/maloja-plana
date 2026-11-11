@@ -4430,6 +4430,8 @@ export default {
     ergebnisEiner: 'Cun questas indicaziuns sa mussa ina via pussaivla: {weg}.',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     ergebnisMehrere: 'Cun questas indicaziuns sa mussan vias pussaivlas: {wege}.',
+    // TODO(rm): provisorisch — deutsch, Gruppe A L1 (11.11.2026), Übersetzung offen
+    sozBewilligung: { sie: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.', du: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lass dich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.' },
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     markeNetto: 'Net {betrag} / mais',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)

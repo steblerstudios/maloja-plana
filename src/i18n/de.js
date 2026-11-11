@@ -1699,6 +1699,7 @@ export default {
     ergebnisKeiner: 'Mit diesen Angaben zeigt sich kein klarer Geld-Anspruch — die Wege unten decken mehr ab, das meiste ist nicht allein vom Einkommen abhängig.',
     ergebnisEiner: 'Mit diesen Angaben zeigt sich ein möglicher Weg: {weg}.',
     ergebnisMehrere: 'Mit diesen Angaben zeigen sich mögliche Wege: {wege}.',
+    sozBewilligung: { sie: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.', du: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lass dich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.' },
     markeNetto: 'Netto {betrag} / Mt.',
     markeNettoGeschaetzt: 'Netto ≈ {betrag} / Mt. (geschätzt)',
     markeMiete: 'Miete {betrag}',

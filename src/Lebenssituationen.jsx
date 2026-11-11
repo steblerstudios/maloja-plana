@@ -18,6 +18,7 @@ import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { linkStil, auswahlStil } from './components/PrimaryButton.jsx';
+import { hatAusweisFNS, ohneSchweizerPass } from './data/ausweis.js';
 
 // ─── Lebenslagen (Auswahl) ─────────────────────────────────
 // Lebenszustände — andauernde Situationen, die versteckte Berechtigungen
@@ -199,6 +200,11 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
               key: 'text',
               style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed }
             }, t(baseKey + '.text')),
+            // Gruppe A L1: Sozialhilfe ohne Schweizer Pass — Folgen für die Bewilligung (AIG Art. 62, 63).
+            b.key === 'sozialhilfe' && ohneSchweizerPass(data) && React.createElement('div', {
+              key: 'bewilligung', 'data-hinweis': 'soz-bewilligung',
+              style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.relaxed }
+            }, t('wasStehtMirZu.sozBewilligung')),
             React.createElement('div', {
               key: 'quelle',
               style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' }
@@ -358,7 +364,11 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
       ipvTeil,
       sozPegel && h(Pegel, { palette, t, state: sozPegel }),
       knappSoz && h('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
+      // Gruppe A L2: IPV ruht für F/N/S, solange Sozialhilfe bezogen wird (AsylG Art. 82a Abs. 7) — wie im Schnellcheck.
+      ipvTeil && hatAusweisFNS(data) && h('p', { style: s.fuss, 'data-hinweis': 'ipv-ruht' }, t('ipv.ruhtMitSozialhilfe')),
       h('p', { style: s.satz }, satz),
+      // Gruppe A L1: Sozialhilfe als Weg — ohne Schweizer Pass mit dem Hinweis auf die Bewilligung.
+      w.wege.some((x) => x.key === 'soz') && ohneSchweizerPass(data) && h('p', { style: s.fuss, 'data-hinweis': 'soz-bewilligung' }, t('wasStehtMirZu.sozBewilligung')),
       w.ipvSubsumed && w.ipvAmount > 0 && h('p', { style: s.fuss }, t('schnellcheck.ipvSubsumed', { amount: fmt(w.ipvAmount) }))),
     // Wege zu den Rechnern — ausserhalb der Live-Region, damit sie nicht bei jeder Eingabe vorgelesen werden.
     w.wege.length > 0 && erfasst && canton && h('div', { style: { marginTop: space.xs + 'px' } },

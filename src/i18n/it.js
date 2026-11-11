@@ -1694,6 +1694,7 @@ export default {
     ergebnisKeiner: 'Con questi dati non emerge un chiaro diritto a un importo — le vie qui sotto coprono di più; la maggior parte non dipende solo dal reddito.',
     ergebnisEiner: 'Con questi dati emerge una via possibile: {weg}.',
     ergebnisMehrere: 'Con questi dati emergono vie possibili: {wege}.',
+    sozBewilligung: { sie: 'Senza passaporto svizzero, percepire l’aiuto sociale può avere conseguenze per il permesso di soggiorno; si faccia consigliare prima da un servizio di consulenza o dal servizio sociale.', du: 'Senza passaporto svizzero, percepire l’aiuto sociale può avere conseguenze per il permesso di soggiorno; fatti consigliare prima da un servizio di consulenza o dal servizio sociale.' },
     markeNetto: 'Netto {betrag} / mese',
     markeNettoGeschaetzt: 'Netto ≈ {betrag} / mese (stimato)',
     markeMiete: 'Affitto {betrag}',

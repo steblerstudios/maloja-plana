@@ -1,7 +1,7 @@
 import React from 'react';
 import { einnahmenErfasst } from '../utils/unterstuetzungseinheit.js';
 import Icons from '../IconKern.jsx';
-import { hatAusweisFNS } from '../data/ausweis.js';
+import { hatAusweisFNS, ohneSchweizerPass } from '../data/ausweis.js';
 import { text, weight, leading, space, radius, ease, duration } from '../config/tokens.js';
 import { PanelTitle } from './Heading.jsx';
 import { miniCompass } from './miniKompass.js';
@@ -76,8 +76,10 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       // Knapp: ist das Netto nur geschätzt und liegt es nahe am Bedarf, kann die Schätzung kippen.
       knappSoz = e.geschaetzt && istKnapp(sh, e.ohneAlter);
       // Rente oder Einkommen nicht erfasst: kein Betrag, nur der Grund (wie data/anspruchWege.js).
+      // Gruppe A L1: ohne Schweizer Pass Folgen für die Bewilligung (AIG Art. 62, 63), an jedem Sozialhilfe-Weg.
+      const bewilligung = ohneSchweizerPass(probe) ? ' ' + t('wasStehtMirZu.sozBewilligung') : '';
       if (sh?.einkommenFehlt) {
-        if (sh.wegOhneBetrag) found.soz = { monthly: 0, detail: t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') };
+        if (sh.wegOhneBetrag) found.soz = { monthly: 0, detail: t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') + bewilligung };
       } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
@@ -87,7 +89,8 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
           + (sh.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
           + (sh.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : '')
           + (sh.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : '')
-          + (sh.vorBeitraegen ? ' · ' + t('pegel.vorBeitraegen') : ''),
+          + (sh.vorBeitraegen ? ' · ' + t('pegel.vorBeitraegen') : '')
+          + bewilligung,
       };
       // Sonst trotzdem eine Aussage (Wunsch 25.09.2026: «gleich dazuschreiben, ob einem
       // etwas zusteht»), sachlich statt als Urteil: Einkommen gegen SKOS-Bedarf, als Pegel.

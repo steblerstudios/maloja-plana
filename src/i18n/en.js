@@ -1694,6 +1694,7 @@ export default {
     ergebnisKeiner: 'With these details, no clear financial entitlement shows up — the paths below cover more; most do not depend on income alone.',
     ergebnisEiner: 'With these details, one possible path shows up: {weg}.',
     ergebnisMehrere: 'With these details, possible paths show up: {wege}.',
+    sozBewilligung: 'Without a Swiss passport, receiving social assistance can affect your residence permit; get advice beforehand from a counselling service or the social services office.',
     markeNetto: 'Net {betrag} / mo.',
     markeNettoGeschaetzt: 'Net ≈ {betrag} / mo. (estimated)',
     markeMiete: 'Rent {betrag}',
