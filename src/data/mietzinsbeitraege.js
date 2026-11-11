@@ -245,3 +245,24 @@ export function mietzinsEinschaetzung(data, canton) {
     konkubinatMitPartner, partnerOffen, ohneDreizehnten, rentMonthly, ohneZweitePerson, incomeLimit, grenzeMitPartner,
     bsJungOffen, wfg, assessment };
 }
+
+// Höchstbetrag des Beitrags je Monat — nur, wo ein kantonaler Höchstbetrag belegt ist und die Einschätzung
+// «unter der Grenze» sagt. Das Haus zeigt ihn als «bis zu», nie als zugesagten Betrag.
+export function beitragHoechstMonat(e) {
+  if (!e || !e.hasProgram || e.assessment?.key !== 'likely') return null;
+  return Number(e.info?.benefitMaxMonth) > 0 ? Number(e.info.benefitMaxMonth) : null;
+}
+
+// Kantone mit einem in der App erfassten Programm (gefüllt auf der Kachelkarte).
+export const PROGRAMM_KANTONE = Object.keys(PROGRAMS);
+
+// Kachelkarte (Matrix 10.11.2026 §5, Skizze C3): jeder Kanton eine gleich grosse Kachel, grob nach seiner Lage.
+// [Zeile, Spalte]. Für Ja/Nein-Fragen je Kanton, wo die echte Karte kleine Kantone verschluckt.
+export const KACHELKARTE_LAGE = {
+  SH: [0, 4],
+  BS: [1, 2], BL: [1, 3], AG: [1, 4], ZH: [1, 5], TG: [1, 6],
+  JU: [2, 1], SO: [2, 2], LU: [2, 3], ZG: [2, 4], SZ: [2, 5], SG: [2, 6], AR: [2, 7],
+  NE: [3, 1], BE: [3, 2], OW: [3, 3], NW: [3, 4], UR: [3, 5], GL: [3, 6], AI: [3, 7],
+  VD: [4, 1], FR: [4, 2], VS: [4, 3], TI: [4, 5], GR: [4, 6],
+  GE: [5, 0],
+};

@@ -4708,6 +4708,14 @@ export default {
     fieldSuggest: { sie: 'Avec au moins 8 heures par semaine chez un employeur, « Par l’emploi » convient ; vous pouvez alors exclure la couverture accidents de la caisse.', du: 'Avec au moins 8 heures par semaine chez un employeur, « Par l’emploi » convient ; tu peux alors exclure la couverture accidents de la caisse.' },
     fieldUnter8: { sie: 'Sous 8 heures par semaine, l’emploi ne vous assure pas contre les accidents pendant les loisirs. Gardez la couverture accidents auprès de la caisse maladie.', du: 'Sous 8 heures par semaine, l’emploi ne t’assure pas contre les accidents pendant les loisirs. Garde la couverture accidents auprès de la caisse maladie.' },
   },
+  // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  mietzinsSzene: {
+    titel: 'Aides au loyer',
+    beitragLegende: 'en pointillé : ce que le canton pourrait prendre en charge au maximum, jusqu’à CHF {betrag} par mois. Le montant effectif est calculé par le canton.',
+    schild: 'possible',
+    karteAria: { sie: 'Cantons avec un programme connu : {liste}. Votre canton : {kanton}.', du: 'Cantons avec un programme connu : {liste}. Ton canton : {kanton}.' },
+    karteLegende: { sie: 'plein : programme connu · vide : incertain, à vérifier · bord épais : votre canton', du: 'plein : programme connu · vide : incertain, à vérifier · bord épais : ton canton' },
+  },
   mietzins: {
     title: 'Aides au loyer :',
     has: { sie: 'Votre canton propose des aides au loyer liées au revenu. Vérifiez le droit et les conditions auprès de votre commune ou du canton.', du: 'Ton canton propose des aides au loyer liées au revenu. Vérifie le droit et les conditions auprès de ta commune ou du canton.' },

@@ -4760,6 +4760,14 @@ export default {
     fieldSuggest: { sie: 'Mit mindestens 8 Stunden pro Woche bei einer Arbeitgeberin oder einem Arbeitgeber passt «Über die Anstellung»; dann können Sie die Unfalldeckung bei der Kasse abwählen.', du: 'Mit mindestens 8 Stunden pro Woche bei einer Arbeitgeberin oder einem Arbeitgeber passt «Über die Anstellung»; dann kannst du die Unfalldeckung bei der Kasse abwählen.' },
     fieldUnter8: { sie: 'Unter 8 Stunden pro Woche sind Sie über die Stelle in der Freizeit nicht unfallversichert. Behalten Sie die Unfalldeckung bei der Krankenkasse.', du: 'Unter 8 Stunden pro Woche bist du über die Stelle in der Freizeit nicht unfallversichert. Behalte die Unfalldeckung bei der Krankenkasse.' },
   },
+  // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  mietzinsSzene: {
+    titel: 'Mietbeiträge',
+    beitragLegende: 'gestrichelt: so viel könnte der Kanton höchstens übernehmen, bis zu CHF {betrag} im Monat. Wie viel wirklich kommt, rechnet der Kanton.',
+    schild: 'möglich',
+    karteAria: { sie: 'Kantone mit bekanntem Programm: {liste}. Ihr Kanton: {kanton}.', du: 'Kantone mit bekanntem Programm: {liste}. Dein Kanton: {kanton}.' },
+    karteLegende: { sie: 'gefüllt: Programm bekannt · leer: unklar, bitte prüfen · dicker Rand: Ihr Kanton', du: 'gefüllt: Programm bekannt · leer: unklar, bitte prüfen · dicker Rand: dein Kanton' },
+  },
   mietzins: {
     title: 'Mietbeiträge:',
     has: { sie: 'Ihr Kanton kennt einkommensabhängige Mietbeiträge. Prüfen Sie Anspruch und Bedingungen bei Ihrer Gemeinde oder dem Kanton.', du: 'Dein Kanton kennt einkommensabhängige Mietbeiträge. Prüfe Anspruch und Bedingungen bei deiner Gemeinde oder dem Kanton.' },

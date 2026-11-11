@@ -4682,6 +4682,14 @@ export default {
     fieldSuggest: { sie: 'Con almeno 8 ore alla settimana presso un datore di lavoro va bene «Tramite l’impiego»; allora può escludere la copertura infortuni della cassa.', du: 'Con almeno 8 ore alla settimana presso un datore di lavoro va bene «Tramite l’impiego»; allora puoi escludere la copertura infortuni della cassa.' },
     fieldUnter8: { sie: 'Sotto le 8 ore alla settimana l’impiego non La assicura contro gli infortuni nel tempo libero. Mantenga la copertura infortuni presso la cassa malati.', du: 'Sotto le 8 ore alla settimana l’impiego non ti assicura contro gli infortuni nel tempo libero. Mantieni la copertura infortuni presso la cassa malati.' },
   },
+  // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  mietzinsSzene: {
+    titel: 'Contributi all’affitto',
+    beitragLegende: 'tratteggiato: quanto il Cantone potrebbe assumere al massimo, fino a CHF {betrag} al mese. L’importo effettivo lo calcola il Cantone.',
+    schild: 'possibile',
+    karteAria: { sie: 'Cantoni con un programma noto: {liste}. Il Suo Cantone: {kanton}.', du: 'Cantoni con un programma noto: {liste}. Il tuo Cantone: {kanton}.' },
+    karteLegende: { sie: 'pieno: programma noto · vuoto: incerto, da verificare · bordo spesso: il Suo Cantone', du: 'pieno: programma noto · vuoto: incerto, da verificare · bordo spesso: il tuo Cantone' },
+  },
   mietzins: {
     title: 'Sussidi per l\'affitto:',
     has: { sie: 'Il Suo cantone prevede sussidi per l\'affitto in base al reddito. Verifichi diritto e condizioni presso il Suo comune o il cantone.', du: 'Il tuo cantone prevede sussidi per l\'affitto in base al reddito. Verifica diritto e condizioni presso il tuo comune o il cantone.' },

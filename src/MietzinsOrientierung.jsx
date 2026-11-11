@@ -7,6 +7,7 @@ import { mietzinsErgebnis, istJungErwachsen, mietzinsEinschaetzung } from './dat
 import { getCantonName } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
+import { MietzinsSzene } from './components/WohnkostenInstrument.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { zahl } from './utils/geld.js';
 import { CHAPTER_KEYS } from './config/constants.js';
@@ -101,6 +102,9 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       React.createElement('ul', { style: { margin: 0, paddingLeft: '20px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
         voraussetzungen.map((v) => React.createElement('li', { key: v.key, style: { marginTop: space.xs + 'px', color: palette.text } },
           v.achtung && hinweisZeichen(), v.text)))),
+    // Mietzinsbeiträge als Szene (11.11.2026): Haus mit möglichem Beitrag, Glas, Schild, Kachelkarte — mittel. Der
+    // Ergebnis-Satz steht schon oben, darum ohne Satz.
+    canton && React.createElement(MietzinsSzene, { palette, t, data, isDarkMode, kanton: canton, groesse: 'mittel', mitHaus: true, ohneSatz: true }),
     // F7-R3: das Instrument des Kapitels Wohnen — «Wo steht Ihre Miete?» (dasselbe Bauteil wie in der Finanz-Übersicht).
     canton && React.createElement('div', { style: { marginTop: space.md + 'px' } },
       React.createElement(MietVergleich, { palette, t, data, isDarkMode, canton }))

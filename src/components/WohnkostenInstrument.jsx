@@ -7,6 +7,9 @@ import { wohnkostenRechnung, drittelGrenzeMiete } from '../data/wohnkosten.js';
 import { zahl, betrag } from '../utils/geld.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
+import { Pegel } from './Pegel.jsx';
+import { mietzinsEinschaetzung, beitragHoechstMonat, PROGRAMM_KANTONE, KACHELKARTE_LAGE } from '../data/mietzinsbeitraege.js';
+import { mietzinsPegelState } from '../data/pegel.js';
 import { knopfStil } from './PrimaryButton.jsx';
 
 // Kapitel Wohnen · das Instrument oben (Fassung 6, Runde 9, Entwurf Z, Entscheid Stebler Studios 24.10.2026).
@@ -59,7 +62,10 @@ const HAUS = { x: 12, oben: 44, b: 96, stock: 24 };
 //     Nettoeinnahmen betragen.»
 //   D «alles andere» im oberen Teil, nur gross.  E Partner-Haus geteilt (Sie | Partner/in), nur gross.
 // Klein 64 zeigt nur A und B — nichts Feines (§7b).
-export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brutto, teile, fuell, groesse = 'gross' }) => {
+//   F Mietzinsbeitrag (11.11.2026, Stebler Studios «im Haus weiter füllen, gestrichelt, Behörden-Farbe»): `beitrag`
+//     = { anteil (% des Einkommens), farbe } — oben in der Füllung schraffiert und gestrichelt, so viel könnte der
+//     Kanton höchstens übernehmen. Nur gross + mittel. Der Satz daneben sagt «bis zu».
+export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brutto, teile, beitrag, fuell, groesse = 'gross' }) => {
   const h = React.createElement;
   const gross = groesse === 'gross';
   const klein = groesse === 'klein';
@@ -79,6 +85,9 @@ export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brut
   // Wörter nur gross: die Schrift ist so gesetzt, dass sie bei 256 px genau text.xs (13 px) misst (Regel H).
   const schrift = { fontSize: Math.ceil(text.xs * 120 / INSTRUMENT_GROESSE.gross * 100) / 100, fill: palette.mid, textAnchor: 'middle' };
   const hoehe = boden + (geteilt ? 14 : 4);
+  const beitragH = !klein && beitrag && beitrag.anteil > 0 && anteil01 > 0
+    ? koerper * Math.min(beitrag.anteil / 100, anteil01) : 0;
+  const fuellOben = boden - koerper * anteil01;
   return h('svg', {
     viewBox: '0 0 120 ' + hoehe, width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-teil': 'drittel-haus',
     style: { display: 'block', maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto', overflow: 'visible' },
@@ -90,6 +99,13 @@ export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brut
         transition: 'transform ' + duration.slow + 'ms ' + ease + ', fill ' + duration.slow + 'ms ' + ease,
         animation: 'mp-steigen ' + duration.slow + 'ms ' + ease,
       },
+    }),
+    beitragH > 0 && h('defs', null, h('pattern', { id: 'drittel-haus-schraffur', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
+      h('line', { x1: 0, y1: 0, x2: 0, y2: 6, stroke: beitrag.farbe, strokeWidth: 2, opacity: 0.55 }))),
+    beitragH > 0 && h('rect', {
+      'data-teil': 'drittel-haus-beitrag', x: HAUS.x + 0.75, y: fuellOben, width: HAUS.b - 1.5, height: beitragH,
+      fill: 'url(#drittel-haus-schraffur)', stroke: beitrag.farbe, strokeWidth: 1.5, strokeDasharray: '4 3', ...linie,
+      style: { animation: 'fadeIn ' + duration.slow + 'ms ' + ease },
     }),
     !klein && h('line', { x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: HAUS.oben + HAUS.stock, y2: HAUS.oben + HAUS.stock, stroke: palette.mid, strokeWidth: 1, strokeDasharray: '3 3', ...linie }),
     !klein && urteil && !brutto && h('line', { 'data-teil': 'drittel-haus-viertel', x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: viertelY, y2: viertelY, stroke: palette.mid, strokeWidth: 1, strokeDasharray: '1 3', strokeLinecap: 'round', ...linie }),
@@ -105,6 +121,21 @@ export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brut
     geteilt && t && h('text', { x: (teilX + HAUS.x + HAUS.b) / 2, y: boden + 11, ...schrift }, t('wohnenInstrument.hausPartner')),
   );
 };
+
+// Der mögliche Mietzinsbeitrag im Haus (F): eine Stelle für Kapitel und Werkzeug. Nur mit Urteil (nicht bei
+// Partner/in ohne Haushalt-Rechnung) und nur, wo ein Höchstbetrag belegt ist und das Einkommen unter der Grenze liegt.
+export const beitragImHaus = (data, r, isDarkMode, palette, kanton = data?.basis?.canton || '') => {
+  if (!kanton || !r || r.anteil == null || r.mitPartner || !(r.einkommen > 0)) return null;
+  const hoechst = beitragHoechstMonat(mietzinsEinschaetzung(data, kanton));
+  if (!hoechst) return null;
+  return { anteil: Math.min(hoechst, r.kosten) / r.einkommen * 100, farbe: bereichFillColor('behoerden', isDarkMode) || palette.mid, hoechst };
+};
+const BeitragLegende = ({ palette, t, beitrag }) => React.createElement('p', {
+  'data-teil': 'beitrag-legende', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 0', display: 'flex', gap: '4px' },
+},
+  React.createElement('svg', { width: 14, height: 10, viewBox: '0 0 14 10', 'aria-hidden': 'true', style: { flexShrink: 0, marginTop: '4px' } },
+    React.createElement('rect', { x: 0.75, y: 0.75, width: 12.5, height: 8.5, fill: 'none', stroke: beitrag.farbe, strokeWidth: 1.5, strokeDasharray: '3 2' })),
+  t('mietzinsSzene.beitragLegende', { betrag: zahl(beitrag.hoechst) }));
 
 // Welcher Text unter «… % des Einkommens» steht.
 // Partner-Haus (11.11.2026): mit dem Haushalt gerechnet → «der Netto-Einnahmen Ihres Haushalts».
@@ -135,6 +166,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
   const vergleich = canton && r.netto > 0 ? getRentComparison(canton, { rooms: wohnen?.rooms, householdSize: hh.householdSize || 1 }) : null;
 
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
+  const imHaus = beitragImHaus(allData, r, isDarkMode, palette);
   const zeile = { display: 'flex', justifyContent: 'space-between', gap: space.md + 'px', padding: '8px 0', fontSize: text.sm, color: palette.text };
   const kapH = { margin: space.lg + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
 
@@ -146,7 +178,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
     // Anteil am Einkommen im Drittel-Haus. Das Haus wiederholt die Zahl daneben — für Screenreader stumm.
     r.anteil != null && React.createElement(React.Fragment, null,
       React.createElement('div', { style: { margin: space.md + 'px 0 ' + space.sm + 'px' } },
-        React.createElement(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto, teile: r.haushalt ? { sie: r.einkommen - r.partnerEinkommen, partner: r.partnerEinkommen } : null, fuell })),
+        React.createElement(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto, teile: r.haushalt ? { sie: r.einkommen - r.partnerEinkommen, partner: r.partnerEinkommen } : null, beitrag: imHaus, fuell })),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, t(anteilKey(r), { pct, einkommen: zahl(r.einkommen) })),
         React.createElement('span', null, React.createElement(LegendenMarke, { form: 'strich', color: r.ueberDrittel && !r.mitPartner ? palette.roseDeep : palette.text, palette }), t('wohnenInstrument.drittel')),
@@ -154,7 +186,8 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
         !r.mitPartner && !r.brutto && React.createElement('span', { 'data-teil': 'viertel-legende' }, React.createElement(LegendenMarke, { form: 'punktlinie', color: palette.mid, palette }), t('wohnenInstrument.viertel'))
       ),
       React.createElement('p', { 'data-teil': 'drittel-satz', style: { ...klein, margin: space.xs + 'px 0 0', color: r.ueberDrittel ? palette.text : palette.mid } },
-        t(satzKey(r)))
+        t(satzKey(r))),
+      imHaus && React.createElement(BeitragLegende, { palette, t, beitrag: imHaus })
     ),
     r.anteil == null && React.createElement('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('wohnenInstrument.ohneEinkommen')),
 
@@ -167,6 +200,9 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
         userLabel: ausprobiert ? t('wohnenInstrument.ausprobierteMiete', { amount: zahl(r.netto) }) : undefined,
       })
     ),
+
+    // Mietzinsbeiträge (11.11.2026): Glas, Schild, Kachelkarte — der Beitrag selbst steht schon im Haus oben.
+    React.createElement(MietzinsSzene, { palette, t, data: allData, isDarkMode }),
 
     // Ausprobieren: andere Miete — nur hier, nichts wird gespeichert. Nicht bei Eigentum (siehe oben).
     // Das «›» zeigt, dass die Zeile aufgeht (Abnahme F6, 25.10.2026: ohne Zeichen wirkte sie nicht aufklappbar).
@@ -207,6 +243,72 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
         }, t('wohnenInstrument.zurueck'))
       )
     )
+  );
+};
+
+// Mietzinsbeiträge als Szene (Stebler Studios 11.11.2026, «Ja, so bauen»; Wächter wohnenMietzinsSzene.test.js).
+// Eine Rechnung: mietzinsEinschaetzung — dieselbe wie im Werkzeug «Mietzins». Teile:
+//   Haus (nur mit `mitHaus`): der mögliche Beitrag gestrichelt in der Behörden-Farbe, als «bis zu» (beitragHoechstMonat).
+//   Glas: der Pegel der IPV, Lesart «Luft» (Einkommen gegen Grenze) — nur, wo die Grenze eine Zahl ist.
+//   Schild «möglich»: nur, wenn das Einkommen unter der Grenze liegt. Nie «Anspruch»: der Kanton entscheidet.
+//   Kachelkarte: die 26 Kantone, gefüllt = Programm in der App erfasst, leer = unklar (nie «gibt es nicht»).
+const KACHEL = { b: 26, h: 20, abstand: 2 };
+export const Kachelkarte = ({ palette, t, kanton, gefuellt, isDarkMode }) => {
+  const h = React.createElement;
+  const breite = 8 * (KACHEL.b + KACHEL.abstand);
+  const hoehe = 6 * (KACHEL.h + KACHEL.abstand);
+  const frucht = bereichFillColor('wohnen', isDarkMode) || palette.sage;
+  // Schrift bei 256 px genau text.xs (Regel H), die Karte wird nie breiter als gross.
+  const schrift = Math.ceil(text.xs * breite / INSTRUMENT_GROESSE.gross * 100) / 100;
+  return h('svg', {
+    viewBox: '0 0 ' + breite + ' ' + hoehe, width: '100%', role: 'img', 'data-teil': 'kachelkarte',
+    'aria-label': t('mietzinsSzene.karteAria', { liste: gefuellt.join(', '), kanton }),
+    style: { display: 'block', maxWidth: INSTRUMENT_GROESSE.gross + 'px', height: 'auto' },
+  },
+    Object.entries(KACHELKARTE_LAGE).map(([k, [zeile, spalte]]) => {
+      const voll = gefuellt.includes(k);
+      const ihr = k === kanton;
+      const x = spalte * (KACHEL.b + KACHEL.abstand), y = zeile * (KACHEL.h + KACHEL.abstand);
+      return h('g', { key: k, 'data-kanton': k, 'data-programm': voll ? 'ja' : 'nein', ...(ihr ? { 'data-ihr': 'ja' } : {}), 'aria-hidden': 'true' },
+        h('rect', { x: x + 1, y: y + 1, width: KACHEL.b - 2, height: KACHEL.h - 2, rx: 3,
+          fill: voll ? frucht : 'none', fillOpacity: voll ? 0.45 : 0,
+          stroke: ihr ? palette.text : palette.border, strokeWidth: ihr ? 2.5 : 1 }),
+        h('text', { x: x + KACHEL.b / 2, y: y + KACHEL.h / 2 + schrift * 0.35, textAnchor: 'middle', fontSize: schrift, fill: voll || ihr ? palette.text : palette.mid }, k));
+    }));
+};
+
+const SchildMoeglich = ({ palette, t }) => {
+  const h = React.createElement;
+  return h('svg', { viewBox: '0 0 84 90', width: 84, 'aria-hidden': 'true', focusable: 'false', 'data-teil': 'mietzins-schild',
+    style: { display: 'block', overflow: 'visible', animation: 'fadeIn ' + duration.slow + 'ms ' + ease } },
+    h('line', { x1: 24, x2: 24, y1: 30, y2: 88, stroke: palette.text, strokeWidth: 1.5 }),
+    h('path', { d: 'M4 10H66L76 22L66 34H4Z', fill: palette.up || palette.surface, stroke: palette.sky, strokeWidth: 1.5 }),
+    h('text', { x: 38, y: 27, textAnchor: 'middle', fontSize: text.xs, fill: palette.skyDeep || palette.text }, t('mietzinsSzene.schild')));
+};
+
+export const MietzinsSzene = ({ palette, t, data, isDarkMode, kanton: kantonVorgabe, groesse = 'gross', mitHaus = false, ohneSatz = false }) => {
+  const h = React.createElement;
+  const kanton = kantonVorgabe || data?.basis?.canton || '';
+  if (!kanton) return null;
+  const e = mietzinsEinschaetzung(data, kanton);
+  const glas = e.hasProgram ? mietzinsPegelState({ annualIncome: e.annualIncome, incomeLimit: e.incomeLimit }) : null;
+  const moeglich = e.assessment?.key === 'likely';
+  const r = mitHaus ? wohnkostenRechnung(data?.wohnen, data, null) : null;
+  const zeigtHaus = r && r.anteil != null && !r.mitPartner;
+  const beitrag = zeigtHaus ? beitragImHaus(data, r, isDarkMode, palette, kanton) : null;
+  const satz = e.hasProgram && e.assessment ? t('mietzinsView.result_' + e.assessment.key, e.assessment.params || {}) : t('mietzins.' + e.info.state);
+  const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 0' };
+  return h('section', { 'data-teil': 'mietzins-szene', style: { margin: space.lg + 'px 0' } },
+    h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' } }, t('mietzinsSzene.titel')),
+    (zeigtHaus || glas || moeglich) && h('div', { style: { display: 'flex', alignItems: 'flex-end', gap: space.md + 'px', flexWrap: 'wrap' } },
+      zeigtHaus && h('div', { style: { flex: '0 1 ' + INSTRUMENT_GROESSE[groesse] + 'px' } },
+        h(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto, beitrag, fuell: bereichFillColor('wohnen', isDarkMode) || palette.sage, groesse })),
+      glas && h('div', { 'data-teil': 'mietzins-glas' }, h(Pegel, { palette, t, state: glas, nurGlas: true })),
+      moeglich && h(SchildMoeglich, { palette, t })),
+    beitrag && h(BeitragLegende, { palette, t, beitrag }),
+    !ohneSatz && h('p', { style: { margin: space.sm + 'px 0', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, satz),
+    h(Kachelkarte, { palette, t, kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode }),
+    h('p', { style: klein }, t('mietzinsSzene.karteLegende')),
   );
 };
 

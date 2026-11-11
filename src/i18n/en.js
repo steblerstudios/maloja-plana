@@ -4781,6 +4781,14 @@ export default {
     fieldSuggest: 'With at least 8 hours a week for one employer, “Through employment” fits; you can then remove accident cover from your insurer.',
     fieldUnter8: 'Under 8 hours a week, the job does not insure you against accidents in your free time. Keep accident cover with your health insurer.',
   },
+  // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  mietzinsSzene: {
+    titel: 'Rent contributions',
+    beitragLegende: 'dashed: the most the canton could cover, up to CHF {betrag} a month. The canton calculates the actual amount.',
+    schild: 'possible',
+    karteAria: 'Cantons with a known programme: {liste}. Your canton: {kanton}.',
+    karteLegende: 'filled: programme known · empty: unclear, please check · thick border: your canton',
+  },
   mietzins: {
     title: 'Rent subsidies:',
     has: 'Your canton has income-based rent subsidies. Check eligibility and conditions with your commune or canton.',

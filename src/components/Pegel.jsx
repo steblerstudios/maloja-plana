@@ -21,7 +21,9 @@ const VESSEL_CLIP = 'M33 17 L33 123 Q33 137 46 137 L82 137 Q95 137 95 123 L95 17
 
 const fmtCHF = (n) => betrag(n || 0);
 
-export const Pegel = ({ palette, t, state }) => {
+// `nurGlas` (11.11.2026, Mietzinsbeiträge im Kapitel Wohnen): nur das Gefäss, ohne Ablesung — dieselbe Form an
+// einem anderen Ort, die Sätze stehen dort daneben.
+export const Pegel = ({ palette, t, state, nurGlas = false }) => {
   const h = React.createElement;
   if (!state || !state.show) return null;
   const variant = state.variant || 'luft';
@@ -77,6 +79,8 @@ export const Pegel = ({ palette, t, state }) => {
     ),
     h('line', { x1: 30, y1: 146, x2: 98, y2: 146, stroke: palette.border, strokeWidth: 3, strokeLinecap: 'round' })
   );
+
+  if (nurGlas) return h('div', { 'data-teil': 'pegel-glas' }, svg);
 
   // ── Ablesung ──
   const title = soz ? t('nav.sozialhilfe') : t('schnellcheck.ipv');
