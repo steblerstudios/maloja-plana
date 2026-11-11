@@ -6,7 +6,7 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
-import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
+import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS, WEITERBILDUNG_MAX } from './data/steuerRechner.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, tarifvergleichGrund, KANTONAL_DATA_VERSION, kantonsdatenAbgerufen } from './data/kantonaleSteuerdaten.js';
 import { SAEULE3A_MAX, saeule3aGrenzePerson } from './data/saeule3a.js';
 import { istSelbstaendig } from './utils/anstellung.js';
@@ -109,7 +109,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     { label: t('tax.pension3a'), key: 'pension3a', default: 0, max: max3a, gesetz: 'pension3a' },
     { label: t('tax.debtInterest'), key: 'debtInterest', default: 0 },
     { label: t('tax.maintenance'), key: 'maintenance', default: 0 },
-    { label: t('tax.education'), key: 'education', default: 0, max: 13000, gesetz: 'education' },
+    { label: t('tax.education'), key: 'education', default: 0, max: WEITERBILDUNG_MAX, gesetz: 'education' },
     { label: t('tax.otherDeductions'), key: 'other', default: 0 }
   ];
   const grenzeVon = (key) => (deductions.find((d) => d.key === key) || {}).max;

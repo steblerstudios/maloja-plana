@@ -3341,7 +3341,7 @@ export default {
     education: 'Frais de formation',
     otherDeductions: 'Autres déductions',
     grenze_pension3a: 'Au maximum {max} selon la loi (pilier 3a, année fiscale 2026)',
-    grenze_education: 'Au maximum {max} selon la loi, sous conditions (premier diplôme du degré secondaire II ou dès 20 ans)',
+    grenze_education: 'Impôt fédéral direct : au maximum {max}, sous conditions (premier diplôme du degré secondaire II ou dès 20 ans). Les cantons ont leurs propres plafonds',
     gekappt: 'Limité à {max} pour l’estimation.',
     calculation: 'Calcul',
     taxableIncome: 'Revenu imposable',

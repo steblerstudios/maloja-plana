@@ -3277,7 +3277,7 @@ export default {
     education: 'Spese di formazione',
     otherDeductions: 'Altre deduzioni',
     grenze_pension3a: 'Per legge al massimo {max} (pilastro 3a, anno fiscale 2026)',
-    grenze_education: 'Per legge al massimo {max}, a determinate condizioni (primo diploma del livello secondario II o a partire dai 20 anni)',
+    grenze_education: 'Imposta federale diretta: al massimo {max}, a determinate condizioni (primo diploma del livello secondario II o a partire dai 20 anni). I Cantoni hanno propri importi massimi',
     gekappt: 'Per la stima limitato a {max}.',
     calculation: 'Calcolo',
     taxableIncome: 'Reddito imponibile',
