@@ -86,3 +86,25 @@ describe('Regel «Zahl» · Quelle', () => {
     expect(q).toMatch(/t\('strasse\.eigen'\)\) \+ ': ' \+ betrag\(userValue\)/);
   });
 });
+
+describe('Regel «Zahl» · Lohn und Bereit', () => {
+  const quelle = (f) => fs.readFileSync(path.resolve(__dirname, f), 'utf8');
+  it('Lohn: eine Schreibweise für Kachel und Kapitel, im Kapitel gross nach dem Barometer', async () => {
+    const { lohnLageWert } = await import('../components/LohnEinordnung.jsx');
+    expect(lohnLageWert({ rel: 'below', delta: -900, pct: 13 })).toBe('−13 %');
+    expect(lohnLageWert({ rel: 'near', delta: 50, pct: 1 })).toBe('≈ +1 %');
+    expect(lohnLageWert({ rel: 'near', delta: 0, pct: 0 })).toBe('≈ 0 %');
+    expect(quelle('../components/InstrumentePanel.jsx')).toContain('zahl: { wert: lohnLageWert(ls), einheit');
+    const q = quelle('../components/LohnEinordnung.jsx');
+    const bild = q.indexOf('React.createElement(Barometer, {');
+    const zahl = q.indexOf("'data-instrument-zahl': 'lohn'");
+    expect(bild).toBeGreaterThan(-1);
+    expect(zahl).toBeGreaterThan(bild);
+    expect(zahl).toBeLessThan(q.indexOf("t('lohnEinordnung.median') + ': CHF '"));
+  });
+  it('Bereit im Kapitel Notfall: erst der Balken, darunter «x von y»', () => {
+    const q = quelle('../components/NotfallImKapitel.jsx');
+    const abschnitt = q.slice(q.indexOf("const bereit = h('section'"));
+    expect(abschnitt.indexOf("background: notfallRot")).toBeLessThan(abschnitt.indexOf("'data-instrument-zahl': 'bereit'"));
+  });
+});

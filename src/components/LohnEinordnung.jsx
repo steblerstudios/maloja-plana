@@ -133,6 +133,13 @@ export function lohnLage(data) {
   return { state, sperre, vergleichbar, bvgAlter, rentenalter, beitragsfrei };
 }
 
+// Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): die Hauptzahl des Lohns — Abstand zum Median in % —, EINE
+// Schreibweise für Kachel und Kapitel.
+export const lohnLageWert = (state) => {
+  const vorzeichen = state.delta > 0 ? '+' : state.delta < 0 ? '−' : '';
+  return (state.rel === 'near' ? '≈ ' : '') + (state.pct === 0 ? '' : vorzeichen) + state.pct + ' %';
+};
+
 // Lohn-Barometer klein (64 px, Brand Book §7b «Spiegel Startseite», 10.11.2026): dieselben vier Zonen wie gross
 // (unter p10 · bis Median · bis p90 · darüber, gleich breit), Füllung bis zum Vergleichslohn, Punkt = Median
 // in der Farbe der Lage. Nur das Bild; die Zahl steht daneben.
@@ -306,6 +313,13 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
         z.sub && React.createElement('div', { style: { color: palette.soft, fontWeight: weight.regular } }, t('lohnEinordnung.' + z.sub))
       );
     })),
+
+    // Regel «Zahl» (Matrix §10): unter dem Bild die Hauptzahl gross, wie auf der Kachel «Lohn». Bild-Beschriftung —
+    // der Satz darunter und das aria-Label sagen es.
+    React.createElement('div', {
+      'data-instrument-zahl': 'lohn', 'aria-hidden': 'true',
+      style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums', marginBottom: space.xs + 'px' },
+    }, lohnLageWert(state)),
 
     // Werte-Zeile — Ihr Lohn LINKS, Median RECHTS (Entscheid Stebler Studios 2026-07-18).
     // Die Legenden-Marken spiegeln die Marken auf dem Balken (Füllung in `arbeitColor`,

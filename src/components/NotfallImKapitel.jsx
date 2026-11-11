@@ -308,11 +308,13 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   });
   const bereit = h('section', { 'data-teil': 'notfall-bereit', 'aria-labelledby': 'mp-notfall-bereit' },
     h('h3', { id: 'mp-notfall-bereit', style: kapH }, t('notfallKapitel.bereitTitel')),
-    h('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm + 'px', flexWrap: 'wrap' } },
-      h('span', { style: { fontSize: '28px', fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, t('notfallKapitel.vonN', { n: stand.erledigt, total: stand.gesamt })),
-      h('span', { style: klein }, t('notfallKapitel.bereitSatz'))),
-    h('div', { 'aria-hidden': 'true', style: { height: '6px', background: palette.up, borderRadius: radius.hair, overflow: 'hidden', margin: space.xs + 'px 0 ' + space.sm + 'px' } },
+    // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): erst das Bild, darunter die Zahl gross. Das Bild selbst
+    // (Balken, Ring oder Koffer) ist noch nicht entschieden (B-F1) — hier rückt nur die Zahl unter den Balken.
+    h('div', { 'aria-hidden': 'true', style: { height: '6px', background: palette.up, borderRadius: radius.hair, overflow: 'hidden', margin: space.xs + 'px 0 ' + space.xs + 'px' } },
       h('div', { style: { width: pct + '%', height: '100%', background: notfallRot } })),
+    h('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px' } },
+      h('span', { 'data-instrument-zahl': 'bereit', style: { fontSize: '28px', fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, t('notfallKapitel.vonN', { n: stand.erledigt, total: stand.gesamt })),
+      h('span', { style: klein }, t('notfallKapitel.bereitSatz'))),
     stand.fehlend.length === 0
       ? h('p', { style: { fontSize: text.sm, color: palette.sageDeep || palette.text, margin: '0 0 ' + space.sm + 'px' } }, t('notfallEinstieg.allDone'))
       : stand.fehlend.map(fehlZeile),
