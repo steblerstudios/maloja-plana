@@ -197,5 +197,17 @@ siebenmal neu entschieden werden:
    swiss-precision-pruefer am Volltext, Blocker behoben) · Inhalt, Gestaltung, Sprache → Entwurfs-PR #812, gestapelt auf #806
    (rechts-pruefer, fünf Sätze nachgeschärft). Zusammen 9301 Tests grün. Zwei Gestaltungs-Fehlbefunde im Blatt berichtigt.
    Offen: Lektüre fr/it/en, rm, Zuschlag in der 13. Rente (BSV), Witwen-Satz nach EGMR, Absätze teilen (S4).
+   **Gruppe D · Fachseiten ausserhalb der Kapitel** (11.11.; Inventar der Gruppen A–E in Punkt 5 auf dem Zweig
+   `befund/gruppe-a-einstieg`): Bild [gruppe-d-fachseiten.html](../design/gruppe-d-fachseiten.html). Gut: Krankenkasse in
+   allen Kernwerten am Gesetz, Prämien 2027 und Prämienregionen 1.1.2027 nachgeführt, Politsystem samt Sitzverteilung 2027
+   richtig, kurze Erklärseiten ohne Beträge. Hoch: L1 `/sozialhilfe/` und `/was-steht-mir-zu/` ermutigen zum Bezug («kostet
+   nichts») ohne Hinweis auf die Bewilligung B/L/C (AIG Art. 62 Abs. 1 Bst. e, 63 Abs. 1 Bst. c, Fassung 1.11.2026) · L2 IPV
+   ruht bei Sozialhilfe für N/S (AsylG Art. 82a Abs. 7) und F (AIG Art. 86 Abs. 2) fehlt. Mittel: L3 Stipendien-Check ohne
+   Antwort für F und B unter 5 Jahren, Ergebnis klingt nach Bescheid · L4 «Einsprachefrist meist 30 Tage» unbelegt · L5
+   Sozialhilfequote zugleich 2024 und 2025 · L6 Rückerstattung und ZGB Art. 328 fehlen · L7 Bundesvorgaben IPV (KVG Art. 65
+   Abs. 1bis/1ter) fehlen. Dazu Kleines (u. a. Meldefrist KVV Art. 11 Abs. 2, IPV-Zahlen 2023, ein toter Link). Gestaltung A
+   Stand-Zeile nur unten auf den vier kurzen Seiten, B bewegte Fassungen ohne Seitenrahmen, C Stipendien-Listen doppelt, D
+   Trefferflächen. Sprache S1–S8. Nichts davon im Startbündel. Konkordat nicht am Volltext (edk.ch sperrt). Zweig
+   `befund/gruppe-d-fachseiten` (von `main`), nur Befund, gebaut ist nichts.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
