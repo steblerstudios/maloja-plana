@@ -4,6 +4,7 @@ import { getHouseholdInfo } from '../config/cantonalData.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
+import { wohnkostenRechnung, drittelGrenzeMiete } from './WohnkostenInstrument.jsx'; // Quelle: data/wohnkosten.js
 
 // „Wo steht Ihre Miete?" — regionaler BFS-Vergleich + Wohnkostenquote.
 // Bewusst EIN Bauteil für die beiden Orte, die auf den KAPITEL-Daten rechnen
@@ -30,21 +31,22 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
   const hh = getHouseholdInfo(data) || {};
   const householdSize = hh.householdSize || 1;
 
-  const monthlyIncome = parseFloat(data?.finanzen?.monthlyIncome) || 0;
   // Zwei Grössen, zwei Fragen: der Balken vergleicht die NETTOMIETE mit der BFS-Nettomiete
   // (data/mietpreise.js, ohne Nebenkosten) — wie das Budget. Die Wohnkosten-Zeile darunter
   // zählt die Nebenkosten mit; sie heisst «Wohnkosten». Bis 28.09.2026 füllte die Summe
   // auch den Balken («Ihre Miete: CHF 1830» unter der Quelle «Nettomiete»).
-  const nettoMiete = parseFloat(data?.wohnen?.rentAmount) || 0;
-  const rentMonthly = nettoMiete + (parseFloat(data?.wohnen?.utilities) || 0);
+  // Anteil und Drittel-Grenze aus der EINEN Rechnung (data/wohnkosten.js, seit 11.11.2026) — wie im
+  // Kapitel Wohnen: alle Wohnkosten ÷ alle eigenen Einnahmen. Bis dahin hier nur Miete + NK ÷ Lohn.
+  const r = wohnkostenRechnung(data?.wohnen, data);
+  const nettoMiete = r.netto;
 
-  if (!canton || rentMonthly <= 0) return null;
+  if (!canton || r.kosten <= 0) return null;
 
   // Ohne Nettomiete (z. B. Eigentum, nur Nebenkosten erfasst) kein Miet-Balken.
   const rentComparison = nettoMiete > 0 ? getRentComparison(canton, { rooms: data?.wohnen?.rooms, householdSize }) : null;
-  const rentSharePct = monthlyIncome > 0 ? Math.round((rentMonthly / monthlyIncome) * 100) : null;
-  // Die Drittel-Faustregel als Miet-Betrag — nur mit Einkommen bestimmbar.
-  const drittel = monthlyIncome > 0 ? Math.round(monthlyIncome / 3) : 0;
+  const rentSharePct = r.anteil != null ? Math.round(r.anteil) : null;
+  // Die Drittel-Faustregel als Miet-Betrag (`thresholdValue` unten) — nur mit Einkommen bestimmbar,
+  // mit Partner/in kein Urteil.
 
   if (!rentComparison && rentSharePct == null) return null;
 
@@ -54,20 +56,21 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
     }, t('mietzinsView.compareTitle')),
 
     rentComparison && React.createElement(RegionalBarometer, {
-      palette, t, comparison: rentComparison, userValue: nettoMiete, kind: 'rent',
+      palette, t, comparison: rentComparison, userValue: nettoMiete, kind: 'rent', form: 'haeuser',
       // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
       fillColor: bereichFillColor('wohnen', isDarkMode),
-      thresholdValue: drittel,
+      thresholdValue: drittelGrenzeMiete(r),
     }),
 
     rentSharePct != null && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
       // Kein inline-„!" — das sitzt auf dem Balken. Hier nur die lesbare Deep-Variante.
       React.createElement('div', {
-        style: { fontSize: text.sm, color: rentSharePct > 33 ? palette.goldDeep : palette.text, lineHeight: leading.normal },
+        style: { fontSize: text.sm, color: r.ueberDrittel && !r.mitPartner ? palette.goldDeep : palette.text, lineHeight: leading.normal },
       }, t('mietzinsView.rentShare', { pct: rentSharePct })),
+      // Mit Partner/in derselbe Satz wie im Kapitel: gerechnet ist nur das eigene Einkommen.
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '2px' },
-      }, t('mietzinsView.rentShareGuide'))
+      }, t(r.mitPartner ? 'wohnenInstrument.mitPartner' : 'mietzinsView.rentShareGuide'))
     )
   );
 };

@@ -114,7 +114,7 @@ sonst tritt Alarm-Inflation ein und niemand schaut mehr hin.
 | Instrument | Schwelle | rosé wenn |
 |---|---|---|
 | Lohn | kantonaler Mindestlohn-Boden (`mindestlohnBoden`) | Lohn (auf 100% hochgerechnet) darunter |
-| Miete | ein Drittel des Einkommens | Miete darüber |
+| Miete | Wohnkosten über einem Drittel der eigenen Einnahmen (eine Rechnung: `data/wohnkosten.js`, `drittelGrenzeMiete`; mit Partner/in keine Marke) | Miete darüber |
 
 Das Mindestlohn-„!" ist zugleich der **Befund** für den Lohn-Nachfrage-Brief
 (`briefGenerator`, `wageClaim`) — Anzeige und Brief teilen dieselbe Quelle.

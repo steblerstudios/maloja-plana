@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { text, weight, radius, space, leading, duration, ease, INSTRUMENT_GROESSE } from '../config/tokens.js';
+import { text, weight, space, leading, duration, ease, INSTRUMENT_GROESSE } from '../config/tokens.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
-import { eigeneEinnahmen, sumAllExpenses } from '../utils/monatsrechnung.js';
-import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
-import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
+import { wohnkostenRechnung, drittelGrenzeMiete } from '../data/wohnkosten.js';
 import { zahl, betrag } from '../utils/geld.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
@@ -37,28 +35,40 @@ export const REGLER_SCHRITT = 50;
 // Eine erfasste Miete über 3'500 bleibt auf dem Regler erreichbar (kein Sprung beim ersten Schieben).
 export const reglerMax = (heute) => Math.max(REGLER_MAX, Math.ceil(heute / REGLER_SCHRITT) * REGLER_SCHRITT);
 
-const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : 0; };
 const aufRegler = (v, max) => Math.min(max, Math.max(REGLER_MIN, Math.round(v / REGLER_SCHRITT) * REGLER_SCHRITT));
 
-// Reine Rechnung, damit sie ohne DOM geprüft werden kann. `wohnen` ist der gerade bearbeitete Stand
-// des Kapitels, `allData` das ganze Profil, `miete` die (ausprobierte) Nettomiete.
-export function wohnkostenRechnung(wohnen, allData, miete) {
-  const heute = n(wohnen?.rentAmount);
-  const nk = n(wohnen?.utilities);
-  const netto = miete == null ? heute : n(miete);
-  // Eigentum: wie die Monatsrechnung — «Hypothek vorhanden? Nein» zählt nicht.
-  const hypothek = wohnen?.mortgageStatus === 'no' ? 0 : n(wohnen?.mortgagePayment);
-  const eigentum = hypothek > 0;
-  const kosten = netto + nk + hypothek + n(wohnen?.buildingsInsurance) / 12;
-  const { total: einkommen, brutto } = eigeneEinnahmen(allData?.finanzen);
-  const e = haushaltsEinnahmen({ finanzen: allData?.finanzen || {} });
-  const ganzBrutto = brutto && e.lohnArt === 'brutto' && e.lohn > 0 && (e.neben === 0 || e.nebenArt === 'brutto') && e.familienzulagen + e.alimente === 0;
-  const mitPartner = n(partnerEinkommenRoh(allData?.basis)) > 0;
-  const anteil = einkommen > 0 ? (kosten / einkommen) * 100 : null;
-  const profil = { ...(allData || {}), wohnen: { ...(wohnen || {}), rentAmount: netto } };
-  const frei = einkommen > 0 && !brutto ? einkommen - sumAllExpenses(allData?.finanzen, profil) : null;
-  return { heute, nk, netto, kosten, eigentum, einkommen, brutto, ganzBrutto, mitPartner, anteil, ueberDrittel: anteil != null && anteil > 100 / 3, frei };
-}
+// Die Rechnung liegt seit 11.11.2026 in data/wohnkosten.js — eine Quelle für Kapitel, Mietzins-Werkzeug
+// und Budget. Mietzins (MietVergleich) und Budget holen sie über DIESE Datei: so landet sie im
+// bestehenden Baustein «WohnkostenInstrument» und nicht in einem eigenen, dessen Name sonst im
+// Startbündel stünde (gemessen 11.11.2026: eigener Baustein = 65’005 / 65’000 B).
+export { wohnkostenRechnung, drittelGrenzeMiete };
+
+// Das Drittel-Haus (Stebler Studios 11.11.2026, «A und B kombiniert»): das Haus ist das ganze Einkommen,
+// drei gleiche Stockwerke, das Erdgeschoss ist ein Drittel. Die Wohnkosten füllen es von unten. Reicht die
+// Füllung in den ersten Stock, geht mehr als ein Drittel ans Wohnen. Ersetzt den Drittel-Balken; dieselbe
+// Rechnung (`anteil`, `ueberDrittel`), dieselben Farben (Birne, über einem Drittel Sand). Mit Partner/in bleibt
+// es Birne — kein Urteil, wie der Satz. Rein Bild: die Zahl und der Satz stehen daneben (aria-hidden).
+// Grösse nach Brand Book §7b: gross 256 im Kapitel, klein 64 in der Übersicht.
+const HAUS = { x: 12, oben: 44, b: 96, stock: 24 };
+export const DrittelHaus = ({ palette, anteil, ueberDrittel, mitPartner, fuell, groesse = 'gross' }) => {
+  const h = React.createElement;
+  const koerper = HAUS.stock * 3;
+  const boden = HAUS.oben + koerper;
+  const voll = Math.max(0, Math.min(100, anteil || 0)) / 100 * koerper;
+  const farbe = ueberDrittel && !mitPartner ? palette.sand : fuell;
+  const linie = { vectorEffect: 'non-scaling-stroke' };
+  return h('svg', {
+    viewBox: '0 0 120 ' + (boden + 4), width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-teil': 'drittel-haus',
+    style: { display: 'block', maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto' },
+  },
+    voll > 0 && h('rect', { 'data-teil': 'drittel-haus-fuellung', x: HAUS.x, y: boden - voll, width: HAUS.b, height: voll, fill: farbe }),
+    // Zwischen 1. und 2. Stock nur fein, über dem Erdgeschoss die feste Linie: das Drittel.
+    h('line', { x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: HAUS.oben + HAUS.stock, y2: HAUS.oben + HAUS.stock, stroke: palette.mid, strokeWidth: 1, strokeDasharray: '3 3', ...linie }),
+    h('line', { 'data-teil': 'drittel-haus-drittel', x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: boden - HAUS.stock, y2: boden - HAUS.stock, stroke: palette.text, strokeWidth: 2, ...linie }),
+    h('rect', { x: HAUS.x, y: HAUS.oben, width: HAUS.b, height: koerper, fill: 'none', stroke: palette.text, strokeWidth: 1.5, ...linie }),
+    h('path', { d: 'M' + (HAUS.x - 8) + ' ' + HAUS.oben + 'L60 6L' + (HAUS.x + HAUS.b + 8) + ' ' + HAUS.oben + 'Z', fill: 'none', stroke: palette.text, strokeWidth: 1.5, strokeLinejoin: 'round', ...linie }),
+  );
+};
 
 // Welcher Text unter «… % des Einkommens» steht.
 const anteilKey = (r) => r.brutto ? (r.ganzBrutto ? 'wohnenInstrument.anteilBrutto' : 'wohnenInstrument.anteilTeilsBrutto')
@@ -107,12 +117,10 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
       t(ausprobiert ? 'wohnenInstrument.titelAusprobiert' : 'wohnenInstrument.titel')),
     React.createElement('div', { 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(r.kosten)),
 
-    // Anteil am Einkommen mit Drittel-Marke. Der Balken wiederholt die Zahl daneben — für Screenreader stumm.
+    // Anteil am Einkommen im Drittel-Haus. Das Haus wiederholt die Zahl daneben — für Screenreader stumm.
     r.anteil != null && React.createElement(React.Fragment, null,
-      React.createElement('div', { 'aria-hidden': 'true', 'data-teil': 'drittel-balken', style: { position: 'relative', height: '10px', margin: space.md + 'px 0 ' + space.sm + 'px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border } },
-        React.createElement('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.min(100, r.anteil) + '%', background: r.ueberDrittel ? palette.sand : fuell, borderRadius: radius.full } }),
-        React.createElement('div', { style: { position: 'absolute', top: '-5px', bottom: '-5px', left: (100 / 3) + '%', width: '2px', background: palette.text } })
-      ),
+      React.createElement('div', { style: { margin: space.md + 'px 0 ' + space.sm + 'px' } },
+        React.createElement(DrittelHaus, { palette, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, fuell })),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, t(anteilKey(r), { pct, einkommen: zahl(r.einkommen) })),
         React.createElement('span', null, React.createElement(LegendenMarke, { form: 'strich', color: palette.text, palette }), t('wohnenInstrument.drittel'))
@@ -127,6 +135,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
       React.createElement('h3', { style: kapH }, t('po.regionalCompare.rent.title')),
       React.createElement(RegionalBarometer, {
         palette, t, comparison: vergleich, userValue: r.netto, kind: 'rent', compact: true, fillColor: fuell, imKapitel: true,
+        form: 'haeuser', maxBreite: INSTRUMENT_GROESSE.gross,
         userLabel: ausprobiert ? t('wohnenInstrument.ausprobierteMiete', { amount: zahl(r.netto) }) : undefined,
       })
     ),

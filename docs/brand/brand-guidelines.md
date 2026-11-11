@@ -270,6 +270,19 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   `gross` 256 mit Ablesesatz); die eigene Kleinzeichnung `miniGauge` ist aufgelöst.
 - Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Netz-Schild auf
   KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
+- **Wohnen: Drittel-Haus + Häuserzeile** *(11.11.2026, Stebler Studios nach Skizze A–C: «ja a und b kombiniert»)*.
+  Ein Bild aus dem Lebensbereich, wo die Frage typisch für den Bereich ist (wie das Netz-Schild):
+  **A Drittel-Haus** für «Wie viel vom Einkommen geht ans Wohnen?» — das Haus ist das Einkommen, drei gleiche
+  Stockwerke, die feste Linie über dem Erdgeschoss ist **ein Drittel**; die Wohnkosten füllen es von unten (Birne,
+  über einem Drittel Sand; mit Partner/in immer Birne, kein Urteil). **B Häuserzeile** für «Wo steht meine Miete?» —
+  dieselben Marken wie das Barometer als Häuser: Ihr Haus gefüllt (= Füllung), Region mit Dach in der Farbe des
+  Punkts (= Ihre Lage), Schweiz gestrichelt (= Strich), das Drittel als Linie quer über die Strasse mit «!» (= Schwelle,
+  nur wo A fehlt: Mietzins, Budget). Kapitel Wohnen: A + B gross 256; Mietzins und Budget: B mittel 128; Übersicht:
+  beide klein 64 (eigener Schritt). Lohn und Prämie bleiben Balken. Eine Rechnung: `data/wohnkosten.js`. Bauteile:
+  `DrittelHaus` (`WohnkostenInstrument.jsx`), `RegionalBarometer` mit `form: 'haeuser'`. Wächter: `wohnenHaus.test.js`.
+  **Budget** (11.11.2026): Gruppe «Wohnen» aufgeklappt mit Drittel-Haus mittel (nur ohne Partner/in, dann gleich der
+  Gruppen-Prozentzahl) und dem BFS-Richtwert als zwei Häuser klein (`HaeuserVergleich`: Sie gefüllt, vergleichbarer
+  Haushalt mit Dach in der Farbe Ihrer Lage); der Wohn-Hinweis folgt dem Drittel. Wächter: `budgetWohnenHaus.test.js`.
 
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
 «Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
