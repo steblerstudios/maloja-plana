@@ -2716,7 +2716,7 @@ export default {
       contact1: 'If you write to us at info@malojaplana.ch, we process your email address, the content of your message and any attachments in order to reply. The mailbox is hosted by Infomaniak in Switzerland. We keep the correspondence for as long as the enquiry and the usual follow-up questions require, then delete it. It is not passed on to third parties unless required by law.',
       backupTitle: 'Backups',
       // K39: backup1/rights2/faq a5+a7 aligned with E10 (encrypted by default) and E18 (delete path).
-      backup1: 'When Maloja starts, it automatically keeps snapshots of your entries and documents in the browser (IndexedDB, at most one every 12 hours, the last 5 are kept). These snapshots are not encrypted. To save a backup file, go to Settings → Data & backup → Backup: by default it is encrypted with a password of at least 12 characters; saving without encryption remains a deliberate option. You can also export your entries unencrypted as JSON or CSV. These files only leave your device if you actively share them. If your download folder is in a cloud (such as iCloud Drive or OneDrive), the file is copied there too; for such places, choose the backup with a password.',
+      backup1: 'When Maloja starts, it automatically keeps snapshots of your entries and documents in the browser (IndexedDB, at most one every 12 hours, the last 5 are kept). These snapshots are not encrypted. To save a backup file, go to Settings → Data & backup → Create a backup: by default it is encrypted with a password of at least 12 characters; saving without encryption remains a deliberate option. You can also export your entries unencrypted as JSON or CSV. These files only leave your device if you actively share them. If your download folder is in a cloud (such as iCloud Drive or OneDrive), the file is copied there too; for such places, choose the backup with a password.',
       rightsTitle: 'Your rights (nDSG)',
       rights1: 'Since all data is stored locally, you have direct access to all your data at any time — no formal request needed.',
       rights2: 'You can delete your data at any time: individual entries in the app, everything at once under Settings → "Data on this device" → "Delete all data on this device", or via your browser data. Backup files you have downloaded are outside the app; you delete those yourself. There are no server-side copies.',
@@ -4212,7 +4212,7 @@ export default {
     whatIsExported: 'What is exported?',
     allChapterData: 'All chapter data',
     documentMetadata: 'List of documents (without the files)',
-    andereHinweis: 'For a spreadsheet or a list. The file contains your entries and the names of your documents, but no files, reminders or contacts, and it is not encrypted. Only the backup above can be used for restoring.',
+    andereHinweis: 'For a spreadsheet or a list. The files contain your entries, JSON and list also the names of your documents, but no files, reminders or contacts, and they are not encrypted. Only the backup above can be used for restoring.',
     settingsAndPreferences: 'Settings and preferences',
     security: 'Security',
     securityNote: 'The exported file contains personal data. Store it safely.',
@@ -6137,7 +6137,7 @@ export default {
     legalLink: 'Privacy & legal notice',
     bannerLabel: 'Closed Beta',
     feedbackMail: 'Feedback by email',
-    feedbackContext: 'These details help with troubleshooting (optional; we delete them on request):',
+    feedbackContext: 'These details help with troubleshooting (optional, can be removed before sending; on request we also delete them later):',
     feedbackForm: 'Feedback form',
     feedback: {
       title: 'Your beta feedback',

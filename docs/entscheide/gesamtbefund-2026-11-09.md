@@ -220,5 +220,8 @@ siebenmal neu entschieden werden:
    Doku-Zeile mit dem alten Code entfernt. Den neuen Code wählt Stebler Studios; im Repo steht nur sein Fingerabdruck.
    **Notiert, nicht gebaut:** T1 Teilen-Empfang (erst am echten Android-Teilen messen), T3 Runden der Ableitung
    (neues Dateiformat), T4 Kleines; Impressum-Anschrift bleibt offen.
+   Wächter `gruppeCVertrauen.test.js`, rechts-pruefer mit DSG-Volltext (Art. 25, Fassung 1.9.2023). Nicht im Browser
+   angesehen (alle Server-Plätze belegt). **Offen bei Stebler Studios:** neuen Beta-Code wählen (der alte steht in
+   der git-Historie), Deploy.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
