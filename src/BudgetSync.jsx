@@ -237,6 +237,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
           // kein Urteil, ohne Einkommen keine Marke. Bis dahin hier Haushaltseinkommen ÷ 3.
           // Die Miete hier ist dieselbe Zahl (`monatsAusgaben` liest wohnen.rentAmount).
           thresholdValue: drittelGrenzeMiete(wohn),
+          drittel: wohn,
           // Das Budget hat keine Nachbarzeile → die Überschreitung braucht hier den
           // sichtbaren Satz (in MietVergleich trägt ihn `rentShareGuide`).
           showThresholdText: true,

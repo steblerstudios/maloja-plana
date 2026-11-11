@@ -2259,7 +2259,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Regional-Barometer und «Ausprobieren: andere Miete». Einkommen und «Frei verfügbar» aus der
     // einen Monatsrechnung; der Regler verändert das Profil nie.
     chapter.key === 'wohnen' && allData && React.createElement(React.Suspense, { key: 'wohnkosten', fallback: null },
-      React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode })
+      React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode, onNavigate })
     ),
 
     // Fassung 6 · Kapitel Behörden (Runde 9, Entwurf AD): Steuerfrist als Kalenderblatt, Behördengänge offen,

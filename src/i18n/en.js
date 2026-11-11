@@ -4781,6 +4781,29 @@ export default {
     fieldSuggest: 'With at least 8 hours a week for one employer, “Through employment” fits; you can then remove accident cover from your insurer.',
     fieldUnter8: 'Under 8 hours a week, the job does not insure you against accidents in your free time. Keep accident cover with your health insurer.',
   },
+  // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
+  strasse: { eigen: 'you', ausprobiert: 'tried', region: 'region', regionKanton: 'region {kanton}', schweiz: 'Switzerland' },
+  // Wohnen international: Schild neben dem Vergleichshaus (11.11.2026). Eurostat-Preisniveau, kein Mietvergleich.
+  wohnenInternational: {
+    titel: 'Housing and energy',
+    unter: 'Switzerland compared with …',
+    teurer: '{name}: {pct}% more expensive in Switzerland',
+    guenstiger: '{name}: {pct}% cheaper in Switzerland',
+    namen: { EU: 'EU average', DE: 'Germany', AT: 'Austria', FR: 'France', IT: 'Italy' },
+    satz: 'The “EU” floor is derived: the Swiss average at the EU average price level for housing and energy (electricity, gas and water included). These are not measured prices. Neighbours: Germany {DE}%, Austria {AT}%, France {FR}%, Italy {IT}%.',
+    quelle: 'Source: [[Eurostat, price level housing and energy 2025 (prc_ppp_ind_1)|https://ec.europa.eu/eurostat/databrowser/view/prc_ppp_ind_1/default/table]] (checked in November 2026).',
+  },
+  mietzinsSzene: {
+    titel: 'Rent contributions',
+    beitragLegende: 'dashed: the most the canton could cover, up to CHF {betrag} a month. The canton calculates the actual amount.',
+    schild: 'possible',
+    cta: 'possible: check rent contributions',
+    ctaStelle: 'possible: go to the cantonal office',
+    ctaKurz: 'possible',
+    karteAria: 'Cantons with a known programme: {liste}. Your canton: {kanton}.',
+    karteLegende: 'filled: programme known · empty: unclear, please check · thick border: your canton',
+  },
   mietzins: {
     title: 'Rent subsidies:',
     has: 'Your canton has income-based rent subsidies. Check eligibility and conditions with your commune or canton.',

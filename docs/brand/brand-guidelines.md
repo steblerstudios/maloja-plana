@@ -291,7 +291,8 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   zweiten Person. Wächter: `wohnenPartnerHaus.test.js`.
   **Ausgebaut nach Grösse** (11.11.2026, Stebler Studios nach Skizze A–E: «Ja, so bauen»):
   - Das **«!» an der Drittel-Linie** (A) ist graphit und wird Rosé (`roseDeep`), sobald die Füllung über einem
-    Drittel liegt. Linie und Legenden-Strich färben mit. Ohne Urteil gibt es kein «!». Damit hat auch das
+    Drittel liegt. **Die Füllung bleibt immer grün** (Birne): Stebler Studios 11.11.2026, «darf grün gefüllt werden und
+    nicht golden». Die Warnung tragen Linie und «!», nicht die Fläche. Linie und Legenden-Strich färben mit. Ohne Urteil gibt es kein «!». Damit hat auch das
     Kapitel sein «!» wieder.
   - Die **Füllung steigt** (B) beim Erscheinen in `duration.slow` (`mp-steigen`, abbremsend) und folgt dem
     Regler (`scaleY`). «Weniger Bewegung» stellt beides still, mit beiden Schaltern.
@@ -301,6 +302,55 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   - Das **Partner-Haus ist geteilt** (E): ein feiner Strich nach den Netto-Einnahmen, darunter «Sie | Partner/in».
   - Nach Grösse: **gross** A–E, **mittel** A + B + C, **klein** A + B. Schrift im Bild nur gross, bei 256 px genau
     13 px (Regel H). Wächter: `drittelHausAusbau.test.js`.
+  **Mietbeiträge als Szene** (11.11.2026, Stebler Studios: «im Haus weiter füllen, gestrichelt, Behörden-Farbe» und
+  «Ja, so bauen»):
+  - Im Drittel-Haus steht der mögliche Beitrag **oben in der Füllung, schraffiert und gestrichelt in Zwetschge**
+    (Behörden). Er gilt immer als «bis zu», gross und mittel. Gerechnet wird eine Obergrenze **für diesen Haushalt**,
+    nicht der kantonale Deckel. Heute gibt es sie nur für BS (Merkblatt 01.2026, Ziff. 7/11/13); eine Person mit
+    2 Zimmern kommt auf 929, nicht auf 1'060. GE (Jahreswert, keine Grenze), ZG und BL: keine Zahl im Haus.
+  - Daneben das **Glas der IPV** (`Pegel`, `nurGlas`) für Einkommen gegen Grenze, nur wo die Grenze eine Zahl ist.
+    Dieselbe Frage bekommt dieselbe Form, also kein neues Haus.
+  - Die **Tonne ist grau gefüllt** (Behörden-Zwetschge, `Pegel` mit `fuellFarbe`). Stebler Studios: «grau gefüllt».
+  - **«möglich» ist ein Wegweiser, der ganz der Knopf ist**: Pfosten und Pfeil-Schild in `skyDeep` (Blau =
+    informieren), darauf das Zeichen des Werkzeugs «Mietzins» und «möglich: Mietbeiträge prüfen». Stebler Studios
+    11.11.2026: «die Kombo von dem jetzt und dem vorher». Das Schild ist ein Bild hinter einem rechteckigen Knopf,
+    damit der Fokusring sichtbar bleibt. Er steht **rechts neben der Tonne** auf demselben Boden, der Text bricht im Schild um. Im Kapitel führt er ins
+    Werkzeug, im Werkzeug zur kantonalen Stelle. Er steht nur, wenn das Einkommen unter der Grenze liegt, und sagt nie
+    «Anspruch».
+  - Darunter die **Kachelkarte** der 26 Kantone, **jeder Kanton ein kleines Haus** (Matrix §5, C3; Stebler Studios:
+    «einzelne kleine Häuser»). Gefüllt heisst Programm erfasst, leer heisst unklar, nie «gibt es nicht».
+  - Eine Rechnung: `mietzinsEinschaetzung`. Kapitel Wohnen gross, Werkzeug «Mietzins» mittel. Wächter:
+    `wohnenMietzinsSzene.test.js`.
+  **Ihr Haus in der Strasse** (11.11.2026, Stebler Studios «dieses Haus in die Stadt … das was heute Ihre Miete ist
+  ersetzen», «ja genau»): In der Häuserzeile ist Ihr Haus das **Drittel-Haus klein**. Die Höhe ist Ihre Miete gegen
+  Region und Schweiz, darin die Füllung (Anteil am Einkommen) und die Drittel-Linie, Rosé darüber, ohne «!». Die
+  Drittel-Linie quer über die Strasse entfällt; Satz und aria-Label bleiben. Ohne Einkommen bleibt Ihr Haus gefüllt
+  wie bisher. Gilt in Kapitel, Mietzins, Budget und Kachel (`drittel` = `wohnkostenRechnung`). Wächter:
+  `wohnenStrasse.test.js`.
+  **Die Nachbarn** (11.11.2026, Skizze B «A + Beträge»): Gross (Kapitel, 256) ist das Regionshaus das Haus Ihres
+  Kantons von der Mietbeiträge-Karte, hellgrün mit Kürzel. Das Dach behält die Lage-Farbe. Das Schweizer Haus trägt
+  gestrichelt «CH». Die Beträge stehen direkt unter den Häusern («erst sehen, dann lesen»), die Legenden-Zeilen
+  entfallen dort. Mittel (Mietzins, Budget) bleibt bei den Legenden-Zeilen, weil Kürzel und Beträge dort unter 13 px
+  bzw. zu eng wären.
+  **Das Vergleichshaus, gross** (11.11.2026, Stebler Studios: «Kantonshaus, Schweizer Haus und das internationale zu
+  einem vereinen, mit Farben und Linien, Fahnen in jeden Stock, die Tür darf die Tonne selbst sein»; Abnahme «ja»).
+  Es ersetzt das Kantonshaus mit Fahne/Tür (ebenfalls 11.11.) und das Schweizer Haus:
+  - **Ein Haus neben Ihrem.** Jeder Vergleich ist ein Stock auf derselben Franken-Skala: Kanton durchgezogen in der
+    Lage-Farbe, Schweiz gestrichelt grau. Die Fahne steht am Stock («ZG 1'875», «CH Ø 1'446»).
+  - **Die Tür ist die Tonne:** eine Tür mit Rundbogen, grau (Behörden) gefüllt nach Einkommen gegen Grenze, die Grenze
+    als blaue Strichlinie. Ohne Programm ist es eine schlichte Tür. Im Kapitel gibt es danach keine eigene Tonne mehr.
+  - **Der Wegweiser «möglich»** steht unter der Tür, der Pfosten zeigt hinauf.
+  - **Unter den Häusern** steht nur noch Ihr Betrag.
+  - **EU als Stock** (gepunktet blau, Fahne «EU −53 %»): abgeleitet aus dem Schweizer Schnitt und dem Eurostat-
+    Preisniveau für Wohnen und Energie (prc_ppp_ind_1, A0104, 2025; `data/wohnenInternational.js`). Die Fahne zeigt
+    Prozent, nie Franken. Der Satz unter der Strasse sagt «abgeleitet, keine gemessenen Wohnungspreise» und nennt die
+    Nachbarländer.
+  - **Fahne am Kanton-Stock** («Sie −20 %», aus `lageZurRegion`, Rand in der Lage-Farbe), aussen rechts. Läge sie im
+    Weg des Wegweisers, rückt sie ins Haus.
+  - **Der Wegweiser «möglich ›» steht in der Strasse** rechts vom Vergleichshaus, Pfosten auf dem Boden, auch auf dem
+    Handy; der ganze Satz steht im Vorlesetext. Die Tür sitzt rechts im Haus.
+  - Die Strasse gross ist 170 Einheiten breit (330 px), die Schrift 7 Einheiten: 13 px auch bei 375 px Bildschirm.
+  - Mittel (Mietzins, Budget) bleibt bei drei kleinen Häusern.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
   klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
   trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.

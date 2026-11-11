@@ -6663,6 +6663,29 @@ export default {
     fieldSuggest: { sie: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pudais Vus deselecziunar la cuvrida d’accident da la cassa.', du: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pos ti deselecziunar la cuvrida d’accident da la cassa.' },
     fieldUnter8: { sie: 'Sut 8 uras l’emna na As assicurescha la plazza betg cunter accidents en il temp liber. Tegnai la cuvrida d’accident tar la cassa da malsauns.', du: 'Sut 8 uras l’emna na t’assicurescha la plazza betg cunter accidents en il temp liber. Tegna la cuvrida d’accident tar la cassa da malsauns.' },
   },
+  // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
+  strasse: { eigen: { sie: 'Vus', du: 'ti' }, ausprobiert: 'empruvà', region: 'regiun', regionKanton: 'regiun {kanton}', schweiz: 'Svizra' },
+  // Wohnen international: Schild neben dem Vergleichshaus (11.11.2026). Eurostat-Preisniveau, kein Mietvergleich.
+  wohnenInternational: {
+    titel: 'Abitar ed energia',
+    unter: 'Svizra cumparada cun …',
+    teurer: '{name}: en Svizra {pct} % pli char',
+    guenstiger: '{name}: en Svizra {pct} % pli bunmartg',
+    namen: { EU: 'media UE', DE: 'Germania', AT: 'Austria', FR: 'Frantscha', IT: 'Italia' },
+    satz: "L'auzada «UE» è derivada: la media svizra al nivel dals pretschs per abitar ed energia da la media UE (electricitad, gas ed aua cumpigliads). I n'èn nagins pretschs mesirads. Pajais vischins: Germania {DE} %, Austria {AT} %, Frantscha {FR} %, Italia {IT} %.",
+    quelle: 'Funtauna: [[Eurostat, nivel dals pretschs abitar ed energia 2025 (prc_ppp_ind_1)|https://ec.europa.eu/eurostat/databrowser/view/prc_ppp_ind_1/default/table]] (verifitgà en november 2026).',
+  },
+  mietzinsSzene: {
+    titel: 'Contribuziuns al fitg',
+    beitragLegende: "puntignà: quai che il chantun pudess surpigliar al maximum, fin CHF {betrag} il mais. L'import effectiv quinta il chantun.",
+    schild: 'pussaivel',
+    cta: 'pussaivel: verifitgar las contribuziuns al fitg',
+    ctaStelle: 'pussaivel: al servetsch chantunal',
+    ctaKurz: 'pussaivel',
+    karteAria: { sie: 'Chantuns cun in program enconuschent: {liste}. Voss chantun: {kanton}.', du: 'Chantuns cun in program enconuschent: {liste}. Tes chantun: {kanton}.' },
+    karteLegende: { sie: 'emplenì: program enconuschent · vid: nunclera, per plaschair verifitgar · ur gross: Voss chantun', du: 'emplenì: program enconuschent · vid: nunclera, per plaschair verifitgar · ur gross: tes chantun' },
+  },
   mietzins: {
     title: 'Contribuziuns a la fittanza:',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
