@@ -482,7 +482,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       } : {}),
       sub: netz.st.touched ? t('instrumente.schildCount', { covered: netzZahl.covered, total: netzZahl.total }) : setup,
       glyph: netz.st.touched ? h(NetzSchild, { palette, t, versicherungen: v, ...netzOpts, groesse: 'klein' }) : null,
-      onClick: () => onNavigate('chapter', 3),
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')),
     },
   ];
 

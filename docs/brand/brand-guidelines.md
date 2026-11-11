@@ -270,6 +270,10 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   `gross` 256 mit Ablesesatz); die eigene Kleinzeichnung `miniGauge` ist aufgelöst.
 - Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Netz-Schild auf
   KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
+- **Versicherungen, 11.11.2026 — erst die Rechnung:** die KK-Last (Prämie ÷ Monatseinkommen) rechnet nur
+  `kkLastAnteil` (`src/KKLastCard.jsx`); Karte, Spiegel in Finanzen und Kapitel rufen sie (B-R4, Wächter
+  `kkLastAnteil.test.js`). Der Weg ins Kapitel folgt `CHAPTER_KEYS`, nie einer festen Zahl. Das alte Schild liegt
+  in `components/_archiv/` mit `_WAS-IST-DAS.md`; `data/schutzschild.js` rechnet weiter.
 
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
 «Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
