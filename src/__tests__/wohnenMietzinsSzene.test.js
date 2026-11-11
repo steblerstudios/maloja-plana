@@ -94,6 +94,10 @@ describe('Stebler Studios 11.11.2026: Häuser, grau, Knopf', () => {
     expect(kapitel).toMatch(/data-teil="mietzins-cta"[^>]*><svg aria-hidden="true"[^>]*><path d="M0 0H92L100 22L92 44H0Z"/); // das Pfeil-Schild
     expect(kapitel).toMatch(/<span aria-hidden="true" role="img"[^>]*><svg/); // das Zeichen ist wirklich da
     expect(kapitel).toContain('data-teil="mietzins-wegweiser"');
+    // rechts neben der Tonne, ohne Umbruch: dieselbe Reihe, Tonne zuerst, die Reihe bricht nicht um
+    const reihe = kapitel.slice(kapitel.indexOf('data-teil="mietzins-reihe"'));
+    expect(reihe).toMatch(/^data-teil="mietzins-reihe" style="[^"]*flex-wrap:nowrap/);
+    expect(reihe.indexOf('mietzins-glas')).toBeLessThan(reihe.indexOf('mietzins-wegweiser'));
     expect(werkzeugText()).toContain(t('mietzinsSzene.ctaStelle')); // das Zeichen ist wirklich da
     const werkzeug = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
     expect(werkzeug).toMatch(/<a [^>]*href="https:\/\/zg\.ch[^"]*"[^>]*data-teil="mietzins-cta"|<a [^>]*data-teil="mietzins-cta"[^>]*href="https:\/\/zg\.ch/);

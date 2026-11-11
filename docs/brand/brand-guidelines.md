@@ -314,7 +314,7 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   - **«möglich» ist ein Wegweiser, der ganz der Knopf ist**: Pfosten und Pfeil-Schild in `skyDeep` (Blau =
     informieren), darauf das Zeichen des Werkzeugs «Mietzins» und «möglich: Mietbeiträge prüfen». Stebler Studios
     11.11.2026: «die Kombo von dem jetzt und dem vorher». Das Schild ist ein Bild hinter einem rechteckigen Knopf,
-    damit der Fokusring sichtbar bleibt. Im Kapitel führt er ins
+    damit der Fokusring sichtbar bleibt. Er steht **rechts neben der Tonne** auf demselben Boden, der Text bricht im Schild um. Im Kapitel führt er ins
     Werkzeug, im Werkzeug zur kantonalen Stelle. Er steht nur, wenn das Einkommen unter der Grenze liegt, und sagt nie
     «Anspruch».
   - Darunter die **Kachelkarte** der 26 Kantone, **jeder Kanton ein kleines Haus** (Matrix §5, C3; Stebler Studios:

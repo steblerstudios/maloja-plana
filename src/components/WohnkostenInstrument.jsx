@@ -293,8 +293,8 @@ export const Kachelkarte = ({ palette, t, kanton, gefuellt, isDarkMode }) => {
 const MoeglichKnopf = ({ palette, t, onNavigate, url }) => {
   const h = React.createElement;
   const stil = {
-    position: 'relative', display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px',
-    padding: '0 ' + (space.lg + space.xs) + 'px 0 ' + space.ms + 'px', border: 'none', background: 'none', cursor: 'pointer',
+    position: 'relative', display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', maxWidth: '100%',
+    padding: space.xs + 'px ' + (space.lg + space.xs) + 'px ' + space.xs + 'px ' + space.ms + 'px', textAlign: 'left', lineHeight: leading.tight, border: 'none', background: 'none', cursor: 'pointer',
     fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.semi, color: palette.surface, textDecoration: 'none',
   };
   const schild = h('svg', { 'aria-hidden': 'true', viewBox: '0 0 100 44', preserveAspectRatio: 'none', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 0 } },
@@ -306,7 +306,7 @@ const MoeglichKnopf = ({ palette, t, onNavigate, url }) => {
     ? h('button', { type: 'button', 'data-teil': 'mietzins-cta', onClick: () => onNavigate('mietzins'), style: stil }, inhalt)
     : url ? h(ExternerLink, { t, href: url, 'data-teil': 'mietzins-cta', style: stil }, inhalt) : null;
   if (!knopf) return null;
-  return h('div', { 'data-teil': 'mietzins-wegweiser', style: { display: 'inline-flex', flexDirection: 'column', animation: 'fadeIn ' + duration.slow + 'ms ' + ease } },
+  return h('div', { 'data-teil': 'mietzins-wegweiser', style: { display: 'inline-flex', flexDirection: 'column', flex: '0 1 auto', minWidth: 0, animation: 'fadeIn ' + duration.slow + 'ms ' + ease } },
     knopf,
     h('span', { 'aria-hidden': 'true', style: { width: '2px', height: space.lg + 'px', marginLeft: space.lg + 'px', background: palette.text } }));
 };
@@ -325,10 +325,12 @@ export const MietzinsSzene = ({ palette, t, data, isDarkMode, onNavigate, kanton
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 0' };
   return h('section', { 'data-teil': 'mietzins-szene', style: { margin: space.lg + 'px 0' } },
     h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' } }, t('mietzinsSzene.titel')),
-    (zeigtHaus || glas || moeglich) && h('div', { style: { display: 'flex', alignItems: 'flex-end', gap: space.md + 'px', flexWrap: 'wrap' } },
+    // Wegweiser rechts neben der Tonne, beide auf demselben Boden (Stebler Studios 11.11.2026, «rechts neben der Tonne»):
+    // keine Umbrüche; der Text im Schild bricht selbst um, wenn es eng wird.
+    (zeigtHaus || glas || moeglich) && h('div', { 'data-teil': 'mietzins-reihe', style: { display: 'flex', alignItems: 'flex-end', gap: space.md + 'px', flexWrap: zeigtHaus ? 'wrap' : 'nowrap' } },
       zeigtHaus && h('div', { style: { flex: '0 1 ' + INSTRUMENT_GROESSE[groesse] + 'px' } },
         h(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto, beitrag, fuell: bereichFillColor('wohnen', isDarkMode) || palette.sage, groesse })),
-      glas && h('div', { 'data-teil': 'mietzins-glas' }, h(Pegel, { palette, t, state: glas, nurGlas: true, fuellFarbe: bereichFillColor('behoerden', isDarkMode) || palette.mid })),
+      glas && h('div', { 'data-teil': 'mietzins-glas', style: { flex: 'none' } }, h(Pegel, { palette, t, state: glas, nurGlas: true, fuellFarbe: bereichFillColor('behoerden', isDarkMode) || palette.mid })),
       moeglich && h(MoeglichKnopf, { palette, t, onNavigate, url: e.info?.url })),
     beitrag && h(BeitragLegende, { palette, t, beitrag }),
     !ohneSatz && h('p', { style: { margin: space.sm + 'px 0', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, satz),
