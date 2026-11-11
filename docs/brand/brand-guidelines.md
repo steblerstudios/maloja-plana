@@ -278,11 +278,14 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   dieselben Marken wie das Barometer als Häuser: Ihr Haus gefüllt (= Füllung), Region mit Dach in der Farbe des
   Punkts (= Ihre Lage), Schweiz gestrichelt (= Strich), das Drittel als Linie quer über die Strasse mit «!» (= Schwelle,
   nur wo A fehlt: Mietzins, Budget). Kapitel Wohnen: A + B gross 256; Mietzins und Budget: B mittel 128; Übersicht:
-  beide klein 64 (eigener Schritt). Lohn und Prämie bleiben Balken. Eine Rechnung: `data/wohnkosten.js`. Bauteile:
+  beide klein 64. Lohn und Prämie bleiben Balken. Eine Rechnung: `data/wohnkosten.js`. Bauteile:
   `DrittelHaus` (`WohnkostenInstrument.jsx`), `RegionalBarometer` mit `form: 'haeuser'`. Wächter: `wohnenHaus.test.js`.
   **Budget** (11.11.2026): Gruppe «Wohnen» aufgeklappt mit Drittel-Haus mittel (nur ohne Partner/in, dann gleich der
   Gruppen-Prozentzahl) und dem BFS-Richtwert als zwei Häuser klein (`HaeuserVergleich`: Sie gefüllt, vergleichbarer
   Haushalt mit Dach in der Farbe Ihrer Lage); der Wohn-Hinweis folgt dem Drittel. Wächter: `budgetWohnenHaus.test.js`.
+  **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
+  klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
+  trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.
 
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
 «Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
