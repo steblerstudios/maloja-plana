@@ -22,7 +22,7 @@ vi.mock('react', async (orig) => {
   return { ...echt, default: { ...echt.default, useState, useRef, useEffect }, useState, useRef, useEffect };
 });
 
-const { useRueckgaengig, wiederEinsetzen, nochEntfernt, RUECKGAENGIG_MS } = await import('../hooks/useRueckgaengig.js');
+const { useRueckgaengig, wiederEinsetzen, nochEntfernt } = await import('../hooks/useRueckgaengig.js');
 const { RueckgaengigMeldung } = await import('../components/RueckgaengigMeldung.jsx');
 
 const neu = () => { zustand.slots = []; zustand.effekte = []; };
@@ -84,38 +84,25 @@ describe('useRueckgaengig', () => {
     expect(render().entfernt).toBe(null);
   });
 
-  it('nach rund fünf Sekunden ist die Meldung weg — und Rückgängig tut nichts mehr', () => {
+  // WCAG 2.2.1 (Entscheid Stebler Studios 11.11.2026): keine Zeitgrenze mehr — vorher nach fünf Sekunden weg.
+  it('die Meldung bleibt stehen, auch nach langer Zeit — Rückgängig wirkt weiter', () => {
     render().merke({ item: 'x', index: 0, text: 'x' });
-    vi.advanceTimersByTime(RUECKGAENGIG_MS - 1);
-    expect(render().entfernt).not.toBe(null);
-    vi.advanceTimersByTime(1);
-    expect(render().entfernt).toBe(null);
+    vi.advanceTimersByTime(10 * 60 * 1000);
+    expect(render().entfernt).toMatchObject({ item: 'x' });
     const zurueck = vi.fn();
     render().rueckgaengig(zurueck);
-    expect(zurueck).not.toHaveBeenCalled();
+    expect(zurueck).toHaveBeenCalledWith({ item: 'x', index: 0, text: 'x' });
   });
 
-  it('ein zweites Löschen ersetzt das erste und startet die fünf Sekunden neu', () => {
+  it('kein Wecker läuft', () => {
     render().merke({ item: 'a', index: 0, text: 'a' });
-    vi.advanceTimersByTime(4000);
-    render().merke({ item: 'b', index: 1, text: 'b' });
-    vi.advanceTimersByTime(4000);
-    expect(render().entfernt).toMatchObject({ item: 'b' });
-  });
-
-  it('der Wecker eines zurückgeholten Eintrags löscht keine spätere Meldung', () => {
-    render().merke({ item: 'a', index: 0, text: 'a' });
-    render().rueckgaengig(() => {});
-    vi.advanceTimersByTime(2000);
-    render().merke({ item: 'b', index: 0, text: 'b' });
-    vi.advanceTimersByTime(3500);
-    expect(render().entfernt).toMatchObject({ item: 'b' });
-  });
-
-  it('beim Aushängen bleibt kein Wecker stehen', () => {
-    render().merke({ item: 'a', index: 0, text: 'a' });
-    zustand.effekte.forEach(f => { const weg = f(); if (typeof weg === 'function') weg(); });
     expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it('ein zweites Löschen ersetzt das erste', () => {
+    render().merke({ item: 'a', index: 0, text: 'a' });
+    render().merke({ item: 'b', index: 1, text: 'b' });
+    expect(render().entfernt).toMatchObject({ item: 'b' });
   });
 });
 
@@ -125,7 +112,7 @@ describe('RueckgaengigMeldung', () => {
   const zeig = (p) => renderToStaticMarkup(React.createElement(RueckgaengigMeldung, { palette, t, onRueckgaengig: () => {}, ...p }));
 
   it('ohne Eintrag: nur die leere Live-Region (damit die Ansage beim Erscheinen klappt)', () => {
-    expect(zeig({ entfernt: null })).toBe('<div role="status" aria-live="polite"></div>');
+    expect(zeig({ entfernt: null })).toBe('<div tabindex="-1" role="status" aria-live="polite"></div>');
   });
   it('mit Eintrag: Name und Knopf, Knopf mit eigener Textfarbe (Dunkelmodus)', () => {
     const html = zeig({ entfernt: { item: {}, index: 0, text: 'Zahnarzt' } });
@@ -133,13 +120,44 @@ describe('RueckgaengigMeldung', () => {
     expect(html).toMatch(/<button type="button" style="[^"]*color:[^"]*">common.rueckgaengig<\/button>/);
   });
   it('ansagen: false — keine zweite Live-Region in einer, die schon ansagt', () => {
-    expect(zeig({ entfernt: null, ansagen: false })).toBe('');
+    expect(zeig({ entfernt: null, ansagen: false })).toBe('<div tabindex="-1"></div>');
     expect(zeig({ entfernt: { text: 'x' }, ansagen: false })).not.toContain('role="status"');
   });
 });
 
 // Wächter: jede Liste, die auf einen Tipp löscht, führt den Weg zurück. Eine Erlaubnisliste statt
 // Suche nach Mustern — wer eine neue Lösch-Liste baut, trägt sie hier ein.
+// WCAG 2.4.3: nach «Rückgängig» nimmt der immer vorhandene Rahmen den Fokus.
+describe('RueckgaengigMeldung — Fokus nach Rückgängig', () => {
+  it('der Knopf ruft erst das Zurücklegen, dann den Fokus auf den Rahmen', () => {
+    const quelle = fs.readFileSync(path.join(__dirname, '..', 'components', 'RueckgaengigMeldung.jsx'), 'utf8');
+    expect(quelle).toMatch(/onRueckgaengig\(\);\s*if \(rahmen\.current && rahmen\.current\.focus\) rahmen\.current\.focus\(\);/);
+    expect(quelle).toContain("onClick: zurueck");
+  });
+
+  // a11y-Prüfung 11.11.2026: der Fokus soll nicht auf einem leeren Rahmen liegen.
+  it('danach steht «Zurückgeholt · Name» im Rahmen — angesagt und fokussierbar', () => {
+    const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+    const zeichne = (zurueckgeholt, entfernt = null) => {
+      zustand.slots = [{ current: null }, zurueckgeholt]; zustand.i = 0;
+      return renderToStaticMarkup(React.createElement(RueckgaengigMeldung, { palette, t: (k) => k, entfernt, onRueckgaengig: () => {} }));
+    };
+    const html = zeichne('Zahnarzt');
+    expect(html).toMatch(/^<div tabindex="-1" role="status" aria-live="polite"><div data-zurueckgeholt="true"/);
+    expect(html).toContain('common.zurueckgeholt · Zahnarzt');
+    // Eine neue Löschung geht vor: dann wieder «Entfernt» mit Knopf.
+    expect(zeichne('Zahnarzt', { item: {}, index: 0, text: 'Bank' })).toContain('common.entfernt · Bank');
+    expect(zeichne('Zahnarzt', { item: {}, index: 0, text: 'Bank' })).not.toContain('zurueckgeholt');
+  });
+
+  it('«Zurückgeholt» gibt es in allen Sprachen', async () => {
+    for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
+      const t = (await import(`../i18n/${l}.js`)).default;
+      expect(t.common.zurueckgeholt, l).toBeTruthy();
+    }
+  });
+});
+
 describe('alle Lösch-Listen haben Rückgängig', () => {
   const LISTEN = [
     'MerklisteView.jsx', 'CalendarReminders.jsx', 'KVGLeistungen.jsx', 'Saeule3aTracker.jsx',

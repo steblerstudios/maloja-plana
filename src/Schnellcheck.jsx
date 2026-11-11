@@ -7,7 +7,7 @@ import { Icon } from './IconSystem.jsx';
 import { LeistungsKompass } from './components/LeistungsKompass.jsx';
 import { Pegel } from './components/Pegel.jsx';
 import { PraemienBeleg } from './components/PraemienBeleg.jsx';
-import { hatAusweisFNS } from './data/ausweis.js';
+import { hatAusweisFNS, sozHinweisSchluessel } from './data/ausweis.js';
 import { sozialhilfePegelState } from './data/pegel.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './components/EinkommenFeld.jsx';
 import { praemienBelegState } from './data/praemienBeleg.js';
@@ -79,12 +79,14 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       key: 'soz', view: 'sozialhilfe', color: palette.gold, textColor: palette.goldDeep, // Ast Finanzen (Seiten-Architektur 06.11.2026)
       label: t('nav.sozialhilfe'), monthly: w.monthly, qualitative: w.qualitative,
       // R4: Betrag hängt am Freibetrag — ist er kantonal nicht bestätigt, leise dazusagen.
-      note: w.qualitative ? t(w.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') : t('schnellcheck.sozNote') + (w.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
+      note: (w.qualitative ? t(w.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') : t('schnellcheck.sozNote') + (w.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
         // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — beim Betrag dazusagen.
         + (w.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')
         + (w.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
         + (w.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : '')
-        + (w.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : ''),
+        + (w.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : ''))
+        // Gruppe A L1: ohne Schweizer Pass Folgen für die Bewilligung (AIG Art. 62, 63) — auch beim Weg ohne Betrag.
+        + (sozHinweisSchluessel(data) ? ' ' + t(sozHinweisSchluessel(data)) : ''),
     } : {
       // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
       key: 'el', view: 'ergaenzungsleistungen', color: palette.mid, textColor: palette.mid,

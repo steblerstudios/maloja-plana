@@ -231,5 +231,77 @@ siebenmal neu entschieden werden:
    belassen (Ehrlichkeitsregel im Code), Erklärseite Krankenkasse bleibt bei Versicherungen (Organigramm 07.11.),
    Altersgrenze Kind «18» nach Jahrgang (KVV Art. 91 Abs. 3) nicht am Volltext belegt, Notrufnummern und
    Medikamentenpreise an der Quelle.
+5. **Die übrigen Seiten** (11.11.), im selben Verfahren wie die Kapitel. Inventar aus `ansichtenRegister.js`,
+   `werkzeugRegister.js`, den `view === '…'`-Zweigen in `main.jsx`, den Umleitungen in `hashRouter.js` und `public/`;
+   abgezogen, was die Blätter zu Kapitel 1–7 abdecken. Fünf Gruppen, Reihenfolge A → E. ✅ **11.11.: so** (Stebler
+   Studios: «Ja, mit A anfangen»).
+   A Einstieg & Orientierung (Übersicht, Menü, Suche, «Was steht mir zu?», Schnellcheck, Rucksack, Obstgarten,
+   Onboarding, Rundgang, Hinweis fällige Erinnerungen) · B Ordnen & Unterlagen (Ablage, Was ansteht, Merkliste,
+   Unterlagen drucken mit drei Dossiers, Briefe, Behördenlinks) · C Einstellungen & Vertrauen (Einstellungen mit
+   Benachrichtigungen, Datensicherung, Rechtliches in der App, Beta-Tor, Sperrbildschirm, App installieren, Teilen/Flyer)
+   · D Fachseiten ausserhalb der Kapitel (Stipendien in der App; Erklärseiten Was steht mir zu, Sozialhilfe, Steuern,
+   Prämienverbilligung-Übersicht, Kantone im Vergleich, Krankenkasse «bewegt»; Nachprüfung Kantonsatlas, Politsystem)
+   · E Website & Rahmen (Startseite, Sprach-Startseiten, Rechtliches statisch, 404, Wartung). Nicht dabei: die
+   übersetzten Erklärseiten (Übersetzungs-Prüfung #692) und die 26 IPV-Kantonsseiten (separat geprüft).
+   **Gruppe A · Einstieg & Orientierung** (11.11.): Bild [gruppe-a-einstieg.html](../design/gruppe-a-einstieg.html).
+   Gut: Datenschutz-Aussagen stimmen am Code, drei klare Hinweise auf «Was steht mir zu?». Hoch: L1 Sozialhilfe-Karten
+   und -Weg «ein Recht, kein Entgegenkommen» ohne Hinweis auf die Folgen für die Bewilligung B/L/C (AIG Art. 62 Abs. 1
+   Bst. e, 63 Abs. 1 Bst. c, Fassung 1.11.2026). Mittel: L2 IPV ruht für F/N/S bei Sozialhilfe (AsylG Art. 82a Abs. 7)
+   nur im Schnellcheck Schritt 1 gesagt, L3 Familien-EL ohne Wohnsitzdauer, L4 EL ohne Karenzfrist und Vermögen, L5 Reka
+   (Alleinerziehende, keine Anreise), L6 «was Ihnen zusteht» im Onboarding, L7 Schnellcheck Schritt 3 ohne Hinweis, L8
+   «sicher ablegen», L9 AHV-Mindestbeitrag nur bis 25. Gestaltung A fünf Eingänge zu «Was steht mir zu?» und drei
+   IPV-Sätze, B vier Ordnungen (Kapitel, Werkzeug-Gruppen, Rucksack, Obstgarten) mit verschiedenen Zahlen, C zwei
+   Fortschrittszahlen (62 % / 72 %), D drei Ebenen auf dem ersten Bildschirm. Sprache S1–S7. Onboarding nur am Code
+   (Beta-Tor). Zweig `befund/gruppe-a-einstieg` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **11.11.: Inhalt und Sprache, dazu D** (Stebler Studios: «Nur Inhalt und Sprache», dann «d aus gestaltung darfst
+   du auch gerne noch dazu machen bitte (a, b & c mal notieren bitte damit wirs nochmals anschauen aber weiter machen
+   können)»). Gebaut im selben Zweig: L1 Satz zur Bewilligung an allen Sozialhilfe-Karten und -Wegen (ohne Schweizer
+   Pass), L2 «IPV ruht» für F/N/S, L3–L9, das Kleine, S1–S7, D (Startbildschirm-Karte erst nach dem Rundgang,
+   «Frühe Version» als Zeile). Test `gruppeAEinstieg.test.js`, Startbündel 64 979 / 65 000 Bytes.
+   rechts-pruefer nach dem Bau eingearbeitet. **Blocker:** der Satz zur Bewilligung erschien auch bei N und S, für die
+   AIG Art. 62/63 nicht gilt (keine AIG-Bewilligung; Widerruf S nach AsylG Art. 78 ohne Sozialhilfe), und bei F in
+   falscher Form → N, S, G ohne Satz, F mit eigenem Satz (Familiennachzug AIG Art. 85c Abs. 1 Bst. c, Bewilligung
+   Art. 84 Abs. 5), Nationalität «Schweiz» schliesst aus. Nachgeschärft: SERAFE en, AHV «bis Ende des Jahres»,
+   Familienzulagen ATSG Art. 24 (fünf Jahre) und ohne EL, Mutterschaftsbeihilfe «teils» und Kind unter zwei Jahren,
+   EL bei Beeinträchtigung mit IV-Rente oder Hilflosenentschädigung, Reka 200 Franken nur Familienferien,
+   `kompassIdle`. Vorgemerkt: S-Ausweise mit Anspruch auf Bewilligung ab März 2027 (AsylG Art. 74 Abs. 2).
+   Entwurfs-PR #845.
+   **Gruppe B · Ordnen & Unterlagen** (11.11.): Bild [gruppe-b-unterlagen.html](../design/gruppe-b-unterlagen.html).
+   Ablage, Was ansteht, Merkliste, Unterlagen drucken (Lebensmappe, Behörden-, Notfall-Dossier), 13 Briefvorlagen,
+   Offizielle Links. Gut: Rechtsvorschlag, Einsprache gegen die Kündigung, Mahnung, Todesfall wörtlich am Gesetz; keine
+   erfundenen Aufbewahrungsfristen; 127 Links, keiner tot. Hoch: L1 Mietkündigung ohne Zustimmung des Ehegatten bzw. der
+   eingetragenen Partnerin oder des Partners bei der Familienwohnung — ohne sie nichtig (OR Art. 266m, 266o); der Hinweis
+   wird beim Drucken ausgeblendet. Mittel: L2 Kassenwechsel-Brief kündigt ab 1.12. auf einen unmöglichen Termin
+   (KVG Art. 7 Abs. 2) — vor dem 1. Dezember bauen, L3 Ausstände und Art. 7 Abs. 5 fehlen, L4 Kalender-Vorlage
+   «Steuererklärung Frist» auf heute + 120 Tage, L5 Kassen-Vorlage ohne Werktag, L6 «Rechnung beanstanden» ohne
+   Verfügung (ATSG Art. 49, 51), L7 «sicher» in der Ablage, L8 Organspende-Register gibt es noch nicht. Gestaltung A
+   Brief antippen: nichts geschieht (Formular 3700 px tiefer), B Bücherregal mit senkrechter Schrift, Kantonslinks erst
+   bei 1250 px, C Was ansteht 4 px zu breit, Löschen über den Tagesstreifen, D Ablage-Titel bricht falsch. Sprache S1–S7
+   (it-Links deutsch). Frage zu den Herzensempfehlungen. Zweig `befund/gruppe-b-unterlagen`, gestapelt auf #845, nur
+   Befund, gebaut ist nichts.
+   ✅ **11.11.: alles ausser dem Bücherregal** (Stebler Studios: «alles so bauen bis aufs bücherregal das müssen wir
+   nochbesprechen»). Gebaut im selben Zweig: L1 zweite Unterschrift «Zustimmung … (OR Art. 266m)» je nach Zivilstand,
+   L2 Kassenwechsel nennt das Jahr und springt nach der Frist aufs nächste, L3–L8, Kleines, Gestaltung A (Brief antippen
+   springt zum Formular), C (375 px, Löschen am Eintrag mit Rückgängig — ändert Entwurf G vom 27.10., Reiter «Termine»),
+   D («Dokumenten-ablage»), Sprache S1–S7 (it-Links, Grussformeln, «so früh wie möglich»). rechts-pruefer nach dem Bau:
+   **Blocker** — der Ablage-Satz versprach eine Tresor-Sperre, die nicht eingebaut ist → «im Browser-Speicher
+   unverschlüsselt»; dazu sieben Nachschärfungen. Test `gruppeBUnterlagen.test.js`. **Zum Besprechen:** Bücherregal (B).
+   Nebenbefund: Landschaftsband der Kapitelseiten −24 px, vermutlich 4 px Überbreite.
+   **Notiert, nicht gebaut — gemeinsam ansehen:** A ein Eingang zu «Was steht mir zu?» und ein IPV-Satz · B vier
+   Ordnungen (angleichen oder den 7 Kapiteln folgen) · C eine Fortschrittszahl · Suchwörter (Register im Startbündel).
+   **Restrunde 11.11. abends** (Entscheidblatt mit Handy-Bildern 375 px vom gebauten Stand `c7bffc56`:
+   `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). ⏸️ **Gruppen A, B, C, D, E: nach dem nächsten
+   Deploy** (Stebler Studios: «halte diese situation zu erst mal so fest … und dann kommen wir nach dem nächsten deploy
+   wieder auf dieses dokument zurück und können entscheiden»). Empfohlen und dort wieder aufzunehmen — A: ein Eingang zu
+   «Was steht mir zu?» und ein IPV-Satz aus `ipvAnzeige`; vier Ordnungen nur angleichen (Neuordnung nach Kapiteln
+   später, eigener Entscheid); eine Fortschrittszahl aus `gesamtVollstaendigkeit`; Suchwörter erst nach dem einen
+   Eingang, wenn das Startbündel Platz hat. B: Bücherregal mit «Ihr Kanton» zuerst und liegender Schrift; Löschen am
+   Eintrag (Änderung von Entwurf G) bestätigen; «Nexter» ohne Link, bis die richtige Adresse da ist —
+   `crewz.io/de/nexter/` heisst heute (gemessen 11.11.) «Roved – das Trinkspiel für unvergessliche Abende».
+   ✅ **Quer: «Alle drei wie empfohlen».** Q1 Landschaftsband der Kapitelseiten `margin: '0 -20px'` wie main
+   (gemessen vorher 379 px, nachher alle sieben Kapitel 375 px). Q2 Wächter: `activateTresor` wird nirgends
+   aufgerufen, und kein Satz zur Ablage sagt in einer der fünf Sprachen Verschlüsselung zu (Erlaubnisliste der
+   gelesenen Sätze). Test `querBandTresor.test.js`, Mutationsprobe beider Teile rot aus dem richtigen Grund. Q3 Test
+   «Stand der Lebenslagen» (`gruppeAEinstieg.test.js`) bleibt: er wird am 1.1.2027 rot, das ist der Wecker; Nachprüfung 16.12.2026.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.

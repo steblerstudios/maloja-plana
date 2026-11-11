@@ -9,11 +9,14 @@ import path from 'path';
 const src = fs.readFileSync(path.join(__dirname, '..', 'BriefGenerator.jsx'), 'utf8');
 
 describe('Brief-Vorwahl springt zum Formular', () => {
-  it('der Sprung hängt nur an der Vorwahl, nicht an der eigenen Kartenwahl', () => {
-    const effekt = src.slice(src.indexOf('const formAnfangRef'), src.indexOf('}, [initialTemplate]);', src.indexOf('const formAnfangRef')) + '}, [initialTemplate]);'.length);
-    expect(effekt).toContain('if (!initialTemplate) return');
+  // Gruppe B Gestaltung A (Entscheid Stebler Studios 11.11.2026): seither springt auch die eigene Kartenwahl —
+  // auf dem Handy stand das Formular rund 3700 px unter der Liste, nach dem Antippen geschah sichtbar nichts.
+  it('der Sprung hängt an der Vorwahl und an der eigenen Kartenwahl', () => {
+    const ende = '}, [initialTemplate, sprung]);';
+    const effekt = src.slice(src.indexOf('const formAnfangRef'), src.indexOf(ende, src.indexOf('const formAnfangRef')) + ende.length);
+    expect(effekt).toContain('if (!initialTemplate && !sprung) return');
     expect(effekt).toContain('scrollIntoView');
-    expect(effekt).toMatch(/\}, \[initialTemplate\]\);$/);
+    expect(effekt.endsWith(ende)).toBe(true);
   });
   it('respektiert «weniger Bewegung» (Einstellung und System)', () => {
     expect(src).toMatch(/or5_reducemotion[\s\S]{0,200}prefers-reduced-motion[\s\S]{0,120}behavior: reduce \? 'auto' : 'smooth'/);
