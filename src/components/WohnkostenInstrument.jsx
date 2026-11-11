@@ -181,7 +181,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
     programm: mz.hasProgram,
     stand: mz.hasProgram ? mietzinsPegelState({ annualIncome: mz.annualIncome, incomeLimit: mz.incomeLimit }) : null,
     farbe: bereichFillColor('behoerden', isDarkMode) || palette.mid,
-    schild: mz.assessment?.key === 'likely' ? React.createElement(MoeglichKnopf, { palette, t, onNavigate, url: mz.info?.url }) : null,
+    schild: mz.assessment?.key === 'likely' ? React.createElement(MoeglichKnopf, { palette, t, onNavigate, url: mz.info?.url, kurz: true }) : null,
   } : null;
   const zeile = { display: 'flex', justifyContent: 'space-between', gap: space.md + 'px', padding: '8px 0', fontSize: text.sm, color: palette.text };
   const kapH = { margin: space.lg + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
@@ -215,8 +215,6 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
         form: 'haeuser', maxBreite: INSTRUMENT_GROESSE.gross, drittel: r, kanton: canton,
         tuer: strassenTuer,
         ausland: auslandStoecke(vergleich.national),
-        // Der blaue Wegweiser «möglich» steht rechts neben dem Vergleichshaus, sein Pfosten auf der Strasse.
-        daneben: strassenTuer && strassenTuer.schild ? React.createElement('div', { 'data-teil': 'wegweiser-neben-haus', style: { alignSelf: 'flex-end', marginBottom: UNTER_BODEN + 'px' } }, strassenTuer.schild) : null,
         userLabel: ausprobiert ? t('wohnenInstrument.ausprobierteMiete', { amount: zahl(r.netto) }) : undefined,
       }),
       React.createElement(InternationalHinweis, { palette, t })
@@ -267,10 +265,6 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
   );
 };
 
-// Der Pfosten des Wegweisers endet auf dem Boden der Strasse: unter dem Boden liegen noch der Bildrand (90 − 84 von 132
-// bei 256 px), die Betrags-Zeile (4 + 40) und der Abstand der Strasse (8). Steht der Wegweiser darunter (schmal), gibt
-// es keine Lücke, weil die Spalte keine feste Höhe hat.
-const UNTER_BODEN = Math.round((90 - 84) / 132 * INSTRUMENT_GROESSE.gross + space.xs + 40 + space.sm);
 // Der Satz und die Quelle zum EU-Stock stehen unter der Strasse: abgeleitet, keine gemessenen Preise in Franken.
 export const InternationalHinweis = ({ palette, t }) => React.createElement('div', { 'data-teil': 'international-hinweis', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 ' + space.sm + 'px' } },
   React.createElement('p', { style: { margin: 0 } }, t('wohnenInternational.satz', Object.fromEntries(['DE', 'AT', 'FR', 'IT'].map((c) => {
@@ -318,7 +312,8 @@ export const Kachelkarte = ({ palette, t, kanton, gefuellt, isDarkMode }) => {
 // Werkzeug zur kantonalen Stelle. Nur unter der Grenze; sagt nie «Anspruch». Das Schild ist ein Bild hinter dem Knopf,
 // der Knopf selbst bleibt rechteckig — so bleibt der Fokusring sichtbar. Blau = informieren; Schrift in der Flächenfarbe
 // (hell 5.4:1 auf skyDeep, dunkel umgekehrt).
-export const MoeglichKnopf = ({ palette, t, onNavigate, url, pfostenOben = false }) => {
+// `kurz` (in der Strasse): das Schild sagt «möglich ›», der ganze Satz steht im Vorlesetext (aria-label).
+export const MoeglichKnopf = ({ palette, t, onNavigate, url, pfostenOben = false, kurz = false }) => {
   const h = React.createElement;
   const stil = {
     position: 'relative', display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', maxWidth: '100%',
@@ -329,10 +324,11 @@ export const MoeglichKnopf = ({ palette, t, onNavigate, url, pfostenOben = false
     h('path', { d: 'M0 0H92L100 22L92 44H0Z', fill: palette.skyDeep }));
   const inhalt = [schild,
     h(Icon, { key: 'i', name: ansichtIkon('mietzins'), size: 18, style: { position: 'relative', zIndex: 1 } }),
-    h('span', { key: 't', style: { position: 'relative', zIndex: 1 } }, t(onNavigate ? 'mietzinsSzene.cta' : 'mietzinsSzene.ctaStelle'))];
+    h('span', { key: 't', style: { position: 'relative', zIndex: 1, whiteSpace: kurz ? 'nowrap' : undefined } }, kurz ? t('mietzinsSzene.ctaKurz') + ' ›' : t(onNavigate ? 'mietzinsSzene.cta' : 'mietzinsSzene.ctaStelle'))];
+  const vorlesen = kurz ? { 'aria-label': t(onNavigate ? 'mietzinsSzene.cta' : 'mietzinsSzene.ctaStelle') } : {};
   const knopf = onNavigate
-    ? h('button', { type: 'button', 'data-teil': 'mietzins-cta', onClick: () => onNavigate('mietzins'), style: stil }, inhalt)
-    : url ? h(ExternerLink, { t, href: url, 'data-teil': 'mietzins-cta', style: stil }, inhalt) : null;
+    ? h('button', { type: 'button', 'data-teil': 'mietzins-cta', ...vorlesen, onClick: () => onNavigate('mietzins'), style: stil }, inhalt)
+    : url ? h(ExternerLink, { t, href: url, 'data-teil': 'mietzins-cta', ...vorlesen, style: stil }, inhalt) : null;
   if (!knopf) return null;
   const pfosten = h('span', { 'aria-hidden': 'true', style: { width: '2px', height: space.lg + 'px', marginLeft: space.lg + 'px', background: palette.text } });
   // pfostenOben: an der Tür des Vergleichshauses zeigt der Pfosten hinauf zur Tür.

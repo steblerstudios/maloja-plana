@@ -4800,6 +4800,7 @@ export default {
     schild: 'possible',
     cta: 'possible: check rent contributions',
     ctaStelle: 'possible: go to the cantonal office',
+    ctaKurz: 'possible',
     karteAria: 'Cantons with a known programme: {liste}. Your canton: {kanton}.',
     karteLegende: 'filled: programme known · empty: unclear, please check · thick border: your canton',
   },

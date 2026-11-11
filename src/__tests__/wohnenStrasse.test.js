@@ -76,11 +76,26 @@ describe('Vergleichshaus gross (Stebler Studios 11.11.2026: Kanton, Schweiz «zu
     expect(ohne).toContain('data-programm="nein"');
     expect(ohne).not.toContain('tuer-fuellung');
   });
-  it('der Wegweiser steht rechts neben dem Vergleichshaus (Stebler Studios: «rechts neben dem Vergleichshaus»)', () => {
-    const h = gross({ daneben: React.createElement('span', { id: 'weg' }, 'W') });
-    expect(h).toMatch(/data-teil="strasse-mit-schild"[\s\S]*data-form="haeuser"[\s\S]*<span id="weg">W<\/span>/);
-    expect(h).not.toContain('tuer-schild');
-    expect(quelle('../components/WohnkostenInstrument.jsx')).toMatch(/'data-teil': 'wegweiser-neben-haus'/);
+  it('der Wegweiser steht IN der Strasse rechts vom Vergleichshaus, auf dem Boden, ausserhalb des Bildes (role=img)', () => {
+    const h = gross({ tuer: { programm: true, stand: null, schild: React.createElement('span', { id: 'weg' }, 'W') } });
+    expect(h).toMatch(/data-teil="strasse-mit-schild"[\s\S]*data-teil="wegweiser-in-strasse"[^>]*><span id="weg">W<\/span>/);
+    const bild = h.slice(h.indexOf('role="img"'), h.indexOf('data-teil="wegweiser-in-strasse"'));
+    expect(bild).not.toContain('id="weg"');
+    expect(h).toMatch(/padding-bottom:49\.4\d*%/);   // Boden 84 von 170
+  });
+  it('C · Fahne am Kanton-Stock: «Sie −13 %» aus lageZurRegion, aussen rechts, Rand in der Lage-Farbe', () => {
+    const h = gross({ userValue: 1500 });   // 1500 gegen 1732 → −13 %, salbei
+    const f = h.slice(h.indexOf('data-teil="fahne-abstand"'));
+    expect(h).toMatch(/data-teil="fahne-abstand" data-ort="aussen"/);
+    expect(f).toMatch(/stroke="#6a6"/);
+    expect(f).toMatch(/>Sie −13 %</);
+    expect(gross({ userValue: 1740 })).toMatch(/>Sie ≈ 0 %</);
+    expect(gross({ userValue: 1900 })).toMatch(/data-teil="fahne-abstand"[\s\S]*>Sie \+10 %</);
+  });
+  it('Schrift der Strasse auch bei 375 px Bildschirm (Strasse ~319 px) mindestens 13 px', () => {
+    const h = gross();
+    const s = Number(h.match(/data-teil="fahne-kanton"[^>]*font-size="([\d.]+)"/)[1]);
+    expect(s * 319 / 170).toBeGreaterThanOrEqual(13);
   });
   it('EU als Stock: gepunktet blau, Prozent-Fahne, unter dem Schweizer Stock', () => {
     const h = gross({ ausland: { eu: { hoehe: 679, pct: -53 } } });

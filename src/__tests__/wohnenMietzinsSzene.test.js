@@ -105,6 +105,15 @@ describe('Stebler Studios 11.11.2026: Häuser, grau, Knopf', () => {
   });
 });
 
+describe('Wegweiser kurz in der Strasse', () => {
+  it('«möglich ›» sichtbar, der ganze Satz im Vorlesetext', async () => {
+    const { MoeglichKnopf } = await import('../components/WohnkostenInstrument.jsx');
+    const h = renderToStaticMarkup(React.createElement(MoeglichKnopf, { palette: LIGHT_PALETTE, t, onNavigate: () => {}, kurz: true }));
+    expect(h).toContain('aria-label="' + t('mietzinsSzene.cta') + '"');
+    expect(h).toContain(t('mietzinsSzene.ctaKurz') + ' ›');
+  });
+});
+
 describe('Kachelkarte', () => {
   it('26 Kantone, je einmal', () => {
     const k = Object.keys(KACHELKARTE_LAGE);

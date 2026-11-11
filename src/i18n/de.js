@@ -4779,6 +4779,7 @@ export default {
     schild: 'möglich',
     cta: 'möglich: Mietbeiträge prüfen',
     ctaStelle: 'möglich: zur kantonalen Stelle',
+    ctaKurz: 'möglich',
     karteAria: { sie: 'Kantone mit bekanntem Programm: {liste}. Ihr Kanton: {kanton}.', du: 'Kantone mit bekanntem Programm: {liste}. Dein Kanton: {kanton}.' },
     karteLegende: { sie: 'gefüllt: Programm bekannt · leer: unklar, bitte prüfen · dicker Rand: Ihr Kanton', du: 'gefüllt: Programm bekannt · leer: unklar, bitte prüfen · dicker Rand: dein Kanton' },
   },

@@ -4727,6 +4727,7 @@ export default {
     schild: 'possible',
     cta: 'possible : vérifier les aides au loyer',
     ctaStelle: 'possible : vers le service cantonal',
+    ctaKurz: 'possible',
     karteAria: { sie: 'Cantons avec un programme connu : {liste}. Votre canton : {kanton}.', du: 'Cantons avec un programme connu : {liste}. Ton canton : {kanton}.' },
     karteLegende: { sie: 'plein : programme connu · vide : incertain, à vérifier · bord épais : votre canton', du: 'plein : programme connu · vide : incertain, à vérifier · bord épais : ton canton' },
   },

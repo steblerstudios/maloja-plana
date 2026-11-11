@@ -6682,6 +6682,7 @@ export default {
     schild: 'pussaivel',
     cta: 'pussaivel: verifitgar las contribuziuns al fitg',
     ctaStelle: 'pussaivel: al servetsch chantunal',
+    ctaKurz: 'pussaivel',
     karteAria: { sie: 'Chantuns cun in program enconuschent: {liste}. Voss chantun: {kanton}.', du: 'Chantuns cun in program enconuschent: {liste}. Tes chantun: {kanton}.' },
     karteLegende: { sie: 'emplenì: program enconuschent · vid: nunclera, per plaschair verifitgar · ur gross: Voss chantun', du: 'emplenì: program enconuschent · vid: nunclera, per plaschair verifitgar · ur gross: tes chantun' },
   },

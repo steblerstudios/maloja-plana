@@ -4701,6 +4701,7 @@ export default {
     schild: 'possibile',
     cta: 'possibile: verificare i contributi all’affitto',
     ctaStelle: 'possibile: al servizio cantonale',
+    ctaKurz: 'possibile',
     karteAria: { sie: 'Cantoni con un programma noto: {liste}. Il Suo Cantone: {kanton}.', du: 'Cantoni con un programma noto: {liste}. Il tuo Cantone: {kanton}.' },
     karteLegende: { sie: 'pieno: programma noto · vuoto: incerto, da verificare · bordo spesso: il Suo Cantone', du: 'pieno: programma noto · vuoto: incerto, da verificare · bordo spesso: il tuo Cantone' },
   },
