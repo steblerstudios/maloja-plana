@@ -10,6 +10,7 @@ import { ablaufStandKey } from './utils/ablaufStand.js';
 import { zusatzSchritte, zusatzFussNotizen } from './ZusatzWechsel.jsx';
 import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
+import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 
 // KVG-Wechsel — der erste geführte Ablauf ("Faden"), jetzt auf der wiederverwendbaren
 // Ablauf-Schale. Verkettet die vorhandenen Bausteine zu einem ruhigen Weg: Vergleich →
@@ -188,6 +189,10 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
 
     // ── Schritt 4 — Frist sichern ──
     { titel: t('kvgWechsel.step4Title'), inhalt: [
+      // Wechselfrist als Kalenderblatt (Stebler Studios 11.11.2026, Matrix §9) — dasselbe Datum wie Kachel und Kapitel
+      // (nextNov30 = kvgWechselfrist, Test kvgWechselfristBlatt).
+      React.createElement('div', { key: 'blatt', 'data-teil': 'kvg-wechselfrist-blatt', style: { margin: '0 0 ' + space.sm + 'px' } },
+        React.createElement(Kalenderblatt, { iso: deadline, palette, thema: { bereich: 'versicherungen', icon: 'insurance' } })),
       React.createElement('p', { key: 'a', style: s.stepText }, t('kvgWechsel.step4Text', { year: deadlineYear })),
       React.createElement(FristButton, {
         key: 'b', palette, t,

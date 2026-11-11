@@ -277,6 +277,10 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
 - **Franchise-Kreuz klein, 11.11.2026 (B-F5):** die Kachel zeichnet das Kreuz aus `kreuzState` — dieselben zwei
   Linien wie das Werkzeug, Strich «bisher» bei den eigenen Kosten (`KreuzKlein`). Ohne geladene Prämien kein Bild,
   nur Name und Satz. Das Kreuz bleibt Diagramm; die Kachel ist sein Spiegel mit echter Zahl (Franchise in CHF).
+- **Wechselfrist Krankenkasse, 11.11.2026:** gemeinsame Form «Termin» = Kalenderblatt, an Kachel, Kapitel und
+  Werkzeug KVG-Wechsel (Schritt 4). Eine Rechnung `kvgWechselfrist` (30.11., Werktag davor, KVG Art. 7 Abs. 2).
+  **Nur in der Wechselzeit** (ab BAG-Publikation der neuen Prämien bis und mit Frist), sonst fehlt die Kachel ganz.
+  Hauptzahl: die Tage bis zur Frist, gross unter dem Blatt.
 
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
 «Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
