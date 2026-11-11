@@ -51,6 +51,12 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
 
   if (!rentComparison && rentSharePct == null) return null;
 
+  // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): die Hauptzahl gross wie auf der Kachel und im Kapitel,
+  // direkt unter den Häusern (mit Häuserzeile) oder oben in der Karte (ohne).
+  const hauptzahl = rentSharePct != null && React.createElement('div', { 'data-instrument-zahl': 'wohnkosten', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } },
+    // Gleiche Schreibweise wie Kachel und Kapitel: knapp über einem Drittel eine Stelle, sonst ganz.
+    zahl(r.anteil, { hoechstens: r.ueberDrittel && Math.round(r.anteil) === 33 ? 1 : 0 }) + ' %');
+
   return React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.lg, fontSize: text.sm } },
     showTitle && React.createElement('div', {
       style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' },
@@ -62,13 +68,11 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
       fillColor: bereichFillColor('wohnen', isDarkMode),
       thresholdValue: drittelGrenzeMiete(r),
       drittel: r,
+      unterBild: hauptzahl,
     }),
 
     rentSharePct != null && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
-      // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): die Hauptzahl gross wie auf der Kachel und im Kapitel.
-      React.createElement('div', { 'data-instrument-zahl': 'wohnkosten', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } },
-        // Gleiche Schreibweise wie Kachel und Kapitel: knapp über einem Drittel eine Stelle, sonst ganz.
-        zahl(r.anteil, { hoechstens: r.ueberDrittel && Math.round(r.anteil) === 33 ? 1 : 0 }) + ' %'),
+      !rentComparison && hauptzahl,
       // Kein inline-„!" — das sitzt auf dem Balken. Hier nur die lesbare Deep-Variante.
       React.createElement('div', {
         style: { fontSize: text.sm, color: r.ueberDrittel && !r.mitPartner ? palette.goldDeep : palette.text, lineHeight: leading.normal },

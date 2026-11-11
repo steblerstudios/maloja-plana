@@ -48,6 +48,16 @@ describe('Regel «Zahl» · Werkzeug Mietzins (mittel)', () => {
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: d }));
     expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>30 %</);
   });
+  it('direkt unter den Häusern, vor Legenden und Sätzen', () => {
+    const d = { basis: { canton: 'ZH' }, finanzen: { monthlyIncome: '6200' }, wohnen: { rentAmount: '1650', utilities: '180' } };
+    const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: d }));
+    const bild = html.indexOf('data-form="haeuser"');
+    const zahl = html.indexOf('data-instrument-zahl="wohnkosten"');
+    expect(bild).toBeGreaterThan(-1);
+    expect(zahl).toBeGreaterThan(bild);
+    expect(zahl).toBeLessThan(html.indexOf('po.regionalCompare.nationalVal'));
+    expect(zahl).toBeLessThan(html.indexOf('po.regionalCompare.rent.source'));
+  });
 });
 
 describe('Regel «Zahl» · Quelle', () => {

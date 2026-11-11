@@ -66,7 +66,7 @@ const skala = (regional, national, userValue) => Math.ceil((Math.max(regional, n
 // sind dieselben — nur das Bild wechselt. `maxBreite`: Instrument-Grösse (Brand Book §7b), Standard mittel.
 // `drittel` (11.11.2026): die Wohnkosten-Rechnung (wohnkostenRechnung) — dann ist Ihr Haus in der Häuserzeile das
 // Drittel-Haus klein, und die Drittel-Linie quer über die Strasse entfällt.
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel, form, maxBreite, drittel, kanton, tuer, ausland }) => {
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel, form, maxBreite, drittel, kanton, tuer, ausland, unterBild }) => {
   if (!comparison) return null;
   const { regional, national, diffPct, year, roomKey } = comparison;
   const ns = 'po.regionalCompare.';
@@ -214,6 +214,9 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       React.createElement('div', { style: { position: 'absolute', top: '-9px', bottom: '-3px', left: nationalPct + '%', width: '2px', background: palette.text } }),
     ),
 
+    // Regel «Zahl» (Matrix §10): die Hauptzahl des Aufrufers (z. B. Werkzeug Mietzins: Anteil am Einkommen) direkt
+    // unter dem Bild, vor den Legenden und Sätzen.
+    unterBild || null,
     // Werte als Marken (Farben = Encoding). Die Legenden-Marken (`LegendenMarke`) spiegeln
     // die Marken AUF dem Balken in derselben Farbvariablen — eine Marke, eine Farbe.
     // Rein dekorativ (`aria-hidden`), der Wert steht im Text daneben.
