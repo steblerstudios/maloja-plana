@@ -38,7 +38,7 @@ const GEPRUEFT = new Set([
 const THEMA = /(Dokument|document|documento|Ablage|Tresor|coffre|cassaforte|vault)/i;
 // Nicht «chiffre»/«cifra» allein: das heisst in fr/it/rm auch «Zahl».
 const VERSCHLUESSELT = /(verschlüssel|chiffré|chiffrée|chiffrement|cifrat|crittograf|encrypt|criptad|criptaziun)/i;
-const EHRLICH_NEIN = /(unverschlüsselt|nicht verschlüsselt|non chiffr|pas chiffr|non cifrat|non crittografat|unencrypted|not encrypted|betg criptad)/i;
+const EHRLICH_NEIN = /(unverschlüsselt|nicht verschlüsselt|non chiffr|pas chiffr|non cifrat|non crittografat|non sono cifrat|non sono crittografat|unencrypted|not encrypted|betg criptad)/i;
 
 const saetze = (o, p = '', aus = []) => {
   for (const [k, v] of Object.entries(o)) {
