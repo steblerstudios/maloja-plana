@@ -31,7 +31,7 @@ describe('eine Rechnung', () => {
   it('die Szene steht im Kapitel Wohnen (Beitrag im grossen Haus) und im Werkzeug «Mietzins» (mittel, mit Haus)', () => {
     const w = quelle('../components/WohnkostenInstrument.jsx');
     expect(w).toMatch(/beitrag: imHaus, fuell \}/);
-    expect(w).toMatch(/React\.createElement\(MietzinsSzene, \{ palette, t, data: allData, isDarkMode, onNavigate \}\)/);
+    expect(w).toMatch(/React\.createElement\(MietzinsSzene, \{ palette, t, data: allData, isDarkMode, onNavigate, ohneTuer: !!vergleich \}\)/);
     expect(quelle('../MietzinsOrientierung.jsx')).toMatch(/React\.createElement\(MietzinsSzene, \{ palette, t, data, isDarkMode, kanton: canton, groesse: 'mittel', mitHaus: true, ohneSatz: true \}\)/);
   });
   it('die Einschätzung: unter der Grenze «likely», darüber «incomeHigh», ohne Programm keine', () => {

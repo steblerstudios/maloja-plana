@@ -172,6 +172,15 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
 
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
   const imHaus = beitragImHaus(allData, r, isDarkMode, palette);
+  // Die Tür des Vergleichshauses = die Tonne der Mietbeiträge (Stebler Studios 11.11.2026, «von Tonne zur Tür, danach
+  // keine Tonne mehr»): dieselbe Einschätzung wie die Szene; der Wegweiser «möglich» steht an der Tür.
+  const mz = canton ? mietzinsEinschaetzung(allData, canton) : null;
+  const strassenTuer = mz ? {
+    programm: mz.hasProgram,
+    stand: mz.hasProgram ? mietzinsPegelState({ annualIncome: mz.annualIncome, incomeLimit: mz.incomeLimit }) : null,
+    farbe: bereichFillColor('behoerden', isDarkMode) || palette.mid,
+    schild: mz.assessment?.key === 'likely' ? React.createElement(MoeglichKnopf, { palette, t, onNavigate, url: mz.info?.url, pfostenOben: true }) : null,
+  } : null;
   const zeile = { display: 'flex', justifyContent: 'space-between', gap: space.md + 'px', padding: '8px 0', fontSize: text.sm, color: palette.text };
   const kapH = { margin: space.lg + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
 
@@ -202,13 +211,13 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
       React.createElement(RegionalBarometer, {
         palette, t, comparison: vergleich, userValue: r.netto, kind: 'rent', compact: true, fillColor: fuell, imKapitel: true,
         form: 'haeuser', maxBreite: INSTRUMENT_GROESSE.gross, drittel: r, kanton: canton,
-        kantonProgramm: PROGRAMM_KANTONE.includes(canton), tuerFarbe: bereichFillColor('behoerden', isDarkMode),
+        tuer: strassenTuer,
         userLabel: ausprobiert ? t('wohnenInstrument.ausprobierteMiete', { amount: zahl(r.netto) }) : undefined,
       })
     ),
 
     // Mietzinsbeiträge (11.11.2026): Glas, Schild, Kachelkarte — der Beitrag selbst steht schon im Haus oben.
-    React.createElement(MietzinsSzene, { palette, t, data: allData, isDarkMode, onNavigate }),
+    React.createElement(MietzinsSzene, { palette, t, data: allData, isDarkMode, onNavigate, ohneTuer: !!vergleich }),
 
     // Ausprobieren: andere Miete — nur hier, nichts wird gespeichert. Nicht bei Eigentum (siehe oben).
     // Das «›» zeigt, dass die Zeile aufgeht (Abnahme F6, 25.10.2026: ohne Zeichen wirkte sie nicht aufklappbar).
@@ -291,7 +300,7 @@ export const Kachelkarte = ({ palette, t, kanton, gefuellt, isDarkMode }) => {
 // Werkzeug zur kantonalen Stelle. Nur unter der Grenze; sagt nie «Anspruch». Das Schild ist ein Bild hinter dem Knopf,
 // der Knopf selbst bleibt rechteckig — so bleibt der Fokusring sichtbar. Blau = informieren; Schrift in der Flächenfarbe
 // (hell 5.4:1 auf skyDeep, dunkel umgekehrt).
-const MoeglichKnopf = ({ palette, t, onNavigate, url }) => {
+export const MoeglichKnopf = ({ palette, t, onNavigate, url, pfostenOben = false }) => {
   const h = React.createElement;
   const stil = {
     position: 'relative', display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', maxWidth: '100%',
@@ -307,18 +316,21 @@ const MoeglichKnopf = ({ palette, t, onNavigate, url }) => {
     ? h('button', { type: 'button', 'data-teil': 'mietzins-cta', onClick: () => onNavigate('mietzins'), style: stil }, inhalt)
     : url ? h(ExternerLink, { t, href: url, 'data-teil': 'mietzins-cta', style: stil }, inhalt) : null;
   if (!knopf) return null;
+  const pfosten = h('span', { 'aria-hidden': 'true', style: { width: '2px', height: space.lg + 'px', marginLeft: space.lg + 'px', background: palette.text } });
+  // pfostenOben: an der Tür des Vergleichshauses zeigt der Pfosten hinauf zur Tür.
   return h('div', { 'data-teil': 'mietzins-wegweiser', style: { display: 'inline-flex', flexDirection: 'column', flex: '0 1 auto', minWidth: 0, animation: 'fadeIn ' + duration.slow + 'ms ' + ease } },
-    knopf,
-    h('span', { 'aria-hidden': 'true', style: { width: '2px', height: space.lg + 'px', marginLeft: space.lg + 'px', background: palette.text } }));
+    pfostenOben ? pfosten : knopf,
+    pfostenOben ? knopf : pfosten);
 };
 
-export const MietzinsSzene = ({ palette, t, data, isDarkMode, onNavigate, kanton: kantonVorgabe, groesse = 'gross', mitHaus = false, ohneSatz = false }) => {
+// `ohneTuer`: im Kapitel stehen Tonne (als Tür) und Wegweiser schon in der Strasse — hier dann nur Satz und Karte.
+export const MietzinsSzene = ({ palette, t, data, isDarkMode, onNavigate, kanton: kantonVorgabe, groesse = 'gross', mitHaus = false, ohneSatz = false, ohneTuer = false }) => {
   const h = React.createElement;
   const kanton = kantonVorgabe || data?.basis?.canton || '';
   if (!kanton) return null;
   const e = mietzinsEinschaetzung(data, kanton);
-  const glas = e.hasProgram ? mietzinsPegelState({ annualIncome: e.annualIncome, incomeLimit: e.incomeLimit }) : null;
-  const moeglich = e.assessment?.key === 'likely';
+  const glas = e.hasProgram && !ohneTuer ? mietzinsPegelState({ annualIncome: e.annualIncome, incomeLimit: e.incomeLimit }) : null;
+  const moeglich = e.assessment?.key === 'likely' && !ohneTuer;
   const r = mitHaus ? wohnkostenRechnung(data?.wohnen, data, null) : null;
   const zeigtHaus = r && r.anteil != null && !r.mitPartner;
   const beitrag = zeigtHaus ? beitragImHaus(data, r, isDarkMode, palette, kanton) : null;

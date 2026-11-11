@@ -48,62 +48,55 @@ describe('Ihr Haus in der Strasse', () => {
   });
 });
 
-describe('Nachbarhäuser (Skizze B, Stebler Studios 11.11.2026)', () => {
+describe('Vergleichshaus gross (Stebler Studios 11.11.2026: Kanton, Schweiz «zu einem vereinen», Fahnen je Stock, Tür = Tonne)', () => {
   const gross = (p) => zeile({ drittel: { anteil: 30 }, maxBreite: 256, kanton: 'ZG', ...p });
-  it('gross: Kanton-Kürzel im Regionshaus, «CH» im Schweizer Haus, Regionshaus hellgrün', () => {
+  it('ein Haus statt zwei: Kanton und Schweiz als Stöcke auf derselben Skala wie Ihr Haus', () => {
     const h = gross();
-    expect(h).toMatch(/<text data-teil="strasse-kuerzel"[^>]*>ZG<\/text>/);
-    expect(h).toMatch(/>CH<\/text>/);
-    expect(h).toMatch(/fill="#7a5" fill-opacity="0.18"/);
+    expect(h).toContain('data-teil="vergleichs-haus"');
+    const yK = Number(h.match(/data-teil="stock-kanton"[^>]*y1="([\d.]+)"/)[1]);
+    const yN = Number(h.match(/data-teil="stock-schweiz"[^>]*y1="([\d.]+)"/)[1]);
+    expect(yK).toBeLessThan(yN);                         // Region 1732 höher als Schweiz 1446
+    expect(h).toMatch(/data-teil="stock-kanton"[^>]*stroke="#b80"/);   // Ihre Miete 1900 über der Region: gold
+    expect(h).toMatch(/data-teil="stock-schweiz"[^>]*stroke-dasharray="5 3"/);
   });
-  it('gross: Beträge direkt unter den Häusern, die Legenden-Zeilen entfallen', () => {
+  it('Fahnen je Stock: «ZG 1’732» und «CH Ø 1’446», mindestens 13 px bei 256', () => {
+    const h = gross();
+    expect(h).toMatch(/data-teil="fahne-kanton"[^>]*>ZG 1’732</);
+    expect(h).toMatch(/data-teil="fahne-schweiz"[^>]*>CH Ø 1’446</);
+    const s = Number(h.match(/data-teil="fahne-kanton"[^>]*font-size="([\d.]+)"/)[1]);
+    expect(s * 256 / 132).toBeGreaterThanOrEqual(13);
+  });
+  it('Tür = Tonne: grau gefüllt nach Einkommen gegen Grenze, Grenze als Linie; ohne Programm schlicht', () => {
+    const mit = gross({ tuer: { programm: true, stand: { mode: 'clear', fraction: 0.5 }, farbe: '#5A6472' } });
+    const f = mit.match(/<rect data-teil="tuer-fuellung"[^>]*>/)[0];
+    expect(f).toContain('fill="#5A6472"');
+    expect(Number(f.match(/height="([\d.]+)"/)[1])).toBeCloseTo(24 * 0.5 / 1.25, 6);
+    expect(mit).toContain('data-teil="tuer-grenze"');
+    const ohne = gross({ tuer: { programm: false, stand: null } });
+    expect(ohne).toContain('data-programm="nein"');
+    expect(ohne).not.toContain('tuer-fuellung');
+  });
+  it('der Wegweiser steht an der Tür', () => {
+    const h = gross({ tuer: { programm: true, stand: { mode: 'clear', fraction: 0.5 }, schild: React.createElement('span', { id: 'weg' }, 'W') } });
+    expect(h).toMatch(/data-teil="tuer-schild"[^>]*><span id="weg">W<\/span>/);
+  });
+  it('unter den Häusern nur noch Ihr Betrag; die Legenden-Zeilen entfallen (aria-Label bleibt)', () => {
     const h = gross();
     const b = h.slice(h.indexOf('data-teil="strasse-betraege"'));
     expect(b).toContain('1’900');
-    expect(b).toContain('1’732');
-    expect(b).toContain('1’446');
-    expect(b).toContain('strasse.regionKanton{&quot;kanton&quot;:&quot;ZG&quot;}');
-    // sichtbar keine Legenden-Zeilen mehr (im aria-Label stehen die Werte weiter)
+    expect(b).not.toContain('strasse.regionKanton');
     expect(h).not.toMatch(/>po\.regionalCompare\.nationalVal/);
-    expect(h).not.toMatch(/(>|svg>)po\.regionalCompare\.rent\.yourVal/);
     expect(h).toMatch(/aria-label="[^"]*po\.regionalCompare\.rent\.yourVal/);
   });
-  it('mittel (Mietzins, Budget): keine Kürzel, die Legenden-Zeilen bleiben (sonst unter 13 px)', () => {
+  it('mittel (Mietzins, Budget) bleibt bei drei Häusern und den Legenden-Zeilen', () => {
     const h = zeile({ drittel: { anteil: 30 }, kanton: 'ZG' });
-    expect(h).not.toContain('strasse-kuerzel');
-    expect(h).not.toContain('strasse-betraege');
+    expect(h).not.toContain('vergleichs-haus');
     expect(h).toMatch(/>po\.regionalCompare\.nationalVal/);
   });
-  it('Kürzel bei 256 px mindestens 13 px', () => {
-    const h = gross();
-    const s = Number(h.match(/data-teil="strasse-kuerzel"[^>]*font-size="([\d.]+)"/)[1]);
-    expect(s * 256 / 132).toBeGreaterThanOrEqual(13);
-  });
-});
-
-describe('Kantonshaus gross: Mischung A–C (Stebler Studios 11.11.2026, «eine Mischung aller»)', () => {
-  const gross = (p) => zeile({ drittel: { anteil: 30 }, maxBreite: 256, kanton: 'ZG', ...p });
-  it('C: die Form der Karte — ein Umriss mit flachem Dach, hellgrün', () => {
-    const h = gross();
-    expect(h).toMatch(/<g data-teil="kanton-haus"><path d="M44 84V[\d.]+L58 [\d.]+L72 [\d.]+V84Z" fill="#7a5" fill-opacity="0.18"/);
-  });
-  it('A: Fahne mit Prozent aus lageZurRegion, Rand in der Lage-Farbe', () => {
-    const ueber = gross({ userValue: 1900 });   // 1900 gegen 1732 → +10 %, gold
-    expect(ueber).toMatch(/data-teil="kanton-fahne"[\s\S]*stroke="#b80"[\s\S]*>\+10 %<\/text>/);
-    const unter = gross({ userValue: 1500 });   // −13 %, salbei
-    expect(unter).toMatch(/data-teil="kanton-fahne"[\s\S]*stroke="#6a6"[\s\S]*>−13 %<\/text>/);
-    expect(gross({ userValue: 1740 })).toMatch(/>≈ 0 %<\/text>/);
-  });
-  it('B: Tür in Behörden-Grau nur mit Programm', () => {
-    expect(gross({ kantonProgramm: true, tuerFarbe: '#5A6472' })).toMatch(/data-teil="kanton-tuer"[^>]*fill="#5A6472"/);
-    expect(gross({ kantonProgramm: false })).not.toContain('kanton-tuer');
-  });
-  it('mittel bleibt das bisherige Regionshaus (Dach in der Lage-Farbe, ohne Fahne)', () => {
-    const h = zeile({ drittel: { anteil: 30 }, kanton: 'ZG' });
-    expect(h).not.toContain('kanton-haus');
-    expect(h).not.toContain('kanton-fahne');
-  });
-  it('Kapitel gibt Programm und Behörden-Farbe mit', () => {
-    expect(quelle('../components/WohnkostenInstrument.jsx')).toMatch(/kantonProgramm: PROGRAMM_KANTONE\.includes\(canton\), tuerFarbe: bereichFillColor\('behoerden', isDarkMode\)/);
+  it('Kapitel gibt die Tür aus derselben Mietbeiträge-Einschätzung mit; die Szene darunter ohne Tonne', () => {
+    const w = quelle('../components/WohnkostenInstrument.jsx');
+    expect(w).toMatch(/const mz = canton \? mietzinsEinschaetzung\(allData, canton\) : null;/);
+    expect(w).toMatch(/tuer: strassenTuer,/);
+    expect(w).toMatch(/React\.createElement\(MietzinsSzene, \{ palette, t, data: allData, isDarkMode, onNavigate, ohneTuer: !!vergleich \}\)/);
   });
 });

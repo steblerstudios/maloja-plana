@@ -332,12 +332,17 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   gestrichelt «CH». Die Beträge stehen direkt unter den Häusern («erst sehen, dann lesen»), die Legenden-Zeilen
   entfallen dort. Mittel (Mietzins, Budget) bleibt bei den Legenden-Zeilen, weil Kürzel und Beträge dort unter 13 px
   bzw. zu eng wären.
-  **Das Kantonshaus, gross** (11.11.2026, Stebler Studios «eine Mischung aller» zu Skizzen A–C):
-  - **Form der Karte:** ein Umriss mit flachem Dach, hellgrün, Kürzel im Haus.
-  - **Fahne auf dem First:** «−20 %», «+20 %» oder «≈ 0 %» aus `lageZurRegion`. Der Rand hat die Lage-Farbe
-    (salbei/gold), die Zahl die Deep-Variante. Die Fahne ersetzt die Dachfarbe.
-  - **Tür in Behörden-Grau:** nur, wenn die App für den Kanton ein Mietbeiträge-Programm kennt.
-  - Mittel bleibt beim Dach in der Lage-Farbe.
+  **Das Vergleichshaus, gross** (11.11.2026, Stebler Studios: «Kantonshaus, Schweizer Haus und das internationale zu
+  einem vereinen, mit Farben und Linien, Fahnen in jeden Stock, die Tür darf die Tonne selbst sein»; Abnahme «ja»).
+  Es ersetzt das Kantonshaus mit Fahne/Tür (ebenfalls 11.11.) und das Schweizer Haus:
+  - **Ein Haus neben Ihrem.** Jeder Vergleich ist ein Stock auf derselben Franken-Skala: Kanton durchgezogen in der
+    Lage-Farbe, Schweiz gestrichelt grau. Die Fahne steht am Stock («ZG 1'875», «CH Ø 1'446»).
+  - **Die Tür ist die Tonne:** eine Tür mit Rundbogen, grau (Behörden) gefüllt nach Einkommen gegen Grenze, die Grenze
+    als blaue Strichlinie. Ohne Programm ist es eine schlichte Tür. Im Kapitel gibt es danach keine eigene Tonne mehr.
+  - **Der Wegweiser «möglich»** steht unter der Tür, der Pfosten zeigt hinauf.
+  - **Unter den Häusern** steht nur noch Ihr Betrag.
+  - Europa und das Ausland folgen erst nach der Quellenprüfung, als Schild rechts mit Fähnchen.
+  - Mittel (Mietzins, Budget) bleibt bei drei kleinen Häusern.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
   klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
   trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.
