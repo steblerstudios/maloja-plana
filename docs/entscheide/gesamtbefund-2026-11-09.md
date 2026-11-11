@@ -209,5 +209,10 @@ siebenmal neu entschieden werden:
    Stand-Zeile nur unten auf den vier kurzen Seiten, B bewegte Fassungen ohne Seitenrahmen, C Stipendien-Listen doppelt, D
    Trefferflächen. Sprache S1–S8. Nichts davon im Startbündel. Konkordat nicht am Volltext (edk.ch sperrt). Zweig
    `befund/gruppe-d-fachseiten` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **11.11.: Inhalt, Sprache, A und D, dann auch B und C** (Stebler Studios: «Inhalt, Sprache, A und D», auf
+   Nachfrage zu B und C «Beide bauen»). Gebaut im selben Zweig: L1–L7, Kleines, S1–S8, A Prüfdatum oben, B bewegte
+   Seiten im Seitenrahmen, C Stipendien ohne doppelte Listen, D Trefferflächen; fr/it/en/rm mitgezogen (Gegenlesung
+   #692, rm vorläufig). Test `gruppeDFachseiten.test.js`. Zwei Gestaltungs-Fehlbefunde (B Hintergrund, D `h1`) im Blatt
+   berichtigt. Offen: IPV-Zahlen 2025, Preisüberwacher-Link, Konkordat am Volltext. Nichts im Startbündel.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.

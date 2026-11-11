@@ -7171,7 +7171,7 @@ export default {
     checkStatusQ: "Your residence status",
     checkScopeQ: "Your education",
     checkStatusOnlyEducation: "In Switzerland only for the education",
-    checkStatusOther: "Other status (e.g. F permit, B permit for less than 5 years)",
+    checkStatusOther: "Other status (e.g. F permit except recognised refugees, B permit for less than 5 years)",
     checkScopeOther: "Other / further education",
     resultEligible: "Under the minimum rules of the intercantonal agreement on education grants, you may be eligible. Whether your canton has joined the agreement, which limits apply and whether you are entitled is decided by the grants office. Apply to the responsible canton, usually the canton where your parents reside.",
     resultNotEligible: "People who are in Switzerland solely for their education usually have no claim to cantonal scholarships. The private directory below may be an alternative.",

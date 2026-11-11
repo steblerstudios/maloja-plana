@@ -437,7 +437,7 @@ export const SEITEN = [
         absaetze: [
           'Sozialhilfe ist <strong>subsidiär</strong>. Bevor sie in Frage kommt, werden andere Ansprüche geprüft: Lohn, Arbeitslosenentschädigung, Renten, Ergänzungsleistungen, Prämienverbilligung, Unterhaltsbeiträge, Stipendien. Auch eigenes Vermögen wird berücksichtigt, wobei die Kantone einen Freibetrag kennen, dessen Höhe sich unterscheidet.',
           'Das ist der Grund, warum eine Anmeldung oft mit vielen Fragen zu ganz anderen Leistungen beginnt. Es geht nicht um Misstrauen, sondern um die gesetzliche Reihenfolge.',
-          'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für den Aufenthalt haben. Mit einer Aufenthalts- oder Kurzaufenthaltsbewilligung (B, L) kann er ein Grund sein, die Bewilligung zu widerrufen; mit einer Niederlassungsbewilligung (C), wenn der Bezug dauerhaft und in erheblichem Mass erfolgt (AIG Art. 62 Abs. 1 Bst. e, Art. 63 Abs. 1 Bst. c). Mit Ausweis F kann er ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren. Lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten. Das Recht auf Hilfe in Notlagen (weiter unten) gilt unabhängig davon.',
+          'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für den Aufenthalt haben. Mit einer Aufenthalts- oder Kurzaufenthaltsbewilligung (B, L) kann er ein Grund sein, die Bewilligung zu widerrufen; mit einer Niederlassungsbewilligung (C), wenn der Bezug dauerhaft und in erheblichem Mass erfolgt (AIG Art. 62 Abs. 1 Bst. e, Art. 63 Abs. 1 Bst. c). Mit Ausweis F kann er ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren (AIG Art. 85c Abs. 1 Bst. c, Art. 84 Abs. 5). Für Staatsangehörige von EU/EFTA-Staaten gelten zum Teil andere Regeln. Lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten. Unabhängig vom Aufenthaltsstatus haben Sie in einer Notlage Anspruch auf das Nötigste zum Leben (BV Art. 12, weiter unten).',
         ],
       },
       {
@@ -510,12 +510,12 @@ export const SEITEN = [
       {
         frage: 'Hat Sozialhilfe Folgen für meine Aufenthaltsbewilligung?',
         antwort:
-          'Ohne Schweizer Pass kann sie welche haben. Mit Ausweis B oder L kann der Bezug ein Grund sein, die Bewilligung zu widerrufen, mit Ausweis C bei dauerhaftem Bezug in erheblichem Mass (AIG Art. 62 Abs. 1 Bst. e, Art. 63 Abs. 1 Bst. c). Mit Ausweis F kann er ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren. Mit Ausweis N, S oder F ruht zudem die Prämienverbilligung, solange Sozialhilfe bezogen wird (Ausnahmen siehe Seite Prämienverbilligung). Lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.',
+          'Ohne Schweizer Pass kann sie welche haben. Mit Ausweis B oder L kann der Bezug ein Grund sein, die Bewilligung zu widerrufen, mit Ausweis C bei dauerhaftem Bezug in erheblichem Mass (AIG Art. 62 Abs. 1 Bst. e, Art. 63 Abs. 1 Bst. c). Mit Ausweis F kann er ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren (AIG Art. 85c Abs. 1 Bst. c, Art. 84 Abs. 5). Mit Ausweis N oder S und mit Ausweis F in den ersten sieben Jahren nach der Einreise ruht zudem die Prämienverbilligung, solange Sozialhilfe bezogen wird (AsylG Art. 82a Abs. 7, AsylV 2 Art. 5b). Lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.',
       },
       {
         frage: 'Muss ich Sozialhilfe zurückzahlen?',
         antwort:
-          'Ob und wann, regelt der Kanton — etwa wenn später eine Erbschaft oder ein grösseres Vermögen dazukommt. Ausserdem können Verwandte in gerader Linie, also Eltern, Kinder, Grosseltern und Enkel, zur Unterstützung verpflichtet werden, wenn sie in günstigen Verhältnissen leben (ZGB Art. 328 Abs. 1). Was in Ihrem Fall gilt, sagt die zuständige Stelle.',
+          'Ob und wann, regelt der Kanton — etwa wenn später eine Erbschaft oder ein grösseres Vermögen dazukommt. Ausserdem können Verwandte in gerader Linie, etwa Eltern, Kinder, Grosseltern und Enkel, zur Unterstützung verpflichtet werden, wenn sie in günstigen Verhältnissen leben (ZGB Art. 328 Abs. 1). Was in Ihrem Fall gilt, sagt die zuständige Stelle.',
       },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
@@ -547,7 +547,7 @@ export const SEITEN = [
         absaetze: [
           'Die direkte Bundessteuer richtet sich nach dem Bundesgesetz über die direkte Bundessteuer (DBG) und kennt für die ganze Schweiz denselben Tarif. Sie unterscheidet nach Zivilstand und Haushalt, aber nicht nach Wohnort.',
           'Erhoben wird sie trotzdem vom Kanton — die Steuererklärung ist dieselbe.',
-          'Anders bei der <strong>Quellensteuer</strong>: Wer ohne Niederlassungsbewilligung in der Schweiz arbeitet, etwa mit Ausweis B, dem zieht der Arbeitgeber die Steuer direkt vom Lohn ab; eine Steuererklärung gibt es dann in der Regel nicht. Weitere Abzüge, etwa für die Säule 3a, gibt es in diesem Fall nur über eine nachträgliche ordentliche Veranlagung, und die muss bis zum 31. März des Folgejahres beantragt werden (DBG Art. 89a).',
+          'Anders bei der <strong>Quellensteuer</strong>: Wer ohne Niederlassungsbewilligung in der Schweiz arbeitet, etwa mit Ausweis B, dem zieht der Arbeitgeber die Steuer direkt vom Lohn ab (DBG Art. 83). Liegt der Bruttolohn unter einer gesetzlichen Grenze, gibt es in der Regel keine Steuererklärung. Weitere Abzüge, etwa für die Säule 3a, gibt es dann nur über eine nachträgliche ordentliche Veranlagung; sie muss bis zum 31. März des Folgejahres beantragt werden, beim Wegzug bis zur Abmeldung (DBG Art. 89a Abs. 3). Liegt er darüber, wird von Amtes wegen ordentlich veranlagt (DBG Art. 89, QStV Art. 9).',
         ],
       },
       {

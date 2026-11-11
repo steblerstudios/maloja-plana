@@ -7160,7 +7160,7 @@ export default {
     checkStatusQ: { sie: "Ihr Aufenthaltsstatus", du: "Dein Aufenthaltsstatus" },
     checkScopeQ: { sie: "Ihre Ausbildung", du: "Deine Ausbildung" },
     checkStatusOnlyEducation: "Nur für die Ausbildung in der Schweiz",
-    checkStatusOther: "Anderer Status (z. B. Ausweis F, Ausweis B seit weniger als 5 Jahren)",
+    checkStatusOther: "Anderer Status (z. B. Ausweis F ausser anerkannte Flüchtlinge, Ausweis B seit weniger als 5 Jahren)",
     checkScopeOther: "Anderes / Weiterbildung",
     resultEligible: { sie: "Nach den Mindestregeln des Stipendien-Konkordats sieht es so aus, als könnten Sie berechtigt sein. Ob Ihr Kanton dem Konkordat beigetreten ist, welche Grenzen gelten und ob Sie Anspruch haben, entscheidet die Stipendienstelle. Stellen Sie den Antrag beim zuständigen Kanton, in der Regel dem Wohnsitzkanton Ihrer Eltern.", du: "Nach den Mindestregeln des Stipendien-Konkordats sieht es so aus, als könntest du berechtigt sein. Ob dein Kanton dem Konkordat beigetreten ist, welche Grenzen gelten und ob du Anspruch hast, entscheidet die Stipendienstelle. Stelle den Antrag beim zuständigen Kanton, in der Regel dem Wohnsitzkanton deiner Eltern." },
     resultNotEligible: "Wer sich ausschliesslich für die Ausbildung in der Schweiz aufhält, hat in der Regel keinen Anspruch auf kantonale Stipendien. Das private Verzeichnis unten kann eine Alternative sein.",

@@ -7120,7 +7120,7 @@ export default {
     checkStatusQ: { sie: 'Il Suo statuto di soggiorno', du: 'Il tuo statuto di soggiorno' },
     checkScopeQ: { sie: "La Sua formazione", du: "La tua formazione" },
     checkStatusOnlyEducation: "In Svizzera solo per la formazione",
-    checkStatusOther: "Altro statuto (p. es. permesso F, permesso B da meno di 5 anni)",
+    checkStatusOther: "Altro statuto (p. es. permesso F salvo rifugiati riconosciuti, permesso B da meno di 5 anni)",
     checkScopeOther: "Altro / formazione continua",
     resultEligible: { sie: "Secondo le regole minime del concordato sulle borse di studio, potrebbe averne diritto. Se il Suo cantone ha aderito al concordato, quali limiti valgono e se ne ha diritto lo decide l’ufficio delle borse di studio. Presenti la domanda al cantone competente, di norma il cantone di domicilio dei Suoi genitori.", du: "Secondo le regole minime del concordato sulle borse di studio, potresti averne diritto. Se il tuo cantone ha aderito al concordato, quali limiti valgono e se ne hai diritto lo decide l’ufficio delle borse di studio. Presenta la domanda al cantone competente, di norma il cantone di domicilio dei tuoi genitori." },
     resultNotEligible: "Chi soggiorna in Svizzera unicamente per la formazione di norma non ha diritto alle borse cantonali. Il repertorio privato qui sotto può essere un'alternativa.",

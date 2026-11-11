@@ -165,7 +165,7 @@ export const SEITEN = [
           'L’agid social è <strong>subsidiar</strong>. Avant ch’el vegn en dumonda, vegnan examinads auters dretgs: salari, indemnisaziun da dischoccupaziun, rentas, prestaziuns cumplementaras, reducziun da premi, contribuziuns d’mantegniment, stipendis. Era l’agna facultad vegn resguardada, cun quai ch’ils chantuns enconuschan ina franchisa da la quala l’import differeschia.',
           'Quai è il motiv pertge ch’ina annunzia cumenza savens cun bleras dumondas davart prestaziuns dal tut autras. I na va betg per malfidanza, mabain per l’urden prescrit da la lescha.',
           // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
-          'Senza pass svizzer po il retratg d’agid social avair consequenzas per la dimora. Cun ina permissiun da dimora u da curta durada (B, L) po el esser in motiv da revocar la permissiun; cun ina permissiun da domicil (C), sch’il retratg è durabel ed en grond dimensiun (art. 62 al. 1 lit. e ed art. 63 al. 1 lit. c LEI). Cun permiss F po el engrevgiar ina dumonda posteriura per reuniun da famiglia u per ina permissiun da dimora. Laschai cussegliar Vus ordavant tar in post da cussegliaziun u tar il servetsch social. Il dretg d’agid en situaziuns da basegn (pli giu) vala independentamain da quai.',
+          'Senza pass svizzer po il retratg d’agid social avair consequenzas per la dimora. Cun ina permissiun da dimora u da curta durada (B, L) po el esser in motiv da revocar la permissiun; cun ina permissiun da domicil (C), sch’il retratg è durabel ed en grond dimensiun (art. 62 al. 1 lit. e ed art. 63 al. 1 lit. c LEI). Cun permiss F po el engrevgiar ina dumonda posteriura per reuniun da famiglia u per ina permissiun da dimora (art. 85c al. 1 lit. c ed art. 84 al. 5 LEI). Per burgais da stadis da la UE/AELS valan per part autras reglas. Laschai cussegliar Vus ordavant tar in post da cussegliaziun u tar il servetsch social. Independentamain dal status da dimora avais Vus en ina situaziun da basegn dretg sin il minimum per viver (art. 12 CF, pli giu).',
         ],
       },
       {
@@ -215,12 +215,12 @@ export const SEITEN = [
       {
         frage: 'Ha l’agid social consequenzas per mia permissiun da dimora?',
         antwort:
-          'Senza pass svizzer po el avair. Cun permiss B u L po il retratg esser in motiv da revocar la permissiun, cun permiss C sch’el è durabel ed en grond dimensiun (art. 62 al. 1 lit. e ed art. 63 al. 1 lit. c LEI). Cun permiss F po el engrevgiar ina dumonda posteriura per reuniun da famiglia u per ina permissiun da dimora. Cun permiss N, S u F è ultra da quai la reducziun da premi suspendida, uschè ditg ch’i vegn retratg agid social (excepziuns: vesair la pagina Reducziun da premi). Laschai cussegliar Vus ordavant tar in post da cussegliaziun u tar il servetsch social.',
+          'Senza pass svizzer po el avair. Cun permiss B u L po il retratg esser in motiv da revocar la permissiun, cun permiss C sch’el è durabel ed en grond dimensiun (art. 62 al. 1 lit. e ed art. 63 al. 1 lit. c LEI). Cun permiss F po el engrevgiar ina dumonda posteriura per reuniun da famiglia u per ina permissiun da dimora (art. 85c al. 1 lit. c ed art. 84 al. 5 LEI). Cun permiss N u S e cun permiss F durant ils emprims set onns suenter l’entrada è ultra da quai la reducziun da premi suspendida, uschè ditg ch’i vegn retratg agid social (art. 82a al. 7 LAsil, art. 5b OAsil 2). Laschai cussegliar Vus ordavant tar in post da cussegliaziun u tar il servetsch social.',
       },
       {
         frage: 'Stoss jau restituir l’agid social?',
         antwort:
-          'Sch’e cura, regla il chantun — per exempel sch’i vegn pli tard ina ierta u ina facultad pli gronda. Ultra da quai pon parents en lingia directa, q.v.d. geniturs, uffants, tats e biadis, vegnir obligads da sustegnair, sch’els vivan en bunas relaziuns (art. 328 al. 1 CCS). Tge che vala en Voss cas, di il post cumpetent.',
+          'Sch’e cura, regla il chantun — per exempel sch’i vegn pli tard ina ierta u ina facultad pli gronda. Ultra da quai pon parents en lingia directa, per exempel geniturs, uffants, tats e biadis, vegnir obligads da sustegnair, sch’els vivan en bunas relaziuns (art. 328 al. 1 CCS). Tge che vala en Voss cas, di il post cumpetent.',
       },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
@@ -242,7 +242,7 @@ export const SEITEN = [
           'La taglia federala directa sa drizza tenor la Lescha federala davart la taglia federala directa (LTFD) ed enconuscha per tut la Svizra la medema tarifa. Ella differenziescha tenor il stadi civil e la chasada, ma betg tenor il lieu da domicil.',
           'Encassada vegn ella tuttina dal chantun — la decleraziun da taglia è la medema.',
           // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
-          'Auter tar la <strong>taglia a la funtauna</strong>: sche Vus lavurais en Svizra senza permissiun da domicil, per exempel cun permiss B, deducescha il patrun la taglia directamain da la paja; ina decleraziun da taglia na datti lura per regla betg. Ulteriuras deducziuns, per exempel per la pitga 3a, datti lura mo tras ina taxaziun ordinaria posteriura, che sto vegnir dumandada fin ils 31 da mars da l’onn suandant (art. 89a LTFD).',
+          'Auter tar la <strong>taglia a la funtauna</strong>: sche Vus lavurais en Svizra senza permissiun da domicil, per exempel cun permiss B, deducescha il patrun la taglia directamain da la paja (art. 83 LTFD). Sche la paja brutta è sut ina limita legala, na datti per regla nagina decleraziun da taglia. Ulteriuras deducziuns, per exempel per la pitga 3a, datti lura mo tras ina taxaziun ordinaria posteriura; ella sto vegnir dumandada fin ils 31 da mars da l’onn suandant, tar ina partenza fin a la desannunzia (art. 89a al. 3 LTFD). Sur quella vegn taxà ordinariamain d’uffizi (art. 89 LTFD, art. 9 OTF).',
         ],
       },
       {

@@ -150,7 +150,7 @@ export const SEITEN = [
         absaetze: [
           'L’aiuto sociale è <strong>sussidiario</strong>. Prima che entri in considerazione vengono esaminati altri diritti: salario, indennità di disoccupazione, rendite, prestazioni complementari, riduzione dei premi, contributi di mantenimento, borse di studio. Viene considerata anche la sostanza propria, per la quale i Cantoni conoscono una franchigia il cui importo differisce.',
           'È il motivo per cui un’iscrizione comincia spesso con molte domande su prestazioni del tutto diverse. Non si tratta di sfiducia, bensì dell’ordine previsto dalla legge.',
-          'Senza passaporto svizzero, ricevere l’aiuto sociale può avere conseguenze per il soggiorno. Con un permesso di dimora o di soggiorno di breve durata (B, L) può essere un motivo di revoca del permesso; con un permesso di domicilio (C), se l’aiuto è percepito in modo durevole e in larga misura (art. 62 cpv. 1 lett. e e art. 63 cpv. 1 lett. c LStrI). Con un permesso F può rendere più difficile una futura domanda di ricongiungimento familiare o di permesso di dimora. Si faccia consigliare prima da un servizio di consulenza o dal servizio sociale. Il diritto all’aiuto in situazioni di bisogno (più sotto) vale indipendentemente da ciò.',
+          'Senza passaporto svizzero, ricevere l’aiuto sociale può avere conseguenze per il soggiorno. Con un permesso di dimora o di soggiorno di breve durata (B, L) può essere un motivo di revoca del permesso; con un permesso di domicilio (C), se l’aiuto è percepito in modo durevole e in larga misura (art. 62 cpv. 1 lett. e e art. 63 cpv. 1 lett. c LStrI). Con un permesso F può rendere più difficile una futura domanda di ricongiungimento familiare o di permesso di dimora (art. 85c cpv. 1 lett. c e art. 84 cpv. 5 LStrI). Per i cittadini di Stati UE/AELS valgono in parte altre regole. Si faccia consigliare prima da un servizio di consulenza o dal servizio sociale. Indipendentemente dallo statuto di soggiorno, in una situazione di bisogno ha diritto al minimo indispensabile per vivere (art. 12 Cost., più sotto).',
         ],
       },
       {
@@ -199,12 +199,12 @@ export const SEITEN = [
       {
         frage: 'L’aiuto sociale ha conseguenze sul mio permesso di soggiorno?',
         antwort:
-          'Senza passaporto svizzero può averne. Con un permesso B o L riceverlo può essere un motivo di revoca del permesso, con un permesso C se percepito in modo durevole e in larga misura (art. 62 cpv. 1 lett. e e art. 63 cpv. 1 lett. c LStrI). Con un permesso F può rendere più difficile una futura domanda di ricongiungimento familiare o di permesso di dimora. Con un permesso N, S o F, inoltre, la riduzione dei premi è sospesa finché si riceve l’aiuto sociale (eccezioni: vedi la pagina Riduzione dei premi). Si faccia consigliare prima da un servizio di consulenza o dal servizio sociale.',
+          'Senza passaporto svizzero può averne. Con un permesso B o L riceverlo può essere un motivo di revoca del permesso, con un permesso C se percepito in modo durevole e in larga misura (art. 62 cpv. 1 lett. e e art. 63 cpv. 1 lett. c LStrI). Con un permesso F può rendere più difficile una futura domanda di ricongiungimento familiare o di permesso di dimora (art. 85c cpv. 1 lett. c e art. 84 cpv. 5 LStrI). Con un permesso N o S, e con un permesso F nei primi sette anni dopo l’entrata, inoltre, la riduzione dei premi è sospesa finché si riceve l’aiuto sociale (art. 82a cpv. 7 LAsi, art. 5b OAsi 2). Si faccia consigliare prima da un servizio di consulenza o dal servizio sociale.',
       },
       {
         frage: 'Devo restituire l’aiuto sociale?',
         antwort:
-          'Se e quando, lo stabilisce il Cantone — per esempio se più tardi si aggiunge un’eredità o una sostanza più consistente. Inoltre i parenti in linea retta, cioè genitori, figli, nonni e nipoti, possono essere tenuti all’assistenza se vivono in condizioni agiate (art. 328 cpv. 1 CC). Che cosa vale nel Suo caso, glielo dice il servizio competente.',
+          'Se e quando, lo stabilisce il Cantone — per esempio se più tardi si aggiunge un’eredità o una sostanza più consistente. Inoltre i parenti in linea retta, per esempio genitori, figli, nonni e nipoti, possono essere tenuti all’assistenza se vivono in condizioni agiate (art. 328 cpv. 1 CC). Che cosa vale nel Suo caso, glielo dice il servizio competente.',
       },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
@@ -225,7 +225,7 @@ export const SEITEN = [
         absaetze: [
           'L’imposta federale diretta si fonda sulla legge federale sull’imposta federale diretta (LIFD) e conosce per tutta la Svizzera la stessa tariffa. Distingue secondo lo stato civile e l’economia domestica, ma non secondo il luogo di domicilio.',
           'Viene tuttavia riscossa dal Cantone — la dichiarazione d’imposta è la stessa.',
-          'Diverso è il caso dell’<strong>imposta alla fonte</strong>: se lavora in Svizzera senza permesso di domicilio, per esempio con un permesso B, il datore di lavoro trattiene l’imposta direttamente dal salario; di regola non c’è quindi una dichiarazione d’imposta. Altre deduzioni, per esempio per il pilastro 3a, sono possibili solo con una tassazione ordinaria ulteriore, che va chiesta entro il 31 marzo dell’anno successivo (art. 89a LIFD).',
+          'Diverso è il caso dell’<strong>imposta alla fonte</strong>: se lavora in Svizzera senza permesso di domicilio, per esempio con un permesso B, il datore di lavoro trattiene l’imposta direttamente dal salario (art. 83 LIFD). Se il salario lordo è inferiore a un limite legale, di regola non c’è una dichiarazione d’imposta. Altre deduzioni, per esempio per il pilastro 3a, sono allora possibili solo con una tassazione ordinaria ulteriore; va chiesta entro il 31 marzo dell’anno successivo, in caso di partenza entro la notifica di partenza (art. 89a cpv. 3 LIFD). Al di sopra, la tassazione ordinaria avviene d’ufficio (art. 89 LIFD, art. 9 OIFo).',
         ],
       },
       {

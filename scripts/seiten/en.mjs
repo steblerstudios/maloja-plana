@@ -154,7 +154,7 @@ export const SEITEN = [
         absaetze: [
           'Social assistance is <strong>subsidiary</strong>. Before it comes into question, other entitlements are examined: wages, unemployment benefits, pensions, supplementary benefits (Ergänzungsleistungen, EL), premium reduction, maintenance payments, education grants (Stipendien). Your own assets are also taken into account, although the cantons allow an exempt amount whose level differs.',
           'That is why an application often begins with many questions about quite different benefits. It is not about mistrust, but about the order laid down by law.',
-          'Without a Swiss passport, receiving social assistance can affect your residence. With a residence or short-term permit (B, L), it can be grounds for revoking the permit; with a settlement permit (C), if assistance is received long-term and to a considerable extent (Art. 62 para. 1 let. e and Art. 63 para. 1 let. c AIG). With an F permit, it can make a later application for family reunification or a residence permit more difficult. Get advice beforehand from a counselling service or the social services office. The right to assistance in situations of need (further down) applies regardless.',
+          'Without a Swiss passport, receiving social assistance can affect your residence. With a residence or short-term permit (B, L), it can be grounds for revoking the permit; with a settlement permit (C), if assistance is received long-term and to a considerable extent (Art. 62 para. 1 let. e and Art. 63 para. 1 let. c AIG). With an F permit, it can make a later application for family reunification or a residence permit more difficult (Art. 85c para. 1 let. c and Art. 84 para. 5 AIG). Partly different rules apply to nationals of EU/EFTA states. Get advice beforehand from a counselling service or the social services office. Whatever your residence status, in an emergency you are entitled to the bare necessities of life (Art. 12 Federal Constitution, further down).',
         ],
       },
       {
@@ -203,12 +203,12 @@ export const SEITEN = [
       {
         frage: 'Does social assistance affect my residence permit?',
         antwort:
-          'Without a Swiss passport, it can. With a B or L permit, receiving it can be grounds for revoking the permit, with a C permit if it is received long-term and to a considerable extent (Art. 62 para. 1 let. e and Art. 63 para. 1 let. c AIG). With an F permit, it can make a later application for family reunification or a residence permit more difficult. With an N, S or F permit, premium reduction is also suspended while social assistance is received (exceptions: see the Premium reduction page). Get advice beforehand from a counselling service or the social services office.',
+          'Without a Swiss passport, it can. With a B or L permit, receiving it can be grounds for revoking the permit, with a C permit if it is received long-term and to a considerable extent (Art. 62 para. 1 let. e and Art. 63 para. 1 let. c AIG). With an F permit, it can make a later application for family reunification or a residence permit more difficult (Art. 85c para. 1 let. c and Art. 84 para. 5 AIG). With an N or S permit, and with an F permit in the first seven years after entry, premium reduction is also suspended while social assistance is received (Art. 82a para. 7 AsylG, Art. 5b AsylV 2). Get advice beforehand from a counselling service or the social services office.',
       },
       {
         frage: 'Do I have to repay social assistance?',
         antwort:
-          'Whether and when is regulated by the canton — for example if an inheritance or larger assets come later. In addition, relatives in direct line, meaning parents, children, grandparents and grandchildren, can be obliged to provide support if they live in comfortable circumstances (Art. 328 para. 1 Civil Code). The responsible office will tell you what applies in your case.',
+          'Whether and when is regulated by the canton — for example if an inheritance or larger assets come later. In addition, relatives in direct line, such as parents, children, grandparents and grandchildren, can be obliged to provide support if they live in comfortable circumstances (Art. 328 para. 1 Civil Code). The responsible office will tell you what applies in your case.',
       },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
@@ -229,7 +229,7 @@ export const SEITEN = [
         absaetze: [
           'Direct federal tax is governed by the Federal Act on Direct Federal Taxation (DBG) and applies the same rate schedule throughout Switzerland. It distinguishes by marital status and household, but not by place of residence.',
           'It is nevertheless levied by the canton — you file one tax return for both.',
-          'It is different with <strong>tax at source</strong>: if you work in Switzerland without a settlement permit, for example with a B permit, your employer deducts the tax directly from your wages; there is then usually no tax return. Further deductions, for example for pillar 3a, are only possible through a subsequent ordinary assessment, which must be requested by 31 March of the following year (Art. 89a DBG).',
+          'It is different with <strong>tax at source</strong>: if you work in Switzerland without a settlement permit, for example with a B permit, your employer deducts the tax directly from your wages (Art. 83 DBG). If your gross wage is below a statutory threshold, there is usually no tax return. Further deductions, for example for pillar 3a, are then only possible through a subsequent ordinary assessment; it must be requested by 31 March of the following year, or by deregistration if you leave (Art. 89a para. 3 DBG). Above it, an ordinary assessment is carried out automatically (Art. 89 DBG, Art. 9 QStV).',
         ],
       },
       {

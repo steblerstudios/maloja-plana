@@ -7170,7 +7170,7 @@ export default {
     checkStatusQ: { sie: "Votre statut de séjour", du: "Ton statut de séjour" },
     checkScopeQ: { sie: "Votre formation", du: "Ta formation" },
     checkStatusOnlyEducation: "En Suisse uniquement pour la formation",
-    checkStatusOther: "Autre statut (p. ex. permis F, permis B depuis moins de 5 ans)",
+    checkStatusOther: "Autre statut (p. ex. permis F sauf réfugiés reconnus, permis B depuis moins de 5 ans)",
     checkScopeOther: "Autre / formation continue",
     resultEligible: { sie: "Selon les règles minimales du concordat sur les bourses d’études, vous pourriez y avoir droit. C’est le service des bourses qui décide si votre canton a adhéré au concordat, quelles limites s’appliquent et si vous y avez droit. Déposez la demande auprès du canton compétent, en général le canton de domicile de vos parents.", du: "Selon les règles minimales du concordat sur les bourses d’études, tu pourrais y avoir droit. C’est le service des bourses qui décide si ton canton a adhéré au concordat, quelles limites s’appliquent et si tu y as droit. Dépose la demande auprès du canton compétent, en général le canton de domicile de tes parents." },
     resultNotEligible: "Les personnes qui séjournent en Suisse uniquement pour leur formation n'ont en général pas droit aux bourses cantonales. Le répertoire privé ci-dessous peut être une alternative.",

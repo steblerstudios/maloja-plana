@@ -158,7 +158,7 @@ export const SEITEN = [
         absaetze: [
           'L’aide sociale est <strong>subsidiaire</strong>. Avant qu’elle entre en ligne de compte, d’autres droits sont examinés : salaire, indemnités de chômage, rentes, prestations complémentaires, réduction des primes, contributions d’entretien, bourses d’études. La fortune propre est également prise en compte, les cantons connaissant une franchise dont le montant diffère.',
           'C’est la raison pour laquelle une demande commence souvent par beaucoup de questions portant sur de tout autres prestations. Il ne s’agit pas de méfiance, mais de l’ordre prévu par la loi.',
-          'Sans passeport suisse, percevoir l’aide sociale peut avoir des conséquences sur le séjour. Avec une autorisation de séjour ou de courte durée (B, L), cela peut être un motif de révocation de l’autorisation ; avec une autorisation d’établissement (C), si l’aide est perçue durablement et dans une large mesure (art. 62, al. 1, let. e, et art. 63, al. 1, let. c, LEI). Avec un permis F, cela peut compliquer une future demande de regroupement familial ou d’autorisation de séjour. Faites-vous conseiller au préalable par un service de conseil ou par le service social. Le droit d’obtenir de l’aide dans des situations de détresse (plus bas) s’applique indépendamment de cela.',
+          'Sans passeport suisse, percevoir l’aide sociale peut avoir des conséquences sur le séjour. Avec une autorisation de séjour ou de courte durée (B, L), cela peut être un motif de révocation de l’autorisation ; avec une autorisation d’établissement (C), si l’aide est perçue durablement et dans une large mesure (art. 62, al. 1, let. e, et art. 63, al. 1, let. c, LEI). Avec un permis F, cela peut compliquer une future demande de regroupement familial ou d’autorisation de séjour (art. 85c, al. 1, let. c, et art. 84, al. 5, LEI). Pour les ressortissants des États de l’UE/AELE, d’autres règles s’appliquent en partie. Faites-vous conseiller au préalable par un service de conseil ou par le service social. Quel que soit votre statut de séjour, vous avez droit, en situation de détresse, au minimum vital (art. 12 Cst., plus bas).',
         ],
       },
       {
@@ -207,12 +207,12 @@ export const SEITEN = [
       {
         frage: 'L’aide sociale a-t-elle des conséquences sur mon autorisation de séjour ?',
         antwort:
-          'Sans passeport suisse, cela peut être le cas. Avec un permis B ou L, la perception peut être un motif de révocation de l’autorisation, avec un permis C en cas de perception durable et dans une large mesure (art. 62, al. 1, let. e, et art. 63, al. 1, let. c, LEI). Avec un permis F, elle peut compliquer une future demande de regroupement familial ou d’autorisation de séjour. Avec un permis N, S ou F, la réduction des primes est en outre suspendue tant que l’aide sociale est perçue (exceptions : voir la page Réduction des primes). Faites-vous conseiller au préalable par un service de conseil ou par le service social.',
+          'Sans passeport suisse, cela peut être le cas. Avec un permis B ou L, la perception peut être un motif de révocation de l’autorisation, avec un permis C en cas de perception durable et dans une large mesure (art. 62, al. 1, let. e, et art. 63, al. 1, let. c, LEI). Avec un permis F, elle peut compliquer une future demande de regroupement familial ou d’autorisation de séjour (art. 85c, al. 1, let. c, et art. 84, al. 5, LEI). Avec un permis N ou S, et avec un permis F durant les sept premières années après l’entrée, la réduction des primes est en outre suspendue tant que l’aide sociale est perçue (art. 82a, al. 7, LAsi, art. 5b OA 2). Faites-vous conseiller au préalable par un service de conseil ou par le service social.',
       },
       {
         frage: 'Dois-je rembourser l’aide sociale ?',
         antwort:
-          'C’est le canton qui règle si et quand — par exemple lorsqu’un héritage ou une fortune plus importante s’ajoute plus tard. En outre, les parents en ligne directe, c’est-à-dire les parents, les enfants, les grands-parents et les petits-enfants, peuvent être tenus de fournir une aide s’ils vivent dans l’aisance (art. 328, al. 1, CC). Ce qui s’applique dans votre cas, le service compétent vous le dira.',
+          'C’est le canton qui règle si et quand — par exemple lorsqu’un héritage ou une fortune plus importante s’ajoute plus tard. En outre, les parents en ligne directe, par exemple les parents, les enfants, les grands-parents et les petits-enfants, peuvent être tenus de fournir une aide s’ils vivent dans l’aisance (art. 328, al. 1, CC). Ce qui s’applique dans votre cas, le service compétent vous le dira.',
       },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
@@ -233,7 +233,7 @@ export const SEITEN = [
         absaetze: [
           'L’impôt fédéral direct se fonde sur la loi fédérale sur l’impôt fédéral direct (LIFD) et connaît le même barème pour toute la Suisse. Il distingue selon l’état civil et le ménage, mais pas selon le lieu de domicile.',
           'Il est néanmoins perçu par le canton — la déclaration d’impôt est la même.',
-          'Il en va autrement de l’<strong>impôt à la source</strong> : si vous travaillez en Suisse sans autorisation d’établissement, par exemple avec un permis B, l’employeur déduit l’impôt directement du salaire ; il n’y a alors en règle générale pas de déclaration d’impôt. D’autres déductions, par exemple pour le pilier 3a, ne sont possibles que par une taxation ordinaire ultérieure, qui doit être demandée jusqu’au 31 mars de l’année suivante (art. 89a LIFD).',
+          'Il en va autrement de l’<strong>impôt à la source</strong> : si vous travaillez en Suisse sans autorisation d’établissement, par exemple avec un permis B, l’employeur déduit l’impôt directement du salaire (art. 83 LIFD). Si le salaire brut est inférieur à une limite légale, il n’y a en règle générale pas de déclaration d’impôt. D’autres déductions, par exemple pour le pilier 3a, ne sont alors possibles que par une taxation ordinaire ultérieure ; elle doit être demandée jusqu’au 31 mars de l’année suivante, en cas de départ jusqu’au départ (art. 89a, al. 3, LIFD). Au-delà, la taxation ordinaire a lieu d’office (art. 89 LIFD, art. 9 OIS).',
         ],
       },
       {

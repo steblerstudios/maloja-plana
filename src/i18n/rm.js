@@ -8161,7 +8161,7 @@ export default {
     checkScopeQ: { sie: "Vossa furmaziun", du: "Tia furmaziun" },
     checkStatusOnlyEducation: "En Svizra mo per la furmaziun",
     // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
-    checkStatusOther: "Auter status (p.ex. permiss F, permiss B dapi main che 5 onns)",
+    checkStatusOther: "Auter status (p.ex. permiss F auter che fugitivs renconuschids, permiss B dapi main che 5 onns)",
     checkScopeOther: "Auter / furmaziun cuntinuanta",
     // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
     resultEligible: { sie: "Tenor las reglas minimalas dal concordat da stipendis pudessas Vus avair dretg. Sche Voss chantun è sa participà al concordat, tge limitas valan e sche Vus avais dretg, decida l’uffizi da stipendis. Inoltrai la dumonda tar il chantun cumpetent, per regla il chantun da domicil da Voss geniturs.", du: "Tenor las reglas minimalas dal concordat da stipendis pudessas ti avair dretg. Sche tes chantun è sa participà al concordat, tge limitas valan e sche ti has dretg, decida l’uffizi da stipendis. Inoltrescha la dumonda tar il chantun cumpetent, per regla il chantun da domicil da tes geniturs." },
