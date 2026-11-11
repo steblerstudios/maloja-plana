@@ -9,6 +9,9 @@
 //
 // Eigene Datei, damit nichts davon ins Startbündel reist (nur die nachgeladene Kachel braucht sie).
 
+import { LSE_VOLLZEIT_STUNDEN_WOCHE } from '../data/branchenLohn.js';
+import { wochenstundenUnplausibel } from '../data/lohnCheck.js';
+
 const datum = (iso) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ''));
   if (!m) return null;
@@ -36,4 +39,38 @@ export function dienstLage(employmentStart, heute = new Date()) {
   const inProbezeit = monate < 1;
   const kuendigungsfristMonate = dienstjahr <= 1 ? 1 : dienstjahr <= 9 ? 2 : 3;
   return { monate, jahre, dienstjahr, inProbezeit, kuendigungsfristMonate };
+}
+
+// Eine Rechnung je Wahrheit (Matrix 10.11.2026 §6 Regel 3; Formenlehre §7f): Ferien und Pensum standen bis
+// 11.11.2026 inline in InstrumentePanel.jsx. Kachel, Kapitel und Werkzeug rufen ab jetzt diese Funktionen.
+
+// Zahl aus einem Textfeld («22,5» wie «22.5»); leer, ungültig oder negativ → null.
+const tageZahl = (v) => {
+  const s = String(v ?? '').replace(',', '.').trim();
+  const n = Number(s);
+  return s !== '' && Number.isFinite(n) && n >= 0 ? n : null;
+};
+
+// Ferien (Felder `ferienTageJahr`, `ferienTageBezogen`). «Offen» nur, wenn der Bezug erfasst ist — sonst wird
+// kein Stand erfunden. Mehr bezogen als Anspruch: offen 0, das Bild bleibt bei voll.
+// { jahr, bezogen, offen, anteilBezogen, anteilOffen } oder null (ohne Anspruch über 0).
+export function ferienLage(ferienTageJahr, ferienTageBezogen) {
+  const jahr = tageZahl(ferienTageJahr);
+  if (!(jahr > 0)) return null;
+  const bezogen = tageZahl(ferienTageBezogen);
+  if (bezogen == null) return { jahr, bezogen: null, offen: null, anteilBezogen: null, anteilOffen: null };
+  const offen = Math.max(0, jahr - bezogen);
+  return { jahr, bezogen, offen, anteilBezogen: Math.min(1, bezogen / jahr), anteilOffen: offen / jahr };
+}
+
+// Pensum aus den Wochenstunden, gemessen an der Rechenbasis des Lohnvergleichs (LSE 40 Std., BFS) — nicht «die»
+// Vollzeit (Fachprüfung 10.11.2026). Ab der Basis «Vollzeit», Anteil nie über 1. Unplausible Stunden (über der
+// Obergrenze des Lohn-Checks) zählen nicht. { stunden, basis, anteil, prozent, vollzeit } oder null.
+export function pensumLage(workHoursPerWeek) {
+  const stunden = Number(String(workHoursPerWeek ?? '').replace(',', '.'));
+  if (!(stunden > 0) || wochenstundenUnplausibel(stunden)) return null;
+  const basis = LSE_VOLLZEIT_STUNDEN_WOCHE;
+  const vollzeit = stunden >= basis;
+  const anteil = Math.min(1, stunden / basis);
+  return { stunden, basis, anteil, prozent: Math.round(anteil * 100), vollzeit };
 }
