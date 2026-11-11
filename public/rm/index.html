@@ -18,19 +18,19 @@
   <meta name="robots" content="noindex, follow">
   <meta name="author" content="Stebler Studios">
   <meta name="theme-color" content="#F2F2F0">
-  <title>Entrada — Maloja Plana</title>
+  <title>In classeur da vita svizzer — Maloja Plana</title>
   <meta name="description" content="In classeur da vita svizzer — taglias, reducziun da premi, agid social, salari minimal, prevenziun e carta d’urgenza en in lieu. Tut las indicaziuns restan sin Voss apparat: nagin conto, nagina transmissiun ad in server, nagin traçar. Gratuit e da funtauna averta.">
   <link rel="canonical" href="https://malojaplana.ch/rm/">
 
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Entrada">
+  <meta property="og:title" content="In classeur da vita svizzer">
   <meta property="og:description" content="In classeur da vita svizzer — taglias, reducziun da premi, agid social, salari minimal, prevenziun e carta d’urgenza en in lieu. Tut las indicaziuns restan sin Voss apparat: nagin conto, nagina transmissiun ad in server, nagin traçar. Gratuit e da funtauna averta.">
   <meta property="og:url" content="https://malojaplana.ch/rm/">
   <meta property="og:image" content="https://malojaplana.ch/og-image.png">
   <meta property="og:locale" content="rm_CH">
   <meta property="og:site_name" content="Maloja Plana">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Entrada">
+  <meta name="twitter:title" content="In classeur da vita svizzer">
   <meta name="twitter:description" content="In classeur da vita svizzer — taglias, reducziun da premi, agid social, salari minimal, prevenziun e carta d’urgenza en in lieu. Tut las indicaziuns restan sin Voss apparat: nagin conto, nagina transmissiun ad in server, nagin traçar. Gratuit e da funtauna averta.">
   <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
 
@@ -45,7 +45,7 @@
         "@type": "WebPage",
         "@id": "https://malojaplana.ch/rm/#webpage",
         "url": "https://malojaplana.ch/rm/",
-        "name": "Entrada",
+        "name": "In classeur da vita svizzer",
         "description": "In classeur da vita svizzer — taglias, reducziun da premi, agid social, salari minimal, prevenziun e carta d’urgenza en in lieu. Tut las indicaziuns restan sin Voss apparat: nagin conto, nagina transmissiun ad in server, nagin traçar. Gratuit e da funtauna averta.",
         "inLanguage": "rm-CH",
         "isPartOf": {
@@ -110,6 +110,10 @@
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
     footer p{ margin-bottom:6px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
     footer .sprachen{ margin-top:14px }
@@ -149,9 +153,8 @@
       </ul>
 
       <div class="karte">
-        <p><strong>Maloja Plana calculescha quai per Vossa situaziun.</strong></p>
         <p>L’applicaziun è actualmain en ina <strong>beta serrada</strong> e dovra in code d’access. <strong>Senza code sa laschar guardar in exempel</strong> — cun datas inventadas, i na vegn memorisà nagut.</p>
-        <p><a class="knopf" href="/?lang=rm">Guardar l’exempel — senza code d’access</a></p>
+        <p><a class="knopf" href="/app/?lang=rm&amp;beispiel">Guardar l’exempel — senza code d’access</a></p>
       </div>
 
       <ul>
@@ -172,7 +175,7 @@
            zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
            Datenabfluss und widerspricht local-first / CSP self-only. -->
       <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Annunziar%20in%20problem">Annunziar in problem</a></p>
-      <p class="sprachen">Lingua: <a href="/" hreflang="de">Deutsch</a> · <a href="/fr/" hreflang="fr">Français</a> · <a href="/it/" hreflang="it">Italiano</a> · <a href="/en/" hreflang="en">English</a> · <span aria-current="true">Rumantsch</span></p>
+      <p class="sprachen">Lingua: <a href="/" hreflang="de" lang="de">Deutsch</a> · <a href="/fr/" hreflang="fr" lang="fr">Français</a> · <a href="/it/" hreflang="it" lang="it">Italiano</a> · <a href="/en/" hreflang="en" lang="en">English</a> · <span aria-current="true">Rumantsch</span></p>
     </footer>
   </div>
 </body>

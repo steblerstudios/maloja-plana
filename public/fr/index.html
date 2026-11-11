@@ -18,19 +18,19 @@
   <meta name="robots" content="noindex, follow">
   <meta name="author" content="Stebler Studios">
   <meta name="theme-color" content="#F2F2F0">
-  <title>Accueil — Maloja Plana</title>
+  <title>Un classeur de vie suisse — Maloja Plana</title>
   <meta name="description" content="Un classeur de vie suisse — impôts, réduction des primes, aide sociale, salaire minimum, prévoyance et carte d’urgence au même endroit. Toutes les données restent sur votre appareil : pas de compte, aucune transmission à un serveur, aucun traçage. Gratuit et à code source ouvert.">
   <link rel="canonical" href="https://malojaplana.ch/fr/">
 
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Accueil">
+  <meta property="og:title" content="Un classeur de vie suisse">
   <meta property="og:description" content="Un classeur de vie suisse — impôts, réduction des primes, aide sociale, salaire minimum, prévoyance et carte d’urgence au même endroit. Toutes les données restent sur votre appareil : pas de compte, aucune transmission à un serveur, aucun traçage. Gratuit et à code source ouvert.">
   <meta property="og:url" content="https://malojaplana.ch/fr/">
   <meta property="og:image" content="https://malojaplana.ch/og-image.png">
   <meta property="og:locale" content="fr_CH">
   <meta property="og:site_name" content="Maloja Plana">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Accueil">
+  <meta name="twitter:title" content="Un classeur de vie suisse">
   <meta name="twitter:description" content="Un classeur de vie suisse — impôts, réduction des primes, aide sociale, salaire minimum, prévoyance et carte d’urgence au même endroit. Toutes les données restent sur votre appareil : pas de compte, aucune transmission à un serveur, aucun traçage. Gratuit et à code source ouvert.">
   <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
 
@@ -45,7 +45,7 @@
         "@type": "WebPage",
         "@id": "https://malojaplana.ch/fr/#webpage",
         "url": "https://malojaplana.ch/fr/",
-        "name": "Accueil",
+        "name": "Un classeur de vie suisse",
         "description": "Un classeur de vie suisse — impôts, réduction des primes, aide sociale, salaire minimum, prévoyance et carte d’urgence au même endroit. Toutes les données restent sur votre appareil : pas de compte, aucune transmission à un serveur, aucun traçage. Gratuit et à code source ouvert.",
         "inLanguage": "fr-CH",
         "isPartOf": {
@@ -110,6 +110,10 @@
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
     footer p{ margin-bottom:6px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
     footer .sprachen{ margin-top:14px }
@@ -149,9 +153,8 @@
       </ul>
 
       <div class="karte">
-        <p><strong>Maloja Plana fait le calcul pour votre situation.</strong></p>
         <p>L’application est actuellement en <strong>bêta fermée</strong> et nécessite un code d’accès. <strong>Un exemple est consultable sans code</strong> — avec des données fictives, rien n’est enregistré.</p>
-        <p><a class="knopf" href="/?lang=fr">Voir l’exemple — sans code d’accès</a></p>
+        <p><a class="knopf" href="/app/?lang=fr&amp;beispiel">Voir l’exemple — sans code d’accès</a></p>
       </div>
 
       <ul>
@@ -172,7 +175,7 @@
            zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
            Datenabfluss und widerspricht local-first / CSP self-only. -->
       <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Signaler%20un%20probl%C3%A8me">Signaler un problème</a></p>
-      <p class="sprachen">Langue: <a href="/" hreflang="de">Deutsch</a> · <span aria-current="true">Français</span> · <a href="/it/" hreflang="it">Italiano</a> · <a href="/en/" hreflang="en">English</a> · <a href="/rm/" hreflang="rm">Rumantsch</a></p>
+      <p class="sprachen">Langue: <a href="/" hreflang="de" lang="de">Deutsch</a> · <span aria-current="true">Français</span> · <a href="/it/" hreflang="it" lang="it">Italiano</a> · <a href="/en/" hreflang="en" lang="en">English</a> · <a href="/rm/" hreflang="rm" lang="rm">Rumantsch</a></p>
     </footer>
   </div>
 </body>

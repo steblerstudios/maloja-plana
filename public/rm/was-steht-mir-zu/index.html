@@ -169,6 +169,10 @@
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
     footer p{ margin-bottom:6px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
     footer .sprachen{ margin-top:14px }
@@ -272,7 +276,7 @@
            zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
            Datenabfluss und widerspricht local-first / CSP self-only. -->
       <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Annunziar%20in%20problem">Annunziar in problem</a></p>
-      <p class="sprachen">Lingua: <a href="/was-steht-mir-zu/" hreflang="de">Deutsch</a> · <a href="/fr/was-steht-mir-zu/" hreflang="fr">Français</a> · <a href="/it/was-steht-mir-zu/" hreflang="it">Italiano</a> · <a href="/en/was-steht-mir-zu/" hreflang="en">English</a> · <span aria-current="true">Rumantsch</span></p>
+      <p class="sprachen">Lingua: <a href="/was-steht-mir-zu/" hreflang="de" lang="de">Deutsch</a> · <a href="/fr/was-steht-mir-zu/" hreflang="fr" lang="fr">Français</a> · <a href="/it/was-steht-mir-zu/" hreflang="it" lang="it">Italiano</a> · <a href="/en/was-steht-mir-zu/" hreflang="en" lang="en">English</a> · <span aria-current="true">Rumantsch</span></p>
     </footer>
   </div>
 </body>

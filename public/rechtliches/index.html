@@ -128,6 +128,10 @@
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
     footer p{ margin-bottom:6px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
     footer .sprachen{ margin-top:14px }
@@ -156,7 +160,7 @@
 
     <main>
       <h1>Impressum, Datenschutz und Haftungsausschluss</h1>
-      <p class="vorspann">Diese Seite gilt für malojaplana.ch und die öffentlichen Erklärseiten. Für die Anwendung selbst gilt zusätzlich die ausführliche Datenschutzerklärung, die in der App unter «Datenschutz & Rechtliches» steht — auch sie ohne Zugangscode. Verbindlich sind die veröffentlichten Fassungen: diese Seite für malojaplana.ch und die Erklärseiten, der Text in der App für die Anwendung. Die Arbeitsfassungen im öffentlichen Quellcode (docs/legal) sind Entwürfe und Herkunftsnachweis, nicht die verbindliche Fassung.</p>
+      <p class="vorspann">Diese Seite gilt für malojaplana.ch und die öffentlichen Erklärseiten. Für die Anwendung gilt zusätzlich die ausführliche Datenschutzerklärung in der App unter «Datenschutz & Rechtliches», auch sie ohne Zugangscode. Verbindlich sind diese beiden veröffentlichten Fassungen, für die Anwendung der Text in der App, nicht die Arbeitsfassungen im Quellcode (docs/legal).</p>
 
 
         <h2>Anbieterin</h2>
@@ -167,16 +171,16 @@
         <h2>Haftungsausschluss</h2>
         <p>Maloja Plana ist ein <strong>Orientierungswerkzeug</strong>. Die Rechner und Übersichten stützen sich auf öffentlich zugängliche Rechtsgrundlagen und dienen ausschliesslich der persönlichen Information.</p>
         <p><strong>Maloja Plana ersetzt keine Rechts-, Steuer-, Versicherungs- oder Finanzberatung.</strong></p>
-        <p>Die Anbieterin übernimmt keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der Berechnungen, für die Eignung der Ergebnisse für individuelle Entscheidungen, und für Schäden, die aus deren Nutzung entstehen. Massgebend sind ausschliesslich die geltenden Gesetze und die zuständigen Behörden.</p>
+        <p>Die Anbieterin übernimmt keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der Berechnungen, für die Eignung der Ergebnisse für individuelle Entscheidungen, und für Schäden, die aus deren Nutzung entstehen. Die Haftung für vorsätzlich oder grobfahrlässig verursachte Schäden bleibt vorbehalten. Massgebend sind ausschliesslich die geltenden Gesetze und die zuständigen Behörden.</p>
 
         <h2>Datenschutz auf diesen Seiten</h2>
-        <p>Die Erklärseiten sind statisches HTML. Sie laden <strong>keine Skripte, keine Cookies und keine Ressourcen von Dritten</strong>; die Schriften liegen auf demselben Server. Die Startseite lädt zusätzlich eigene kleine Skripte vom selben Server: eines leitet alte App-Adressen nach /app/ weiter, eines bewegt die Bilder der Reise. Sie setzen keine Cookies und senden keine Daten. Es gibt kein Tracking, keine Analyse und keine Werbung.</p>
-        <p>Beim Abruf fallen dennoch technische Daten beim Hoster an — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Genf, mit Rechenzentren in der Schweiz: IP-Adresse in den Server-Logs, Browsertyp, Betriebssystem und Zeitpunkt des Zugriffs. Das ist für die Auslieferung und die Betriebssicherheit technisch notwendig. Infomaniak handelt dabei als Auftragsbearbeiterin (Art. 9 nDSG). Die Zugriffs- und Fehlerlogs bewahrt Infomaniak nach eigener Angabe mindestens 7 Tage auf (Infomaniak Support-FAQ 1926, abgerufen am 23.09.2026).</p>
+        <p>Die Erklärseiten sind statisches HTML. Sie laden <strong>keine Skripte, keine Cookies und keine Ressourcen von Dritten</strong>; die Schriften liegen auf demselben Server. Die Startseite lädt zusätzlich eigene kleine Skripte vom selben Server: eines leitet alte App-Adressen nach /app/ weiter, eines bewegt die Bilder der Reise. Wer die App früher unter der Hauptadresse benutzt hat, erhält beim nächsten Besuch einer dieser Seiten einmal ein drittes: Es leert den alten Zwischenspeicher der App im Browser, meldet sich danach selbst ab und lädt die Seite einmal neu; Ihre Angaben auf dem Gerät fasst es nicht an. Diese Skripte setzen keine Cookies und senden keine Daten. Es gibt kein Tracking, keine Analyse und keine Werbung.</p>
+        <p>Beim Abruf fallen dennoch technische Daten bei der Hosting-Anbieterin an — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Genf, mit Rechenzentren in der Schweiz: IP-Adresse in den Server-Logs, Browsertyp, Betriebssystem und Zeitpunkt des Zugriffs. Das ist für die Auslieferung und die Betriebssicherheit technisch notwendig. Infomaniak handelt dabei als Auftragsbearbeiterin (Art. 9 nDSG). Die Zugriffs- und Fehlerlogs bewahrt Infomaniak nach eigener Angabe mindestens 7 Tage auf (Infomaniak Support-FAQ 1926, abgerufen am 23.09.2026).</p>
         <p>Weitere Empfänger gibt es nicht: keine Analyse-Dienste, keine Social-Media-Einbindungen, keine Weitergabe und kein Verkauf von Daten.</p>
 
         <h2>Kontakt per E-Mail</h2>
-        <p>Schreiben Sie an <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, bearbeiten wir Ihre Adresse, den Inhalt der Nachricht und allfällige Anhänge, um zu antworten. Das Postfach liegt bei Infomaniak in der Schweiz. Die Korrespondenz bleibt so lange, wie die Anfrage und übliche Nachfragen es brauchen, danach wird sie gelöscht. Eine Weitergabe an Dritte findet nicht statt, ausser sie ist gesetzlich geschuldet.</p>
-        <p><strong>Warteliste:</strong> Schreiben Sie uns, um auf die Warteliste zu kommen, bewahren wir Ihre Nachricht mit Ihrer E-Mail-Adresse nur zu diesem Zweck auf. Wir schreiben Ihnen höchstens zweimal: wenn die Beta endet und, falls es dazu kommt, wenn Maloja Plana im App Store erscheint. Danach löschen wir Nachricht und Adresse, spätestens am 31. Dezember 2027, auch wenn es bis dahin keine App-Store-Fassung gibt. Auf Wunsch löschen wir sie umgehend; eine Antwort mit «abmelden» genügt. Für etwas anderes verwenden wir die Adresse nicht, auch nicht für einen Newsletter.</p>
+        <p>Wenn Sie an <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a> schreiben, bearbeiten wir Ihre Adresse, den Inhalt der Nachricht und allfällige Anhänge, um zu antworten. Das Postfach liegt bei Infomaniak in der Schweiz. Die Korrespondenz bleibt so lange, wie die Anfrage und übliche Nachfragen es brauchen, danach wird sie gelöscht. Eine Weitergabe an Dritte findet nicht statt, ausser sie ist gesetzlich geschuldet.</p>
+        <p><strong>Warteliste:</strong> Wenn Sie sich für die Warteliste melden, bewahren wir Ihre Nachricht mit Ihrer E-Mail-Adresse nur zu diesem Zweck auf. Wir schreiben Ihnen höchstens zweimal: wenn die Beta endet und, falls es dazu kommt, wenn Maloja Plana im App Store erscheint. Danach löschen wir Nachricht und Adresse, spätestens am 31. Dezember 2027, auch wenn es bis dahin keine App-Store-Fassung gibt. Auf Wunsch löschen wir sie umgehend; eine Antwort mit «abmelden» genügt. Für etwas anderes verwenden wir die Adresse nicht, auch nicht für einen Newsletter.</p>
 
         <h2>Daten in der Anwendung</h2>
         <p>Was Sie in Maloja Plana erfassen, bleibt <strong>auf Ihrem Gerät</strong> (localStorage, IndexedDB und für geteilte Dateien der Cache im Browser). Es gibt kein Konto, keine Anmeldung und keine Übermittlung an die Anbieterin oder an Dritte. Wer die Daten löschen will, löscht sie im Gerät — es gibt keine zweite Kopie anderswo.</p>
@@ -184,10 +188,10 @@
         <p>Weil nichts übermittelt wird, kann die Anbieterin zu Ihren Eingaben auch keine Auskunft erteilen: sie hat sie nie gesehen. Die ausführliche Fassung mit allen Rechten nach DSG steht in der App unter «Datenschutz & Rechtliches».</p>
 
         <h2>Geistiges Eigentum</h2>
-        <p>Der Code steht unter <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a>, einsehbar auf <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">GitHub</a>. «Maloja Plana» ist eine Projektbezeichnung von Sophie Stebler. Für kommerzielle Nutzung gibt es Dual Licensing — Anfragen an die oben genannte Adresse.</p>
+        <p>Der Code steht unter <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a>, einsehbar auf <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">GitHub</a>. «Maloja Plana» ist eine Projektbezeichnung von Sophie Stebler. Für kommerzielle Nutzung gibt es eine Doppellizenz (Dual Licensing) — Anfragen an die oben genannte Adresse.</p>
 
         <h2>Anwendbares Recht</h2>
-        <p>Es gilt Schweizer Recht. Gerichtsstand ist Basel-Stadt, Schweiz.</p>
+        <p>Es gilt Schweizer Recht. Gerichtsstand ist Basel-Stadt, Schweiz. Stand dieser Seite: 11. November 2026.</p>
 
 
 
@@ -218,7 +222,7 @@
            zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
            Datenabfluss und widerspricht local-first / CSP self-only. -->
       <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
-      <p class="sprachen">Sprache: <span aria-current="true">Deutsch</span> · <a href="/fr/rechtliches/" hreflang="fr">Français</a> · <a href="/it/rechtliches/" hreflang="it">Italiano</a> · <a href="/en/rechtliches/" hreflang="en">English</a> · <a href="/rm/rechtliches/" hreflang="rm">Rumantsch</a></p>
+      <p class="sprachen">Sprache: <span aria-current="true">Deutsch</span> · <a href="/fr/rechtliches/" hreflang="fr" lang="fr">Français</a> · <a href="/it/rechtliches/" hreflang="it" lang="it">Italiano</a> · <a href="/en/rechtliches/" hreflang="en" lang="en">English</a> · <a href="/rm/rechtliches/" hreflang="rm" lang="rm">Rumantsch</a></p>
     </footer>
   </div>
 </body>

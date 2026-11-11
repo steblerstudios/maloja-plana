@@ -297,13 +297,13 @@ export const SONDERSEITEN = [
         absaetze: [
           'Maloja Plana is an <strong>orientation tool</strong>. The calculators and overviews are based on publicly accessible legal sources and are intended solely for personal information.',
           '<strong>Maloja Plana does not replace legal, tax, insurance or financial advice.</strong>',
-          'The provider accepts no warranty for the accuracy, completeness or currency of the calculations, for the suitability of the results for individual decisions, or for damage arising from their use. Only the applicable laws and the competent authorities are decisive.',
+          'The provider accepts no warranty for the accuracy, completeness or currency of the calculations, for the suitability of the results for individual decisions, or for damage arising from their use. Liability for damage caused intentionally or through gross negligence remains reserved. Only the applicable laws and the competent authorities are decisive.',
         ],
       },
       {
         titel: 'Data protection on these pages',
         absaetze: [
-          'The explanatory pages are static HTML. They load <strong>no scripts, no cookies and no third-party resources</strong>; the fonts are on the same server. There is no tracking, no analytics and no advertising.',
+          'The explanatory pages are static HTML. They load <strong>no scripts, no cookies and no third-party resources</strong>; the fonts are on the same server. The home page also loads small scripts of its own from the same server: one redirects old app addresses to /app/, one animates the images of the journey. Anyone who used the app at the main address before receives a third one, once, on their next visit to one of these pages: it empties the app’s old cache in the browser, unregisters itself and reloads the page once; it does not touch your data on the device. These scripts set no cookies and send no data. There is no tracking, no analytics and no advertising.',
           'When the pages are accessed, technical data nevertheless arises at the host — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Geneva, with data centres in Switzerland: IP address in the server logs, browser type, operating system and time of access. This is technically necessary for delivery and operational security. Infomaniak acts as a processor in doing so (Art. 9 nDSG). According to Infomaniak’s own information, access and error logs are kept for at least 7 days (Infomaniak support FAQ 1926, retrieved on 23 September 2026).',
           'There are no further recipients: no analytics services, no social media embeds, no passing on and no sale of data.',
         ],

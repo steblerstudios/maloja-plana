@@ -293,13 +293,13 @@ export const SONDERSEITEN = [
         absaetze: [
           'Maloja Plana è uno <strong>strumento di orientamento</strong>. I calcolatori e le panoramiche si basano su fonti giuridiche accessibili al pubblico e servono esclusivamente all’informazione personale.',
           '<strong>Maloja Plana non sostituisce alcuna consulenza giuridica, fiscale, assicurativa o finanziaria.</strong>',
-          'La fornitrice non assume alcuna garanzia per l’esattezza, la completezza o l’attualità dei calcoli, per l’idoneità dei risultati a decisioni individuali, né per i danni derivanti dal loro utilizzo. Fanno fede esclusivamente le leggi vigenti e le autorità competenti.',
+          'La fornitrice non assume alcuna garanzia per l’esattezza, la completezza o l’attualità dei calcoli, per l’idoneità dei risultati a decisioni individuali, né per i danni derivanti dal loro utilizzo. Resta riservata la responsabilità per danni causati intenzionalmente o per negligenza grave. Fanno fede esclusivamente le leggi vigenti e le autorità competenti.',
         ],
       },
       {
         titel: 'Protezione dei dati su queste pagine',
         absaetze: [
-          'Le pagine esplicative sono HTML statico. Non caricano <strong>alcuno script, alcun cookie e alcuna risorsa di terzi</strong>; i caratteri si trovano sullo stesso server. Non vi è alcun tracciamento, alcuna analisi e alcuna pubblicità.',
+          'Le pagine esplicative sono HTML statico. Non caricano <strong>alcuno script, alcun cookie e alcuna risorsa di terzi</strong>; i caratteri si trovano sullo stesso server. La pagina iniziale carica inoltre piccoli script propri dallo stesso server: uno reindirizza i vecchi indirizzi dell’applicazione verso /app/, l’altro anima le immagini del percorso. Chi in passato usava l’applicazione all’indirizzo principale ne riceve una volta un terzo alla visita successiva di una di queste pagine: svuota la vecchia memoria cache dell’applicazione nel browser, si disattiva e ricarica la pagina una volta; non tocca i dati sul Suo dispositivo. Questi script non impostano cookie e non inviano dati. Non vi è alcun tracciamento, alcuna analisi e alcuna pubblicità.',
           'Alla consultazione vengono comunque raccolti dati tecnici presso l’hoster — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Ginevra, con centri dati in Svizzera: indirizzo IP nei registri del server, tipo di browser, sistema operativo e momento dell’accesso. Ciò è tecnicamente necessario per la fornitura e per la sicurezza dell’esercizio. Infomaniak agisce in tal senso quale responsabile del trattamento (art. 9 nLPD). Secondo le indicazioni del fornitore, i registri di accesso e di errore vengono conservati almeno 7 giorni (FAQ di supporto Infomaniak 1926, consultata il 23 settembre 2026).',
           'Non vi sono altri destinatari: nessun servizio di analisi, nessuna integrazione di social media, nessuna trasmissione e nessuna vendita di dati.',
         ],

@@ -18,19 +18,19 @@
   <meta name="robots" content="noindex, follow">
   <meta name="author" content="Stebler Studios">
   <meta name="theme-color" content="#F2F2F0">
-  <title>Home — Maloja Plana</title>
+  <title>A Swiss life folder — Maloja Plana</title>
   <meta name="description" content="A Swiss life folder — taxes, premium reduction, social assistance, minimum wage, pension provision and emergency card in one place. Everything stays on your device: no account, nothing sent to a server, no tracking. Free and open source.">
   <link rel="canonical" href="https://malojaplana.ch/en/">
 
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Home">
+  <meta property="og:title" content="A Swiss life folder">
   <meta property="og:description" content="A Swiss life folder — taxes, premium reduction, social assistance, minimum wage, pension provision and emergency card in one place. Everything stays on your device: no account, nothing sent to a server, no tracking. Free and open source.">
   <meta property="og:url" content="https://malojaplana.ch/en/">
   <meta property="og:image" content="https://malojaplana.ch/og-image.png">
   <meta property="og:locale" content="en_GB">
   <meta property="og:site_name" content="Maloja Plana">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Home">
+  <meta name="twitter:title" content="A Swiss life folder">
   <meta name="twitter:description" content="A Swiss life folder — taxes, premium reduction, social assistance, minimum wage, pension provision and emergency card in one place. Everything stays on your device: no account, nothing sent to a server, no tracking. Free and open source.">
   <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
 
@@ -45,7 +45,7 @@
         "@type": "WebPage",
         "@id": "https://malojaplana.ch/en/#webpage",
         "url": "https://malojaplana.ch/en/",
-        "name": "Home",
+        "name": "A Swiss life folder",
         "description": "A Swiss life folder — taxes, premium reduction, social assistance, minimum wage, pension provision and emergency card in one place. Everything stays on your device: no account, nothing sent to a server, no tracking. Free and open source.",
         "inLanguage": "en",
         "isPartOf": {
@@ -110,6 +110,10 @@
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
     footer p{ margin-bottom:6px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
     footer .sprachen{ margin-top:14px }
@@ -149,9 +153,8 @@
       </ul>
 
       <div class="karte">
-        <p><strong>Maloja Plana works this out for your situation.</strong></p>
         <p>The app is currently in a <strong>closed beta</strong> and needs an access code. <strong>An example can be viewed without a code</strong> — with invented data; nothing is saved.</p>
-        <p><a class="knopf" href="/?lang=en">View the example — no access code</a></p>
+        <p><a class="knopf" href="/app/?lang=en&amp;beispiel">View the example — no access code</a></p>
       </div>
 
       <ul>
@@ -172,7 +175,7 @@
            zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
            Datenabfluss und widerspricht local-first / CSP self-only. -->
       <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Report%20a%20problem">Report a problem</a></p>
-      <p class="sprachen">Language: <a href="/" hreflang="de">Deutsch</a> · <a href="/fr/" hreflang="fr">Français</a> · <a href="/it/" hreflang="it">Italiano</a> · <span aria-current="true">English</span> · <a href="/rm/" hreflang="rm">Rumantsch</a></p>
+      <p class="sprachen">Language: <a href="/" hreflang="de" lang="de">Deutsch</a> · <a href="/fr/" hreflang="fr" lang="fr">Français</a> · <a href="/it/" hreflang="it" lang="it">Italiano</a> · <span aria-current="true">English</span> · <a href="/rm/" hreflang="rm" lang="rm">Rumantsch</a></p>
     </footer>
   </div>
 </body>
