@@ -5901,6 +5901,10 @@ export default {
   },
 
   eo: {
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildErsatz: 'Indemnisaziun per di',
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildLohn: 'salari per di fin ussa',
     title: 'Cumpensaziun da gudogn (EO)',
     einkommen: 'Entrada annaira brut (CHF)',
     einkommenHint: "Ultima entrada annaira avant l'eveniment",
@@ -7030,6 +7034,10 @@ export default {
   },
   // «Lohnt sich meine Karte?» — Kreditkarten-Rechner (27.09.2026). Neutral formuliert, keine Sie/Du-Fassung nötig.
   stundenlohnView: {
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildSie: 'Salari per ura',
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildMindest: 'Salari minimal',
     // TODO(rm): provisorisch — Gegenlese Muttersprachler:in (Stundenlohn-Rechner neu, 28.09.2026).
     // Gesetzes-Abkürzungen vorläufig nach deutscher Form (OR, BVG, UVV) mit «art.»/«al.».
     title: 'Salari per ura: tge ma tutga?',
@@ -8097,6 +8105,12 @@ export default {
     disclaimer: "Ils cuntegns servan a l'orientaziun. Els na remplazzan nagin cussegliament giuridic u finanzial individual. Verifitgai las indicaziuns tar il post cumpetent.", // TODO(rm): Flyer A5 25.09., Gegenlese
   },
   alv: {
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildErsatz: 'Indemnisaziuns per mais',
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildLohn: 'salari fin ussa',
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildMonate: 'Fin {n} mais · in fegl per mais',
     title: "Indemnisaziun da dischoccupaziun",
     intro: { sie: "In'orientaziun che Vus pudessas survegnir sco indemnisaziun dal di en cas da perdita da lavur. Il quint obligatoric vegn fatg dal RAV e da Vossa cassa da dischoccupaziun.", du: "In'orientaziun che ti pudessas survegnir sco indemnisaziun dal di en cas da perdita da lavur. Il quint obligatoric vegn fatg dal RAV e da tia cassa da dischoccupaziun." },
     bruttolohn: "Salari brut mensil fin ussa (CHF)",

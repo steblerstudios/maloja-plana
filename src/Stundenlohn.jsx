@@ -1,5 +1,5 @@
 import React from 'react';
-import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
+import { RechnerForm, Einzelwahl, MuenzStapel } from './components/RechnerForm.jsx';
 import { hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { CANTON_CODES, getCantonName } from './config/kantonPLZ.js';
@@ -143,7 +143,10 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData, onNavigate }) => {
     ),
     React.createElement('section', { 'aria-labelledby': 'sl-e', style: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.text } },
       React.createElement('h3', { id: 'sl-e', style: { ...titelStil, fontSize: text.body } }, t('stundenlohnView.einordnungTitel')),
-      befundKeys.map((key) => React.createElement('p', { key, style: absatz }, befundSatz(key))),
+      befundKeys.map((key) => React.createElement(React.Fragment, { key },
+        // Bild (11.11.2026, «stundenlohn b»): Münzstapel Stundenlohn gegen Mindestlohn, nur mit belegtem Mindestlohn.
+        r.befunde[key].mindestStunde > 0 && React.createElement(MuenzStapel, { palette, sie: r.lesarten[key].grundRoh, mindest: r.befunde[key].mindestStunde, labelSie: t('stundenlohnView.bildSie'), labelMindest: t('stundenlohnView.bildMindest') }),
+        React.createElement('p', { style: absatz }, befundSatz(key)))),
       // GE/NE/TI/JU: Mindestlohn ohne Feiertagszuschlag — der wird nie herausgerechnet, also die Annahme offen sagen.
       ['GE', 'NE', 'TI', 'JU'].includes(e.kanton) && e.feiertag !== 'nein' && React.createElement('p', { style: absatz }, t('stundenlohnView.ml_feiertagAnnahme')),
       React.createElement('p', { style: absatz }, r.bvg === 'unbekannt'

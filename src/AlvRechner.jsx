@@ -1,7 +1,7 @@
 import { lohnVergleichSperre } from './data/lohnEinordnung.js';
 import React, { useState, useMemo } from 'react';
-import { berechneTaggeld, alvErgebnis, ALV_PARAMS, ALV_DATA_SOURCE } from './data/alvRechner.js';
-import { RechnerForm, ErgebnisZahl, ErgebnisZeile, Einzelwahl } from './components/RechnerForm.jsx';
+import { berechneTaggeld, alvErgebnis, alvErsatzAnteil, alvBezugMonate, ALV_PARAMS, ALV_DATA_SOURCE } from './data/alvRechner.js';
+import { RechnerForm, ErgebnisZahl, ErgebnisZeile, Einzelwahl, ErsatzBalken, Kalenderblaetter } from './components/RechnerForm.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
@@ -105,13 +105,17 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const ergebnis = result && (result.anspruch
     ? React.createElement(React.Fragment, null,
         React.createElement(ErgebnisZahl, { palette, label: t('alv.monatlichLabel'), wert: 'CHF ' + fmt(result.monatlich) }),
+        // Bild G (11.11.2026): der Ersatz füllt den bisherigen Lohn bis zu seiner Stelle, der Rest fällt weg.
+        React.createElement(ErsatzBalken, { palette, anteil: alvErsatzAnteil(parsedLohn, result), labelErsatz: t('alv.bildErsatz'), labelLohn: t('alv.bildLohn') }),
         React.createElement('div', { style: { marginTop: space.xs + 'px' } },
           React.createElement(ErgebnisZeile, { palette, label: t('alv.taggeldLabel'), wert: betrag(result.taggeld, { stellen: 2 }) }),
           React.createElement(ErgebnisZeile, { palette, label: t('alv.satzLabel'), wert: t('alv.satzValue', { p: Math.round(result.satz * 100) }) }),
           React.createElement(ErgebnisZeile, { palette, label: t('alv.wartetageLabel'), wert: t('alv.wartetageValue', { n: result.wartetage }) }),
-          result.anspruchstage != null && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchValue', { n: result.anspruchstage, m: Math.round(result.anspruchstage / ALV_PARAMS.taggelderProMonat) }) }),
+          result.anspruchstage != null && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchValue', { n: result.anspruchstage, m: Math.round(alvBezugMonate(result.anspruchstage)) }) }),
           // L1: Beitragszeit reicht, das Alter fehlt → die Spanne, keine erfundene Zahl.
-          result.anspruchstageOffen && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchOffenAlter', result.anspruchSpanne) })
+          result.anspruchstageOffen && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchOffenAlter', result.anspruchSpanne) }),
+          // Wie lange (11.11.2026, «wie lang b»): ein Kalenderblatt je Monat. Nur mit fester Höchstzahl, nicht bei der Spanne.
+          result.anspruchstage != null && React.createElement(Kalenderblaetter, { palette, monate: alvBezugMonate(result.anspruchstage), label: t('alv.bildMonate', { n: Math.round(alvBezugMonate(result.anspruchstage)) }) })
         ))
     : React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, t('alv.noAnspruch')));
 

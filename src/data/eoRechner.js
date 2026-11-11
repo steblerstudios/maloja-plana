@@ -213,3 +213,12 @@ export const EO_DATA_SOURCE = EO_HEUTE.quelle;
 export function eoErgebnis({ einkommen }) {
   return ergebnis(ERGEBNIS_ART.SCHAETZUNG, { fehlend: Number(einkommen) > 0 ? [] : ['bruttolohn'] });
 }
+
+// Bild im EO-Rechner (Stebler Studios 11.11.2026): wie viel vom bisherigen Lohn? Taggeld geteilt durch den
+// Tageslohn (Jahreseinkommen ÷ 360, EOV Art. 5 Abs. 2 Bst. b, wie taggeldAusEinkommen). Über dem Höchstbetrag
+// fällt der Anteil unter 80 %. Ohne Anspruch oder Einkommen: null.
+export function eoErsatzAnteil(jahreseinkommen, leistung) {
+  const tageslohn = (Number(jahreseinkommen) || 0) / 360;
+  if (!leistung || !leistung.anspruch || tageslohn <= 0) return null;
+  return Math.max(0, Math.min(1, leistung.taggeld / tageslohn));
+}

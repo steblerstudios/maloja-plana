@@ -8,6 +8,9 @@ import { readFileSync } from 'node:fs';
 const rm = readFileSync(new URL('../rm.js', import.meta.url), 'utf8').split('\n');
 
 const PROVISORISCH = {
+  alv: ['bildErsatz', 'bildLohn', 'bildMonate'],             // Arbeit-Rechner-Bilder, 11.11.2026
+  eo: ['bildErsatz', 'bildLohn'],
+  stundenlohnView: ['bildSie', 'bildMindest'],
   vr: [
     'gutschriftGeteilt',               // AHV B8 (#524), 21.10.2026
     'beitragsjahreHint',               // AHV Vorbezug (#529), 22.10.2026

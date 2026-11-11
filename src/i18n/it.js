@@ -5035,6 +5035,8 @@ export default {
   },
   // «Lohnt sich meine Karte?» — Kreditkarten-Rechner (27.09.2026). Neutral formuliert, keine Sie/Du-Fassung nötig.
   stundenlohnView: {
+    bildSie: 'Salario orario',
+    bildMindest: 'Salario minimo',
     title: 'Salario orario: che cosa mi spetta?',
     intro: 'Per il lavoro pagato a ore: il salario suddiviso in salario di base, vacanze e altri supplementi, il salario di base confrontato con il salario minimo cantonale, e in più le soglie per la cassa pensioni e l’assicurazione infortuni. Calcolato solo con i dati inseriti qui — ciò a cui risponde solo il contratto resta aperto come domanda.',
     anstellungTitel: 'Impiego',
@@ -6772,6 +6774,8 @@ export default {
   },
 
   eo: {
+    bildErsatz: 'Indennità giornaliera',
+    bildLohn: 'salario giornaliero precedente',
     title: 'Indennità di perdita di guadagno (IPG)',
     einkommen: 'Reddito annuo lordo (CHF)',
     einkommenHint: 'Ultimo reddito annuo prima dell\'evento',
@@ -7052,6 +7056,9 @@ export default {
     },
   },
   alv: {
+    bildErsatz: 'Indennità al mese',
+    bildLohn: 'salario precedente',
+    bildMonate: 'Fino a {n} mesi · un foglio per mese',
     title: "Indennità di disoccupazione",
     intro: { sie: "Un orientamento su quanto potrebbe ricevere come indennità giornaliera in caso di perdita del lavoro. Il calcolo vincolante è fatto dall'URC e dalla Sua cassa di disoccupazione.", du: "Un orientamento su quanto potresti ricevere come indennità giornaliera in caso di perdita del lavoro. Il calcolo vincolante è fatto dall'URC e dalla tua cassa di disoccupazione." },
     bruttolohn: "Salario lordo mensile precedente (CHF)",

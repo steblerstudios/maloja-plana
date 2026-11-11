@@ -154,3 +154,17 @@ export function alvErgebnis({ bruttolohn, beitragsmonate, alter }) {
 
 export const ALV_DATA_VERSION = String(ALV_JAHR);
 export const ALV_DATA_SOURCE = ALV_HEUTE.quelle;
+
+// Bilder im ALV-Rechner (Stebler Studios 11.11.2026). Eine Rechnung je Wahrheit:
+// Wie viel vom bisherigen Lohn? Der Ersatz im Monat (≈ Taggeld × 21,7) geteilt durch den eingetragenen Lohn.
+// Über dem Höchstbetrag (UVV Art. 22) fällt der Anteil unter den Satz. Ohne Anspruch oder Lohn: null.
+export function alvErsatzAnteil(lohnMonat, ergebnis) {
+  const lohn = Number(lohnMonat) || 0;
+  if (!ergebnis || !ergebnis.anspruch || lohn <= 0) return null;
+  return Math.max(0, Math.min(1, ergebnis.monatlich / lohn));
+}
+
+// Wie lange? Höchstzahl der Taggelder in Monaten (AVIV Art. 40a: 21,7 Taggelder je Monat). Ohne Zahl: null.
+export function alvBezugMonate(anspruchstage) {
+  return anspruchstage > 0 ? anspruchstage / ALV_PARAMS.taggelderProMonat : null;
+}

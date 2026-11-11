@@ -5061,6 +5061,8 @@ export default {
   },
   // «Lohnt sich meine Karte?» — Kreditkarten-Rechner (27.09.2026). Neutral formuliert, keine Sie/Du-Fassung nötig.
   stundenlohnView: {
+    bildSie: 'Salaire horaire',
+    bildMindest: 'Salaire minimum',
     title: 'Salaire horaire : à quoi ai-je droit ?',
     intro: 'Pour le travail payé à l’heure : le salaire réparti entre salaire de base, vacances et autres suppléments, le salaire de base comparé au salaire minimum cantonal, ainsi que les seuils de la caisse de pensions et de l’assurance-accidents. Calculé uniquement avec les indications saisies ici — ce que seul le contrat peut dire reste posé comme question.',
     anstellungTitel: 'Engagement',
@@ -6797,6 +6799,8 @@ export default {
   },
 
   eo: {
+    bildErsatz: 'Allocation journalière',
+    bildLohn: 'ancien salaire journalier',
     title: 'Allocations pour perte de gain (APG)',
     einkommen: 'Revenu annuel brut (CHF)',
     einkommenHint: 'Dernier revenu annuel avant l\'événement',
@@ -7102,6 +7106,9 @@ export default {
     disclaimer: "Les contenus servent à l’orientation. Ils ne remplacent pas un conseil juridique ou financier individuel. Vérifiez les informations auprès du service compétent.",
   },
   alv: {
+    bildErsatz: 'Indemnités par mois',
+    bildLohn: 'ancien salaire',
+    bildMonate: 'Jusqu’à {n} mois · une feuille par mois',
     title: "Indemnités de chômage",
     intro: { sie: "Une orientation sur ce que vous pourriez recevoir comme indemnité journalière en cas de perte d'emploi. Le calcul contraignant est effectué par l'ORP et votre caisse de chômage.", du: "Une orientation sur ce que tu pourrais recevoir comme indemnité journalière en cas de perte d'emploi. Le calcul contraignant est effectué par l'ORP et ta caisse de chômage." },
     bruttolohn: "Salaire brut mensuel précédent (CHF)",
