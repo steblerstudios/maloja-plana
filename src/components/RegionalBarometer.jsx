@@ -66,7 +66,7 @@ const skala = (regional, national, userValue) => Math.ceil((Math.max(regional, n
 // sind dieselben — nur das Bild wechselt. `maxBreite`: Instrument-Grösse (Brand Book §7b), Standard mittel.
 // `drittel` (11.11.2026): die Wohnkosten-Rechnung (wohnkostenRechnung) — dann ist Ihr Haus in der Häuserzeile das
 // Drittel-Haus klein, und die Drittel-Linie quer über die Strasse entfällt.
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel, form, maxBreite, drittel, kanton, tuer }) => {
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel, form, maxBreite, drittel, kanton, tuer, daneben, ausland }) => {
   if (!comparison) return null;
   const { regional, national, diffPct, year, roomKey } = comparison;
   const ns = 'po.regionalCompare.';
@@ -156,7 +156,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       style: { fontWeight: weight.semi, marginBottom: space.sm + 'px', fontSize: text.sm },
     }, t(k + 'title')),
 
-    form === 'haeuser' ? haeuserzeile({ palette, t, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, dotTextColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel, gross: strasseGross, kanton, userLabel, fillColor, tuer }) :
+    form === 'haeuser' ? haeuserzeile({ palette, t, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, dotTextColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel, gross: strasseGross, kanton, userLabel, fillColor, tuer, daneben, ausland }) :
     // Balken: Füllung (eigener Wert) + Punkt (Region) + Strich (Schweizer Schnitt)
     React.createElement('div', {
       role: 'img', 'aria-label': ariaLabel,
@@ -330,8 +330,9 @@ const sieDrittelHaus = (x, y, drittel, palette, fuell) => {
 //     dieselbe Lesart wie der Pegel (mietzinsPegelState). Kennt der Kanton ein Programm ohne Zahl: Tür hell getönt.
 //     Ohne Programm eine schlichte Tür.
 const VH = { x: 44, b: 68, dach: 10, luft: 8, tuerB: 16, tuerH: 24 };
-const VH_TUER_MITTE = VH.x + VH.b / 2;
-function vergleichsHaus({ palette, oben, regional, national, dotColor, dotTextColor, fillColor, kanton, tuer }) {
+// Die Tür sitzt rechts im Haus, neben dem Wegweiser; links bleibt Platz für die Fahnen der Stöcke.
+const VH_TUER_MITTE = VH.x + VH.b - 14;
+function vergleichsHaus({ palette, oben, regional, national, dotColor, dotTextColor, fillColor, kanton, tuer, ausland }) {
   const h = React.createElement;
   const yR = oben(regional), yN = oben(national);
   const top = Math.min(yR, yN) - VH.luft;
@@ -351,6 +352,10 @@ function vergleichsHaus({ palette, oben, regional, national, dotColor, dotTextCo
     h('line', { 'data-teil': 'stock-kanton', x1: x, x2: r, y1: yR, y2: yR, stroke: dotColor, strokeWidth: 2.5, ...STRICH }),
     fahne(yR, (kanton ? kanton + ' ' : '') + zahl(regional), dotTextColor || palette.text, 'fahne-kanton'),
     fahne(yN, 'CH Ø ' + zahl(national), palette.mid, 'fahne-schweiz'),
+    // EU als Stock (Stebler Studios 11.11.2026, «so wie BS und CH»): abgeleitet aus dem Preisniveau für Wohnen und
+    // Energie (data/wohnenInternational.js), darum gepunktet blau und eine Prozent-Fahne, kein Frankenbetrag.
+    ausland && h('line', { 'data-teil': 'stock-eu', x1: x, x2: r, y1: oben(ausland.eu.hoehe), y2: oben(ausland.eu.hoehe), stroke: palette.skyDeep, strokeWidth: 2, strokeDasharray: '1 3', strokeLinecap: 'round', ...STRICH }),
+    ausland && h('text', { 'data-teil': 'fahne-eu', x: x + 4, y: oben(ausland.eu.hoehe) - 3, fontSize: KUERZEL_SCHRIFT, fontWeight: 600, fill: palette.skyDeep }, 'EU ' + (ausland.eu.pct >= 0 ? '+' : '−') + Math.abs(ausland.eu.pct) + ' %'),
     // Die Tür (= Tonne)
     h('g', { 'data-teil': 'tuer', 'data-programm': tuer && tuer.programm ? 'ja' : 'nein' },
       h('defs', null, h('clipPath', { id: 'vh-tuer-clip' }, h('path', { d: tuerPfad }))),
@@ -362,7 +367,7 @@ function vergleichsHaus({ palette, oben, regional, national, dotColor, dotTextCo
   );
 }
 
-function haeuserzeile({ palette, t, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, dotTextColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel, gross, kanton, userLabel, fillColor, tuer }) {
+function haeuserzeile({ palette, t, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, dotTextColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel, gross, kanton, userLabel, fillColor, tuer, daneben, ausland }) {
   const h = React.createElement;
   const oben = (v) => BODEN - Math.max(4, (pct(v) / 100) * HOEHE);
   const strich = STRICH;
@@ -372,10 +377,11 @@ function haeuserzeile({ palette, t, ariaLabel, hasUser, userValue, regional, nat
   // Ohne Einkommen kein Anteil: dann bleibt Ihr Haus gefüllt wie bisher (kein leeres Drittel-Haus).
   const mitDrittel = !!drittel && drittel.anteil != null;
   // Gross: Platz über der Strasse für das Dach des Vergleichshauses.
-  return h('div', { role: 'img', 'aria-label': ariaLabel, 'data-form': 'haeuser', style: { marginBottom: space.sm + 'px', paddingTop: gross ? space.lg + 'px' : 0 } },
+  // `daneben` (gross): das internationale Schild rechts neben der Strasse; bei wenig Platz rückt es darunter.
+  const strasse = h('div', { role: 'img', 'aria-label': ariaLabel, 'data-form': 'haeuser', style: { marginBottom: space.sm + 'px', paddingTop: gross ? space.lg + 'px' : 0, ...(gross && daneben ? { flex: '0 0 ' + (maxBreite || INSTRUMENT_GROESSE.mittel) + 'px', maxWidth: '100%' } : {}) } },
     h('svg', { viewBox: '0 0 132 90', width: '100%', 'aria-hidden': 'true', focusable: 'false', style: { display: 'block', maxWidth: (maxBreite || INSTRUMENT_GROESSE.mittel) + 'px', height: 'auto', overflow: 'visible' } },
       // Gross: ein Vergleichshaus (Kanton + Schweiz als Stöcke, Tür = Tonne). Mittel: wie bisher drei Häuser.
-      gross ? vergleichsHaus({ palette, oben, regional, national, dotColor, dotTextColor, fillColor, kanton, tuer })
+      gross ? vergleichsHaus({ palette, oben, regional, national, dotColor, dotTextColor, fillColor, kanton, tuer, ausland })
         : h('g', null,
           haus(HAUS_X.schweiz, national, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }),
           haus(HAUS_X.region, regional, { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: dotColor, stroke: palette.surface, strokeWidth: 1 })),
@@ -388,15 +394,16 @@ function haeuserzeile({ palette, t, ariaLabel, hasUser, userValue, regional, nat
       hasThreshold && !mitDrittel && h('text', { x: 128, y: linieY + 5, textAnchor: 'middle', fontSize: 15, fontWeight: 700, fill: schwelleFarbe }, '!'),
     ),
     // Skizze B: die Beträge direkt unter den Häusern (erst sehen, dann lesen). Spalten genau unter den Häusern.
-    gross && h('div', { 'data-teil': 'strasse-betraege', style: { position: 'relative', minHeight: tuer && tuer.schild ? '92px' : '40px', maxWidth: (maxBreite || INSTRUMENT_GROESSE.mittel) + 'px', marginTop: space.xs + 'px' } },
+    gross && h('div', { 'data-teil': 'strasse-betraege', style: { position: 'relative', minHeight: '40px', maxWidth: (maxBreite || INSTRUMENT_GROESSE.mittel) + 'px', marginTop: space.xs + 'px' } },
       [[HAUS_X.sie, hasUser ? userValue : null, userLabel ? t('strasse.ausprobiert') : t('strasse.eigen'), palette.text]]
         .filter(([, wert]) => wert > 0)
         .map(([x, wert, name, farbe]) => h('div', { key: x, 'aria-hidden': 'true', style: { position: 'absolute', left: ((x + HAUS_B / 2) / 132 * 100) + '%', transform: 'translateX(-50%)', textAlign: 'center', whiteSpace: 'nowrap', lineHeight: 1.25 } },
           h('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: farbe } }, zahl(wert)),
-          h('div', { style: { fontSize: text.xs, color: palette.mid } }, name))),
-      // Der Wegweiser «möglich» steht an der Tür: sein Pfosten zeigt hinauf zur Tür.
-      gross && tuer && tuer.schild && h('div', { 'data-teil': 'tuer-schild', style: { position: 'absolute', top: 0, left: (VH_TUER_MITTE / 132 * 100) + '%', marginLeft: '-' + (space.lg + 1) + 'px' } }, tuer.schild)),
+          h('div', { style: { fontSize: text.xs, color: palette.mid } }, name)))),
   );
+  return gross && daneben
+    ? h('div', { 'data-teil': 'strasse-mit-schild', style: { display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: space.md + 'px' } }, strasse, daneben)
+    : strasse;
 }
 
 // Die Häuserzeile klein (64 px, Brand Book §7b «Spiegel Startseite»; Stebler Studios 11.11.2026 «Kacheln 64

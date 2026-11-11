@@ -4763,6 +4763,16 @@ export default {
   // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
   // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
   strasse: { eigen: { sie: 'Sie', du: 'du' }, ausprobiert: 'ausprobiert', region: 'Region', regionKanton: 'Region {kanton}', schweiz: 'Schweiz' },
+  // Wohnen international: Schild neben dem Vergleichshaus (11.11.2026). Eurostat-Preisniveau, kein Mietvergleich.
+  wohnenInternational: {
+    titel: 'Wohnen und Energie',
+    unter: 'Schweiz gegen …',
+    teurer: '{name}: in der Schweiz {pct} % teurer',
+    guenstiger: '{name}: in der Schweiz {pct} % günstiger',
+    namen: { EU: 'EU-Schnitt', DE: 'Deutschland', AT: 'Österreich', FR: 'Frankreich', IT: 'Italien' },
+    satz: 'Der Stock «EU» ist abgeleitet: der Schweizer Schnitt zum Preisniveau für Wohnen und Energie im EU-Schnitt (Strom, Gas und Wasser gehören dazu). Es sind keine gemessenen Wohnungspreise. Nachbarländer: Deutschland {DE} %, Österreich {AT} %, Frankreich {FR} %, Italien {IT} %.',
+    quelle: 'Quelle: [[Eurostat, Preisniveau Wohnen und Energie 2025 (prc_ppp_ind_1)|https://ec.europa.eu/eurostat/databrowser/view/prc_ppp_ind_1/default/table]] (geprüft im November 2026).',
+  },
   mietzinsSzene: {
     titel: 'Mietbeiträge',
     beitragLegende: 'gestrichelt: so viel könnte der Kanton höchstens übernehmen, bis zu CHF {betrag} im Monat. Wie viel wirklich kommt, rechnet der Kanton.',

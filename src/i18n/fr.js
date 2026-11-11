@@ -4711,6 +4711,16 @@ export default {
   // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
   // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
   strasse: { eigen: { sie: 'vous', du: 'toi' }, ausprobiert: 'essai', region: 'région', regionKanton: 'région {kanton}', schweiz: 'Suisse' },
+  // Wohnen international: Schild neben dem Vergleichshaus (11.11.2026). Eurostat-Preisniveau, kein Mietvergleich.
+  wohnenInternational: {
+    titel: 'Logement et énergie',
+    unter: 'Suisse face à …',
+    teurer: '{name} : en Suisse {pct} % plus cher',
+    guenstiger: '{name} : en Suisse {pct} % moins cher',
+    namen: { EU: 'moyenne UE', DE: 'Allemagne', AT: 'Autriche', FR: 'France', IT: 'Italie' },
+    satz: 'L’étage « UE » est dérivé : la moyenne suisse au niveau des prix du logement et de l’énergie de la moyenne UE (électricité, gaz et eau compris). Ce ne sont pas des prix mesurés. Pays voisins : Allemagne {DE} %, Autriche {AT} %, France {FR} %, Italie {IT} %.',
+    quelle: 'Source : [[Eurostat, niveau des prix logement et énergie 2025 (prc_ppp_ind_1)|https://ec.europa.eu/eurostat/databrowser/view/prc_ppp_ind_1/default/table]] (vérifié en novembre 2026).',
+  },
   mietzinsSzene: {
     titel: 'Aides au loyer',
     beitragLegende: 'en pointillé : ce que le canton pourrait prendre en charge au maximum, jusqu’à CHF {betrag} par mois. Le montant effectif est calculé par le canton.',

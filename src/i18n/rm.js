@@ -6666,6 +6666,16 @@ export default {
   // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
   // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
   strasse: { eigen: { sie: 'Vus', du: 'ti' }, ausprobiert: 'empruvà', region: 'regiun', regionKanton: 'regiun {kanton}', schweiz: 'Svizra' },
+  // Wohnen international: Schild neben dem Vergleichshaus (11.11.2026). Eurostat-Preisniveau, kein Mietvergleich.
+  wohnenInternational: {
+    titel: 'Abitar ed energia',
+    unter: 'Svizra cumparada cun …',
+    teurer: '{name}: en Svizra {pct} % pli char',
+    guenstiger: '{name}: en Svizra {pct} % pli bunmartg',
+    namen: { EU: 'media UE', DE: 'Germania', AT: 'Austria', FR: 'Frantscha', IT: 'Italia' },
+    satz: "L'auzada «UE» è derivada: la media svizra al nivel dals pretschs per abitar ed energia da la media UE (electricitad, gas ed aua cumpigliads). I n'èn nagins pretschs mesirads. Pajais vischins: Germania {DE} %, Austria {AT} %, Frantscha {FR} %, Italia {IT} %.",
+    quelle: 'Funtauna: [[Eurostat, nivel dals pretschs abitar ed energia 2025 (prc_ppp_ind_1)|https://ec.europa.eu/eurostat/databrowser/view/prc_ppp_ind_1/default/table]] (verifitgà en november 2026).',
+  },
   mietzinsSzene: {
     titel: 'Contribuziuns al fitg',
     beitragLegende: "puntignà: quai che il chantun pudess surpigliar al maximum, fin CHF {betrag} il mais. L'import effectiv quinta il chantun.",

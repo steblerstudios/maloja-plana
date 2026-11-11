@@ -76,9 +76,19 @@ describe('Vergleichshaus gross (Stebler Studios 11.11.2026: Kanton, Schweiz «zu
     expect(ohne).toContain('data-programm="nein"');
     expect(ohne).not.toContain('tuer-fuellung');
   });
-  it('der Wegweiser steht an der Tür', () => {
-    const h = gross({ tuer: { programm: true, stand: { mode: 'clear', fraction: 0.5 }, schild: React.createElement('span', { id: 'weg' }, 'W') } });
-    expect(h).toMatch(/data-teil="tuer-schild"[^>]*><span id="weg">W<\/span>/);
+  it('der Wegweiser steht rechts neben dem Vergleichshaus (Stebler Studios: «rechts neben dem Vergleichshaus»)', () => {
+    const h = gross({ daneben: React.createElement('span', { id: 'weg' }, 'W') });
+    expect(h).toMatch(/data-teil="strasse-mit-schild"[\s\S]*data-form="haeuser"[\s\S]*<span id="weg">W<\/span>/);
+    expect(h).not.toContain('tuer-schild');
+    expect(quelle('../components/WohnkostenInstrument.jsx')).toMatch(/'data-teil': 'wegweiser-neben-haus'/);
+  });
+  it('EU als Stock: gepunktet blau, Prozent-Fahne, unter dem Schweizer Stock', () => {
+    const h = gross({ ausland: { eu: { hoehe: 679, pct: -53 } } });
+    expect(h).toMatch(/data-teil="stock-eu"[^>]*stroke="#357"/);
+    expect(h).toMatch(/data-teil="fahne-eu"[^>]*>EU −53 %</);
+    const yN = Number(h.match(/data-teil="stock-schweiz"[^>]*y1="([\d.]+)"/)[1]);
+    const yE = Number(h.match(/data-teil="stock-eu"[^>]*y1="([\d.]+)"/)[1]);
+    expect(yE).toBeGreaterThan(yN);
   });
   it('unter den Häusern nur noch Ihr Betrag; die Legenden-Zeilen entfallen (aria-Label bleibt)', () => {
     const h = gross();

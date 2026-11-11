@@ -11,8 +11,10 @@ import { Pegel } from './Pegel.jsx';
 import { Icon } from '../IconSystem.jsx';
 import { ansichtIkon } from '../config/ansichtenRegister.js';
 import { ExternerLink } from './ExternerLink.jsx';
+import { Belege } from './Belege.jsx';
 import { mietzinsEinschaetzung, beitragHoechstMonat, PROGRAMM_KANTONE, KACHELKARTE_LAGE } from '../data/mietzinsbeitraege.js';
 import { mietzinsPegelState } from '../data/pegel.js';
+import { auslandStoecke, WOHNEN_INTERNATIONAL } from '../data/wohnenInternational.js';
 import { knopfStil } from './PrimaryButton.jsx';
 
 // Kapitel Wohnen · das Instrument oben (Fassung 6, Runde 9, Entwurf Z, Entscheid Stebler Studios 24.10.2026).
@@ -179,7 +181,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
     programm: mz.hasProgram,
     stand: mz.hasProgram ? mietzinsPegelState({ annualIncome: mz.annualIncome, incomeLimit: mz.incomeLimit }) : null,
     farbe: bereichFillColor('behoerden', isDarkMode) || palette.mid,
-    schild: mz.assessment?.key === 'likely' ? React.createElement(MoeglichKnopf, { palette, t, onNavigate, url: mz.info?.url, pfostenOben: true }) : null,
+    schild: mz.assessment?.key === 'likely' ? React.createElement(MoeglichKnopf, { palette, t, onNavigate, url: mz.info?.url }) : null,
   } : null;
   const zeile = { display: 'flex', justifyContent: 'space-between', gap: space.md + 'px', padding: '8px 0', fontSize: text.sm, color: palette.text };
   const kapH = { margin: space.lg + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
@@ -212,8 +214,12 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
         palette, t, comparison: vergleich, userValue: r.netto, kind: 'rent', compact: true, fillColor: fuell, imKapitel: true,
         form: 'haeuser', maxBreite: INSTRUMENT_GROESSE.gross, drittel: r, kanton: canton,
         tuer: strassenTuer,
+        ausland: auslandStoecke(vergleich.national),
+        // Der blaue Wegweiser «möglich» steht rechts neben dem Vergleichshaus, sein Pfosten auf der Strasse.
+        daneben: strassenTuer && strassenTuer.schild ? React.createElement('div', { 'data-teil': 'wegweiser-neben-haus', style: { display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: Math.round(INSTRUMENT_GROESSE.gross * BODEN_ANTEIL) + 'px', marginTop: space.lg + 'px' } }, strassenTuer.schild) : null,
         userLabel: ausprobiert ? t('wohnenInstrument.ausprobierteMiete', { amount: zahl(r.netto) }) : undefined,
-      })
+      }),
+      React.createElement(InternationalHinweis, { palette, t })
     ),
 
     // Mietzinsbeiträge (11.11.2026): Glas, Schild, Kachelkarte — der Beitrag selbst steht schon im Haus oben.
@@ -260,6 +266,16 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
     )
   );
 };
+
+// Boden der Strasse im Bild (BODEN 84 von 132 Breite, RegionalBarometer): dort steht der Pfosten des Wegweisers.
+const BODEN_ANTEIL = 84 / 132;
+// Der Satz und die Quelle zum EU-Stock stehen unter der Strasse: abgeleitet, keine gemessenen Preise in Franken.
+export const InternationalHinweis = ({ palette, t }) => React.createElement('div', { 'data-teil': 'international-hinweis', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 ' + space.sm + 'px' } },
+  React.createElement('p', { style: { margin: 0 } }, t('wohnenInternational.satz', Object.fromEntries(['DE', 'AT', 'FR', 'IT'].map((c) => {
+    const p = Math.round((WOHNEN_INTERNATIONAL.index[c] / WOHNEN_INTERNATIONAL.index.CH - 1) * 100);
+    return [c, (p >= 0 ? '+' : '−') + Math.abs(p)];
+  })))),
+  React.createElement(Belege, { palette, t, zeile: t('wohnenInternational.quelle'), style: { fontSize: text.xs } }));
 
 // Mietzinsbeiträge als Szene (Stebler Studios 11.11.2026, «Ja, so bauen»; Wächter wohnenMietzinsSzene.test.js).
 // Eine Rechnung: mietzinsEinschaetzung — dieselbe wie im Werkzeug «Mietzins». Teile:

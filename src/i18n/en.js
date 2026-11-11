@@ -4784,6 +4784,16 @@ export default {
   // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
   // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
   strasse: { eigen: 'you', ausprobiert: 'tried', region: 'region', regionKanton: 'region {kanton}', schweiz: 'Switzerland' },
+  // Wohnen international: Schild neben dem Vergleichshaus (11.11.2026). Eurostat-Preisniveau, kein Mietvergleich.
+  wohnenInternational: {
+    titel: 'Housing and energy',
+    unter: 'Switzerland compared with …',
+    teurer: '{name}: {pct}% more expensive in Switzerland',
+    guenstiger: '{name}: {pct}% cheaper in Switzerland',
+    namen: { EU: 'EU average', DE: 'Germany', AT: 'Austria', FR: 'France', IT: 'Italy' },
+    satz: 'The “EU” floor is derived: the Swiss average at the EU average price level for housing and energy (electricity, gas and water included). These are not measured prices. Neighbours: Germany {DE}%, Austria {AT}%, France {FR}%, Italy {IT}%.',
+    quelle: 'Source: [[Eurostat, price level housing and energy 2025 (prc_ppp_ind_1)|https://ec.europa.eu/eurostat/databrowser/view/prc_ppp_ind_1/default/table]] (checked in November 2026).',
+  },
   mietzinsSzene: {
     titel: 'Rent contributions',
     beitragLegende: 'dashed: the most the canton could cover, up to CHF {betrag} a month. The canton calculates the actual amount.',
