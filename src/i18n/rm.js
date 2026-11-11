@@ -1735,6 +1735,14 @@ export default {
     settingsDisplay: 'Visualisaziun e lingua',
     settingsTheme: 'Apparientscha',
     settingsAnrede: 'Furma da curtaschia',
+  // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+    schalterAn: 'An',
+  // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+    schalterAus: 'Aus',
+  // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+    settingsDunkel: 'Dunkle Darstellung',
+  // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+    sicherungAnlegen: 'Sicherung anlegen',
     editPersonalData: 'Modifitgar las datas persunalas',
   },
 
@@ -2663,10 +2671,11 @@ export default {
       intro1: 'Maloja Plana resta disponibla per tuts — er dal tut gratuit sche necessari. Sche l’argent è stret, stos ti pudair duvrar tut senza limitas.',
       intro2: 'Transparent ditg: per che quai restia uschia, dumandain nus quels che pon sa la lubir ina contribuziun voluntaria. Uschia resta Maloja gratuit per persunas cun pauc daners — senza sforz, senza controlla da las entradas, senza funcziuns bloccadas.',
       scaleTitle: 'Contribuir tenor las pussaivladads',
-      tierLow: 'Budget stret: 0 CHF — dal tut en urden, senza mala conscienza.',
+      // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+      tierLow: '0 CHF: Maloja bleibt für alle kostenlos, auch ohne Beitrag.',
       tierMid: 'I va uschè-uschè: ina pitschna contribuziun ina giada gida gia.',
       tierHigh: 'I ma va bain: ina contribuziun regulara tegna Maloja avert per auters.',
-      medianNote: 'Per orientaziun: il salari median svizzer è circa 6800 CHF brut al mais. Tgi che è sur quai e ha in pau spazi sustegna per il mument — e cun mintga partener vegn Maloja pli favuraivel.',
+      medianNote: 'Tgi che ha in pau spazi sustegna per il mument — e cun mintga partener vegn Maloja pli favuraivel.',
       // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
       howTitle: { sie: 'Uschia pudais Vus contribuir', du: 'Uschia pos ti contribuir' },
       contributeCta: 'Far ina contribuziun voluntaria',
@@ -2705,12 +2714,14 @@ export default {
       backupTitle: 'Segirezzas',
       // K39: backup1/rights2/faq a1/a5/a7 adattads ad E10 ed E18.
       // TODO(rm): provisoric — laschar controllar d'ina persuna da lingua materna.
-      backup1: { sie: "Cun aviar l'app fa Maloja automaticamain maletgs instantans da Vossas indicaziuns e documents en il navigatur (IndexedDB, maximalmain in mintga 12 uras, ils ultims 5 restan). Quests maletgs instantans n'èn betg criptads. Ina segirezza sco datoteca faschais Vus sut Utensils → Export: sco predefiniziun è ella criptada cun in pled-clav d'almain 12 caracters; senza criptaziun pudais Vus la tscherner conscientamain. Ultra da quai pudais Vus exportar Vossas indicaziuns senza criptaziun sco JSON u CSV. Questas datotecas bandunan Voss apparat mo sche Vus las dastgais vinavant activamain.", du: "Cun aviar l'app fa Maloja automaticamain maletgs instantans da Tias indicaziuns e documents en il navigatur (IndexedDB, maximalmain in mintga 12 uras, ils ultims 5 restan). Quests maletgs instantans n'èn betg criptads. Ina segirezza sco datoteca fas Ti sut Utensils → Export: sco predefiniziun è ella criptada cun in pled-clav d'almain 12 caracters; senza criptaziun pos Ti la tscherner conscientamain. Ultra da quai pos Ti exportar Tias indicaziuns senza criptaziun sco JSON u CSV. Questas datotecas bandunan Tes apparat mo sch'Ti las dastgas vinavant activamain." },
+      // TODO(rm): Cloud-Satz (iCloud/OneDrive) und Weg fehlen noch, Gruppe C L4 (11.11.2026)
+      backup1: { sie: "Cun aviar l'app fa Maloja automaticamain maletgs instantans da Vossas indicaziuns e documents en il navigatur (IndexedDB, maximalmain in mintga 12 uras, ils ultims 5 restan). Quests maletgs instantans n'èn betg criptads. Ina segirezza sco datoteca faschais Vus sut Configuraziuns → Datas & segirezza → Segirezza: sco predefiniziun è ella criptada cun in pled-clav d'almain 12 caracters; senza criptaziun pudais Vus la tscherner conscientamain. Ultra da quai pudais Vus exportar Vossas indicaziuns senza criptaziun sco JSON u CSV. Questas datotecas bandunan Voss apparat mo sche Vus las dastgais vinavant activamain.", du: "Cun aviar l'app fa Maloja automaticamain maletgs instantans da Tias indicaziuns e documents en il navigatur (IndexedDB, maximalmain in mintga 12 uras, ils ultims 5 restan). Quests maletgs instantans n'èn betg criptads. Ina segirezza sco datoteca fas Ti sut Configuraziuns → Datas & segirezza → Segirezza: sco predefiniziun è ella criptada cun in pled-clav d'almain 12 caracters; senza criptaziun pos Ti la tscherner conscientamain. Ultra da quai pos Ti exportar Tias indicaziuns senza criptaziun sco JSON u CSV. Questas datotecas bandunan Tes apparat mo sch'Ti las dastgas vinavant activamain." },
       rightsTitle: { sie: 'Voss dretgs (nLPD)', du: 'Tes dretgs (nLPD)' },
       rights1: { sie: "Cunquai che tut las datas èn memorisadas localmain, avais Vus da tut temp access direct a tut Vossas datas — senza dumonda d'infurmaziun.", du: "Cunquai che tut las datas èn memorisadas localmain, has Ti da tut temp access direct a tut Tes datas — senza dumonda d'infurmaziun." },
       rights2: { sie: "Vus pudais stizzar Vossas datas da tut temp: singulas en l'app, tut ensemen sut Configuraziuns → «Datas sin quest apparat» → «Stizzar tut las datas sin quest apparat», u via las datas dal navigatur. Datotecas da segirezza telechargiadas èn ordaifer l'app; quellas stizzais Vus sez. I na dat naginas copias sin servers.", du: "Ti pos stizzar Tes datas da tut temp: singulas en l'app, tut ensemen sut Configuraziuns → «Datas sin quest apparat» → «Stizzar tut las datas sin quest apparat», u via las datas dal navigatur. Datotecas da segirezza telechargiadas èn ordaifer l'app; quellas stizzas Ti sez. I na dat naginas copias sin servers." },
-      rights3: { sie: 'Vus pudais exportar Vossas datas en in format legibel da maschinas (JSON u CSV) (dretg da consegna da datas, art. 28 nLPD).', du: 'Ti pos exportar Tes datas en in format legibel da maschinas (JSON u CSV) (dretg da consegna da datas, art. 28 nLPD).' },
-      rights4: "Dumondas davart ils logs da hosting u davart e-mails a nus: info@malojaplana.ch", // TODO(rm): Gegenlese Muttersprache
+      rights3: { sie: 'Vus pudais exportar Vossas datas en in format legibel da maschinas (JSON u CSV).', du: 'Ti pos exportar Tes datas en in format legibel da maschinas (JSON u CSV).' },
+      // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+      rights4: { sie: 'Zu E-Mails, Warteliste und Feedback, die bei uns liegen, können Sie Auskunft (Art. 25 nDSG) und Löschung verlangen; ebenso Fragen zu den Hosting-Logs: info@malojaplana.ch', du: 'Zu E-Mails, Warteliste und Feedback, die bei uns liegen, kannst du Auskunft (Art. 25 nDSG) und Löschung verlangen; ebenso Fragen zu den Hosting-Logs: info@malojaplana.ch' },
       securityTitle: 'Segirezza da datas',
       security1: { sie: "Las datas d'utilisader na bandunan betg Voss apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain.", du: "Las datas d'utilisader na bandunan betg Tes apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain." },
       security2: { sie: 'Cunquai che tut las datas vegnan memorisadas localmain, è la segirezza en Vossa responsabladad: Segirai Voss apparat cun in pled-clav e fai regularmain segirezzas.', du: 'Cunquai che tut las datas vegnan memorisadas localmain, è la segirezza en Tia responsabladad: Segirescha Tes apparat cun in pled-clav e fai regularmain segirezzas.' },
@@ -2993,7 +3004,7 @@ export default {
     intro: 'Stizzà vegn tut quai che Maloja ha memorisà en quest navigatur:',
     wasAngaben: { sie: 'Vossas indicaziuns en tut ils chapitels, las promemorias, ils contacts e la glista da notizias', du: 'Tias indicaziuns en tut ils chapitels, las promemorias, ils contacts e la glista da notizias' },
     wasDokumente: 'tut ils documents deponids cun lur datotecas e las copias da segirezza automaticas en il navigatur',
-    wasEinstellungen: 'parameters sco lingua e preschentaziun, er in tresor installà',
+    wasEinstellungen: 'parameters sco lingua e preschentaziun',
     bleibt: { sie: "Betg pertutgadas èn las datotecas da segirezza che Vus avais telechargià e l'access beta. Sin auters apparats na sa mida nagut.", du: "Betg pertutgadas èn las datotecas da segirezza che Ti has telechargià e l'access beta. Sin auters apparats na sa mida nagut." },
     letzteSicherung: 'Ultima copia da segirezza telechargiada: {datum}',
     keineSicherung: "Sin quest apparat n'è anc registrada nagina copia da segirezza telechargiada.",
@@ -3073,24 +3084,24 @@ export default {
 
     schritte: {
       ios: [
-        'Avrir malojaplana.ch en Safari.',
+        'Avrir malojaplana.ch/app en Safari.',
         'Tutgar il simbol da cundivider en la lingia sutvart — il quadrat cun la frizza si.',
         'Sfulattar la glista giu enfin che «Zum Home-Bildschirm» cumpara.',
         'Tutgar «Hinzufügen» sisum a dretga.',
       ],
       android: [
-        'Avrir malojaplana.ch en Chrome.',
+        'Avrir malojaplana.ch/app en Chrome.',
         'Tutgar ils trais puncts sisum a dretga.',
         'Tscherner «App installieren». Tenor la versiun da Chrome numna l\'endataziun «Zum Startbildschirm hinzufügen».',
         'Confermar. Il simbol sa chatta lura tar las autras apps.',
       ],
       macSafari: [
-        'Avrir malojaplana.ch en Safari.',
+        'Avrir malojaplana.ch/app en Safari.',
         'En il menu «Ablage» cliccar sin «Zum Dock hinzufügen».',
         'Confermar il num. Maloja Plana sa chatta lura en il Dock e s\'avra en ina atgna fanestra.',
       ],
       chromium: [
-        'Avrir malojaplana.ch.',
+        'Avrir malojaplana.ch/app.',
         'Cliccar sin il simbol d\'installaziun a dretga en la lingia d\'adressa — in pitschen visur cun ina frizza.',
         'Sche il simbol manca, va il camin sur il menu sisum a dretga: tscherner là «Maloja Plana installieren». Tenor la versiun sa chatta l\'endataziun en in submenu per cundivider e memorisar.',
         'Confermar.',
@@ -3752,15 +3763,9 @@ export default {
     notSupported: 'Communicaziuns betg sustegnidas',
     enable: 'Activar las communicaziuns',
     blockedHint: 'Va a las configuraziuns dal navigatur per permetter communicaziuns per questa app.',
-    categories: 'Tips da communicaziuns',
     overdueReminders: 'Commemoraziuns scadidas',
-    overdueRemindersDesc: 'Retschaiva ina communicaziun cura che ina commemoraziun è scadida.',
-    documentExpiry: 'Scadenza da documents',
-    documentExpiryDesc: 'Retschaiva ina communicaziun 30 dis avant la scadenza dad in document.',
-    healthReminders: 'Commemoraziuns da sanadad',
-    healthRemindersDesc: 'Commemoraziuns per medi, dentist e vaccinaziuns.',
-    adminDeadlines: 'Termins administrativs',
-    adminDeadlinesDesc: 'Renovaziuns da permissiun, termins da taglia, termins RAV.',
+  // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+    nurBeimOeffnen: { sie: 'Maloja meldet sich, wenn Sie die App öffnen und eine Erinnerung überfällig ist. Bei geschlossener App kommt keine Meldung. Tragen Sie wichtige Fristen darum auch im eigenen Kalender ein.', du: 'Maloja meldet sich, wenn du die App öffnest und eine Erinnerung überfällig ist. Bei geschlossener App kommt keine Meldung. Trag wichtige Fristen darum auch im eigenen Kalender ein.' },
     privacyNote: { sie: 'Las communicaziuns vegnan elavuradas localmain sin Voss apparat. Naginas datas vegnan tramessas a servers.', du: 'Las communicaziuns vegnan elavuradas localmain sin Tes apparat. Naginas datas vegnan tramessas a servers.' },
   },
 
@@ -4020,6 +4025,8 @@ export default {
     structureRejected: 'La segirezza n\'ha betg pudì vegnir legida, perquai che sia structura na correspunda betg al format spetgà. Nagut n\'è vegnì midà.',
     fileTooLarge: 'La datoteca è pli gronda che {max} ed è perquai betg vegnida legida. Nagut n\'è vegnì midà.',
     restored: 'Restituì',
+  // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+    ohneDokumente: { sie: 'Diese Datei ist ein Export für andere Programme. Eingespielt werden nur Ihre Angaben; Dokumente, Erinnerungen und Kontakte enthält sie nicht.', du: 'Diese Datei ist ein Export für andere Programme. Eingespielt werden nur deine Angaben; Dokumente, Erinnerungen und Kontakte enthält sie nicht.' },
   },
 
   // E10 (16.09.2026): segirezza criptada sco predefiniziun, pled-clav almain 12 segns.
@@ -6464,7 +6471,7 @@ export default {
   },
 
   zipExport: {
-    title: 'Segirezza da datas & export',
+    title: 'Segirezza da datas & export', // TODO(rm): «Segirezza» heisst auch Sicherheit (Gruppe C S1/S3), Wort für die Datei von einer rm-Person wählen
     person: 'Persuna',
     documents: 'Documents',
     dataSize: 'Grondezza da datas',
@@ -6474,6 +6481,8 @@ export default {
     whatIsExported: 'Tge vegn exportà?',
     allChapterData: 'Tut las datas da chapitels',
     documentMetadata: 'Metadatas da documents',
+  // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+    andereHinweis: { sie: 'Für eine Tabelle oder eine Liste. Die Datei enthält Ihre Angaben und die Namen Ihrer Dokumente, aber keine Dateien, Erinnerungen oder Kontakte, und sie ist nicht verschlüsselt. Zum Wiederherstellen eignet sich nur die Sicherung oben.', du: 'Für eine Tabelle oder eine Liste. Die Datei enthält deine Angaben und die Namen deiner Dokumente, aber keine Dateien, Erinnerungen oder Kontakte, und sie ist nicht verschlüsselt. Zum Wiederherstellen eignet sich nur die Sicherung oben.' },
     settingsAndPreferences: 'Configuraziuns & preferenzas',
     security: 'Segirezza',
     securityNote: { sie: 'La datoteca exportada cuntegna datas persunalas. Conservai ella en segirezza.', du: 'La datoteca exportada cuntegna datas persunalas. Conservescha ella en segirezza.' },
@@ -8087,7 +8096,7 @@ export default {
   flyer: {
     title: "Flyer per derasar",
     intro: "In flyer per stampar cun in code QR a Maloja Plana — ideal per posts da cussegliaziun, vischnancas ed affissaziuns.",
-    claim: "Chapir tge che ta tutga. Ordinar tge che vegn.",
+    claim: "Chapir ils dretgs. Ordinar quai che spetga.",
     lead: "Tia survista calma da la vita en Svizra.",
     point1: "Vossas endataziuns restan sin Voss apparat", // TODO(rm): E43 umformuliert, Gegenlese
     point2: "Gratuit & offline-abel, senza conto", // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)

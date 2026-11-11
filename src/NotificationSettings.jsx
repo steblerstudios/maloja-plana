@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Eyebrow } from './components/Heading.jsx';
 import {
   getNotificationPermission,
@@ -7,8 +7,9 @@ import {
   saveNotificationPrefs,
 } from './utils/notifications.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
-import { text, weight, radius, space, ease, duration } from './config/tokens.js';
+import { text, weight, radius, space } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { Schalter } from './components/Schalter.jsx';
 
 // ─── Notification Settings ─────────────────────────────────
 // Respectful, opt-in notification management.
@@ -17,12 +18,21 @@ import { PrimaryButton } from './components/PrimaryButton.jsx';
 //
 // Seit 05.11.2026 (Seitenlandkarte Z2) ein Abschnitt der Einstellungen (SettingsView.jsx), keine eigene
 // Seite mehr. `#/notifications` → UMLEITUNGEN → Einstellungen, Sprungmarke BENACHRICHTIGUNGEN_ANKER.
+//
+// Gruppe C, L1 + Gestaltung B (11.11.2026): Hier standen vier Schalter (überfällige Erinnerungen,
+// Dokumentenablauf 30 Tage vorher, Gesundheit, Fristen bei Ämtern). Gebaut ist nur die erste Art:
+// `checkOverdueReminders` beim Öffnen der App. Die drei anderen versprachen Meldungen, die nie kamen
+// (Fristen verpasst, wer sich darauf verlässt). Jetzt: ein Schalter, der wirkt, und ein Satz, was er
+// tut und was nicht. Wächter: gruppeCVertrauen.test.js (jeder Schalter hier hat einen Leser).
 export const BENACHRICHTIGUNGEN_ANKER = 'mp-benachrichtigungen';
+// Die eine gebaute Art. Der Schlüssel bleibt, damit gespeicherte Einstellungen gelten.
+export const BENACHRICHTIGUNG_ARTEN = ['overdueReminders'];
 
 export const NotificationSettings = ({ palette, t }) => {
   const [permission, setPermission] = useState(getNotificationPermission());
   const [prefs, setPrefs] = useState(getNotificationPrefs);
-  const [saved, setSaved] = useState(false);
+  const statusRef = useRef(null);
+  const nachErlaubnis = useRef(false);
 
   const isSupported = permission !== 'unsupported';
   const isGranted = permission === 'granted';
@@ -30,64 +40,27 @@ export const NotificationSettings = ({ palette, t }) => {
 
   const handleRequestPermission = async () => {
     const result = await requestNotificationPermission();
+    nachErlaubnis.current = true;
     setPermission(result);
   };
 
-  const togglePref = (key) => {
-    const updated = { ...prefs, [key]: !prefs[key] };
+  // Nach der Antwort des Browsers verschwindet der Knopf: Fokus auf die Statuszeile, damit er nicht
+  // auf den Seitenanfang fällt (a11y C5).
+  useEffect(() => {
+    if (nachErlaubnis.current && statusRef.current) { statusRef.current.focus(); nachErlaubnis.current = false; }
+  }, [permission]);
+
+  const ueberfaelligAn = prefs.overdueReminders !== false; // Voreinstellung an
+  const setUeberfaellig = (an) => {
+    const updated = { ...prefs, overdueReminders: an };
     setPrefs(updated);
     saveNotificationPrefs(updated);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
   };
 
-  const toggleStyle = (enabled) => ({
-    width: '44px', height: '24px', borderRadius: radius.md,
-    // Eingeschaltet gold wie alle Auswahlen (Fassung 9, M8).
-    background: enabled ? palette.sand : palette.up,
-    border: '1px solid ' + (enabled ? palette.sand : palette.border),
-    cursor: 'pointer', position: 'relative',
-    transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`, flexShrink: 0,
-  });
-
-  const toggleDot = (enabled) => ({
-    width: '16px', height: '16px', borderRadius: '50%',
-    background: enabled ? '#fff' : palette.mid,
-    position: 'absolute', top: '2px',
-    left: enabled ? '22px' : '2px',
-    transition: `left ${duration.normal}ms ${ease}, background ${duration.normal}ms ${ease}`,
-  });
-
-  const renderToggle = (key, label, description) => {
-    const enabled = prefs[key] !== false; // default on
-    return React.createElement('div', {
-      key: key,
-      style: {
-        display: 'flex', alignItems: 'start', gap: '12px',
-        padding: '16px 0', borderBottom: '1px solid ' + palette.border,
-      }
-    },
-      React.createElement('div', { style: { flex: 1 } },
-        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '2px', color: palette.text } }, label),
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.4 } }, description)
-      ),
-      React.createElement('button', {
-        onClick: () => togglePref(key),
-        disabled: !isGranted,
-        // Zustand als aria-pressed statt angehängtem englischem ' on'/' off' (Seitenrundgang 26.10.2026, R11).
-        'aria-label': label,
-        'aria-pressed': enabled && isGranted,
-        style: {
-          ...toggleStyle(enabled && isGranted),
-          opacity: isGranted ? 1 : 0.4,
-          cursor: isGranted ? 'pointer' : 'not-allowed',
-          border: 'none',
-        }
-      },
-        React.createElement('div', { style: toggleDot(enabled && isGranted) })
-      )
-    );
-  };
+  const statusText = isGranted ? t('notifications.enabled')
+    : isDenied ? t('notifications.blocked')
+    : !isSupported ? t('notifications.notSupported')
+    : t('notifications.notEnabled');
 
   // Gleiche Karte wie die übrigen Abschnitte der Einstellungen; Überschrift eine Stufe unter dem Seitentitel.
   return React.createElement('section', {
@@ -99,70 +72,37 @@ export const NotificationSettings = ({ palette, t }) => {
       React.createElement(Icon, { name: 'cowbell', size: 16, color: palette.mid }),
       t('notifications.title')),
 
-    // Permission status
-    React.createElement('div', {
-      style: {
-        padding: space.md, borderRadius: radius.lg, marginBottom: space.md,
-        background: isGranted ? palette.sage + '11' : palette.up,
-        border: '1px solid ' + (isGranted ? palette.sage + '33' : palette.border),
-      }
-    },
-      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '12px', marginBottom: space.sm } },
-        React.createElement('div', {
-          style: {
-            width: '10px', height: '10px', borderRadius: '50%',
-            background: isGranted ? palette.sage : isDenied ? palette.rose : palette.sky,
-          }
-        }),
-        React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } },
-          isGranted ? t('notifications.enabled') :
-          isDenied ? t('notifications.blocked') :
-          !isSupported ? t('notifications.notSupported') :
-          t('notifications.notEnabled')
-        )
-      ),
+    // Was gebaut ist — und was nicht (L1). Steht immer da, auch vor der Erlaubnis.
+    React.createElement('p', { id: BENACHRICHTIGUNGEN_ANKER + '-was', style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5, margin: '0 0 ' + space.md + 'px 0' } },
+      t('notifications.nurBeimOeffnen')),
 
-      !isGranted && isSupported && !isDenied && React.createElement(PrimaryButton, {
-        palette, onClick: handleRequestPermission,
-      }, t('notifications.enable')),
-
-      isDenied && React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs }
-      }, t('notifications.blockedHint'))
-    ),
-
-    // Notification types
-    React.createElement('div', { style: { marginBottom: space.md } },
-      React.createElement(Eyebrow, { palette, style: { color: palette.mid, marginBottom: space.xs } }, t('notifications.categories')),
-
-      renderToggle('overdueReminders',
-        t('notifications.overdueReminders'),
-        t('notifications.overdueRemindersDesc')
-      ),
-      renderToggle('documentExpiry',
-        t('notifications.documentExpiry'),
-        t('notifications.documentExpiryDesc')
-      ),
-      renderToggle('healthReminders',
-        t('notifications.healthReminders'),
-        t('notifications.healthRemindersDesc')
-      ),
-      renderToggle('adminDeadlines',
-        t('notifications.adminDeadlines'),
-        t('notifications.adminDeadlinesDesc')
+    isGranted
+      // Erlaubt: nur noch der eine Schalter (B). Zustand als Wort, role="switch".
+      ? React.createElement('div', {
+        style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px', padding: space.xs + 'px 0', borderTop: '1px solid ' + palette.border + '55', borderBottom: '1px solid ' + palette.border + '55' },
+      },
+        React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('notifications.overdueReminders')),
+        React.createElement(Schalter, { palette, t, an: ueberfaelligAn, onChange: setUeberfaellig, label: t('notifications.overdueReminders'), beschreibungId: BENACHRICHTIGUNGEN_ANKER + '-was' })
       )
-    ),
+      // Noch nicht erlaubt, blockiert oder nicht möglich: eine ruhige Statuszeile mit Wort, kein leerer Schalter.
+      : React.createElement('div', {
+        style: { padding: space.md + 'px', borderRadius: radius.md, background: palette.up, border: '1px solid ' + palette.border },
+      },
+        React.createElement('div', {
+          ref: statusRef, tabIndex: -1, role: 'status',
+          style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, outline: 'none' },
+        },
+          React.createElement('span', { 'aria-hidden': 'true', style: { width: '10px', height: '10px', borderRadius: '50%', flexShrink: 0, background: isDenied ? palette.rose : palette.sky } }),
+          statusText
+        ),
+        !isDenied && isSupported && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
+          React.createElement(PrimaryButton, { palette, onClick: handleRequestPermission }, t('notifications.enable'))),
+        isDenied && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.xs + 'px 0 0 0' } }, t('notifications.blockedHint'))
+      ),
 
-    // Privacy note
-    React.createElement('div', {
-      style: { padding: '12px', background: palette.up, borderRadius: radius.md, fontSize: text.sm, color: palette.mid }
-    },
-      hinweisZeichen(), t('notifications.privacyNote')
-    ),
-
-    saved && React.createElement('div', {
-      style: { marginTop: '12px', padding: space.sm, background: palette.sage + '22', borderRadius: radius.md, fontSize: text.sm, color: palette.sageDeep, textAlign: 'center' }
-    }, hinweisZeichen('check'), t('common.saved'))
+    // Datenschutz einmal, klein (B).
+    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.md + 'px 0 0 0', lineHeight: 1.5 } },
+      hinweisZeichen(), ' ', t('notifications.privacyNote'))
   );
 };
 
