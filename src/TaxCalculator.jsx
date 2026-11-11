@@ -10,6 +10,8 @@ import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS, WEITERBILDUNG_MAX 
 import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, tarifvergleichGrund, KANTONAL_DATA_VERSION, kantonsdatenAbgerufen } from './data/kantonaleSteuerdaten.js';
 import { SAEULE3A_MAX, saeule3aGrenzePerson } from './data/saeule3a.js';
 import { istSelbstaendig } from './utils/anstellung.js';
+import { jahreslohnAusProfil } from './utils/jahreslohnAusProfil.js';
+import { bvgKoordinationsabzug } from './data/lohnAbzuege.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
@@ -83,6 +85,27 @@ export const steuerAnsageText = (t, teile) => teile.length
   ? t('tax.ansageHinweis', { teile: teile.map((k) => t(TEIL_TEXT[k])).join(', ') })
   : t('tax.ansageZahlen');
 
+// Säule-3a-Grenze einer Person im Steuer-Rechner (BVV 3 Art. 7 Abs. 1) — als eigene Funktion, damit sie mit
+// echten Profilen getestet werden kann (saeule3aGrenzePerson.test.js). Angestellte: der kleine Betrag; selbständig
+// ohne eingetragene Kasse: der grosse als oberste Grenze. Bewusst nicht der Hauptlohn als Einkommen: bei
+// Selbständigen zählt das ganze Erwerbseinkommen (auch Nebenerwerb), und ×13 passt dort nicht (Fachprüfung 11.11.2026).
+export const steuer3aGrenzePerson = (data, steuerjahr) => {
+  const hatPensionskasse = !istSelbstaendig(data?.finanzen) || !!data?.versicherungen?.bvgInsurer;
+  return saeule3aGrenzePerson({ steuerjahr, hatPensionskasse }) ?? SAEULE3A_MAX;
+};
+
+// Angestellte mit bekanntem Bruttolohn bis zur BVG-Eintrittsschwelle (BVG Art. 2 Abs. 1) gehören ohne freiwillige
+// Versicherung keiner Pensionskasse an — für sie zählen höchstens 20 % des Erwerbseinkommens (BVV 3 Art. 7 Abs. 1
+// Bst. b). Darauf wird nur HINGEWIESEN, nicht gekappt (Entscheid Stebler Studios 11.11.2026, Entwurf #868): viele
+// Kassen versichern schon unter der gesetzlichen Schwelle, und eine Kappung auf 20 % wäre für sie zu tief.
+// Gibt den 20-%-Betrag zurück oder null (selbständig, Kasse eingetragen, Lohn unbekannt oder über der Schwelle).
+export const steuer3aHinweisOhnePk = (data, steuerjahr) => {
+  if (istSelbstaendig(data?.finanzen) || data?.versicherungen?.bvgInsurer) return null;
+  const lohn = Number(jahreslohnAusProfil(data?.finanzen)) || 0;
+  if (lohn <= 0 || bvgKoordinationsabzug(lohn, steuerjahr).versichert) return null;
+  return saeule3aGrenzePerson({ steuerjahr, hatPensionskasse: false, erwerbseinkommen: lohn });
+};
+
 export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, vorlaeufig }) => {
   const isMobile = useIsMobile();
   const hh = getHouseholdInfo(data);
@@ -94,15 +117,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
   // selbständig heisst «Selbstständig» oder «Freiberuflich», eine eingetragene Pensionskasse gibt den kleinen Betrag.
   // Das Jahr hängt am Tarif dieses Rechners (STEUER_DATA_VERSION), nicht am Kalender: der Höchstabzug
   // wechselt mit, wenn die Werte 2027 eingesetzt werden, und nicht schon am 1.1.
-  const selbstaendig = istSelbstaendig(data.finanzen);
-  const hatPensionskasse = !selbstaendig || !!data.versicherungen?.bvgInsurer;
-  const max3aPerson = saeule3aGrenzePerson({
-    steuerjahr: Number(STEUER_DATA_VERSION),
-    hatPensionskasse,
-    // Ohne Einkommen → der grosse Betrag als oberste Grenze. Bewusst nicht der Hauptlohn: bei Selbständigen
-    // zählt das ganze Erwerbseinkommen (auch Nebenerwerb), und ×13 passt dort nicht (Fachprüfung 11.11.2026).
-    // Mit Einkommen rechnet der Vorsorge-Rechner, wo es eingetragen wird.
-  }) ?? SAEULE3A_MAX;
+  const max3aPerson = steuer3aGrenzePerson(data, Number(STEUER_DATA_VERSION));
+  const hinweis3aOhnePk = steuer3aHinweisOhnePk(data, Number(STEUER_DATA_VERSION));
   const max3a = max3aPerson * (giltAlsVerheiratet(data.basis?.maritalStatus) ? 2 : 1);
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0 },
@@ -357,6 +373,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
             t('tax.grenze_' + ded.gesetz, { max: betrag(ded.max, { hoechstens: 2 }), jahr: STEUER_DATA_VERSION })),
           gekappt[ded.key] && React.createElement('div', { role: 'status', style: { fontSize: text.xs, color: palette.text, marginTop: '2px' } },
             t('tax.gekappt', { max: betrag(ded.max, { hoechstens: 2 }) })),
+          ded.key === 'pension3a' && hinweis3aOhnePk != null && React.createElement('div', { 'data-hinweis-3a-ohne-pk': 'true', style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+            t('tax.hinweis3aOhnePk', { betrag: betrag(hinweis3aOhnePk) })),
           // F7-L8: Die Einzahlungen stehen im Kapitel Finanzen (Säule-3a-Tracker). Hier auf Klick, nicht still —
           // der Abzug ändert die Schätzung, und im Rechner darf man bewusst etwas anderes durchspielen.
           ded.key === 'pension3a' && aus3aKnopf(ded.max)

@@ -3297,6 +3297,7 @@ export default {
     education: 'Spese di formazione',
     otherDeductions: 'Altre deduzioni',
     grenze_pension3a: 'Per legge al massimo {max} (pilastro 3a, anno fiscale {jahr})',
+    hinweis3aOhnePk: 'Salario fino alla soglia d’entrata LPP: senza cassa pensione si può versare e dedurre al massimo il 20 % del reddito da attività lucrativa (OPP 3 art. 7 cpv. 1 lett. b), cioè circa {betrag} per persona calcolato sul salario principale. Con una cassa pensione vale l’importo sopra; registrare allora la cassa nelle assicurazioni.',
     grenze_education: 'Imposta federale diretta: al massimo {max}, a determinate condizioni (primo diploma del livello secondario II o a partire dai 20 anni). I Cantoni hanno propri importi massimi',
     gekappt: 'Per la stima limitato a {max}.',
     calculation: 'Calcolo',

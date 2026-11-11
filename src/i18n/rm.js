@@ -5083,6 +5083,7 @@ export default {
     education: 'Furmaziun supplementara',
     otherDeductions: 'Autras deducziuns',
     grenze_pension3a: 'Gesetzlich höchstens {max} (Säule 3a, Steuerjahr {jahr})', // TODO(rm): übersetzen
+    hinweis3aOhnePk: 'Lohn bis zur BVG-Eintrittsschwelle: Ohne Pensionskasse lassen sich höchstens 20 % des Erwerbseinkommens einzahlen und abziehen (BVV 3 Art. 7 Abs. 1 Bst. b), aus dem Hauptlohn gerechnet rund {betrag} je Person. Mit Pensionskasse gilt der Betrag oben; die Kasse dann bei den Versicherungen eintragen.', // TODO(rm): übersetzen
     grenze_education: 'Bei der direkten Bundessteuer höchstens {max}, unter Voraussetzungen (erster Abschluss auf Sekundarstufe II oder ab 20 Jahren). Die Kantone haben eigene Höchstbeträge', // TODO(rm): übersetzen
     gekappt: 'Für die Schätzung auf {max} begrenzt.', // TODO(rm): übersetzen
     calculation: 'Calculaziun',
