@@ -273,6 +273,13 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
 - **Reserve-Tank seit 10.11.2026 wie das Schild:** ein Bauteil mit `groesse` (`klein` 64 ohne Wörter,
   `gross` 256 mit Ablesesatz); die eigene Kleinzeichnung `miniGauge` ist aufgelöst.
 - Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Netz-Schild auf
+- **Gesundheitsbelege: eine Rechnung, zwei Namen** *(11.11.2026, Instrumente-Matrix B-R3)*. `belegeImJahr` in
+  `src/data/franchiseTacho.js` zählt die KK-Belege eines Jahres für alle Orte. **An die Franchise** (Betrag,
+  bezahlt und offen): Kachel Franchise-Stand, Kreuz, KVG-Reiter, Prämien-Übersicht. **Bezahlte Gesundheitskosten**
+  (mit nicht gedecktem Anteil, offene Forderungen nicht doppelt): Finanzen-Karte, ohne «(KVG)» im Titel, weil sie
+  auch Nicht-Gedecktes zählt. Wächter: `src/__tests__/gesundheitsbelegeEineRechnung.test.js`. Bild für den
+  Franchise-Stand: **Fieberthermometer** (entschieden, Bau folgt).
+- Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Reserve-Tank 280 → 256, Netz-Schild auf
   KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
 - **Wohnen: Drittel-Haus + Häuserzeile** *(11.11.2026, Stebler Studios nach Skizze A–C: «ja a und b kombiniert»)*.
   Ein Bild aus dem Lebensbereich, wo die Frage typisch für den Bereich ist (wie das Netz-Schild):
