@@ -239,3 +239,7 @@ Gestaltung A–D (Zweig 2) · L7, U6/U7, S8, E2 (Startseiten-Stapel) · E1 (mit 
 #848 (Gruppe D) ändern dieselben drei Generator-Dateien (`build-seiten.mjs`, `seiten-inhalt.mjs`, `seiten-sprachen.mjs`),
 A–D greift in deren gemeinsamen Stil-Block. Nach beiden Merges frisch von `main` bauen, vorher im Browser ansehen, Brand
 Book im selben Zweig nachführen. Auslöser: Stebler Studios meldet die Merges.
+⏸️ **Restrunde 11.11. abends: L1 und L3 nach dem nächsten Deploy** (Stebler Studios: «halte diese situation zu erst
+mal so fest … nach dem nächsten deploy wieder auf dieses dokument zurück»; Entscheidblatt
+`stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). L1 Postanschrift: Postfach eintragen oder bis zur Antwort
+auf F2a warten (gleich wie Gruppe C). L3 Gerichtsstand wartet auf die Juristin (F2a). Zweig 2 bleibt wie oben.
