@@ -2194,11 +2194,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Muster M5 (Fassung 6, Stebler Studios 25.10.2026): Kopf wie im Entwurf — Landschaftsband in der
   // Bereichsfarbe, darauf die Brotkrume «Übersicht › Kapitel», darunter das Symbol in einer Kachel
   // und der Titel. Keine Karte mehr um das Kapitel (vorher Kopf und Inhalt in einer Karte, die Seite
-  // dahinter getönt; Entscheid 27.09.2026). Das Band reicht bis an den Rand (main: 20 px seitlich).
+  // dahinter getönt; Entscheid 27.09.2026). Das Band reicht bis an den Rand (main: 20 px seitlich) —
+  // genau 20, nicht die Voreinstellung −24 px: sonst ist die Seite 379 px breit (Quer Q1, 11.11.2026).
   const kachelGrund = bereichsfarbe ? bereichsfarbe.grund : palette.up;
   return React.createElement('div', { 'data-kapitel': chapter.key },
     React.createElement('div', { 'data-kapitelkopf': 'band', style: { textAlign: 'left', marginBottom: space.lg + 'px' } },
-      React.createElement(Landschaftsband, { palette, grund: kachelGrund }),
+      React.createElement(Landschaftsband, { palette, grund: kachelGrund, margin: '0 -20px' }),
       React.createElement('nav', { 'aria-label': tr('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
         React.createElement('ol', { style: { listStyle: 'none', margin: 0, ...pfadPilleStil(palette), fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {

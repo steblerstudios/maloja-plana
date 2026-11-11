@@ -255,5 +255,19 @@ siebenmal neu entschieden werden:
    Nebenbefund: Landschaftsband der Kapitelseiten −24 px, vermutlich 4 px Überbreite.
    **Notiert, nicht gebaut — gemeinsam ansehen:** A ein Eingang zu «Was steht mir zu?» und ein IPV-Satz · B vier
    Ordnungen (angleichen oder den 7 Kapiteln folgen) · C eine Fortschrittszahl · Suchwörter (Register im Startbündel).
+   **Restrunde 11.11. abends** (Entscheidblatt mit Handy-Bildern 375 px vom gebauten Stand `c7bffc56`:
+   `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). ⏸️ **Gruppen A, B, C, D, E: nach dem nächsten
+   Deploy** (Stebler Studios: «halte diese situation zu erst mal so fest … und dann kommen wir nach dem nächsten deploy
+   wieder auf dieses dokument zurück und können entscheiden»). Empfohlen und dort wieder aufzunehmen — A: ein Eingang zu
+   «Was steht mir zu?» und ein IPV-Satz aus `ipvAnzeige`; vier Ordnungen nur angleichen (Neuordnung nach Kapiteln
+   später, eigener Entscheid); eine Fortschrittszahl aus `gesamtVollstaendigkeit`; Suchwörter erst nach dem einen
+   Eingang, wenn das Startbündel Platz hat. B: Bücherregal mit «Ihr Kanton» zuerst und liegender Schrift; Löschen am
+   Eintrag (Änderung von Entwurf G) bestätigen; «Nexter» ohne Link, bis die richtige Adresse da ist —
+   `crewz.io/de/nexter/` heisst heute (gemessen 11.11.) «Roved – das Trinkspiel für unvergessliche Abende».
+   ✅ **Quer: «Alle drei wie empfohlen».** Q1 Landschaftsband der Kapitelseiten `margin: '0 -20px'` wie main
+   (gemessen vorher 379 px, nachher alle sieben Kapitel 375 px). Q2 Wächter: `activateTresor` wird nirgends
+   aufgerufen, und kein Satz zur Ablage sagt in einer der fünf Sprachen Verschlüsselung zu (Erlaubnisliste der
+   gelesenen Sätze). Test `querBandTresor.test.js`, Mutationsprobe beider Teile rot aus dem richtigen Grund. Q3 Test
+   «Stand der Lebenslagen» (`gruppeAEinstieg.test.js`) bleibt: er wird am 1.1.2027 rot, das ist der Wecker; Nachprüfung 16.12.2026.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
