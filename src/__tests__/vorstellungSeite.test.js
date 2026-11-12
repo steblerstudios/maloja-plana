@@ -136,13 +136,14 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     expect(svg).not.toMatch(/<script|href=/);   // reines Bild, nichts Ausführbares, nichts Nachgeladenes
   });
 
-  it('Vier Höhenlinien-Bilder (10.11. abends): C+A nach Kehre 7, D vor «App holen», B vor dem Fuss, je mit Quelle', () => {
+  it('Vier Höhenlinien-Bilder: nach Kehre 7 Blick Papier + Karte Salbei, Blick Salbei in «App holen» (O, getauscht 10.11. abends), Karte Papier trägt den Schluss (N)', () => {
     const lage = (f) => koerper.indexOf(`src="/vorstellung/${f}"`);
-    expect(lage('pass-blick.svg')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
-    expect(lage('pass-karte.svg')).toBeGreaterThan(lage('pass-blick.svg'));
-    expect(lage('pass-blick-papier.svg')).toBeGreaterThan(koerper.indexOf('id="atlas"'));
-    expect(koerper.indexOf('id="holen"')).toBeGreaterThan(lage('pass-blick-papier.svg'));
-    expect(lage('pass-karte-papier.svg')).toBeGreaterThan(koerper.indexOf('class="schluss"'));
+    expect(lage('pass-blick-papier.svg')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
+    expect(koerper.indexOf('class="pass-karte-anfang"')).toBeGreaterThan(lage('pass-blick-papier.svg'));
+    expect(lage('pass-karte.svg')).toBeGreaterThan(koerper.indexOf('class="pass-karte-anfang"'));
+    expect(lage('pass-blick.svg')).toBeGreaterThan(koerper.indexOf('id="t-holen"'));
+    expect(koerper.indexOf('class="holen"')).toBeGreaterThan(lage('pass-blick.svg'));
+    expect(lage('pass-karte-papier.svg')).toBeGreaterThan(koerper.indexOf('id="t-schluss"'));
     expect(koerper.indexOf('<footer')).toBeGreaterThan(lage('pass-karte-papier.svg'));
     for (const f of ['pass-blick.svg', 'pass-blick-papier.svg', 'pass-karte-papier.svg']) {
       const svg = fs.readFileSync(path.join(WURZEL, 'public/vorstellung', f), 'utf8');
@@ -178,13 +179,15 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     KAPITEL.forEach((k, i) => expect(html).toContain(`Kehre ${i + 1} von 7 · ${k.name}`));
   });
 
-  it('B/D · jeder Stocknagel ist ein Aufkleber mit dem Kapitel-Zeichen statt einer Nummer, leicht schräg', () => {
+  it('B/D · jeder Stocknagel ist ein Aufkleber mit dem Kapitel-Zeichen, flach im Passbild-Stil (10.11.: rund, gerade, ohne Schatten und Wölbung)', () => {
     const naegel = html.split('<g class="nagel">').slice(1).map((t) => t.split('<g class="nagel-dreh"')[0].split('</svg>\n')[0]);
     expect(naegel).toHaveLength(7);
     for (const n of naegel) {
-      expect(n).toMatch(/^<g transform="rotate\(-?\d+ 60 \d+\)">/);
+      expect(n).toMatch(/^<g transform="rotate\(0 60 \d+\)">/);
       expect(n).toMatch(/<g class="bild" style="color:var\(--k\d\)"><svg x="42"/);
-      expect(n).toContain('<g class="woelbung">');
+      expect(n).toMatch(/<g class="schild"[^>]*><circle /);
+      expect(n).not.toContain('woelbung');
+      expect(n).not.toContain('unterschatten');
       expect(n).not.toContain('<text x="60"');
     }
   });
@@ -282,8 +285,151 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(html).toMatch(new RegExp(`<input type="checkbox" id="anhalten"[^>]*>\\s*<div class="${sel.replace('.', '')}"`));
   });
 
-  it('Browserleiste hell und dunkel nach Granit', () => {
-    expect(html).toContain('<meta name="theme-color" content="#F2F2F0" media="(prefers-color-scheme: light)">');
+  // Design-Durchgang 10.11.2026 (Stebler Studios «Ja, alle so», Befunde A–M), Brand Book §7e.
+  it('A · eine Seitenfarbe: die Creme des Passbilds, auch Ausklang und Hero-Schleier; kein Granit-Grau mehr', () => {
+    const wurzel = stil.match(/:root\{([\s\S]*?)\n {4}\}/)[1];
+    expect(wurzel).toContain('--bg:#FCF0E4;');
+    expect(wurzel).toContain('--himmel:#FCF0E4;');
+    expect(wurzel).toContain('--schleier:252,240,228;');
+    const regeln = stil.replace(/\/\*[\s\S]*?\*\//g, '');   // Kommentare nennen die alten Töne als Historie
+    expect(regeln).not.toMatch(/rgba\(244,240,230/);
+    expect(regeln).not.toMatch(/#F2F2F0/i);
+    expect(stil).toMatch(/\.leiste\{[^}]*background:#FFF8F0/);
+  });
+
+  it('A · im dunklen Modus bleibt der Hero hell: seine Nebenknöpfe tragen festes Papier, keine Variable', () => {
+    expect(stil).toContain('.pass .knopf.zweit{ background:#FFF8F0 }');
+  });
+
+  it('B · nach der letzten Kehre gehen Stock, Weglinie und dunkle Schicht mit dem Bild weg', () => {
+    expect(js).toContain("buehne.setAttribute('data-ende', '')");
+    for (const teil of ['.reise-stock', '.reise-linie', '.reise-quelle']) expect(stil).toContain(`.js .reise-buehne[data-ende] ${teil}`);
+    expect(stil).toContain('.js .reise-buehne[data-ende]::after{ opacity:0 }');
+  });
+
+  it('C · der Stock ist 86 % hoch und mittig, nicht bildhoch', () => {
+    expect(stil).toMatch(/\.reise-stock\{ position:absolute; left:50%; top:7%; height:86%;/);
+    expect(stil).toContain('margin-left:calc(86svh * -120 / 700 / 2)');
+  });
+
+  it('D/E · am Handy lässt die Textfläche den Stock frei, «KI-gemalt» steht links unten', () => {
+    expect(handy).toContain('.reise-station{ align-items:center; padding:10vh 84px 10vh 16px }');
+    expect(handy).toMatch(/\.reise-stock\{ left:auto; right:-30px;/);
+    expect(stil).toMatch(/\.reise-quelle\{ position:absolute; left:12px;/);
+  });
+
+  it('F/G · die Karte von oben steht auf Inhaltsbreite, vor der Papier-Karte keine doppelte Luft', () => {
+    expect(stil).toMatch(/\.pass-karte-bild\{[^}]*max-width:1040px; margin:0 auto;/);
+    expect(stil).toContain('.pass-band-karte{ margin:0 }');
+  });
+
+  it('H/I · Reiter «Kantone» in Kopf und Leiste; am Handy rückt der gewählte Reiter in Sicht', () => {
+    expect(html.match(/<a href="#atlas">Kantone<\/a>/g)).toHaveLength(2);
+    expect(js).toContain('function inSicht(a)');
+    expect(js).toContain('if (aktuell) inSicht(aktuell)');
+  });
+
+  it('J · der Trennpunkt hängt am vorderen Wort (Hero und Fuss), keine Zeile beginnt mit «·»', () => {
+    expect(stil).toContain('.pass .fakten span:not(:last-child)::after{');
+    expect(stil).toContain('.fuss .vertrauen span:not(:last-child)::after{');
+    expect(stil).not.toMatch(/(fakten|vertrauen) span::before/);
+  });
+
+  it('K · unter 960 px steht der Hero in einer Spalte', () => {
+    const tablet = stil.slice(stil.indexOf('@media (max-width:960px)'));
+    expect(tablet.slice(0, tablet.indexOf('\n    }'))).toContain('.pass{ grid-template-columns:1fr;');
+  });
+
+  // Zweite Runde (Stebler Studios «Ja, N bis P so», 10.11.2026)
+  it('N · Schluss auf der Karte: «Beispiel ansehen» am Fuss der Kehren, «App holen» an der Passhöhe, deckend', () => {
+    const schluss = html.slice(html.indexOf('<section class="schluss-karte"'), html.indexOf('</section>', html.indexOf('<section class="schluss-karte"')));
+    expect(schluss).toMatch(/style="--x:43\.6%; --y:76\.5%; --xh:39\.7%; --xp:27%" href="[^"]*">Beispiel ansehen/);
+    expect(schluss).toMatch(/style="--x:57\.8%; --y:26\.6%; --xh:62\.6%; --xp:78%" href="#holen">App holen/);
+    expect(stil).toMatch(/\.knopf\.am-punkt\{[^}]*background:var\(--flaeche\)/);
+    expect(schluss).not.toContain('knopf haupt');   // ein Hauptknopf je Seite, und der steht im Hero
+    // Der Text steht auf allen Breiten auf den Linien (Stebler Studios 10.11. abends): nie aus dem Raster gelöst
+    expect(stil).not.toMatch(/\.schluss-bild > \*\{ grid-area:auto \}/);
+    expect(handy).toContain('.schluss-punkt, .knopf.am-punkt{ left:var(--xp) }');
+    expect(handy).toContain('.schluss-bild img{ aspect-ratio:3/5;');
+    expect(schluss).toMatch(/class="knopf zweit am-punkt oben" style="[^"]*--xp:78%"/);
+    // Passhöhe in der Karte (viewBox 1 1 278 128) liegt bei 161,6 | 35,1 → 57,8 % | 26,6 %
+    const karte = fs.readFileSync(path.join(WURZEL, 'public/vorstellung/pass-karte-papier.svg'), 'utf8');
+    expect(karte).toContain('<circle cx="161.6" cy="35.1"');
+  });
+
+  it('O · App holen: drei Geräte als Auswahl auf dem Blick, nur die gewählte Anleitung sichtbar, ohne Skript', () => {
+    const holen = html.slice(html.indexOf('<section id="holen"'), html.indexOf('</section>', html.indexOf('<section id="holen"')));
+    expect(holen.match(/<input type="radio" name="geraet"/g)).toHaveLength(3);
+    expect(holen).toContain('<input type="radio" name="geraet" id="g1" class="unsichtbar" checked>');
+    for (const n of ['iPhone und iPad', 'Android', 'Computer']) expect(holen).toMatch(new RegExp(`<label for="g\\d"[^>]*><svg[^>]*>.*?</svg>${n}</label>`));
+    expect(stil).toContain('.holen .geraet{ display:none }');
+    for (const i of [1, 2, 3]) expect(stil).toContain(`#g${i}:checked ~ .holen .t${i}{ display:block }`);
+    expect(holen).not.toMatch(/apple|android-logo/i);
+  });
+
+  it('O · der Kopf von «App holen» liegt auf dem Salbei-Blick, das Bild läuft oben aus; am Handy steht er darüber', () => {
+    const fig = html.slice(html.indexOf('<figure class="holen-blick">'), html.indexOf('</figure>', html.indexOf('<figure class="holen-blick">')));
+    expect(fig.indexOf('<h2 id="t-holen">')).toBeGreaterThan(-1);
+    expect(fig.indexOf('class="holen-kopf"')).toBeLessThan(fig.indexOf('class="holen-flaeche"'));
+    expect(stil).toContain('.holen-blick > .holen-kopf, .holen-blick > .holen-flaeche{ grid-area:1 / 1 }');
+    expect(stil).toMatch(/\.holen-blick img\{[^}]*mask-image:linear-gradient\(180deg, transparent 0%/);
+    expect(handy).toContain('.holen-blick > .holen-kopf, .holen-blick > .holen-flaeche{ grid-area:auto }');
+  });
+
+  it('Zum Nachlesen: jede Erklärseite trägt das Zeichen ihres Kapitels in der Kapitelfarbe, die Fragen keines', () => {
+    const lesen = html.slice(html.indexOf('<ul class="liste eins lesen">'), html.indexOf('</ul>', html.indexOf('<ul class="liste eins lesen">')));
+    const erwartet = { '/was-steht-mir-zu/': 5, '/praemienverbilligung/': 3, '/sozialhilfe/': 2, '/steuern/': 2, '/krankenkasse/': 3 };
+    for (const [ziel, k] of Object.entries(erwartet)) {
+      // je Listenpunkt für sich lesen (sonst läuft das Muster über den nächsten <li> hinweg)
+      const punkt = lesen.split('<li ').find((t) => t.includes(`<a href="${ziel}">`));
+      expect(punkt, ziel).toMatch(new RegExp(`^style="--farbe:var\\(--k${k}\\)"><span class="lesen-zeichen" aria-hidden="true"><svg`));
+    }
+    expect(stil).toContain('.liste .lesen-zeichen{ grid-row:1 / span 2; color:var(--farbe);');
+    const fragen = html.slice(html.indexOf('<div class="fragen">'), html.indexOf('</section>', html.indexOf('<div class="fragen">')));
+    expect(fragen).not.toContain('lesen-zeichen');
+  });
+
+  it('P · die Schicht neben dem Stock trägt die Kapitelfarbe, unter dem Text mindestens 74 %', () => {
+    expect(stil).toContain("@property --ton{ syntax:'<color>'; inherits:true; initial-value:#121210 }");
+    for (let i = 0; i < 7; i++) expect(stil).toContain(`.reise-buehne[data-hier="${i}"]{ --ton:color-mix(in srgb, var(--k${i}) 30%, #121210) }`);
+    expect(stil).toContain('color-mix(in srgb, var(--ton) 74%, transparent) 46%');
+    expect(handy).toContain('background:color-mix(in srgb, color-mix(in srgb, var(--farbe) 30%, #121210) 82%, transparent)');
+  });
+
+  // Das Brand Book wird im selben Zweig nachgeführt (10.11.: ein Skript brach ab, die Zeilen N–P fehlten unbemerkt).
+  it('Brand Book §7e beschreibt Seitenfarbe, App holen (O), Schluss (N) und die Schicht in der Kapitelfarbe (P)', () => {
+    const buch = fs.readFileSync(path.join(WURZEL, 'docs/brand/brand-guidelines.md'), 'utf8');
+    const e = buch.slice(buch.indexOf('### 7e.'), buch.indexOf('## 8.'));
+    for (const zeile of ['| **Seitenfarbe** |', '| **App holen (O)** |', '| **Schluss (N)** |', '| **Telefon an der Kehre (A)**', '| **Situationen mit Telefon (C/D)**']) expect(e).toContain(zeile);
+    expect(e).toContain('**in der Farbe der Kehre**');
+    expect(e).toContain('`#FCF0E4`');
+  });
+
+  // «Ein Blick hinein» vereint mit Reise und Situationen (Stebler Studios 10.11.2026: «A, dazu C und D»).
+  it('A · Kehre 7 trägt das Telefon mit dem Gesundheits-Bildschirm, in der linken Bildhälfte; am Handy über der Karte', () => {
+    const kehre = (n) => html.match(new RegExp(`<li class="reise-station[^"]*" id="kehre-${n}"[\\s\\S]*?</li>`))[0];
+    expect(kehre(7)).toMatch(/^<li class="reise-station mit-telefon"/);
+    expect(kehre(7)).toMatch(/<div class="reise-telefon"><div class="telefon" role="img" aria-label="Kapitel Gesundheit im Beispiel, mit erfundenen Daten">[\s\S]*?<img src="\/vorstellung\/app-5\.webp"/);
+    expect(kehre(7).indexOf('class="reise-telefon"')).toBeLessThan(kehre(7).indexOf('class="reise-text"'));
+    for (const n of [1, 2, 3, 4, 5, 6]) expect(kehre(n), `Kehre ${n}`).not.toContain('reise-telefon');
+    expect(stil).toMatch(/\.reise-telefon\{ position:absolute; left:27%; top:50%/);
+    expect(handy).toMatch(/\.reise-telefon\{ position:static; transform:none \}/);
+    expect(handy).toMatch(/\.reise-station\.mit-telefon\{ flex-direction:column/);
+  });
+
+  it('C/D · «Was steht mir zu?» steht neben der Auswahl der Situationen, mit dem Satz zum Gerät; «Ein Blick hinein» ist weg', () => {
+    const lagen = html.match(/<section id="situationen"[\s\S]*?<\/section>/)[0];
+    expect(lagen).toMatch(/<div class="lagen-raster">\s*<fieldset>[\s\S]*<\/fieldset>\s*<figure class="lagen-telefon">/);
+    expect(lagen).toMatch(/aria-label="Ansicht «Was steht mir zu\?» im Beispiel, mit erfundenen Daten"[\s\S]*?<img src="\/vorstellung\/app-3\.webp"/);
+    expect(lagen).toContain('<figcaption>Was Sie wählen, bleibt auf Ihrem Gerät und dient nur dazu, Ihnen Passendes zu zeigen — kein Profil, keine Bewertung.</figcaption>');
+    expect(html).not.toContain('t-blick');
+    expect(html).not.toContain('<p class="augenbraue">Ein Blick hinein</p>');   // im Stil-Kommentar steht der Name als Historie
+    expect(stil).not.toMatch(/\.blick[\s.{-]/);
+    expect(html.match(/app-5\.webp/g)).toHaveLength(2);   // Bildfolge im Hero + Kehre 7
+  });
+
+  it('Browserleiste hell nach der Seitenfarbe, dunkel nach Granit', () => {
+    expect(html).toContain('<meta name="theme-color" content="#FCF0E4" media="(prefers-color-scheme: light)">');
     expect(html).toContain('<meta name="theme-color" content="#22211F" media="(prefers-color-scheme: dark)">');
   });
 
