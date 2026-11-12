@@ -328,6 +328,17 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       background:radial-gradient(38% 30% at 20% 40%, rgba(255,255,255,.55), transparent 70%),
                  radial-gradient(30% 24% at 62% 28%, rgba(255,255,255,.45), transparent 70%),
                  radial-gradient(26% 20% at 88% 55%, rgba(255,255,255,.4), transparent 70%) }
+    /* B · Motion 11.11.2026 (Vorbild Fuji: Wetter je Höhe, nur das Prinzip): wenige Teilchen in der Luft über dem Bild,
+       unten Lärchengold (Kehre 1–3), in der Mitte helle Pollen (4–6), oben am Pass Schnee (7). Die Schichten blenden in
+       900 ms (Bühne) über; ohne Skript und bei «weniger Bewegung» gibt es keine Teilchen. Nur transform und opacity. */
+    .reise-luft{ position:absolute; inset:0; z-index:3; pointer-events:none; overflow:hidden }
+    .reise-luft > div{ position:absolute; inset:0; opacity:0 }
+    .reise-luft i{ position:absolute; top:-4%; left:var(--x); width:var(--g); height:var(--g); border-radius:50%; background:currentColor; opacity:var(--o) }
+    .reise-luft .gold{ color:#E3CB8E } .reise-luft .hell{ color:#FCF0E4 } .reise-luft .schnee{ color:#FBFBFA }
+    .js .reise-buehne:is([data-hier="0"], [data-hier="1"], [data-hier="2"]) .gold,
+    .js .reise-buehne:is([data-hier="3"], [data-hier="4"], [data-hier="5"]) .hell,
+    .js .reise-buehne[data-hier="6"] .schnee{ opacity:1 }
+    html:not(.js) .reise-luft{ display:none }
     /* Zwei Schichten für die Lesbarkeit: hell links/oben unter dem Hero (dunkle Schrift), dunkel rechts unter
        den Kehren (weisse Schrift, mind. 62 % unter dem Text). Das Skript schaltet über data-hier um. */
     .reise-buehne::before, .reise-buehne::after{ content:""; position:absolute; inset:0; z-index:3; pointer-events:none }
@@ -356,6 +367,9 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .reise-linie .halt .treffer{ fill:transparent; stroke:none }
     .reise-linie .halt-ziel{ cursor:pointer }
     .reise-linie .halt-ziel:hover .halt circle:not(.treffer){ stroke-width:3.5 }
+    /* D · Motion 11.11.2026: oben angekommen (Kehre 7) leuchtet der Weg einmal von unten nach oben auf, je Halt ein
+       Ring in Sand (400 ms, 150 ms versetzt). Nur Deckkraft, keine Vergrösserung. */
+    .reise-linie .halt .schein{ fill:none; stroke:var(--sand); stroke-width:3; opacity:0 }
     .js .reise-ablauf{ pointer-events:none }   /* die Ebene über der Bühne lässt Klicks zur Weglinie durch … */
     .js .reise-anfang, .js .reise-ablauf .reise-text, .js .reise-ablauf .reise-telefon, .reise-ueberspringen{ pointer-events:auto }   /* … nur was man bedient, fängt sie */
     /* Klebt, solange die Reise läuft, oben links über der Weglinie (die beginnt bei 14vh); unten wäre es dem grossen
@@ -385,6 +399,15 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     /* Auf jedem Stocknagel das Kapitel-Zeichen der App in der Kapitelfarbe, auf heller Plakette mit farbigem Rand
        (wie ein emailliertes Stockschild). Weiss auf Farbe ginge nicht: der Fünfliber hat weisse Details. */
     .js .nagel{ opacity:0 } .js .nagel.dran{ opacity:1 }
+    /* A · Motion 11.11.2026 («Stardust»): setzt sich ein Aufkleber, rieseln ein paar Sandkörner von ihm ab und ein
+       Lichtring in Creme scheint kurz auf (Vorbild Fuji: der Stempel leuchtet, ohne zu wachsen). Ruhend unsichtbar. */
+    .nagel .schein{ fill:none; stroke:#FCF0E4; stroke-width:2.5; opacity:0 }
+    .nagel .staub circle{ fill:#FCF0E4; opacity:0; transform-box:fill-box }
+    /* C · Motion 11.11.2026: der Titel jeder Kehre setzt sich Buchstabe für Buchstabe. Das Skript teilt ihn nur ohne
+       «weniger Bewegung» auf; vorgelesen wird der ganze Titel (unsichtbare Kopie), die Buchstaben sind aria-hidden. */
+    .reise-text h3 .wort{ display:inline-block; white-space:nowrap }
+    .js .reise-text h3.setzen .z{ opacity:0 } .js .reise-text h3.setzen.gesetzt .z{ opacity:1 }
+    .js .reise-buehne[data-ende] .reise-luft{ opacity:0 }   /* B · mit dem Ausklang geht auch die Luft */
     .js .reise-buehne[data-hier="-1"] .reise-stock, .js .reise-buehne[data-hier="-1"] .reise-linie,
     .js .reise-buehne[data-hier="-1"] .reise-wolken, .js .reise-buehne[data-hier="-1"] .reise-quelle{ opacity:0 }
     /* B · Nach der letzten Kehre gehen Stock, Weglinie und Bildhinweis mit dem Bild weg, statt über dem Ausklang zu schweben. */
@@ -463,17 +486,35 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
       .js .reise-buehne{ transition:--ton .9s cubic-bezier(.4,0,.2,1) }
       .js .reise-bild img{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-bild .an{ transition:-webkit-mask-position .9s cubic-bezier(.4,0,.2,1), mask-position .9s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1) }
-      .js .reise-stock, .js .reise-linie, .js .reise-wolken, .js .reise-quelle{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-stock, .js .reise-linie, .js .reise-wolken, .js .reise-quelle, .js .reise-luft{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-linie .gegangen{ transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-linie .ort{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
       .js .nagel.dran{ animation:anschlagen .6s cubic-bezier(.2,.8,.2,1) }
       @keyframes anschlagen{ 0%{ transform:translateY(-14px) scale(1.15); opacity:0 } 65%{ transform:translateY(2px) scale(.97); opacity:1 } 100%{ transform:none } }
       .reise-wolken{ animation:ziehen 80s linear infinite alternate }
       @keyframes ziehen{ from{ transform:translateX(-12%) } to{ transform:translateX(12%) } }
+      /* Motion 11.11.2026 (A–D und Hero), Zeiten nur aus §7a E: 150 · 250 · 400 · 600 · Bühne 900, Kurve wie tokens.js.
+         Einzige Schleifen wie die Wolken: das langsame Schweben der Teilchen (B), Luft statt Effekt. */
+      .js .nagel.dran .staub circle{ animation:rieseln .6s cubic-bezier(.4,0,.2,1) .25s both }
+      @keyframes rieseln{ 0%{ opacity:0; transform:translateY(-6px) } 25%{ opacity:.9 } 100%{ opacity:0; transform:translateY(var(--f)) } }
+      .js .nagel.dran .schein{ animation:aufscheinen .4s cubic-bezier(.4,0,.2,1) .25s both }
+      @keyframes aufscheinen{ 0%{ opacity:0 } 40%{ opacity:.85 } 100%{ opacity:0 } }
+      .js .reise-luft > div{ transition:opacity .9s cubic-bezier(.4,0,.2,1) }
+      .reise-luft i{ animation:schweben var(--t) linear var(--d) infinite }
+      @keyframes schweben{ from{ transform:translate(0, 0) } to{ transform:translate(var(--w), 108vh) } }
+      .js .reise-text h3.setzen.gesetzt .z{ transition:opacity .4s cubic-bezier(.4,0,.2,1); transition-delay:calc(var(--v) * 1ms) }
+      .js .reise-buehne[data-oben] .halt .schein{ animation:aufscheinen .4s cubic-bezier(.4,0,.2,1) both; animation-delay:calc(var(--n) * .15s) }
+      /* Hero gestaffelt (Fuji: erst das Bild, dann der Titel, die Aufforderung zuletzt): Titel, Satz, Geräte, Knöpfe,
+         zuletzt «Sieben Kapitel». Je 400 ms, 150 ms versetzt, 8 px nach oben. Ohne Unterstützung steht alles da. */
+      .pass h1 > span, .pass .vorspann, .pass .wege, .pass .fakten, .pass .beta, .pass .geraete, .pass-weiter{ animation:auftritt .4s cubic-bezier(.4,0,.2,1) both }
+      .pass h1 > .zweite{ animation-delay:.15s } .pass .vorspann, .pass .geraete{ animation-delay:.3s }
+      .pass .wege{ animation-delay:.45s } .pass .fakten, .pass .beta, .pass-weiter{ animation-delay:.6s }
+      @keyframes auftritt{ from{ opacity:0; transform:translateY(8px) } }
     }
     @media (prefers-reduced-motion: reduce){
       .reise-bild img{ transform:none }
       .reise-wolken{ display:none }
+      .reise-luft{ display:none }
     }
     @media (max-width:760px){
       .reise-buehne::before{ background:linear-gradient(180deg, rgba(var(--schleier),.95) 0%, rgba(var(--schleier),.9) 52%, rgba(var(--schleier),.35) 78%, rgba(var(--schleier),0) 92%) }
@@ -841,7 +882,7 @@ function reiseLinie() {
   // B · Vorbilder 10.11.2026: jeder Halt führt zu seiner Kehre (nur mit Maus oder Finger; die Linie ist fürs Vorlesen
   // stumm und nicht fokussierbar — für Tastatur und Vorlesen gibt es «Weiter» und «Reise überspringen»). Die unsichtbare
   // Scheibe r=22 macht die Trefferfläche rund 40 px gross.
-  const punkte = reiseWegPunkte().map(([x, y], i) => `<a class="halt-ziel" href="#kehre-${i + 1}" tabindex="-1"><g class="halt" data-kehre="${i + 1}" data-x="${x}" data-y="${y}" transform="translate(${x} ${y})" style="color:var(--k${i})"><circle class="treffer" r="22"/><circle r="12"/>${zeichen(i, `weg${i + 1}`, 'x="-8.5" y="-8.5" width="17" height="17" ')}</g></a>`).join('');
+  const punkte = reiseWegPunkte().map(([x, y], i) => `<a class="halt-ziel" href="#kehre-${i + 1}" tabindex="-1"><g class="halt" data-kehre="${i + 1}" data-x="${x}" data-y="${y}" transform="translate(${x} ${y})" style="color:var(--k${i}); --n:${i}"><circle class="treffer" r="22"/><circle class="schein" r="19"/><circle r="12"/>${zeichen(i, `weg${i + 1}`, 'x="-8.5" y="-8.5" width="17" height="17" ')}</g></a>`).join('');
   return `<svg class="reise-linie" viewBox="0 0 60 600" aria-hidden="true" focusable="false">
             <path class="weg" d="${d}"/>
             <path class="gegangen" d="${d}" pathLength="100"/>
@@ -858,6 +899,27 @@ const NAGEL_Y = KAPITEL.map((_, i) => 590 - i * 82);
 // weisser Rand, darunter ein Schatten, darüber eine Wölbung (das Holz ist rund). Darauf das Kapitel-Zeichen der App.
 // M · Passbild-Stil (Stebler Studios 10.11.2026): alle gleich, rund, gerade — flach wie das Passbild, ohne Schatten und Wölbung.
 const STICKER = KAPITEL.map(() => ['kreis', 0]);
+// A · Motion 11.11.2026: sechs Körner am seitlichen Rand jedes Aufklebers (dx, dy ab Mitte, Radius, Fallweg in px).
+// Seitlich, damit sie neben dem Stock vor dem dunklen Bild fallen — auf dem Holz sah man Sand auf Sand nicht (im
+// Browser gesehen). Fest gesetzt, nicht zufällig: die erzeugte Seite muss bei jedem Bauen gleich bleiben.
+const STAUB = [[-31, 6, 2.4, 26], [-27, 15, 1.8, 34], [-34, 18, 2.2, 20], [30, 8, 2.2, 30], [27, 16, 2.6, 22], [34, 20, 1.8, 36]];
+
+// B · Motion 11.11.2026: die Teilchen in der Luft, drei Schichten (Gold, Hell, Schnee). Lage, Grösse und Tempo aus
+// einem festen Startwert gerechnet (gleiche Seite bei jedem Bauen). Negative Verzögerung: von Anfang an verteilt.
+function reiseLuft() {
+  let saat = 11112026;
+  const zufall = () => { saat = (saat * 1103515245 + 12345) % 2147483648; return saat / 2147483648; };
+  const schicht = (name, anzahl, [tMin, tMax], [gMin, gMax], [oMin, oMax], wind) => {
+    const teile = Array.from({ length: anzahl }, () => {
+      const t = tMin + zufall() * (tMax - tMin);
+      const x = (zufall() * 100).toFixed(1), d = (-zufall() * t).toFixed(1), g = (gMin + zufall() * (gMax - gMin)).toFixed(1);
+      const o = (oMin + zufall() * (oMax - oMin)).toFixed(2), w = Math.round(wind[0] + zufall() * (wind[1] - wind[0]));
+      return `<i style="--x:${x}%; --t:${t.toFixed(1)}s; --d:${d}s; --g:${g}px; --o:${o}; --w:${w}px"></i>`;
+    }).join('');
+    return `<div class="${name}">${teile}</div>`;
+  };
+  return `<div class="reise-luft" aria-hidden="true">${schicht('gold', 16, [30, 46], [2, 4], [0.35, 0.7], [-60, 40])}${schicht('hell', 16, [34, 50], [1.5, 3.5], [0.3, 0.6], [-40, 60])}${schicht('schnee', 24, [14, 22], [2, 4.5], [0.5, 0.85], [-30, 10])}</div>`;
+}
 function stickerForm(form, y) {
   const m = y + 30;
   if (form === 'kreis') return `<circle cx="60" cy="${m}" r="27"/>`;
@@ -871,8 +933,10 @@ function reiseStock() {
     const [form, neigung] = STICKER[i];
     const f = stickerForm(form, y);
     return `<g class="nagel-dreh" data-kehre="${i + 1}"><g class="nagel"><g transform="rotate(${neigung} 60 ${y + 30})">`
+      + `<circle class="schein" cx="60" cy="${y + 30}" r="35"/>`
       + `<g class="schild" style="stroke:var(--k${i})">${f}</g>`
       + `<g class="bild" style="color:var(--k${i})">${zeichen(i, `nagel${i + 1}`, `x="42" y="${y + 12}" width="36" height="36" `)}</g>`
+      + `<g class="staub">${STAUB.map(([dx, dy, r, fall]) => `<circle cx="${60 + dx}" cy="${y + 30 + dy}" r="${r}" style="--f:${fall}px"/>`).join('')}</g>`
       + `</g></g></g>`;
   }).join('');
   return `<svg class="reise-stock" viewBox="0 0 120 700" aria-hidden="true" focusable="false">
@@ -994,6 +1058,7 @@ ${json}
 ${KAPITEL.map((_, i) => `          <img class="kehre-bild" src="${LEER}" data-src="/vorstellung/kehre-${i + 1}.webp" alt="" width="1280" height="853" decoding="async">`).join('\n')}
         </div>
         <div class="reise-wolken"></div>
+        ${reiseLuft()}
         ${reiseLinie()}
         ${reiseStock()}
         <span class="reise-quelle">KI-gemalt</span>
