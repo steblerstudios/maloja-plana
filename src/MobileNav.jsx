@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, shadow, ease, duration, fontFamilyDisplay } from './config/tokens.js';
-import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
+import { groupSettingsControls, alsSchalter, zeilenLabelKey } from './settingsGroups.js';
+import { Schalter } from './components/Schalter.jsx';
 import { useFocusTrap } from './hooks/useFocusTrap.js';
+import { useWischSchliessen } from './hooks/useWischSchliessen.js';
 import { MENUE_WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
 import { suchTreffer, oeffneTreffer, eintragKey } from './config/suche.js';
 import { laeuftAlsApp } from './utils/geraetErkennung.js';
@@ -25,11 +27,15 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   const schublade = useRef(null);
   useFocusTrap(isOpen, { ref: schublade, onEscape: onClose });
 
-  if (!isOpen) return null;
-
   // Seite, von der die Schublade einfährt — folgt der gewählten Hand (Standard rechts,
   // Linkshänder-Modus links). Rand + Slide-Richtung passen sich mit an.
   const side = leftHand ? 'left' : 'right';
+  // Wischen zum Schliessen, zurück zu dieser Seite (10.11.2026) — nur die Einstellungs-Schublade,
+  // nicht das ganzseitige Menü (hooks/useWischSchliessen.js sagt, warum). Vor dem frühen return.
+  const wisch = useWischSchliessen({ seite: side, onClose });
+
+  if (!isOpen) return null;
+
   const panelSide = side === 'left'
     ? { left: 0, borderRight: '1px solid ' + palette.border, animation: 'slideIn 0.25s' }
     : { right: 0, borderLeft: '1px solid ' + palette.border, animation: 'slideInRight 0.25s' };
@@ -51,7 +57,10 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       React.createElement('nav', {
         ref: schublade,
         role: 'navigation', 'aria-label': settingsLabel || t('nav.settings'),
+        'data-wisch-schublade': side,
+        ...wisch.griffe,
         style: {
+          ...wisch.stil,
           position: 'fixed', top: 0, bottom: 0, width: '288px', maxWidth: '86vw',
           background: palette.surface, boxShadow: shadow.lg,
           zIndex: 999, overflowY: 'auto', display: 'flex', flexDirection: 'column',
@@ -69,13 +78,21 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           key: g.key, style: { padding: '16px 24px', borderBottom: '1px solid ' + palette.border },
         },
           React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.soft, marginBottom: space.xs } }, t(g.labelKey)),
-          ...g.controls.map((ctrl, i) => React.createElement('div', {
-            key: ctrl.key || i,
-            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md, padding: space.xs + 'px 0' },
-          },
-            React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, CONTROL_LABELS[ctrl.key] ? t(CONTROL_LABELS[ctrl.key]) : ctrl.key),
-            ctrl
-          ))
+          ...g.controls.map((ctrl, i) => {
+            // Gruppe C, Gestaltung A: An/Aus als Schalter mit Zustandswort, wie auf der Einstellungsseite.
+            const schalter = alsSchalter(ctrl);
+            const labelKey = zeilenLabelKey(ctrl, !!schalter);
+            const label = labelKey ? t(labelKey) : ctrl.key;
+            return React.createElement('div', {
+              key: ctrl.key || i,
+              style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md, padding: space.xs + 'px 0' },
+            },
+              React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, label),
+              schalter
+                ? React.createElement(Schalter, { palette, t, an: schalter.an, onChange: schalter.umschalten, label })
+                : ctrl
+            );
+          })
         )),
         onStartTour ? React.createElement('button', {
           type: 'button', onClick: () => { onClose(); onStartTour(); },

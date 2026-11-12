@@ -3,13 +3,12 @@ import { hinweisZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getCantonName } from './config/cantonalData.js';
-import { STIPENDIEN_OFFICIAL, STIPENDIEN_KANTONE_URL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE, stipendienErgebnis } from './data/stipendienData.js';
+import { STIPENDIEN_OFFICIAL, STIPENDIEN_KANTONE_URL, STIPENDIEN_PRIVATE, stipendienErgebnis } from './data/stipendienData.js';
 import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { PanelTitle } from './components/Heading.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
-import { GlossarText } from './GlossarBegriff.jsx';
 import { StatusForm } from './components/StatusForm.jsx';
 import { linkStil } from './components/PrimaryButton.jsx';
 
@@ -81,9 +80,13 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     angaben: {
       erfasst: (status ? 1 : 0) + (scope ? 1 : 0), gesamt: 2,
       inhalt: React.createElement('div', { style: { paddingTop: space.xs + 'px' } },
-        React.createElement(Einzelwahl, { palette, id: 'stip-status', label: t('stip.checkStatusQ'), wert: status, onWahl: setStatus, optionen: [
+        // Gruppe D L3 (11.11.2026): «Anderer Status» für F und B unter 5 Jahren → resultUnclear statt
+        // einer erzwungenen falschen Wahl. Gestaltung C: der Hinweis «Nicht berechtigt ist …» steht hier
+        // als Hinweis zur Frage; die Listen «Wer kann beantragen?» / «Was wird unterstützt?» unten fallen weg.
+        React.createElement(Einzelwahl, { palette, id: 'stip-status', label: t('stip.checkStatusQ'), hinweis: t('stip.notEligible'), wert: status, onWahl: setStatus, optionen: [
           ['swiss', t('stip.who.swiss')], ['foreigner5y', t('stip.who.foreigner5y')],
           ['euefta', t('stip.who.euefta')], ['refugee', t('stip.who.refugee')],
+          ['other', t('stip.checkStatusOther')],
           ['onlyEducation', t('stip.checkStatusOnlyEducation')],
         ].map(([wert, label]) => ({ wert, label })) }),
         React.createElement(Einzelwahl, { palette, id: 'stip-scope', label: t('stip.checkScopeQ'), wert: scope, onWahl: setScope, optionen: [
@@ -97,7 +100,15 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
       titel: t('stip.whereTitle'),
       inhalt: React.createElement(React.Fragment, null,
         React.createElement('p', { style: { ...intro, margin: 0 } }, t('stip.where')),
-        React.createElement('p', { style: { ...intro, margin: space.sm + 'px 0 0 0' } }, t('stip.whereAusnahmen')),
+        // Gestaltung C: ein Satz über 15 Zeilen → Einleitung plus Liste, wenn der Text Zeilen trägt (de).
+        ...(() => {
+          const [kopf, ...faelle] = String(t('stip.whereAusnahmen')).split('\n');
+          return [
+            React.createElement('p', { key: 'wa', style: { ...intro, margin: space.sm + 'px 0 0 0' } }, kopf),
+            ...faelle.map((f, i) => React.createElement('div', { key: 'wa' + i, style: { ...item, marginTop: i === 0 ? space.xs + 'px' : 0 } },
+              React.createElement('span', { style: bullet }, '–'), React.createElement('span', null, f))),
+          ];
+        })(),
         canton && React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } },
           t('stip.yourCanton', { canton: getCantonName(canton, t) }))
       ),
@@ -107,15 +118,6 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
       React.createElement(ExternerLink, { t, href: STIPENDIEN_OFFICIAL.edkCantonalOffices, style: { ...stelleLink, fontWeight: stelleKanton ? undefined : weight.semi } }, t('stip.cantonalLink'))),
     quelle: React.createElement(React.Fragment, null, hinweisZeichen(), renderSource(t('stip.source'), null, t)),
   },
-    // Wer kann beantragen?
-    React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.eligibilityTitle')),
-    STIPENDIEN_ELIGIBILITY.whoKeys.map(k => li(t('stip.who.' + k), 'who-' + k)),
-    React.createElement('div', { style: { ...intro, fontStyle: 'italic', marginTop: space.xs + 'px' } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('stip.notEligible'))),
-
-    // Was wird unterstützt?
-    React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.scopeTitle')),
-    STIPENDIEN_ELIGIBILITY.scopeKeys.map(k => li(t('stip.scope.' + k), 'scope-' + k)),
-
     // Stipendium oder Darlehen?
     React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.formTitle')),
     React.createElement('p', { style: intro }, t('stip.formNote')),

@@ -13,6 +13,17 @@ export const kvgFristImFenster = (data, heute) => {
   return heute >= jahr + '-10-31' && heute <= frist ? frist : null;
 };
 
+// Gruppe B L2 (11.11.2026): auf welches Jahresende ein Kassenwechsel-Brief kündigt. Bis zur Frist (Eingang am
+// letzten Werktag im November, KVG Art. 7 Abs. 2) das laufende Jahr, danach das nächste — sonst druckte die Vorlage
+// ab dem 1. Dezember einen Termin, der nicht mehr möglich ist. `heute` ist ISO-Text.
+export const kvgKuendigungsTermin = (heute) => {
+  const j = Number(heute.slice(0, 4));
+  const fristJ = werktagAmOderDavor(j + '-11-30');
+  const nachFrist = heute > fristJ;
+  const jahr = nachFrist ? j + 1 : j;
+  return { jahr, frist: nachFrist ? werktagAmOderDavor(jahr + '-11-30') : fristJ, nachFrist, verpasstJahr: j, verpasstFrist: fristJ };
+};
+
 export const festeFristen = (data, heute) => {
   const kvg = kvgFristImFenster(data, heute);
   const steuer = data?.behoerden?.taxFilingDeadline;

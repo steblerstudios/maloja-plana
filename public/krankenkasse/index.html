@@ -85,63 +85,82 @@
       font-weight:400; font-display:swap }
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
-    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870 }
+    /* Gruppe E, Gestaltung B (12.11.2026): Titel in Hanken Grotesk wie die Startseite (Brand Book §3),
+       die Datei liegt schon unter /fonts/. Alles andere bleibt Lexend. */
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gestaltung C: ein Gold, ein Leise-Ton — dieselben Werte wie website/index.html.
+       --sand ist die Fläche (Knopf), --sand-tief die Schrift (Links), hell 7A5F30, dunkel C4A06A. */
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;
+           --rand:#E0DDD8; --sand:#C4A06A; --sand-tief:#7A5F30; --auf-sand:#2A2620 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870 }
+             --rand:#3A3936; --sand:#C4A06A; --sand-tief:#C4A06A; --auf-sand:#2A2620 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
       font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
-    a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
+    a{ color:var(--sand-tief); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
     /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
-       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+       Die Rückmeldung kommt über die dickere Unterstreichung. */
     a:hover{ text-decoration-thickness:2px }
-    header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
-    nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
+    header{ padding:24px 0 0 }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px. Gruppe E, C: Bildmarke 28 px wie auf der Startseite. */
+    .marke{ display:inline-flex; align-items:center; gap:10px; min-height:44px; font-weight:600; text-decoration:none;
+      font-size:16px; color:var(--text) }
+    .marke svg{ height:28px; width:auto; flex:none }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:16px }
     main{ padding:8px 0 16px }
-    h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
-    .vorspann{ font-size:18px; color:var(--text); margin-bottom:8px }
-    h2{ font-size:20px; font-weight:600; margin:40px 0 12px; letter-spacing:-0.005em }
-    h3{ font-size:16px; font-weight:600; margin:24px 0 6px }
-    p{ margin-bottom:14px }
-    ul{ margin:0 0 14px 22px } li{ margin-bottom:8px }
-    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:10px;
-      padding:20px 22px; margin:28px 0 }
+    /* Gestaltung B: Grössen nur von der Skala 13 · 15 · 16 · 19 · 23 · 28 · 36 (Brand Book §7a). */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-weight:600 }
+    h1{ font-size:36px; line-height:1.2; margin:16px 0 12px; letter-spacing:-0.015em }
+    .vorspann{ font-size:19px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:23px; line-height:1.3; margin:48px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:19px; line-height:1.35; margin:24px 0 8px }
+    p{ margin-bottom:16px }
+    ul{ margin:0 0 16px 24px } li{ margin-bottom:8px }
+    /* Gestaltung D: Karte 12 px Ecke, innen 32 (am Handy 24), Abstand 32. */
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:12px;
+      padding:32px; margin:32px 0 }
     .karte p:last-child{ margin-bottom:0 }
     .weiter{ list-style:none; margin:16px 0 0; padding:0 }
-    .weiter li{ margin-bottom:10px }
+    .weiter li{ margin-bottom:12px }
     .weiter a{ font-weight:600; text-decoration:none }
     .weiter a:hover{ text-decoration:underline }
-    .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
-    .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
-      padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
-    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
-    .leise{ font-size:14px; color:var(--leise) }
-    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
-      padding-left:14px; margin:32px 0 }
-    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
+    .weiter span{ display:block; font-size:15px; color:var(--leise); font-weight:400 }
+    /* Knopf 10 px Ecke, 44 px hoch (Brand Book §7a, «6 px» überholt am 06.11.). */
+    .knopf{ display:inline-flex; align-items:center; min-height:44px; background:var(--sand); color:var(--auf-sand);
+      text-decoration:none; padding:12px 24px; border-radius:10px; font-weight:600; font-size:15px; margin-top:4px }
+    .knopf:hover{ filter:brightness(1.05) }
+    .hinweis{ font-size:13px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:13px; color:var(--leise) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:16px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:24px 0 64px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
-    footer p{ margin-bottom:6px }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
+    footer p{ margin-bottom:8px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
-    footer .sprachen{ margin-top:14px }
+    footer .sprachen{ margin-top:16px }
     footer .sprachen a{ text-decoration:underline }
     footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
     /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
-       nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
-    .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
-      margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. Hinweisstreifen: 6 px (kleinste Rolle). */
+    .entwurf{ border:1px solid var(--sand); border-radius:6px; padding:12px 16px;
+      margin-bottom:24px; font-size:15px; color:var(--leise); background:var(--flaeche) }
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
-    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
+    .verbindlich{ margin-bottom:24px; font-size:13px; color:var(--leise) }
     /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
     ul.kantone{ columns:2; column-gap:32px }
     ul.kantone li{ break-inside:avoid }
-    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }
+    @media (max-width:600px){ h1{ font-size:28px } .vorspann{ font-size:16px } h2{ font-size:19px; margin-top:32px }
+      .karte{ padding:24px } ul.kantone{ columns:1 } }
     /* ─── Hintergrundseite · Maloja-Stil ───────────────────────────────────
        Überschriften in Hanken Grotesk (Markenhandbuch §3), Lesetext Lexend.
        Bereichsfarbe Heidelbeere (Versicherungen, data/lebensbereiche.js):
@@ -171,9 +190,10 @@
     nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
     nav.inhalt p{ margin:0 0 8px; font-size:13px; font-weight:600; color:var(--leise) }
     nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
-    nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
+    nav.inhalt li{ counter-increment:frage; margin:0; break-inside:avoid; display:flex; align-items:center; gap:10px; font-size:15px }
     nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
-    nav.inhalt a{ text-decoration:none } nav.inhalt a:hover{ text-decoration:underline }
+    /* Gruppe D: Einträge ≥ 44 px Trefferfläche (vorher 25 px). */
+    nav.inhalt a{ text-decoration:none; display:inline-flex; align-items:center; min-height:44px } nav.inhalt a:hover{ text-decoration:underline }
 
     .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
 
@@ -338,7 +358,7 @@
 <body>
   <div class="rahmen">
     <header>
-      <a class="marke" href="/">Maloja&nbsp;Plana</a>
+      <a class="marke" href="/"><svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg>Maloja&nbsp;Plana</a>
       <nav class="krume" aria-label="Sie sind hier">
         <a href="/">Start</a> › Krankenkasse erklärt
       </nav>
@@ -376,7 +396,7 @@
           <p class="bewegt"><a href="/krankenkasse/bewegt/dorf/">Bewegte Fassung zum Ausprobieren: Ein Dorf mit 100 Menschen</a>
           <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
         </figure></div>
-      <p class="schicht-kurz">Der Topf funktioniert nur, weil die vielen Gesunden die wenigen Schwerkranken tragen.</p>
+      <p class="schicht-kurz">Der Topf funktioniert, weil viele einzahlen und wenige hohe Kosten haben.</p>
       <details class="schicht-mehr">
         <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
         <p>Stellen Sie sich ein Dorf mit 100 Menschen vor. Niemand weiss, wen es dieses Jahr trifft. Eine Krebstherapie kann mehr kosten, als eine Familie je sparen könnte. Allein wäre das nicht zu bezahlen. Zu hundert schon.</p>
@@ -418,7 +438,7 @@
         <h3>Von Reich zu Arm</h3>
         <p>Die Prämie selbst kennt keinen Reichtum: Sie ist pro Kopf gleich, ob jemand 40'000 oder 400'000 Franken verdient. Der Ausgleich läuft über die Steuern. Bund und Kantone verbilligten 2023 die Prämien von knapp 2,5 Millionen Menschen mit rund 5,9 Milliarden Franken.<sup class="beleg"><a href="#quelle-statkv" id="beleg-statkv-1" aria-label="Quelle 3">3</a></sup> Und bei stationären Behandlungen in Listenspitälern zahlt der Wohnkanton aus Steuern mindestens 55 % der Vergütung.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-2" aria-label="Quelle 2">2</a></sup></p>
         <h3>Von Kasse zu Kasse</h3>
-        <p>Eine Kasse mit vielen Jungen und Gesunden wäre sonst billig, eine mit vielen Alten teuer, und alle würden nur noch Gesunde anlocken. Darum gibt es den Risikoausgleich: Kassen mit günstigen Versicherten zahlen an Kassen mit teuren. Für 2024 flossen so netto rund 1,1 Milliarden Franken.<sup class="beleg"><a href="#quelle-kvgorg" id="beleg-kvgorg-1" aria-label="Quelle 4">4</a></sup></p>
+        <p>Eine Kasse mit vielen Jungen und Gesunden wäre sonst billig, eine mit vielen älteren Versicherten teuer, und alle würden nur noch Gesunde anlocken. Darum gibt es den Risikoausgleich: Kassen mit günstigen Versicherten zahlen an Kassen mit teuren. Für 2024 flossen so netto rund 1,1 Milliarden Franken.<sup class="beleg"><a href="#quelle-kvgorg" id="beleg-kvgorg-1" aria-label="Quelle 4">4</a></sup></p>
       </details>
       <nav class="wege" aria-label="Weiter von: Wer zahlt für wen? Die Querfinanzierung"><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a><a class="weg" href="#nachbar"><span aria-hidden="true">→</span> Warum zahlen andere weniger?</a></nav>
 
@@ -515,7 +535,7 @@
         <p class="leise">Bei der einzelnen Kasse kommt der Risikoausgleich dazu, als Zuschlag oder als Abzug. Über alle Kassen hebt er sich auf.<sup class="beleg"><a href="#quelle-kvgorg" id="beleg-kvgorg-2" aria-label="Quelle 4">4</a></sup></p>
         <p>Das ist eine Schätzung fürs nächste Jahr, denn die Prämie muss im Voraus feststehen. Die Kassen reichen ihre Rechnung beim BAG ein. Das BAG lehnt ab, wenn die Prämie die Kosten nicht deckt, zu weit darüber liegt oder zu viel Reserve aufbaut. Verdienen darf die Kasse an der Grundversicherung nichts: Das Geld darf nur für die Grundversicherung verwendet werden, Überschüsse bleiben dort, etwa in den Reserven.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-8" aria-label="Quelle 2">2</a></sup></p>
         <p>Das Bild oben zeigt das als Messaufbau. Der Stapel sind die Kosten, der Sockel der eigene Anteil, und der Taster liest oben die Prämie ab. Der Stapel wächst jedes Jahr, also steigt auch der Taster.</p>
-        <p class="merke"><strong>Kurz gesagt:</strong> Die Verwaltung kostet nur 16 Franken im Monat, 4,6 % der Prämien.<sup class="beleg"><a href="#quelle-kennzahlen" id="beleg-kennzahlen-2" aria-label="Quelle 9">9</a></sup> Sie ist nicht der Grund, warum die Prämie steigt. Die Prämie ist hoch, weil die Behandlungen viel kosten. Wer die Prämie senken will, muss die Kosten senken.</p>
+        <p class="merke"><strong>Kurz gesagt:</strong> Die Verwaltung macht 16 Franken im Monat aus, 4,6 % der Prämien.<sup class="beleg"><a href="#quelle-kennzahlen" id="beleg-kennzahlen-2" aria-label="Quelle 9">9</a></sup> Sie ist nicht der Grund, warum die Prämie steigt. Die Prämie ist hoch, weil die Behandlungen viel kosten; sinken kann sie nur, wenn die Kosten sinken.</p>
 <div class="tabelle" role="region" aria-label="Mittlere Monatsprämie 2027, ganze Schweiz" tabindex="0"><table>
           <caption>Mittlere Monatsprämie 2027, ganze Schweiz</caption>
           <tr><th scope="col">Altersgruppe</th><th scope="col" class="n">Franken</th></tr>
@@ -622,9 +642,9 @@
         <h3>Die Franchise</h3>
         <p>Wer eine höhere Franchise wählt, bekommt Rabatt, aber nicht beliebig viel: Der Rabatt darf höchstens 70 % des zusätzlichen Risikos betragen. Von 300 auf 2'500 Franken übernehmen Sie 2'200 Franken mehr Risiko, der Rabatt liegt also bei höchstens 1'540 Franken im Jahr, rund 128 Franken im Monat.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-12" aria-label="Quelle 2">2</a></sup></p>
         <h3>Das Modell</h3>
-        <p>Bei Hausarzt-, HMO- oder Telmed-Modellen gehen Sie zuerst an eine bestimmte Stelle und verzichten auf die freie Wahl. Dafür kann die Kasse Rabatt geben. Der Rabatt darf nur Kostenunterschiede weitergeben, die wirklich aus dem Modell stammen, nicht daraus, dass dort gesündere Menschen versichert sind.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-13" aria-label="Quelle 2">2</a></sup></p>
+        <p>Bei Hausarzt-, HMO- (Gesundheitszentrum) oder Telmed-Modellen (zuerst telefonische Beratung) gehen Sie zuerst an eine bestimmte Stelle und verzichten auf die freie Wahl. Dafür kann die Kasse Rabatt geben. Der Rabatt darf nur Kostenunterschiede weitergeben, die wirklich aus dem Modell stammen, nicht daraus, dass dort gesündere Menschen versichert sind.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-13" aria-label="Quelle 2">2</a></sup></p>
         <h3>Die Unfalldeckung</h3>
-        <p>Wer mindestens acht Stunden pro Woche bei derselben Arbeitgeberin oder demselben Arbeitgeber arbeitet, ist über die Stelle auch in der Freizeit gegen Unfälle versichert. Dann lässt sich die Unfalldeckung bei der Kasse schriftlich ruhen lassen, mit einer Bestätigung der Arbeitgeberseite. Das senkt die Prämie um höchstens 7 %. Endet die Stelle, melden Sie das der Kasse innert eines Monats; die Unfalldeckung gilt dann automatisch wieder. Ohne Meldung kann die Kasse den Prämienanteil für die Unfalldeckung mit Zins nachfordern.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-14" aria-label="Quelle 2">2</a></sup></p>
+        <p>Wer mindestens acht Stunden pro Woche bei derselben Arbeitgeberin oder demselben Arbeitgeber arbeitet, ist über die Stelle auch in der Freizeit gegen Unfälle versichert. Dann lässt sich die Unfalldeckung bei der Kasse schriftlich ruhen lassen, mit einer Bestätigung der Arbeitgeberseite. Das senkt die Prämie um höchstens 7 %. Endet die Stelle, melden Sie das der Kasse innert eines Monats, nachdem Arbeitgeber oder Arbeitslosenversicherung Sie darüber informiert haben; die Unfalldeckung gilt dann automatisch wieder. Ohne Meldung kann die Kasse den Prämienanteil für die Unfalldeckung mit Zins nachfordern.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-14" aria-label="Quelle 2">2</a></sup></p>
         <h3>Die Kasse</h3>
         <p>Die Leistungen der Grundversicherung sind bei allen Kassen gleich, die Prämie nicht.</p>
         <p class="merke"><strong>Kurz gesagt:</strong> Die Prämie hängt davon ab, wo Sie wohnen, wie alt Sie sind, bei welcher Kasse Sie sind und was Sie selbst an Risiko und Wahlfreiheit eintauschen. Der Gesundheitszustand zählt dabei nicht: Die Kasse darf deshalb keine höhere Prämie verlangen.</p>
@@ -650,7 +670,7 @@
         <h3>Das Geld schaut auf den Ort, nicht auf den Sinn</h3>
         <p>Stationär zahlt heute der Kanton mit, ambulant zahlt die Kasse allein. Wird eine Operation vom Spitalbett in die Tagesklinik verlegt, ist das oft billiger, aber die Prämienzahlenden tragen plötzlich alles. Was für alle gut ist, ist für einzelne Zahlende schlecht.</p>
         <h3>Generika kosten mehr als im Ausland</h3>
-        <p>Generika sind Kopien von Medikamenten, deren Patent abgelaufen ist. Laut Preisüberwacher kosten die günstigsten in der Schweiz 2,4-mal so viel wie im Ausland.<sup class="beleg"><a href="#quelle-preisueberwacher" id="beleg-preisueberwacher-1" aria-label="Quelle 18">18</a></sup> Ein Vergleich von santésuisse und Interpharma von 2023 kommt mit anderer Methode auf knapp das Doppelte.<sup class="beleg"><a href="#quelle-interpharma" id="beleg-interpharma-1" aria-label="Quelle 19">19</a></sup> Teurer sind sie in beiden Rechnungen.</p>
+        <p>Generika sind Kopien von Medikamenten, deren Patent abgelaufen ist. Laut Preisüberwacher kosten die günstigsten in der Schweiz im Schnitt 2,4-mal so viel wie im Ausland (15 Vergleichsländer).<sup class="beleg"><a href="#quelle-preisueberwacher" id="beleg-preisueberwacher-1" aria-label="Quelle 18">18</a></sup> Ein Vergleich von santésuisse und Interpharma von 2023 kommt mit anderer Methode auf knapp das Doppelte.<sup class="beleg"><a href="#quelle-interpharma" id="beleg-interpharma-1" aria-label="Quelle 19">19</a></sup> Teurer sind sie in beiden Rechnungen.</p>
         <h3>Alle haben andere Interessen</h3>
         <p>Jede Sparmassnahme nimmt jemandem Einkommen weg: Ärzteschaft, Spitälern, Pharma, Kantonen, Kassen. Alle haben gute Argumente und eine Interessenvertretung. Darum geht es langsam voran. Für die Jahre 2028 bis 2031 soll der Bundesrat erstmals Kosten- und Qualitätsziele festlegen; angekündigt war das für Ende 2026.<sup class="beleg"><a href="#quelle-bag2027" id="beleg-bag2027-3" aria-label="Quelle 11">11</a></sup></p>
         <h3>Und wen trifft es?</h3>
@@ -664,19 +684,19 @@
         <li><span class="jahr">2028</span><span class="was">EFAS: ambulant und stationär nach demselben Schlüssel<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-15" aria-label="Quelle 2">2</a></sup></span></li>
         <li><span class="jahr">2032</span><span class="was">Die Pflege kommt zu EFAS dazu</span></li>
       </ol></div>
-      <p class="schicht-kurz">Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Wer für sich selbst gemahnte Prämien, Kostenbeteiligungen, Verzugszinsen oder Betreibungskosten offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt bei der Kasse eingetroffen sind.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-16" aria-label="Quelle 2">2</a></sup></p>
+      <p class="schicht-kurz">Nach der Mitteilung der neuen Prämie können Sie die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Wer für sich selbst gemahnte Prämien, Kostenbeteiligungen, Verzugszinsen oder Betreibungskosten offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt bei der Kasse eingetroffen sind.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-16" aria-label="Quelle 2">2</a></sup></p>
       <details class="schicht-mehr">
         <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
         <p><strong>Seit 2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen hat am 1. Januar 2026 TARMED abgelöst.<sup class="beleg"><a href="#quelle-tardoc" id="beleg-tardoc-2" aria-label="Quelle 22">22</a></sup></p>
         <p><strong>2028, EFAS:</strong> Ambulant und stationär werden nach demselben Schlüssel finanziert. Die Kantone übernehmen ab 2028 einen Anteil an den Kosten nach Abzug der Kostenbeteiligung, den jeder Kanton selbst festlegt, aber mit einem Mindestsatz: 2028 je nach Kanton mindestens 21,3 bis 28,5 %, ab 2031 meist mindestens 24,5 %. Den Rest tragen die Prämien. 2032 kommt die Pflege dazu, dann beträgt der Kantonsanteil mindestens 26,9 %. Die Preise selbst ändern sich dadurch nicht.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-17" aria-label="Quelle 2">2</a></sup></p>
         <p><strong>Mindestfranchise:</strong> Das Parlament hat es verlangt, der Bundesrat schlägt 400 statt 300 Franken vor. Das war im März 2026 in der Vernehmlassung und ist umstritten: Die einen erwarten weniger Bagatellbesuche, die anderen sehen eine Last für Chronischkranke und Menschen mit wenig Geld. Ein Datum für das Inkrafttreten nannte die Mitteilung vom 13.03.2026 nicht.<sup class="beleg"><a href="#quelle-mindestfranchise" id="beleg-mindestfranchise-1" aria-label="Quelle 23">23</a></sup></p>
-        <p><strong>Für Sie:</strong> Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Am sichersten kündigt man erst, wenn die neue Kasse die Aufnahme bestätigt hat. Ohne Prämienmitteilung gilt eine längere Frist. Wer gemahnte Prämien, Kostenbeteiligungen, Verzugszinsen oder Betreibungskosten offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt bei der Kasse eingetroffen sind. Ausstände nur für die Kinder hindern den eigenen Wechsel nicht.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-18" aria-label="Quelle 2">2</a></sup> Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes.<sup class="beleg"><a href="#quelle-priminfo" id="beleg-priminfo-1" aria-label="Quelle 24">24</a></sup></p>
+        <p><strong>Für Sie:</strong> Nach der Mitteilung der neuen Prämie können Sie die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Am sichersten kündigen Sie erst, wenn die neue Kasse die Aufnahme bestätigt hat. Ohne Prämienmitteilung ist ein Wechsel auf Ende Juni oder Ende Dezember möglich, mit drei Monaten Kündigungsfrist, also Eingang bis 31. März beziehungsweise 30. September; mit Wahlfranchise oder einem besonderen Modell nur auf Ende Jahr. Wer gemahnte Prämien, Kostenbeteiligungen, Verzugszinsen oder Betreibungskosten offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt bei der Kasse eingetroffen sind. Ausstände nur für die Kinder hindern den eigenen Wechsel nicht.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-18" aria-label="Quelle 2">2</a></sup> Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes.<sup class="beleg"><a href="#quelle-priminfo" id="beleg-priminfo-1" aria-label="Quelle 24">24</a></sup></p>
         <p>Ob Sie Anspruch auf eine Verbilligung der Prämie haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>
       </details>
       <nav class="wege" aria-label="Weiter von: Was ändert sich?"><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
 
       <div class="karte">
-        <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
+        <p><strong>Mit Ihren Angaben lässt sich das in der App durchrechnen.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
         <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
         <p><a class="knopf" href="/app/?beispiel#/praemien">Beispiel ansehen — ohne Zugangscode</a></p>
@@ -841,7 +861,7 @@
         <li id="quelle-preisueberwacher">
           <span class="q-nr">18</span>
           <div>
-            <p class="q-titel"><a href="https://www.preisueberwacher.admin.ch/dam/pue/de/dokumente/newsletter/newsletter_08_24.pdf.download.pdf/Newsletter_08_24_d.pdf" rel="noopener">Newsletter 8/2024</a></p>
+            <p class="q-titel"><a href="https://www.preisueberwacher.admin.ch/dam/de/sd-web/BkYrO1muxFAu/newsletter_08_24.pdf" rel="noopener">Newsletter 8/2024</a></p>
             <p class="q-her">Preisüberwachung</p>
             <p class="q-belegt">Belegt: Generikapreise im Auslandvergleich</p>
             <p class="q-zurueck">Zurück zum Text: <a href="#problem" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>

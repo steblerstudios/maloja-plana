@@ -226,7 +226,7 @@ describe('Offene Befunde aus #651 geschlossen', () => {
     expect(render(p)).toMatch(/aria-label="Kinder[^"]*"[^>]*>(?:(?!<\/select>).)*<option value="6" selected=""/s);
   });
   it('das Feld Familienzulagen warnt vor Doppelzählung, in jeder Sprache', () => {
-    expect(JSON.stringify(de)).toMatch(/Kinderzulagen vom Arbeitgeber[^"]*doppelt/);
+    expect(JSON.stringify(de)).toMatch(/Kinderzulagen von der Arbeitgeberin, vom Arbeitgeber[^"]*doppelt/);
     expect(JSON.stringify(en)).toMatch(/compensation office\.[^"]*twice/);
     expect(JSON.stringify(fr)).toMatch(/caisse de compensation\.[^"]*double/);
     expect(JSON.stringify(itTranslations)).toMatch(/cassa di compensazione\.[^"]*due volte/);

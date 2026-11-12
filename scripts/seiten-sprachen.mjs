@@ -54,7 +54,7 @@ export const SPRACHEN = [
     ldLang: 'de-CH',
     praefix: '',
     freigegeben: true,
-    geprueft: 'September 2026', // Fach- + Rechtsprüfung 20.09.2026
+    geprueft: 'November 2026', // Fach- + Rechtsprüfung 20.09.2026; Gruppe D (Ausländerrecht, IPV, Sprache) 11.11.2026
   },
   {
     code: 'fr',
@@ -127,7 +127,7 @@ export const RAHMEN = {
     kurzhinweis:
       'Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. ' +
       'Diese Seite nennt bewusst keine Beträge und Fristen.',
-    karteTitel: 'Maloja Plana rechnet das für Ihre Situation durch.',
+    karteTitel: 'Mit Ihren Angaben lässt sich das in der App durchrechnen.',
     karteText:
       'Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, ' +
       'Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, ' +
@@ -141,6 +141,10 @@ export const RAHMEN = {
       'Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine ' +
       'Zusammenarbeit und keine Billigung. Nicht alle davon sind Behörden — die SKOS etwa ist ein ' +
       'Fachverband, ihre Richtlinien sind Empfehlungen.',
+    // Gruppe D K (11.11.2026): ohne SKOS-Quelle auf der Seite ohne den SKOS-Satz.
+    quellenLeiseOhneSkos:
+      'Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine ' +
+      'Zusammenarbeit und keine Billigung.',
     nurDeutsch: 'nur auf Deutsch verfügbar',
     vorbehalt:
       'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — ' +
@@ -217,7 +221,7 @@ export const RAHMEN = {
     karteTitel: 'Maloja Plana esegue il calcolo per la sua situazione.',
     karteText:
       'Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, ' +
-      'previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: ' +
+      'previdenza e scheda d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: ' +
       'nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.',
     karteBeta:
       'L’applicazione è attualmente in <strong>beta chiusa</strong> e richiede un codice d’accesso. ' +
@@ -329,6 +333,9 @@ export const RAHMEN = {
     spracheLabel: 'Lingua',
     entwurfBanner:
       'Questa translaziun n’è anc betg vegnida legida d’ina persuna. Decisiv è il text tudestg.',
+    // Gruppe E, S10: ohne diesen Satz fiele bei der Freigabe «Deutsch gilt» ganz weg. Nur aus Wörtern des
+    // Banners gebaut; vor der Freigabe muttersprachlich lesen lassen wie den ganzen rm-Rahmen.
+    verbindlich: 'Translaziun. Decisiv è il text tudestg.',
   },
 };
 

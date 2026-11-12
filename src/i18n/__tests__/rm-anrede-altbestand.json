@@ -2,15 +2,10 @@
  "lebenszustaende.rentnerin.frage",
  "bewilligung.step2Text",
  "fuehrerausweis.step1Text",
- "selbstaendigkeit.step3Text",
- "pensionierung.step2Text",
- "kkErst.step3Text",
  "anspruchCheck.resultEmptySituation",
  "budgetImport.selectCsvOrExcel",
  "onboarding.needsSubtitle",
  "notifications.blockedHint",
- "notifications.overdueRemindersDesc",
- "notifications.documentExpiryDesc",
  "backupVoreinstellung.hinweisUnverschluesselt",
  "notfallkarte.step2Title",
  "notfallkarte.step2Text",
@@ -19,8 +14,5 @@
  "notfallkarte.loc_error",
  "notfallkarte.loc_unsupported",
  "notfallkarte.step3Text",
- "po.reserveCheck_none",
- "gepaeck.intro",
- "vr.intlIntro",
- "vr.zukunftRenteKapitalHinweis"
+ "gepaeck.intro"
 ]

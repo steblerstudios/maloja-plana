@@ -77,7 +77,7 @@ export const SEITEN = [
       {
         frage: 'Stoss jau inoltrar dapertut sez ina dumonda?',
         antwort:
-          'Quai varieschia tenor prestaziun e chantun. Tar tschertas prestaziuns s’annunzian ils posts da sasez, tar autras na capita nagut senza dumonda. En cas da dubi vala: dumandar na custa nagut, ed ina dumonda betg inoltrada na vegn mai approvada.',
+          'Quai varieschia tenor prestaziun e chantun. Tar tschertas prestaziuns s’annunzian ils posts da sasez, tar autras na capita nagut senza dumonda. En cas da dubi vala: dumandar na custa nagut, ed ina dumonda betg inoltrada na vegn mai approvada. Senza pass svizzer vala ina excepziun per l’agid social: il retratg po avair consequenzas per la permissiun da dimora; laschai cussegliar Vus avant la dumonda (dapli sin la pagina Agid social).',
       },
       {
         frage: 'Tge custa Maloja Plana?',
@@ -102,6 +102,8 @@ export const SEITEN = [
         titel: 'Tge che la Confederaziun prescriva e tge ch’il chantun decida',
         absaetze: [
           'La Confederaziun prescriva <em>che</em> i stoppia dar ina reducziun da premi, fixescha per quai pretensiuns minimalas e sa participescha al finanziament. En il rom da questas pretensiuns decida il chantun tgi ch’la survegn e quant bler.',
+          // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+          'Trais prescripziuns valan dapertut. Per entradas bassas e mesaunas reduceschan ils chantuns las premias dals uffants per almain 80 pertschient e quellas dals giuvens creschids en furmaziun per almain 50 pertschient (art. 65 al. 1bis LAMal). Mintga chantun fixescha tge part da l’entrada disponibla che la premia dastga far il pli (art. 65 al. 1ter LAMal). Ed uschespert ch’il dretg è constatà, sto il pajament succeder uschia che Vus na stuais betg pajar ordavant la premia (art. 65 al. 3 LAMal).',
           'Concretamain differeschan da chantun a chantun: ils limits d’entrada e da facultad, la moda co che l’entrada decisiva vegn insumma calculada, sche ins sto inoltrar ina dumonda u sche ins vegn contactà, ed ils termins.',
           'Dapertut medem è percunter <strong>nua ch’ils daners van</strong>: il chantun paja la contribuziun directamain a la cassa da malsauns, betg a la persuna assicurada. Quai stat en la LAMal e n’è betg spazi da moviment chantunal.',
           'Perquai na maina la frasa «tar nus survegn ins quai a partir d’ina entrada da X» rara vart. Ella vala il pli auter per in chantun, e là mo per in onn.',
@@ -126,7 +128,7 @@ export const SEITEN = [
       {
         frage: 'Hai jau dretg a la reducziun da premi?',
         antwort:
-          'Quai dependa dal chantun da domicil, da l’entrada e da la facultad decisivas e da la grondezza da la chasada — tut trais vegnan ponderads differentamain tenor chantun. In limit che vala dapertut n’exista betg. Decisiv decida il post cumpetent: per il pli la cassa da cumpensaziun chantunala u l’institut chantunal d’assicuranzas socialas, en singuls chantuns l’administraziun da taglia u la vischnanca da domicil.',
+          'Quai dependa dal chantun da domicil, da l’entrada e da la facultad decisivas e da la grondezza da la chasada — tut trais vegnan ponderads differentamain tenor chantun. In limit che vala dapertut n’exista betg. Decisiv decida il post cumpetent: per il pli la cassa da cumpensaziun chantunala u l’institut chantunal d’assicuranzas socialas, en singuls chantuns l’administraziun da taglia u la vischnanca da domicil. Ina excepziun vala en il sectur d’asil: cun permiss N u S è il dretg suspendì, uschè ditg ch’i vegn retratg agid social dal tut u per part (art. 82a al. 7 LAsil). Il medem vala cun permiss F, auter che sche l’entrada è stada avant dapli che set onns (art. 86 al. 2 LEI, art. 5b OAsil 2). Per fugitivs admess provisoricamain pon valair autras reglas; quai sclerescha il post chantunal.',
       },
       {
         frage: 'Stoss jau inoltrar ina dumonda?',
@@ -162,6 +164,8 @@ export const SEITEN = [
         absaetze: [
           'L’agid social è <strong>subsidiar</strong>. Avant ch’el vegn en dumonda, vegnan examinads auters dretgs: salari, indemnisaziun da dischoccupaziun, rentas, prestaziuns cumplementaras, reducziun da premi, contribuziuns d’mantegniment, stipendis. Era l’agna facultad vegn resguardada, cun quai ch’ils chantuns enconuschan ina franchisa da la quala l’import differeschia.',
           'Quai è il motiv pertge ch’ina annunzia cumenza savens cun bleras dumondas davart prestaziuns dal tut autras. I na va betg per malfidanza, mabain per l’urden prescrit da la lescha.',
+          // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+          'Senza pass svizzer po il retratg d’agid social avair consequenzas per la dimora. Cun ina permissiun da dimora u da curta durada (B, L) po el esser in motiv da revocar la permissiun; cun ina permissiun da domicil (C), sch’il retratg è durabel ed en grond dimensiun (art. 62 al. 1 lit. e ed art. 63 al. 1 lit. c LEI). Cun permiss F po el engrevgiar ina dumonda posteriura per reuniun da famiglia u per ina permissiun da dimora (art. 85c al. 1 lit. c ed art. 84 al. 5 LEI). Per burgais da stadis da la UE/AELS valan per part autras reglas. Laschai cussegliar Vus ordavant tar in post da cussegliaziun u tar il servetsch social. Independentamain dal status da dimora avais Vus en ina situaziun da basegn dretg sin il minimum per viver (art. 12 CF, pli giu).',
         ],
       },
       {
@@ -207,6 +211,17 @@ export const SEITEN = [
         antwort:
           'Las prestaziuns cumplementaras tutgan al emprim pitgel e vegnan per regla en dumonda, sche ina prestaziun da l’AVS u da l’AI na cuvra betg il basegn existenzial. Ellas èn regladas dal dretg federal e n’èn betg agid social. In dretg a las prestaziuns cumplementaras va avant a l’agid social.',
       },
+      // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+      {
+        frage: 'Ha l’agid social consequenzas per mia permissiun da dimora?',
+        antwort:
+          'Senza pass svizzer po el avair. Cun permiss B u L po il retratg esser in motiv da revocar la permissiun, cun permiss C sch’el è durabel ed en grond dimensiun (art. 62 al. 1 lit. e ed art. 63 al. 1 lit. c LEI). Cun permiss F po el engrevgiar ina dumonda posteriura per reuniun da famiglia u per ina permissiun da dimora (art. 85c al. 1 lit. c ed art. 84 al. 5 LEI). Cun permiss N u S e cun permiss F durant ils emprims set onns suenter l’entrada è ultra da quai la reducziun da premi suspendida, uschè ditg ch’i vegn retratg agid social (art. 82a al. 7 LAsil, art. 5b OAsil 2). Laschai cussegliar Vus ordavant tar in post da cussegliaziun u tar il servetsch social.',
+      },
+      {
+        frage: 'Stoss jau restituir l’agid social?',
+        antwort:
+          'Sch’e cura, regla il chantun — per exempel sch’i vegn pli tard ina ierta u ina facultad pli gronda. Ultra da quai pon parents en lingia directa, per exempel geniturs, uffants, tats e biadis, vegnir obligads da sustegnair, sch’els vivan en bunas relaziuns (art. 328 al. 1 CCS). Tge che vala en Voss cas, di il post cumpetent.',
+      },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
   },
@@ -226,6 +241,8 @@ export const SEITEN = [
         absaetze: [
           'La taglia federala directa sa drizza tenor la Lescha federala davart la taglia federala directa (LTFD) ed enconuscha per tut la Svizra la medema tarifa. Ella differenziescha tenor il stadi civil e la chasada, ma betg tenor il lieu da domicil.',
           'Encassada vegn ella tuttina dal chantun — la decleraziun da taglia è la medema.',
+          // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+          'Auter tar la <strong>taglia a la funtauna</strong>: sche Vus lavurais en Svizra senza permissiun da domicil, per exempel cun permiss B, deducescha il patrun la taglia directamain da la paja (art. 83 LTFD). Sche la paja brutta è sut ina limita legala, na datti per regla nagina decleraziun da taglia. Ulteriuras deducziuns, per exempel per la pitga 3a, datti lura mo tras ina taxaziun ordinaria posteriura; ella sto vegnir dumandada fin ils 31 da mars da l’onn suandant, tar ina partenza fin a la desannunzia (art. 89a al. 3 LTFD). Sur quella vegn taxà ordinariamain d’uffizi (art. 89 LTFD, art. 9 OTF).',
         ],
       },
       {

@@ -3,7 +3,7 @@ import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
 import { hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN, taxpunktwertFuer } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, FRANCHISE_KINDER, SELBSTBEHALT_MAX, SELBSTBEHALT_MAX_KINDER, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN, taxpunktwertFuer } from './data/kvgLeistungen.js';
 import { erinnerungSichern, loadReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
@@ -19,6 +19,8 @@ import { heuteIso } from './utils/fristen.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
+import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -274,14 +276,26 @@ const KatalogTab = ({ palette, t, filterCat, canton }) => {
 // ─── Franchise Tab ─────────────────────────────────────────
 const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehmen, form }) => {
   const currentYear = new Date().getFullYear();
-  const storedFranchise = (() => {
+  // Kapitel 7, L10 (10.11.2026): Kinder haben eigene Stufen (0–600) und höchstens CHF 350 Selbstbehalt
+  // (KVG Art. 64 Abs. 4, KVV Art. 103). Eine gespeicherte Kinderfranchise wird erkannt; ein unbekannter Wert
+  // wird nicht mehr still zu 300, sondern genannt.
+  const gespeichert = (() => {
     const f = data.versicherungen?.franchise;
-    if (!f) return 300;
+    if (f === undefined || f === null || f === '') return { n: 300, kind: false, unbekannt: null };
     const n = Number(String(f).replace(/[^0-9]/g, ''));
-    return FRANCHISE_STUFEN.includes(n) ? n : 300;
+    if (FRANCHISE_STUFEN.includes(n)) return { n, kind: false, unbekannt: null };
+    if (FRANCHISE_KINDER.includes(n)) return { n, kind: true, unbekannt: null };
+    return { n: 300, kind: false, unbekannt: String(f) };
   })();
 
-  const [franchise, setFranchise] = useState(storedFranchise);
+  const [kind, setKind] = useState(gespeichert.kind);
+  const [franchise, setFranchise] = useState(gespeichert.n);
+  const stufen = kind ? FRANCHISE_KINDER : FRANCHISE_STUFEN;
+  const wechsleKind = (neu) => {
+    setKind(neu);
+    const liste = neu ? FRANCHISE_KINDER : FRANCHISE_STUFEN;
+    if (!liste.includes(franchise)) setFranchise(liste[0]);
+  };
   const [selectedYear, setSelectedYear] = useState(currentYear);
 
   // Belege werden einzeln erfasst und pro Jahr zur Summe zusammengerechnet.
@@ -349,10 +363,19 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
     setNewNichtGedeckt(''); setNgOpen(false);
     setNewEingereicht(false);
   };
+  // Sofort weg, «Entfernt · Rückgängig» legt den Beleg an dieselbe Stelle zurück (10.11.2026).
+  // Zurückgelegt wird in die Liste von DANN (`belege` beim Tipp), nicht in die beim Löschen.
+  const { entfernt, merke, rueckgaengig: zurueck } = useRueckgaengig();
   const removeBeleg = (id) => {
     if (!onUpdateData) return;
+    const index = belege.findIndex(b => b.id === id);
+    if (index >= 0) {
+      const b = belege[index];
+      merke({ item: b, index, text: [fmtDatum(b.datum), betrag(Number(b.betrag) || 0, { hoechstens: 2 })].filter(Boolean).join(', ') });
+    }
     onUpdateData('versicherungen', 'kkBelege', belege.filter(b => b.id !== id));
   };
+  const belegZurueck = () => zurueck(({ item, index }) => onUpdateData && onUpdateData('versicherungen', 'kkBelege', wiederEinsetzen(belege, item, index)));
   // Zweite Dimension: bei der KK eingereicht? (ruhiger Haken, keine falsche Dringlichkeit)
   const toggleEingereicht = (id) => {
     if (!onUpdateData) return;
@@ -363,7 +386,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
   const zweitKnopf = { ...knopfStil(palette, 'neben'), fontSize: text.xs };
   const heute = heuteIso();
 
-  const result = berechneFranchise(franchise, kosten);
+  const result = berechneFranchise(franchise, kosten, kind ? SELBSTBEHALT_MAX_KINDER : SELBSTBEHALT_MAX);
   const hasInput = kosten > 0;
 
   // Ein ruhiger Standort-Satz: wo stehe ich dieses Jahr? (drei Zonen)
@@ -465,6 +488,35 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       }, t('kvg.franchiseExplain')),
 
       React.createElement('label', {
+        htmlFor: 'kvg-person',
+        style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium }
+      }, t('kvg.personLabel')),
+      React.createElement('div', { style: { position: 'relative', marginBottom: '12px' } },
+        React.createElement('select', {
+          id: 'kvg-person',
+          value: kind ? 'kind' : 'erwachsen',
+          onChange: (e) => wechsleKind(e.target.value === 'kind'),
+          style: {
+            width: '100%', padding: space.sm, borderRadius: radius.md,
+            border: '1px solid ' + palette.feldrand, background: palette.surface,
+            color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
+            appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px',
+            cursor: 'pointer', minHeight: '44px',
+          }
+        },
+          React.createElement('option', { value: 'erwachsen' }, t('kvg.personErwachsen')),
+          React.createElement('option', { value: 'kind' }, t('kvg.personKind'))
+        ),
+        React.createElement('div', {
+          'aria-hidden': 'true',
+          style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
+        }, aufklappZeichen(true))
+      ),
+      gespeichert.unbekannt && React.createElement('p', {
+        style: { margin: '0 0 12px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal }
+      }, t('kvg.franchiseUnbekannt', { wert: gespeichert.unbekannt })),
+
+      React.createElement('label', {
         htmlFor: 'kvg-franchise',
         style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium }
       }, t('kvg.franchiseLabel')),
@@ -481,7 +533,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
             cursor: 'pointer',
           }
         },
-          FRANCHISE_STUFEN.map(f =>
+          stufen.map(f =>
             React.createElement('option', { key: f, value: f }, betrag(f, { hoechstens: 2 }))
           )
         ),
@@ -717,6 +769,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                           style: {
                             background: 'none', border: 'none', color: palette.mid, cursor: 'pointer',
                             fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
+                            // 44 × 44 Tippfläche (M4) — vorher so gross wie das Zeichen selbst.
+                            minWidth: '44px', minHeight: '44px', margin: '-12px -12px -12px 0',
                           }
                         }, '×')
                   )
@@ -778,6 +832,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
               React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(kosten, { hoechstens: 2 }))
             )
           ),
+      // Ausserhalb der Liste: nach dem letzten Beleg steht dort «keine Belege», die Meldung bleibt.
+      React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, belege), onRueckgaengig: belegZurueck }),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal, marginTop: '12px', paddingTop: '12px', borderTop: '1px solid ' + palette.border }
       }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.belegRueckwirkend')))

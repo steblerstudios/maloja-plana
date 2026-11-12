@@ -82,7 +82,7 @@ const STAND_STREIFEN = {
   steuer: 'Kantonshauptort, ledig, ohne Kinder und Konfession, Steuerjahr 2026',
   miete: '2024, Durchschnitt aller Verträge, nicht Inserate',
   leer: '1. Juni 2026',
-  sozialhilfe: '2024',
+  sozialhilfe: '2025', // Gruppe D L5 (11.11.2026): Werte sind q25, Quelle «2025, publiziert 27.10.2026»
   el: 'Dezember 2025',
   alq: 'September 2026, Monatswert',
   kinderzulage: '2026, erster Ansatz',

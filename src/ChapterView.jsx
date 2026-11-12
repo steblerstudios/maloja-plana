@@ -16,7 +16,7 @@ import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { betrag } from './utils/geld.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
-import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, wochenstundenZuTiefFuerMonatslohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
+import { arbeitsKanton, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, wochenstundenZuTiefFuerMonatslohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
 // Ein Blatt ohne eigene Importe — kostet hier nichts ausser sich selbst.
 import { einzahlungenImJahr } from './data/saeule3a.js';
@@ -41,7 +41,7 @@ import { abschnittGruppen } from './utils/abschnitte.js';
 // Dasselbe Bild wie das Bergpanorama der Übersicht (BergLandschaft) — im Cache, kein zweiter Download.
 import { Landschaftsband, pfadPilleStil } from './components/Landschaftsband.jsx';
 import { mindestlohnNichtAnwendbar, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
-import { istAngestellt } from './utils/anstellung.js';
+import { nichtberufsunfallStatus } from './utils/nichtberufsunfall.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 import { ZumVerstehen } from './components/ErklaerseiteLink.jsx';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
@@ -1023,8 +1023,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
         // UVG: bei Angestellten transparent vorschlagen, dass die Unfalldeckung über
         // den Arbeitgeber läuft (kein verstecktes Auto-Ausfüllen — nur ein Hinweis).
-        field.k === 'uvg' && chapter.key === 'versicherungen' && allData && allData.finanzen && istAngestellt(allData.finanzen) &&
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('uvgHint.fieldSuggest'))),
+        // Kapitel 4, V1: nur mit 8 Std./Woche bei einer Arbeitgeberin auch Freizeitunfälle (UVV Art. 13).
+        field.k === 'uvg' && chapter.key === 'versicherungen' && nichtberufsunfallStatus(allData) &&
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr(nichtberufsunfallStatus(allData) === 'nein' ? 'uvgHint.fieldUnter8' : 'uvgHint.fieldSuggest'))),
         renderOrientation(field)
       );
     }
@@ -1362,7 +1363,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             } else if (hrs > 0) {
               const perMonth = stundenAufMonat(hrs);
               const perYear = stundenAufJahr(hrs);
-              const kanton = allData && allData.basis && allData.basis.canton;
+              const { kanton } = arbeitsKanton(allData);
               const monthlyIncome = parseFloat(allData && allData.finanzen && allData.finanzen.monthlyIncome) || 0;
               // Einkommensart mitgeben (Mindestlohn = brutto) — sonst rechnet dieser zweite
               // Aufrufer einen Netto-Lohn gegen den Brutto-Boden, während das Finanzen-Kapitel
@@ -1541,7 +1542,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               ['ipvIncome', 'premium', 'nav.crosslink.ipvFromIncome'],
               ['sozialhilfe', 'sozialhilfe', 'nav.crosslink.sozialhilfeHint'],
             ], ['finanzuebersicht', 'finanzuebersicht', 'nav.crosslink.finanzuebersichtHint']);
-            const kanton = allData && allData.basis && allData.basis.canton;
+            const { kanton, angenommen: kantonAngenommen } = arbeitsKanton(allData);
             if (kanton && kantonHatMindestlohn(kanton) && !mindestlohnNichtAnwendbar(allData)) {
               const lohn = parseFloat(data[field.k]) || 0;
               if (lohn > 0) {
@@ -1659,6 +1660,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                         // Rechtsverletzung festzustellen (siehe `WAGECLAIM_BEREIT`).
                         .replace('{ausnahmen}', () => tr('lohnCheck.ausnahmen'))
                     )
+                  );
+                  // Kapitel 3 F1: ohne erfassten Arbeitsort gilt die Annahme Wohnkanton — sichtbar, weil der
+                  // Mindestlohn am Arbeitsort gilt (Fehlalarm, wenn jemand in einem anderen Kanton arbeitet).
+                  kantonAngenommen && elements.push(
+                    React.createElement('div', { key: 'mindestlohn-arbeitsort', style: { gridColumn: '1 / -1', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm + 'px' } },
+                      tr('lohnCheck.arbeitsortAnnahme', { kanton }))
                   );
                   // ⚠️ Brief-Knopf ruht — siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.
                   if (WAGECLAIM_BEREIT && onNavigate) {
@@ -2116,21 +2123,42 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         weg('stelleverloren', { sub: P('stelleverlorenSub') }), weg('stundenlohn', { titel: P('stundenlohn'), sub: P('stundenlohnSub') }),
         ablage('chapterView.passend.ablageAusbildung'),
       ];
-      case 'behoerden': return [
+      case 'behoerden': {
+        // Kapitel 6 · A (Befund und Entscheid Stebler Studios 10.11.2026): die Abläufe dieses Kapitels stehen hier. Vorher
+        // zeigte «Passend» nur Seiten aus Finanzen; sieben der neun Abläufe waren von der Kapitelseite aus nicht erreichbar.
+        // Bewilligung, Einbürgerung, Neu in der Schweiz und Asyl nicht mit Schweizer Pass (wie Kapitel 1); Dienst nicht,
+        // wenn das Geburtsdatum ausserhalb der Jahre der Dienst- und Ersatzpflicht liegt (Jahr des 17. bis 37. Geburtstags).
+        const jahrgang = /^(\d{4})-/.exec(String(b.dateOfBirth || ''));
+        const alterImJahr = jahrgang ? new Date().getFullYear() - Number(jahrgang[1]) : null;
+        const dienstPasst = alterImJahr == null || (alterImJahr >= 17 && alterImJahr <= 37);
+        const auslaendisch = b.nationality !== 'swiss';
+        return [
         // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
         ...(data?.betreibungsStatus === 'entries' ? [weg('betreibung'), weg('schulden')] : []),
+        ...(auslaendisch ? [weg('bewilligung'), weg('einbuergerung'), weg('zuzug'), weg('asyl')] : []),
+        weg('ausweis'), weg('fuehrerausweis'), weg('wegzug'),
+        ...(dienstPasst ? [weg('dienst')] : []),
         weg('tax', { sub: P('steuernSub') }), weg('betreibungsauszug'),
         ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
         weg('selbstmahnen'),
         weg('briefe', { sub: P('briefeSub') }),
         ablage('chapterView.passend.ablageDokumente'),
       ];
+      }
       // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen aus «Vorsorge» oben selbst zum
       // Werkzeug. F7-K5-2 und F7-L1 (31.10.2026): der Ablauf «Vorsorgeauftrag & Patientenverfügung» kommt aus Behörden
       // hierher, Organspende bekommt hier ihren Eingang aus einem Kapitel.
+      // Kapitel 7, Gestaltung A (10.11.2026): Gesundheit hatte zwei Orte — die Seiten zu Krankenkasse, Unfall, IV
+      // und Pflege hingen nur am Arztkoffer, der seinerseits nicht zum Kapitel führte. Jetzt stehen sie hier, in
+      // zwei Gruppen wie die Familie im Kapitel Basis. Die Erklärseite Krankenkasse bleibt bei Versicherungen
+      // (Organigramm 07.11.2026, ZUM_VERSTEHEN); hier stehen nur Ziele in der App.
       case 'notfall': return [
         weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('organ'),
         ablage('chapterView.passend.ablageDokumente'),
+        { key: 'gruppe-krankenkasse', ueberschrift: P('gruppeKrankenkasse') },
+        weg('kvg'), weg('kk'), weg('gesundheit'),
+        { key: 'gruppe-passiert', ueberschrift: P('gruppePassiert') },
+        weg('unfallkrankheit'), weg('iv'), weg('pflege'),
       ];
       default: return [
         // F7-L9 (01.11.2026): «Neue Stelle» und Stundenlohn hängen an Ausbildung & Arbeit, nicht mehr hier.
@@ -2187,11 +2215,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Muster M5 (Fassung 6, Stebler Studios 25.10.2026): Kopf wie im Entwurf — Landschaftsband in der
   // Bereichsfarbe, darauf die Brotkrume «Übersicht › Kapitel», darunter das Symbol in einer Kachel
   // und der Titel. Keine Karte mehr um das Kapitel (vorher Kopf und Inhalt in einer Karte, die Seite
-  // dahinter getönt; Entscheid 27.09.2026). Das Band reicht bis an den Rand (main: 20 px seitlich).
+  // dahinter getönt; Entscheid 27.09.2026). Das Band reicht bis an den Rand (main: 20 px seitlich) —
+  // genau 20, nicht die Voreinstellung −24 px: sonst ist die Seite 379 px breit (Quer Q1, 11.11.2026).
   const kachelGrund = bereichsfarbe ? bereichsfarbe.grund : palette.up;
   return React.createElement('div', { 'data-kapitel': chapter.key },
     React.createElement('div', { 'data-kapitelkopf': 'band', style: { textAlign: 'left', marginBottom: space.lg + 'px' } },
-      React.createElement(Landschaftsband, { palette, grund: kachelGrund }),
+      React.createElement(Landschaftsband, { palette, grund: kachelGrund, margin: '0 -20px' }),
       React.createElement('nav', { 'aria-label': tr('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
         React.createElement('ol', { style: { listStyle: 'none', margin: 0, ...pfadPilleStil(palette), fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {

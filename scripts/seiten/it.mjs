@@ -64,7 +64,7 @@ export const SEITEN = [
       {
         frage: 'Devo sempre presentare personalmente una domanda?',
         antwort:
-          'Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi la contattano di propria iniziativa, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta.',
+          'Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi la contattano di propria iniziativa, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta. Senza passaporto svizzero vale un’eccezione per l’aiuto sociale: riceverlo può avere conseguenze per il permesso di soggiorno; si faccia consigliare prima della domanda (maggiori dettagli alla pagina Aiuto sociale).',
       },
       {
         frage: 'Quanto costa Maloja Plana?',
@@ -89,6 +89,7 @@ export const SEITEN = [
         titel: 'Che cosa prescrive la Confederazione e che cosa decide il Cantone',
         absaetze: [
           'La Confederazione prescrive <em>che</em> una riduzione dei premi debba esistere, fissa a tal fine requisiti minimi e partecipa al suo finanziamento. Nel quadro di questi requisiti, il Cantone decide chi la riceve e in quale misura.',
+          'Tre prescrizioni valgono ovunque. Per i redditi bassi e medi i Cantoni riducono i premi dei figli di almeno l’80 per cento e quelli dei giovani adulti in formazione di almeno il 50 per cento (art. 65 cpv. 1bis LAMal). Ogni Cantone stabilisce la quota massima che il premio può rappresentare rispetto al reddito disponibile (art. 65 cpv. 1ter LAMal). E una volta accertato il diritto, il versamento deve avvenire in modo che Lei non debba anticipare il premio (art. 65 cpv. 3 LAMal).',
           'Concretamente, da Cantone a Cantone differiscono: i limiti di reddito e di sostanza, il modo stesso in cui il reddito determinante viene calcolato, il fatto di dover presentare una domanda oppure di essere contattati, e i termini.',
           'Ovunque uguale è invece <strong>dove va il denaro</strong>: il Cantone versa il contributo direttamente alla cassa malati, non alla persona assicurata. Ciò figura nella LAMal e non rientra nel margine di manovra cantonale.',
           'Per questo la frase «da noi si riceve qualcosa a partire da un reddito di X» porta raramente lontano. Vale al massimo per un Cantone, e anche lì soltanto per un anno.',
@@ -113,7 +114,7 @@ export const SEITEN = [
       {
         frage: 'Ho diritto alla riduzione dei premi?',
         antwort:
-          'Dipende dal Cantone di domicilio, dal reddito e dalla sostanza determinanti e dalla grandezza dell’economia domestica — tutti e tre ponderati diversamente a seconda del Cantone. Non esiste un limite valido ovunque. Decide in modo vincolante il servizio competente: per lo più la cassa cantonale di compensazione o l’istituto cantonale delle assicurazioni sociali, in singoli Cantoni l’amministrazione delle contribuzioni o il Comune di domicilio.',
+          'Dipende dal Cantone di domicilio, dal reddito e dalla sostanza determinanti e dalla grandezza dell’economia domestica — tutti e tre ponderati diversamente a seconda del Cantone. Non esiste un limite valido ovunque. Decide in modo vincolante il servizio competente: per lo più la cassa cantonale di compensazione o l’istituto cantonale delle assicurazioni sociali, in singoli Cantoni l’amministrazione delle contribuzioni o il Comune di domicilio. Un’eccezione vale nel settore dell’asilo: con un permesso N o S il diritto è sospeso finché si riceve, in tutto o in parte, l’aiuto sociale (art. 82a cpv. 7 LAsi). Lo stesso vale con un permesso F, salvo se l’entrata risale a più di sette anni fa (art. 86 cpv. 2 LStrI, art. 5b OAsi 2). Per i rifugiati ammessi provvisoriamente possono valere altre regole; lo chiarisce il servizio cantonale.',
       },
       {
         frage: 'Devo presentare una domanda?',
@@ -149,6 +150,7 @@ export const SEITEN = [
         absaetze: [
           'L’aiuto sociale è <strong>sussidiario</strong>. Prima che entri in considerazione vengono esaminati altri diritti: salario, indennità di disoccupazione, rendite, prestazioni complementari, riduzione dei premi, contributi di mantenimento, borse di studio. Viene considerata anche la sostanza propria, per la quale i Cantoni conoscono una franchigia il cui importo differisce.',
           'È il motivo per cui un’iscrizione comincia spesso con molte domande su prestazioni del tutto diverse. Non si tratta di sfiducia, bensì dell’ordine previsto dalla legge.',
+          'Senza passaporto svizzero, ricevere l’aiuto sociale può avere conseguenze per il soggiorno. Con un permesso di dimora o di soggiorno di breve durata (B, L) può essere un motivo di revoca del permesso; con un permesso di domicilio (C), se l’aiuto è percepito in modo durevole e in larga misura (art. 62 cpv. 1 lett. e e art. 63 cpv. 1 lett. c LStrI). Con un permesso F può rendere più difficile una futura domanda di ricongiungimento familiare o di permesso di dimora (art. 85c cpv. 1 lett. c e art. 84 cpv. 5 LStrI). Per i cittadini di Stati UE/AELS valgono in parte altre regole. Si faccia consigliare prima da un servizio di consulenza o dal servizio sociale. Indipendentemente dallo statuto di soggiorno, in una situazione di bisogno ha diritto al minimo indispensabile per vivere (art. 12 Cost., più sotto).',
         ],
       },
       {
@@ -194,6 +196,16 @@ export const SEITEN = [
         antwort:
           'Le prestazioni complementari (PC) appartengono al primo pilastro ed entrano di regola in considerazione quando una prestazione dell’AVS o dell’AI non copre il fabbisogno vitale. Sono disciplinate dal diritto federale e non sono aiuto sociale. Un diritto alle PC prevale sull’aiuto sociale.',
       },
+      {
+        frage: 'L’aiuto sociale ha conseguenze sul mio permesso di soggiorno?',
+        antwort:
+          'Senza passaporto svizzero può averne. Con un permesso B o L riceverlo può essere un motivo di revoca del permesso, con un permesso C se percepito in modo durevole e in larga misura (art. 62 cpv. 1 lett. e e art. 63 cpv. 1 lett. c LStrI). Con un permesso F può rendere più difficile una futura domanda di ricongiungimento familiare o di permesso di dimora (art. 85c cpv. 1 lett. c e art. 84 cpv. 5 LStrI). Con un permesso N o S, e con un permesso F nei primi sette anni dopo l’entrata, inoltre, la riduzione dei premi è sospesa finché si riceve l’aiuto sociale (art. 82a cpv. 7 LAsi, art. 5b OAsi 2). Si faccia consigliare prima da un servizio di consulenza o dal servizio sociale.',
+      },
+      {
+        frage: 'Devo restituire l’aiuto sociale?',
+        antwort:
+          'Se e quando, lo stabilisce il Cantone — per esempio se più tardi si aggiunge un’eredità o una sostanza più consistente. Inoltre i parenti in linea retta, per esempio genitori, figli, nonni e nipoti, possono essere tenuti all’assistenza se vivono in condizioni agiate (art. 328 cpv. 1 CC). Che cosa vale nel Suo caso, glielo dice il servizio competente.',
+      },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
   },
@@ -213,6 +225,7 @@ export const SEITEN = [
         absaetze: [
           'L’imposta federale diretta si fonda sulla legge federale sull’imposta federale diretta (LIFD) e conosce per tutta la Svizzera la stessa tariffa. Distingue secondo lo stato civile e l’economia domestica, ma non secondo il luogo di domicilio.',
           'Viene tuttavia riscossa dal Cantone — la dichiarazione d’imposta è la stessa.',
+          'Diverso è il caso dell’<strong>imposta alla fonte</strong>: se lavora in Svizzera senza permesso di domicilio, per esempio con un permesso B, il datore di lavoro trattiene l’imposta direttamente dal salario (art. 83 LIFD). Se il salario lordo è inferiore a un limite legale, di regola non c’è una dichiarazione d’imposta. Altre deduzioni, per esempio per il pilastro 3a, sono allora possibili solo con una tassazione ordinaria ulteriore; va chiesta entro il 31 marzo dell’anno successivo, in caso di partenza entro la notifica di partenza (art. 89a cpv. 3 LIFD). Al di sopra, la tassazione ordinaria avviene d’ufficio (art. 89 LIFD, art. 9 OIFo).',
         ],
       },
       {
@@ -280,13 +293,13 @@ export const SONDERSEITEN = [
         absaetze: [
           'Maloja Plana è uno <strong>strumento di orientamento</strong>. I calcolatori e le panoramiche si basano su fonti giuridiche accessibili al pubblico e servono esclusivamente all’informazione personale.',
           '<strong>Maloja Plana non sostituisce alcuna consulenza giuridica, fiscale, assicurativa o finanziaria.</strong>',
-          'La fornitrice non assume alcuna garanzia per l’esattezza, la completezza o l’attualità dei calcoli, per l’idoneità dei risultati a decisioni individuali, né per i danni derivanti dal loro utilizzo. Fanno fede esclusivamente le leggi vigenti e le autorità competenti.',
+          'La fornitrice non assume alcuna garanzia per l’esattezza, la completezza o l’attualità dei calcoli, per l’idoneità dei risultati a decisioni individuali, né per i danni derivanti dal loro utilizzo. Resta riservata la responsabilità per danni causati intenzionalmente o per negligenza grave. Fanno fede esclusivamente le leggi vigenti e le autorità competenti.',
         ],
       },
       {
         titel: 'Protezione dei dati su queste pagine',
         absaetze: [
-          'Le pagine esplicative sono HTML statico. Non caricano <strong>alcuno script, alcun cookie e alcuna risorsa di terzi</strong>; i caratteri si trovano sullo stesso server. Non vi è alcun tracciamento, alcuna analisi e alcuna pubblicità.',
+          'Le pagine esplicative sono HTML statico. Non caricano <strong>alcuno script, alcun cookie e alcuna risorsa di terzi</strong>; i caratteri si trovano sullo stesso server. La pagina iniziale carica inoltre piccoli script propri dallo stesso server: uno reindirizza i vecchi indirizzi dell’applicazione verso /app/, l’altro anima le immagini del percorso. Chi in passato usava l’applicazione all’indirizzo principale ne riceve una volta un terzo alla visita successiva di una di queste pagine: svuota la vecchia memoria cache dell’applicazione nel browser, si disattiva e ricarica la pagina una volta; non tocca i dati sul Suo dispositivo. Questi script non impostano cookie e non inviano dati. Non vi è alcun tracciamento, alcuna analisi e alcuna pubblicità.',
           'Alla consultazione vengono comunque raccolti dati tecnici presso l’hoster — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Ginevra, con centri dati in Svizzera: indirizzo IP nei registri del server, tipo di browser, sistema operativo e momento dell’accesso. Ciò è tecnicamente necessario per la fornitura e per la sicurezza dell’esercizio. Infomaniak agisce in tal senso quale responsabile del trattamento (art. 9 nLPD). Secondo le indicazioni del fornitore, i registri di accesso e di errore vengono conservati almeno 7 giorni (FAQ di supporto Infomaniak 1926, consultata il 23 settembre 2026).',
           'Non vi sono altri destinatari: nessun servizio di analisi, nessuna integrazione di social media, nessuna trasmissione e nessuna vendita di dati.',
         ],

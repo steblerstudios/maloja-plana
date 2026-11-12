@@ -31,7 +31,8 @@ import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, b
 import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
 import { vorstellungBauen } from './seiten/vorstellung.mjs';
 import { karteBild } from './seiten/kantonsatlas.mjs';
-import { appBeispiel } from './seiten-ziele.mjs';
+import { MARKE } from './seiten/marke.mjs';
+import { appBeispiel, appBeispielSprache } from './seiten-ziele.mjs';
 import { KANTONSSEITEN, WEGE, KANTON_HINWEIS } from './seiten/praemienverbilligung-kantone.mjs';
 
 // Tabellen und Bilder aller Hintergrundseiten, an <!--FIG:…--> / <!--TAB:…-->.
@@ -87,8 +88,14 @@ function hreflangRing(pfad) {
 function sprachWaehler(pfad, aktiv) {
   const glieder = SPRACHEN.map((s) => (s.code === aktiv.code
     ? `<span aria-current="true">${SPRACHNAME[s.code]}</span>`
-    : `<a href="${pfadIntern(pfad, s)}" hreflang="${s.htmlLang}">${SPRACHNAME[s.code]}</a>`));
+    : sprachLink(pfadIntern(pfad, s), s)));
   return glieder.join(' · ');
+}
+
+// Ein Link im Sprachumschalter. `lang` gehört dazu (Gruppe E, U5): `hreflang` sagt nur, in welcher
+// Sprache das Ziel ist; vorgelesen wird der Name «Français» erst mit `lang="fr"` französisch.
+function sprachLink(href, s) {
+  return `<a href="${href}" hreflang="${s.htmlLang}" lang="${s.htmlLang}">${SPRACHNAME[s.code]}</a>`;
 }
 
 const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -111,63 +118,82 @@ const stil = `
       font-weight:400; font-display:swap }
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
-    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870 }
+    /* Gruppe E, Gestaltung B (12.11.2026): Titel in Hanken Grotesk wie die Startseite (Brand Book §3),
+       die Datei liegt schon unter /fonts/. Alles andere bleibt Lexend. */
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gestaltung C: ein Gold, ein Leise-Ton — dieselben Werte wie website/index.html.
+       --sand ist die Fläche (Knopf), --sand-tief die Schrift (Links), hell 7A5F30, dunkel C4A06A. */
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;
+           --rand:#E0DDD8; --sand:#C4A06A; --sand-tief:#7A5F30; --auf-sand:#2A2620 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870 }
+             --rand:#3A3936; --sand:#C4A06A; --sand-tief:#C4A06A; --auf-sand:#2A2620 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
       font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
-    a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
+    a{ color:var(--sand-tief); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
     /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
-       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+       Die Rückmeldung kommt über die dickere Unterstreichung. */
     a:hover{ text-decoration-thickness:2px }
-    header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
-    nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
+    header{ padding:24px 0 0 }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px. Gruppe E, C: Bildmarke 28 px wie auf der Startseite. */
+    .marke{ display:inline-flex; align-items:center; gap:10px; min-height:44px; font-weight:600; text-decoration:none;
+      font-size:16px; color:var(--text) }
+    .marke svg{ height:28px; width:auto; flex:none }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:16px }
     main{ padding:8px 0 16px }
-    h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
-    .vorspann{ font-size:18px; color:var(--text); margin-bottom:8px }
-    h2{ font-size:20px; font-weight:600; margin:40px 0 12px; letter-spacing:-0.005em }
-    h3{ font-size:16px; font-weight:600; margin:24px 0 6px }
-    p{ margin-bottom:14px }
-    ul{ margin:0 0 14px 22px } li{ margin-bottom:8px }
-    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:10px;
-      padding:20px 22px; margin:28px 0 }
+    /* Gestaltung B: Grössen nur von der Skala 13 · 15 · 16 · 19 · 23 · 28 · 36 (Brand Book §7a). */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-weight:600 }
+    h1{ font-size:36px; line-height:1.2; margin:16px 0 12px; letter-spacing:-0.015em }
+    .vorspann{ font-size:19px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:23px; line-height:1.3; margin:48px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:19px; line-height:1.35; margin:24px 0 8px }
+    p{ margin-bottom:16px }
+    ul{ margin:0 0 16px 24px } li{ margin-bottom:8px }
+    /* Gestaltung D: Karte 12 px Ecke, innen 32 (am Handy 24), Abstand 32. */
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:12px;
+      padding:32px; margin:32px 0 }
     .karte p:last-child{ margin-bottom:0 }
     .weiter{ list-style:none; margin:16px 0 0; padding:0 }
-    .weiter li{ margin-bottom:10px }
+    .weiter li{ margin-bottom:12px }
     .weiter a{ font-weight:600; text-decoration:none }
     .weiter a:hover{ text-decoration:underline }
-    .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
-    .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
-      padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
-    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
-    .leise{ font-size:14px; color:var(--leise) }
-    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
-      padding-left:14px; margin:32px 0 }
-    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
+    .weiter span{ display:block; font-size:15px; color:var(--leise); font-weight:400 }
+    /* Knopf 10 px Ecke, 44 px hoch (Brand Book §7a, «6 px» überholt am 06.11.). */
+    .knopf{ display:inline-flex; align-items:center; min-height:44px; background:var(--sand); color:var(--auf-sand);
+      text-decoration:none; padding:12px 24px; border-radius:10px; font-weight:600; font-size:15px; margin-top:4px }
+    .knopf:hover{ filter:brightness(1.05) }
+    .hinweis{ font-size:13px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:13px; color:var(--leise) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:16px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:24px 0 64px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
-    footer p{ margin-bottom:6px }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
+    footer p{ margin-bottom:8px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
-    footer .sprachen{ margin-top:14px }
+    footer .sprachen{ margin-top:16px }
     footer .sprachen a{ text-decoration:underline }
     footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
     /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
-       nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
-    .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
-      margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. Hinweisstreifen: 6 px (kleinste Rolle). */
+    .entwurf{ border:1px solid var(--sand); border-radius:6px; padding:12px 16px;
+      margin-bottom:24px; font-size:15px; color:var(--leise); background:var(--flaeche) }
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
-    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
+    .verbindlich{ margin-bottom:24px; font-size:13px; color:var(--leise) }
     /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
     ul.kantone{ columns:2; column-gap:32px }
     ul.kantone li{ break-inside:avoid }
-    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }`;
+    @media (max-width:600px){ h1{ font-size:28px } .vorspann{ font-size:16px } h2{ font-size:19px; margin-top:32px }
+      .karte{ padding:24px } ul.kantone{ columns:1 } }`;
 
 // Der Hinweis über dem Titel hängt an der FREIGABE, nicht daran, ob ein Text
 // in RAHMEN steht (Befund Rechtsprüfung 05.11.2026):
@@ -328,7 +354,8 @@ function seiteBauen(seite, sprache) {
     <main>
 ${hinweisOben(sprache)}      <h1>${esc(seite.titel)}</h1>
       <p class="vorspann">${seite.vorspann}</p>
-${istErklaerseite ? `      <p class="hinweis">${esc(R.kurzhinweis)}</p>` : ''}
+${istErklaerseite ? `      <p class="hinweis">${esc(R.kurzhinweis)}${sprache.geprueft
+        ? `<br>\n      <strong class="stand">${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>` : ''}</p>` : ''}
 
 ${abschnitte}${kantonsBlock}
 
@@ -347,7 +374,7 @@ ${istErklaerseite ? `      <div class="karte">
       <ul>
 ${quellen}
       </ul>
-      <p class="leise">${esc(R.quellenLeise)}</p>` : ''}
+      <p class="leise">${esc((!seite.quellen.some((s) => s.startsWith('skos')) && R.quellenLeiseOhneSkos) || R.quellenLeise)}</p>` : ''}
 
 ${istErklaerseite ? `      <p class="vorbehalt">${R.vorbehalt}${sprache.geprueft
         ? `<br>\n      <strong>${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>${R.originalGeprueft ? ` ${esc(R.originalGeprueft)}` : ''}` : ''}</p>` : ''}
@@ -367,20 +394,22 @@ ${fuss(sprache, `${esc(R.spracheLabel)}: ${sprachWaehler(seite.pfad, sprache)}`)
 // Gesamtbefund S6). Die Server-.htaccess geht nicht mit dem Deploy, darum hier eine Seite,
 // die mit den Erklärseiten ausgeliefert wird. Sie bringt KEINEN neuen Text: Titel, Liste und
 // Karte kommen aus RAHMEN und den Seiten der Sprache, die schon übersetzt sind. Der Knopf
-// führt in die App in derselben Sprache (/?lang=xx). Freigabe wie jede Seite der Sprache:
+// führt ins Beispiel in derselben Sprache (/app/?lang=xx&beispiel, seit Gruppe E). Die Kartenzeile
+// «… rechnet das für Ihre Situation durch» steht hier nicht: ohne Erklärtext davor fehlt ihr der Bezug (S2). Freigabe wie jede Seite der Sprache:
 // gesperrt → noindex und nicht in der Sitemap.
 function sprachStartBauen(sprache) {
   const R = RAHMEN[sprache.code];
   const inhalt = inhaltFuer(sprache.code);
   const seitenUrl = `${BASIS}/${sprache.praefix}`;
-  // Titel «Accueil — Maloja Plana», Brotkrume «Accueil › Français»: beides aus vorhandenen Wörtern.
-  const seite = { titel: R.start, brotkrume: SPRACHNAME[sprache.code], beschreibung: R.karteText };
+  // Titel «Un classeur de vie suisse — Maloja Plana» (Gruppe E, E3; vorher «Accueil», sagt der Suche nichts),
+  // Brotkrume «Accueil › Français»: alles aus vorhandenen Wörtern, der Titel ist der Anfang von karteText.
+  const seite = { titel: R.karteText.split(' — ')[0], brotkrume: SPRACHNAME[sprache.code], beschreibung: R.karteText };
   const liste = inhalt.seiten.map((s) =>
     `          <li><a href="${pfadIntern(s.pfad, sprache)}">${esc(s.brotkrume)}</a>` +
     `<span>${esc(s.beschreibung)}</span></li>`).join('\n');
   const waehler = SPRACHEN.map((s) => (s.code === sprache.code
     ? `<span aria-current="true">${SPRACHNAME[s.code]}</span>`
-    : `<a href="/${s.praefix}" hreflang="${s.htmlLang}">${SPRACHNAME[s.code]}</a>`)).join(' · ');
+    : sprachLink(`/${s.praefix}`, s))).join(' · ');
   const ld = {
     '@context': 'https://schema.org',
     '@graph': [{
@@ -400,9 +429,8 @@ ${liste}
       </ul>
 
       <div class="karte">
-        <p><strong>${esc(R.karteTitel)}</strong></p>
         <p>${R.karteBeta}</p>
-        <p><a class="knopf" href="/?lang=${sprache.code}">${esc(R.karteKnopf)}</a></p>
+        <p><a class="knopf" href="${esc(appBeispielSprache(sprache.code))}">${esc(R.karteKnopf)}</a></p>
       </div>
 
       <ul>
@@ -470,7 +498,7 @@ ${JSON.stringify(ld, null, 2).split('\n').map((l) => '  ' + l).join('\n')}
 <body>
   <div class="rahmen">
     <header>
-      <a class="marke" href="/">Maloja&nbsp;Plana</a>
+      <a class="marke" href="/">${MARKE}Maloja&nbsp;Plana</a>
       <nav class="krume" aria-label="${esc(R.krumeLabel)}">
         <a href="/">${esc(R.start)}</a> › ${krumeMitte ? `<a href="${krumeMitte.href}">${esc(krumeMitte.text)}</a> › ` : ''}${esc(seite.brotkrume)}
       </nav>
@@ -534,9 +562,10 @@ const stilHintergrund = `
     nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
     nav.inhalt p{ margin:0 0 8px; font-size:13px; font-weight:600; color:var(--leise) }
     nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
-    nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
+    nav.inhalt li{ counter-increment:frage; margin:0; break-inside:avoid; display:flex; align-items:center; gap:10px; font-size:15px }
     nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
-    nav.inhalt a{ text-decoration:none } nav.inhalt a:hover{ text-decoration:underline }
+    /* Gruppe D: Einträge ≥ 44 px Trefferfläche (vorher 25 px). */
+    nav.inhalt a{ text-decoration:none; display:inline-flex; align-items:center; min-height:44px } nav.inhalt a:hover{ text-decoration:underline }
 
     .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
 
@@ -898,13 +927,13 @@ const stilKanton = `
        in --text: Gold als Schrift hätte auf hellem Grund zu wenig Kontrast. */
     :root{ --heidel-text:#4A6A88 }
     @media (prefers-color-scheme: dark){ :root{ --heidel-text:#8CAAC6 } }
-    .weg{ border:1px solid var(--rand); border-left:4px solid var(--gold); border-radius:10px;
+    .weg{ border:1px solid var(--rand); border-left:4px solid var(--sand); border-radius:10px;
       background:var(--flaeche); padding:18px 20px; margin:20px 0 28px }
     .weg.automatisch{ border-left-color:var(--heidel-text) }
     .weg .marke-weg{ display:flex; align-items:center; gap:10px; font-weight:600; font-size:17px; margin-bottom:8px }
     .weg svg{ flex:none; width:22px; height:22px }
     .weg.antrag svg{ color:#8A6F35 }
-    @media (prefers-color-scheme: dark){ .weg.antrag svg{ color:var(--gold) } }
+    @media (prefers-color-scheme: dark){ .weg.antrag svg{ color:var(--sand) } }
     .weg.automatisch svg{ color:var(--heidel-text) }
     .weg p:last-child{ margin-bottom:0 }
     .stelle a{ font-weight:600 }`;
@@ -1048,7 +1077,11 @@ const stilBewegt = `
     .iso-stage{ outline-offset:4px } .iso-stage:focus-visible{ outline:2px solid var(--text); border-radius:10px }
     .iso-stage svg{ display:block; width:100%; height:auto }
     /* Im Rahmen der Hauptseite (rahmen.js): Hinweise stehen dort, hier nur Bild und Regler. */
-    .im-rahmen main{ padding:0 } .im-rahmen .nur-allein{ display:none }`;
+    .im-rahmen main{ padding:0 } .im-rahmen .nur-allein{ display:none }
+    /* Gruppe D, Gestaltung B (11.11.2026): allein geöffnet im selben Rahmen wie die Hauptseite
+       (Kopf, Brotkrume, Fusszeile mit Impressum); in der Hauptseite eingebettet ohne. */
+    .im-rahmen .rahmen{ max-width:none; padding:0 } .im-rahmen header, .im-rahmen footer{ display:none }
+    .hinweis-b a{ display:inline-block; padding:12px 0; margin:-12px 0 }`;
 
 function bewegtSeiteBauen(name) {
   const b = BEWEGT[name];
@@ -1085,14 +1118,20 @@ function bewegtSeiteBauen(name) {
   </style>
 </head>
 <body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/">${MARKE}Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="${esc(RAHMEN.de.krumeLabel)}">
+        <a href="/">${esc(RAHMEN.de.start)}</a> › <a href="/krankenkasse/">Krankenkasse erklärt</a> › ${esc(b.titel)}
+      </nav>
+    </header>
   <main>
     <p class="zurueck-b nur-allein"><a href="/krankenkasse/#abb-${name}">Zurück zu «Warum die Krankenkasse so viel kostet»</a></p>
     <h1 class="titel-b nur-allein">${esc(b.titel)}</h1>${buehne}
     <p class="hinweis-b nur-allein">Teil der Seite ${zurueck} · Maloja Plana</p>
   </main>
 ${pfade.map((pf) => `  <script src="/krankenkasse/bewegt/${pf}"></script>`).join('\n')}
-</body>
-</html>
+${fuss(SPRACHEN.find((s) => s.code === 'de'), esc(RAHMEN.de.nurDeutsch))}
 `;
 }
 
@@ -1231,12 +1270,87 @@ function tabellenErreichbar(html) {
 }
 for (const a of seitenAusgaben) if (a.name.endsWith('.html')) a.inhalt = tabellenErreichbar(a.inhalt);
 
+// ─── 404 und Wartung aus dem Rahmen (Gruppe E, Gestaltung A, 12.11.2026) ───────────────
+// Bis 11.11. von Hand: weisse Karte, eigene Grau-Braun-Töne, kein Kopf, kein Dunkelmodus — wie ein fremdes
+// Produkt. Jetzt derselbe Stil, dieselbe Marke wie die Erklärseiten. Die Texte sind die aus Gruppe E, Zweig 1
+// (Sie-Form, keine Zeitzusage, fr/it/en mit lang; rm folgt mit der Muttersprachler-Gegenlese).
+// Alle Adressen absolut (/fonts, /): die 404 erscheint unter jeder Adresse, auch tief verschachtelt.
+// 🛑 wartung.html nach jedem Deploy von Hand ins Infomaniak-Panel kopieren (RELEASE.md, «Wartungsseite»).
+const RAHMEN_SEITEN = {
+  '404.html': {
+    titel: 'Seite nicht gefunden',
+    satz: 'Diese Adresse gibt es nicht.',
+    vorspann: 'Vielleicht wurde die Seite verschoben.',
+    weiter: { href: '/', text: 'Zur Startseite' },
+    sprachen: {
+      fr: 'Cette adresse n’existe pas. La page a peut-être été déplacée.',
+      it: 'Questo indirizzo non esiste. Forse la pagina è stata spostata.',
+      en: 'This address does not exist. The page may have moved.',
+    },
+  },
+  'wartung.html': {
+    titel: 'Wartung',
+    satz: 'Wir pflegen gerade die Seite.',
+    vorspann: 'Bitte versuchen Sie es etwas später erneut.',
+    notiz: 'Ihre Daten bleiben unberührt: Sie liegen auf Ihrem Gerät, nicht auf dieser Seite. Eine Wartung ändert daran nichts.',
+    // href="" lädt dieselbe Adresse neu, ohne Skript (die Seite hat keins).
+    weiter: { href: '', text: 'Seite neu laden' },
+    sprachen: {
+      fr: 'Nous effectuons une maintenance. Veuillez réessayer un peu plus tard. Vos données restent sur votre appareil, la maintenance n’y change rien.',
+      it: 'Stiamo eseguendo una manutenzione. La preghiamo di riprovare più tardi. I Suoi dati restano sul Suo dispositivo, la manutenzione non cambia nulla.',
+      en: 'We are carrying out maintenance. Please try again a little later. Your data stays on your device; maintenance does not change that.',
+    },
+  },
+};
+const stilRahmenSeite = `
+    .sprachzeilen{ font-size:13px; color:var(--leise); border-top:1px solid var(--rand); margin-top:48px; padding-top:24px }
+    .sprachzeilen span{ display:block; margin-bottom:8px }`;
+function rahmenSeiteBauen(name) {
+  const s = RAHMEN_SEITEN[name];
+  return `<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="${CSP}">
+  <!-- ERZEUGT — nicht von Hand bearbeiten. Quelle und Generator: scripts/build-seiten.mjs (RAHMEN_SEITEN). -->
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#F2F2F0">
+  <title>${esc(s.titel)} — Maloja Plana</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>${stil}${stilRahmenSeite}
+  </style>
+</head>
+<body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/">${MARKE}Maloja&nbsp;Plana</a>
+    </header>
+    <main>
+      <h1>${esc(s.satz)}</h1>
+      <p class="vorspann">${esc(s.vorspann)}</p>${s.notiz ? `
+      <p>${esc(s.notiz)}</p>` : ''}
+      <p><a class="knopf" href="${s.weiter.href}">${esc(s.weiter.text)}</a></p>
+      <p class="sprachzeilen">
+${Object.entries(s.sprachen).map(([l, x]) => `        <span lang="${l}">${esc(x)}</span>`).join('\n')}
+      </p>
+    </main>
+    <footer>
+      <p><a href="/rechtliches/">${esc(RAHMEN.de.rechtlichesLink)}</a> · <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+    </footer>
+  </div>
+</body>
+</html>
+`;
+}
+
 const ausgaben = [
   ...seitenAusgaben,
   // Vorstellungsseite auf der Wurzel (Plan «App nach /app/», PR 3). Liegt in website/, nicht in
   // public/: public/ wird auch in den App-Ordner kopiert, und dort hat index.html die App.
   { ziel: resolve(WURZEL, 'website', 'index.html'), inhalt: vorstellungBauen(), name: '../website/index.html' },
   { ziel: resolve(WURZEL, 'public', 'sitemap.xml'), inhalt: sitemapBauen(), name: 'sitemap.xml' },
+  ...Object.keys(RAHMEN_SEITEN).map((n) => ({ ziel: resolve(WURZEL, 'public', n), inhalt: rahmenSeiteBauen(n), name: n })),
   // Prämienkarte als eigenes Bild für den Atlas-Abschnitt der Vorstellungsseite (Entscheid 10.11.2026, C).
   { ziel: resolve(WURZEL, 'public', 'kantonsatlas', 'karte-praemie.svg'), inhalt: karteBild('praemie'), name: 'kantonsatlas/karte-praemie.svg' },
 ];

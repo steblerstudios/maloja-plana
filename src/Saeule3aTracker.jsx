@@ -7,6 +7,8 @@ import {
 } from './data/saeule3a.js';
 import { zahl } from './utils/geld.js';
 import { knopfStil } from './components/PrimaryButton.jsx';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
+import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 const fmt = (v) => zahl(v);
 const chf = (v) => 'CHF ' + fmt(v);
@@ -49,7 +51,17 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
 
   const addDeposit = () => onChange([...list, { date: '', amount: '' }]);
   const updateDeposit = (idx, patch) => onChange(list.map((d, i) => i === idx ? { ...d, ...patch } : d));
-  const removeDeposit = (idx) => onChange(list.filter((_, i) => i !== idx));
+  // Sofort weg, «Entfernt · Rückgängig» legt die Einzahlung zurück (10.11.2026). Leere Zeilen
+  // (nichts eingetragen) gehen ohne Meldung — da gibt es nichts zurückzuholen.
+  const { entfernt, merke, rueckgaengig: zurueck } = useRueckgaengig();
+  const removeDeposit = (idx) => {
+    const dep = list[idx];
+    if (dep && (dep.date || dep.amount)) {
+      merke({ item: dep, index: idx, text: [dep.date ? dep.date.split('-').reverse().join('.') : '', dep.amount ? chf(dep.amount) : ''].filter(Boolean).join(', ') });
+    }
+    onChange(list.filter((_, i) => i !== idx));
+  };
+  const depositZurueck = () => zurueck(({ item, index }) => onChange(wiederEinsetzen(list, item, index)));
 
   const inputStyle = {
     padding: (space.ms) + 'px ' + space.sm + 'px',
@@ -115,11 +127,14 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
           React.createElement('button', {
             onClick: () => removeDeposit(idx),
             'aria-label': t('common.delete'),
-            style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 8px', minHeight: '24px' }
+            // 44 × 44 Tippfläche wie bei den Sprachen (M4) — vorher 24 hoch.
+            style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 8px', minWidth: '44px', minHeight: '44px' }
           }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
         )
       )
     ),
+
+    React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, list), onRueckgaengig: depositZurueck }),
 
     React.createElement('button', {
       onClick: addDeposit,

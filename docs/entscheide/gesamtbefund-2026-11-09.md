@@ -187,5 +187,287 @@ siebenmal neu entschieden werden:
    Steuerrechner Fortbildung 10 000 statt 13 000, 3a unbegrenzt · F4 Sozialhilfe ohne Folgen für B/L/C · F5 «BVG übernommen»,
    Erbschafts-Satz. Dazu F6–F11, Gestaltung A–C + Felder < 44 px, Sprache S1–S7. ✅ **09.11.: alles wie empfohlen**
    (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-3-finanzen` (von `main`).
+   **Kapitel 4 · Versicherungen & Vorsorge** (09.11.): Bild [kapitel-4-versicherungen.html](../design/kapitel-4-versicherungen.html).
+   Hoch: V1 Rat «Unfalldeckung abwählen» ohne 8-Stunden-Bedingung (UVV Art. 13) · P1 IK-Auszug halbiert die AHV (B-17) ·
+   P2 Zukunftsbild zahlt AHV ab 58 (B-18) · P3 früher beziehen ergibt ab 65 mehr (B-19) · P4 Zuschlag Frauen 1961–69 fehlt
+   (AHVG Art. 34bis). Dazu V2–V5, P5–P9, Kleines, Gestaltung A–D, Sprache S1–S10. Vorschlag: zwei Zweige (Rechner-Logik ·
+   Inhalt/Gestaltung/Sprache), Rätoromanisch offen. ✅ **09.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles»).
+   Zweige `feat/kapitel-4-rechner` (von `main`) und `feat/kapitel-4-versicherungen` (auf dem Befund-Zweig).
+   ✅ **Gebaut (10.11.):** Rechner → Entwurfs-PR #806 (B-17–B-19, Rentenzuschlag Art. 34bis, 3a-Grenze, Hinweise;
+   swiss-precision-pruefer am Volltext, Blocker behoben) · Inhalt, Gestaltung, Sprache → Entwurfs-PR #812, gestapelt auf #806
+   (rechts-pruefer, fünf Sätze nachgeschärft). Zusammen 9301 Tests grün. Zwei Gestaltungs-Fehlbefunde im Blatt berichtigt.
+   Offen: Lektüre fr/it/en, rm, Zuschlag in der 13. Rente (BSV), Witwen-Satz nach EGMR, Absätze teilen (S4).
+   **Kapitel 5 · Ausbildung & Arbeit** (10.11.): Bild [kapitel-5-ausbildung.html](../design/kapitel-5-ausbildung.html). Hoch: L1
+   ALV-Rechner ohne Alter 400 statt 200 Taggelder (AVIG Art. 27 Abs. 5bis). Mittel: L2–L7 (Betrag ohne Beitragszeit, brutto,
+   Kinder ab 18, Einstelltage, Abredeversicherung-Frist), A1 AHV-Akonto für Selbständige, A2 Probezeit-Verlängerung. Gestaltung
+   A–C (Zahlen-Platzhalter, langer Absatz, «Noch eine Angabe nötig» ohne Namen), Sprache S1–S7. Stundenlohn mit #802 erledigt.
+   ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-5-ausbildung` (von `main`).
+   ✅ **Gebaut** → Entwurfs-PR #814: ALV-Rechner mit Alter (Spanne aus Beitragsmonaten), kein Betrag unter 12 Monaten,
+   brutto, Kinder ab 18 nur in Ausbildung, A–C; L5–L7, A1 (Jahrestabelle `selbstaendigAhv.js`), A2, Teile von K;
+   Überschriftenstufen; Sprache S2/S5/S6/S7 in den berührten Texten. rechts-pruefer mit Volltext eingearbeitet,
+   9396 Tests grün. Offen: Sprung zum Feld (C), rm-Übersetzung (S1), übrige K-Punkte, AHV-Werte 2027 für Selbständige.
+   ✅ **10.11. Nachzug** (gleicher PR #814): C «Noch nötig: …» mit Sprung zum Feld (app-weit, `data/angabeZiele.js`,
+   5 Rechner); Lebenslauf: Geburtsdatum/Nationalität/Zivilstand abwählbar; «Drei Wege»; ALV-Randfälle (Wartetage nach
+   Jahresverdienst, 80 % nach vollem Taggeld ≤ 140 Fr.); Lohnbasis 6/12 Monate und 13. Monatslohn; Zwischenverdienst;
+   Sperrfrist verschiebt RAV-Datum; AHV je Kalenderjahr und 3a nach Aussteuerung; Quellensteuer genauer; S3/S4 in Lehre
+   und Ausgesteuert (de, en; rm-Rückfall nachgezogen). rechts-pruefer am Volltext eingearbeitet. Offen: Mindestlohn-Hinweis
+   «angenommen» (hängt an `arbeitsKanton` aus #802, noch nicht gemergt), Mindestlohn-Ausnahmen GE/TI/JU, S3 in fr/it,
+   rm-Übersetzung, AHV-Werte 2027 Selbständige.
+   ✅ **10.11. Nachzug 2**: S3 in fr/it (Lehre, Ausgesteuert), Geburtsdatum TT.MM.JJJJ im Lebenslauf. AHV 2027 für
+   Selbständige nur teilweise belegt (AHVV Art. 21: Skala bis 61 500; Art. 28: AHV-Mindestbeitrag 444), Gesamt-
+   Mindestbeitrag AHV+IV+EO nicht → bleibt ohne Eintrag. Weiter offen: Mindestlohn «angenommen» (#802), GE/TI/JU, rm.
+   ✅ **10.11. Nachzug 3**: Mindestlohn-Ausnahmen an BS MiLoG § 2 und NE LEmpl Art. 32a–e gelesen. «Lehre, Praktikum,
+   unter 18 ausgenommen» galt nicht überall (BS: unter 18 nur Ferienjob; NE: per Staatsrat, Erlass nicht gefunden) →
+   `lohnCheck.ausnahmen` sagt jetzt «jeder Kanton legt fest», mit belegten Beispielen. Offen: NE-Erlass, #802, rm.
+   **Kapitel 6 · Behörden & Rechtliches** (10.11.): Bild [kapitel-6-behoerden.html](../design/kapitel-6-behoerden.html). Kapitelseite
+   und neun Abläufe (Bewilligung, Neu in der Schweiz, Einbürgerung, Wegzug, Asyl, Pass/ID, Führerausweis, Betreibungsauszug,
+   Dienst), Fachprüfung am Fedlex-Volltext (swiss-precision- und rechts-pruefer). Hoch: L1 Wegzug mit Ausländerausweis ohne
+   Abmeldefrist 14 Tage vor Ausreise und ohne «Bewilligung erlischt, C vorher aufrechterhalten» (VZAE Art. 15, AIG Art. 61) ·
+   L2 Asyl: Rechtsvertretung kann das Mandat bei Aussichtslosigkeit beenden, die Frist läuft weiter (AsylG Art. 102h). Mittel:
+   L3 Pass/ID überholt seit 1.11.2026 (Fingerabdrücke bei ID mit Chip, Notpass), L4 Einsprache Wehrpflichtersatz klingt nach
+   Arbeitstagen, L5 Quellensteuer-Rückforderung nur mit DBA, L6 EU/EFTA nicht unterschieden, L7 Jahre mit L/N/S zählen nicht
+   zur Einbürgerung, L8 «nicht mehr fahren» fehlt zweimal, L9 F-Flüchtlinge reisen anders, A1 freiwillige AHV 888 Fr. ab 2027,
+   A2 Erinnerung ab 75 ab Klick gerechnet. Gestaltung A Abläufe fehlen auf der Kapitelseite (7 von 9), B Überschriften 2 → 4,
+   C drei Einleitungen. Sprache S1–S7 (rm 146 Texte deutsch, «ruhiger Überblick» in allen neun Intros). Zweig
+   `feat/kapitel-6-behoerden` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles bauen»). Bau im selben Zweig.
+   ✅ **Gebaut** (Zweig `feat/kapitel-6-behoerden`): L1 Wegzug mit Ausländerausweis (Frist 14 Tage vor Ausreise aus
+   demselben Wegzugsdatum wie die AHV-Frist; Bewilligung erlischt, C-Gesuch innert sechs Monaten, VZAE Art. 79) · L2
+   Asyl-Mandat · L3 Ausweis nach VAwG 1.11.2026 · L4 30 Kalendertage · L5 DBA-Bedingung · L6 EU/EFTA, L-Grenze · L7
+   L/N/S · L8 «nicht mehr fahren» · L9 F-Flüchtlinge · A1 Jahrestabelle `data/freiwilligeAhv.js` (870/888) · A2
+   Kontrolluntersuchung ab der letzten Untersuchung · Gestaltung A (Abläufe unter «Passend», mit Pass/Alter gefiltert),
+   B (Stufe 3), C (Intro weg) · K: Steuerjahr bei verlängerter Frist, Betreibungsamt-Feld, Asyl-Quellen, KVV Bst. ebis,
+   DBG Art. 4, BZG Art. 41, OR 324b, Kontrollfahrt, BüG Art. 11 · S5 «ruhig» aus neun Intros, S6 Dokumentenablage.
+   rechts-pruefer am Volltext nach dem Bau eingearbeitet (Blocker: Kontrolluntersuchung nicht ab dem 75. Geburtstag
+   rechnen). Test `kapitel6Behoerden.test.js`. Offen: rm-Übersetzung (S1, auch L2 nur de/fr/it/en), S2 Maskulin in
+   unberührten Texten, S3 Gesetzesangaben ans Satzende, S4 Kürzel ausschreiben, Notpass-Zuschläge.
+   **Kapitel 7 · Gesundheit** (10.11.): Bild [kapitel-7-gesundheit.html](../design/kapitel-7-gesundheit.html). Kapitelseite
+   und dreizehn Seiten (Notfallkarte, Notfallpass, Arztkoffer, Vorsorgeauftrag & Patientenverfügung, Patientenverfügung
+   erstellen, Bestattungswünsche, Organspende, KVG-Leistungen, Kassenkarten-Scanner, Unfall oder Krankheit, Krankheit & IV,
+   Angehörige pflegen, Erklärseite Krankenkasse), Fachprüfung am Fedlex-Volltext (rechts- und swiss-precision-pruefer).
+   Gut: Form des Vorsorgeauftrags richtig, Patientenverfügung richtig, Organspende richtig (erweiterte Zustimmungslösung
+   gilt bis zur Widerspruchslösung, laut BAG vss. 1. Halbjahr 2028), ZGB 360–381 ab 1.1.2027 unverändert. Hoch: L1 die
+   Vorsorgeauftrag-Vorlage druckt Linien für Ort, Datum und Unterschrift, ein unterschriebener Ausdruck ist ungültig
+   (ZGB Art. 361 Abs. 2). Mittel: L2 Ehegatten-Vertretung nur «im gemeinsamen Haushalt» (Art. 374: auch regelmässiger
+   Beistand; nur ohne Vorsorgeauftrag/Beistandschaft), L3 Patientenverfügung in der Psychiatrie nur zu berücksichtigen
+   (Art. 380, 433), L4 freie Spitalwahl (KVG Art. 41 Abs. 1bis), L5 «Franchise ist Ihr Selbstbehalt», Kinder 350, L6 IV
+   ohne Rechtsweg (Vorbescheid 30 Tage, Beschwerde statt Einsprache), L7 Kurzurlaub OR 329h unter «EO», L8 Mutterschaft
+   (KVG Art. 64 Abs. 7 Bst. a ganze Schwangerschaft), L9 «ab jetzt 100 %» trotz Spitalbeitrag, L10 Franchise-Rechner nur
+   für Erwachsene. Gestaltung A Gesundheit hat zwei Orte (Kapitelseite zeigt nur den Notfall, KVG/IV/Pflege/Unfall hängen
+   am Arztkoffer), B Notrufnummern als 19-px-Textlinks, C Doppeltes (drei Einleitungen, Patientenverfügung zweimal,
+   «Vorsorge» zweimal). Sprache S1–S7 (rm Unfall-Seite ganz deutsch, Notfallkarte ohne rm-Sie-Formen, «Bleiben Sie ruhig»).
+   Zweig `feat/kapitel-7-gesundheit` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles bauen»). Bau im selben Zweig, auf `main` nachgezogen.
+   ✅ **Gebaut** (Zweig `feat/kapitel-7-gesundheit`): L1 Vorlage ohne Unterschriftslinien (Satz «von Hand auf die
+   Abschrift») · KVG L4 Listenspital auch ausserkantonal, L5 Franchise ≠ Selbstbehalt, Kinder 350, L8 Mutterschaft ganze
+   Schwangerschaft, L9 kein «100 %» (CHF 15 je Spitaltag, nicht für Kinder), L10 Rechner Kind/Erwachsen (Stufen 0–600,
+   Höchstbetrag 350, unbekannte Werte genannt) · L2 Art. 374, Art. 378-Reihe, L3 Art. 380 (urteilsunfähig) / 433 · L6
+   IV-Schritt «Vorbescheid und Entscheid» mit Frist ab Erhalt + 30 Tage (EreignisFrist, eingeschriebener Brief Art. 38
+   Abs. 2bis), Beschwerde statt Einsprache · L7 OR 329h · K: handlungsfähig (Art. 360, 398), Art. 367, Personenkreis
+   Betreuungsgutschrift (inkl. eingetragene Partnerschaft, ATSG 13a), Organspende ab 16, Psychotherapie seit Juli 2022,
+   Impf-Referenzdokument 1.7.2026, KLV 12e, SIWF · Gestaltung A (Passend in zwei Gruppen, Arztkoffer unter «Gesundheit»),
+   B (Notruf-Knöpfe 48 px, 117), C (Intro weg, PV-Frage eingeklappt, «Organspende & Verfügungen») · S1 rm-Marken, S2,
+   S5, S6 (Elternstufe «Gesundheit»). rechts-pruefer nach dem Bau eingearbeitet (Blocker: Art. 378 Ziff. 1 nennt zuerst
+   die in der Patientenverfügung ODER im Vorsorgeauftrag bezeichnete Person). Test `kapitel7Gesundheit.test.js`,
+   Startbündel unverändert 64 995 / 65 000 Bytes (wie `main`). Offen: rm-Übersetzung (u. a. sieben Sie-Formen der
+   Notfallkarte), S3 Gesetzesangaben ans Satzende, S4 Kürzel, S7 Fachwörter, Kapitelseite-Kleines (Testament im Block
+   «Vorsorge», «1 von 5» neben «19 von 20», Szenario «Behördengang»), Arztkoffer-Platzhalter «In Vorbereitung» bewusst
+   belassen (Ehrlichkeitsregel im Code), Erklärseite Krankenkasse bleibt bei Versicherungen (Organigramm 07.11.),
+   Altersgrenze Kind «18» nach Jahrgang (KVV Art. 91 Abs. 3) nicht am Volltext belegt, Notrufnummern und
+   Medikamentenpreise an der Quelle.
+5. **Die übrigen Seiten** (11.11.), im selben Verfahren wie die Kapitel. Inventar aus `ansichtenRegister.js`,
+   `werkzeugRegister.js`, den `view === '…'`-Zweigen in `main.jsx`, den Umleitungen in `hashRouter.js` und `public/`;
+   abgezogen, was die Blätter zu Kapitel 1–7 abdecken. Fünf Gruppen, Reihenfolge A → E. ✅ **11.11.: so** (Stebler
+   Studios: «Ja, mit A anfangen»).
+   A Einstieg & Orientierung (Übersicht, Menü, Suche, «Was steht mir zu?», Schnellcheck, Rucksack, Obstgarten,
+   Onboarding, Rundgang, Hinweis fällige Erinnerungen) · B Ordnen & Unterlagen (Ablage, Was ansteht, Merkliste,
+   Unterlagen drucken mit drei Dossiers, Briefe, Behördenlinks) · C Einstellungen & Vertrauen (Einstellungen mit
+   Benachrichtigungen, Datensicherung, Rechtliches in der App, Beta-Tor, Sperrbildschirm, App installieren, Teilen/Flyer)
+   · D Fachseiten ausserhalb der Kapitel (Stipendien in der App; Erklärseiten Was steht mir zu, Sozialhilfe, Steuern,
+   Prämienverbilligung-Übersicht, Kantone im Vergleich, Krankenkasse «bewegt»; Nachprüfung Kantonsatlas, Politsystem)
+   · E Website & Rahmen (Startseite, Sprach-Startseiten, Rechtliches statisch, 404, Wartung). Nicht dabei: die
+   übersetzten Erklärseiten (Übersetzungs-Prüfung #692) und die 26 IPV-Kantonsseiten (separat geprüft).
+   **Gruppe A · Einstieg & Orientierung** (11.11.): Bild [gruppe-a-einstieg.html](../design/gruppe-a-einstieg.html).
+   Gut: Datenschutz-Aussagen stimmen am Code, drei klare Hinweise auf «Was steht mir zu?». Hoch: L1 Sozialhilfe-Karten
+   und -Weg «ein Recht, kein Entgegenkommen» ohne Hinweis auf die Folgen für die Bewilligung B/L/C (AIG Art. 62 Abs. 1
+   Bst. e, 63 Abs. 1 Bst. c, Fassung 1.11.2026). Mittel: L2 IPV ruht für F/N/S bei Sozialhilfe (AsylG Art. 82a Abs. 7)
+   nur im Schnellcheck Schritt 1 gesagt, L3 Familien-EL ohne Wohnsitzdauer, L4 EL ohne Karenzfrist und Vermögen, L5 Reka
+   (Alleinerziehende, keine Anreise), L6 «was Ihnen zusteht» im Onboarding, L7 Schnellcheck Schritt 3 ohne Hinweis, L8
+   «sicher ablegen», L9 AHV-Mindestbeitrag nur bis 25. Gestaltung A fünf Eingänge zu «Was steht mir zu?» und drei
+   IPV-Sätze, B vier Ordnungen (Kapitel, Werkzeug-Gruppen, Rucksack, Obstgarten) mit verschiedenen Zahlen, C zwei
+   Fortschrittszahlen (62 % / 72 %), D drei Ebenen auf dem ersten Bildschirm. Sprache S1–S7. Onboarding nur am Code
+   (Beta-Tor). Zweig `befund/gruppe-a-einstieg` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **11.11.: Inhalt und Sprache, dazu D** (Stebler Studios: «Nur Inhalt und Sprache», dann «d aus gestaltung darfst
+   du auch gerne noch dazu machen bitte (a, b & c mal notieren bitte damit wirs nochmals anschauen aber weiter machen
+   können)»). Gebaut im selben Zweig: L1 Satz zur Bewilligung an allen Sozialhilfe-Karten und -Wegen (ohne Schweizer
+   Pass), L2 «IPV ruht» für F/N/S, L3–L9, das Kleine, S1–S7, D (Startbildschirm-Karte erst nach dem Rundgang,
+   «Frühe Version» als Zeile). Test `gruppeAEinstieg.test.js`, Startbündel 64 979 / 65 000 Bytes.
+   rechts-pruefer nach dem Bau eingearbeitet. **Blocker:** der Satz zur Bewilligung erschien auch bei N und S, für die
+   AIG Art. 62/63 nicht gilt (keine AIG-Bewilligung; Widerruf S nach AsylG Art. 78 ohne Sozialhilfe), und bei F in
+   falscher Form → N, S, G ohne Satz, F mit eigenem Satz (Familiennachzug AIG Art. 85c Abs. 1 Bst. c, Bewilligung
+   Art. 84 Abs. 5), Nationalität «Schweiz» schliesst aus. Nachgeschärft: SERAFE en, AHV «bis Ende des Jahres»,
+   Familienzulagen ATSG Art. 24 (fünf Jahre) und ohne EL, Mutterschaftsbeihilfe «teils» und Kind unter zwei Jahren,
+   EL bei Beeinträchtigung mit IV-Rente oder Hilflosenentschädigung, Reka 200 Franken nur Familienferien,
+   `kompassIdle`. Vorgemerkt: S-Ausweise mit Anspruch auf Bewilligung ab März 2027 (AsylG Art. 74 Abs. 2).
+   Entwurfs-PR #845.
+   **Gruppe B · Ordnen & Unterlagen** (11.11.): Bild [gruppe-b-unterlagen.html](../design/gruppe-b-unterlagen.html).
+   Ablage, Was ansteht, Merkliste, Unterlagen drucken (Lebensmappe, Behörden-, Notfall-Dossier), 13 Briefvorlagen,
+   Offizielle Links. Gut: Rechtsvorschlag, Einsprache gegen die Kündigung, Mahnung, Todesfall wörtlich am Gesetz; keine
+   erfundenen Aufbewahrungsfristen; 127 Links, keiner tot. Hoch: L1 Mietkündigung ohne Zustimmung des Ehegatten bzw. der
+   eingetragenen Partnerin oder des Partners bei der Familienwohnung — ohne sie nichtig (OR Art. 266m, 266o); der Hinweis
+   wird beim Drucken ausgeblendet. Mittel: L2 Kassenwechsel-Brief kündigt ab 1.12. auf einen unmöglichen Termin
+   (KVG Art. 7 Abs. 2) — vor dem 1. Dezember bauen, L3 Ausstände und Art. 7 Abs. 5 fehlen, L4 Kalender-Vorlage
+   «Steuererklärung Frist» auf heute + 120 Tage, L5 Kassen-Vorlage ohne Werktag, L6 «Rechnung beanstanden» ohne
+   Verfügung (ATSG Art. 49, 51), L7 «sicher» in der Ablage, L8 Organspende-Register gibt es noch nicht. Gestaltung A
+   Brief antippen: nichts geschieht (Formular 3700 px tiefer), B Bücherregal mit senkrechter Schrift, Kantonslinks erst
+   bei 1250 px, C Was ansteht 4 px zu breit, Löschen über den Tagesstreifen, D Ablage-Titel bricht falsch. Sprache S1–S7
+   (it-Links deutsch). Frage zu den Herzensempfehlungen. Zweig `befund/gruppe-b-unterlagen`, gestapelt auf #845, nur
+   Befund, gebaut ist nichts.
+   ✅ **11.11.: alles ausser dem Bücherregal** (Stebler Studios: «alles so bauen bis aufs bücherregal das müssen wir
+   nochbesprechen»). Gebaut im selben Zweig: L1 zweite Unterschrift «Zustimmung … (OR Art. 266m)» je nach Zivilstand,
+   L2 Kassenwechsel nennt das Jahr und springt nach der Frist aufs nächste, L3–L8, Kleines, Gestaltung A (Brief antippen
+   springt zum Formular), C (375 px, Löschen am Eintrag mit Rückgängig — ändert Entwurf G vom 27.10., Reiter «Termine»),
+   D («Dokumenten-ablage»), Sprache S1–S7 (it-Links, Grussformeln, «so früh wie möglich»). rechts-pruefer nach dem Bau:
+   **Blocker** — der Ablage-Satz versprach eine Tresor-Sperre, die nicht eingebaut ist → «im Browser-Speicher
+   unverschlüsselt»; dazu sieben Nachschärfungen. Test `gruppeBUnterlagen.test.js`. **Zum Besprechen:** Bücherregal (B).
+   Nebenbefund: Landschaftsband der Kapitelseiten −24 px, vermutlich 4 px Überbreite.
+   **Gruppe D · Fachseiten ausserhalb der Kapitel** (11.11.; Inventar der Gruppen A–E in Punkt 5 auf dem Zweig
+   `befund/gruppe-a-einstieg`): Bild [gruppe-d-fachseiten.html](../design/gruppe-d-fachseiten.html). Gut: Krankenkasse in
+   allen Kernwerten am Gesetz, Prämien 2027 und Prämienregionen 1.1.2027 nachgeführt, Politsystem samt Sitzverteilung 2027
+   richtig, kurze Erklärseiten ohne Beträge. Hoch: L1 `/sozialhilfe/` und `/was-steht-mir-zu/` ermutigen zum Bezug («kostet
+   nichts») ohne Hinweis auf die Bewilligung B/L/C (AIG Art. 62 Abs. 1 Bst. e, 63 Abs. 1 Bst. c, Fassung 1.11.2026) · L2 IPV
+   ruht bei Sozialhilfe für N/S (AsylG Art. 82a Abs. 7) und F (AIG Art. 86 Abs. 2) fehlt. Mittel: L3 Stipendien-Check ohne
+   Antwort für F und B unter 5 Jahren, Ergebnis klingt nach Bescheid · L4 «Einsprachefrist meist 30 Tage» unbelegt · L5
+   Sozialhilfequote zugleich 2024 und 2025 · L6 Rückerstattung und ZGB Art. 328 fehlen · L7 Bundesvorgaben IPV (KVG Art. 65
+   Abs. 1bis/1ter) fehlen. Dazu Kleines (u. a. Meldefrist KVV Art. 11 Abs. 2, IPV-Zahlen 2023, ein toter Link). Gestaltung A
+   Stand-Zeile nur unten auf den vier kurzen Seiten, B bewegte Fassungen ohne Seitenrahmen, C Stipendien-Listen doppelt, D
+   Trefferflächen. Sprache S1–S8. Nichts davon im Startbündel. Konkordat nicht am Volltext (edk.ch sperrt). Zweig
+   `befund/gruppe-d-fachseiten` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **11.11.: Inhalt, Sprache, A und D, dann auch B und C** (Stebler Studios: «Inhalt, Sprache, A und D», auf
+   Nachfrage zu B und C «Beide bauen»). Gebaut im selben Zweig: L1–L7, Kleines, S1–S8, A Prüfdatum oben, B bewegte
+   Seiten im Seitenrahmen, C Stipendien ohne doppelte Listen, D Trefferflächen; fr/it/en/rm mitgezogen (Gegenlesung
+   #692, rm vorläufig). Test `gruppeDFachseiten.test.js`. Zwei Gestaltungs-Fehlbefunde (B Hintergrund, D `h1`) im Blatt
+   berichtigt. Offen: IPV-Zahlen 2025, Preisüberwacher-Link, Konkordat am Volltext. Nichts im Startbündel.
+   ⏸️ **Restrunde 11.11. abends: nach dem nächsten Deploy** (Stebler Studios: «halte diese situation zu erst mal so
+   fest … nach dem nächsten deploy wieder auf dieses dokument zurück»; Entscheidblatt
+   `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). Empfohlen und dort wieder aufzunehmen: IPV-Zahlen
+   erst mit der Statistik 2025 (Nachprüfung 16.12.2026); Preisüberwacher-Newsletter-Adresse an der Quelle suchen,
+   mit Gegenprobe; Stipendien-Konkordat nochmals am Volltext versuchen.
+   **Notiert, nicht gebaut — gemeinsam ansehen:** A ein Eingang zu «Was steht mir zu?» und ein IPV-Satz · B vier
+   Ordnungen (angleichen oder den 7 Kapiteln folgen) · C eine Fortschrittszahl · Suchwörter (Register im Startbündel).
+   **Restrunde 11.11. abends** (Entscheidblatt mit Handy-Bildern 375 px vom gebauten Stand `c7bffc56`:
+   `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). ⏸️ **Gruppen A, B, C, D, E: nach dem nächsten
+   Deploy** (Stebler Studios: «halte diese situation zu erst mal so fest … und dann kommen wir nach dem nächsten deploy
+   wieder auf dieses dokument zurück und können entscheiden»). Empfohlen und dort wieder aufzunehmen — A: ein Eingang zu
+   «Was steht mir zu?» und ein IPV-Satz aus `ipvAnzeige`; vier Ordnungen nur angleichen (Neuordnung nach Kapiteln
+   später, eigener Entscheid); eine Fortschrittszahl aus `gesamtVollstaendigkeit`; Suchwörter erst nach dem einen
+   Eingang, wenn das Startbündel Platz hat. B: Bücherregal mit «Ihr Kanton» zuerst und liegender Schrift; Löschen am
+   Eintrag (Änderung von Entwurf G) bestätigen; «Nexter» ohne Link, bis die richtige Adresse da ist —
+   `crewz.io/de/nexter/` heisst heute (gemessen 11.11.) «Roved – das Trinkspiel für unvergessliche Abende».
+   ✅ **Quer: «Alle drei wie empfohlen».** Q1 Landschaftsband der Kapitelseiten `margin: '0 -20px'` wie main
+   (gemessen vorher 379 px, nachher alle sieben Kapitel 375 px). Q2 Wächter: `activateTresor` wird nirgends
+   aufgerufen, und kein Satz zur Ablage sagt in einer der fünf Sprachen Verschlüsselung zu (Erlaubnisliste der
+   gelesenen Sätze). Test `querBandTresor.test.js`, Mutationsprobe beider Teile rot aus dem richtigen Grund. Q3 Test
+   «Stand der Lebenslagen» (`gruppeAEinstieg.test.js`) bleibt: er wird am 1.1.2027 rot, das ist der Wecker; Nachprüfung 16.12.2026.
+   **Gruppe C · Einstellungen & Vertrauen** (11.11.): Bild [gruppe-c-vertrauen.html](../design/gruppe-c-vertrauen.html).
+   Gut: Datenschutz-Aussagen stimmen am Code (kein `fetch`/`sendBeacon`, CSP nur `'self'`, Beispiel speichert nichts),
+   Sicherung standardmässig AES-256-GCM, Import geprüft und ganz oder gar nicht, «Alle Daten löschen» vorbildlich,
+   App-Text und statische Rechtsseite gleich. Hoch: L1 vier Benachrichtigungs-Schalter, drei davon («30 Tage vor
+   Ablauf», Gesundheit, Bewilligung/Steuer/RAV) tut kein Code, der vierte prüft nur beim Öffnen und ignoriert den
+   Schalter · L2 die goldenen Knöpfe JSON/CSV/Manifest ganz oben sind keine Sicherung (ohne Dokumente, Erinnerungen,
+   Kontakte, Merkliste, unverschlüsselt), lassen sich aber einspielen. Mittel: L3 Installieren zeigt auf
+   `malojaplana.ch` statt `/app/` (Website ohne Manifest, live gemessen), L4 iCloud/OneDrive-Download, L5 was in der
+   unverschlüsselten Datei steht, L6 Weg «Werkzeuge → Export» gibt es nicht, L7 «Exportieren, um Platz zu schaffen»,
+   L8 «sicher» in der Ablage. Sicherheit: T1 Teilen-Empfang nimmt POST von fremden Seiten an (erst am echten
+   Android-Teilen messen), T2 Beta-Code im Klartext in einer Doku des öffentlichen Repos (Entscheid K105 offen), T3
+   PBKDF2 100 000 statt 600 000, T4 Kleines. Gestaltung A Schalter zeigen ihren Zustand nicht («Hell» = Handlung),
+   B Benachrichtigungen lang und Schalter kaum sichtbar, C auf der Sicherungsseite ist der unsichere Weg am lautesten,
+   D Beta-Tor hell im Dunkelmodus und ohne Weg zum Code. Sprache S1–S10. Rechtsartikel (nDSG Art. 25, 28; UWG Art. 3
+   Abs. 1 Bst. s) nicht am Fedlex-Volltext geprüft; Impressum-Anschrift bleibt offen und unverändert. Zweig
+   `befund/gruppe-c-vertrauen` (von `main`), Entwurfs-PR #846.
+   ✅ **11.11.: Sprache, Inhalt und Gestaltung** (Stebler Studios: «hier sprache inhalt und gestaltung»), dazu beim
+   Beta-Tor «Zeile raus, Code wechseln». Gebaut im selben Zweig: L1–L8 und das Kleine, S1–S10, Gestaltung A–D, die
+   Doku-Zeile mit dem alten Code entfernt. Den neuen Code wählt Stebler Studios; im Repo steht nur sein Fingerabdruck.
+   **Notiert, nicht gebaut:** T1 Teilen-Empfang (erst am echten Android-Teilen messen), T3 Runden der Ableitung
+   (neues Dateiformat), T4 Kleines; Impressum-Anschrift bleibt offen.
+   Wächter `gruppeCVertrauen.test.js`, rechts-pruefer mit DSG-Volltext (Art. 25, Fassung 1.9.2023). Nicht im Browser
+   angesehen (alle Server-Plätze belegt). **Offen bei Stebler Studios:** neuen Beta-Code wählen (der alte steht in
+   der git-Historie), Deploy.
+   ⏸️ **Restrunde 11.11. abends: nach dem nächsten Deploy** (Stebler Studios: «halte diese situation zu erst mal so
+   fest … nach dem nächsten deploy wieder auf dieses dokument zurück»; Entscheidblatt
+   `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). Empfohlen und dort wieder aufzunehmen: den neuen
+   Beta-Code setzt Stebler Studios selbst (nur der Fingerabdruck ins Repo, der Code nie in einen Chat); T1
+   Teilen-Empfang am echten Android-Teilen messen und T3 Ableitung (neues Dateiformat, alte Sicherungen lesbar)
+   später; Impressum-Anschrift — Postfach eintragen oder bis zur Antwort auf F2a warten (gleich wie Gruppe E, L1).
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
+
+---
+
+**Gruppe E · Website & Rahmen** (11.11., zum Punkt 5 «Die übrigen Seiten»): Bild
+[gruppe-e-website.html](../design/gruppe-e-website.html). Gemessen auf `main` `c865f518`; für alle Dateien dieser Gruppe
+ist `main` gleich live `73caaf6e` (`git diff` leer). Startseite, Sprach-Startseiten, Rechtliches statisch, 404, Wartung,
+Manifest, Sitemap. Prüfer: rechts-pruefer, polygrafin, a11y-pruefer, copy-pruefer, link-checker; Kernstellen von Hand
+nachgeprüft. Die Startseite ist gegen den Kopf des Stapels #825 → #833 → #837 → #843 (`6f8b6f39`) abgeglichen, je Punkt
+steht, ob ein PR die Stelle schon berührt. Gut: Datenaussagen stimmen am Code, 140 Links ohne Fehler, Sitemap 36 URLs
+alle 200, `/fr/` usw. antworten 200 (S6 erledigt). Hoch: **H1** der Knopf «Beispiel ansehen — ohne Zugangscode» der vier
+Sprach-Startseiten führt auf `/?lang=xx` und damit vor das Beta-Tor (`build-seiten.mjs:405`, ohne `beispiel`) · **H2** 404
+und Wartung duzen, laden ihre Schrift nicht, haben eigene Farben, keinen Dunkelmodus, Wartung-Fremdsprachen 2,67:1, der
+404-Link ist nicht als Link erkennbar. Mittel/klein: L1 Impressum ohne Postanschrift (UWG Art. 3 Abs. 1 Bst. s Ziff. 1,
+Entscheid Stebler Studios) · L2 Haftung ohne «soweit gesetzlich zulässig» (OR Art. 100 Abs. 1) · L3 Gerichtsstand (ZPO
+Art. 32, 35) · L4/L5 `sw-abschied.js` fehlt in der Skriptliste, fr/it/en/rm ohne den Startseiten-Satz · L6 kein
+Stand-Datum · L7 Atlas-Karte ohne BFS-Quelle · L8 Manifest halb englisch · U5–U8 · W1 kein Schalter für die Wartung im
+Repo. Gestaltung des Rahmens A 404/Wartung aus dem Generator · B eine Schriftordnung (G10 bestätigt) · C ein Kopf, ein
+Gold, ein Leise-Ton · D Knopf 10 / Karte 12 / Luft §7a. Sprache S1–S10 (S7 entfällt mit #833). SEO: fr/it/en weiter
+gesperrt bis zur Lektüre (gewollt), rm `noindex` ✔; mit der Freigabe zusammen hreflang und Sitemap (E1); die Startseite
+verlinkt keine Sprach-Startseite (E2); E3 Titel der Sprach-Startseiten; E4 `dateModified`. Zweig `befund/gruppe-e-website`
+(von `main`), nur Befund, gebaut ist nichts. Vorschlag: Zweig 1 Inhalt/Recht/Sprache (ohne `vorstellung.mjs`), Zweig 2
+Gestaltung A–D erst nach Ja; L7, U6/U7, S8, E2 in den Startseiten-Stapel, nicht hier.
+✅ **11.11.: Zweig 1 gebaut** (Stebler Studios: «Zweig 1 bauen»), im selben Zweig, Entwurfs-PR #847. H1 Knopf der
+Sprach-Startseiten auf `/app/?lang=xx&beispiel` (Adresse in `scripts/seiten-ziele.mjs`) · H2/S1/S3/S4 404 und Wartung:
+Sie-Form, klarer Satz, keine Zeitzusage, Datensatz in allen Sprachen, `lang` je Zeile, Lexend statt der nie geladenen
+DM Sans, Leise-Ton 6,83:1, 404-Link unterstrichen und 44 px · L2 Vorbehalt für Vorsatz und grobe Fahrlässigkeit (Satz
+aus den Nutzungsbedingungen Ziff. 6, auch in `docs/legal/impressum.md` und fr/it/en) · L4/L5 Abschieds-Service-Worker
+in der Skriptliste, Startseiten-Satz in fr/it/en · L6 Stand-Datum · L8 Manifest deutsch · U5 `lang` im Sprachumschalter
+· U8 Fuss- und Krumen-Links 44 px · S2 Karte der Sprach-Startseite ohne «rechnet das durch» · S5/S6 Rechtliches-Text ·
+S9 «scheda d’emergenza» · S10 rm-Verbindlichkeitssatz · E3 Titel der Sprach-Startseiten · W1 RELEASE.md, Abschnitt
+Wartungsseite (Panel-Kopie). Test `gruppeEWebsite.test.js`, Mutationsprobe H1 rot aus dem richtigen Grund. rechts-pruefer: OR Art. 100 Abs. 1
+am Fedlex-Volltext (Stand 1.10.2026) bestätigt, vier Präzisierungen übernommen.
+**Nicht gebaut:** L1 (Entscheid Stebler Studios) · L3 Gerichtsstand, liegt als F2a bei der Juristin · L2 und L5 für rm (die
+rm-Rechtsseite sagt damit vorerst weniger als die anderen vier; neue Sätze erst mit Muttersprachler-Lektüre) · S9 «aiuto sociale» bleibt, die App sagt es 69-mal (Befund berichtigt) ·
+Gestaltung A–D (Zweig 2) · L7, U6/U7, S8, E2 (Startseiten-Stapel) · E1 (mit der Sprachfreigabe).
+🛑 **Nach dem Deploy von Hand:** den neuen Text von `public/wartung.html` ins Infomaniak-Panel kopieren.
+⏸️ **11.11.: Zweig 2 (Gestaltung A–D des Rahmens) wartet** (Stebler Studios: «Nach Merge #847/#848»). Grund: #847 und
+#848 (Gruppe D) ändern dieselben drei Generator-Dateien (`build-seiten.mjs`, `seiten-inhalt.mjs`, `seiten-sprachen.mjs`),
+A–D greift in deren gemeinsamen Stil-Block. Nach beiden Merges frisch von `main` bauen, vorher im Browser ansehen, Brand
+Book im selben Zweig nachführen. Auslöser: Stebler Studios meldet die Merges.
+⏸️ **Restrunde 11.11. abends: L1 und L3 nach dem nächsten Deploy** (Stebler Studios: «halte diese situation zu erst
+mal so fest … nach dem nächsten deploy wieder auf dieses dokument zurück»; Entscheidblatt
+`stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). L1 Postanschrift: Postfach eintragen oder bis zur Antwort
+auf F2a warten (gleich wie Gruppe C). L3 Gerichtsstand wartet auf die Juristin (F2a). Zweig 2 bleibt wie oben.
+
+**Gruppen A–E · Restpunkte entschieden** (12.11.2026, nach dem Deploy `d439855d`; Entscheidblatt mit Handy-Bildern
+375 px vom Live-Stand: `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`).
+⏸️ **A später** (Stebler Studios: «A später») — ein Eingang zu «Was steht mir zu?», vier Ordnungen, eine
+Fortschrittszahl, Suchwörter bleiben notiert.
+**B:** ⏸️ B1 Bücherregal später. ✅ B2 **× am Eintrag bleibt** (Stebler Studios: «× am Eintrag bleibt … und wisch
+gesten als todo») — Entwurf G vom 27.10. (Löschen nur über den Tag im Tagesstreifen) ist damit für das Löschen
+abgelöst; eine Wischgeste zum Löschen gibt es nicht (Wischen schiebt nur den Tagesstreifen). 📝 **ToDo:** Löschen
+zusätzlich per Wischgeste am Eintrag, mit Rückgängig, × bleibt (Tastatur, Vorlesen). ✅ B3 entfällt: `crewz.io/de/nexter/`
+zeigt den Habit-Tracker Nexter (Überschrift «Track, was zählt. Keine Streaks …», gemessen 12.11.; Gegenprobe
+erfundene Adresse 404) — nur der `<title>` der Crewz-Seite heisst falsch «Roved – das Trinkspiel». Fehlalarm vom
+11.11. (nur den Titel gelesen) hiermit berichtigt, Link bleibt.
+**C:** wie empfohlen (Stebler Studios: «So, Postanschrift später») — Beta-Code setzt Stebler Studios selbst, T1 und
+T3 später, Impressum-Anschrift später (F2a).
+**D:** ⏸️ D1 IPV-Statistik 2025 später (Nachprüfung 16.12.). ✅ D2 Preisüberwacher-Newsletter 8/24 unter neuer
+Adresse (`/dam/de/sd-web/BkYrO1muxFAu/newsletter_08_24.pdf`, verlinkt von `/de/medikamente`, Gegenprobe 404; «+140 %»
+= 2,4-mal bestätigt). ✅ D3 Stipendien-Konkordat am Volltext (sGS 211.531, Stand 1.8.2015): Art. 5 Abs. 1 Bst. c
+«C oder B bei 5 Jahren Aufenthaltsrecht» statt «5 Jahre Wohnsitz», Bst. e «ausser EU/EFTA» bei «B unter 5 Jahren»,
+Ergebnis «ob Ihr Kanton beigetreten ist, erfahren Sie bei der Stipendienstelle» statt «entscheidet»; rm nur
+`// TODO(rm)`. rechts-pruefer nach dem Bau: **Blocker** — eine erste Fassung strich «oder nach vier Jahren
+finanzieller Unabhängigkeit»; das steht aber in Art. 7 Abs. 1 («Vier Jahre finanzielle Unabhängigkeit durch eigene
+Erwerbstätigkeit entspricht einer abgeschlossenen ersten berufsbefähigenden Ausbildung») → zurückgenommen, der Test
+verlangt den Satz jetzt. Preisüberwacher-Satz mit «im Schnitt … (15 Vergleichsländer)». Test
+`gruppeDFachseiten.test.js` (D2, D3 rot gegen den alten Stand). Zweig `fix/gruppe-d-restpunkte`.
+**E:** ⏸️ L1 Postanschrift später, L3 Gerichtsstand wartet auf F2a. ✅ **Zweig 2 jetzt bauen** (Stebler Studios:
+«Jetzt bauen») — eigener Zweig von `main`.

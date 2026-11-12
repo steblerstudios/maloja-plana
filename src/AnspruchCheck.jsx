@@ -9,6 +9,7 @@ import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
 import { zurueckZeichen } from './IconSystem.jsx';
 import { PanelTitle } from './components/Heading.jsx';
+import { hatAusweisFNS, sozHinweisSchluessel } from './data/ausweis.js';
 
 // Anspruch-Check, geführt (#4.4.2 „Brücke"): webt die zwei bestehenden Checks zu
 // EINEM Fluss — Schritt 1 = Zahlen (Schnellcheck), Schritt 2 = Lebenslage
@@ -94,6 +95,11 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       style: { fontSize: text.xs, color: palette.soft, fontStyle: 'italic', lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px 0' }
     }, txt);
 
+    const hinweis = (art, txt) => React.createElement('p', {
+      key: art, 'data-hinweis': art,
+      style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.xs + 'px 0 ' + space.sm + 'px 0' }
+    }, txt);
+
     const sectionHeader = (txt) => React.createElement('h3', {
       style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, letterSpacing: '0.3px', margin: space.md + 'px 0 ' + space.sm + 'px 0' }
     }, txt);
@@ -110,6 +116,10 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       incomeBenefits.length
         ? incomeBenefits.map((b) => row(b.key, b.label, () => (b.uebergabe ? onNavigate(b.view, undefined, b.uebergabe) : onNavigate(b.view))))
         : emptyLine(t('anspruchCheck.resultEmptyIncome')),
+      // Gruppe A L2: IPV ruht für F/N/S bei Sozialhilfe (AsylG Art. 82a Abs. 7) — wie Schritt 1.
+      incomeBenefits.some((b) => b.key === 'ipv') && hatAusweisFNS(probe) && hinweis('ipv-ruht', t('ipv.ruhtMitSozialhilfe')),
+      // Gruppe A L1: Sozialhilfe ohne Schweizer Pass — Folgen für die Bewilligung (AIG Art. 62, 63).
+      incomeBenefits.some((b) => b.key === 'soz') && sozHinweisSchluessel(probe) && hinweis('soz-bewilligung', t(sozHinweisSchluessel(probe))),
 
       sectionHeader(t('anspruchCheck.resultSituationHeader')),
       chosen.length
@@ -119,7 +129,9 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       React.createElement('button', {
         type: 'button', onClick: () => onNavigate('situationen'),
         style: { ...linkStil(palette), display: 'block', marginTop: space.md + 'px', fontSize: text.sm, fontWeight: weight.medium }
-      }, t('anspruchCheck.resultToLandkarte'))
+      }, t('anspruchCheck.resultToLandkarte')),
+      // Gruppe A L7: das Ergebnis ist eine Orientierung; wer entscheidet, sagt der Hinweis (wie Schritt 1).
+      hinweis('fuss', t('anspruch.footNote'))
     );
   };
 

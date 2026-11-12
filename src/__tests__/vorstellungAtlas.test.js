@@ -10,9 +10,10 @@ const html = vorstellungBauen();
 const abschnitt = html.match(/<section id="atlas" aria-labelledby="t-atlas">[\s\S]*?<\/section>/)[0];
 
 describe('Vorstellungsseite: Abschnitt Kantonsatlas', () => {
-  it('steht zwischen «Ein Blick hinein» und «Holen»', () => {
+  // «Ein Blick hinein» ist seit 10.11.2026 in Kehre 7 und die Situationen aufgegangen: der Atlas folgt den Situationen.
+  it('steht zwischen den Situationen und «Holen»', () => {
     const i = (s) => html.indexOf(s);
-    expect(i('id="t-blick"')).toBeLessThan(i('id="t-atlas"'));
+    expect(i('id="t-lagen"')).toBeLessThan(i('id="t-atlas"'));
     expect(i('id="t-atlas"')).toBeLessThan(i('id="t-holen"'));
   });
 
@@ -31,9 +32,9 @@ describe('Vorstellungsseite: Abschnitt Kantonsatlas', () => {
 
   it('die Wege in den Atlas und «Zum Nachlesen» sind gross genug zum Tippen (44 px)', () => {
     expect(html).toContain('.liste > li > a{ display:inline-block; padding:13px 0 }');
-    // Beide Listen tragen ihre Links direkt im Listenpunkt, sonst greift die Regel nicht.
-    const nachlesen = html.match(/<h2>Zum Nachlesen<\/h2>\s*<ul class="liste eins">[\s\S]*?<\/ul>/)[0];
-    expect(nachlesen.match(/<li><a href=/g)).toHaveLength(5);
+    // «Zum Nachlesen» steht seit D (10.11.2026 spät) auf dem hellen Blick: Zeichen 44 px, Link in der Karte 44 px hoch.
+    expect(html).toMatch(/\.bildwahl-ebene label\{[^}]*min-height:44px/);
+    expect(html).toMatch(/\.bildwahl-tafel a\{[^}]*min-height:44px/);
     expect(abschnitt.match(/<\/p><a href="\/kantonsatlas\/#fuer-/g)).toHaveLength(BRILLEN.length);
     // Der Link im Satz (Datenschutz) steht in einem <p> und wird nicht aufgebläht.
     expect(html).toMatch(/<p>[^<]*Keine Werbung[^<]*<a href="\/rechtliches\/">Datenschutz<\/a>/);

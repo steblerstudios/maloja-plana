@@ -27,6 +27,7 @@ describe('die Vorlage übernimmt 0 Tage als heute', () => {
   it('kein «|| 30», das aus 0 Tagen still 30 macht', () => {
     const src = fs.readFileSync(path.join(__dirname, '..', 'CalendarReminders.jsx'), 'utf8');
     expect(src).not.toMatch(/daysFromNow\s*\|\|\s*30/);
-    expect(src).toMatch(/kkChange[^\n]*tageBisNaechstem\(todayISO\(\),\s*'11-30'\)/);
+    // Gruppe B L5 (11.11.2026): seither zehn Tage vor dem letzten Werktag im November (kkWechselErinnerung).
+    expect(src).toMatch(/kkChange[^\n]*kkWechselErinnerung\(todayISO\(\)\)/);
   });
 });

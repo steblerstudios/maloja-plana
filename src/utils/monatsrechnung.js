@@ -25,14 +25,14 @@
 // Hinweis die Autokosten schon enthalten. Das wäre ein eigener Entscheid.
 
 import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
-import { istAngestellt, istLernend } from './anstellung.js';
+import { istAngestellt, istLernend, istSelbstaendig } from './anstellung.js';
 
 // Nur positive Beträge zählen — wie die Einnahmen (data/haushaltsEinnahmen.js); ein negativer
 // Eintrag soll die Ausgaben nicht still verkleinern (Fachprüfung Fassung 6).
 const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : 0; };
 
 // Selbständige zahlen AHV und Pensionskasse selbst, es gibt keinen Lohnabzug (Fachprüfung 01.11.2026).
-export const zahltBeitraegeSelbst = (finanzen) => finanzen?.employmentType === 'selfEmployed' || finanzen?.employmentType === 'freelance';
+export const zahltBeitraegeSelbst = istSelbstaendig;
 
 // «Schon vom Nettolohn abgezogen» stimmt nur für Angestellte mit netto erfasstem Lohn (dieselbe Regel wie VersicherungenInstrument).
 export const beitragsNotizKey = (finanzen) => istAngestellt(finanzen) && finanzen?.incomeType === 'netto' ? 'budgetSync.bvgReferenceNote' : 'budgetSync.bvgNichtGezaehltNote';

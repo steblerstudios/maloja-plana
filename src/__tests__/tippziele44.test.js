@@ -18,7 +18,8 @@ const STELLEN = [
   ['MerklisteView.jsx', 'tagKnopf: {', 'nach'],
   ['DocumentTresor.jsx', "'aria-pressed': aktiv", 'nach'],
   ['NotfallpassBlatt.jsx', 'knopf: {', 'nach'],
-  ['ArztkofferView.jsx', "t('arztkoffer.back')", 'vor'],
+  // ArztkofferView.jsx: der Knopf «Zurück zur Übersicht» entfiel mit der Brotkrume (Kapitel 7, 10.11.2026);
+  // deren 44 px prüft brotkrume.test.js.
   ['LegalView.jsx', "t('common.back')", 'vor'],
   ['NotfallDossier.jsx', "t('notfallpass.dossierVerweis')", 'vor'],
   // Fassung G (27.10.2026): «Ganzer Monat» und «Ganzes Jahr» teilen den Stil `aufklapp`.
@@ -46,7 +47,8 @@ describe('Tippziele ≥ 44 px an den Stellen aus dem Seitenrundgang', () => {
   it('Kalender: Erledigt- und Löschen-Knopf je 44 × 44', () => {
     const src = quelle('CalendarReminders.jsx');
     expect(src).toMatch(/const leiseKnopf = \{ minWidth: '44px', minHeight: '44px'/);
-    expect(src.match(/style: leiseKnopf \}|style: \{ \.\.\.leiseKnopf,/g)).toHaveLength(2);
+    // Gruppe B C (11.11.2026): dazu das × am Eintrag — drei Knöpfe im selben 44-px-Stil.
+    expect(src.match(/style: leiseKnopf \}|style: \{ \.\.\.leiseKnopf,/g)).toHaveLength(3);
   });
 
   it('Schublade «Ansicht & Sprache»: Schliessen 44 × 44 statt 24', () => {

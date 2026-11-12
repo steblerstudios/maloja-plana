@@ -2,6 +2,8 @@
 // Beim Scrollen: vor Kehre 1 steht das Passbild des Hero (Bild 0); je Kehre wischt das neue Bild wie ein
 // Pinselstrich quer über das alte, der Ort auf der Weglinie wandert mit, an den Wanderstock kommt je erreichter Kehre
 // ein Stocknagel, und der Stock dreht sich um die eigene Achse, bis der neue Nagel vorn steht.
+// Motion 11.11.2026 (A–D): der Titel jeder Kehre setzt sich Buchstabe für Buchstabe (C), an der letzten Kehre leuchtet
+// der Weg auf (D, data-oben). Staub am Aufkleber (A) und Luft (B) sind reines CSS über data-hier und .dran.
 // Ohne dieses Skript ist alles da (alle Aufkleber am Stock, Passbild, Hero mit eigener heller Fläche).
 // Bei «weniger Bewegung» wechseln Bild, Nägel und Ort genauso, nur ohne Bewegung (der Stock springt statt zu drehen).
 // Eigene Datei, weil die CSP nur script-src 'self' erlaubt. Reines ES5, keine Abhängigkeiten.
@@ -20,6 +22,30 @@
   var namen = stationen.map(function (s) { var n = s.querySelector('.name'); return n ? n.textContent.split('·').pop().trim() : ''; });
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
   var bisher = null;
+
+  // C · Motion 11.11.2026: der Titel jeder Kehre setzt sich Buchstabe für Buchstabe (Vorbild Fuji, nur das Prinzip).
+  // Nur ohne «weniger Bewegung». Vorgelesen wird eine unsichtbare Kopie des ganzen Titels, die Buchstaben sind
+  // aria-hidden; Wörter bleiben zusammen (kein Umbruch mitten im Wort). Streuung höchstens 250 ms: die Reihenfolge
+  // gibt 0–150 ms, dazu ein Zufall von 0–100 ms, damit es sich setzt wie Staub und nicht tippt wie eine Maschine.
+  var titel = [].slice.call(bruecke.querySelectorAll('.reise-text h3'));
+  function setzbar(h) {
+    var text = h.textContent, n = text.replace(/\s/g, '').length, z = 0;
+    var vorlesen = document.createElement('span'); vorlesen.className = 'unsichtbar'; vorlesen.textContent = text;
+    var bild = document.createElement('span'); bild.setAttribute('aria-hidden', 'true');
+    text.split(/(\s+)/).forEach(function (teil) {
+      if (!teil) return;
+      if (/^\s+$/.test(teil)) { bild.appendChild(document.createTextNode(' ')); return; }
+      var wort = document.createElement('span'); wort.className = 'wort';
+      for (var i = 0; i < teil.length; i++) {
+        var b = document.createElement('span'); b.className = 'z'; b.textContent = teil.charAt(i);
+        b.style.setProperty('--v', String(Math.round(z / Math.max(1, n - 1) * 150 + Math.random() * 100)));
+        wort.appendChild(b); z++;
+      }
+      bild.appendChild(wort);
+    });
+    h.textContent = ''; h.appendChild(vorlesen); h.appendChild(bild); h.classList.add('setzen');
+  }
+  if (!ruhig.matches) titel.forEach(setzbar);
 
   function bildZeigen(nr) {
     if (nr === bisher) return;
@@ -48,8 +74,19 @@
     var k = 0, s = stationen[Math.max(0, hier)];
     if (s) { var r = (s.querySelector('.reise-text') || s).getBoundingClientRect(); k = Math.min(1, Math.max(0, (schwelle - r.top) / h)); }
     buehne.setAttribute('data-hier', String(hier));
+    // B · Ist der Text der letzten Kehre oben hinaus, gehen Stock und Weglinie mit dem Bild weg (Ausklang).
+    var letzte = stationen[stationen.length - 1];
+    // Massgebend ist der Text (11.11.2026, im Browser gesehen): mit dem Ende des Abschnitts bei 85 % ging die dunkle
+    // Schicht schon weg, während der weisse Text von Kehre 7 noch mitten auf dem hellen See stand.
+    var ende = !!letzte && (letzte.querySelector('.reise-text') || letzte).getBoundingClientRect().bottom <= h * 0.15;
+    if (ende !== buehne.hasAttribute('data-ende')) { if (ende) buehne.setAttribute('data-ende', ''); else buehne.removeAttribute('data-ende'); }
     bildZeigen(hier + 1);
     naegel.forEach(function (n, i) { n.classList.toggle('dran', i <= hier); });
+    // C · ein Titel setzt sich, wenn seine Kehre erreicht ist; zurückgescrollt bleibt er stehen, darüber wird er wieder frei.
+    titel.forEach(function (t, i) { if (i === hier) t.classList.add('gesetzt'); else if (i > hier) t.classList.remove('gesetzt'); });
+    // D · oben angekommen (letzte Kehre): der Weg leuchtet einmal von unten nach oben auf, je Ankunft einmal.
+    var oben = hier === stationen.length - 1;
+    if (oben !== buehne.hasAttribute('data-oben')) { if (oben) buehne.setAttribute('data-oben', ''); else buehne.removeAttribute('data-oben'); }
     punkte.forEach(function (p, i) { p.classList.toggle('hier', i === hier); p.classList.toggle('gegangen', i < hier); });
     if (gegangen) {
       var anteil = hier < 0 ? 0 : (hier + 0.5) / stationen.length;
@@ -70,10 +107,13 @@
   // C · Die Leiste oben erscheint erst nach der Reise (Seiten-Links, der aktuelle Abschnitt mit aria-current).
   // Während der Reise zeigt die Weglinie links im Bild, wo man ist (Entscheid 10.11.); ohne Skript gibt es sie nicht.
   var leiste = document.querySelector('.leiste');
+  var ausklang = bruecke.querySelector('.reise-ausklang');
   var leisteLinks = leiste ? [].slice.call(leiste.querySelectorAll('.leiste-links a')) : [];
   function leisteNeu(hier, h) {
     if (!leiste) return;
-    var zustand = bruecke.getBoundingClientRect().bottom <= h * 0.5 ? 'seite' : 'aus';
+    // Seit D/E (10.11.2026 spät) liegen «Zum Nachlesen» und «Was Sie eingeben» noch in der Brücke: massgebend ist das
+    // Ende der Reise (der Ausklang), nicht das Ende der Brücke — sonst käme die Leiste erst nach diesen Abschnitten.
+    var zustand = (ausklang || bruecke).getBoundingClientRect().bottom <= h * 0.5 ? 'seite' : 'aus';
     if (leiste.getAttribute('data-zustand') !== zustand) leiste.setAttribute('data-zustand', zustand);
     // Aktueller Abschnitt: der letzte, dessen Anfang die obere Bildhälfte erreicht hat.
     var aktuell = null;
@@ -83,6 +123,17 @@
       if (el && el.getBoundingClientRect().top <= h * 0.4) aktuell = a;
     });
     leisteLinks.forEach(function (a) { if (a === aktuell) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    if (aktuell !== bisherLink) { bisherLink = aktuell; if (aktuell) inSicht(aktuell); }
+  }
+  // I · Am Handy ist die Zeile wischbar und rechts leise ausgeblendet: den gewählten Reiter in den klaren Teil rücken.
+  // Nur waagrecht in der eigenen Zeile, die Seite selbst scrollt nicht mit.
+  var bisherLink = null;
+  function inSicht(a) {
+    var zeile = a.parentNode;
+    if (!zeile || zeile.scrollWidth <= zeile.clientWidth) return;
+    var z = zeile.getBoundingClientRect(), r = a.getBoundingClientRect(), klar = z.right - z.width * 0.18;
+    if (r.right > klar) zeile.scrollLeft += r.right - klar + 4;
+    else if (r.left < z.left) zeile.scrollLeft -= z.left - r.left + 4;
   }
 
   // Der Stock: Nägel rundum (je 1/7 Drehung), Maserung als feine Streifen. Vorne breit, seitlich schmal, hinten weg.

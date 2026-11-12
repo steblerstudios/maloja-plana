@@ -17,6 +17,19 @@ import { knopfStil } from './PrimaryButton.jsx';
 // Kein Wort-Eintippen: Umlaute und Tastaturen machen das zur Hürde; zwei bewusste
 // Handlungen tragen die Absicherung.
 
+// Datum der letzten heruntergeladenen Sicherung in der App-Sprache, sonst null. Geteilt mit der
+// Karte «Daten & Sicherung» der Einstellungen (Gruppe C, Gestaltung B, 11.11.2026).
+export function letzteSicherungDatum(t) {
+  try {
+    const roh = localStorage.getItem('or5_lastBackup');
+    if (!roh) return null;
+    // App-Sprache statt Gerätesprache (Seitenrundgang 26.10.2026, S3); unlesbar → kein Datum.
+    const d = new Date(roh);
+    if (isNaN(d.getTime())) return null;
+    return d.toLocaleDateString(/^[a-z]{2}-[A-Z]{2}$/.test(t('calendar.locale')) ? t('calendar.locale') : 'de-CH', { day: 'numeric', month: 'long', year: 'numeric' });
+  } catch { return null; /* Speicher gesperrt — dann eben ohne Datum */ }
+}
+
 export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
   const [offen, setOffen] = useState(false);
   const [schritt, setSchritt] = useState(1);
@@ -44,15 +57,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
   };
   const neuStarten = () => { try { location.replace(location.pathname + location.search); } catch { location.reload(); } };
 
-  let letzteSicherung = null;
-  try {
-    const roh = localStorage.getItem('or5_lastBackup');
-    if (roh) {
-      // App-Sprache statt Gerätesprache (Seitenrundgang 26.10.2026, S3); unlesbar → kein Datum.
-      const d = new Date(roh);
-      if (!isNaN(d.getTime())) letzteSicherung = d.toLocaleDateString(/^[a-z]{2}-[A-Z]{2}$/.test(t('calendar.locale')) ? t('calendar.locale') : 'de-CH', { day: 'numeric', month: 'long', year: 'numeric' });
-    }
-  } catch { /* Speicher gesperrt — dann eben ohne Datum */ }
+  const letzteSicherung = letzteSicherungDatum(t);
 
   // Knopfarten (Fassung 9): Neben = abbrechen/zurück, Haupt = zuerst sichern bzw. neu starten,
   // Gefahr = jeder Schritt zum Löschen, gefüllt nur im letzten («Jetzt alles löschen», M5).
@@ -113,9 +118,11 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
   };
 
   return React.createElement('section', {
+    'aria-labelledby': 'daten-loeschen-bereich',
     style: { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, padding: space.lg + 'px', marginTop: space.md + 'px' },
   },
-    React.createElement(Eyebrow, { palette, style: { color: palette.mid, margin: '0 0 ' + space.xs + 'px 0' } }, t('datenLoeschen.bereich')),
+    // Kartentitel als Überschrift wie die übrigen Karten der Einstellungen (Gruppe C, a11y C7).
+    React.createElement(Eyebrow, { palette, as: 'h3', id: 'daten-loeschen-bereich', style: { color: palette.mid, margin: '0 0 ' + space.xs + 'px 0' } }, t('datenLoeschen.bereich')),
     p(t(demoMode ? 'datenLoeschen.beispielAus' : 'datenLoeschen.kurz')),
     React.createElement('button', {
       type: 'button', disabled: demoMode, onClick: () => setOffen(true),
