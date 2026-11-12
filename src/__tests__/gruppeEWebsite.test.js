@@ -101,10 +101,11 @@ describe('H2 · 404 und Wartung', () => {
     expect(ohneKommentare(lies('public', 'wartung.html'))).not.toMatch(/Minuten|minutes|minuti/);
   });
 
-  it('404: der Weg zurück ist als Link erkennbar und 44 px hoch', () => {
+  // Seit Gestaltung A (12.11.2026) ist der Weg zurück ein Knopf aus dem Rahmen: Form statt Unterstreichung.
+  it('404: der Weg zurück ist erkennbar (Knopf) und 44 px hoch', () => {
     const html = lies('public', '404.html');
-    expect(html).toMatch(/a \{[^}]*text-decoration: underline/);
-    expect(html).toMatch(/a \{[^}]*min-height: 44px/);
+    expect(html).toContain('<a class="knopf" href="/">Zur Startseite</a>');
+    expect(html).toMatch(/\.knopf\{[^}]*min-height:44px/);
   });
 });
 

@@ -115,10 +115,11 @@ git checkout main               # danach zurück auf main
 
 Die Wartung schaltet **nicht** der Deploy und nicht die `.htaccess` ein, sondern das Infomaniak-Panel:
 Seiteneditor → Wartungsseite. Dort steht eine **Kopie** von `public/wartung.html` (so angelegt mit Commit
-`c95be277`, Juli 2026). Die Datei im Repo ist die Quelle; `/wartung.html` wird nur mitdeployt.
+`c95be277`, Juli 2026). Seit 12.11.2026 erzeugt `node scripts/build-seiten.mjs` die Datei; die Quelle ist dort (`RAHMEN_SEITEN`); `/wartung.html` wird nur mitdeployt.
 
 - **Ändert sich `public/wartung.html`, den Inhalt im Panel neu einfügen** — sonst zeigt die Wartung den alten Text.
-  Zuletzt geändert: Gruppe E, 11.11.2026 (Sie-Form, kein Zeitversprechen, Kontrast, Sprachen).
+  Zuletzt geändert: Gruppe E, 12.11.2026 (Gestaltung A: jetzt aus `scripts/build-seiten.mjs` erzeugt, Kopf, Marke,
+  Dunkelmodus, Knopf «Seite neu laden»). Davor 11.11.2026 (Sie-Form, kein Zeitversprechen, Kontrast, Sprachen).
 - Die Schrift lädt die Seite von `/fonts/`. Ist während der Wartung der ganze Server gesperrt, greift die
   Systemschrift; der Text bleibt lesbar.
 - Ein- und Ausschalten macht Stebler Studios im Panel. Nicht belegt ist, ob das Panel auch `/fonts/` sperrt.

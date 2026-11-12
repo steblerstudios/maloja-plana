@@ -408,6 +408,20 @@ Richtung «Stationen sammeln» (Vorbild «Collecting Stamps on Mt. Fuji»): nur 
 
 Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Punkte A–E nach Skizze; danach «Ja, alles so» zu A–F: Hero und Reise vereint, Laptop + Telefon, Drehen statt Zoom, Pinselstrich quer, Brand Book auf der ganzen Seite; dann «Alle, A bis E» zu Kopf, Leiste und Fuss nach der Durchsicht der eigenen Projekte, `stebler-studios/analysen/maloja-startseite-abschauen-2026-11-10.md`).
 
+### 7f. Der Rahmen — Erklärseiten, Rechtliches, 404, Wartung *(12.11.2026, Gruppe E Gestaltung A–D)*
+
+Eine Quelle für alles, was nicht App und nicht Startseite ist: der Stil-Block in `scripts/build-seiten.mjs`.
+Dieselben Werte wie die Startseite, damit niemand zwei Produkte sieht.
+
+| Was | Regel |
+|---|---|
+| **Kopf (C)** | Bildmarke 28 px (`scripts/seiten/marke.mjs`, dieselbe Zeichnung wie die Startseite) und «Maloja Plana» 16 px, darunter die Brotkrume 13 px |
+| **Farbe (C)** | ein Gold: `--sand #C4A06A` (Fläche, Knopf), `--sand-tief #7A5F30` hell / `#C4A06A` dunkel (Links); ein Leise-Ton `--leise #575B61` hell / `#A8A5A0` dunkel. Das zweite Gold `#C4A870` und `#6A6E74` sind im Rahmen abgelöst |
+| **Schrift (B)** | Titel h1–h3 in **Hanken Grotesk 600**, alles andere Lexend. Grössen nur von der Skala 13 · 15 · 16 · 19 · 23 · 28 · 36: h1 36 (Handy 28), Vorspann 19 (Handy 16), h2 23 (Handy 19), h3 19, Text 16, Zweitzeilen 15, Kleinstes 13. Die Figuren- und Hintergrundseiten tragen eigene Zusatzstile mit Grössen ausserhalb der Skala (12/14/18/20/21/24/44) — noch offen |
+| **Ecken und Luft (D)** | Knopf 10 px, 44 px hoch · Karte 12 px, innen 32 (Handy 24), Abstand 32 · Abschnitt (h2) 48 oben (Handy 32) · Hinweisstreifen 6 px (kleinste Rolle) |
+| **404 und Wartung (A)** | aus dem Generator (`RAHMEN_SEITEN`), nicht mehr von Hand: Kopf mit Marke, Text frei auf dem Papier statt in der Karte, ein Knopf im Gold («Zur Startseite» / «Seite neu laden»), darunter fr/it/en je mit `lang`, Fuss mit Rechtlichem. Dunkelmodus wie alle Seiten. 🛑 `wartung.html` nach dem Deploy ins Infomaniak-Panel kopieren (RELEASE.md) |
+| **Wächter** | `gruppeERahmen.test.js` (A–D) · `seitenStilA11y.test.js` prüft seither auch 404 und Wartung (Hover-Kontrast, Unterstreichung) |
+
 ## 8. Calm-UX-Prinzipien
 
 - **Entschlacken via Disclosure/Dropdown — nie löschen.** Die Bergketten-Landkarte ist Identität;
