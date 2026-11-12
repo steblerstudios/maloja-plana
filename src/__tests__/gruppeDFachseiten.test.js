@@ -7,6 +7,9 @@ import { StipendienView } from '../StipendienView.jsx';
 import { LIGHT_PALETTE } from '../config/constants.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
+import frD from '../i18n/fr.js';
+import itD from '../i18n/it.js';
+import enD from '../i18n/en.js';
 import { GEPRUEFT } from '../../scripts/seiten-inhalt.mjs';
 
 // ─────────────────────────────────────────────────────────────
@@ -120,7 +123,7 @@ describe('Gruppe D · Stipendien', () => {
     expect(html).toContain(t('stip.checkStatusOther'));
     expect(t('stip.checkStatusOther')).toMatch(/Ausweis F/);
     expect(t('stip.resultEligible')).not.toMatch(/^Sie erfüllen/);
-    expect(t('stip.resultEligible')).toMatch(/entscheidet die Stipendienstelle/);
+    expect(t('stip.resultEligible')).toMatch(/Stipendienstelle; sie entscheidet auch/);
     expect(t('stip.resultUnclear')).not.toMatch(/kostenlos/);
   });
 
@@ -139,5 +142,39 @@ describe('Gruppe D · Stipendien', () => {
     expect(vorkommen).toBe(1);
     // Der Ausschluss steht als Hinweis bei der Frage.
     expect(html).toContain(t('stip.notEligible'));
+  });
+});
+
+// D2 (Restrunde 12.11.2026): der Preisüberwacher hat seine Website umgebaut, die alte Adresse unter
+// /dam/pue/… antwortet 404. Neue Adresse von der heutigen Seite «Medikamente» (/de/medikamente), am
+// 12.11. geladen: Newsletter Nr. 8/24 vom 19.11.2024, «mehr als doppelt so teuer (+140%)» = 2,4-mal.
+describe('Gruppe D · Restpunkte', () => {
+  it('D2 Preisüberwacher-Quelle zeigt auf die neue Adresse, nirgends mehr auf /dam/pue/', () => {
+    const html = lies('krankenkasse');
+    expect(html).toContain('https://www.preisueberwacher.admin.ch/dam/de/sd-web/BkYrO1muxFAu/newsletter_08_24.pdf');
+    expect(html).not.toContain('preisueberwacher.admin.ch/dam/pue/');
+    expect(html).toContain('im Schnitt 2,4-mal so viel wie im Ausland (15 Vergleichsländer)');
+  });
+});
+
+// D3 (Restrunde 12.11.2026): Stipendien-Konkordat vom 18.6.2009 am Volltext (sGS 211.531, Stand 1.8.2015).
+// Art. 5 Abs. 1 Bst. c: Niederlassungsbewilligung ODER Aufenthaltsbewilligung bei fünf Jahren Aufenthaltsrecht;
+// Bst. e: EU/EFTA gleichgestellt. Art. 6 Abs. 1 Bst. d mit Art. 7 Abs. 1: «Vier Jahre finanzielle Unabhängigkeit
+// durch eigene Erwerbstätigkeit entspricht einer abgeschlossenen ersten berufsbefähigenden Ausbildung» — die vier
+// Jahre gehören in den Satz (rechts-pruefer 12.11.: eine erste Fassung hatte sie gestrichen, Blocker).
+describe('Gruppe D · Stipendien-Konkordat am Volltext (D3)', () => {
+  const sprachen = { de, fr: frD, it: itD, en: enD };
+  it('Art. 5 Abs. 1 Bst. c: C oder B mit fünf Jahren Aufenthaltsrecht — nicht «fünf Jahre Wohnsitz»', () => {
+    expect(de.stip.who.foreigner5y).toMatch(/Niederlassungsbewilligung \(C\) oder mit Aufenthaltsbewilligung \(B\), wenn sie seit 5 Jahren in der Schweiz aufenthaltsberechtigt sind/);
+    for (const [l, s] of Object.entries(sprachen)) expect(s.stip.who.foreigner5y, l).not.toMatch(/Wohnsitz|domicili[ée]e?s? en Suisse depuis|domiciliate in Svizzera|resident in Switzerland for/);
+  });
+  it('Art. 5 Abs. 1 Bst. e: «B unter fünf Jahren» nimmt EU/EFTA aus', () => {
+    for (const [l, s] of Object.entries(sprachen)) expect(s.stip.checkStatusOther, l).toMatch(/EU\/EFTA|UE\/AELE|UE\/AELS/);
+  });
+  it('Art. 7 Abs. 1: vier Jahre finanzielle Unabhängigkeit stehen der ersten Ausbildung gleich', () => {
+    for (const [l, s] of Object.entries(sprachen)) expect(JSON.stringify(s.stip.whereAusnahmen), l).toMatch(/vier Jahren|quatre ans|quattro anni|four years/);
+  });
+  it('Beitritt zum Konkordat ist eine Tatsache, die die Stelle nennt — nicht «entscheidet»', () => {
+    expect(JSON.stringify(de.stip.resultEligible)).toMatch(/beigetreten ist, erfahren Sie bei der Stipendienstelle/);
   });
 });

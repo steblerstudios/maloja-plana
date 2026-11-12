@@ -445,3 +445,29 @@ Book im selben Zweig nachführen. Auslöser: Stebler Studios meldet die Merges.
 mal so fest … nach dem nächsten deploy wieder auf dieses dokument zurück»; Entscheidblatt
 `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). L1 Postanschrift: Postfach eintragen oder bis zur Antwort
 auf F2a warten (gleich wie Gruppe C). L3 Gerichtsstand wartet auf die Juristin (F2a). Zweig 2 bleibt wie oben.
+
+**Gruppen A–E · Restpunkte entschieden** (12.11.2026, nach dem Deploy `d439855d`; Entscheidblatt mit Handy-Bildern
+375 px vom Live-Stand: `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`).
+⏸️ **A später** (Stebler Studios: «A später») — ein Eingang zu «Was steht mir zu?», vier Ordnungen, eine
+Fortschrittszahl, Suchwörter bleiben notiert.
+**B:** ⏸️ B1 Bücherregal später. ✅ B2 **× am Eintrag bleibt** (Stebler Studios: «× am Eintrag bleibt … und wisch
+gesten als todo») — Entwurf G vom 27.10. (Löschen nur über den Tag im Tagesstreifen) ist damit für das Löschen
+abgelöst; eine Wischgeste zum Löschen gibt es nicht (Wischen schiebt nur den Tagesstreifen). 📝 **ToDo:** Löschen
+zusätzlich per Wischgeste am Eintrag, mit Rückgängig, × bleibt (Tastatur, Vorlesen). ✅ B3 entfällt: `crewz.io/de/nexter/`
+zeigt den Habit-Tracker Nexter (Überschrift «Track, was zählt. Keine Streaks …», gemessen 12.11.; Gegenprobe
+erfundene Adresse 404) — nur der `<title>` der Crewz-Seite heisst falsch «Roved – das Trinkspiel». Fehlalarm vom
+11.11. (nur den Titel gelesen) hiermit berichtigt, Link bleibt.
+**C:** wie empfohlen (Stebler Studios: «So, Postanschrift später») — Beta-Code setzt Stebler Studios selbst, T1 und
+T3 später, Impressum-Anschrift später (F2a).
+**D:** ⏸️ D1 IPV-Statistik 2025 später (Nachprüfung 16.12.). ✅ D2 Preisüberwacher-Newsletter 8/24 unter neuer
+Adresse (`/dam/de/sd-web/BkYrO1muxFAu/newsletter_08_24.pdf`, verlinkt von `/de/medikamente`, Gegenprobe 404; «+140 %»
+= 2,4-mal bestätigt). ✅ D3 Stipendien-Konkordat am Volltext (sGS 211.531, Stand 1.8.2015): Art. 5 Abs. 1 Bst. c
+«C oder B bei 5 Jahren Aufenthaltsrecht» statt «5 Jahre Wohnsitz», Bst. e «ausser EU/EFTA» bei «B unter 5 Jahren»,
+Ergebnis «ob Ihr Kanton beigetreten ist, erfahren Sie bei der Stipendienstelle» statt «entscheidet»; rm nur
+`// TODO(rm)`. rechts-pruefer nach dem Bau: **Blocker** — eine erste Fassung strich «oder nach vier Jahren
+finanzieller Unabhängigkeit»; das steht aber in Art. 7 Abs. 1 («Vier Jahre finanzielle Unabhängigkeit durch eigene
+Erwerbstätigkeit entspricht einer abgeschlossenen ersten berufsbefähigenden Ausbildung») → zurückgenommen, der Test
+verlangt den Satz jetzt. Preisüberwacher-Satz mit «im Schnitt … (15 Vergleichsländer)». Test
+`gruppeDFachseiten.test.js` (D2, D3 rot gegen den alten Stand). Zweig `fix/gruppe-d-restpunkte`.
+**E:** ⏸️ L1 Postanschrift später, L3 Gerichtsstand wartet auf F2a. ✅ **Zweig 2 jetzt bauen** (Stebler Studios:
+«Jetzt bauen») — eigener Zweig von `main`.
