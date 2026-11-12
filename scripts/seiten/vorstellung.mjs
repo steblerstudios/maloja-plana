@@ -95,12 +95,23 @@ const PINSEL = `url("data:image/svg+xml,${encodeURIComponent(PINSEL_SVG)}")`;
 // Zum Nachlesen: je Erklärseite das Zeichen ihres Kapitels (Kapitel wie die App sie einordnet, werkzeugRegister.js:
 // Steuern und Sozialhilfe → Finanzen, Prämien → Versicherungen; «Was steht mir zu?» → Behörden: Bund, Kantone, Gemeinden).
 // Index wie CHAPTER_KEYS. Die häufigen Fragen bekommen bewusst keine Zeichen: keine ist ein Kapitel (ein Bild, eine Bedeutung).
-const NACHLESEN = [
-  ['/was-steht-mir-zu/', 'Was steht mir zu?', 'Warum Unterstützung auf Bund, Kantone und Gemeinden verteilt ist.', 5],
-  ['/praemienverbilligung/', 'Prämienverbilligung', 'Ein Beitrag an die Krankenkassenprämie — was das für Sie bedeutet.', 3],
-  ['/sozialhilfe/', 'Sozialhilfe', 'Wer entscheidet und woraus sie sich zusammensetzt.', 2],
-  ['/steuern/', 'Steuern', 'Warum derselbe Lohn je nach Wohnort anders besteuert wird.', 2],
-  ['/krankenkasse/', 'Warum die Krankenkasse so viel kostet', 'Gemeinsamer Topf, Franchise und Prämie — Schritt für Schritt.', 3],
+// Zum Nachlesen (Stebler Studios 10.11.2026 spät: «zu jedem Thema gibt es sicher was zu lesen — antippen, dann ploppen
+// die Berichte auf»): je Thema = Kapitel der App (Einordnung wie werkzeugRegister.js) die Erklärseiten dazu. Die Sätze
+// stammen aus den Seiten selbst (meta description bzw. bisheriger Satz), keine neue Fachaussage. Index wie CHAPTER_KEYS.
+const THEMEN = [
+  { k: 5, x: '34.9%', y: '69.3%', berichte: [   // Behörden · Strassenpunkt (558 | 453)
+    ['/was-steht-mir-zu/', 'Was steht mir zu?', 'Warum Unterstützung auf Bund, Kantone und Gemeinden verteilt ist.'],
+    ['/politsystem/', 'Wie die Schweiz entscheidet', 'Wie in der Schweiz ein Gesetz entsteht und wo Sie mitreden.'],
+    ['/kantone-im-vergleich/', 'Kantone im Vergleich', 'Die Zahlen der 26 Kantone nebeneinander, mit Quelle und Stand, ohne Rangliste.'],
+  ] },
+  { k: 3, x: '54.6%', y: '71.5%', berichte: [   // Versicherungen · (874 | 475)
+    ['/praemienverbilligung/', 'Prämienverbilligung', 'Ein Beitrag an die Krankenkassenprämie — was das für Sie bedeutet.'],
+    ['/krankenkasse/', 'Warum die Krankenkasse so viel kostet', 'Gemeinsamer Topf, Franchise und Prämie — Schritt für Schritt.'],
+  ] },
+  { k: 2, x: '75.9%', y: '84.9%', berichte: [   // Finanzen · (1215 | 609)
+    ['/steuern/', 'Steuern', 'Warum derselbe Lohn je nach Wohnort anders besteuert wird.'],
+    ['/sozialhilfe/', 'Sozialhilfe', 'Wer entscheidet und woraus sie sich zusammensetzt.'],
+  ] },
 ];
 
 // O · Die drei Geräte auf dem Blick (Salbei, seit 10.11. abends getauscht mit Papier; beide haben dieselbe Kamera und
@@ -110,6 +121,38 @@ const GERAETE = [
   { name: 'iPhone und iPad', zeichen: 'telefon', x: '37.4%', y: '69.5%' },   // Strassenpunkt (599 | 455)
   { name: 'Android', zeichen: 'telefon', x: '54.4%', y: '81.6%' },           // (870 | 576)
   { name: 'Computer', zeichen: 'laptop', x: '79.9%', y: '57.2%' },           // (1278 | 332)
+];
+// E · «Was Sie eingeben, bleibt bei Ihnen» auf der Salbei-Karte, ebenso gebaut. Punkte auf der Passstrasse in
+// pass-karte.svg (viewBox 1 1 278 128); unten = Wahl unter dem Punkt (oben ist der Kopf). --xh: am Handy 4:3 beschnitten.
+const VERSPRECHEN_ORTE = [
+  { x: 55.0, y: 49.6 },                 // (153.8 | 64.5) Aufstieg — Kein Konto
+  { x: 42.6, y: 68.2 },                 // (119.3 | 88.3) Kehren — Nur auf diesem Gerät
+  { x: 6.5, y: 73.4 },                  // (19 | 95) Bogen links — Kein Tracking
+  { x: 57.8, y: 26.6 },                 // (161.6 | 35.1) Passhöhe — Quelloffen
+  { x: 47.9, y: 74.4, unten: true },    // (134.1 | 96.2) Kehren unten — Grün gehostet
+];
+const handyX = (x) => `${(((x - 19.3) / 61.4) * 100).toFixed(1)}%`;   // 4:3 mittig beschnitten (sichtbar 61,4 % ab 19,3 %)
+const VERSPRECHEN = [
+  ['Kein Konto', 'Keine Anmeldung. Der Zugangscode der Beta wird nur auf Ihrem Gerät geprüft.'],
+  ['Nur auf diesem Gerät', 'Im Speicher Ihres Browsers — nicht bei uns und nicht bei Dritten.'],
+  ['Kein Tracking', 'Keine Werbung, keine Analyse-Dienste. Der Hoster speichert beim Abruf kurz technische Zugriffsdaten (<a href="/rechtliches/">Datenschutz</a>).'],
+  ['Quelloffen', 'Der Quellcode ist öffentlich einsehbar.'],
+  ['Grün gehostet', 'Bei Infomaniak in Genf: Rechenzentren in der Schweiz, nach <a href="https://www.infomaniak.com/en/ecology">Angaben des Anbieters</a> mit erneuerbarem Strom betrieben.'],
+];
+// Zeichen der fünf Versprechen (Stebler Studios 11.11.2026: «Typisch, ohne Strich»): die vertrauten Zeichen, damit sie
+// auch ohne Deutsch erkannt werden, aber ohne roten Verbots-Strich (ruhig statt Warnung). Linienstil wie die Kapitel-
+// Zeichen, Farbe aus dem Knopf. Das Blatt ist dasselbe wie «Grün gehostet» in der App (IconKern _leaf).
+const VERSPRECHEN_ZEICHEN = [
+  // Kein Konto: Person mit Häkchen («Sie bleiben anonym»)
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="7.5" r="3.5"/><path d="M3.5 20c0-3.9 2.9-6.5 6.5-6.5 1.6 0 3 .5 4.1 1.4"/><path d="M14.5 18.3l2.2 2.2 4.3-4.6"/></svg>',
+  // Nur auf diesem Gerät: Telefon mit Schloss
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2.5" width="12" height="19" rx="2.2"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10.3 11V9.6a1.7 1.7 0 0 1 3.4 0V11"/></svg>',
+  // Kein Tracking: Auge geschlossen, als ruhiger Lidstrich mit Wimpern
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10c2.5 4 5.5 6 9 6s6.5-2 9-6"/><path d="M6.2 14.3l-1.6 2.1M12 16v2.7M17.8 14.3l1.6 2.1"/></svg>',
+  // Quelloffen: spitze Klammern
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.6 5l-3.2 14"/></svg>',
+  // Grün gehostet: Blatt (wie in der App)
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19C5 11 11 5 19 5c0 8-6 14-14 14Z"/><path d="M8 16l8-8"/></svg>',
 ];
 const GERAET_ZEICHEN = {
   telefon: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 18.5h3"/></svg>',
@@ -209,11 +252,11 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     .geraete-bild{ position:relative; width:100%; padding-bottom:4% }
     .laptop{ position:relative; width:88%; margin-bottom:6px }
     .laptop .deckel{ background:#1B1A18; border-radius:14px 14px 4px 4px; padding:10px 10px 12px;
-      box-shadow:0 0 0 1px #3A3936, 0 28px 44px -26px rgba(30,28,24,.55) }
+      box-shadow:0 0 0 1px #3A3936, 0 28px 44px -26px rgba(30,28,24,.28) }
     .laptop .schirm{ aspect-ratio:16/10; overflow:hidden; border-radius:4px; background:#22211F }
     .laptop .schirm img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block }
     .laptop .sockel{ position:relative; height:14px; margin:0 -6%; border-radius:2px 2px 14px 14px;
-      background:linear-gradient(#DCD8D0, #B6B1A7); box-shadow:0 10px 18px -12px rgba(30,28,24,.6) }
+      background:linear-gradient(#DCD8D0, #B6B1A7); box-shadow:0 10px 18px -12px rgba(30,28,24,.3) }
     .laptop .sockel::before{ content:""; position:absolute; left:50%; top:0; width:18%; height:5px; margin-left:-9%; border-radius:0 0 6px 6px; background:#A8A39A }
     .geraete .telefon{ position:absolute; right:0; bottom:0; width:clamp(110px, 13vw, 150px); padding:6px; border-radius:24px }
     .geraete .bildschirm{ border-radius:19px; --statusleiste:16px }
@@ -223,7 +266,7 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     .buehne{ display:flex; flex-direction:column; align-items:center; margin:0; padding-top:8px }
     .telefon{ position:relative; width:280px; aspect-ratio:480/1040; padding:11px;
       background:var(--gehaeuse); border-radius:46px;
-      box-shadow:0 0 0 1px var(--gehaeuse-rand), 0 24px 40px -24px rgba(30,28,24,.5) }
+      box-shadow:0 0 0 1px var(--gehaeuse-rand), 0 24px 40px -24px rgba(30,28,24,.25) }
     .pass .telefon{ --gehaeuse:#1B1A18; --gehaeuse-rand:#3A3936 }
     .insel{ position:absolute; z-index:3; top:20px; left:50%; transform:translateX(-50%);
       width:84px; height:24px; border-radius:14px; background:var(--insel) }
@@ -294,14 +337,14 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-buehne::after{
       background:linear-gradient(270deg, rgba(18,18,16,.68) 0%, rgba(18,18,16,.62) 44%, rgba(18,18,16,0) 66%),
                  linear-gradient(90deg, rgba(18,18,16,.32) 0%, rgba(18,18,16,0) 22%);
-      background:linear-gradient(270deg, color-mix(in srgb, var(--ton) 74%, transparent) 0%, color-mix(in srgb, var(--ton) 74%, transparent) 46%, color-mix(in srgb, var(--ton) 0%, transparent) 66%),
+      background:linear-gradient(270deg, color-mix(in oklab, var(--ton) 74%, transparent) 0%, color-mix(in oklab, var(--ton) 74%, transparent) 46%, color-mix(in oklab, var(--ton) 0%, transparent) 66%),
                  linear-gradient(90deg, rgba(18,18,16,.32) 0%, rgba(18,18,16,0) 22%) }
     /* P · Die dunkle Schicht trägt die Farbe der Kehre (Stebler Studios 10.11.2026): 30 % Kapitelfarbe im Dunkeln.
        Unter dem Text 74 % statt 62 %, damit der weisse Text auch über einem weissen Bildteil mindestens 4,5:1 hat
-       (gerechnet für alle sieben Kapitel: mindestens 4,69:1, am knappsten Finanzen). Ohne color-mix gilt die Zeile davor.
+       (gerechnet für alle sieben Kapitel: mindestens 4,97:1 in Oklab gemischt, sRGB waren es 4,69:1, am knappsten Basis und Finanzen). Ohne color-mix gilt die Zeile davor.
        --ton ist registriert, darum gleitet die Farbe beim Wechsel mit (nur ohne «weniger Bewegung»). */
     @property --ton{ syntax:'<color>'; inherits:true; initial-value:#121210 }
-${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in srgb, var(--k${i}) 30%, #121210) }`).join('\n')}
+${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in oklab, var(--k${i}) 30%, #121210) }`).join('\n')}
     .js .reise-buehne[data-hier="-1"]::before{ opacity:1 } .js .reise-buehne[data-hier="-1"]::after{ opacity:0 }
     html:not(.js) .reise-anfang{ background:rgba(var(--schleier),.93) }
     .reise-wolken{ z-index:3 } .reise-linie, .reise-stock, .reise-quelle{ z-index:4 }
@@ -309,6 +352,21 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .reise-linie .weg{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:.1 9; opacity:.85 }
     .reise-linie .gegangen{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:100 100; stroke-dashoffset:100 }
     .reise-linie .halt circle{ fill:#FBFBFA; stroke:currentColor; stroke-width:2 }
+    /* B · Halte anklickbar, Ausweg aus der Reise (Vorbilder 10.11.2026, NN/g «Scrolljacking»: immer ein Ausweg) */
+    .reise-linie .halt .treffer{ fill:transparent; stroke:none }
+    .reise-linie .halt-ziel{ cursor:pointer }
+    .reise-linie .halt-ziel:hover .halt circle:not(.treffer){ stroke-width:3.5 }
+    .js .reise-ablauf{ pointer-events:none }   /* die Ebene über der Bühne lässt Klicks zur Weglinie durch … */
+    .js .reise-anfang, .js .reise-ablauf .reise-text, .js .reise-ablauf .reise-telefon, .reise-ueberspringen{ pointer-events:auto }   /* … nur was man bedient, fängt sie */
+    /* Klebt, solange die Reise läuft, oben links über der Weglinie (die beginnt bei 14vh); unten wäre es dem grossen
+       Telefon an Kehre 7 in den Weg gekommen (im Browser gesehen). Leise: weiss unterstrichen auf der dunklen Unterlage
+       wie «KI-gemalt», 44 px hoch. Nimmt keinen Platz (negativer Rand). */
+    .reise-ueberspringen{ position:sticky; top:16px; z-index:6; display:inline-flex; align-items:center;
+      min-height:44px; margin:0 0 -44px clamp(16px, 5vw, 64px); padding:0 12px; border-radius:var(--radius-knopf);
+      font-size:15px; color:#FBFBFA; background:rgba(20,20,18,.72); text-decoration:underline; text-underline-offset:3px }
+    .reise-ueberspringen:hover{ color:#FBFBFA; text-decoration-thickness:2px }
+    .reise-ueberspringen:focus-visible{ outline:2px solid #FBFBFA; outline-offset:3px }
+    .reise-ueberspringen::after{ content:"↓" / ""; margin-left:8px }
     .reise-linie .halt.gegangen circle{ stroke-width:3 }
     .reise-linie .halt{ transform-box:fill-box; transform-origin:center }
     .reise-linie .ort{ display:none } .js .reise-linie .ort{ display:block }
@@ -333,6 +391,7 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .js .reise-buehne[data-ende] .reise-stock, .js .reise-buehne[data-ende] .reise-linie,
     .js .reise-buehne[data-ende] .reise-wolken, .js .reise-buehne[data-ende] .reise-quelle,
     .js .reise-buehne[data-ende]::after{ opacity:0 }
+    .js .reise-buehne[data-hier="-1"] .reise-linie, .js .reise-buehne[data-ende] .reise-linie{ pointer-events:none }
     /* E · links unten: rechts lag das Schild am Handy unter der Stockspitze */
     .reise-quelle{ position:absolute; left:12px; bottom:10px; font-size:13px; color:#FBFBFA; background:rgba(20,20,18,.72); padding:2px 8px; border-radius:6px }
     .reise-ablauf{ position:relative; z-index:5; margin-top:-100vh; margin-top:-100svh }
@@ -353,24 +412,6 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     /* G · Vor der Karte steht schon die Luft des Schlussabschnitts (96 px) — nicht noch einmal 96. */
     .pass-band-karte{ margin:0 }
     .pass-band-karte img{ aspect-ratio:280/130; object-fit:cover }
-    .pass-karte{ position:relative; background:#7E8F7B; color:#F6F2E8 }
-    /* F · Die Karte auf Inhaltsbreite (vorher randlos 1280 px und mehr); das Salbei bleibt randlos, die Linien laufen
-       an den Seiten weich aus statt mit harter Kante. */
-    .pass-karte-bild{ position:relative; aspect-ratio:280/130; max-width:1040px; margin:0 auto;
-      -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent) }
-    .pass-karte-bild img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block }
-    .pass-karte .hoehe{ position:absolute; left:57.7%; top:27%; margin:-10px 0 0 14px; font-size:16px; font-weight:600; letter-spacing:.02em;
-      text-shadow:0 0 6px rgba(85,104,90,.9) }
-    .pass-karte figcaption{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 16px; padding-top:12px; font-size:15px }
-    .pass-karte .quelle{ font-size:13px; opacity:.85 }
-    .pass-karte-ende{ height:16vh; background:linear-gradient(#7E8F7B, var(--bg)) }
-    /* Seit dem Tausch (Papier-Blick nach Kehre 7) endet der Blick in Creme: weich ins Salbei der Karte, keine Kante. */
-    .pass-karte-anfang{ height:16vh; background:linear-gradient(#FCF0E4, #7E8F7B) }
-    @media (max-width:760px){
-      .pass-karte-bild{ aspect-ratio:4/3 }
-      .pass-karte-bild{ -webkit-mask-image:none; mask-image:none }
-      .pass-karte .hoehe{ left:62.5% }   /* gleicher Punkt bei 4:3, object-fit:cover um die Mitte (Rechnung im Brand Book §7e) */
-    }
     /* B–D · Kehre: Zahl und Text rechts neben dem Stock */
     .reise-stationen{ list-style:none }
     .reise-station{ min-height:100vh; min-height:100svh; display:flex; align-items:center;
@@ -389,22 +430,39 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
        in der freien linken Bildhälfte, gegenüber dem Text; der Text behält seine Breite. Am Handy klein im Himmel darüber. */
     .reise-station{ position:relative }
     /* 27 % = Mitte zwischen Weglinie und Stock (gemessen bei 768 px: Linie endet 110, Stock beginnt 301). */
-    .reise-telefon{ position:absolute; left:27%; top:50%; transform:translate(-50%, -50%) }
-    .reise-telefon .telefon{ width:clamp(136px, 16vw, 220px); padding:9px; border-radius:38px }
-    .reise-telefon .bildschirm{ border-radius:30px; --statusleiste:30px }
-    .reise-telefon .insel{ top:16px; width:64px; height:18px }
-    /* Knöpfe auf dem Bild: Nebenknopf auf Papier (deckend #FFF8F0, Schrift und Rand sandDeep, 10 px). Kein Milchglas (§7e). */
-    .reise-knoepfe{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px }
-    .reise-knoepfe a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 20px; border-radius:var(--radius-knopf); text-decoration:none;
-      font-size:15px; font-weight:600; color:#7A5F30; border:1px solid #7A5F30; background:#FFF8F0; text-shadow:none }
-    .reise-knoepfe a:hover{ color:#7A5F30; background:#F2EDE3 }
-    .reise-knoepfe a:focus-visible{ outline:2px solid #FBFBFA; outline-offset:3px; box-shadow:0 0 0 5px #24262A }
-    .reise-knoepfe .weiter::after{ content:"↓" / ""; margin-left:8px }
+    /* A3 · Vorbilder 10.11.2026 (Stebler Studios «A, B, C, D so»): ab 1100 px ein grosses Telefon, unten vom Rand der
+       Kehre angeschnitten — wie aus der Tasche gezogen. 28vw, höchstens 380 px: Bildschirm etwa 0,7 × Originalgrösse,
+       damit die Hauptzeilen der App lesbar bleiben (Apple-Regel «mindestens 200 px, lesbar»). Sichtbar 70 % der Höhe.
+       Darunter (< 1100 px) ist dafür kein Platz zwischen Weglinie und Stock: dort steht der Ausschnitt (A2). */
+    .reise-telefon{ --breite:clamp(260px, 28vw, 380px); position:absolute; left:27%; bottom:0; transform:translateX(-50%);
+      width:var(--breite); height:calc(var(--breite) * 1040 / 480 * .7); overflow:hidden }
+    .reise-telefon .telefon{ width:100%; padding:10px; border-radius:46px; box-shadow:0 0 0 1px var(--gehaeuse-rand) }
+    .reise-telefon .bildschirm{ border-radius:36px; --statusleiste:34px }
+    .reise-telefon .insel{ top:20px; width:76px; height:22px }
+    /* A2 · Ausschnitt statt kleinem Telefon: nur die Notfallkarte, Bild auf 360 px (0,75 × Original), Hauptzeile etwa 13 px.
+       Steht oben in der Textfläche, Karte 16 px (Regel C), Haarlinie. */
+    .reise-ausschnitt{ display:none; position:relative; width:100%; max-width:360px; height:140px; overflow:hidden; margin:0 0 16px;
+      border-radius:16px; background:#22211F; box-shadow:0 0 0 1px rgba(251,251,250,.28) }
+    .reise-ausschnitt img{ position:absolute; left:-10px; top:-118px; width:360px; height:auto; display:block }   /* links bündig: am Handy (Fläche ~240 px) beginnen die Zeilen sichtbar, rechts schneidet der Rand ab */
+    @media (max-width:1099px){
+      .reise-telefon{ display:none }
+      .reise-ausschnitt{ display:block }
+    }
+    /* C · Vorbilder 10.11.2026 (Stebler Studios «A, B, C, D so»): in der Reise keine Papier-Knöpfe mehr (vorher 14 gleich
+       starke Nebenknöpfe), sondern «… im Beispiel ansehen» als Link und «Weiter ↓» leise — weiss auf der getönten Schicht
+       (mind. 4,97:1 wie der Text), immer unterstrichen (WCAG 1.4.1), Tippfläche 44 px hoch. Papier-Knöpfe erst nach der Reise. */
+    .reise-knoepfe{ display:flex; flex-wrap:wrap; gap:4px 28px; margin-top:16px }
+    .reise-knoepfe a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 0; border-radius:var(--radius-knopf);
+      font-size:16px; color:#FBFBFA; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:4px }
+    .reise-knoepfe a:hover{ color:#FBFBFA; text-decoration-thickness:2px }
+    .reise-knoepfe a:focus-visible{ outline:2px solid #FBFBFA; outline-offset:3px }
+    .reise-knoepfe .weiter{ font-weight:600 }
+    .reise-knoepfe .weiter::after{ content:"↓" / ""; margin-left:8px; display:inline-block }
     @media (prefers-reduced-motion: no-preference){
       .js .reise-buehne::before, .js .reise-buehne::after{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
-      .js .reise-buehne{ transition:--ton 1.1s cubic-bezier(.4,0,.2,1) }
+      .js .reise-buehne{ transition:--ton .9s cubic-bezier(.4,0,.2,1) }
       .js .reise-bild img{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
-      .js .reise-bild .an{ transition:-webkit-mask-position 1.1s cubic-bezier(.4,0,.2,1), mask-position 1.1s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-bild .an{ transition:-webkit-mask-position .9s cubic-bezier(.4,0,.2,1), mask-position .9s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-stock, .js .reise-linie, .js .reise-wolken, .js .reise-quelle{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-linie .gegangen{ transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-linie .ort{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
@@ -420,28 +478,21 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     @media (max-width:760px){
       .reise-buehne::before{ background:linear-gradient(180deg, rgba(var(--schleier),.95) 0%, rgba(var(--schleier),.9) 52%, rgba(var(--schleier),.35) 78%, rgba(var(--schleier),0) 92%) }
       .reise-buehne::after{ background:linear-gradient(0deg, rgba(18,18,16,.74) 0%, rgba(18,18,16,.6) 40%, rgba(18,18,16,0) 70%);
-        background:linear-gradient(0deg, color-mix(in srgb, var(--ton) 74%, transparent) 0%, color-mix(in srgb, var(--ton) 60%, transparent) 40%, color-mix(in srgb, var(--ton) 0%, transparent) 70%) }
+        background:linear-gradient(0deg, color-mix(in oklab, var(--ton) 74%, transparent) 0%, color-mix(in oklab, var(--ton) 60%, transparent) 40%, color-mix(in oklab, var(--ton) 0%, transparent) 70%) }
       /* D · Stock ein Stück über den rechten Rand, damit die Textfläche ihn nicht mehr überdeckt (vorher etwa 12 px) */
       .reise-stock{ left:auto; right:-30px; margin-left:0; height:86%; top:7% }
       .reise-linie{ display:none }
+      .reise-ueberspringen{ margin-left:16px }
       .reise-station{ align-items:center; padding:10vh 84px 10vh 16px }
       .reise-gross{ width:64px; margin-bottom:12px }
       /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene dunkle Fläche (78 %, ohne Milchglas). */
       .reise-text{ background:rgba(20,20,18,.82); padding:18px 18px 20px; border-radius:16px;
-        background:color-mix(in srgb, color-mix(in srgb, var(--farbe) 30%, #121210) 82%, transparent) }   /* P · in der Kapitelfarbe getönt, 82 %: mind. 5,88:1 */
+        background:color-mix(in oklab, color-mix(in oklab, var(--farbe) 30%, #121210) 82%, transparent) }   /* P · in der Kapitelfarbe getönt, 82 %: mind. 6,29:1 (Oklab, vorher sRGB 5,88) */
       .reise-text p{ font-size:16px }
-      .reise-station.mit-telefon{ flex-direction:column; justify-content:center; align-items:flex-start; gap:12px }
-      .reise-telefon{ position:static; transform:none }
-      .reise-telefon .telefon{ width:96px; padding:5px; border-radius:18px }
-      .reise-telefon .bildschirm{ border-radius:14px; --statusleiste:12px }
-      .reise-telefon .insel{ top:8px; width:30px; height:8px }
     }
     @media (max-height:520px){
-      .reise-station.mit-telefon{ flex-direction:column; align-items:flex-start; gap:12px }
-      .reise-telefon{ position:static; transform:none }
-      .reise-telefon .telefon{ width:96px; padding:5px; border-radius:18px }
-      .reise-telefon .bildschirm{ border-radius:14px; --statusleiste:12px }
-      .reise-telefon .insel{ top:8px; width:30px; height:8px }
+      .reise-telefon{ display:none }
+      .reise-ausschnitt{ display:block }
       .reise-buehne{ position:relative; height:70vh }
       .reise-ablauf{ margin-top:0 }
       .reise-anfang{ background:var(--bg) }
@@ -449,7 +500,7 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
       .reise-station{ min-height:auto; padding:24px 16px; background:var(--bg) }
       .reise-text .name, .reise-text p{ color:var(--text) }
       .reise-text{ text-shadow:none; background:none; padding:0 }
-      .reise-knoepfe a{ color:var(--text); border-color:var(--text); background:none }
+      .reise-knoepfe a{ color:var(--text) }
       .reise-knoepfe a:focus-visible{ outline-color:var(--sand-tief) }
       .leiste{ display:none }
     }
@@ -462,6 +513,107 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .lagen-telefon .bildschirm{ border-radius:31px; --statusleiste:32px }
     .lagen-telefon .insel{ top:17px; width:72px; height:20px }
     .lagen-telefon figcaption{ margin-top:16px; font-size:15px; color:var(--leise) }
+
+    /* D · Vorbilder 10.11.2026 (Stebler Studios «A, B, C, D so»): nach der Reise kommen Etikett, Titel und erster Satz
+       jedes Abschnitts leise herein — an den Scroll gebunden, nicht an die Zeit (Chrome «Scrollytelling»): Deckkraft und
+       16 px (= md) nach oben, fertig, wenn der Titel ein Viertel ins Bild gerückt ist. Nur CSS, nur transform und opacity,
+       nie Knöpfe oder Formulare. Ohne Unterstützung oder mit «weniger Bewegung» steht alles einfach da (Endzustand). */
+    @supports ((animation-timeline: view()) and (animation-range: 0% 100%)){
+      @media (prefers-reduced-motion: no-preference){
+        :is(main, .rahmen) > section :is(.augenbraue, h2, h2 + .unterzeile){   /* die Abschnitte stehen meist in .rahmen (im Browser gesehen) */
+          animation:leise-ein linear both; animation-timeline:view(); animation-range:entry 0% cover 25% }
+        @keyframes leise-ein{ from{ opacity:0; transform:translateY(16px) } to{ opacity:1; transform:none } }
+      }
+    }
+
+    /* ─── D/E · Zwei Höhenbilder nach Kehre 7, gebaut wie «App holen» (Stebler Studios 10.11.2026 spät: «soll im Bild
+       sein wie beim iPhone-Android-Computer-Ding», «wie unten Beispiel und App holen»). Kopf auf dem Auslauf des Bildes in
+       die Seitenfarbe, Wahl als Auswahl-Knöpfe auf echten Punkten der Strasse (gewählt Sand gefüllt, 10 px, 44 px hoch),
+       darunter nur die gewählte Tafel. Ohne Skript. Hell fest (Creme), darum Schrift fest dunkel, auch im dunklen Modus.
+       D: heller Blick (Papier), Wahl mit Kapitel-Zeichen. E: Karte von oben (Salbei), Wahl ohne Zeichen (eigene Icon-Frage). */
+    .js .reise-ablauf .nach-reise{ pointer-events:auto }
+    .nach-reise{ background:#FCF0E4 } .nach-reise > section{ padding:64px 0 0 }   /* deckend: sonst schimmert die Bühne durch */
+    .bildwahl{ color:#24262A; --bg:#FCF0E4; --flaeche:#FFF8F0; --text:#24262A; --leise:#575B61; --sand-tief:#7A5F30 }
+    .bildwahl fieldset{ border:0; min-width:0; margin:0 auto }
+    /* Die unsichtbaren Auswahlfelder liegen in der Bildmitte: oben im Abschnitt zog der Fokus die Seite beim Tippen
+       um rund 70 px hoch (im Browser gemessen). */
+    .bildwahl fieldset{ position:relative } .bildwahl fieldset > input.unsichtbar{ top:40% }
+    .bildwahl h2, .bildwahl h3{ color:#24262A } .bildwahl .augenbraue, .bildwahl .unterzeile{ color:#575B61 }
+    .bildwahl-blick{ position:relative; margin:0; display:grid }
+    .bildwahl-blick > .bildwahl-kopf, .bildwahl-blick > .bildwahl-flaeche{ grid-area:1 / 1 }
+    .bildwahl-kopf{ position:relative; z-index:1; align-self:start; max-width:30rem; pointer-events:none }
+    .bildwahl-kopf *{ pointer-events:auto }
+    .bildwahl-blick > .quelle{ grid-row:2; font-size:13px; color:#575B61; padding-top:8px }
+    .bildwahl-flaeche{ position:relative }
+    .bildwahl-papier .bildwahl-flaeche img{ display:block; width:100%; height:auto;
+      -webkit-mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.08) 22%, #000 46%); mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.08) 22%, #000 46%) }
+    /* E: Die Karte hat keinen eigenen Grund — die Fläche trägt das Salbei und läuft oben und unten in die Seitenfarbe aus. */
+    /* Die Karte beginnt 96 px tiefer als der Kopf: so steht der Untertitel auf Creme, nicht auf den Linien (im Browser gesehen). */
+    .bildwahl-salbei .bildwahl-flaeche{ margin-top:96px; aspect-ratio:280/130; background:#7E8F7B;
+      -webkit-mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.1) 18%, #000 42%, #000 88%, transparent 100%);
+      mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.1) 18%, #000 42%, #000 88%, transparent 100%) }
+    .bildwahl-salbei .bildwahl-flaeche img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block }
+    .bildwahl-salbei .hoehe{ position:absolute; left:57.8%; top:26.6%; margin:-10px 0 0 14px; font-size:16px; font-weight:600; color:#F6F2E8;
+      text-shadow:0 0 6px rgba(85,104,90,.9); white-space:nowrap }
+    .bildwahl-ebene{ position:absolute; top:0; left:0; right:0; pointer-events:none }
+    .bildwahl-papier .bildwahl-ebene{ aspect-ratio:1600/1000 } .bildwahl-salbei .bildwahl-ebene{ top:96px; aspect-ratio:280/130 }
+    .bildwahl-ebene label{ pointer-events:auto; position:absolute; left:var(--x); top:var(--y); transform:translate(-50%, calc(-100% - 14px));
+      display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:8px 16px; border:1px solid #7A5F30; border-radius:var(--radius-knopf);
+      background:#FFF8F0; color:#7A5F30; font-size:15px; font-weight:600; cursor:pointer; white-space:nowrap }
+    .bildwahl-ebene label::after{ content:""; position:absolute; left:50%; top:100%; height:8px; border-left:1.5px solid #7A5F30 }
+    .bildwahl-ebene label.unten{ transform:translate(-50%, 14px) } .bildwahl-ebene label.unten::after{ top:auto; bottom:100% }
+    .bildwahl-ebene .zeichen{ display:inline-grid; color:color-mix(in oklab, var(--farbe) 65%, #24262A) }
+    .bildwahl-ebene .zeichen svg{ width:22px; height:22px; display:block }
+    /* E · die Zeichen der Versprechen tragen die Farbe des Knopfs (Linie, keine Fläche) */
+    .bildwahl-salbei .bildwahl-ebene .zeichen{ color:inherit }
+    .bildwahl-salbei .bildwahl-ebene .zeichen svg{ fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round }
+    .bildwahl-punkt{ position:absolute; left:var(--x); top:var(--y); width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%;
+      background:#55685A; box-shadow:0 0 0 2px #FCF0E4 }
+    /* D · Die Berichte eines Themas ploppen im Bild auf: Karte oben rechts über den Bergkämmen (Papier, Ecke 16, Haarlinie).
+       Über dem Thema selbst deckte sie den Titel zu (im Browser gesehen); welches Thema offen ist, zeigen Knopf und Sandring. */
+    .bildwahl-pop{ display:none; position:absolute; z-index:2; right:0; top:4%;
+      width:min(360px, 46vw); padding:18px 20px 8px; background:#FFF8F0; border:1px solid #E6DACB; border-radius:16px; pointer-events:auto }
+    .bildwahl-pop h3{ font-size:16px; margin-bottom:4px }
+    .bildwahl-pop ul{ list-style:none; margin:0; padding:0 }
+    .bildwahl-pop li{ border-top:1px solid #E6DACB; padding:2px 0 10px } .bildwahl-pop li:first-child{ border-top:0 }
+    .bildwahl-pop a{ display:inline-flex; align-items:center; min-height:44px; color:#7A5F30; font-weight:600 }
+    .bildwahl-pop p{ font-size:15px; line-height:1.5; color:#575B61; margin-top:-6px }
+    /* E · Der Text des gewählten Versprechens steht im Bild, rechts auf der freien Seite der Karte (dort liegt keine Strasse). */
+    .bildwahl-salbei .bildwahl-tafeln{ position:absolute; right:2%; top:40%; width:min(340px, 34%); pointer-events:auto }
+    .bildwahl-salbei .bildwahl-tafel{ margin-top:0 }
+    .bildwahl-tafel{ display:none; margin-top:24px; max-width:640px; padding:24px 26px 22px; background:#FFF8F0; border:1px solid #E6DACB; border-radius:16px }
+    .bildwahl-tafel h3{ margin-bottom:8px } .bildwahl-tafel p{ font-size:16px; line-height:1.6; color:#575B61 }
+    .bildwahl-tafel a{ color:#7A5F30; font-weight:600; display:inline-flex; align-items:center; min-height:44px }
+${[1, 2, 3, 4, 5].map((i) => `    #n${i}:checked ~ .bildwahl-blick .bildwahl-pop.t${i}{ display:block }
+    #n${i}:checked ~ .bildwahl-blick [for=n${i}]{ background:var(--sand); border-color:var(--sand); color:var(--auf-sand) }
+    #n${i}:checked ~ .bildwahl-blick [for=n${i}] .zeichen{ color:var(--auf-sand) }
+    #n${i}:checked ~ .bildwahl-blick .p${i}{ box-shadow:0 0 0 2px #FCF0E4, 0 0 0 5px var(--sand) }
+    #n${i}:focus-visible ~ .bildwahl-blick [for=n${i}]{ outline:2px solid #7A5F30; outline-offset:3px }`).join('\n')}
+${[1, 2, 3, 4, 5].map((i) => `    #v${i}:checked ~ .bildwahl-blick .bildwahl-tafel.t${i}{ display:block }
+    #v${i}:checked ~ .bildwahl-blick [for=v${i}]{ background:var(--sand); border-color:var(--sand); color:var(--auf-sand) }
+    #v${i}:checked ~ .bildwahl-blick [for=v${i}] .zeichen{ color:var(--auf-sand) }
+    #v${i}:checked ~ .bildwahl-blick .p${i}{ box-shadow:0 0 0 2px #FCF0E4, 0 0 0 5px var(--sand) }
+    #v${i}:focus-visible ~ .bildwahl-blick [for=v${i}]{ outline:2px solid #7A5F30; outline-offset:3px }`).join('\n')}
+
+    /* Bis 900 px stehen die Wahlen als Zeile unter dem Bild (wie «App holen» am Handy): im Bild berührten sie sich sonst.
+       Kopf über dem Bild, die Punkte bleiben im Bild, der gewählte trägt den Sandring. */
+    @media (max-width:900px){
+      .bildwahl-blick > .bildwahl-kopf, .bildwahl-blick > .bildwahl-flaeche{ grid-area:auto }
+      .bildwahl-blick > .quelle{ grid-row:auto }
+      .bildwahl-kopf{ max-width:none; margin-bottom:8px }
+      .bildwahl-salbei .bildwahl-flaeche{ margin-top:0 }
+      .bildwahl-papier .bildwahl-flaeche img{ -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 30%); mask-image:linear-gradient(180deg, transparent 0%, #000 30%) }
+      .bildwahl-ebene{ position:static; aspect-ratio:auto !important; display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
+      .bildwahl-ebene label{ position:static; transform:none !important }
+      .bildwahl-ebene label::after{ content:none }
+      .bildwahl-pop{ position:static; transform:none; width:100%; margin-top:8px }
+      .bildwahl-salbei .bildwahl-tafeln{ position:static; width:100%; margin-top:8px }
+    }
+    @media (max-width:760px){
+      .bildwahl-salbei .bildwahl-flaeche{ aspect-ratio:4/3 }
+      .bildwahl-salbei .bildwahl-punkt{ left:var(--xh) }
+      .bildwahl-salbei .hoehe{ left:auto; right:37.4%; margin:-10px 14px 0 0 }   /* links vom Punkt, rechts wurde es abgeschnitten */
+    }
 
     /* ─── Holen: auf den Startbildschirm ──────────────────────────── */
     .holen{ margin-top:16px; max-width:640px }
@@ -521,11 +673,6 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
     .liste > li > a{ display:inline-block; padding:13px 0 }
     .liste span{ display:block }
     /* Zum Nachlesen: links das Kapitel-Zeichen der Seite in der Kapitelfarbe (dekorativ, der Titel sagt es). */
-    .liste.lesen li{ display:grid; grid-template-columns:32px 1fr; column-gap:16px; align-items:start }
-    .liste.lesen li > *:not(.lesen-zeichen){ grid-column:2 }
-    .liste .lesen-zeichen{ grid-row:1 / span 2; color:var(--farbe); padding-top:10px }   /* .liste span färbt sonst grau */
-    .lesen-zeichen svg{ width:32px; height:32px; display:block }
-    .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:64px }
     .fragen h3{ margin-top:24px } .fragen h3:first-of-type{ margin-top:0 }
     .fragen p{ color:var(--leise) }
     .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand); padding-left:14px; margin-top:var(--abstand-m) }
@@ -631,7 +778,7 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
       .lagen-telefon .telefon{ width:180px; margin:0 auto; padding:8px; border-radius:34px }
       .lagen-telefon .bildschirm{ border-radius:27px; --statusleiste:28px }
       .lagen-telefon .insel{ top:15px; width:60px; height:17px }
-      .liste, .zweispaltig{ grid-template-columns:1fr; gap:20px }
+      .liste{ grid-template-columns:1fr; gap:20px }
       /* O am Handy: Punkte bleiben im Bild, die Wahl steht als Zeile darunter (das Bild ist zu niedrig für Schilder). */
       .geraet-wahl{ position:static; aspect-ratio:auto; display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
       /* Am Handy ist das Bild zu niedrig für Text: der Kopf steht darüber, das Bild läuft oben weich aus. */
@@ -661,13 +808,16 @@ function reiseStationen() {
   return KAPITEL.map((k, i) => {
     const weiter = i + 1 < n ? `<a class="weiter" href="#kehre-${i + 2}" aria-label="Weiter zu Kehre ${i + 2}">Weiter</a>` : '<a class="weiter" href="#holen">Weiter: App holen</a>';
     const bild = KEHRE_BILDSCHIRM[i];
+    // A2/A3 · gross angeschnitten (ab 1100 px) oder Ausschnitt in der Textfläche (darunter); je nur eines sichtbar.
     const telefon = bild ? `
             <div class="reise-telefon"><div class="telefon" role="img" aria-label="Kapitel ${esc(k.name)} im Beispiel, mit erfundenen Daten"><div class="insel"></div><div class="bildschirm"><img src="${BILD(bild)}" alt="" width="480" height="1040" loading="lazy" decoding="async"></div></div></div>` : '';
+    const ausschnitt = bild ? `
+              <div class="reise-ausschnitt" role="img" aria-label="Ausschnitt aus dem Kapitel ${esc(k.name)} im Beispiel, mit erfundenen Daten"><img src="${BILD(bild)}" alt="" width="480" height="1040" loading="lazy" decoding="async"></div>` : '';
     return `          <li class="reise-station${bild ? ' mit-telefon' : ''}" id="kehre-${i + 1}" style="--farbe:var(--k${i})">${telefon}
-            <div class="reise-text">
+            <div class="reise-text">${ausschnitt}
               <div class="reise-gross" aria-hidden="true">${zeichen(i, `gross${i + 1}`)}</div>
               <span class="name">Kehre ${i + 1} von ${n} · ${esc(k.name)}</span><h3>${esc(k.titel)}</h3><p>${esc(k.text)}</p>
-              <p class="reise-knoepfe"><a href="${BEISPIEL}#/chapter/${i}">${esc(k.name)} im Beispiel ansehen</a>${weiter}</p>
+              <p class="reise-knoepfe"><a class="beispiel" href="${BEISPIEL}#/chapter/${i}">${esc(k.name)} im Beispiel ansehen</a>${weiter}</p>
             </div></li>`;
   }).join('\n');
 }
@@ -688,7 +838,10 @@ function reiseWegPunkte() {
 function reiseLinie() {
   const d = `M${WEG[0].join(' ')} ` + WEG.slice(1).map((c) => `C${c.join(' ')}`).join(' ');
   // An jedem Halt das Kapitel-Zeichen auf heller Scheibe (Stebler Studios 10.11.: «die Icons kommen in die weisse Linie»).
-  const punkte = reiseWegPunkte().map(([x, y], i) => `<g class="halt" data-kehre="${i + 1}" data-x="${x}" data-y="${y}" transform="translate(${x} ${y})" style="color:var(--k${i})"><circle r="12"/>${zeichen(i, `weg${i + 1}`, 'x="-8.5" y="-8.5" width="17" height="17" ')}</g>`).join('');
+  // B · Vorbilder 10.11.2026: jeder Halt führt zu seiner Kehre (nur mit Maus oder Finger; die Linie ist fürs Vorlesen
+  // stumm und nicht fokussierbar — für Tastatur und Vorlesen gibt es «Weiter» und «Reise überspringen»). Die unsichtbare
+  // Scheibe r=22 macht die Trefferfläche rund 40 px gross.
+  const punkte = reiseWegPunkte().map(([x, y], i) => `<a class="halt-ziel" href="#kehre-${i + 1}" tabindex="-1"><g class="halt" data-kehre="${i + 1}" data-x="${x}" data-y="${y}" transform="translate(${x} ${y})" style="color:var(--k${i})"><circle class="treffer" r="22"/><circle r="12"/>${zeichen(i, `weg${i + 1}`, 'x="-8.5" y="-8.5" width="17" height="17" ')}</g></a>`).join('');
   return `<svg class="reise-linie" viewBox="0 0 60 600" aria-hidden="true" focusable="false">
             <path class="weg" d="${d}"/>
             <path class="gegangen" d="${d}" pathLength="100"/>
@@ -888,26 +1041,66 @@ ${[1, 2, 3, 4, 5].map((n) => `                  <img src="${BILD(n)}" alt="" wid
         <section id="weg" class="reise" aria-labelledby="t-weg">
           <h2 id="t-weg" class="unsichtbar">Sieben Kapitel: ein Weg, Kehre für Kehre</h2>
           <p class="unsichtbar">Die App hat sieben Kapitel. Diese Seite zeigt sie als Weg auf den Malojapass, eine Kehre je Kapitel. Sie beginnen, wo Sie wollen, und gehen in Ihrem Tempo weiter. Die Bilder in diesem Abschnitt sind KI-gemalt, eine freie Darstellung.</p>
+          <a class="reise-ueberspringen" href="#situationen">Reise überspringen</a>
           <ol class="reise-stationen" role="list">
 ${reiseStationen()}
           </ol>
         </section>
         <div class="reise-ausklang" aria-hidden="true"></div>
-        <figure class="pass-blick">
-          <img src="/vorstellung/pass-blick-papier.svg" alt="Der Blick von der Passhöhe über die Kehren ins Bergell hinunter, in Höhenlinien, mit der Passstrasse." width="1600" height="1000" loading="lazy" decoding="async">
-        </figure>
-        <div class="pass-karte-anfang" aria-hidden="true"></div>
-        <figure class="pass-karte">
-          <div class="pass-karte-bild">
-            <img src="/vorstellung/pass-karte.svg" alt="Karte des Malojapasses von oben: Höhenlinien und die Passstrasse, die in engen Kehren aus dem Bergell zur Passhöhe hinaufführt." width="1400" height="650" loading="lazy" decoding="async">
-            <span class="hoehe" aria-hidden="true">Passhöhe 1815&nbsp;m</span>
-          </div>
-          <figcaption class="rahmen">
-            <span>Oben angekommen: der Blick über die Kehren ins Bergell, und derselbe Weg von oben.</span>
-            <span class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</span>
-          </figcaption>
-        </figure>
-        <div class="pass-karte-ende" aria-hidden="true"></div>
+        <div class="nach-reise">
+        <!-- ═══ D · Zum Nachlesen im hellen Blick, gebaut wie «App holen»: Kopf auf dem Bild, Wahl auf der Strasse,
+             darunter nur die gewählte Seite. Ohne Skript (Auswahlfelder), Pfeiltasten wechseln. ═══ -->
+        <section id="nachlesen" class="bildwahl bildwahl-papier" aria-labelledby="t-nachlesen">
+          <fieldset class="rahmen">
+            <legend class="unsichtbar">Erklärseite wählen</legend>
+${THEMEN.map((_, n) => `            <input type="radio" name="nachlesen" id="n${n + 1}" class="unsichtbar"${n === 0 ? ' checked' : ''}>`).join('\n')}
+            <figure class="bildwahl-blick">
+              <div class="bildwahl-kopf">
+                <p class="augenbraue">Oben angekommen</p>
+                <h2 id="t-nachlesen">Zum Nachlesen.</h2>
+                <p class="unterzeile">Zu jedem Thema Erklärseiten, ohne Anmeldung und ohne App. Tippen Sie auf ein Thema.</p>
+              </div>
+              <div class="bildwahl-flaeche">
+                <img src="/vorstellung/pass-blick-papier.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+${THEMEN.map((t, n) => `                <span class="bildwahl-punkt p${n + 1}" style="--x:${t.x}; --y:${t.y}" aria-hidden="true"></span>`).join('\n')}
+              </div>
+              <div class="bildwahl-ebene">
+${THEMEN.map((t, n) => `                <label for="n${n + 1}" style="--x:${t.x}; --y:${t.y}; --farbe:var(--k${t.k})"><span class="zeichen" aria-hidden="true">${zeichen(t.k, `lesen${n + 1}`)}</span>${esc(KAPITEL[t.k].name)}</label>`).join('\n')}
+${THEMEN.map((t, n) => `                <div class="bildwahl-pop t${n + 1}" style="--x:${t.x}; --y:${t.y}"><h3>${esc(KAPITEL[t.k].name)}: zum Nachlesen</h3><ul role="list">${t.berichte.map(([ziel, titel, satz]) => `<li><a href="${ziel}">${esc(titel)}</a><p>${esc(satz)}</p></li>`).join('')}</ul></div>`).join('\n')}
+              </div>
+              <figcaption class="quelle">Der Blick von der Passhöhe über die Kehren ins Bergell · Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
+            </figure>
+          </fieldset>
+        </section>
+
+        <!-- ═══ E · «Was Sie eingeben, bleibt bei Ihnen» auf der Karte von oben (Salbei), ebenso gebaut: der Kopf steht auf
+             dem Auslauf der Karte in die Seitenfarbe, die fünf Versprechen als Wahl auf der Strasse, darunter das gewählte. ═══ -->
+        <section id="vertrauen" class="bildwahl bildwahl-salbei" aria-labelledby="t-vertrauen">
+          <fieldset class="rahmen">
+            <legend class="unsichtbar">Versprechen wählen</legend>
+${VERSPRECHEN.map((_, n) => `            <input type="radio" name="versprechen" id="v${n + 1}" class="unsichtbar"${n === 0 ? ' checked' : ''}>`).join('\n')}
+            <figure class="bildwahl-blick">
+              <div class="bildwahl-kopf">
+                <p class="augenbraue">Ihre Angaben</p>
+                <h2 id="t-vertrauen">Was Sie eingeben, bleibt bei Ihnen.</h2>
+                <p class="unterzeile">Die Rechnungen laufen in Ihrem Browser. Was Sie eingeben, wird nicht an einen Server geschickt.</p>
+              </div>
+              <div class="bildwahl-flaeche">
+                <img src="/vorstellung/pass-karte.svg" alt="" width="1400" height="650" loading="lazy" decoding="async">
+                <span class="hoehe" aria-hidden="true">Passhöhe 1815&nbsp;m</span>
+${VERSPRECHEN_ORTE.map((o, n) => `                <span class="bildwahl-punkt p${n + 1}" style="--x:${o.x}%; --y:${o.y}%; --xh:${handyX(o.x)}" aria-hidden="true"></span>`).join('\n')}
+              </div>
+              <div class="bildwahl-ebene">
+${VERSPRECHEN.map(([titel], n) => `                <label for="v${n + 1}"${VERSPRECHEN_ORTE[n].unten ? ' class="unten"' : ''} style="--x:${VERSPRECHEN_ORTE[n].x}%; --y:${VERSPRECHEN_ORTE[n].y}%"><span class="zeichen">${VERSPRECHEN_ZEICHEN[n]}</span>${esc(titel)}</label>`).join('\n')}
+                <div class="bildwahl-tafeln">
+${VERSPRECHEN.map(([titel, text], n) => `                  <div class="bildwahl-tafel t${n + 1}"><h3>${esc(titel)}</h3><p>${text}</p></div>`).join('\n')}
+                </div>
+              </div>
+              <figcaption class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
+            </figure>
+          </fieldset>
+        </section>
+        </div>
       </div>
     </div>
 
@@ -1012,28 +1205,10 @@ ${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; -
     </section>
 
     <!-- ═══ Vertrauen ═══ -->
-    <section aria-labelledby="t-vertrauen">
-      <p class="augenbraue">Ihre Angaben</p>
-      <h2 id="t-vertrauen">Was Sie eingeben, bleibt bei Ihnen.</h2>
-      <p class="unterzeile">Die Rechnungen laufen in Ihrem Browser. Was Sie eingeben, wird nicht an einen Server geschickt.</p>
-      <ul class="liste">
-        <li><h3>Kein Konto</h3><p>Keine Anmeldung. Der Zugangscode der Beta wird nur auf Ihrem Gerät geprüft.</p></li>
-        <li><h3>Nur auf diesem Gerät</h3><p>Im Speicher Ihres Browsers — nicht bei uns und nicht bei Dritten.</p></li>
-        <li><h3>Kein Tracking</h3><p>Keine Werbung, keine Analyse-Dienste. Der Hoster speichert beim Abruf kurz technische Zugriffsdaten (<a href="/rechtliches/">Datenschutz</a>).</p></li>
-        <li><h3>Quelloffen</h3><p>Der Quellcode ist öffentlich einsehbar.</p></li>
-      </ul>
-    </section>
-
-    <!-- ═══ Nachlesen + Fragen ═══ -->
-    <section class="zweispaltig" aria-label="Nachlesen und häufige Fragen">
-      <div>
-        <h2>Zum Nachlesen</h2>
-        <ul class="liste eins lesen">
-${NACHLESEN.map(([ziel, titel, satz, k], n) => `          <li style="--farbe:var(--k${k})"><span class="lesen-zeichen" aria-hidden="true">${zeichen(k, `lesen${n + 1}`)}</span><a href="${ziel}">${esc(titel)}</a><span>${esc(satz)}</span></li>`).join('\n')}
-        </ul>
-      </div>
+    <!-- ═══ Häufige Fragen (Zum Nachlesen steht seit D auf dem hellen Blick nach der Reise) ═══ -->
+    <section class="fragen-abschnitt" aria-labelledby="t-fragen">
       <div class="fragen">
-        <h2>Häufige Fragen</h2>
+        <h2 id="t-fragen">Häufige Fragen</h2>
         <h3>Warum brauche ich einen Zugangscode?</h3>
         <p>Maloja Plana ist noch in einer geschlossenen Beta. Das Beispiel geht ohne Code — mit erfundenen Daten, es wird nichts gespeichert.</p>
         <p>Einen Code bekommen Sie per E-Mail: schreiben Sie an <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Zugangscode">info@malojaplana.ch</a>.</p>
