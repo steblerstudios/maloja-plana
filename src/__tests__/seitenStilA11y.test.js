@@ -26,9 +26,10 @@ function htmlDateien(ordner) {
     return e.name.endsWith('.html') ? [p] : [];
   });
 }
-// Nur Seiten aus scripts/build-seiten.mjs. Die App (index.html der Wurzel) und
-// die zwei handgeschriebenen Seiten 404.html und wartung.html haben eigenen Stil.
-const NICHT_GENERIERT = new Set(['index.html', '404.html', 'wartung.html']);
+// Nur Seiten aus scripts/build-seiten.mjs. Die App (index.html der Wurzel) hat eigenen Stil.
+// 404.html und wartung.html kommen seit 12.11.2026 aus dem Generator (Gruppe E, Gestaltung A) und
+// werden darum mitgeprüft.
+const NICHT_GENERIERT = new Set(['index.html']);
 const SEITEN = htmlDateien(PUBLIC)
   .filter((p) => !NICHT_GENERIERT.has(path.relative(PUBLIC, p)))
   .map((p) => ({ name: path.relative(PUBLIC, p), html: fs.readFileSync(p, 'utf8') }))
