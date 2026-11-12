@@ -122,6 +122,36 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     expect(html).toMatch(/class="unsichtbar">[^<]*KI-gemalt/);
   });
 
+  it('Pass von oben (A1, 10.11.): Karte nach Kehre 7, vor den Situationen, mit Quelle und fertiger SVG', () => {
+    const karte = koerper.indexOf('class="pass-karte"');
+    expect(karte).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
+    expect(koerper.indexOf('id="situationen"')).toBeGreaterThan(karte);
+    expect(html).toContain('src="/vorstellung/pass-karte.svg"');
+    expect(html).toContain('Höhen © swisstopo · Strasse © OpenStreetMap');
+    expect(html).toContain('Passhöhe 1815&nbsp;m');
+    const svg = fs.readFileSync(path.join(WURZEL, 'public/vorstellung/pass-karte.svg'), 'utf8');
+    expect(svg).toContain('© swisstopo');
+    expect(svg).toContain('© OpenStreetMap');
+    expect(svg).toContain('Passhöhe 1815 m');
+    expect(svg).not.toMatch(/<script|href=/);   // reines Bild, nichts Ausführbares, nichts Nachgeladenes
+  });
+
+  it('Vier Höhenlinien-Bilder (10.11. abends): C+A nach Kehre 7, D vor «App holen», B vor dem Fuss, je mit Quelle', () => {
+    const lage = (f) => koerper.indexOf(`src="/vorstellung/${f}"`);
+    expect(lage('pass-blick.svg')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
+    expect(lage('pass-karte.svg')).toBeGreaterThan(lage('pass-blick.svg'));
+    expect(lage('pass-blick-papier.svg')).toBeGreaterThan(koerper.indexOf('id="atlas"'));
+    expect(koerper.indexOf('id="holen"')).toBeGreaterThan(lage('pass-blick-papier.svg'));
+    expect(lage('pass-karte-papier.svg')).toBeGreaterThan(koerper.indexOf('class="schluss"'));
+    expect(koerper.indexOf('<footer')).toBeGreaterThan(lage('pass-karte-papier.svg'));
+    for (const f of ['pass-blick.svg', 'pass-blick-papier.svg', 'pass-karte-papier.svg']) {
+      const svg = fs.readFileSync(path.join(WURZEL, 'public/vorstellung', f), 'utf8');
+      expect(svg, f).toContain('© swisstopo');
+      expect(svg, f).not.toMatch(/<script|href=/);
+    }
+    expect((koerper.match(/Höhen © swisstopo/g) || []).length).toBe(3);   // A, D, B; C teilt die Zeile mit A
+  });
+
   it('B · ohne Skript hängen alle sieben Stocknägel am Stock (ausblenden nur unter .js)', () => {
     expect((html.match(/<g class="nagel">/g) || []).length).toBe(7);
     expect(stil).toContain('.js .nagel{ opacity:0 }');
