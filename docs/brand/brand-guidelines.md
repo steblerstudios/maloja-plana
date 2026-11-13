@@ -266,7 +266,9 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   Empfohlen» ist seit 09.11. von Startseite und Prämien-Übersicht entfernt.
 - Spiegel rechnen **dieselbe Zahl** wie das Zuhause (Startseite: «5/5 eingetragen» aus `netzSchildTeile`).
 - Wächter: `src/__tests__/instrumenteZuhauseSpiegel.test.js`.
-- Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Reserve-Tank 280 → 256, Netz-Schild auf
+- **Reserve-Tank seit 10.11.2026 wie das Schild:** ein Bauteil mit `groesse` (`klein` 64 ohne Wörter,
+  `gross` 256 mit Ablesesatz); die eigene Kleinzeichnung `miniGauge` ist aufgelöst.
+- Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Netz-Schild auf
   KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
 
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
@@ -449,6 +451,21 @@ Dieselben Werte wie die Startseite, damit niemand zwei Produkte sieht.
 - **Bedingte Sektionen** statt leerer Zahlen-Rechner (z.B. Alimente klappt ohne Kinder ein,
   bleibt aber erkundbar) — ehrliche Orientierung vor Schein-Präzision.
 - **Wert vor der Hürde zeigen:** Trust/Nutzen vor dem Gate (BetaGate-Intro, Demo-Modus).
+- **Die Monate gross beim Reserve-Tank** *(10.11.2026, Idee aus dem Abgleich mit Nessie; Stebler Studios:
+  «gleiches System wie das Netz-Schild» und «soll lieber runter zur Tankanzeige»)*. In der Kapitelzeile
+  Finanzen steht unter dem kleinen Tank die Zahl gross (`2xl`): so viele Monate deckt der liquide
+  Notgroschen die Ausgaben. **Keine eigene Karte zuoberst** — ein Zwischenstand mit Karte über «Was ist
+  jetzt dran?» ist wieder entfernt; die Zahl gehört zu ihrem Instrument. Keine Ampelfarbe; bei leerem
+  Notgroschen keine grosse «0». Dieselbe Rechnung wie die Tankanzeige (`data/reserveTank.js`).
+- **Alle Instrumente: Bild · grosse Zahl · ein Satz** *(10.11.2026, Skizze; Stebler Studios «ja super genau so»)*.
+  In der Kapitelzeile zeigt jedes Instrument unter dem Bild seine Zahl gross (`2xl`) und darunter einen Satz,
+  was sie bedeutet. Der Name tritt dann zurück (bleibt im `title` und im `aria-label`). Steuer-Säule
+  «≈ CHF 8’431» · «So viel Einkommenssteuer im Jahr, grob geschätzt», ihre Hinweise (Bund, Annahmen, Frist)
+  bleiben klein darunter; Reserve-Tank «4.7 Monate» · «So lange reicht Ihr Notgroschen»; Netz-Schild
+  «8/8» · «So viel Ihrer Absicherung ist eingetragen»; Franchise-Kreuz «CHF 2’500» · «Eher diese Franchise».
+  Beträge laufen über `betrag()`, damit der Sichtschutz greift. Ohne Zahl (nicht eingerichtet, Quellensteuer,
+  leerer Notgroschen) bleibt die Kachel wie bisher: Name und kleiner Satz.
+  Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)
 
