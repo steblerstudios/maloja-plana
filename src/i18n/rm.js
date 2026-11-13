@@ -8286,10 +8286,11 @@ export default {
     checkScopeQ: { sie: "Vossa furmaziun", du: "Tia furmaziun" },
     checkStatusOnlyEducation: "En Svizra mo per la furmaziun",
     // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
-    checkStatusOther: "Auter status (p.ex. permiss F auter che fugitivs renconuschids, permiss B dapi main che 5 onns)", // TODO(rm): Stipendien-Konkordat Art. 5 — de geändert 12.11.2026 (C oder B mit 5 J. Aufenthaltsrecht; «ausser EU/EFTA»), rm noch alt
+    checkStatusOther: "Anderer Status (z. B. Ausweis F ausser anerkannte Flüchtlinge, Ausweis B seit weniger als 5 Jahren, ausser EU/EFTA)", // TODO(rm): provisorisch deutsch (13.11.2026) — Stipendien-Konkordat Art. 5 Abs. 1 Bst. c/e, rm-Fassung nannte noch «5 Jahre Wohnsitz»; Übersetzung offen
     checkScopeOther: "Auter / furmaziun cuntinuanta",
     // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
-    resultEligible: { sie: "Tenor las reglas minimalas dal concordat da stipendis pudessas Vus avair dretg. Sche Voss chantun è sa participà al concordat, tge limitas valan e sche Vus avais dretg, decida l’uffizi da stipendis. Inoltrai la dumonda tar il chantun cumpetent, per regla il chantun da domicil da Voss geniturs.", du: "Tenor las reglas minimalas dal concordat da stipendis pudessas ti avair dretg. Sche tes chantun è sa participà al concordat, tge limitas valan e sche ti has dretg, decida l’uffizi da stipendis. Inoltrescha la dumonda tar il chantun cumpetent, per regla il chantun da domicil da tes geniturs." }, // TODO(rm): de 12.11.2026 — Beitritt erfährt man bei der Stipendienstelle (nicht «entscheidet»), rm noch alt
+    // TODO(rm): provisorisch deutsch (13.11.2026) — «ob der Kanton beigetreten ist, erfahren Sie bei der Stipendienstelle»; Übersetzung offen
+    resultEligible: { sie: "Nach den Mindestregeln des Stipendien-Konkordats sieht es so aus, als könnten Sie berechtigt sein. Ob Ihr Kanton dem Konkordat beigetreten ist, erfahren Sie bei der Stipendienstelle; sie entscheidet auch, welche Grenzen gelten und ob Sie Anspruch haben. Stellen Sie den Antrag beim zuständigen Kanton, in der Regel dem Wohnsitzkanton Ihrer Eltern.", du: "Nach den Mindestregeln des Stipendien-Konkordats sieht es so aus, als könntest du berechtigt sein. Ob dein Kanton dem Konkordat beigetreten ist, erfährst du bei der Stipendienstelle; sie entscheidet auch, welche Grenzen gelten und ob du Anspruch hast. Stelle den Antrag beim zuständigen Kanton, in der Regel dem Wohnsitzkanton deiner Eltern." },
     resultNotEligible: "Persunas che sa trategnan en Svizra mo per lur furmaziun n'han per ordinari nagin dretg sin stipendis chantunals. Il register privat sutvart po esser in'alternativa.",
     resultScopeOther: { sie: "Per segundas furmaziuns e furmaziun cuntinuanta valan reglas pli strictas. Clerai Voss cas directamain cun l'uffizi chantunal da stipendis.", du: "Per segundas furmaziuns e furmaziun cuntinuanta valan reglas pli strictas. Clerescha tes cas directamain cun l'uffizi chantunal da stipendis." },
     // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
@@ -8299,7 +8300,7 @@ export default {
     eligibilityTitle: 'Tgi po far dumonda?',
     who: {
       swiss: 'Burgaisas e burgais svizzers',
-      foreigner5y: 'Esters cun domicil en Svizra dapi almain 5 onns', // TODO(rm): Stipendien-Konkordat Art. 5 — de geändert 12.11.2026 (C oder B mit 5 J. Aufenthaltsrecht; «ausser EU/EFTA»), rm noch alt
+      foreigner5y: "Ausländerinnen und Ausländer mit Niederlassungsbewilligung (C) oder mit Aufenthaltsbewilligung (B), wenn sie seit 5 Jahren in der Schweiz aufenthaltsberechtigt sind", // TODO(rm): provisorisch deutsch (13.11.2026) — Stipendien-Konkordat Art. 5 Abs. 1 Bst. c/e, rm-Fassung nannte noch «5 Jahre Wohnsitz»; Übersetzung offen
       euefta: 'Burgais da stadis da la UE/AELS (sut tschertas cundiziuns)',
       refugee: 'Fugitivs renconuschids ed apatrids',
     },
