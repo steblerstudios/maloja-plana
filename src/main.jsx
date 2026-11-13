@@ -807,8 +807,8 @@ const AppInner = ({ demo }) => {
   }, [isDarkMode]);
   // Rollenfarben für die Kalender-Abzeichen (Icon-Plan B5c): Blau = Fristen, Rot = warnen (Fassung 9).
   useEffect(() => {
-    try { document.documentElement.style.setProperty('--mp-frist', palette.sky); document.documentElement.style.setProperty('--mp-warnen', palette.rose); } catch {}
-  }, [palette.sky, palette.rose]);
+    try { document.documentElement.style.setProperty('--mp-frist', palette.sky); document.documentElement.style.setProperty('--mp-warnen', palette.rose); document.documentElement.style.setProperty('--mp-up', palette.up); } catch {}
+  }, [palette.sky, palette.rose, palette.up]);
   useEffect(() => { try { localStorage.setItem('or5_readable', String(readable)); } catch {} document.documentElement.classList.toggle('mp-readable', readable); }, [readable]);
   useEffect(() => {
     const on = () => setIsOffline(false);
