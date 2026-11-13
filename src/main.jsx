@@ -52,7 +52,8 @@ import { Icon, Icons, zurueckZeichen, aufklappZeichen } from './IconKern.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
-import StorageWarning from './StorageWarning.jsx';
+// Nachgeladen wie OverdueBanner (13.11.2026, Bundle-Budget): zeigt sich nur bei knappem Speicher.
+const StorageWarning = lazyMitTexten(() => import('./StorageWarning.jsx'));
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 const DocumentTresor = lazyMitTexten(() => import('./DocumentTresor.jsx'));
 const KKScanner = lazyMitTexten(() => import('./KKScanner.jsx'));
@@ -1549,7 +1550,8 @@ const AppInner = ({ demo }) => {
         style: { ...knopfStil(palette, 'neben'), marginBottom: space.md + 'px' },
       }, t('sandbox.footerLink')),
       view === 'dashboard' && React.createElement(React.Fragment, null,
-        React.createElement(StorageWarning, { palette, t }),
+        React.createElement(React.Suspense, { fallback: null },
+          React.createElement(StorageWarning, { palette, t })),
         // handleNavigate, nicht setView: nur so springt die Seite nach oben und der Fokus
         // auf <main> — seit das Dokument scrollt (#296), landete man sonst mitten im Kalender.
         React.createElement(React.Suspense, { fallback: null },
