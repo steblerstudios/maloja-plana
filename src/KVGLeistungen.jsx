@@ -16,6 +16,7 @@ import { betrag } from './utils/geld.js';
 import { AblaufLink } from './AblaufSchale.jsx';
 import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
+import { belegeImJahr } from './data/franchiseTacho.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
@@ -306,7 +307,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
   // Jahre mit Belegen + laufendes Jahr, neueste zuerst — für den Jahr-Umschalter.
   const availableYears = [...new Set([currentYear, ...belege.map(belegYear)])].sort((a, b) => b - a);
   const yearBelege = belege.filter(b => belegYear(b) === selectedYear);
-  const kosten = yearBelege.reduce((sum, b) => sum + (Number(b.betrag) || 0), 0);
+  // Dieselbe Rechnung wie die Kachel Franchise-Stand (Instrumente-Matrix B-R3, 11.11.2026).
+  const kosten = belegeImJahr(data, selectedYear).anDieFranchise.gesamt;
 
   // Eingabe-Zustand für „Beleg hinzufügen"
   const [newDatum, setNewDatum] = useState('');

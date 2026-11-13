@@ -4205,7 +4205,7 @@ export default {
     monthlyIncome: 'Entrada mensiala',
     assets: 'Facultad',
     assetsDetail: 'Investiziuns, spargns ed autra facultad (valur fiscala)',
-    healthCosts: 'Custs da sanadad pajads (LAMal)',
+    healthCosts: 'Custs da sanadad pajads',
     healthCostsDetail: 'Quints dal medi pajads {year}',
     healthCostsOpen: 'anc avert: {amount}',
     taxMonthlyCompare: { sie: '≈ {estimate} per mais stimà · Vossa indicaziun en il budget: {angabe} per mais.', du: '≈ {estimate} per mais stimà · Tia indicaziun en il budget: {angabe} per mais.' },
