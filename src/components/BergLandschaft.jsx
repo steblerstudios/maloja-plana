@@ -535,8 +535,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
             boxShadow: maturity === 'complete' ? `0 0 0 3px ${ui.surface}, 0 1px 5px rgba(0,0,0,0.25)` : '0 1px 4px rgba(0,0,0,0.2)',
             transition: `transform ${duration.fast}ms ${ease}`,
           },
-          onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.04)'; },
-          onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
+          className: 'mp-hover-hebt', // Hover in tokens.css (13.11.2026, Bundle-Budget)
         },
           // F7-S8 (Stebler Studios 27.10.2026): Tippfläche mindestens 44 px (Regel aus #620), ohne das Bild zu
           // vergrössern — ein unsichtbarer Rand um die Marke; der Klick landet über das Kind beim Knopf.
@@ -611,8 +610,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
             boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
             transition: `transform ${duration.fast}ms ${ease}`,
           },
-          onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.04)'; },
-          onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
+          className: 'mp-hover-hebt',
         }, React.createElement('div', { style: { width: '17px', height: '17px' } }, st.zeichen())),
         React.createElement('span', {
           className: 'mountain-label', 'aria-hidden': 'true',

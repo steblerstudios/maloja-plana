@@ -451,8 +451,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               border: 'none', borderRadius: radius.md, color: palette.text,
               transition: 'background ' + duration.fast + 'ms ' + ease,
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
+            className: 'mp-hover-flaeche', // Hover in tokens.css (13.11.2026, Bundle-Budget)
           },
             React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minWidth: 0 } },
               // Das Icon des Kapitels statt des Punkts (25.09.2026) — dasselbe wie in der
@@ -708,8 +707,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               color: palette.text,
               transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
+            className: 'mp-hover-flaeche',
           },
             // Akzentfarbe (Sand) nur auf der EINEN Primär-Aktion; Sekundär-Werkzeuge
             // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (Stebler Studios).
@@ -768,8 +766,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               key: item.label,
               onClick: item.action,
               style: { ...linkStil(palette), padding: '2px 0', fontSize: text.sm, textAlign: 'left', display: 'flex', alignItems: 'center', gap: space.xs + 'px' },
-              onMouseEnter: (e) => { e.currentTarget.style.opacity = '0.7'; },
-              onMouseLeave: (e) => { e.currentTarget.style.opacity = '1'; },
+              className: 'mp-hover-blass',
             },
               item.label
             )

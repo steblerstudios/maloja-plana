@@ -1400,6 +1400,7 @@ export default {
     rueckgaengig: 'Undo',
     zurueckgeholt: 'Restored',
     pickDate: 'Pick a date',
+    betraegeVerbergen: 'Hide amounts',
     simpleView: 'Simple view',
     grayscale: 'Grayscale',
     colorBlind: 'Colour-blind mode',

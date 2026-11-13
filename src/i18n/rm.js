@@ -1718,6 +1718,7 @@ export default {
     rueckgaengig: 'Revocar',
     zurueckgeholt: 'Zurückgeholt', // TODO(rm): übersetzen
     pickDate: 'Tscherner ina data',
+    betraegeVerbergen: 'Zuppar ils imports',
     simpleView: 'Vista simpla',
     grayscale: 'Stgala da grisch',
     colorBlind: 'Modus daltonic',

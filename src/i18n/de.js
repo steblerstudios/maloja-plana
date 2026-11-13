@@ -1406,6 +1406,7 @@ export default {
     rueckgaengig: 'Rückgängig',
     zurueckgeholt: 'Zurückgeholt',
     pickDate: 'Datum wählen',
+    betraegeVerbergen: 'Beträge verbergen',
     simpleView: 'Einfache Ansicht',
     grayscale: 'Schwarzweiss',
     colorBlind: 'Farbsehhilfe',

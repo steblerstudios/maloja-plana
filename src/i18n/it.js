@@ -1400,6 +1400,7 @@ export default {
     rueckgaengig: 'Annulla',
     zurueckgeholt: 'Ripristinato',
     pickDate: 'Scegli una data',
+    betraegeVerbergen: 'Nascondere gli importi',
     simpleView: 'Vista semplice',
     grayscale: 'Scala di grigi',
     colorBlind: 'Modalità daltonici',

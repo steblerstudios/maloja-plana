@@ -341,6 +341,15 @@ html { overflow-x: clip; }
   }
 }
 
+/* ─── Hover aus dem Haupt-Bundle in CSS (13.11.2026) ──────────
+   Bis hier per onMouseEnter/onMouseLeave in Dashboard.jsx (3) und BergLandschaft.jsx (2).
+   Gleiches Aussehen, aber die Bytes zählen nicht mehr ins Bundle-Budget (size-limit 65 kB),
+   damit der Sichtschutz «Beträge verbergen» Platz hat. --mp-up setzt main.jsx aus der Palette.
+   !important nur bei der Fläche: dort steht background:transparent inline. */
+.mp-hover-flaeche:hover { background: var(--mp-up) !important; }
+.mp-hover-blass:hover { opacity: 0.7; }
+.mp-hover-hebt:hover { transform: scale(1.04); }
+
 /* ─── Datei-Auswahl: das Feld ist unsichtbar, der Ring sitzt am Label ──
    Bis 24.09.2026 trugen alle fünf Datei-Felder `display:none`. Ein solches Feld
    bekommt keinen Fokus, und das umgebende <label> ist nicht fokussierbar — per
@@ -573,3 +582,10 @@ main[tabindex="-1"]:focus { outline: none; }
 
 /* Aufklapp-Teile mit eigenem Chevron (Versicherungs-Übersicht): kein zweiter Pfeil in Safari. */
 .mp-summary::-webkit-details-marker { display: none; }
+
+/* Sichtschutz «Beträge verbergen» (Kopfzeile, src/utils/geld.js). Angezeigte Beträge werden
+   im Formatierer zu «CHF •••»; Eingabefelder für Beträge sind hier nur unscharf und werden
+   beim Antippen wieder lesbar — wer tippt, will sehen, was er tippt. Nur am Bildschirm. */
+@media screen {
+  html[data-betraege="aus"] input[inputmode="decimal"]:not(:focus) { filter: blur(6px); }
+}
