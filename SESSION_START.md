@@ -17,6 +17,13 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 12.11.2026, 01:50 — `7ba06d80` ist LIVE** (0.1.49-beta, gebaut 01:42:21, Deploy Stebler Studios). Überholt alle Stände darunter.
+> - Neu live: freiwillige AHV/IV-Mindestbeitrag 1 010 Fr. (2026) / 1 030 Fr. (2027) statt nur AHV-Anteil 870 (#869; VFV Art. 13b, IVG Art. 3 Abs. 1bis, 5 % nach VFV 18a + SR 831.143.41) · Gruppe D Restpunkte: Preisüberwacher-Quelle, Stipendien-Konkordat Art. 5 (#871) · Gruppe E Rahmen: 404 und Wartung im Rahmen der Erklärseiten (#872) · Doku (#870).
+> - Vortor auf `7ba06d80`, Merge-Pause vorher: 592 Testdateien, Lint 0 Fehler, SEO 0, 64 985 / 65 000 B, PII sauber, ESTV gleich; fünf Prüfer ohne Blocker.
+> - Live gegengeprüft: `version.json`, `/` und `/app/` 200, erfundene Adresse 404, 151 Dateien, `index-vEM3vKNT.js` und `de-rest-DSZbxbro.js` = geprüfter Build, AHV/IV-Satz im `de-rest`. Browser, Konsole, Handy nicht geprüft.
+> - Nach dem Deploy gemergt, **nicht live:** Startseiten-Stapel #825 #833 #837 #843 (main `a8ebc817`).
+> - Offen: rm-Stipendien noch «5 Jahre Wohnsitz» (`TODO(rm)`, Altbestand) · Rechtsseite «Erklärseiten laden keine Skripte» stimmt nicht für `/krankenkasse/bewegt/` · «Merkblatt 10.02, Stand {jahr}» ab 2027 · 404/Wartung ohne eigenes `:focus-visible`. Liste: `stebler-studios/_handoffs/2026-11-10-maloja-deploy-tag.md`.
+>
 > 🧾 **Nachtrag 12.11.2026, 00:40 — `d439855d` ist LIVE** (0.1.49-beta, gebaut 00:34:53, Deploy Stebler Studios). Überholt alle Stände darunter.
 > - Neu live: Kapitel 5 Ausbildung (#814) · Kapitel 6 Behörden (#828) · Kapitel 7 Gesundheit (#838) · Gruppe C Vertrauen (#846) · Gruppe D Fachseiten (#848) · Gruppe E Website (#847) · 3a-Hinweis unter der BVG-Schwelle im Steuer-Rechner (#868) · Doku (#866).
 > - Vortor auf `d439855d` in eigener Kopie, vorher Merge-Pause bei allen Maloja-Sitzungen → kein Merge während des Vortors, Marke beim ersten Anlauf gültig. 591 Testdateien, Lint 0 Fehler, SEO 0, 64 974 / 65 000 B, PII sauber, ESTV 156/156, SL-Preise 06.10.; swiss-precision, rechts, sicherheits, a11y, qualitaets ohne Blocker. Darmkrebs «50 bis 74» an KLV Art. 12e Bst. d belegt.
