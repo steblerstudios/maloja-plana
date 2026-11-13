@@ -31,11 +31,21 @@ describe('Vorstellungsseite: Kopf und Suchmaschinen', () => {
     expect(skripte).toEqual([' src="/weiterleitung.js"', ' src="/reise.js" defer']);
     expect(html).toMatch(/content="default-src 'none'; script-src 'self';/);
     // www.infomaniak.com: Quelle zu «Grün gehostet» (E, 10.11.2026 spät), ein Link, nichts Geladenes
-    expect(html).not.toMatch(/https?:\/\/(?!malojaplana\.ch|www\.gnu\.org|github\.com|schema\.org|www\.infomaniak\.com\/en\/ecology")/);
+    // www.openstreetmap.org/copyright: ODbL-Namensnennung für die Passstrasse (13.11.2026), ein Link
+    expect(html).not.toMatch(/https?:\/\/(?!malojaplana\.ch|www\.gnu\.org|github\.com|schema\.org|www\.infomaniak\.com\/en\/ecology"|www\.openstreetmap\.org\/copyright")/);
   });
 });
 
 describe('Vorstellungsseite: Inhalt', () => {
+  it('Karten-Quellen: jede Strassen-Angabe nennt die OpenStreetMap-Mitwirkenden mit ODbL (Lizenzpflicht, 13.11.2026)', () => {
+    const strasse = html.match(/Strasse ©[^·<]*(?:<a [^>]*>[^<]*<\/a>)?[^·<]*/g) || [];
+    expect(strasse.length).toBeGreaterThan(0);
+    strasse.forEach((s) => {
+      expect(s).toContain('href="https://www.openstreetmap.org/copyright"');
+      expect(s).toContain('OpenStreetMap-Mitwirkende');
+      expect(s).toContain('ODbL');
+    });
+  });
   it('die sieben Kapitel heissen wie in der App, in derselben Reihenfolge', () => {
     const app = CHAPTER_KEYS.map((k) => de.chapters[k]);
     expect(KAPITEL).toHaveLength(7);
@@ -128,7 +138,7 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     expect(karte).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
     expect(koerper.indexOf('id="situationen"')).toBeGreaterThan(karte);
     expect(html).toContain('src="/vorstellung/pass-karte.svg"');
-    expect(html).toContain('Höhen © swisstopo · Strasse © OpenStreetMap');
+    expect(html).toContain('Höhen © swisstopo · Strasse © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL)');
     expect(html).toContain('Passhöhe 1815&nbsp;m');
     const svg = fs.readFileSync(path.join(WURZEL, 'public/vorstellung/pass-karte.svg'), 'utf8');
     expect(svg).toContain('© swisstopo');
