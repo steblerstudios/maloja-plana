@@ -10,6 +10,7 @@
 
 import { escapeHtml as esc } from '../utils/helpers.js';
 import { OFFEN, leer, druckSeite, druckFeld, druckLinie, datumCH } from './patientenverfuegung.js';
+import { mitEchtenBetraegen } from '../utils/geld.js';
 
 export const FRAGEN_BW = [
   { key: 'art', art: 'eine', optionen: ['erd', 'kremation', 'angehoerige', OFFEN] },
@@ -45,7 +46,7 @@ export function bestattungDokument(antworten, daten, t) {
   return { person, zeilen, texte, leer: zeilen.length === 0 && texte.length === 0 };
 }
 
-export function bestattungHtml(antworten, daten, t, lang = 'de') {
+function bestattungHtmlRoh(antworten, daten, t, lang = 'de') {
   const d = bestattungDokument(antworten, daten, t);
   const koerper = `<div class="pv-blatt">
 <h1>${esc(t('bw.doc.titel'))}</h1>
@@ -61,4 +62,9 @@ ${d.texte.map((x) => `<section><h2>${esc(x.titel)}</h2><p style="white-space:pre
     lang, titel: t('bw.doc.titel'), koerper, begleitTitel: t('bw.begleit.titel'), druckLabel: t('bw.ui.drucken'),
     begleitPunkte: [t('bw.begleit.wo'), t('bw.begleit.gemeinde'), t('bw.begleit.testament'), t('bw.begleit.keineBeratung')],
   });
+}
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export function bestattungHtml(...args) {
+  return mitEchtenBetraegen(() => bestattungHtmlRoh(...args));
 }

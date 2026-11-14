@@ -191,6 +191,22 @@ describe('Lohn-Briefe', () => {
     // Zeitraum offen blieb — wer 3 Monate schuldig war, mahnte gedruckt ein Drittel ein.
     // Jetzt bleibt der Forderungsbetrag offen; der Monatslohn steht nur als benannter
     // Anhalt daneben. Der Nebenjob-Bezug bleibt: nie der Hauptlohn.
+    // 🔴 Vortor 13.11.2026: Mit «Beträge verbergen» stand im gedruckten Brief «CHF ···», weil
+    // t() jeden «CHF {x}»-Platzhalter verbarg. Briefe verlassen die App → immer echte Beträge.
+    it('Sichtschutz an: der Brief enthält trotzdem die Beträge, nie «···»', () => {
+      const vorher = globalThis.document;
+      globalThis.document = { documentElement: { dataset: { betraege: 'aus' } } };
+      try {
+        expect(t('briefe.wageClaim.figuresLohn', { amount: 22.5 })).toContain('···'); // Bildschirm: verborgen
+        for (const [vorlage, optionen] of [['wageClaim', {}], ['unpaidWage', { job: 'side' }]]) {
+          const html = generateLetter(vorlage, mitNeben, t, optionen);
+          expect(html).not.toContain('···');
+        }
+        expect(generateLetter('wageClaim', mitNeben, t)).toMatch(/CHF[\s\u00a0\u202f]?\d/);
+      } finally {
+        globalThis.document = vorher;
+      }
+    });
     it('unpaidWage job=side: Monatslohn als Anhalt (800), nie der Hauptlohn (3000)', () => {
       const html = generateLetter('unpaidWage', mitNeben, t, { job: 'side' });
       expect(html).toContain('Café Nebenan');

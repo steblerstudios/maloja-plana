@@ -3,7 +3,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { betrag, betragEcht, betraegeVerborgen } from '../geld.js';
+import { betrag, betragEcht, betraegeVerborgen, mitEchtenBetraegen } from '../geld.js';
 import { createT } from '../../i18n/index.js';
 
 // Kein jsdom im Projekt: ein schlankes document reicht, geld.js liest nur das dataset.
@@ -39,6 +39,44 @@ describe('Beträge verbergen', () => {
   });
   it('theme-init.js setzt das Attribut vor dem Rendern', () => {
     expect(quelle('../../../public/theme-init.js')).toMatch(/or5_betraege[\s\S]*dataset\.betraege = 'aus'/);
+  });
+});
+
+describe('Dokumente verlassen die App mit echten Beträgen (Vortor 13.11.2026)', () => {
+  const t = createT({ de: { brief: 'brutto CHF {amount}' } }, 'de', 'sie');
+  it('mitEchtenBetraegen: betrag() und t() zeigen den wahren Betrag, danach wieder verborgen', () => {
+    document.documentElement.dataset.betraege = 'aus';
+    expect(mitEchtenBetraegen(() => betrag(1234))).toBe('CHF 1’234');
+    expect(mitEchtenBetraegen(() => t('brief', { amount: 5000 }))).toBe('brutto CHF 5’000');
+    expect(betrag(1234)).toBe('CHF ···');
+    expect(t('brief', { amount: 5000 })).toBe('brutto CHF ···');
+  });
+  it('auch wenn der Erzeuger wirft, ist der Sichtschutz danach wieder an', () => {
+    document.documentElement.dataset.betraege = 'aus';
+    expect(() => mitEchtenBetraegen(() => { throw new Error('x'); })).toThrow('x');
+    expect(betrag(1)).toBe('CHF ···');
+  });
+  // Liste der Erzeuger, deren Ergebnis die App verlässt (Druck, Brief, Dossier, Download).
+  // Ein neuer Erzeuger gehört hier dazu — sonst druckt er bei eingeschaltetem Sichtschutz «CHF ···».
+  it('jeder Dokument-Erzeuger läuft in mitEchtenBetraegen', () => {
+    const erzeuger = {
+      '../../briefGenerator.js': ['generateLetter'],
+      '../../dossierGenerator.js': ['generateLebensmappe', 'generateNotfallDossier', 'generateBehoerdenDossier', 'generateBehoerdenJSON'],
+      '../../zipExport.js': ['prepareDataForExport', 'prepareDownloadFiles'],
+      '../../data/bestattung.js': ['bestattungHtml'],
+      '../../data/patientenverfuegung.js': ['dokumentHtml'],
+      '../../data/vorsorgeauftrag.js': ['vorlageHtml'],
+      '../../cvGenerator.js': ['generateCVHTML'],
+      '../../flyerGenerator.js': ['buildFlyerHtml'],
+      '../icsExport.js': ['buildICS'],
+      '../../premiumCalc.js': ['buildIpvDokument'],
+      '../../budgetSync.js': ['createBudgetReport'],
+      '../../components/FinanzAuswertung.jsx': ['generatePrintHTML'],
+    };
+    for (const [datei, namen] of Object.entries(erzeuger)) {
+      const text = quelle(datei);
+      for (const n of namen) expect(text, datei + ' ' + n).toContain('mitEchtenBetraegen(() => ' + n + 'Roh(...args))');
+    }
   });
 });
 

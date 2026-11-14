@@ -15,6 +15,7 @@
 
 import { escapeHtml as esc } from '../utils/helpers.js';
 import { OFFEN, LUECKE, leer, datumCH, druckSeite } from './patientenverfuegung.js';
+import { mitEchtenBetraegen } from '../utils/geld.js';
 
 const PERSON_FELDER = ['name', 'beziehung', 'geburt', 'adresse'];
 
@@ -73,7 +74,7 @@ export function vorlage(antworten, daten, t) {
   return { saetze };
 }
 
-export function vorlageHtml(antworten, daten, t, lang = 'de') {
+function vorlageHtmlRoh(antworten, daten, t, lang = 'de') {
   const v = vorlage(antworten, daten, t);
   const koerper = `<div class="pv-blatt">
 <div class="va-warnung"><strong>${esc(t('va.vorlage.nichtAbschreiben'))}</strong><br>${esc(t('va.vorlage.warnung'))}</div>
@@ -91,4 +92,9 @@ ${v.saetze.map((s) => `<p>${esc(s)}</p>`).join('\n')}
     begleitPunkte: [t('va.begleit.form'), t('va.begleit.alter'), t('va.begleit.zivilstandsamt'), t('va.begleit.kesb'),
       t('va.begleit.besondere'), t('va.begleit.patientenverfuegung'), t('va.begleit.keineBeratung')],
   });
+}
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export function vorlageHtml(...args) {
+  return mitEchtenBetraegen(() => vorlageHtmlRoh(...args));
 }

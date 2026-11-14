@@ -13,6 +13,7 @@
 // Keine Vorlage Dritter lag beim Schreiben offen (URG Art. 2; nur Gesetz und SAMW).
 
 import { escapeHtml as esc } from '../utils/helpers.js';
+import { mitEchtenBetraegen } from '../utils/geld.js';
 
 export const OFFEN = 'offen';
 
@@ -152,7 +153,7 @@ ${begleitPunkte.filter(Boolean).map((b) => `<li>${esc(b)}</li>`).join('\n')}
 </html>`;
 }
 
-export function dokumentHtml(antworten, daten, t, lang = 'de') {
+function dokumentHtmlRoh(antworten, daten, t, lang = 'de') {
   const d = dokument(antworten, daten, t);
   const abschnitt = (s) => `<section><h2>${esc(s.titel)}</h2>`
     + s.zeilen.map((z) => `<p>${esc(z)}</p>`).join('')
@@ -179,4 +180,9 @@ ${d.bestehendSatz ? `<p style="margin-top:18px">${esc(d.bestehendSatz)}</p>` : '
     begleitPunkte: [t('pv.begleit.ungueltig'), t('pv.begleit.urteilsfaehig'), t('pv.begleit.besprechen'), t('pv.begleit.karte'),
       d.original ? t('pv.begleit.original', { ort: d.original }) : null, t('pv.begleit.neueFassung'), t('pv.begleit.keineBeratung')],
   });
+}
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export function dokumentHtml(...args) {
+  return mitEchtenBetraegen(() => dokumentHtmlRoh(...args));
 }
