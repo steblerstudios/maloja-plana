@@ -1,3 +1,4 @@
+import { mitEchtenBetraegen } from './geld.js';
 // iCal/.ics-Export der Termine & Fristen. Reiner Generator (testbar) +
 // kleiner Download-Helper. All-Day-Events; Wiederkehr via RRULE; Erinnerung
 // 1 Tag vorher (VALARM). Keine Dependency.
@@ -33,7 +34,7 @@ function dtstamp(now = new Date()) {
 
 // reminders: [{ id, title, dueDate (ISO), category, recurrence }]
 // t (optional): Übersetzer für Kategorie-Labels.
-export function buildICS(reminders, t) {
+function buildICSRoh(reminders, t) {
   const stamp = dtstamp();
   const lines = [
     'BEGIN:VCALENDAR',
@@ -98,4 +99,9 @@ export function downloadICS(reminders, t, filename = 'maloja-plana-termine.ics')
   a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export function buildICS(...args) {
+  return mitEchtenBetraegen(() => buildICSRoh(...args));
 }

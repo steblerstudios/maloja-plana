@@ -3,6 +3,7 @@ import { getFullName } from './config/constants.js';
 import { escapeHtml, formatDE } from './utils/helpers.js';
 import { zivilstandLabel } from './utils/zivilstand.js';
 import { auswahlLabel } from './utils/auswahlLabel.js';
+import { mitEchtenBetraegen } from './utils/geld.js';
 
 // Kapitel 5, K (10.11.2026): Geburtsdatum, Nationalität und Zivilstand sind im Lebenslauf freiwillig — die
 // Person wählt sie ab (`persoenlich`, Standard: alle drei an, wie bisher). Abgewählt bleibt das Feld leer und
@@ -61,7 +62,7 @@ export const generateCVTemplate = (data, t, persoenlich = {}) => {
 };
 
 
-export const generateCVHTML = (cvData, t) => {
+const generateCVHTMLRoh = (cvData, t) => {
   const labelPersonal = t ? t('cv.personalData') : 'Personal data';
   const labelExperience = t ? t('cv.experience') : 'Work experience';
   const labelEducation = t ? t('cv.education') : 'Education and qualifications';
@@ -254,3 +255,6 @@ export const downloadCVAsJSON = (data, t) => {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 };
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export const generateCVHTML = (...args) => mitEchtenBetraegen(() => generateCVHTMLRoh(...args));

@@ -6,6 +6,7 @@
 import { getCantonName } from './config/cantonalData.js';
 import { getFullName } from './config/constants.js';
 import { getCantonalLinks } from './data/direktLinks.js';
+import { mitEchtenBetraegen } from './utils/geld.js';
 
 // Das IPV-Dokument, das PremiumSubsidy als JSON herunterlädt. Eine Quelle für Datei
 // und Export-Vorschau (K20): die Vorschau nennt, was genau dieses Objekt enthält.
@@ -25,7 +26,7 @@ const ipvErgebnisFuerDokument = (r, t) => {
 // Sprachkürzel der App (calendar.locale, z. B. «fr-CH»); ohne gültiges Kürzel de-CH.
 const appLocale = (t) => { const l = t ? t('calendar.locale') : ''; return /^[a-z]{2}-[A-Z]{2}$/.test(l) ? l : 'de-CH'; };
 
-export const buildIpvDokument = (data, t, ipvResult) => {
+const buildIpvDokumentRoh = (data, t, ipvResult) => {
   const canton = (data && data.basis && data.basis.canton) || '';
   return {
     title: 'KVG IPV — Kantonal',
@@ -50,3 +51,6 @@ export const getKVGApplicationLink = (canton) => {
 
   return links[canton] || links.default;
 };
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export const buildIpvDokument = (...args) => mitEchtenBetraegen(() => buildIpvDokumentRoh(...args));

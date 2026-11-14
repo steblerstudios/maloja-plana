@@ -21,6 +21,7 @@ import { htmlSprache } from './utils/htmlSprache.js';
 import { zahl } from './utils/geld.js';
 import { plusTage, heuteIso } from './utils/fristen.js';
 import { kvgKuendigungsTermin } from './utils/festeFristen.js';
+import { mitEchtenBetraegen } from './utils/geld.js';
 
 // ─── Fristen (Tage) ───────────────────────────────────────
 // (a) wageClaim/Mindestlohn: 30 Tage — keine gesetzliche Antwortfrist, Lohnkorrektur
@@ -1095,7 +1096,7 @@ const GENERATORS = {
 // VORGESCHAUT werden (`getLetterTemplates` + `briefCanRender` in `BriefGenerator.jsx`), nicht
 // hier. So bleibt der Generator direkt testbar — die Korrektheit des Briefes bleibt für den
 // Tag des Wiedereinschaltens abgesichert, statt hinter dem Flag zu verrosten.
-export function generateLetter(templateKey, data, t, options = {}) {
+function generateLetterRoh(templateKey, data, t, options = {}) {
   const gen = GENERATORS[templateKey];
   if (!gen) return '';
   return gen(data, t, options);
@@ -1110,3 +1111,7 @@ export function briefCanRender(templateKey) {
   return true;
 }
 
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export function generateLetter(...args) {
+  return mitEchtenBetraegen(() => generateLetterRoh(...args));
+}

@@ -4,8 +4,9 @@ import { betragEcht as betrag } from './utils/geld.js'; // Export: immer der wah
 import { keineKontaktperson } from './utils/naGruppen.js';
 import { inDays } from './utils/helpers.js';
 import { organListe } from './utils/organspende.js';
+import { mitEchtenBetraegen } from './utils/geld.js';
 
-export const prepareDataForExport = (data, docs = []) => {
+const prepareDataForExportRoh = (data, docs = []) => {
   return {
     exportDate: new Date().toISOString(),
     version: '5.0',
@@ -191,7 +192,7 @@ const generateCSVBackup = (data, t) => {
   return rows.map(row => row.map(cell => `"${escapeCsvFormula(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
 };
 
-export const prepareDownloadFiles = (data, docs = [], t) => {
+const prepareDownloadFilesRoh = (data, docs = [], t) => {
   return {
     manifest: {
       filename: 'MANIFEST.txt',
@@ -223,3 +224,7 @@ export const initiateBrowserDownload = async (filename, content, mimeType = 'tex
   
   setTimeout(() => URL.revokeObjectURL(url), 100);
 };
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export const prepareDataForExport = (...args) => mitEchtenBetraegen(() => prepareDataForExportRoh(...args));
+export const prepareDownloadFiles = (...args) => mitEchtenBetraegen(() => prepareDownloadFilesRoh(...args));
