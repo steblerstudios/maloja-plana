@@ -1133,7 +1133,7 @@ ${THEMEN.map((t, n) => `                <span class="bildwahl-punkt p${n + 1}" s
 ${THEMEN.map((t, n) => `                <label for="n${n + 1}" style="--x:${t.x}; --y:${t.y}; --farbe:var(--k${t.k})"><span class="zeichen" aria-hidden="true">${zeichen(t.k, `lesen${n + 1}`)}</span>${esc(KAPITEL[t.k].name)}</label>`).join('\n')}
 ${THEMEN.map((t, n) => `                <div class="bildwahl-pop t${n + 1}" style="--x:${t.x}; --y:${t.y}"><h3>${esc(KAPITEL[t.k].name)}: zum Nachlesen</h3><ul role="list">${t.berichte.map(([ziel, titel, satz]) => `<li><a href="${ziel}">${esc(titel)}</a><p>${esc(satz)}</p></li>`).join('')}</ul></div>`).join('\n')}
               </div>
-              <figcaption class="quelle">Der Blick von der Passhöhe über die Kehren ins Bergell · Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
+              <figcaption class="quelle">Der Blick von der Passhöhe über die Kehren ins Bergell · Höhen © swisstopo · Strasse © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL)</figcaption>
             </figure>
           </fieldset>
         </section>
@@ -1161,7 +1161,7 @@ ${VERSPRECHEN.map(([titel], n) => `                <label for="v${n + 1}"${VERSP
 ${VERSPRECHEN.map(([titel, text], n) => `                  <div class="bildwahl-tafel t${n + 1}"><h3>${esc(titel)}</h3><p>${text}</p></div>`).join('\n')}
                 </div>
               </div>
-              <figcaption class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
+              <figcaption class="quelle">Höhen © swisstopo · Strasse © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL)</figcaption>
             </figure>
           </fieldset>
         </section>
@@ -1231,7 +1231,7 @@ ${GERAETE.map((g, i) => `            <span class="geraet-punkt p${i + 1}" style=
           <div class="geraet-wahl">
 ${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; --y:${g.y}">${GERAET_ZEICHEN[g.zeichen]}${esc(g.name)}</label>`).join('\n')}
           </div>
-          <figcaption class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
+          <figcaption class="quelle">Höhen © swisstopo · Strasse © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL)</figcaption>
         </figure>
         <div class="holen">
         <div class="geraet t1">
@@ -1302,7 +1302,7 @@ ${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; -
           <a class="knopf zweit am-punkt oben" style="--x:57.8%; --y:26.6%; --xh:62.6%; --xp:78%" href="#holen">App holen<span class="unsichtbar"> — oben an der Passhöhe</span></a>
         </div>
       </div>
-      <p class="rahmen quelle">Höhen © swisstopo · Strasse © OpenStreetMap</p>
+      <p class="rahmen quelle">Höhen © swisstopo · Strasse © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL)</p>
     </section>
   </main>
 
