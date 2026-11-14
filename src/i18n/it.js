@@ -6398,7 +6398,7 @@ export default {
         userBelow: { sie: 'Il Suo affitto è circa il {pct}% sotto la media della Sua regione.', du: 'Il tuo affitto è circa il {pct}% sotto la media della tua regione.' },
         userEqual: { sie: 'Il Suo affitto è circa nella media della Sua regione.', du: 'Il tuo affitto è circa nella media della tua regione.' },
         structural: 'È soprattutto strutturale — nelle città e nelle regioni richieste, terreni e abitazioni sono più scarsi e cari. La media svizzera spesso lì non esiste nemmeno.',
-        thresholdBreachedLine: { sie: 'Il Suo affitto supera un terzo del Suo reddito.', du: 'Il tuo affitto supera un terzo del tuo reddito.' },
+        thresholdBreachedLine: { sie: 'Le Sue spese per l’alloggio superano un terzo del Suo reddito.', du: 'Le tue spese per l’alloggio superano un terzo del tuo reddito.' },
         source: 'Fonte: [[UST|www.bfs.admin.ch]], rilevazione strutturale sugli affitti {year} · affitto netto, spese escluse',
         vergleichZimmer: 'Confrontato con abitazioni di {n} locali.',
         vergleichAb6: 'Confrontato con abitazioni di 6 locali o più.',

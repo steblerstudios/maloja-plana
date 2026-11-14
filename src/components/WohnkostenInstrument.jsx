@@ -3,9 +3,7 @@ import { text, weight, radius, space, leading, duration, ease } from '../config/
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
-import { eigeneEinnahmen, sumAllExpenses } from '../utils/monatsrechnung.js';
-import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
-import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
+import { wohnkostenRechnung, drittelGrenzeMiete } from '../data/wohnkosten.js';
 import { zahl, betrag } from '../utils/geld.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
@@ -37,28 +35,13 @@ export const REGLER_SCHRITT = 50;
 // Eine erfasste Miete über 3'500 bleibt auf dem Regler erreichbar (kein Sprung beim ersten Schieben).
 export const reglerMax = (heute) => Math.max(REGLER_MAX, Math.ceil(heute / REGLER_SCHRITT) * REGLER_SCHRITT);
 
-const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : 0; };
 const aufRegler = (v, max) => Math.min(max, Math.max(REGLER_MIN, Math.round(v / REGLER_SCHRITT) * REGLER_SCHRITT));
 
-// Reine Rechnung, damit sie ohne DOM geprüft werden kann. `wohnen` ist der gerade bearbeitete Stand
-// des Kapitels, `allData` das ganze Profil, `miete` die (ausprobierte) Nettomiete.
-export function wohnkostenRechnung(wohnen, allData, miete) {
-  const heute = n(wohnen?.rentAmount);
-  const nk = n(wohnen?.utilities);
-  const netto = miete == null ? heute : n(miete);
-  // Eigentum: wie die Monatsrechnung — «Hypothek vorhanden? Nein» zählt nicht.
-  const hypothek = wohnen?.mortgageStatus === 'no' ? 0 : n(wohnen?.mortgagePayment);
-  const eigentum = hypothek > 0;
-  const kosten = netto + nk + hypothek + n(wohnen?.buildingsInsurance) / 12;
-  const { total: einkommen, brutto } = eigeneEinnahmen(allData?.finanzen);
-  const e = haushaltsEinnahmen({ finanzen: allData?.finanzen || {} });
-  const ganzBrutto = brutto && e.lohnArt === 'brutto' && e.lohn > 0 && (e.neben === 0 || e.nebenArt === 'brutto') && e.familienzulagen + e.alimente === 0;
-  const mitPartner = n(partnerEinkommenRoh(allData?.basis)) > 0;
-  const anteil = einkommen > 0 ? (kosten / einkommen) * 100 : null;
-  const profil = { ...(allData || {}), wohnen: { ...(wohnen || {}), rentAmount: netto } };
-  const frei = einkommen > 0 && !brutto ? einkommen - sumAllExpenses(allData?.finanzen, profil) : null;
-  return { heute, nk, netto, kosten, eigentum, einkommen, brutto, ganzBrutto, mitPartner, anteil, ueberDrittel: anteil != null && anteil > 100 / 3, frei };
-}
+// Die Rechnung liegt seit 11.11.2026 in data/wohnkosten.js — eine Quelle für Kapitel, Mietzins-Werkzeug
+// und Budget. Mietzins (MietVergleich) und Budget holen sie über DIESE Datei: so landet sie im
+// bestehenden Baustein «WohnkostenInstrument» und nicht in einem eigenen, dessen Name sonst im
+// Startbündel stünde (gemessen 11.11.2026: eigener Baustein = 65’005 / 65’000 B).
+export { wohnkostenRechnung, drittelGrenzeMiete };
 
 // Welcher Text unter «… % des Einkommens» steht.
 const anteilKey = (r) => r.brutto ? (r.ganzBrutto ? 'wohnenInstrument.anteilBrutto' : 'wohnenInstrument.anteilTeilsBrutto')

@@ -6425,7 +6425,7 @@ export default {
         userBelow: 'Your rent is about {pct}% below the average in your region.',
         userEqual: 'Your rent is about at the average in your region.',
         structural: 'This is mostly structural — in cities and sought-after regions, land and flats are scarcer and pricier. The Swiss average often simply isn\'t available there.',
-        thresholdBreachedLine: 'Your rent exceeds a third of your income.',
+        thresholdBreachedLine: 'Your housing costs exceed a third of your income.',
         source: 'Source: [[FSO|www.bfs.admin.ch]], structural survey on rents {year} · net rent, excl. extra costs',
         vergleichZimmer: 'Compared with {n}-room flats.',
         vergleichAb6: 'Compared with flats of 6 rooms or more.',
