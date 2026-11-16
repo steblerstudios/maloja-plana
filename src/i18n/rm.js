@@ -72,7 +72,8 @@ export default {
       berechtigungen: {
         alimente: { titel: 'Avanzament dals alimors & agid d’incasso', text: 'Sche las contribuziuns d’mantegniment n’arrivan betg, po la vischnanca las avanzar ed gidar a las incassar — uschia che l’uffant na resta betg senza.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Chasadas cun in sulet genitur han savens dretg sin in agid per las premias da la cassa da malsauns — per il genitur ed ils uffants.' },
-        familienzulagen: { titel: 'Supplements da famiglia', text: 'Supplements per uffants e da furmaziun per mintga uffant — recuperabels retroactivamain sche emblidads. Els suondan il genitur che lavura.' },
+        // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+        familienzulagen: { titel: 'Supplements da famiglia', text: "Supplements per uffants e da furmaziun per mintga uffant — supplements emblidads pon vegnir pretendids fin tschintg onns enavos (ATSG Art. 24). Han omadus geniturs il dretg, fixescha la lescha ina successiun (FamZG Art. 7); senza activitad da gudogn datti els cun entradas bassas e senza prestaziuns cumplementaras (FamZG Art. 19)." },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
@@ -185,7 +186,7 @@ export default {
         sozialhilfe: { titel: 'Agid social (era suenter la fin dals dretgs)', text: 'Sche las indemnisaziuns èn exauridas, po l’agid social surpuntar la largia. In dretg, betg carezza — e separà da l’URC.' },
         franchise: { titel: 'Controllar la franchisa', text: 'Cun in pli bass entrada po ina franchisa bassa esser pli segira, ina auta pli favuraivla sche ins va darar tar il medi — controllar mintg’atun.' },
         // TODO(rm): Kapitel 5 (10.11.2026) — die deutsche Fassung ist ergänzt (Quellensteuer genauer, DBG Art. 84, 89a); rm noch nachführen.
-        steuern: { titel: 'Taglias cun in pli bass entrada', text: 'Las indemnisaziuns da dischoccupaziun èn taxablas, ma in pli bass entrada annual munta per ordinari main taglias — la taglia a la funtauna è savens rembursabla.' },
+        steuern: { titel: 'Taglias cun in pli bass entrada', text: "Las indemnisaziuns da dischoccupaziun èn taxablas, ma ina entrada annuala pli bassa munta per ordinari main taglias. Tgi che vegn taxà a la funtauna, a quel deducescha la cassa da dischoccupaziun la taglia a la funtauna era da l’indemnisaziun (DBG Art. 84 al. 2 lit. b). Sch’i è vegnì deducì memia bler, po vegnir dumandada fin ils 31 da mars da l’onn suandant ina taxaziun ordinaria posteriura (DBG Art. 89a). Ella vala lura era per ils onns suandants, uschè ditg che la taglia a la funtauna fiss debita (DBG Art. 89 al. 5). Per la taglia chantunala e communala valan las reglas dal chantun." },
       },
     },
     // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
@@ -553,7 +554,8 @@ export default {
       extLink: { sie: 'Chattar ina organisaziun Spitex en Vossa regiun', du: 'Chattar ina organisaziun Spitex en tia regiun' },
     },
     step2Title: '3 · Indemnisaziun d’assistenza (IPG)',
-    step2Text: 'Tgirar in uffant grevamain malsaun u blessà dat dretg ad ina vacanza d’assistenza pajada, indemnisada tras las indemnisaziuns per perdita da gudogn (IPG).',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    step2Text: "Per tgirar in uffant grevamain malsaun u blessà datti in congedi d’assistenza pajà, indemnisà tras l’urden davart las indemnisaziuns per perdita da gudogn (IPG). Per in commember creschì da la famiglia u per la partenaria u il partenari da vita na datti nagina IPG, ma in congedi pajà da la patruna u dal patrun: il pli 3 dis per eveniment e 10 dis per onn (OR Art. 329h).",
     step2Link: 'Vesair l’indemnisaziun per perdita da gudogn (IPG)',
     step3Title: '4 · Indemnisaziun d’impotenza da la persuna tgirada',
     step3Text: 'Sche la persuna tgirada dovra regularmain agid en il mintgadi, po ella avair dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ella gida a finanziar la tgira necessaria.',
@@ -694,7 +696,8 @@ export default {
     step2Text: { sie: 'Avais Vus anc il vegl permess da manar blau da palpiri? El n’è betg pli valaivel dapi il 1. da november 2024. Baratai el en il format da carta da credit tar l’uffizi chantunal da traffic — il permess sez n’ha nagina data da scadenza.', du: 'Has ti anc il vegl permess da manar blau da palpiri? El n’è betg pli valaivel dapi il 1. da november 2024. Barata el en il format da carta da credit tar l’uffizi chantunal da traffic — il permess sez n’ha nagina data da scadenza.' },
     step2Link: 'Al dossier da las autoritads',
     step3Title: '4 · A partir da 75: controlla medicinala',
-    step3Text: 'A partir da tes 75avel anniversari fa part mintga dus onns ina controlla medicinala da traffic. L’invit vegn dal chantun — i giova d’avair il termin en egl.',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    step3Text: "L’emprima examinaziun medicinala da traffic è debita curt suenter il 75avel anniversari, suenter mintga dus onns. Il chantun ta regorda (VZV Art. 27).",
     step3Button: 'Promemoria «Controlla medicinala» en il chalender',
     step3Done: 'Regurdientscha memorisada en il chalender.',
     step3CalendarLink: 'Guardar en il chalender',
@@ -730,7 +733,7 @@ export default {
     reminderTitle: 'Annunziar la maridaglia a l’uffizi da stadi civil',
     step2Title: '2 · Num & stadi civil',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step2Text: { sie: 'Vus pudais mantegnair Voss num actual u tscherner in num da famiglia cuminaivel. Suenter la maridaglia mida il stadi civil — pensai ad adattar documents d’identitad, datas AVS ed indicaziuns tar il patrun.', du: 'Vus pudais mantegnair voss num actual u tscherner in num da famiglia cuminaivel. Suenter la maridaglia mida il stadi civil — pensai ad adattar documents d’identitad, datas AVS ed indicaziuns tar il patrun.' },
+    step2Text: { sie: "Vus pudais mantegnair Voss num actual u tscherner in num da famiglia cuminaivel: il num da nubil d’ina da las duas persunas (ZGB Art. 160). Suenter la maridaglia mida il stadi civil — pensai ad adattar documents d’identitad, datas AVS ed indicaziuns tar il patrun.", du: "Ti pos mantegnair tes num actual, u vus tschernis in num da famiglia cuminaivel: il num da nubil d’ina da vus duas persunas (ZGB Art. 160). Suenter la maridaglia mida il stadi civil — pensa ad adattar documents d’identitad, datas AVS ed indicaziuns tar il patrun." },
     step3Title: '3 · Taglias',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step3Text: { sie: 'Maridads e partenaris registrads vegnan taxads cuminaivlamain — per tut l’onn a partir da l’onn da la maridaglia. Quai po augmentar u sminuir la grevezza fiscala. Tgi che vegn taxà a la funtauna duess laschar adattar la tariffa. Era Vossa reducziun da premias (RIP) po sa midar cun il retgav cuminaivel — quai na capita betg dapertut da sez. Dumandai tar il post cumpetent, era sch’i sto vegnir annunzià e fin cura.', du: 'Maridads e partenaris registrads vegnan taxads cuminaivlamain — per tut l’onn a partir da l’onn da la maridaglia. Quai po augmentar u sminuir la grevezza fiscala. Tgi che vegn taxà a la funtauna duess laschar adattar la tariffa. Era tia reducziun da premias (RIP) po sa midar cun il retgav cuminaivel — quai na capita betg dapertut da sez. Dumonda tar il post cumpetent, era sch’i sto vegnir annunzià e fin cura.' },
@@ -794,7 +797,7 @@ export default {
     step2Link: 'Guardar il move da chasa',
     step3Title: '3 · Uffants & mantegniment',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step3Text: { sie: 'Cun uffants van avant la chüra e la responsabladad — il bainstar dals uffants stat en il center. Il mantegniment dals uffants ed eventualmain dal conjugal vegn reglà; en cas da dischaccord gida l’APMA u la dretgira. Sche l’auter genitur na paja betg il mantegniment concordà, po Vossa vischnanca al pajar anticipadamain (anticipaziun dal mantegniment) e gidar a l’incassar (agid d’incasso) — Vus na stuais betg currer suenter ils daners suletta. Prendai Vus temp, betg tut sto vegnir decidì immediat.', du: 'Cun uffants van avant la chüra e la responsabladad — il bainstar dals uffants stat en il center. Il mantegniment dals uffants ed eventualmain dal conjugal vegn reglà; en cas da dischaccord gida l’APMA u la dretgira. Sche l’auter genitur na paja betg il mantegniment concordà, po tia vischnanca al pajar anticipadamain (anticipaziun dal mantegniment) e gidar a l’incassar (agid d’incasso) — ti na stos betg currer suenter ils daners suletta. Prendai vus temp, betg tut sto vegnir decidì immediat.' },
+    step3Text: { sie: "Cun uffants van avant la chüra e l’assistenza — il bainstar dals uffants stat en il center. Il mantegniment dals uffants vegn reglà en in contract che l’APMA approvescha, u da la dretgira; in eventual mantegniment dal conjugal tras ina cunvegna u en la protecziun da la lètg da la dretgira (ZGB Art. 176, 287). Sche Vus n’essas betg perina, decida la dretgira. Sch’il mantegniment è fixà uschia e na vegn betg pajà, gida il post spezialisà da Voss chantun a l’incassar (agid d’incasso); las alimentaziuns per uffants po el ultra da quai pajar ordavant (anticipaziun da las alimentaziuns), las premissas regla il chantun. Ina cunvegna senza furma na basta betg per quai — Vus na stuais betg currer suenter ils daners sulets. Prendai temp, betg tut sto vegnir decidì immediat.", du: "Cun uffants van avant la chüra e l’assistenza — il bainstar dals uffants stat en il center. Il mantegniment dals uffants vegn reglà en in contract che l’APMA approvescha, u da la dretgira; in eventual mantegniment dal conjugal tras ina cunvegna u en la protecziun da la lètg da la dretgira (ZGB Art. 176, 287). Sche vus n’essas betg perina, decida la dretgira. Sch’il mantegniment è fixà uschia e na vegn betg pajà, gida il post spezialisà da tes chantun a l’incassar (agid d’incasso); las alimentaziuns per uffants po el ultra da quai pajar ordavant (anticipaziun da las alimentaziuns), las premissas regla il chantun. Ina cunvegna senza furma na basta betg per quai — ti na stos betg currer suenter ils daners sulet. Prenda temp, betg tut sto vegnir decidì immediat." },
     step4Title: '4 · Finanzas & taglias',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     // TODO(rm): provisorisch — Gegenlese (Steuern ganzes Trennungsjahr, 24.09.2026)
@@ -1488,7 +1491,7 @@ export default {
     step2LinkMahnung: 'Anc nagin cumond da pajament, pir in’admoniziun? Admoniziun retschavida', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step3Title: '3 · Proteger il budget & tschertgar cussegl',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step3Text: { sie: 'Voss minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’essas Vus betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.', du: 'Tes minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’es ti betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.' },
+    step3Text: { sie: "Tar in pegnerament dal salari As resta il minimum existenzial tenor il dretg da scussiun (SchKG Art. 93). Spargns pon vegnir pegnerads; betg pegnerabels èn tranter auter objects indispensabels d’utilisaziun persunala, agid social, rentas AVS/AI e prestaziuns cumplementaras (SchKG Art. 92). Quest minimum existenzial fixescha l’uffizi da scussiun tenor directivas chantunalas — el n’è betg la medema cifra sco il basegn fundamental en il budget. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun daventa in attest da perdita. Pli baud, dapli spazi. Sche l’indebitament daventa ina situaziun persistenta, n’essas Vus betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.", du: "Tar in pegnerament dal salari ta resta il minimum existenzial tenor il dretg da scussiun (SchKG Art. 93). Spargns pon vegnir pegnerads; betg pegnerabels èn tranter auter objects indispensabels d’utilisaziun persunala, agid social, rentas AVS/AI e prestaziuns cumplementaras (SchKG Art. 92). Quest minimum existenzial fixescha l’uffizi da scussiun tenor directivas chantunalas — el n’è betg la medema cifra sco il basegn fundamental en il budget. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun daventa in attest da perdita. Pli baud, dapli spazi. Sche l’indebitament daventa ina situaziun persistenta, n’es ti betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu." },
     step3Link: 'Guardar il budget',
     step3LinkSituation: 'Guardar la situaziun «indebità u en scussiun»',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -5007,10 +5010,10 @@ export default {
     patientenverfuegung: { sie: "Ina disposiziun da pazient fixescha tge tractaments medicals che Vus giavischais, sche Vus na pudais betg pli exprimer Voss giavischs. Ella sto esser en scrit, datada e suttascritta — in model emplenì basta (CC art. 371). Models datti tar la FMH u tar la CRS — il meglier discutar quai cun Voss medi da famiglia.", du: "Ina disposiziun da pazient fixescha tge tractaments medicals che ti giavischas, sche ti na pos betg pli exprimer tes giavischs. Ella sto esser en scrit, datada e suttascritta — in model emplenì basta (CC art. 371). Models datti tar la FMH u tar la CRS — il meglier discutar quai cun tes medi da famiglia." },
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
     vorsorgeauftrag: { sie: 'Ein Vorsorgeauftrag bestimmt, wer für Sie entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, können Sie beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3).', du: "Ein Vorsorgeauftrag bestimmt, wer für dich entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, kannst du beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3)." },
-    testament: "En Svizra vala senza testament la successiun legala (ZGB Art. 457 ss.). In testament a maun sto esser cumplettamain scrit a maun, datà e suttascrit.",
+    testament: "En Svizra vala senza testament la successiun legala (ZGB Art. 457 ss.). In testament a maun sto esser scrit cumplettamain a maun, datà e suttascrit (Art. 505 al. 1). Tar la documentaziun publica coopereschan ina persuna da documentaziun e dus perditgas (Art. 499) — sbagls da furma èn lura main probabels. In testament a maun po vegnir deponì tar in post uffizial che il chantun designescha (Art. 505 al. 2).",
     contextFamilienzulagen: { sie: "Per Voss uffants As stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Voss patrun po gidar enavant.", du: "Per Tes uffants Ta stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Tes patrun po gidar enavant." },
     ipv: { sie: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Vus.", du: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Tai." },
-    familienzulagen: "Per uffants datti en Svizra allocaziuns per famiglia. La summa è differenta tenor il chantun — almain CHF 215 per uffant e mais.", // TODO(rm): Ausbildungszulage mind. CHF 268 (FamZG Art. 5) ergänzen, siehe de.js (25.09.2026)
+    familienzulagen: "Per uffants datti en Svizra allocaziuns per famiglia. La summa è differenta tenor il chantun — almain CHF 215 per uffant e mais, per uffants en furmaziun almain CHF 268 (FamZG Art. 5).", // TODO(rm): Ausbildungszulage mind. CHF 268 (FamZG Art. 5) ergänzen, siehe de.js (25.09.2026)
     bewilligung_c: { sie: "La permissiun C è illimitada. Vus na stuais betg la prolungar e avais pratischamain ils medems dretgs sco burgais svizzers.", du: "La permissiun C è illimitada. Ti na stos betg la prolungar e has pratischamain ils medems dretgs sco burgais svizzers." },
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
     el: { sie: 'Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Die EL-Stelle Ihres Kantons sagt Ihnen, ob Sie Anspruch haben (ELG Art. 21).', du: "Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Die EL-Stelle deines Kantons sagt dir, ob du Anspruch hast (ELG Art. 21)." },
@@ -5468,7 +5471,8 @@ export default {
       },
       positionScaffold: '[supplir p.pl. — data, import e tge ch’è betg vegnì u fauss quintà]',
       body2request: 'Jau Vus prej da verifitgar e corriger il quint.',
-      body3: 'Infurmai mai p.pl. en scrit davart il resultat da Vossa verifica. Jau stun a disposiziun per dumondas.',
+      // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+      body3: "Infurmai mai p.pl. en scrit davart il resultat da Vossa verificaziun. Sche Vus mantegnis il quint, As rog jau per ina disposiziun contestabla (art. 49 al. 1 e 51 al. 2 ATSG). Per dumondas stun jau gugent a disposiziun.",
       closing: 'Cordials salids',
       legalNote: 'Nota: en cas d’ina disposiziun formala da la cassa importa il termin d’objecziun 30 dis (LPGA art. 52). Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.',
     },
@@ -5496,7 +5500,8 @@ export default {
       monthlyHint: '(Mes salari mensil brutt importa CHF {amount}.)', // TODO(rm): Gegenlese
       body1: 'mes salari per {months}, da l’import brutt da CHF {amount}, n’è betg entrà enfin oz. Jau Vus prej da versar l’import pendent fin ils {frist}. Jau Vus fiss engraztgaivel per ina curta resposta.',
       closing: 'Cordials salids',
-      legalNote: 'Basa: exigibladad dal salari (OR art. 323). Sch’il pajament na succeda betg, maina la via tras l’autoritad da conciliaziun en chaussas da dretg da lavur u il tribunal da lavur al lieu da lavur, eventualmain tras ina execuziun. Ina retenziun da la lavur (OR art. 82) u ina disditga immediata è mo cussegliabla suenter avair consultà in post spezialisà. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.',
+      // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+      legalNote: "Basa: exigibladad dal salari (OR art. 323). Sch’il pajament na succeda betg, maina la via tras l’autoritad da conciliaziun en chaussas da dretg da lavur resp. il tribunal da lavur al lieu, nua che Vus lavurais per ordinari, u al domicil resp. a la sedia dal patrun (ZPO art. 34 al. 1), eventualmain tras ina scussiun. Ina retenziun da la lavur (OR art. 82) u ina disditga immediata è mo cussegliabla suenter avair consultà in post spezialisà. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.",
       reminderTitle: 'Resposta spetgada — salari nunpajà',
     },
     // ─── Brevs per eveniments da la vita (26.09.2026) — funtaunas en de.js.
@@ -6232,7 +6237,8 @@ export default {
     zweitmeinung: 'Secunda opiniun',
     zweitmeinungNote: { sie: 'Vus avais il dretg ad ina secunda opiniun medicinala.', du: 'Ti has il dretg ad ina secunda opiniun medicinala.' },
     gynaeko: 'Prevenziun ginecologica',
-    gynaekoNote: 'PAP-frotis mintga 3 onns suenter 2 resultats normals (a partir da 21 o.).',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    gynaekoNote: "Las emprimas duas examinaziuns cun frotis da cancer cun in onn distanza, suenter mintga 3 onns, sch’ils resultats èn normals (KLV Art. 12e).",
     gynaeko3j: 'Mintga 3 onns',
     empfehlungShow: 'Mussar la recumandaziun {sources}',
     empfehlungHide: 'Zuppentar la recumandaziun',
@@ -6254,7 +6260,8 @@ export default {
     gynaekoSynthese: 'Omadus recumondan main savens che la pratica svizra — l’assicuranza da basa cuvra la prevenziun en il ritmus recumandà.',
     gynaekoQuelle: 'Funtaunas: directiva OMS 2021 · Codex europeic cunter il cancer, 5avla ediziun.',
     mammografie: 'Mammografia-screening',
-    mammografieNote: 'Dunnas 50–74 o. en chantuns cun program da screening.',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    mammografieNote: "Dunnas a partir da 50 onns, mintga 2 onns, en il program dal chantun, nua ch’i dat in (KLV Art. 12e).",
     mammografie2j: 'Mintga 2 onns',
     mammografieWho: 'Mintga 2 onns per dunnas da 50–74 onns.',
     mammografieEu: 'Mintga 2 onns (50–69); in pau main savens tar 45–49 e 70–74 onns.',
@@ -6270,7 +6277,8 @@ export default {
     mammoGeoCheck: 'Glista actuala per chantun tar',
     mammoGeoLinkLabel: 'Swiss Cancer Screening',
     darmkrebs: 'Screening dal cancer intestinal',
-    darmkrebsNote: 'Colonoscopia a partir da 50 o., mintga 10 onns.',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    darmkrebsNote: "Da 50 fin 74 onns: test da la merda mintga 2 onns u colonoscopia mintga 10 onns (KLV Art. 12e).",
     darmkrebs10j: 'Mintga 10 onns',
     darmkrebsEu: 'Test da la feces (FIT) mintga 2 onns u colonoscopia mintga 10 onns (50–74 onns).',
     darmkrebsSynthese: 'L’assicuranza da basa cuvra quest ritmus.',
@@ -6296,7 +6304,8 @@ export default {
     schwangerschaftNote: 'Tut las controllas e la naschientscha èn libras da franschisa.',
     schwangerschaftFrei: 'Liber da franschisa',
     schwangerschaftDetail1: '7 controllas e 2 ultrasuns tar ina gravidanza normala — tar ina gravidanza da ristga uschè bleras sco medicinalmain necessari.',
-    schwangerschaftDetail2: 'Ni franschisa ni participaziun sin prestaziuns da maternitad — a partir da la 13avla emna da gravidanza fin 8 emnas suenter la naschientscha.',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    schwangerschaftDetail2: "Las prestaziuns da maternitad (controllas, naschientscha, cussegliaziun d’allattar) èn durant l’entira gravidanza senza franschisa e senza participaziun. Per auters tractaments, per exempel en cas da malsogna, vala quai a partir da la 13avla emna da gravidanza fin 8 emnas suenter la naschientscha (KVG Art. 64 al. 7).",
     schwangerschaftDetail3: 'Plus ina suandanta controlla tranter la 6avla e la 10avla emna suenter la naschientscha.',
     schwangerschaftDetailQuelle: 'Funtauna: LAMal / OPre art. 13–14.',
     genetik: 'Tests genetics',
@@ -6310,7 +6319,8 @@ export default {
     generikaNote: 'Cupids, savens cun parteniment pli bass (10% empè da 40%).',
     generikaBonus: 'Parteniment pli bass pussaivel',
     spitalAllg: 'Clinica (secziun generala)',
-    spitalAllgNote: 'Tractament staziunar en la secziun generala en il chantun da domicil.',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    spitalAllgNote: "Tractament staziunar en la partiziun generala d’in ospital da glista, era en in auter chantun. Pajà vegn il pli tenor la tariffa dal chantun da domicil (KVG Art. 41 al. 1bis).",
     spitalHalbpriv: 'Clinica (mez-privat/privat)',
     spitalHalbprivNote: 'Mo cun assicuranza supplementara. LAMal cuvra mo la secziun generala.',
     ambulant: 'Intervenziuns ambulantas',
@@ -6318,7 +6328,8 @@ export default {
     reha: 'Reabilitaziun',
     rehaNote: 'Cun ordinaziun medicinala e garanzia da custs da la CM.',
     zahnarzt: 'Dentist (rutina)',
-    zahnarztNote: 'Tractaments dentals NA èn BETG cupids da la LAMal. Mo assicuranza supplementara.',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    zahnarztNote: "Tractaments dentals na vegnan per regla betg cuvrids da l’assicuranza da basa, auter che en cas da malsognas grevas (KVG Art. 31). Uschiglio dovri ina assicuranza supplementara.",
     zahnUnfall: 'Tractament dental (accident)',
     zahnUnfallNote: "Tar accidents cupì da l'assicuranza d'accidents u da la LAMal.",
     kieferChirurgie: 'Chirurgia da la mandibla',
@@ -6329,14 +6340,17 @@ export default {
     ergo: 'Ergoterapia',
     ergoNote: 'Cupida cun ordinaziun medicinala.',
     psycho: 'Psicoterapia',
-    psychoNote: 'Dapi 2022 era tar psicoterapeuts psicologics (model da prescripziun).',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    psychoNote: "Dapi fanadur 2022 era tar psicoterapeutas e psicoterapeuts psicologics, sin ordinaziun medicinala, il pli 15 sesidas per ordinaziun (KLV Art. 11b).",
     psychoModell: 'Model da prescripziun dapi 2022',
     chiropraktik: 'Chiropratica',
     chiropraktikNote: 'Accessibla directamain senza transferiment.',
     akupunktur: 'Acupunctura',
-    akupunkturNote: "Mo sche exequida d'in medi FMH cun attest da qualificaziun.",
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    akupunkturNote: "Mo tar ina medica u in medi cun furmaziun supplementara tenor il program da qualificaziun da l’Institut svizzer per la furmaziun medicinala supplementara e cuntinuanta (ISFM, KLV Art. 4b).",
     homoeoDurch: 'Omeopatia / antroposofia',
-    homoeoDurchNote: "Mo sche exequida d'in medi FMH cun attest da qualificaziun.",
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    homoeoDurchNote: "Mo tar ina medica u in medi cun furmaziun supplementara tenor il program da qualificaziun da l’ISFM (KLV Art. 4b).",
     aerztlich: 'Mo tras medi FMH',
     brille: 'Egliers / lentillas da contact',
     brilleNote: 'Uffants fin 18 o.: CHF 180/onn. Creschids: betg cupì dapi 2011.',
@@ -6363,7 +6377,8 @@ export default {
     spitex: 'Spitex / tgira a chasa',
     spitexNote: 'Prestaziuns da tgira cun ordinaziun medicinala.',
     franchiseTitle: 'Franschisa & parteniment',
-    franchiseExplain: { sie: 'La franschisa è Voss parteniment annual. Suenter pajais Vus 10% dals custs (max. CHF 700/onn).', du: 'La franschisa è Tes parteniment annual. Suenter pajas Ti 10% dals custs (max. CHF 700/onn).' },
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    franchiseExplain: { sie: "La franschisa pajais Vus mintga onn l’emprim sez. Suenter pajais Vus 10 % dals custs sco participaziun, il pli CHF 700 per onn, per uffants CHF 350 (KVG Art. 64, KVV Art. 103).", du: "La franschisa pajas ti mintga onn l’emprim sez. Suenter pajas ti 10 % dals custs sco participaziun, il pli CHF 700 per onn, per uffants CHF 350 (KVG Art. 64, KVV Art. 103)." },
     // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     personLabel: 'Versicherte Person',
     // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
@@ -6381,7 +6396,8 @@ export default {
     selbstbehaltMax: 'Maximum dal parteniment',
     kasseZahlt: 'La cassa paja',
     eigenanteil: { sie: 'Vossa part', du: 'Tia part' },
-    selbstbehaltDone: 'Parteniment exhaustà — dapi ussa paja la cassa 100%.',
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    selbstbehaltDone: "Participaziun exausta — da qua davent paja la cassa ils ulteriurs custs da l’assicuranza da basa, cun excepziun da CHF 15 per di d’ospital (betg per uffants e creschids giuvens en furmaziun, KVV Art. 104).",
     statusInFranchise: { sie: 'Anc en la franschisa: fin a CHF {offen} dapli pajais Vus tut sez — silsuenter cumenza il parteniment da 10%.', du: 'Anc en la franschisa: fin a CHF {offen} dapli pajas Ti tut sez — silsuenter cumenza il parteniment da 10%.' },
     statusInSelbstbehalt: { sie: 'Franschisa cuntanschida. Dapi ussa pajais Vus 10% — anc CHF {sbOffen} fin al maximum dal parteniment.', du: 'Franschisa cuntanschida. Dapi ussa pajas Ti 10% — anc CHF {sbOffen} fin al maximum dal parteniment.' },
     verbrauchSaved: 'Memorisà per {year}.',
@@ -6838,7 +6854,8 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Kapitel 4, V1, 10.11.2026)
     title: 'Cuvrida d’accident: spargnar cun ina plazza',
     titleUnter8: 'Tegnair la cuvrida d’accident tar la cassa',
-    body: { sie: 'Tgi che lavura almain 8 uras l’emna per in patrun è assicurà·da tras la plazza er cunter accidents en il temp liber. Lura pudais Vus deselecziunar la cuvrida d’accident tar la cassa da malsauns; quai diminuescha la premia. Sch’la plazza finescha, annunziai quai a la cassa da malsauns: la protecziun tras la plazza finescha il 31avel di suenter l’ultim di cun dretg sin almain la mesadad dal salari; cun ina assicuranza tenor cunvegna pudais Vus prolungar ella fin 6 mais (art. 13 OAAc, art. 3 LAAc).', du: 'Tgi che lavura almain 8 uras l’emna per in patrun è assicurà·da tras la plazza er cunter accidents en il temp liber. Lura pos ti deselecziunar la cuvrida d’accident tar la cassa da malsauns; quai diminuescha la premia. Sch’la plazza finescha, annunzia quai a la cassa da malsauns: la protecziun tras la plazza finescha il 31avel di suenter l’ultim di cun dretg sin almain la mesadad dal salari; cun ina assicuranza tenor cunvegna pos ti prolungar ella fin 6 mais (art. 13 OAAc, art. 3 LAAc).' },
+    // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+    body: { sie: "Tgi che lavura almain 8 uras l’emna per ina patruna u in patrun, è assicurà tras la plazza era cunter accidents en il temp liber. Lura pudais Vus deselecziunar la cuvrida d’accident tar la cassa da malsauns; quai diminuescha la premia. Sche la plazza finescha, annunziai quai a la cassa da malsauns: la protecziun cunter accidents tras la plazza finescha il 31avel di suenter l’ultim di cun dretg sin almain la mesadad dal salari; cun ina assicuranza tenor cunvegna pudais Vus prolungar ella fin 6 mais (UVV Art. 13, UVG Art. 3, KVG Art. 8 e 10).", du: "Tgi che lavura almain 8 uras l’emna per ina patruna u in patrun, è assicurà tras la plazza era cunter accidents en il temp liber. Lura pos ti deselecziunar la cuvrida d’accident tar la cassa da malsauns; quai diminuescha la premia. Sche la plazza finescha, annunzia quai a la cassa da malsauns: la protecziun cunter accidents tras la plazza finescha il 31avel di suenter l’ultim di cun dretg sin almain la mesadad dal salari; cun ina assicuranza tenor cunvegna pos ti prolungar ella fin 6 mais (UVV Art. 13, UVG Art. 3, KVG Art. 8 e 10)." },
     bodyOffen: { sie: 'Lavurais Vus almain 8 uras l’emna per in patrun? Lura essas Vus assicurà·da tras la plazza er en il temp liber e pudais deselecziunar la cuvrida d’accident da la cassa da malsauns. Cun damain uras tegnai ella (art. 13 OAAc). Inditgai Voss pensum sut «Furmaziun & lavur», lura mussa l’app quai che correspunda.', du: 'Lavuras ti almain 8 uras l’emna per in patrun? Lura es ti assicurà·da tras la plazza er en il temp liber e pos deselecziunar la cuvrida d’accident da la cassa da malsauns. Cun damain uras tegna ella (art. 13 OAAc). Inditgescha tes pensum sut «Furmaziun & lavur», lura mussa l’app quai che correspunda.' },
     bodyUnter8: { sie: 'Cun damain che 8 uras l’emna tar in patrun essas Vus assicurà·da tras la plazza mo durant la lavur e sin la via a la lavur, betg en il temp liber (art. 13 OAAc). Tegnai la cuvrida d’accident tar la cassa da malsauns.', du: 'Cun damain che 8 uras l’emna tar in patrun es ti assicurà·da tras la plazza mo durant la lavur e sin la via a la lavur, betg en il temp liber (art. 13 OAAc). Tegna la cuvrida d’accident tar la cassa da malsauns.' },
     fieldSuggest: { sie: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pudais Vus deselecziunar la cuvrida d’accident da la cassa.', du: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pos ti deselecziunar la cuvrida d’accident da la cassa.' },
@@ -8227,7 +8244,8 @@ export default {
     rights: {
       rechtsvertretung: { sie: "Represchentanza giuridica gratuita: en il center federal d'asil As vegn attribuida ina represchentanza giuridica gratuita che As accumpogna tras la procedura. Acceptai la — quai è Voss dretg.", du: "Represchentanza giuridica gratuita: en il center federal d'asil At vegn attribuida ina represchentanza giuridica gratuita che T'accumpogna tras la procedura. Acceptescha la — quai è Tes dretg." },
       anhoerung: { sie: "Audiziun & interpret: Vus avais dretg ad ina audiziun davart Voss motivs da fugia, cun translaziun.", du: "Audiziun & interpret: Ti has dretg ad ina audiziun davart Tes motivs da fugia, cun translaziun." },
-      beschwerde: { sie: "Recurs: Vus pudais contestar ina decisiun negativa — Vossa represchentanza giuridica As sustegna.", du: "Recurs: Ti pos contestar ina decisiun negativa — Tia represchentanza giuridica At sustegna." },
+      // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+      beschwerde: { sie: "Recurs: Vus pudais contestar ina decisiun negativa. Sche Vossa represchentanza giuridica tegna in recurs per senza speranza, po ella terminar il mandat (AsylG Art. 102h). Lura As drizzai immediat ad in post da cussegliaziun — il termin cuntinuescha a currer.", du: "Recurs: Ti pos contestar ina decisiun negativa. Sche tia represchentanza giuridica tegna in recurs per senza speranza, po ella terminar il mandat (AsylG Art. 102h). Lura ta drizza immediat ad in post da cussegliaziun — il termin cuntinuescha a currer." },
     },
     fristenTitle: "Impurtant: ils termins èn curts",
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
@@ -8253,14 +8271,17 @@ export default {
         reisen: "Mo en cas excepziunals, cun permissiun dal SEM per motivs impurtants (p.ex. malsogna greva u mort d'in confamigliar).",
       },
       s: {
-        arbeit: "Permess, senza termin da spetga — il patrun annunzia simplamain la lavur.",
-        familie: "Il conjugal e las uffants minorens pon vegnir e survegnan er il status S.",
+        // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+        arbeit: "Permess, senza termin da spetga — lavurar è permess, uschespert che la plazza è annunziada (VZAE Art. 53, 65).",
+        // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+        familie: "La conjugala u il conjugal ed uffants minorens pon suandar, sche la famiglia è vegnida separada tras ils eveniments, e survegnan era il status S (AsylG Art. 71).",
         // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
         // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
         reisen: { sie: 'Mit Status S wegen des Kriegs in der Ukraine dürfen Sie ohne Reisebewilligung ins Ausland reisen und zurückkehren, solange der Schutz besteht (RDV Art. 9 Abs. 8). Wer sich wiederholt oder länger im Heimatstaat aufhält, riskiert den Widerruf des Schutzes (AsylG Art. 78). Für andere Personen mit Status S gelten die Regeln für vorläufig Aufgenommene sinngemäss.', du: 'Mit Status S wegen des Kriegs in der Ukraine darfst du ohne Reisebewilligung ins Ausland reisen und zurückkehren, solange der Schutz besteht (RDV Art. 9 Abs. 8). Wer sich wiederholt oder länger im Heimatstaat aufhält, riskiert den Widerruf des Schutzes (AsylG Art. 78). Für andere Personen mit Status S gelten die Regeln für vorläufig Aufgenommene sinngemäss.' },
       },
       f: {
-        arbeit: "Permess en tut la Svizra, senza termin da spetga — il patrun annunzia simplamain la lavur.",
+        // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+        arbeit: "Permess en tut la Svizra, nagin termin da spetga — la plazza sto vegnir annunziada avant il cumenzament (AIG Art. 85a; cun asil AsylG Art. 61).",
         // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
         familie: 'Frühestens drei Jahre nach Anordnung der vorläufigen Aufnahme möglich (Ehepartner und ledige Kinder unter 18). Bedingungen: zusammenwohnen, eine passende Wohnung, keine Sozialhilfe und keine Ergänzungsleistungen, Verständigung in der Landessprache am Wohnort oder Anmeldung zu einem Sprachkurs — gilt nicht für Kinder (AIG Art. 85c).',
         // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
@@ -8268,7 +8289,8 @@ export default {
         reisen: { sie: 'Vorläufig aufgenommene Flüchtlinge erhalten den Reiseausweis für Flüchtlinge (AIG Art. 59); für sie gilt dasselbe wie beim Ausweis B. Für alle anderen gibt es keine freie Reise: In den ersten drei Jahren gibt es ein Reisedokument nur aus wichtigen Gründen, danach auch aus anderen Gründen für höchstens 30 Tage pro Jahr; in den Heimatstaat nur ausnahmsweise in begründeten Fällen (RDV Art. 9).', du: 'Vorläufig aufgenommene Flüchtlinge erhalten den Reiseausweis für Flüchtlinge (AIG Art. 59); für sie gilt dasselbe wie beim Ausweis B. Für alle anderen gibt es keine freie Reise: In den ersten drei Jahren gibt es ein Reisedokument nur aus wichtigen Gründen, danach auch aus anderen Gründen für höchstens 30 Tage pro Jahr; in den Heimatstaat nur ausnahmsweise in begründeten Fällen (RDV Art. 9).' },
       },
       b: {
-        arbeit: "Permess en tut la Svizra, senza termin da spetga — il patrun annunzia simplamain la lavur.",
+        // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
+        arbeit: "Permess en tut la Svizra, nagin termin da spetga — la plazza sto vegnir annunziada avant il cumenzament (AIG Art. 85a; cun asil AsylG Art. 61).",
         familie: "Privilegià: il conjugal e las uffants minorens separads tras la fugia pon vegnir e vegnan includids en il status da fugitiv.",
         reisen: "Viagiar è pussaivel cun in document da viagi per fugitivs — ma mai en il pajais d'origin.",
       },
@@ -8306,7 +8328,7 @@ export default {
     intro: { sie: "In'orientaziun che Vus pudessas survegnir sco indemnisaziun dal di en cas da perdita da lavur. Il quint obligatoric vegn fatg dal RAV e da Vossa cassa da dischoccupaziun.", du: "In'orientaziun che ti pudessas survegnir sco indemnisaziun dal di en cas da perdita da lavur. Il quint obligatoric vegn fatg dal RAV e da tia cassa da dischoccupaziun." },
     bruttolohn: "Salari brut mensil fin ussa (CHF)",
     // TODO(rm): Kapitel 5 (10.11.2026) — die deutsche Fassung ist ergänzt (Lohnbasis 6/12 Monate, 13. Monatslohn); rm noch nachführen.
-    bruttolohnHint: { sie: "Voss salari brut suttamess a l'AVS dals ultims 6 mais. Maximum assicurà: CHF 12’350/mais.", du: "Tes salari brut suttamess a l'AVS dals ultims 6 mais. Maximum assicurà: CHF 12’350/mais." },
+    bruttolohnHint: { sie: "Voss salari brut mensil suttamess a l’AVS: la media dals ultims 6 mais da contribuziun u, sch’ella è pli auta, dals ultims 12 (AVIV Art. 37). In 13avel salari mensil cunvegnì en il contract fa part dal gudogn assicurà (AVIG Art. 23 al. 1). Co ch’el vegn repartì sin ils mais, fixescha la cassa da dischoccupaziun. Per ina stima pudais Vus quintar in dudeschavel da quel tar il salari mensil. Assicurà è il pli CHF 12’350 per mais.", du: "Tes salari brut mensil suttamess a l’AVS: la media dals ultims 6 mais da contribuziun u, sch’ella è pli auta, dals ultims 12 (AVIV Art. 37). In 13avel salari mensil cunvegnì en il contract fa part dal gudogn assicurà (AVIG Art. 23 al. 1). Co ch’el vegn repartì sin ils mais, fixescha la cassa da dischoccupaziun. Per ina stima pos ti quintar in dudeschavel da quel tar il salari mensil. Assicurà è il pli CHF 12’350 per mais." },
     bruttoNettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari brut per l'AC.",
     keinLohnHint: "L’entrada en il profil n’è betg registrada sco salari d’ina occupaziun, perquai n’è il champ betg preimplenì. In salari pli baud po vegnir endatà qua. La cassa da dischoccupaziun scleresch, sch’i dat in dretg. Maximum assicurà: CHF 12’350/mais.", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
