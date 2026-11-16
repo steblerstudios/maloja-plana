@@ -49,9 +49,7 @@ const ipvAnnahmenTexte = (t, a) => [
 ].filter(Boolean);
 
 export function formatCHF(value) {
-  const n = Math.round(value);
-  if (n === 0) return 'CHF 0';
-  return betrag(n); // utils/geld.js — eine Quelle
+  return betrag(Math.round(value)); // utils/geld.js — auch «CHF 0» verbirgt der Sichtschutz // utils/geld.js — eine Quelle
 }
 
 export const StatusCard = ({ palette, icon, title, status, statusColor, detail, onClick }) =>

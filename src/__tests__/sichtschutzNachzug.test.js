@@ -7,7 +7,7 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { betragText } from '../components/BetragText.jsx';
+import { betragText, betragsZahl } from '../components/BetragText.jsx';
 import { VERBORGEN } from '../utils/geld.js';
 
 globalThis.document = globalThis.document || { documentElement: { dataset: {} } };
@@ -69,6 +69,14 @@ describe('betragText — sichtbar «CHF ···», vorgelesen «Betrag verborgen�
     document.documentElement.dataset.betraege = 'aus';
     expect(text(betragText(t, [1260, 2520]))).not.toMatch(/\d/);
   });
+  it('betragsZahl: Teilbeträge ohne «CHF» verraten den Gesamtbetrag nicht', () => {
+    expect(betragsZahl(1234)).toBe('1’234');
+    document.documentElement.dataset.betraege = 'aus';
+    expect(betragsZahl(1234)).toBe('···');
+    expect(betragsZahl(null)).toBe('–');
+    expect(quelle('VorsorgeRechner.jsx')).toMatch(/'BVG ' \+ betragsZahl\(end\.bvg\)/);
+    expect(quelle('SozialhilfeRechner.jsx')).not.toMatch(/tdRight[^\n]*fmt\(result\./);
+  });
   it('Leeres bleibt «–», auch mit Sichtschutz', () => {
     document.documentElement.dataset.betraege = 'aus';
     expect(betragText(t, null)).toBe('–');
@@ -92,9 +100,9 @@ describe('Schalter, Notfallkarte, Brief-Vorschau', () => {
   it('Brief-Vorschau: unscharf und für Bildschirmleser verdeckt, bis man sie antippt', () => {
     const b = quelle('BriefGenerator.jsx');
     expect(b).toMatch(/const verdeckt = sichtschutzAn && !vorschauOffen;/);
-    expect(b).toMatch(/useEffect\(\(\) => \{ setVorschauOffen\(false\); \}, \[selected, sichtschutzAn\]\);/);
+    expect(b).toMatch(/const vorschauOffen = offenFuer === selected;/);
     expect(b).toMatch(/filter: verdeckt \? 'blur\(6px\)' : 'none'/);
-    expect(b).toMatch(/const aufdecken = \(\) => \{ setVorschauOffen\(true\);/);
+    expect(b).toMatch(/const aufdecken = \(\) => \{ setOffenFuer\(selected\);/);
     expect(b).not.toMatch(/'button', \{[^}]*inset: 0/);
   });
 });

@@ -9,7 +9,7 @@ import { aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { betrag, zahl } from './utils/geld.js';
-import { betragText } from './components/BetragText.jsx';
+import { betragText, betragsZahl } from './components/BetragText.jsx';
 import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 import { hatAusweisFNS } from './data/ausweis.js';
@@ -192,46 +192,46 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
               result.wohnform === 'familienaehnlich' ? t('sh.gblAnteil', { einheit: result.haushaltGroesse, haushalt: result.haushaltGroesse + result.weiterePersonen })
                 : result.wohnform === 'zweckWg' ? t('sh.gblZweckWg', { einheit: result.haushaltGroesse })
                 : result.haushaltGroesse + ' ' + t('sh.personen')) + ')'),
-            React.createElement('td', { style: s.tdRight }, fmt(result.gbl))
+            React.createElement('td', { style: s.tdRight }, betragsZahl(result.gbl))
           ),
           React.createElement('tr', null,
             React.createElement('td', { style: s.td }, t('sh.wohnkosten')),
-            React.createElement('td', { style: s.tdRight }, fmt(result.wohnkosten))
+            React.createElement('td', { style: s.tdRight }, betragsZahl(result.wohnkosten))
           ),
           React.createElement('tr', null,
             React.createElement('td', { colSpan: 2, style: { ...s.td, ...s.hint, paddingTop: 0 } }, t('sozialhilfe.rentLimitUnbekannt'))
           ),
           React.createElement('tr', null,
             React.createElement('td', { style: s.td }, t('sh.kvgLabel')),
-            React.createElement('td', { style: s.tdRight }, fmt(result.kvgPraemie))
+            React.createElement('td', { style: s.tdRight }, betragsZahl(result.kvgPraemie))
           ),
           result.erwerbsunkosten > 0 && React.createElement('tr', null,
             React.createElement('td', { style: s.td }, t('sh.erwerbsunkostenZeile')),
-            React.createElement('td', { style: s.tdRight }, fmt(result.erwerbsunkosten))
+            React.createElement('td', { style: s.tdRight }, betragsZahl(result.erwerbsunkosten))
           ),
           React.createElement('tr', null,
             React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, t('sh.bedarf')),
-            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.semi } }, fmt(result.bedarf))
+            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.semi } }, betragsZahl(result.bedarf))
           ),
           result.totalEinkommen > 0 && React.createElement('tr', null,
             React.createElement('td', { style: s.td }, t('sh.einkommenTotal')),
-            React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.totalEinkommen))
+            React.createElement('td', { style: s.tdRight }, '− ' + betragsZahl(result.totalEinkommen))
           ),
           // Freibetrag nur, wenn eine Lücke bleibt (er gilt im Bezug) — sonst ginge die Tabelle nicht auf.
           result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
             React.createElement('td', { style: { ...s.td, color: palette.sageDeep } }, t('sh.efbLabel')),
-            React.createElement('td', { style: { ...s.tdRight, color: palette.sageDeep } }, '+ ' + fmt(result.efb))
+            React.createElement('td', { style: { ...s.tdRight, color: palette.sageDeep } }, '+ ' + betragsZahl(result.efb))
           ),
           result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
             React.createElement('td', { colSpan: 2, style: { ...s.td, ...s.hint, paddingTop: 0 } }, t('sozialhilfe.efbGeschaetzt'))
           ),
           result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
             React.createElement('td', { style: s.td }, t('sh.anrechenbar')),
-            React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.anrechenbaresEinkommen))
+            React.createElement('td', { style: s.tdRight }, '− ' + betragsZahl(result.anrechenbaresEinkommen))
           ),
           React.createElement('tr', null,
             React.createElement('td', { style: { ...s.td, fontWeight: weight.bold } }, t('sh.sozialhilfe')),
-            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.bold } }, result.anspruchOffen || result.efbEntscheidet ? '—' : fmt(result.sozialhilfeAnspruch))
+            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.bold } }, result.anspruchOffen || result.efbEntscheidet ? '—' : betragsZahl(result.sozialhilfeAnspruch))
           )
         )
       ),

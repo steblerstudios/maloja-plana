@@ -210,12 +210,14 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
   // Sichtschutz «Beträge verbergen»: die Vorschau ist das Dokument und zeigt darum echte Beträge
   // (mitEchtenBetraegen). Am Bildschirm liegt sie unscharf, bis man sie antippt — wie die
   // Betragsfelder (tokens.css). Entscheid Sophie 16.11.2026, Auswahl «Unscharf, antippen».
-  const [vorschauOffen, setVorschauOffen] = useState(false);
+  const [offenFuer, setOffenFuer] = useState(null);
   const vorschauRef = useRef(null);
   // Aufgedeckt gilt nur für diese Vorlage und diesen Sichtschutz: Vorlagenwechsel oder Sichtschutz
   // aus → wieder zu, beim nächsten Einschalten liegt die Vorschau wieder unscharf (a11y-Prüfung 16.11.).
+  // Im Rendern abgeleitet, nicht per Effekt zurückgesetzt — sonst stünde sie einen Frame lang offen.
   const sichtschutzAn = betraegeVerborgen();
-  useEffect(() => { setVorschauOffen(false); }, [selected, sichtschutzAn]);
+  const vorschauOffen = offenFuer === selected;
+  useEffect(() => { if (!sichtschutzAn) setOffenFuer(null); }, [sichtschutzAn]);
   const [printed, setPrinted] = useState(false);
   // Frist in den Kalender gelegt (ruhige Bestätigung statt Doppel-Anlage).
   // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts im echten Kalender).
@@ -605,7 +607,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         // sein Fokusring (tokens.css, outline-offset 2px) innerhalb des Rahmens sichtbar (WCAG 2.4.7).
         // Danach geht der Fokus in die Vorschau, statt auf <body> zu fallen.
         verdeckt && (() => {
-          const aufdecken = () => { setVorschauOffen(true); requestAnimationFrame(() => vorschauRef.current?.focus()); };
+          const aufdecken = () => { setOffenFuer(selected); requestAnimationFrame(() => vorschauRef.current?.focus()); };
           return React.createElement('div', {
             onClick: aufdecken,
             style: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },

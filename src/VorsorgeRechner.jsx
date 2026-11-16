@@ -14,7 +14,7 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { giltAlsVerheiratet, warVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { zahl, betrag, betragSpanne } from './utils/geld.js';
-import { betragText } from './components/BetragText.jsx';
+import { betragText, betragsZahl } from './components/BetragText.jsx';
 import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './utils/beitragsjahreAnnahme.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
@@ -498,7 +498,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           const isOpen = ikExpanded === ph.von;
           const count = ph.jahre.length;
           const avg = Math.round(ph.jahre.reduce((sum, e) => sum + (Number(e.einkommen) || 0), 0) / count);
-          const meta = ph.von + (ph.bis > ph.von ? '–' + ph.bis : '') + ' · ' + count + ' ' + t('vr.jahre') + (ph.typ !== IK_TYP.LUECKE ? ' · Ø ' + fmt(avg) : '');
+          const meta = ph.von + (ph.bis > ph.von ? '–' + ph.bis : '') + ' · ' + count + ' ' + t('vr.jahre') + (ph.typ !== IK_TYP.LUECKE ? ' · Ø ' + betragsZahl(avg) : '');
           return React.createElement('div', { key: ph.typ + ph.von, style: { border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', marginBottom: space.xs + 'px', overflow: 'hidden' } },
             React.createElement('button', {
               onClick: () => setIkExpanded(isOpen ? null : ph.von),
@@ -680,7 +680,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             React.createElement('div', { style: s.label }, t('vr.zukunftEnde') + ' (' + end.alter + ')'),
             React.createElement('div', { style: s.big }, betragText(t, end.total)),
             React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
-              'BVG ' + fmt(end.bvg) + ' · 3a ' + fmt(end.s3a) + ' · 3b ' + fmt(end.s3b))
+              'BVG ' + betragsZahl(end.bvg) + ' · 3a ' + betragsZahl(end.s3a) + ' · 3b ' + betragsZahl(end.s3b))
           ),
           grafik: React.createElement('div', null,
           (() => {
@@ -746,7 +746,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               React.createElement('text', { x: Math.min(x1 - 78, (xret + x1) / 2), y: y0 + 43, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' },
                 // Nur die tatsächlich vorhandenen Säulen benennen (wie die Legende) —
                 // sonst stünde „AHV 0", wenn kein Einkommen erfasst ist, aber BVG versichert.
-                [ahvMonat > 0 ? 'AHV ' + fmt(ahvMonat) : null, bvgMonat > 0 ? 'BVG ' + fmt(bvgMonat) : null].filter(Boolean).join(' + '))),
+                [ahvMonat > 0 ? 'AHV ' + betragsZahl(ahvMonat) : null, bvgMonat > 0 ? 'BVG ' + betragsZahl(bvgMonat) : null].filter(Boolean).join(' + '))),
             // Rücktritts-Linie + Marke
             React.createElement('line', { x1: xret, y1: y0 - 4, x2: xret, y2: yB, stroke: palette.text, strokeWidth: 1.5 }),
             React.createElement('text', { x: Math.min(x1 - 40, Math.max(x0 + 40, xret)), y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
