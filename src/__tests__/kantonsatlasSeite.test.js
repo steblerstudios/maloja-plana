@@ -99,7 +99,7 @@ describe('/kantonsatlas/', () => {
       const f = karte('mindestlohn');
       expect(Object.keys(MINDESTLOHN).sort()).toEqual(['BS', 'GE', 'JU', 'NE', 'TI']);
       for (const k of KANTONE) {
-        expect(f, k).toContain(`<use href="#ka-${k}" class="k${MINDESTLOHN[k] ? 3 : 1}"/>`);
+        expect(f, k).toContain(`<use href="#ka-${k}" class="k${MINDESTLOHN[k] ? 4 : 1}"/>`);
         if (MINDESTLOHN[k]) expect(f, k).toContain(`<tr><th scope="row">${de.cantons[k]}</th><td class="n">${MINDESTLOHN[k].chfStunde.toFixed(2)}</td>`);
       }
       expect(f).toContain('mit kantonalem Mindestlohn (5)');
@@ -110,14 +110,22 @@ describe('/kantonsatlas/', () => {
     it('Alimente: VD ist als «nicht gesichert» markiert, jeder Kanton hat seine Quelle', () => {
       const f = karte('alimente');
       expect(f).toMatch(/Waadt<\/th>[\s\S]*?nicht gesichert/);
-      expect(f).toContain('ist nicht gesichert, ob der Betrag inzwischen angepasst wurde');
+      expect(f).toContain('Nicht gesichert ist der Betrag für den Kanton Freiburg und den Kanton Waadt.');
+      // Rechtsprüfung 16.11.2026: Neuenburg rechnet je Unterhaltsbeitrag, die Tabelle nennt das.
+      expect(f).toContain('Neuenburg rechnet je Unterhaltsbeitrag, nicht je Kind.');
+      expect(f).toMatch(/Neuenburg<\/th>[\s\S]*?pro Unterhaltsbeitrag und Monat/);
+      // Abgeleitete Beträge: die Quelle belegt die Regel, nicht die Zahl; LexFind ist nicht amtlich.
+      const q = (k) => KANTONSATLAS.quellen.find((x) => x.key === `alimente${k}`);
+      expect(q('LU').belegt).toContain('daraus abgeleitet');
+      expect(q('ZH').belegt).toContain('höchster Vorschuss 1008 Fr.');
+      expect(q('VD').amtlich).toBe(false);
       for (const k of KANTONE) expect(KANTONSATLAS.quellen.some((q) => q.key === `alimente${k}`), k).toBe(true);
     });
 
     it('Feiertage: keine Karte, Satz und Tabelle aus den Daten', () => {
       expect(html).not.toContain('id="karte-feiertage"');
-      expect(text).toContain('Das Arbeitsgesetz stellt den 1. August dem Sonntag gleich');
-      expect(text).toMatch(/Gezählt mit dem 1\. August haben 23 Kantone 9 solche Feiertage, Appenzell Ausserrhoden, Graubünden und Neuenburg 8\./);
+      expect(text).toContain('Im Geltungsbereich des Arbeitsgesetzes ist der 1. August dem Sonntag gleichgestellt; dazu dürfen die Kantone höchstens acht weitere Feiertage den Sonntagen gleichstellen.');
+      expect(text).toMatch(/Gezählt mit dem 1\. August haben 23 Kantone neun solche Feiertage; Appenzell Ausserrhoden, Graubünden und Neuenburg haben acht\./);
       expect(html).toContain('<caption>Dem Sonntag gleichgestellte Feiertage je Kanton');
     });
   });
