@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten.
+       Quelle: scripts/seiten-inhalt.mjs
+       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
+       Generator: scripts/build-seiten.mjs
+       Neu bauen:  node scripts/build-seiten.mjs
+       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Freigegeben: diese Sprache ist gegengelesen und darf indexiert werden. -->
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Stebler Studios">
+  <meta name="theme-color" content="#F2F2F0">
+  <title>AHV und Pensionierung — eine Orientierung — Maloja Plana</title>
+  <meta name="description" content="Wie die drei Säulen zusammenspielen, was die AHV-Rente bestimmt, warum man sie anmelden muss und was Vorbezug und Aufschub bedeuten. Ohne Zahlen.">
+  <link rel="canonical" href="https://malojaplana.ch/ahv-pensionierung/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AHV und Pensionierung — eine Orientierung">
+  <meta property="og:description" content="Wie die drei Säulen zusammenspielen, was die AHV-Rente bestimmt, warum man sie anmelden muss und was Vorbezug und Aufschub bedeuten. Ohne Zahlen.">
+  <meta property="og:url" content="https://malojaplana.ch/ahv-pensionierung/">
+  <meta property="og:image" content="https://malojaplana.ch/og-image.png">
+  <meta property="og:locale" content="de_CH">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AHV und Pensionierung — eine Orientierung">
+  <meta name="twitter:description" content="Wie die drei Säulen zusammenspielen, was die AHV-Rente bestimmt, warum man sie anmelden muss und was Vorbezug und Aufschub bedeuten. Ohne Zahlen.">
+  <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://malojaplana.ch/ahv-pensionierung/#webpage",
+        "url": "https://malojaplana.ch/ahv-pensionierung/",
+        "name": "AHV und Pensionierung — eine Orientierung",
+        "description": "Wie die drei Säulen zusammenspielen, was die AHV-Rente bestimmt, warum man sie anmelden muss und was Vorbezug und Aufschub bedeuten. Ohne Zahlen.",
+        "inLanguage": "de-CH",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/#website"
+        },
+        "publisher": {
+          "@id": "https://malojaplana.ch/#org"
+        },
+        "about": {
+          "@id": "https://malojaplana.ch/#app"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://malojaplana.ch/ahv-pensionierung/#krume",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Maloja Plana",
+            "item": "https://malojaplana.ch/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "AHV und Pensionierung",
+            "item": "https://malojaplana.ch/ahv-pensionierung/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://malojaplana.ch/ahv-pensionierung/#faq",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/ahv-pensionierung/#webpage"
+        },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Wie hoch wird meine AHV-Rente?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Das hängt von Ihren Beitragsjahren, Ihren Einkommen und Ihren Gutschriften ab. Verbindlich berechnen lässt sich die Rente in der Regel erst beim Erreichen des Referenzalters (Merkblatt 3.01). Eine Vorausberechnung können Sie bei Ihrer Ausgleichskasse verlangen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Was gilt für Ehepaare?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Die Einkommen aus den Ehejahren werden geteilt und je zur Hälfte beiden angerechnet, unter anderem sobald beide rentenberechtigt sind und bei einer Scheidung. Die beiden Renten eines Ehepaars zusammen sind gegen oben begrenzt; diese Begrenzung fällt unter anderem weg, wenn der gemeinsame Haushalt durch ein Gericht aufgehoben wurde (Merkblatt 3.01)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Ich habe auch im Ausland gearbeitet. Was nun?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Zeiten im Ausland fehlen in der Schweizer AHV in der Regel, sie können aber im anderen Staat zu einer Rente führen. Mit Versicherungszeiten in einem EU- oder EFTA-Staat löst ein einziger Antrag im Wohnsitzland das Verfahren in allen beteiligten Staaten aus (Merkblatt 3.01)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Bekomme ich als Lebenspartnerin oder Lebenspartner eine Hinterlassenenrente?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Eine Witwen- oder Witwerrente der AHV gibt es nur nach einer Ehe oder eingetragenen Partnerschaft und nur unter weiteren Voraussetzungen. Für Paare ohne Ehe oder eingetragene Partnerschaft sieht die AHV keine Hinterlassenenrente vor. Kinder können eine Waisenrente erhalten (AHVG Art. 23, 25). Bei der Pensionskasse kann das Reglement eine Leistung an Lebenspartnerinnen und Lebenspartner vorsehen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Muss ich nach der Pensionierung noch AHV-Beiträge zahlen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Wer nach dem Referenzalter weiterarbeitet, zahlt weiter Beiträge. Unter gewissen Voraussetzungen kann die Rente dann neu berechnet werden. Wer die Rente vorbezieht und nicht mehr arbeitet, bleibt bis zum Referenzalter als nichterwerbstätige Person beitragspflichtig (AHVG Art. 10)."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2');
+      font-weight:400; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gruppe E, Gestaltung B (12.11.2026): Titel in Hanken Grotesk wie die Startseite (Brand Book §3),
+       die Datei liegt schon unter /fonts/. Alles andere bleibt Lexend. */
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gestaltung C: ein Gold, ein Leise-Ton — dieselben Werte wie website/index.html.
+       --sand ist die Fläche (Knopf), --sand-tief die Schrift (Links), hell 7A5F30, dunkel C4A06A. */
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;
+           --rand:#E0DDD8; --sand:#C4A06A; --sand-tief:#7A5F30; --auf-sand:#2A2620 }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
+             --rand:#3A3936; --sand:#C4A06A; --sand-tief:#C4A06A; --auf-sand:#2A2620 }
+      html{ color-scheme:dark }
+    }
+    body{ background:var(--bg); color:var(--text); line-height:1.65;
+      font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
+    .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
+    a{ color:var(--sand-tief); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt über die dickere Unterstreichung. */
+    a:hover{ text-decoration-thickness:2px }
+    header{ padding:24px 0 0 }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px. Gruppe E, C: Bildmarke 28 px wie auf der Startseite. */
+    .marke{ display:inline-flex; align-items:center; gap:10px; min-height:44px; font-weight:600; text-decoration:none;
+      font-size:16px; color:var(--text) }
+    .marke svg{ height:28px; width:auto; flex:none }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:16px }
+    main{ padding:8px 0 16px }
+    /* Gestaltung B: Grössen nur von der Skala 13 · 15 · 16 · 19 · 23 · 28 · 36 (Brand Book §7a). */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-weight:600 }
+    h1{ font-size:36px; line-height:1.2; margin:16px 0 12px; letter-spacing:-0.015em }
+    .vorspann{ font-size:19px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:23px; line-height:1.3; margin:48px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:19px; line-height:1.35; margin:24px 0 8px }
+    p{ margin-bottom:16px }
+    ul{ margin:0 0 16px 24px } li{ margin-bottom:8px }
+    /* Gestaltung D: Karte 12 px Ecke, innen 32 (am Handy 24), Abstand 32. */
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:12px;
+      padding:32px; margin:32px 0 }
+    .karte p:last-child{ margin-bottom:0 }
+    .weiter{ list-style:none; margin:16px 0 0; padding:0 }
+    .weiter li{ margin-bottom:12px }
+    .weiter a{ font-weight:600; text-decoration:none }
+    .weiter a:hover{ text-decoration:underline }
+    .weiter span{ display:block; font-size:15px; color:var(--leise); font-weight:400 }
+    /* Knopf 10 px Ecke, 44 px hoch (Brand Book §7a, «6 px» überholt am 06.11.). */
+    .knopf{ display:inline-flex; align-items:center; min-height:44px; background:var(--sand); color:var(--auf-sand);
+      text-decoration:none; padding:12px 24px; border-radius:10px; font-weight:600; font-size:15px; margin-top:4px }
+    .knopf:hover{ filter:brightness(1.05) }
+    .hinweis{ font-size:13px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:13px; color:var(--leise) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:16px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:24px 0 64px;
+      font-size:13px; color:var(--leise) }
+    footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
+    footer p{ margin-bottom:8px }
+    /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
+    footer .sprachen{ margin-top:16px }
+    footer .sprachen a{ text-decoration:underline }
+    footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
+    /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. Hinweisstreifen: 6 px (kleinste Rolle). */
+    .entwurf{ border:1px solid var(--sand); border-radius:6px; padding:12px 16px;
+      margin-bottom:24px; font-size:15px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:24px; font-size:13px; color:var(--leise) }
+    /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
+    ul.kantone{ columns:2; column-gap:32px }
+    ul.kantone li{ break-inside:avoid }
+    @media (max-width:600px){ h1{ font-size:28px } .vorspann{ font-size:16px } h2{ font-size:19px; margin-top:32px }
+      .karte{ padding:24px } ul.kantone{ columns:1 } }
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
+  </style>
+</head>
+<body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/"><svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg>Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="Sie sind hier">
+        <a href="/">Start</a> › AHV und Pensionierung
+      </nav>
+    </header>
+
+    <main>
+      <h1>AHV und Pensionierung — eine Orientierung</h1>
+      <p class="vorspann">Die Alters- und Hinterlassenenversicherung (AHV) ist die erste Säule der Schweizer Altersvorsorge und für alle obligatorisch, die hier wohnen oder arbeiten. Wie hoch die Rente einmal ausfällt, entscheidet sich über viele Jahre: an den Beitragsjahren, den Einkommen und den Gutschriften für Kinder und Betreuung. Und sie kommt nicht von selbst: Man muss sie anmelden.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge; Fristen nur, wo das Bundesrecht sie für alle gleich festlegt.<br>
+      <strong class="stand">Inhaltlich geprüft: November 2026.</strong></p>
+
+        <h2 id="saeulen">Drei Säulen mit verschiedenen Aufgaben</h2>
+        <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Die drei Säulen">
+          <li><span class="jahr">Erste Säule</span><span class="was">AHV, für alle obligatorisch; reicht sie nicht, kommen Ergänzungsleistungen dazu</span></li>
+          <li><span class="jahr">Zweite Säule</span><span class="was">Pensionskasse, für Angestellte ab einem Mindestlohn obligatorisch</span></li>
+          <li><span class="jahr">Dritte Säule</span><span class="was">freiwillig; die Säule 3a ist steuerlich begünstigt</span></li>
+        </ol></div>
+        <p class="schicht-kurz">Die Altersvorsorge ruht auf drei Säulen (BV Art. 111). Die <strong>AHV</strong> ist die erste: Ihre Renten sollen den Existenzbedarf angemessen decken (BV Art. 112). Reichen sie dafür nicht, kommen Ergänzungsleistungen dazu (BV Art. 112a).</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Die <strong>Pensionskasse</strong>, die berufliche Vorsorge, ist für Angestellte ab einem Mindestlohn obligatorisch. Zusammen mit der AHV soll sie die gewohnte Lebenshaltung in angemessener Weise ermöglichen (BV Art. 113).</p>
+          <p>Die <strong>dritte Säule</strong> ist freiwillig. Einzahlungen in die Säule 3a können vom steuerbaren Einkommen abgezogen werden; einzahlen kann aber nur, wer ein Erwerbseinkommen hat (BVV 3 Art. 7).</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Drei Säulen mit verschiedenen Aufgaben"><a class="weg" href="/ergaenzungsleistungen/"><span aria-hidden="true">→</span> Ergänzungsleistungen</a></nav>
+
+        <h2 id="beitraege">Was die Rente bestimmt, und warum Lücken zählen</h2>
+        <div class="schicht-bild"><div class="kern">
+          <p class="unter" id="rente">Was die Höhe der AHV-Rente bestimmt:</p>
+          <ul class="chips" role="list" aria-labelledby="rente">
+            <li>Beitragsjahre</li><li>Erwerbseinkommen</li><li>Erziehungsgutschriften</li><li>Betreuungsgutschriften</li>
+          </ul>
+          <p class="unter">Jedes fehlende Beitragsjahr kürzt die Rente in der Regel lebenslang.</p>
+        </div></div>
+        <p class="schicht-kurz">Die Höhe der AHV-Rente hängt von den anrechenbaren <strong>Beitragsjahren</strong>, den <strong>Erwerbseinkommen</strong> und den <strong>Erziehungs- und Betreuungsgutschriften</strong> ab (AHVG Art. 29bis). Eine Vollrente erhält, wer vom Jahr nach dem zwanzigsten Geburtstag bis zum Jahr vor dem Referenzalter stets die Beitragspflicht erfüllt hat. Fehlt ein Beitragsjahr, wird die Rente in der Regel gekürzt, und zwar lebenslang (AHVG Art. 29ter, 38).</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Beitragspflichtig sind auch Nichterwerbstätige, etwa im Studium, nach einer Aussteuerung oder bei einer frühen Pensionierung (AHVG Art. 10). Für Verheiratete ohne Erwerbseinkommen gelten die Beiträge als bezahlt, wenn die Ehepartnerin oder der Ehepartner mindestens den doppelten Mindestbeitrag zahlt (AHVG Art. 3 Abs. 3). Nachzahlen lassen sich fehlende Beiträge nur für eine begrenzte Zeit zurück (AHVG Art. 16).</p>
+          <p>Ob Sie Lücken haben, zeigt ein Auszug aus Ihrem individuellen Konto (IK), den Sie bei Ihrer Ausgleichskasse verlangen können (AHVV Art. 141). Ältere Lücken lassen sich nicht mehr schliessen (AHVG Art. 16).</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Was die Rente bestimmt, und warum Lücken zählen"><a class="weg" href="/arbeitslosigkeit/"><span aria-hidden="true">→</span> Arbeitslosigkeit</a></nav>
+
+        <h2 id="anmelden">Die Rente kommt nicht von selbst</h2>
+        <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Der Weg zur Rente">
+          <li><span class="jahr">Einige Monate vorher</span><span class="was">bei der Ausgleichskasse anmelden</span></li>
+          <li><span class="jahr">Referenzalter</span><span class="was">die Rente beginnt im Monat danach</span></li>
+          <li><span class="jahr">Jeden Dezember</span><span class="was">dazu eine dreizehnte Altersrente</span></li>
+        </ol></div>
+        <p class="schicht-kurz">Die AHV-Rente müssen Sie selbst anmelden, am besten einige Monate vor dem Referenzalter. Zuständig ist die Ausgleichskasse, die zuletzt Ihre Beiträge erhalten hat; haben Sie keine Beiträge bezahlt, die kantonale Ausgleichskasse Ihres Wohnkantons (Merkblatt 3.01).</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Der Anspruch entsteht am ersten Tag des Monats nach dem Erreichen des Referenzalters und erlischt am Ende des Monats, in dem die Person stirbt (AHVG Art. 21). Das Referenzalter ist für Frauen und Männer gleich; für Frauen der Übergangsgeneration gelten Übergangsregeln.</p>
+          <p>Wer im Dezember eine Altersrente bezieht, erhält zusätzlich eine dreizehnte Altersrente in der Höhe eines Zwölftels der jährlichen Altersrente. Hinterlassenen-, Invaliden- und Kinderrenten werden weiterhin nur zwölfmal ausbezahlt (Merkblatt 3.01).</p>
+        </details>
+
+        <h2 id="flexibel">Früher oder später beziehen</h2>
+        <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Früher, regulär oder später">
+          <li><span class="jahr">Vorbezug</span><span class="was">ganz oder teilweise; die Rente wird lebenslang gekürzt</span></li>
+          <li><span class="jahr">Referenzalter</span><span class="was">die Rente ohne Kürzung und ohne Zuschlag</span></li>
+          <li><span class="jahr">Aufschub</span><span class="was">ganz oder teilweise; die Rente wird lebenslang erhöht</span></li>
+        </ol></div>
+        <p class="schicht-kurz">Die Rente lässt sich ganz oder teilweise <strong>vorbeziehen</strong>, frühestens ab dem dreiundsechzigsten Geburtstag, für Frauen der Übergangsgeneration früher. Der vorbezogene Teil wird lebenslang gekürzt, auch über das Referenzalter hinaus (AHVG Art. 40, 40a). Während des Vorbezugs gibt es keine Kinderrenten. Den Vorbezug müssen Sie spätestens im Monat vor dem gewünschten Beginn anmelden; rückwirkend geht es nicht (Merkblatt 3.04).</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Sie können die Rente auch ganz oder teilweise <strong>aufschieben</strong>, um mindestens ein und höchstens fünf Jahre; sie wird dann lebenslang erhöht (AHVG Art. 39). Den Aufschub erklären Sie spätestens ein Jahr nach Erreichen des Referenzalters, sonst wird die Rente ohne Erhöhung ausbezahlt (AHVV Art. 55quater).</p>
+          <p>Ein Vorbezug kann Folgen haben, die man nicht gleich sieht: Wer arbeitslos ist, verliert mit dem Vorbezug den Anspruch auf Taggeld, und wer Überbrückungsleistungen bezieht, ebenfalls (AVIG Art. 8, ÜLG Art. 5 Abs. 3). Lassen Sie sich vorher bei Ihrer Ausgleichskasse beraten.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Früher oder später beziehen"><a class="weg" href="/ergaenzungsleistungen/"><span aria-hidden="true">→</span> Ergänzungsleistungen</a></nav>
+
+        <h2 id="mehr">Was im Alter sonst noch zusteht</h2>
+        <div class="schicht-bild"><div class="kern">
+          <p class="unter" id="zusatz">Was im Alter dazukommen kann:</p>
+          <ul class="chips" role="list" aria-labelledby="zusatz">
+            <li>Ergänzungsleistungen</li><li>Hilflosenentschädigung</li><li>Prämienverbilligung</li><li>Beratung, etwa bei Pro Senectute</li>
+          </ul>
+        </div></div>
+        <p class="schicht-kurz">Reichen Renten und Vermögen nicht für das Nötigste, kommen <strong>Ergänzungsleistungen</strong> in Frage. Sie sind ein gesetzlicher Anspruch und keine Sozialhilfe.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Wer eine Altersrente oder Ergänzungsleistungen bezieht, in der Schweiz wohnt und im Alltag dauernd auf die Hilfe anderer angewiesen ist, etwa beim Ankleiden, bei der Körperpflege oder beim Essen, kann eine <strong>Hilflosenentschädigung</strong> der AHV erhalten, wenn die Hilflosigkeit seit mindestens sechs Monaten ununterbrochen besteht und kein Anspruch auf eine Hilflosenentschädigung der Unfall- oder Militärversicherung besteht. Sie hängt nicht von Einkommen und Vermögen ab (AHVG Art. 43bis, Merkblatt 3.01).</p>
+          <p>Bei der <strong>Pensionskasse</strong> entscheiden Sie zwischen Rente und Kapital. Einen Viertel können Sie gesetzlich als Kapital verlangen, mehr nur, wenn das Reglement es vorsieht; bei Verheirateten braucht es die schriftliche Zustimmung (BVG Art. 37, 37a). Bis wann Sie wählen müssen, steht im Reglement; ist das Kapital einmal ausbezahlt, lässt sich das nicht rückgängig machen. Lassen Sie sich früh beraten.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Was im Alter sonst noch zusteht"><a class="weg" href="/ergaenzungsleistungen/"><span aria-hidden="true">→</span> Ergänzungsleistungen</a><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a></nav>
+
+      <h2>Häufige Fragen</h2>
+        <h3>Wie hoch wird meine AHV-Rente?</h3>
+        <p>Das hängt von Ihren Beitragsjahren, Ihren Einkommen und Ihren Gutschriften ab. Verbindlich berechnen lässt sich die Rente in der Regel erst beim Erreichen des Referenzalters (Merkblatt 3.01). Eine Vorausberechnung können Sie bei Ihrer Ausgleichskasse verlangen.</p>
+
+        <h3>Was gilt für Ehepaare?</h3>
+        <p>Die Einkommen aus den Ehejahren werden geteilt und je zur Hälfte beiden angerechnet, unter anderem sobald beide rentenberechtigt sind und bei einer Scheidung. Die beiden Renten eines Ehepaars zusammen sind gegen oben begrenzt; diese Begrenzung fällt unter anderem weg, wenn der gemeinsame Haushalt durch ein Gericht aufgehoben wurde (Merkblatt 3.01).</p>
+
+        <h3>Ich habe auch im Ausland gearbeitet. Was nun?</h3>
+        <p>Zeiten im Ausland fehlen in der Schweizer AHV in der Regel, sie können aber im anderen Staat zu einer Rente führen. Mit Versicherungszeiten in einem EU- oder EFTA-Staat löst ein einziger Antrag im Wohnsitzland das Verfahren in allen beteiligten Staaten aus (Merkblatt 3.01).</p>
+
+        <h3>Bekomme ich als Lebenspartnerin oder Lebenspartner eine Hinterlassenenrente?</h3>
+        <p>Eine Witwen- oder Witwerrente der AHV gibt es nur nach einer Ehe oder eingetragenen Partnerschaft und nur unter weiteren Voraussetzungen. Für Paare ohne Ehe oder eingetragene Partnerschaft sieht die AHV keine Hinterlassenenrente vor. Kinder können eine Waisenrente erhalten (AHVG Art. 23, 25). Bei der Pensionskasse kann das Reglement eine Leistung an Lebenspartnerinnen und Lebenspartner vorsehen.</p>
+
+        <h3>Muss ich nach der Pensionierung noch AHV-Beiträge zahlen?</h3>
+        <p>Wer nach dem Referenzalter weiterarbeitet, zahlt weiter Beiträge. Unter gewissen Voraussetzungen kann die Rente dann neu berechnet werden. Wer die Rente vorbezieht und nicht mehr arbeitet, bleibt bis zum Referenzalter als nichterwerbstätige Person beitragspflichtig (AHVG Art. 10).</p>
+
+
+      <div class="karte">
+        <p><strong>Mit Ihren Angaben lässt sich das in der App durchrechnen.</strong></p>
+        <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/app/?beispiel#/pensionierung">Beispiel ansehen — ohne Zugangscode</a></p>
+      </div>
+
+      <h2>Quellen und Rechner</h2>
+      <ul>
+          <li><a href="https://www.ahv-iv.ch/p/3.01.d" rel="noopener">Merkblatt 3.01 «Altersrenten und Hilflosenentschädigungen der AHV»</a></li>
+          <li><a href="https://www.ahv-iv.ch/p/3.04.d" rel="noopener">Merkblatt 3.04 «Flexibler Rentenbezug»</a></li>
+      </ul>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung.</p>
+
+      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, Sätze oder Einkommensgrenzen: die ändern regelmässig. Fristen und Altersgrenzen nennt sie nur, wo das Bundesrecht sie für die ganze Schweiz gleich festlegt. Massgebend ist immer die Auskunft beziehungsweise die Verfügung der zuständigen Stelle.<br>
+      <strong>Inhaltlich geprüft: November 2026.</strong></p>
+
+      <h2>Weiterlesen</h2>
+      <ul>
+          <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
+          <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
+          <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
+          <li><a href="/steuern/">Steuern</a></li>
+          <li><a href="/ergaenzungsleistungen/">Ergänzungsleistungen</a></li>
+          <li><a href="/arbeitslosigkeit/">Arbeitslosigkeit</a></li>
+          <li><a href="/kantonsatlas/">Kantonsatlas: die 26 Kantone auf der Karte</a></li>
+          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
+      </ul>
+    </main>
+
+    <footer>
+      <p>Maloja Plana ist ein Projekt von Stebler Studios, Basel ·
+      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+      <p>Quelloffen unter
+      <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
+      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
+      <!-- Melde-Weg VOR dem Beta-Gate. Die Adresse steht schon oben als Kontakt; hier
+           mit Betreff, damit eine Meldung im Postfach als solche erkennbar ist und nicht
+           zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
+           Datenabfluss und widerspricht local-first / CSP self-only. -->
+      <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
+      <p class="sprachen">Sprache: <span aria-current="true">Deutsch</span> · <a href="/fr/ahv-pensionierung/" hreflang="fr" lang="fr">Français</a> · <a href="/it/ahv-pensionierung/" hreflang="it" lang="it">Italiano</a> · <a href="/en/ahv-pensionierung/" hreflang="en" lang="en">English</a> · <a href="/rm/ahv-pensionierung/" hreflang="rm" lang="rm">Rumantsch</a></p>
+    </footer>
+  </div>
+</body>
+</html>

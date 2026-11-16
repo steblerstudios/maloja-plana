@@ -448,6 +448,89 @@ export const SEITEN = [
     ],
     quellen: ['arbeitSwiss'],
   },
+
+  // ─── AVS et retraite (16.11.2026) ─────────────────────────────────────────
+  // LAVS = AHVG · RAVS = AHVV · Cst. = BV · LPP = BVG · OPP 3 = BVV 3 · LACI = AVIG ·
+  // LPtra = ÜLG · âge de référence = Referenzalter · compte individuel (CI) = IK.
+  {
+    pfad: 'ahv-pensionierung',
+    titel: 'AVS et retraite — une orientation',
+    beschreibung:
+      'Comment les trois piliers s’articulent, ce qui détermine la rente AVS, pourquoi il faut la demander et ce que signifient anticipation et ajournement. Sans chiffres.',
+    brotkrume: 'AVS et retraite',
+    vorspann:
+      'L’assurance-vieillesse et survivants (AVS) est le premier pilier de la prévoyance vieillesse suisse et obligatoire pour toutes les personnes qui vivent ou travaillent ici. Le montant de la rente se décide sur de nombreuses années : selon les années de cotisation, les revenus et les bonifications pour enfants et pour tâches d’assistance. Et elle ne vient pas d’elle-même : il faut la demander.',
+    abschnitte: [
+      {
+        titel: 'Trois piliers aux tâches différentes',
+        absaetze: [
+          'La prévoyance vieillesse repose sur trois piliers (art. 111 Cst.). L’<strong>AVS</strong> est le premier : ses rentes doivent couvrir les besoins vitaux de manière appropriée (art. 112 Cst.). Si elles n’y suffisent pas, des prestations complémentaires s’y ajoutent (art. 112a Cst.).',
+          'La <strong>caisse de pension</strong>, la prévoyance professionnelle, est obligatoire pour les salariés à partir d’un salaire minimal. Avec l’AVS, elle doit permettre de maintenir de manière appropriée le niveau de vie antérieur (art. 113 Cst.).',
+          'Le <strong>troisième pilier</strong> est facultatif. Les versements au pilier 3a peuvent être déduits du revenu imposable ; mais seule une personne ayant un revenu d’activité lucrative peut y verser (art. 7 OPP 3).',
+        ],
+      },
+      {
+        titel: 'Ce qui détermine la rente, et pourquoi les lacunes comptent',
+        absaetze: [
+          'Le montant de la rente AVS dépend des <strong>années de cotisation</strong> prises en compte, des <strong>revenus d’activité lucrative</strong> et des <strong>bonifications pour tâches éducatives et d’assistance</strong> (art. 29bis LAVS). Reçoit une rente complète la personne qui a toujours rempli l’obligation de cotiser de l’année suivant son vingtième anniversaire jusqu’à l’année précédant l’âge de référence. S’il manque une année de cotisation, la rente est en règle générale réduite, et ce à vie (art. 29ter et 38 LAVS).',
+          'Les personnes sans activité lucrative cotisent aussi, par exemple pendant les études, après une fin de droit au chômage ou en cas de retraite anticipée (art. 10 LAVS). Pour les personnes mariées sans revenu d’activité, les cotisations sont réputées payées si l’épouse ou l’époux verse au moins le double de la cotisation minimale (art. 3, al. 3, LAVS). Les cotisations manquantes ne peuvent être rattrapées que pour une période limitée dans le passé (art. 16 LAVS).',
+          'Un extrait de votre compte individuel (CI), que vous pouvez demander à votre caisse de compensation, montre si vous avez des lacunes (art. 141 RAVS). Les lacunes plus anciennes ne peuvent plus être comblées (art. 16 LAVS).',
+        ],
+      },
+      {
+        titel: 'La rente ne vient pas d’elle-même',
+        absaetze: [
+          'Vous devez demander vous-même la rente AVS, de préférence quelques mois avant l’âge de référence. La caisse de compensation compétente est celle qui a perçu vos dernières cotisations ; si vous n’avez pas cotisé, la caisse cantonale de compensation de votre canton de domicile (mémento 3.01).',
+          'Le droit naît le premier jour du mois qui suit l’âge de référence et s’éteint à la fin du mois du décès (art. 21 LAVS). L’âge de référence est le même pour les femmes et les hommes ; des règles transitoires s’appliquent aux femmes de la génération transitoire.',
+          'Qui touche une rente de vieillesse en décembre reçoit en plus une treizième rente de vieillesse égale à un douzième de la rente de vieillesse annuelle. Les rentes de survivants, d’invalidité et pour enfant continuent d’être versées douze fois seulement (mémento 3.01).',
+        ],
+      },
+      {
+        titel: 'Percevoir plus tôt ou plus tard',
+        absaetze: [
+          'La rente peut être <strong>anticipée</strong> en tout ou en partie, au plus tôt dès le soixante-troisième anniversaire, plus tôt pour les femmes de la génération transitoire. La part anticipée est réduite à vie, y compris au-delà de l’âge de référence (art. 40 et 40a LAVS). Pendant l’anticipation, il n’y a pas de rentes pour enfant. Vous devez demander l’anticipation au plus tard le mois précédant le début souhaité ; elle n’est pas possible rétroactivement (mémento 3.04).',
+          'Vous pouvez aussi <strong>ajourner</strong> la rente en tout ou en partie, d’un an au moins et de cinq ans au plus ; elle est alors augmentée à vie (art. 39 LAVS). Vous déclarez l’ajournement au plus tard un an après avoir atteint l’âge de référence, sinon la rente est versée sans augmentation (art. 55quater RAVS).',
+          'Une anticipation peut avoir des conséquences qu’on ne voit pas tout de suite : qui est au chômage perd avec l’anticipation le droit aux indemnités, et qui touche des prestations transitoires également (art. 8 LACI, art. 5, al. 3, LPtra). Faites-vous conseiller au préalable par votre caisse de compensation.',
+        ],
+      },
+      {
+        titel: 'Ce à quoi l’on a encore droit à l’âge de la retraite',
+        absaetze: [
+          'Si les rentes et la fortune ne suffisent pas pour le minimum vital, des <strong>prestations complémentaires</strong> entrent en ligne de compte. Elles sont un droit légal et non de l’aide sociale.',
+          'Qui touche une rente de vieillesse ou des prestations complémentaires, vit en Suisse et dépend en permanence de l’aide d’autrui au quotidien, par exemple pour s’habiller, pour l’hygiène corporelle ou pour manger, peut recevoir une <strong>allocation pour impotent</strong> de l’AVS si l’impotence dure sans interruption depuis au moins six mois et qu’il n’existe pas de droit à une allocation pour impotent de l’assurance-accidents ou de l’assurance militaire. Elle ne dépend ni du revenu ni de la fortune (art. 43bis LAVS, mémento 3.01).',
+          'Pour la <strong>caisse de pension</strong>, vous choisissez entre rente et capital. Vous pouvez légalement exiger un quart sous forme de capital, davantage seulement si le règlement le prévoit ; pour les personnes mariées, le consentement écrit est nécessaire (art. 37 et 37a LPP). Le délai pour choisir figure dans le règlement ; une fois le capital versé, on ne peut plus revenir en arrière. Faites-vous conseiller tôt.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'À combien s’élèvera ma rente AVS ?',
+        antwort:
+          'Cela dépend de vos années de cotisation, de vos revenus et de vos bonifications. La rente ne peut en règle générale être calculée de manière contraignante qu’à l’âge de référence (mémento 3.01). Vous pouvez demander un calcul anticipé à votre caisse de compensation.',
+      },
+      {
+        frage: 'Qu’en est-il pour les couples mariés ?',
+        antwort:
+          'Les revenus des années de mariage sont partagés et attribués pour moitié à chacun, entre autres dès que les deux ont droit à une rente et en cas de divorce. Les deux rentes d’un couple marié sont ensemble plafonnées ; ce plafonnement tombe entre autres si la vie commune a été suspendue par un tribunal (mémento 3.01).',
+      },
+      {
+        frage: 'J’ai aussi travaillé à l’étranger. Et maintenant ?',
+        antwort:
+          'Les périodes à l’étranger manquent en règle générale dans l’AVS suisse, mais elles peuvent donner droit à une rente dans l’autre État. Avec des périodes d’assurance dans un État de l’UE ou de l’AELE, une seule demande dans le pays de domicile déclenche la procédure dans tous les États concernés (mémento 3.01).',
+      },
+      {
+        frage: 'Ai-je droit à une rente de survivant en tant que partenaire non marié ?',
+        antwort:
+          'Une rente de veuve ou de veuf de l’AVS n’existe qu’après un mariage ou un partenariat enregistré et seulement à d’autres conditions. Pour les couples sans mariage ni partenariat enregistré, l’AVS ne prévoit pas de rente de survivant. Les enfants peuvent recevoir une rente d’orphelin (art. 23 et 25 LAVS). Pour la caisse de pension, le règlement peut prévoir une prestation en faveur des partenaires.',
+      },
+      {
+        frage: 'Dois-je encore payer des cotisations AVS après la retraite ?',
+        antwort:
+          'Qui continue de travailler après l’âge de référence continue de cotiser. À certaines conditions, la rente peut alors être recalculée. Qui anticipe sa rente et ne travaille plus reste tenu de cotiser jusqu’à l’âge de référence en tant que personne sans activité lucrative (art. 10 LAVS).',
+      },
+    ],
+    quellen: ['ahvMerkblatt', 'ahvMerkblattFlex'],
+  },
 ];
 
 export const SONDERSEITEN = [

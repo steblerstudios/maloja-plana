@@ -440,6 +440,89 @@ export const SEITEN = [
     ],
     quellen: ['arbeitSwiss'],
   },
+
+  // ─── AVS e pensionamento (16.11.2026) ─────────────────────────────────────
+  // LAVS = AHVG · OAVS = AHVV · Cost. = BV · LPP = BVG · OPP 3 = BVV 3 · LADI = AVIG ·
+  // LPTD = ÜLG · età di riferimento = Referenzalter · conto individuale (CI) = IK.
+  {
+    pfad: 'ahv-pensionierung',
+    titel: 'AVS e pensionamento — un orientamento',
+    beschreibung:
+      'Come interagiscono i tre pilastri, che cosa determina la rendita AVS, perché bisogna richiederla e che cosa significano anticipo e rinvio. Senza cifre.',
+    brotkrume: 'AVS e pensionamento',
+    vorspann:
+      'L’assicurazione per la vecchiaia e per i superstiti (AVS) è il primo pilastro della previdenza per la vecchiaia svizzera ed è obbligatoria per tutte le persone che vivono o lavorano qui. L’importo della rendita si decide nel corso di molti anni: in base agli anni di contribuzione, ai redditi e agli accrediti per compiti educativi e assistenziali. E non arriva da sola: bisogna richiederla.',
+    abschnitte: [
+      {
+        titel: 'Tre pilastri con compiti diversi',
+        absaetze: [
+          'La previdenza per la vecchiaia si fonda su tre pilastri (art. 111 Cost.). L’<strong>AVS</strong> è il primo: le sue rendite devono coprire adeguatamente il fabbisogno vitale (art. 112 Cost.). Se non bastano, si aggiungono le prestazioni complementari (art. 112a Cost.).',
+          'La <strong>cassa pensioni</strong>, la previdenza professionale, è obbligatoria per i salariati a partire da un salario minimo. Insieme all’AVS deve consentire di mantenere in modo adeguato il tenore di vita abituale (art. 113 Cost.).',
+          'Il <strong>terzo pilastro</strong> è facoltativo. I versamenti nel pilastro 3a possono essere dedotti dal reddito imponibile; può versare però solo chi ha un reddito da attività lucrativa (art. 7 OPP 3).',
+        ],
+      },
+      {
+        titel: 'Che cosa determina la rendita, e perché le lacune contano',
+        absaetze: [
+          'L’importo della rendita AVS dipende dagli <strong>anni di contribuzione</strong> computabili, dai <strong>redditi da attività lucrativa</strong> e dagli <strong>accrediti per compiti educativi e assistenziali</strong> (art. 29bis LAVS). Riceve una rendita completa chi ha sempre adempiuto l’obbligo contributivo dall’anno successivo al ventesimo compleanno fino all’anno precedente l’età di riferimento. Se manca un anno di contribuzione, la rendita di regola viene ridotta, e per tutta la vita (art. 29ter e 38 LAVS).',
+          'Sono soggette all’obbligo contributivo anche le persone senza attività lucrativa, ad esempio durante gli studi, dopo l’esaurimento del diritto alle indennità di disoccupazione o in caso di pensionamento anticipato (art. 10 LAVS). Per le persone coniugate senza reddito da attività lucrativa i contributi sono considerati pagati se il coniuge versa almeno il doppio del contributo minimo (art. 3 cpv. 3 LAVS). I contributi mancanti possono essere recuperati solo per un periodo limitato a ritroso (art. 16 LAVS).',
+          'Se ha delle lacune lo mostra un estratto del suo conto individuale (CI), che può chiedere alla sua cassa di compensazione (art. 141 OAVS). Le lacune più vecchie non possono più essere colmate (art. 16 LAVS).',
+        ],
+      },
+      {
+        titel: 'La rendita non arriva da sola',
+        absaetze: [
+          'La rendita AVS deve richiederla personalmente, preferibilmente alcuni mesi prima dell’età di riferimento. È competente la cassa di compensazione che ha riscosso gli ultimi contributi; se non ha versato contributi, la cassa cantonale di compensazione del suo Cantone di domicilio (promemoria 3.01).',
+          'Il diritto nasce il primo giorno del mese successivo al raggiungimento dell’età di riferimento e si estingue alla fine del mese del decesso (art. 21 LAVS). L’età di riferimento è la stessa per donne e uomini; per le donne della generazione di transizione valgono regole transitorie.',
+          'Chi in dicembre riceve una rendita di vecchiaia riceve in più una tredicesima rendita di vecchiaia pari a un dodicesimo della rendita di vecchiaia annua. Le rendite per superstiti, d’invalidità e per figli continuano a essere versate solo dodici volte (promemoria 3.01).',
+        ],
+      },
+      {
+        titel: 'Riscuotere prima o dopo',
+        absaetze: [
+          'La rendita può essere <strong>anticipata</strong> in tutto o in parte, al più presto dal sessantatreesimo compleanno, prima per le donne della generazione di transizione. La parte anticipata viene ridotta per tutta la vita, anche oltre l’età di riferimento (art. 40 e 40a LAVS). Durante l’anticipo non ci sono rendite per figli. L’anticipo va richiesto al più tardi nel mese precedente l’inizio desiderato; non è possibile retroattivamente (promemoria 3.04).',
+          'Può anche <strong>rinviare</strong> la rendita in tutto o in parte, di almeno un anno e al massimo cinque anni; viene allora aumentata per tutta la vita (art. 39 LAVS). Il rinvio va dichiarato al più tardi un anno dopo il raggiungimento dell’età di riferimento, altrimenti la rendita è versata senza aumento (art. 55quater OAVS).',
+          'Un anticipo può avere conseguenze che non si vedono subito: chi è disoccupato perde con l’anticipo il diritto alle indennità, e chi riceve prestazioni transitorie pure (art. 8 LADI, art. 5 cpv. 3 LPTD). Si faccia consigliare prima dalla sua cassa di compensazione.',
+        ],
+      },
+      {
+        titel: 'Che cos’altro spetta in età avanzata',
+        absaetze: [
+          'Se rendite e sostanza non bastano per il minimo vitale, entrano in considerazione le <strong>prestazioni complementari</strong>. Sono un diritto legale e non aiuto sociale.',
+          'Chi riceve una rendita di vecchiaia o prestazioni complementari, vive in Svizzera e nella vita quotidiana dipende in modo permanente dall’aiuto di altri, ad esempio per vestirsi, per l’igiene personale o per mangiare, può ricevere un <strong>assegno per grandi invalidi</strong> dell’AVS se la grande invalidità dura ininterrottamente da almeno sei mesi e non esiste un diritto a un assegno per grandi invalidi dell’assicurazione contro gli infortuni o dell’assicurazione militare. Non dipende né dal reddito né dalla sostanza (art. 43bis LAVS, promemoria 3.01).',
+          'Per la <strong>cassa pensioni</strong> sceglie tra rendita e capitale. Per legge può chiedere un quarto sotto forma di capitale, di più solo se il regolamento lo prevede; per le persone coniugate serve il consenso scritto (art. 37 e 37a LPP). Entro quando scegliere lo stabilisce il regolamento; una volta versato il capitale non si torna indietro. Si faccia consigliare per tempo.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'A quanto ammonterà la mia rendita AVS?',
+        antwort:
+          'Dipende dai suoi anni di contribuzione, dai suoi redditi e dai suoi accrediti. Di regola la rendita può essere calcolata in modo vincolante solo al raggiungimento dell’età di riferimento (promemoria 3.01). Può chiedere un calcolo anticipato alla sua cassa di compensazione.',
+      },
+      {
+        frage: 'Che cosa vale per i coniugi?',
+        antwort:
+          'I redditi degli anni di matrimonio vengono ripartiti e accreditati per metà a ciascuno, tra l’altro non appena entrambi hanno diritto a una rendita e in caso di divorzio. Le due rendite di una coppia sposata sono complessivamente plafonate; il plafonamento decade tra l’altro se la comunione domestica è stata sciolta da un tribunale (promemoria 3.01).',
+      },
+      {
+        frage: 'Ho lavorato anche all’estero. E ora?',
+        antwort:
+          'I periodi all’estero mancano di regola nell’AVS svizzera, ma possono dare diritto a una rendita nell’altro Stato. Con periodi assicurativi in uno Stato dell’UE o dell’AELS, un’unica domanda nel Paese di domicilio avvia la procedura in tutti gli Stati interessati (promemoria 3.01).',
+      },
+      {
+        frage: 'Come partner non sposato ricevo una rendita per superstiti?',
+        antwort:
+          'Una rendita vedovile dell’AVS esiste solo dopo un matrimonio o un’unione domestica registrata e solo a ulteriori condizioni. Per le coppie senza matrimonio né unione domestica registrata l’AVS non prevede una rendita per superstiti. I figli possono ricevere una rendita per orfani (art. 23 e 25 LAVS). Nella cassa pensioni il regolamento può prevedere una prestazione a favore dei partner.',
+      },
+      {
+        frage: 'Devo ancora pagare contributi AVS dopo il pensionamento?',
+        antwort:
+          'Chi continua a lavorare dopo l’età di riferimento continua a versare contributi. A determinate condizioni la rendita può allora essere ricalcolata. Chi anticipa la rendita e non lavora più resta soggetto all’obbligo contributivo fino all’età di riferimento come persona senza attività lucrativa (art. 10 LAVS).',
+      },
+    ],
+    quellen: ['ahvMerkblatt', 'ahvMerkblattFlex'],
+  },
 ];
 
 export const SONDERSEITEN = [

@@ -457,6 +457,89 @@ export const SEITEN = [
     ],
     quellen: ['arbeitSwiss'],
   },
+
+  // ─── AVS e pensiun (16.11.2026) ───────────────────────────────────────────
+  // 🛑 Mit Sorgfalt gebaut, nicht geprüft. Abkürzungen nach dem Französischen: LAVS = AHVG ·
+  // RAVS = AHVV · Cst. = BV · LPP = BVG · OPP 3 = BVV 3 · LACI = AVIG · LPtra = ÜLG.
+  {
+    pfad: 'ahv-pensionierung',
+    titel: 'AVS e pensiun — in’orientaziun',
+    beschreibung:
+      'Co che las trais pitgas funcziunan ensemen, tge che determinescha la renta da l’AVS, pertge ch’ins sto la dumandar e tge ch’anticipaziun e spustament muntan. Senza cifras.',
+    brotkrume: 'AVS e pensiun',
+    vorspann:
+      'L’assicuranza per la vegliadetgna e per survivents (AVS) è l’emprima pitga da la prevenziun per la vegliadetgna en Svizra ed obligatorica per tut las persunas che vivan u lavuran qua. Quant auta che la renta vegn ina giada, sa decida durant blers onns: tenor ils onns da contribuziun, las entradas e las bonificaziuns per uffants e per tgira. Ed ella na vegn betg da sasezza: ins la sto dumandar.',
+    abschnitte: [
+      {
+        titel: 'Trais pitgas cun incumbensas differentas',
+        absaetze: [
+          'La prevenziun per la vegliadetgna sa basa sin trais pitgas (art. 111 Cst.). L’<strong>AVS</strong> è l’emprima: sias rentas duain cuvrir adequatamain il basegn per viver (art. 112 Cst.). Sch’ellas na tanschan betg, vegnan tiers prestaziuns cumplementaras (art. 112a Cst.).',
+          'La <strong>cassa da pensiun</strong>, la prevenziun professiunala, è obligatorica per emploiadas ed emploiads a partir d’ina paja minimala. Ensemen cun l’AVS duai ella pussibilitar da mantegnair en moda adequata il standard da viver usità (art. 113 Cst.).',
+          'La <strong>terza pitga</strong> è facultativa. Pajaments en la pitga 3a pon vegnir deducids da l’entrada taxabla; pajar en po dentant mo tgi che ha in’entrada da gudogn (art. 7 OPP 3).',
+        ],
+      },
+      {
+        titel: 'Tge che determinescha la renta, e pertge che largias quintan',
+        absaetze: [
+          'L’autezza da la renta da l’AVS dependa dals <strong>onns da contribuziun</strong> imputabels, da las <strong>entradas da gudogn</strong> e da las <strong>bonificaziuns per l’educaziun e per la tgira</strong> (art. 29bis LAVS). Ina renta cumpletta survegn tgi che ha adina ademplì l’obligaziun da contribuziun da l’onn suenter il ventavel anniversari fin a l’onn avant la vegliadetgna da referenza. Sch’i manca in onn da contribuziun, vegn la renta per regla reducida, e quai per tut la vita (art. 29ter e 38 LAVS).',
+          'Era persunas senza activitad da gudogn ston pajar contribuziuns, per exempel durant il studi, suenter l’exclusiun da l’assicuranza cunter la dischoccupaziun u tar ina pensiun anticipada (art. 10 LAVS). Per persunas maridadas senza entrada da gudogn valan las contribuziuns sco pajadas, sche la consorta u il consort paja almain la dubla contribuziun minimala (art. 3 al. 3 LAVS). Contribuziuns che mancan pon vegnir pajadas suenter mo per in temp limità enavos (art. 16 LAVS).',
+          'Sche Vus avais largias, mussa in extract da Voss conto individual (CI) che Vus pudais dumandar tar Vossa cassa da cumpensaziun (art. 141 RAVS). Largias pli veglias na sa laschan betg pli serrar (art. 16 LAVS).',
+        ],
+      },
+      {
+        titel: 'La renta na vegn betg da sasezza',
+        absaetze: [
+          'La renta da l’AVS stuais Vus dumandar sez, il meglier in pèr mais avant la vegliadetgna da referenza. Cumpetenta è la cassa da cumpensaziun che ha retschavì Vossas ultimas contribuziuns; sche Vus n’avais pajà naginas contribuziuns, la cassa chantunala da cumpensaziun da Voss chantun da domicil (fegl d’infurmaziun 3.01).',
+          'Il dretg cumenza l’emprim di dal mais suenter avair cuntanschì la vegliadetgna da referenza e scada la fin dal mais da la mort (art. 21 LAVS). La vegliadetgna da referenza è la medema per dunnas ed umens; per dunnas da la generaziun da transiziun valan reglas transitoricas.',
+          'Tgi che retschaiva il december ina renta da vegliadetgna, survegn ultra da quai ina tredeschavla renta da vegliadetgna en l’autezza d’in dudeschavel da la renta da vegliadetgna annuala. Rentas da survivents, d’invaliditad e d’uffants vegnan pajadas vinavant mo dudesch giadas (fegl d’infurmaziun 3.01).',
+        ],
+      },
+      {
+        titel: 'Retrair pli baud u pli tard',
+        absaetze: [
+          'La renta po vegnir <strong>anticipada</strong> dal tut u per part, il pli baud a partir dal sessantatravel anniversari, pli baud per dunnas da la generaziun da transiziun. La part anticipada vegn reducida per tut la vita, era suenter la vegliadetgna da referenza (art. 40 e 40a LAVS). Durant l’anticipaziun na datti naginas rentas d’uffants. L’anticipaziun stuais Vus dumandar il pli tard il mais avant il cumenzament giavischà; retroactivamain na va quai betg (fegl d’infurmaziun 3.04).',
+          'Vus pudais era <strong>spustar</strong> la renta dal tut u per part, per almain in e maximalmain tschintg onns; ella vegn lura augmentada per tut la vita (art. 39 LAVS). Il spustament declerais Vus il pli tard in onn suenter avair cuntanschì la vegliadetgna da referenza, uschiglio vegn la renta pajada senza augment (art. 55quater RAVS).',
+          'Ina anticipaziun po avair consequenzas ch’ins na vesa betg dalunga: tgi ch’è dischoccupà perda cun l’anticipaziun il dretg sin pajaments per di, e tgi che retschaiva prestaziuns transitoricas era (art. 8 LACI, art. 5 al. 3 LPtra). Laschai Vus cussegliar ordavant da Vossa cassa da cumpensaziun.',
+        ],
+      },
+      {
+        titel: 'Tge che Vus tutga en la vegliadetgna anc',
+        absaetze: [
+          'Sche rentas e facultad na tanschan betg per il minimum per viver, entran <strong>prestaziuns cumplementaras</strong> en dumonda. Ellas èn in dretg legal e betg agid social.',
+          'Tgi che retschaiva ina renta da vegliadetgna u prestaziuns cumplementaras, abita en Svizra e dependa en la vita da mintgadi permanentamain da l’agid d’auters, per exempel per sa trair en, per la tgira dal corp u per mangiar, po survegnir ina <strong>indemnisaziun d’impotenza</strong> da l’AVS, sche l’impotenza dura senza interrupziun dapi almain sis mais e sch’i na exista nagin dretg sin ina indemnisaziun d’impotenza da l’assicuranza cunter accidents u da l’assicuranza militara. Ella na dependa betg da l’entrada e da la facultad (art. 43bis LAVS, fegl d’infurmaziun 3.01).',
+          'Tar la <strong>cassa da pensiun</strong> decidais Vus tranter renta e chapital. In quart pudais Vus pretender legalmain sco chapital, dapli mo sch’il reglament prevesa quai; per persunas maridadas dovri il consentiment en scrit (art. 37 e 37a LPP). Fin cura che Vus stuais tscherner, stat en il reglament; sch’il chapital è pajà ora, na sa lascha quai betg pli far nunfatg. Laschai Vus cussegliar baud.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Quant auta vegn mia renta da l’AVS?',
+        antwort:
+          'Quai dependa da Voss onns da contribuziun, da Vossas entradas e da Vossas bonificaziuns. Per regla sa lascha la renta calcular en moda obligatorica pir cun cuntanscher la vegliadetgna da referenza (fegl d’infurmaziun 3.01). In quint ordavant pudais Vus dumandar tar Vossa cassa da cumpensaziun.',
+      },
+      {
+        frage: 'Tge vala per pèrs maridads?',
+        antwort:
+          'Las entradas dals onns da lètg vegnan partidas ed imputadas mintgamai per la mesadad ad omadus, tranter auter uschespert ch’omadus han dretg sin ina renta e tar in divorzi. Las duas rentas d’in pèr maridà èn ensemen limitadas ensi; questa limitaziun croda tranter auter davent, sch’ina dretgira ha annullà la chasada cuminaivla (fegl d’infurmaziun 3.01).',
+      },
+      {
+        frage: 'Jau hai era lavurà a l’exteriur. E uss?',
+        antwort:
+          'Temps a l’exteriur mancan per regla en l’AVS svizra, els pon dentant manar ad ina renta en l’auter stadi. Cun temps d’assicuranza en in stadi da l’UE u da l’AECL inizia ina suletta dumonda en il pajais da domicil la procedura en tut ils stadis participads (fegl d’infurmaziun 3.01).',
+      },
+      {
+        frage: 'Survegn jau sco partenaria u partenari betg maridà ina renta da survivents?',
+        antwort:
+          'Ina renta da vaiva u da vaiv da l’AVS datti mo suenter in lètg u in partenadi registrà e mo sut ulteriuras premissas. Per pèrs senza lètg u partenadi registrà na prevesa l’AVS nagina renta da survivents. Uffants pon survegnir ina renta d’orfen (art. 23 e 25 LAVS). Tar la cassa da pensiun po il reglament prevair ina prestaziun per partenarias e partenaris.',
+      },
+      {
+        frage: 'Stoss jau anc pajar contribuziuns da l’AVS suenter la pensiun?',
+        antwort:
+          'Tgi che lavura vinavant suenter la vegliadetgna da referenza paja vinavant contribuziuns. Sut tschertas premissas po la renta lura vegnir calculada da nov. Tgi che anticipescha la renta e na lavura betg pli, resta obligà da pajar contribuziuns fin a la vegliadetgna da referenza sco persuna senza activitad da gudogn (art. 10 LAVS).',
+      },
+    ],
+    quellen: ['ahvMerkblatt', 'ahvMerkblattFlex'],
+  },
 ];
 
 export const SONDERSEITEN = [

@@ -442,6 +442,89 @@ export const SEITEN = [
     ],
     quellen: ['arbeitSwiss'],
   },
+
+  // ─── AHV and retirement (16.11.2026) ──────────────────────────────────────
+  // German abbreviations as on the other English pages; terms follow leaflet 3.04 in English
+  // (“reference age”, “early withdrawal”, “deferral”).
+  {
+    pfad: 'ahv-pensionierung',
+    titel: 'AHV and retirement — an orientation',
+    beschreibung:
+      'How the three pillars fit together, what determines the AHV pension, why you have to apply for it, and what early withdrawal and deferral mean. No figures.',
+    brotkrume: 'AHV and retirement',
+    vorspann:
+      'Old-age and survivors’ insurance (AHV) is the first pillar of Swiss retirement provision and compulsory for everyone who lives or works here. How high the pension will be is decided over many years: by contribution years, earnings, and credits for raising children and caring for relatives. And it does not come by itself: you have to apply for it.',
+    abschnitte: [
+      {
+        titel: 'Three pillars with different tasks',
+        absaetze: [
+          'Retirement provision rests on three pillars (Art. 111 BV). The <strong>AHV</strong> is the first: its pensions are meant to cover basic living needs appropriately (Art. 112 BV). If they are not enough, supplementary benefits are added (Art. 112a BV).',
+          'The <strong>pension fund</strong>, occupational pension provision, is compulsory for employees above a minimum salary. Together with the AHV, it is meant to allow you to maintain your previous standard of living in an appropriate way (Art. 113 BV).',
+          'The <strong>third pillar</strong> is voluntary. Payments into pillar 3a can be deducted from taxable income; but only people with earned income can pay in (Art. 7 BVV 3).',
+        ],
+      },
+      {
+        titel: 'What determines the pension, and why gaps matter',
+        absaetze: [
+          'The amount of the AHV pension depends on the countable <strong>contribution years</strong>, <strong>earned income</strong> and <strong>credits for child-raising and care</strong> (Art. 29bis AHVG). You receive a full pension if you always met the contribution obligation from the year after your twentieth birthday until the year before reference age. If a contribution year is missing, the pension is usually reduced, for life (Art. 29ter and 38 AHVG).',
+          'People without earned income must also pay contributions, for example while studying, after unemployment benefits have run out or in early retirement (Art. 10 AHVG). For married people without earned income, contributions count as paid if the spouse pays at least twice the minimum contribution (Art. 3 para. 3 AHVG). Missing contributions can only be paid in arrears for a limited period (Art. 16 AHVG).',
+          'An extract from your individual account (IK), which you can request from your compensation fund, shows whether you have gaps (Art. 141 AHVV). Older gaps can no longer be closed (Art. 16 AHVG).',
+        ],
+      },
+      {
+        titel: 'The pension does not come by itself',
+        absaetze: [
+          'You must apply for the AHV pension yourself, ideally a few months before reference age. The responsible office is the compensation fund that last received your contributions; if you paid none, the cantonal compensation fund of your canton of residence (leaflet 3.01).',
+          'Entitlement begins on the first day of the month after you reach reference age and ends at the end of the month in which the person dies (Art. 21 AHVG). The reference age is the same for women and men; transitional rules apply to women of the transitional generation.',
+          'Anyone receiving an old-age pension in December also receives a thirteenth old-age pension equal to one twelfth of the annual old-age pension. Survivors’, disability and children’s pensions are still paid only twelve times (leaflet 3.01).',
+        ],
+      },
+      {
+        titel: 'Drawing earlier or later',
+        absaetze: [
+          'The pension can be drawn <strong>early</strong>, in full or in part, at the earliest from your sixty-third birthday, earlier for women of the transitional generation. The early part is reduced for life, including beyond reference age (Art. 40 and 40a AHVG). There are no children’s pensions during early withdrawal. You must apply for early withdrawal at the latest in the month before the desired start; it cannot be done retroactively (leaflet 3.04).',
+          'You can also <strong>defer</strong> the pension, in full or in part, by at least one and at most five years; it is then increased for life (Art. 39 AHVG). You declare the deferral at the latest one year after reaching reference age, otherwise the pension is paid without an increase (Art. 55quater AHVV).',
+          'Early withdrawal can have consequences that are not obvious: anyone who is unemployed loses entitlement to unemployment benefits by drawing early, and so does anyone receiving bridging benefits (Art. 8 AVIG, Art. 5 para. 3 ÜLG). Seek advice from your compensation fund beforehand.',
+        ],
+      },
+      {
+        titel: 'What else you may be entitled to in old age',
+        absaetze: [
+          'If pensions and assets are not enough for the bare necessities, <strong>supplementary benefits</strong> come into question. They are a legal entitlement, not social assistance.',
+          'Anyone who receives an old-age pension or supplementary benefits, lives in Switzerland and permanently depends on other people’s help in daily life, for example to dress, wash or eat, can receive a <strong>helplessness allowance</strong> from the AHV if the helplessness has lasted without interruption for at least six months and there is no entitlement to a helplessness allowance from accident or military insurance. It does not depend on income or assets (Art. 43bis AHVG, leaflet 3.01).',
+          'With the <strong>pension fund</strong>, you choose between a pension and a lump sum. By law you can take a quarter as a lump sum, more only if the fund’s regulations allow it; married people need written consent (Art. 37 and 37a BVG). The deadline for choosing is in the regulations; once the lump sum has been paid out, it cannot be undone. Seek advice early.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'How high will my AHV pension be?',
+        antwort:
+          'That depends on your contribution years, your earnings and your credits. As a rule, the pension can only be calculated bindingly when you reach reference age (leaflet 3.01). You can request an advance calculation from your compensation fund.',
+      },
+      {
+        frage: 'What applies to married couples?',
+        antwort:
+          'Income from the years of marriage is split and credited half to each spouse, among other cases as soon as both are entitled to a pension and on divorce. The two pensions of a married couple are capped together; the cap no longer applies, among other cases, if the joint household was dissolved by a court (leaflet 3.01).',
+      },
+      {
+        frage: 'I have also worked abroad. What now?',
+        antwort:
+          'Periods abroad are usually missing in the Swiss AHV, but they can lead to a pension in the other country. With insurance periods in an EU or EFTA state, a single application in your country of residence starts the procedure in all states involved (leaflet 3.01).',
+      },
+      {
+        frage: 'Do I get a survivor’s pension as an unmarried partner?',
+        antwort:
+          'An AHV widow’s or widower’s pension exists only after a marriage or registered partnership and only under further conditions. For couples without marriage or registered partnership, the AHV provides no survivor’s pension. Children may receive an orphan’s pension (Art. 23 and 25 AHVG). At the pension fund, the regulations may provide a benefit for partners.',
+      },
+      {
+        frage: 'Do I still have to pay AHV contributions after retiring?',
+        antwort:
+          'Anyone who keeps working after reference age keeps paying contributions. Under certain conditions, the pension can then be recalculated. Anyone who draws the pension early and no longer works remains liable to contribute as a non-employed person until reference age (Art. 10 AHVG).',
+      },
+    ],
+    quellen: ['ahvMerkblatt', 'ahvMerkblattFlex'],
+  },
 ];
 
 export const SONDERSEITEN = [
