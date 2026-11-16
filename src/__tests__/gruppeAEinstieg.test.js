@@ -171,15 +171,12 @@ describe('Kleines', () => {
   it('Obstgarten: es sind drei Bäumchen, die später kommen', () => {
     expect(de.obstgarten.legend).toMatch(/drei jüngsten/);
   });
-  it('Mutterschaftsbeihilfe nur mit einem Kind unter zwei Jahren oder unbekanntem Alter', async () => {
-    const { kleinkindUnterZweiJahren } = await import('../data/familienEL.js');
-    const heute = new Date(2026, 10, 11);
-    expect(kleinkindUnterZweiJahren([{ birthDate: '2026-03-01' }], heute)).toBe(true);
-    expect(kleinkindUnterZweiJahren([{ birthDate: '2025-02-01' }], heute)).toBe(true); // GR: bis 15 Monate
-    expect(kleinkindUnterZweiJahren([{ birthDate: '2020-03-01' }], heute)).toBe(false);
-    expect(kleinkindUnterZweiJahren([{ age: 0 }], heute)).toBe(true);
-    expect(kleinkindUnterZweiJahren([], heute)).toBe(true);
-    expect(quelle('Lebenssituationen.jsx')).toMatch(/!b\.mutterschaftsbeihilfe \|\| kleinkindUnterZweiJahren\(/);
+  // Fachpunkte 16.11.2026 (Entscheid Stebler Studios «Immer zeigen, Text klärt»): kein Altersfilter mehr — mit älteren
+  // Kindern und einem Baby unterwegs verschwand die Karte sonst. Kanton und «mit Kindern» bleiben die Bedingungen.
+  it('Mutterschaftsbeihilfe hängt nicht am Alter der Kinder', () => {
+    expect(quelle('Lebenssituationen.jsx')).not.toMatch(/kleinkindUnterZweiJahren/);
+    expect(quelle('Lebenssituationen.jsx')).toMatch(/!b\.mutterschaftsbeihilfe \|\| getMutterschaftsbeihilfe\(userCanton\)\.has/);
+    expect(de.lebenszustaende.tiefesEinkommen.berechtigungen.mutterschaftsbeihilfe.text.sie).toMatch(/nach der Geburt/);
   });
   it('«Stand» der Lebenslagen ist nicht älter als das laufende Jahr (rot ab 1.1.2027 ohne Durchgang)', async () => {
     const { LEBENSZUSTAENDE } = await import('../data/lebenszustaende.js');

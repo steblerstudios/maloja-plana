@@ -105,3 +105,20 @@ describe('berechneTaggeld', () => {
     expect(r.monatlich).toBe(Math.round(12350 * 0.8));
   });
 });
+
+// Fachpunkte Nov. 2026: mit Unterhaltspflicht gilt die Grenze von 200 Taggeldern nicht (AVIG Art. 27 Abs. 5bis,
+// Fassung 1.1.2026) — weder als feste Zahl noch als untere Grenze der Spanne ohne Alter.
+describe('Anspruchstage mit Unterhaltspflicht, Alter unbekannt', () => {
+  it('unter 22 Beitragsmonaten steht die Zahl ohne Alter fest', () => {
+    expect(bestimmeAnspruchstage({ beitragsmonate: 12, alter: null, hatKinder: true })).toBe(260);
+    expect(bestimmeAnspruchstage({ beitragsmonate: 18, alter: null, hatKinder: true })).toBe(400);
+    expect(bestimmeAnspruchstage({ beitragsmonate: 12, alter: null, hatKinder: false })).toBe(null);
+  });
+  it('die Spanne beginnt mit Kindern nicht bei 200 (ab 22 Monaten: 400 bis 520)', () => {
+    const mit = berechneTaggeld({ versicherterVerdienst: 5000, hatKinder: true, beitragsmonate: 24, alter: null });
+    expect(mit.anspruchstageOffen).toBe(true);
+    expect(mit.anspruchSpanne).toEqual({ min: 400, max: 520 });
+    const ohne = berechneTaggeld({ versicherterVerdienst: 5000, hatKinder: false, beitragsmonate: 24, alter: null });
+    expect(ohne.anspruchSpanne).toEqual({ min: 200, max: 520 });
+  });
+});

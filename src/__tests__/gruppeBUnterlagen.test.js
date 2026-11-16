@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { generateLetter, brauchtZustimmungFamilienwohnung } from '../briefGenerator.js';
-import { kvgKuendigungsTermin } from '../utils/festeFristen.js';
+import { kvgKuendigungsTermin, zeigeSemesterHinweis } from '../utils/festeFristen.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import fr from '../i18n/fr.js';
@@ -75,6 +75,33 @@ describe('L2: Kassenwechsel-Brief nennt das Jahr, nach der Frist das nächste', 
     expect(h.ausstaende).toMatch(/KVG Art\. 64a Abs\. 6/);
     expect(quelle('BriefGenerator.jsx')).toMatch(/selected === 'insuranceSwitch'[\s\S]{0,200}kvgKuendigungsTermin\(heuteIso\(\)\)/);
   });
+  // Fachpunkte 16.11.2026, am Volltext KVG Art. 7 Abs. 1/2, Art. 64a Abs. 6, KVV Art. 105l (Fassung 1.1.2026).
+  it('Semester-Hinweis im Dezember und von Januar bis März, nicht im Herbst', () => {
+    expect(zeigeSemesterHinweis('2026-12-01')).toBe(true);
+    expect(zeigeSemesterHinweis('2027-01-15')).toBe(true);
+    expect(zeigeSemesterHinweis('2027-03-31')).toBe(true);
+    expect(zeigeSemesterHinweis('2027-04-01')).toBe(false);
+    expect(zeigeSemesterHinweis('2026-11-11')).toBe(false);
+    expect(quelle('BriefGenerator.jsx')).toMatch(/zeigeSemesterHinweis\(heuteIso\(\)\) && t\(k \+ 'semester'\)/);
+  });
+  it('«letzter Werktag» als Angabe des BAG, nicht als Wortlaut von KVG Art. 7 Abs. 2; Einschreiben nicht vorgeschrieben', () => {
+    const b = de.briefe.insuranceSwitch;
+    expect(b.legalNote).toMatch(/bis 30\. November/);
+    expect(b.legalNote).toMatch(/nennt das BAG den letzten Werktag/);
+    expect(b.legalNote).not.toMatch(/gemäss KVG Art\. 7 Abs\. 2[^.]*letzten Werktag/);
+    expect(b.legalNote).toMatch(/nicht vorgeschrieben/);
+    expect(b.hinweis.frist).toMatch(/Angabe BAG/);
+  });
+  it('Ausstände: gemahnte Beträge (KVV Art. 105l Abs. 1 und 2); nachFrist ohne Anrede', () => {
+    const h = de.briefe.insuranceSwitch.hinweis;
+    expect(h.ausstaende).toMatch(/gemahnte/);
+    expect(h.ausstaende).toMatch(/KVV Art\. 105l Abs\. 1 und 2/);
+    expect(h.nachFrist).not.toMatch(/\b(Sie|du)\b/);
+  });
+  it('Familienwohnung: eingetragene Partnerschaft mit PartG Art. 14 Abs. 2', () => {
+    expect(de.briefe.leaseTermination.hinweis.zustimmung.sie).toMatch(/PartG Art\. 14 Abs\. 2/);
+    expect(de.briefe.leaseTermination.hinweis.zustimmung.du).toMatch(/PartG Art\. 14 Abs\. 2/);
+  });
 });
 
 // ─── L4–L8 und Kleines ───
@@ -88,7 +115,7 @@ describe('L4/L5: Kalender-Vorlagen nie aus dem Klickdatum', () => {
   });
   it('L4 Steuerfrist aus den Angaben, sonst ins Formular ohne Datum; Bewilligung ohne Datum', () => {
     const s = quelle('CalendarReminders.jsx');
-    expect(s).toMatch(/taxDeadline'\), category: 'finance', recurrence: 'yearly', festesDatum: data\?\.behoerden\?\.taxFilingDeadline/);
+    expect(s).toMatch(/taxDeadline'\), category: 'finance', recurrence: 'once', festesDatum: data\?\.behoerden\?\.taxFilingDeadline/);
     expect(s).toMatch(/permitRenewal'\), category: 'admin', recurrence: 'once', ohneDatum: true/);
     expect(s).toMatch(/if \(template\.ohneDatum\) \{[\s\S]{0,300}setNewDate\(''\); setView\('add'\)/);
     expect(s).not.toMatch(/taxDeadline'\)[^\n]*daysFromNow/);

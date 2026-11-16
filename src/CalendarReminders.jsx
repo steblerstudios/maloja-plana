@@ -60,8 +60,8 @@ const nextDueFrom = (lastVisit, recurrence) => {
   return naechsterTermin(lastVisit, INTERVALLE[recurrence] ? recurrence : 'yearly') || '';
 };
 
-// Gruppe B L5 (11.11.2026): Erinnerung zehn Tage vor dem letzten Werktag im November — die Kündigung muss dann
-// schon bei der Kasse sein (KVG Art. 7 Abs. 2). Nach der Frist die des nächsten Jahres.
+// Gruppe B L5 (11.11.2026): Erinnerung zehn Tage vor der Frist — Eingang bis 30. November (ein Monat auf Ende Jahr,
+// KVG Art. 7 Abs. 2), am Wochenende der Werktag davor (BAG, fristen.js). Nach der Frist die des nächsten Jahres.
 export const kkWechselErinnerung = (heute) => {
   const j = Number(heute.slice(0, 4));
   let frist = werktagAmOderDavor(j + '-11-30');
@@ -77,7 +77,7 @@ const TEMPLATES = (t, data) => [
   { title: t('calendar.templates.doctorYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 30, coverage: t('calendar.coverage.doctor') },
   { title: t('calendar.templates.dentistYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 60, coverage: t('calendar.coverage.dentist') },
   { title: t('calendar.templates.gynYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 90, coverage: t('calendar.coverage.gyn') },
-  { title: t('calendar.templates.taxDeadline'), category: 'finance', recurrence: 'yearly', festesDatum: data?.behoerden?.taxFilingDeadline >= todayISO() ? data.behoerden.taxFilingDeadline : null, ohneDatum: !(data?.behoerden?.taxFilingDeadline >= todayISO()) },
+  { title: t('calendar.templates.taxDeadline'), category: 'finance', recurrence: 'once', festesDatum: data?.behoerden?.taxFilingDeadline >= todayISO() ? data.behoerden.taxFilingDeadline : null, ohneDatum: !(data?.behoerden?.taxFilingDeadline >= todayISO()) },
   { title: t('calendar.templates.insuranceRenewal'), category: 'insurance', recurrence: 'yearly', daysFromNow: 180 },
   { title: t('calendar.templates.permitRenewal'), category: 'admin', recurrence: 'once', ohneDatum: true },
   { title: t('calendar.templates.ravAppointment'), category: 'admin', recurrence: 'monthly', daysFromNow: 14 },
