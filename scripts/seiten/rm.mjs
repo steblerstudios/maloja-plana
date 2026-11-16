@@ -301,15 +301,15 @@ export const SEITEN = [
       {
         titel: 'Senza prestaziun da l’AVS u da l’AI na datti nagina PC',
         absaetze: [
-          'Las PC premettan ina prestaziun da l’AVS u da l’AI: ina renta da vegliadetgna u da survivents da l’AVS, era ina renta anticipada, ina renta da l’AI, ina indemnisaziun d’impotenza da l’AI u in pajament per di da l’AI che vegn pajà senza interrupziun dapi almain sis mais. Ultra da quai èn necessaris il domicil e la dimora effectiva en Svizra (art. 4 LPC).',
+          'Las PC premettan ina prestaziun da l’AVS u da l’AI: ina renta da vegliadetgna u da survivents da l’AVS, era ina renta anticipada, ina renta da l’AI, ina indemnisaziun d’impotenza da l’AI u in pajament per di da l’AI che vegn pajà senza interrupziun dapi almain sis mais. Ultra da quai èn necessaris il domicil e la dimora usitada en Svizra (art. 4 LPC).',
           'Per persunas estras vala ultra da quai ina durada minimala da dimora: per regla diesch onns senza interrupziun en Svizra, tschintg onns per fugitivs e persunas senza naziunalitad (art. 5 LPC). Per persunas burgaisas d’in stadi da l’UE u da l’AECL na vala ella betg.',
-          'Tgi che n’ha nagina renta mo perquai ch’i mancan onns da contribuziun, po survegnir tuttina PC sut tschertas premissas (art. 4 al. 1 lit. b e d LPC). Tgi che croda en basegns senza nagina prestaziun da l’AVS u da l’AI, sa drizza a l’agid social da la vischnanca da domicil.',
+          'Tgi che n’ha nagina renta mo perquai ch’i mancan onns da contribuziun, po survegnir tuttina PC sut tschertas premissas (art. 4 LPC). Tgi che croda en basegns senza nagina prestaziun da l’AVS u da l’AI, sa drizza a l’agid social da la vischnanca da domicil.',
         ],
       },
       {
         titel: 'La largia tranter expensas ed entradas',
         absaetze: [
-          'La PC annuala correspunda a la part da las <strong>expensas renconuschidas</strong> che surpassa las <strong>entradas imputablas</strong> (art. 9 LPC). Tar las expensas tutgan per exempel in import per il basegn general da viver, il tschains fin ad in maximum ed in import per la premia da la cassa da malsauns. Tar las entradas tutgan rentas, ina part da l’entrada da gudogn ed ina part da la facultad (art. 10 ed 11 LPC).',
+          'La PC annuala correspunda a la part da las <strong>expensas renconuschidas</strong> che surpassa las <strong>entradas imputablas</strong> (art. 9 LPC). Tar las expensas tutgan per exempel in import per il basegn general da viver, il tschains fin ad in maximum ed in import per la premia da la cassa da malsauns (art. 10 LPC). Tar las entradas tutgan rentas, ina part da l’entrada da gudogn ed ina part da la facultad (art. 11 LPC).',
           'Dretg ha mo tgi che posseda ina facultad sut ina limita legala; ina immobiglia abitada da la proprietaria u dal proprietari na vegn betg quintada per questa limita (art. 9a LPC). Facultad, a la quala insatgi ha renunzià senza cuntraprestaziun, per exempel tras ina donaziun, vegn quintada (art. 11a LPC).',
           'La Confederaziun fixescha ils imports per il basegn da viver ed ils maximums dal tschains, graduads tenor trais regiuns (art. 10 LPC). Nus na ls numnain betg intenziunadamain qua: els vegnan adattads regularmain, ed ina cifra sin ina pagina sco questa fiss baud fallada. Per persunas che vivan en ina chasa da tgira suonda il calcul agens reglas; ils chantuns pon limitar ils custs renconuschids da la chasa da tgira.',
         ],
@@ -325,8 +325,8 @@ export const SEITEN = [
       {
         titel: 'S’annunziar: tar il chantun da domicil, e baud',
         absaetze: [
-          'Cumpetent è il chantun, en il qual Vus avais Voss domicil. El decida tge post che retschaiva l’annunzia; per il solit è quai la cassa chantunala da cumpensaziun u l’institut d’assicuranzas socialas, savens tras l’agentura AVS da la vischnanca da domicil, ma mai l’autoritad d’agid social (art. 21 LPC).',
-          'Il dretg cumenza per regla cun il mais, en il qual l’annunzia vegn inoltrada (art. 12 LPC). Pli baud po el cumenzar mo en tscherts cas, per exempel sche l’annunzia suonda curt suenter ina disposiziun da renta u suenter l’entrada en ina chasa da tgira u en l’ospital (art. 12 al. 2 LPC, art. 22 OPC). Tgi che spetga, perda perquai savens mais.',
+          'Cumpetent è il chantun, en il qual Vus avais Voss domicil. El decida tge post che retschaiva l’annunzia; per il solit è quai la cassa chantunala da cumpensaziun u l’institut d’assicuranzas socialas, savens tras l’agentura AVS da la vischnanca da domicil (art. 21 LPC).',
+          'Il dretg cumenza per regla cun il mais, en il qual l’annunzia vegn inoltrada (art. 12 LPC). Pli baud po el cumenzar mo en tscherts cas, per exempel sche l’annunzia vegn fatga entaifer sis mais suenter ina disposiziun da renta u suenter l’entrada en ina chasa da tgira u en l’ospital (art. 12 al. 2 LPC, art. 22 OPC). Tgi che spetga, po perquai perder mais.',
           'Sche Vus n’essas betg segir, sch’ina annunzia vala la paina, dumandai tar il post da PC. El examinescha il dretg e motivescha sia decisiun en ina disposiziun.',
         ],
       },
@@ -335,7 +335,7 @@ export const SEITEN = [
         absaetze: [
           'Las PC vegnan savens confundidas cun l’agid social. Ellas èn insatge auter: in dretg tenor il dretg federal, calculà tenor reglas che valan en tut la Svizra. In dretg sin PC ha la precedenza envers l’agid social.',
           'Durant Vossa vita na stuais Vus betg restituir PC retratgas legalmain. Suenter la mort vegnan ellas restituidas da l’ierta, ma mo da la part che surpassa in import liber legal; tar pèrs maridads pir da l’ierta da la persuna che mora sco segunda (art. 16a LPC).',
-          'Senza pass svizzer po il retratg da PC giugar ina rolla, sche Vus vulais far vegnir commembers da la famiglia en Svizra (art. 43 al. 1 lit. e ed art. 44 al. 1 lit. e LEI). Laschai Vus cussegliar ordavant en quest cas.',
+          'Senza pass svizzer e senza la naziunalitad d’in stadi da l’UE u da l’AECL na vegn la reuniun da la famiglia per regla betg permessa, sche Vus retschavais PC annualas u las retschavessas pervia da la reuniun (art. 43 al. 1 lit. e ed art. 44 al. 1 lit. e LEI). Laschai Vus cussegliar ordavant en quest cas.',
         ],
       },
     ],
@@ -348,7 +348,7 @@ export const SEITEN = [
       {
         frage: 'Datti PC era avant la vegliadetgna da renta?',
         antwort:
-          'Gea. Tgi che retschaiva ina renta da l’AI, ina renta da vaiva, da vaiv u d’orfen po survegnir PC era avant la vegliadetgna da renta. Era tgi che anticipescha la renta da l’AVS ademplescha la premissa d’ina renta; la renta reducida quinta lura sco entrada (art. 4 LPC). Tgi che vegn exclus da l’assicuranza cunter la dischoccupaziun a partir da sessanta onns, po survegnir sut tschertas premissas prestaziuns transitoricas; era quellas s’annunzia ins tar il post da PC.',
+          'Gea. Tgi che retschaiva ina renta da l’AI, ina renta da vaiva, da vaiv u d’orfen po survegnir PC era avant la vegliadetgna da renta. Era tgi che anticipescha la renta da l’AVS ademplescha la premissa d’ina renta (art. 4 LPC); la renta reducida quinta lura sco entrada (art. 11 LPC). Tgi che vegn exclus da l’assicuranza cunter la dischoccupaziun a partir da sessanta onns, po survegnir sut tschertas premissas prestaziuns transitoricas; era quellas s’annunzia ins tar il post da PC.',
       },
       {
         frage: 'Quinta mia chasa u mi appartament?',
@@ -358,7 +358,7 @@ export const SEITEN = [
       {
         frage: 'Tge vala, sche jau stoss ir en ina chasa da tgira?',
         antwort:
-          'Lura vegn la PC calculada tenor agens reglas: empè dal basegn da viver e dal tschains quintan la taxa dal di da la chasa da tgira ed in import per expensas persunalas che fixescha il chantun (art. 10 al. 2 LPC). S’annunziai curt suenter l’entrada; lura exista il dretg gia a partir dal mais da l’entrada (art. 12 al. 2 LPC).',
+          'Lura vegn la PC calculada tenor agens reglas: empè dal basegn da viver e dal tschains quintan la taxa dal di da la chasa da tgira, per la quala il chantun po fixar in maximum, ed in import per expensas persunalas che fixescha il chantun (art. 10 al. 2 LPC). S’annunziai entaifer sis mais suenter l’entrada; lura po il dretg cumenzar gia a partir dal mais da l’entrada, sche las autras premissas èn ademplidas (art. 12 al. 2 LPC).',
       },
       {
         frage: 'Stoss jau annunziar midadas?',

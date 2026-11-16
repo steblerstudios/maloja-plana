@@ -288,15 +288,15 @@ export const SEITEN = [
       {
         titel: 'No AHV or IV benefit, no EL',
         absaetze: [
-          'EL require a benefit from the AHV or IV: an AHV old-age or survivors’ pension, including an early one, an IV pension, an IV helplessness allowance or an IV daily allowance that has been paid without interruption for at least six months. In addition, you must be domiciled and actually reside in Switzerland (Art. 4 ELG).',
+          'EL require a benefit from the AHV or IV: an AHV old-age or survivors’ pension, including an early one, an IV pension, an IV helplessness allowance or an IV daily allowance that has been paid without interruption for at least six months. In addition, you must be domiciled and habitually resident in Switzerland (Art. 4 ELG).',
           'Foreign nationals must also meet a minimum period of residence: as a rule ten years without interruption in Switzerland, five years for refugees and stateless persons (Art. 5 ELG). It does not apply to nationals of an EU or EFTA state.',
-          'Anyone who has no pension only because too few contribution years were reached may still receive EL under certain conditions (Art. 4 para. 1 let. b and d ELG). Anyone in need without any AHV or IV benefit turns to the social assistance office of their municipality of residence.',
+          'Anyone who has no pension only because too few contribution years were reached may still receive EL under certain conditions (Art. 4 ELG). Anyone in need without any AHV or IV benefit turns to the social assistance office of their municipality of residence.',
         ],
       },
       {
         titel: 'The gap between expenses and income',
         absaetze: [
-          'The annual EL equals the amount by which <strong>recognised expenses</strong> exceed <strong>countable income</strong> (Art. 9 ELG). Expenses include, for example, an amount for general living costs, rent up to a ceiling and an amount for the health insurance premium. Income includes pensions, part of earned income and part of assets (Art. 10 and 11 ELG).',
+          'The annual EL equals the amount by which <strong>recognised expenses</strong> exceed <strong>countable income</strong> (Art. 9 ELG). Expenses include, for example, an amount for general living costs, rent up to a ceiling and an amount for the health insurance premium (Art. 10 ELG). Income includes pensions, part of earned income and part of assets (Art. 11 ELG).',
           'Only people whose assets are below a statutory threshold are entitled; a home lived in by its owner does not count towards this threshold (Art. 9a ELG). Assets someone gave up without anything in return, for example through a gift, are counted (Art. 11a ELG).',
           'The Confederation sets the amounts for living costs and the rent ceilings, graded by three regions (Art. 10 ELG). We deliberately do not state them here: they are adjusted regularly, and a figure on a page like this would soon be wrong. For people living in a care home, the calculation follows its own rules; the cantons may limit the recognised care home costs.',
         ],
@@ -312,8 +312,8 @@ export const SEITEN = [
       {
         titel: 'Applying: to your canton of residence, and early',
         absaetze: [
-          'The canton where you are domiciled is responsible. It decides which office receives the application; usually the cantonal compensation fund or social insurance institution, often via the AHV branch office of your municipality, but never the social assistance authority (Art. 21 ELG).',
-          'Entitlement generally begins in the month in which the application is submitted (Art. 12 ELG). It can begin earlier only in certain cases, for example if the application follows soon after a pension ruling or after entering a care home or hospital (Art. 12 para. 2 ELG, Art. 22 ELV). Waiting therefore often costs months.',
+          'The canton where you are domiciled is responsible. It decides which office receives the application; usually the cantonal compensation fund or social insurance institution, often via the AHV branch office of your municipality (Art. 21 ELG).',
+          'Entitlement generally begins in the month in which the application is submitted (Art. 12 ELG). It can begin earlier only in certain cases, for example if the application is made within six months of a pension ruling or of entering a care home or hospital (Art. 12 para. 2 ELG, Art. 22 ELV). Waiting can therefore cost months.',
           'If you are unsure whether applying is worthwhile, ask the EL office. It examines the entitlement and gives reasons for its decision in a written ruling.',
         ],
       },
@@ -322,7 +322,7 @@ export const SEITEN = [
         absaetze: [
           'EL are often confused with social assistance. They are something else: an entitlement under federal law, calculated by rules that apply throughout Switzerland. An entitlement to EL takes precedence over social assistance.',
           'During your lifetime you do not have to repay EL received lawfully. After death they are repaid from the estate, but only from the part that exceeds a statutory allowance; for married couples only from the estate of the second spouse to die (Art. 16a ELG).',
-          'Without a Swiss passport, receiving EL may matter if you want to bring family members to Switzerland (Art. 43 para. 1 let. e and Art. 44 para. 1 let. e AIG). In that case, seek advice beforehand.',
+          'Without a Swiss passport and without the nationality of an EU or EFTA state, family reunification is as a rule not approved if you receive annual EL or would receive them because of the reunification (Art. 43 para. 1 let. e and Art. 44 para. 1 let. e AIG). In that case, seek advice beforehand.',
         ],
       },
     ],
@@ -335,7 +335,7 @@ export const SEITEN = [
       {
         frage: 'Are there EL before retirement age?',
         antwort:
-          'Yes. Anyone receiving an IV pension or a widow’s, widower’s or orphan’s pension can receive EL before retirement age too. Anyone drawing the AHV pension early also meets the pension requirement; the reduced pension then counts as income (Art. 4 ELG). Anyone whose unemployment benefits run out at sixty or later may, under certain conditions, receive bridging benefits (Überbrückungsleistungen); these too are applied for at the EL office.',
+          'Yes. Anyone receiving an IV pension or a widow’s, widower’s or orphan’s pension can receive EL before retirement age too. Anyone drawing the AHV pension early also meets the pension requirement (Art. 4 ELG); the reduced pension then counts as income (Art. 11 ELG). Anyone whose unemployment benefits run out at sixty or later may, under certain conditions, receive bridging benefits (Überbrückungsleistungen); these too are applied for at the EL office.',
       },
       {
         frage: 'Does my house or flat count?',
@@ -345,7 +345,7 @@ export const SEITEN = [
       {
         frage: 'What applies if I have to move into a care home?',
         antwort:
-          'Then EL are calculated by their own rules: instead of living costs and rent, the daily care home rate and an amount for personal expenses set by the canton are counted (Art. 10 para. 2 ELG). Apply soon after moving in; entitlement then exists from the month of entry (Art. 12 para. 2 ELG).',
+          'Then EL are calculated by their own rules: instead of living costs and rent, the daily care home rate, which the canton may cap, and an amount for personal expenses set by the canton are counted (Art. 10 para. 2 ELG). Apply within six months of moving in; entitlement can then begin from the month of entry, if the other conditions are met (Art. 12 para. 2 ELG).',
       },
       {
         frage: 'Do I have to report changes?',

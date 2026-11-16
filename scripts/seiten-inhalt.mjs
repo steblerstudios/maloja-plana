@@ -658,16 +658,16 @@ export const SEITEN = [
         id: 'voraussetzungen',
         bild: `<ol class="zeit kern" role="list" aria-label="Was vorausgesetzt ist">
           <li><span class="jahr">AHV oder IV</span><span class="was">eine Rente, eine Hilflosenentschädigung oder ein länger laufendes Taggeld der IV</span></li>
-          <li><span class="jahr">Schweiz</span><span class="was">Wohnsitz und tatsächlicher Aufenthalt hier</span></li>
+          <li><span class="jahr">Schweiz</span><span class="was">Wohnsitz und gewöhnlicher Aufenthalt hier</span></li>
           <li><span class="jahr">Vermögen</span><span class="was">unter einer gesetzlichen Schwelle</span></li>
         </ol>`,
         kurzAbsatz: 0,
         wege: ['sozialhilfe'],
         titel: 'Ohne Leistung der AHV oder IV gibt es keine EL',
         absaetze: [
-          'EL setzen eine Leistung der AHV oder IV voraus: eine Alters- oder Hinterlassenenrente der AHV, auch eine vorbezogene, eine Rente der IV, eine Hilflosenentschädigung der IV oder ein Taggeld der IV, das seit mindestens sechs Monaten ununterbrochen läuft. Dazu kommen Wohnsitz und tatsächlicher Aufenthalt in der Schweiz (ELG Art. 4).',
+          'EL setzen eine Leistung der AHV oder IV voraus: eine Alters- oder Hinterlassenenrente der AHV, auch eine vorbezogene, eine Rente der IV, eine Hilflosenentschädigung der IV oder ein Taggeld der IV, das seit mindestens sechs Monaten ununterbrochen läuft. Dazu kommen Wohnsitz und gewöhnlicher Aufenthalt in der Schweiz (ELG Art. 4).',
           'Für Ausländerinnen und Ausländer gilt zusätzlich eine Mindestaufenthaltsdauer: in der Regel zehn Jahre ununterbrochen in der Schweiz, für Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Für Staatsangehörige eines EU- oder EFTA-Staates gilt sie nicht.',
-          'Wer keine Rente hat, nur weil zu wenige Beitragsjahre zusammenkamen, kann unter gewissen Voraussetzungen trotzdem EL erhalten (ELG Art. 4 Abs. 1 Bst. b und d). Wer ganz ohne Leistung der AHV oder IV in Not gerät, wendet sich an die Sozialhilfe der Wohngemeinde.',
+          'Wer keine Rente hat, nur weil zu wenige Beitragsjahre zusammenkamen, kann unter gewissen Voraussetzungen trotzdem EL erhalten (ELG Art. 4). Wer ganz ohne Leistung der AHV oder IV in Not gerät, wendet sich an die Sozialhilfe der Wohngemeinde.',
         ],
       },
       {
@@ -686,7 +686,7 @@ export const SEITEN = [
         wege: ['kantonsatlas'],
         titel: 'Die Lücke zwischen Ausgaben und Einnahmen',
         absaetze: [
-          'Die jährliche EL entspricht dem Betrag, um den die <strong>anerkannten Ausgaben</strong> die <strong>anrechenbaren Einnahmen</strong> übersteigen (ELG Art. 9). Zu den Ausgaben gehören etwa ein Betrag für den allgemeinen Lebensbedarf, die Miete bis zu einer Höchstgrenze und ein Betrag für die Krankenkassenprämie. Zu den Einnahmen gehören Renten, ein Teil des Erwerbseinkommens und ein Teil des Vermögens (ELG Art. 10 und 11).',
+          'Die jährliche EL entspricht dem Betrag, um den die <strong>anerkannten Ausgaben</strong> die <strong>anrechenbaren Einnahmen</strong> übersteigen (ELG Art. 9). Zu den Ausgaben gehören etwa ein Betrag für den allgemeinen Lebensbedarf, die Miete bis zu einer Höchstgrenze und ein Betrag für die Krankenkassenprämie (ELG Art. 10). Zu den Einnahmen gehören Renten, ein Teil des Erwerbseinkommens und ein Teil des Vermögens (ELG Art. 11).',
           'Anspruch hat nur, wessen Vermögen unter einer gesetzlichen Schwelle liegt; eine selbst bewohnte Liegenschaft zählt dabei nicht mit (ELG Art. 9a). Vermögen, auf das jemand ohne Gegenleistung verzichtet hat, etwa durch eine Schenkung, wird mitgezählt (ELG Art. 11a).',
           'Die Beträge für den Lebensbedarf legt der Bund fest, die Höchstgrenzen für die Miete abgestuft nach drei Regionen (ELG Art. 10). Wir nennen sie hier bewusst nicht: Sie werden regelmässig angepasst, und eine Zahl auf einer Seite wie dieser wäre bald falsch. Wer im Heim lebt, wird nach eigenen Regeln berechnet; die Kantone können die anerkannten Heimkosten begrenzen.',
         ],
@@ -719,8 +719,8 @@ export const SEITEN = [
         wege: ['was-steht-mir-zu'],
         titel: 'Anmelden: beim Wohnkanton, und früh',
         absaetze: [
-          'Zuständig ist der Kanton, in dem Sie Wohnsitz haben. Welche Stelle die Anmeldung entgegennimmt, bestimmt er; meist ist es die kantonale Ausgleichskasse oder Sozialversicherungsanstalt, oft über die AHV-Zweigstelle der Wohngemeinde, nie aber die Sozialhilfebehörde (ELG Art. 21).',
-          'Der Anspruch beginnt in der Regel mit dem Monat, in dem die Anmeldung eingereicht wird (ELG Art. 12). Früher beginnen kann er nur in bestimmten Fällen, etwa wenn die Anmeldung bald nach einer Rentenverfügung oder einem Eintritt ins Heim oder Spital erfolgt (ELG Art. 12 Abs. 2, ELV Art. 22). Wer zuwartet, verliert darum oft Monate.',
+          'Zuständig ist der Kanton, in dem Sie Wohnsitz haben. Welche Stelle die Anmeldung entgegennimmt, bestimmt er; meist ist es die kantonale Ausgleichskasse oder Sozialversicherungsanstalt, oft über die AHV-Zweigstelle der Wohngemeinde (ELG Art. 21).',
+          'Der Anspruch beginnt in der Regel mit dem Monat, in dem die Anmeldung eingereicht wird (ELG Art. 12). Früher beginnen kann er nur in bestimmten Fällen, etwa wenn die Anmeldung innert sechs Monaten nach einer Rentenverfügung oder nach einem Eintritt ins Heim oder Spital erfolgt (ELG Art. 12 Abs. 2, ELV Art. 22). Wer zuwartet, kann darum Monate verlieren.',
           'Sind Sie unsicher, ob sich eine Anmeldung lohnt, fragen Sie bei der EL-Stelle nach. Sie prüft den Anspruch und begründet ihren Entscheid in einer Verfügung.',
         ],
       },
@@ -736,7 +736,7 @@ export const SEITEN = [
         absaetze: [
           'EL werden oft mit Sozialhilfe verwechselt. Sie sind etwas anderes: ein Anspruch nach Bundesrecht, berechnet nach Regeln, die in der ganzen Schweiz gelten. Ein Anspruch auf EL geht der Sozialhilfe vor.',
           'Zu Lebzeiten müssen Sie rechtmässig bezogene EL nicht zurückzahlen. Nach dem Tod werden sie aus dem Nachlass zurückerstattet, aber nur aus dem Teil, der einen gesetzlichen Freibetrag übersteigt, bei Ehepaaren erst aus dem Nachlass der zweitverstorbenen Person (ELG Art. 16a).',
-          'Ohne Schweizer Pass kann der Bezug von EL eine Rolle spielen, wenn Sie Familienangehörige in die Schweiz nachziehen möchten (AIG Art. 43 Abs. 1 Bst. e, Art. 44 Abs. 1 Bst. e). Lassen Sie sich in diesem Fall vorher beraten.',
+          'Ohne Schweizer Pass und ohne Staatsangehörigkeit eines EU- oder EFTA-Staates wird der Nachzug von Familienangehörigen in der Regel nicht bewilligt, wenn Sie jährliche EL beziehen oder wegen des Nachzugs beziehen würden (AIG Art. 43 Abs. 1 Bst. e, Art. 44 Abs. 1 Bst. e). Lassen Sie sich in diesem Fall vorher beraten.',
         ],
       },
     ],
@@ -749,7 +749,7 @@ export const SEITEN = [
       {
         frage: 'Gibt es EL auch vor dem Rentenalter?',
         antwort:
-          'Ja. Wer eine Rente der IV, eine Witwen-, Witwer- oder Waisenrente bezieht, kann auch vor dem Rentenalter EL erhalten. Auch wer die AHV-Rente vorbezieht, erfüllt die Voraussetzung einer Rente; die gekürzte Rente zählt dann als Einnahme (ELG Art. 4). Wer ab sechzig von der Arbeitslosenversicherung ausgesteuert wird, kann unter Umständen Überbrückungsleistungen erhalten; auch diese meldet man bei der EL-Stelle an.',
+          'Ja. Wer eine Rente der IV, eine Witwen-, Witwer- oder Waisenrente bezieht, kann auch vor dem Rentenalter EL erhalten. Auch wer die AHV-Rente vorbezieht, erfüllt die Voraussetzung einer Rente (ELG Art. 4); die gekürzte Rente zählt dann als Einnahme (ELG Art. 11). Wer ab sechzig von der Arbeitslosenversicherung ausgesteuert wird, kann unter Umständen Überbrückungsleistungen erhalten; auch diese meldet man bei der EL-Stelle an.',
       },
       {
         frage: 'Zählt mein Haus oder meine Wohnung?',
@@ -759,7 +759,7 @@ export const SEITEN = [
       {
         frage: 'Was gilt, wenn ich ins Heim muss?',
         antwort:
-          'Dann wird die EL nach eigenen Regeln berechnet: Statt Lebensbedarf und Miete zählen die Heimtaxe und ein Betrag für persönliche Auslagen, die der Kanton festlegt (ELG Art. 10 Abs. 2). Melden Sie sich bald nach dem Eintritt an; dann besteht der Anspruch schon ab dem Monat des Eintritts (ELG Art. 12 Abs. 2).',
+          'Dann wird die EL nach eigenen Regeln berechnet: Statt Lebensbedarf und Miete zählen die Tagestaxe des Heims, für die der Kanton einen Höchstbetrag festlegen kann, und ein Betrag für persönliche Auslagen, den der Kanton bestimmt (ELG Art. 10 Abs. 2). Melden Sie sich innert sechs Monaten nach dem Eintritt an; dann kann der Anspruch schon ab dem Monat des Eintritts beginnen, wenn die übrigen Voraussetzungen erfüllt sind (ELG Art. 12 Abs. 2).',
       },
       {
         frage: 'Muss ich Änderungen melden?',

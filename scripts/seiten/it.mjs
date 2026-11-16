@@ -287,13 +287,13 @@ export const SEITEN = [
         absaetze: [
           'Le PC presuppongono una prestazione dell’AVS o dell’AI: una rendita di vecchiaia o per superstiti dell’AVS, anche anticipata, una rendita dell’AI, un assegno per grandi invalidi dell’AI o un’indennità giornaliera dell’AI versata ininterrottamente da almeno sei mesi. A ciò si aggiungono il domicilio e la dimora abituale in Svizzera (art. 4 LPC).',
           'Per le straniere e gli stranieri vale inoltre una durata minima di soggiorno: di regola dieci anni ininterrotti in Svizzera, cinque anni per i rifugiati e gli apolidi (art. 5 LPC). Per i cittadini di uno Stato dell’UE o dell’AELS non vale.',
-          'Chi non ha una rendita solo perché mancano anni di contribuzione può, a determinate condizioni, ricevere comunque le PC (art. 4 cpv. 1 lett. b e d LPC). Chi si trova nel bisogno senza alcuna prestazione dell’AVS o dell’AI si rivolge all’aiuto sociale del Comune di domicilio.',
+          'Chi non ha una rendita solo perché mancano anni di contribuzione può, a determinate condizioni, ricevere comunque le PC (art. 4 LPC). Chi si trova nel bisogno senza alcuna prestazione dell’AVS o dell’AI si rivolge all’aiuto sociale del Comune di domicilio.',
         ],
       },
       {
         titel: 'Il divario tra spese e redditi',
         absaetze: [
-          'La PC annua corrisponde alla quota delle <strong>spese riconosciute</strong> che supera i <strong>redditi computabili</strong> (art. 9 LPC). Tra le spese figurano ad esempio un importo per il fabbisogno generale vitale, la pigione fino a un importo massimo e un importo per il premio della cassa malati. Tra i redditi figurano le rendite, una parte del reddito da attività lucrativa e una parte della sostanza (art. 10 e 11 LPC).',
+          'La PC annua corrisponde alla quota delle <strong>spese riconosciute</strong> che supera i <strong>redditi computabili</strong> (art. 9 LPC). Tra le spese figurano ad esempio un importo per il fabbisogno generale vitale, la pigione fino a un importo massimo e un importo per il premio della cassa malati (art. 10 LPC). Tra i redditi figurano le rendite, una parte del reddito da attività lucrativa e una parte della sostanza (art. 11 LPC).',
           'Ha diritto solo chi possiede una sostanza inferiore a una soglia legale; un immobile abitato dal proprietario non viene considerato per questa soglia (art. 9a LPC). La sostanza alla quale una persona ha rinunciato senza controprestazione, ad esempio con una donazione, viene computata (art. 11a LPC).',
           'La Confederazione stabilisce gli importi per il fabbisogno vitale e gli importi massimi della pigione, graduati secondo tre regioni (art. 10 LPC). Qui non li citiamo di proposito: vengono adeguati regolarmente, e una cifra su una pagina come questa sarebbe presto sbagliata. Per chi vive in un istituto il calcolo segue regole proprie; i Cantoni possono limitare le spese riconosciute per l’istituto.',
         ],
@@ -309,8 +309,8 @@ export const SEITEN = [
       {
         titel: 'Annunciarsi: presso il Cantone di domicilio, e presto',
         absaetze: [
-          'È competente il Cantone in cui ha il domicilio. È lui a stabilire quale organo riceve la richiesta; di solito è la cassa cantonale di compensazione o l’istituto delle assicurazioni sociali, spesso tramite l’agenzia AVS del Comune di domicilio, ma mai l’autorità di aiuto sociale (art. 21 LPC).',
-          'Il diritto nasce di regola nel mese in cui è presentata la richiesta (art. 12 LPC). Può iniziare prima solo in determinati casi, ad esempio se la richiesta segue a breve una decisione di rendita o l’entrata in un istituto o in ospedale (art. 12 cpv. 2 LPC, art. 22 OPC). Chi aspetta perde quindi spesso dei mesi.',
+          'È competente il Cantone in cui ha il domicilio. È lui a stabilire quale organo riceve la richiesta; di solito è la cassa cantonale di compensazione o l’istituto delle assicurazioni sociali, spesso tramite l’agenzia AVS del Comune di domicilio (art. 21 LPC).',
+          'Il diritto nasce di regola nel mese in cui è presentata la richiesta (art. 12 LPC). Può iniziare prima solo in determinati casi, ad esempio se la richiesta è presentata entro sei mesi da una decisione di rendita o dall’entrata in un istituto o in ospedale (art. 12 cpv. 2 LPC, art. 22 OPC). Chi aspetta può quindi perdere dei mesi.',
           'Se non è sicuro che valga la pena annunciarsi, chieda all’organo PC. Esamina il diritto e motiva la sua decisione per iscritto.',
         ],
       },
@@ -319,7 +319,7 @@ export const SEITEN = [
         absaetze: [
           'Le PC vengono spesso confuse con l’aiuto sociale. Sono un’altra cosa: un diritto secondo il diritto federale, calcolato secondo regole valide in tutta la Svizzera. Un diritto alle PC ha la precedenza sull’aiuto sociale.',
           'Finché è in vita, non deve restituire le PC percepite legalmente. Dopo il decesso vengono restituite dall’eredità, ma solo dalla parte che supera una franchigia legale; per i coniugi solo dall’eredità della persona deceduta per seconda (art. 16a LPC).',
-          'Senza passaporto svizzero, la riscossione di PC può avere un ruolo se desidera far venire in Svizzera dei familiari (art. 43 cpv. 1 lett. e e art. 44 cpv. 1 lett. e LStrI). In tal caso si faccia consigliare prima.',
+          'Senza passaporto svizzero e senza la cittadinanza di uno Stato dell’UE o dell’AELS, il ricongiungimento familiare di regola non è autorizzato se riceve PC annue o se le riceverebbe a causa del ricongiungimento (art. 43 cpv. 1 lett. e e art. 44 cpv. 1 lett. e LStrI). In tal caso si faccia consigliare prima.',
         ],
       },
     ],
@@ -332,7 +332,7 @@ export const SEITEN = [
       {
         frage: 'Ci sono PC anche prima dell’età di pensionamento?',
         antwort:
-          'Sì. Chi riceve una rendita dell’AI, una rendita per vedove, vedovi o orfani può ricevere le PC anche prima dell’età di pensionamento. Anche chi anticipa la rendita AVS soddisfa la condizione di una rendita; la rendita ridotta conta allora come reddito (art. 4 LPC). Chi esaurisce il diritto all’indennità di disoccupazione a partire dai sessant’anni può, a determinate condizioni, ricevere prestazioni transitorie; anche queste si chiedono all’organo PC.',
+          'Sì. Chi riceve una rendita dell’AI, una rendita per vedove, vedovi o orfani può ricevere le PC anche prima dell’età di pensionamento. Anche chi anticipa la rendita AVS soddisfa la condizione di una rendita (art. 4 LPC); la rendita ridotta conta allora come reddito (art. 11 LPC). Chi esaurisce il diritto all’indennità di disoccupazione a partire dai sessant’anni può, a determinate condizioni, ricevere prestazioni transitorie; anche queste si chiedono all’organo PC.',
       },
       {
         frage: 'La mia casa o il mio appartamento contano?',
@@ -342,7 +342,7 @@ export const SEITEN = [
       {
         frage: 'Che cosa vale se devo entrare in un istituto?',
         antwort:
-          'Allora la PC viene calcolata secondo regole proprie: al posto del fabbisogno vitale e della pigione contano la tassa giornaliera dell’istituto e un importo per le spese personali stabilito dal Cantone (art. 10 cpv. 2 LPC). Si annunci poco dopo l’entrata; il diritto esiste allora già dal mese dell’entrata (art. 12 cpv. 2 LPC).',
+          'Allora la PC viene calcolata secondo regole proprie: al posto del fabbisogno vitale e della pigione contano la tassa giornaliera dell’istituto, per la quale il Cantone può fissare un importo massimo, e un importo per le spese personali stabilito dal Cantone (art. 10 cpv. 2 LPC). Si annunci entro sei mesi dall’entrata; il diritto può allora nascere già dal mese dell’entrata, se le altre condizioni sono adempiute (art. 12 cpv. 2 LPC).',
       },
       {
         frage: 'Devo comunicare i cambiamenti?',
