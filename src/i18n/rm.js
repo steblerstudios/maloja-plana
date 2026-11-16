@@ -3510,7 +3510,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Organspende-Entscheid neu, 27.09.2026)
     nichtFestgehalten: 'Anc betg fixà',
     // TODO(rm): provisorisch — Gegenlese (Satz zu 16 Jahren / TxG Art. 8 Abs. 7 aus de ergänzt, 16.11.2026)
-    rechtsstand: "Stadi dals 27.09.2026: En Svizra vala la regulaziun da consentiment extendida. Ina decisiun po fixar, tgi ch'ha 16 onns (TxG Art. 8 al. 7). Sch'i n'è nagina decisiun fixada, vegnan dumandads ils proxims confamigliars. La regulaziun d'opposiziun ed in register naziunal èn decidids, ma anc betg en vigur; l'UFSP fa quint cun il register en il segund semester 2027 e cun la regulaziun d'opposiziun a partir dal emprim semester 2028. Controllai per plaschair il stadi actual tar l'UFSP.",
+    rechtsstand: "Stadi dals 27.09.2026: En Svizra vala la regulaziun da consentiment extendida. Tgi che ha 16 onns, po fixar ina decisiun (TxG Art. 8 al. 7). Sch'i n'è nagina decisiun fixada, vegnan dumandads ils proxims confamigliars. La regulaziun d'opposiziun ed in register naziunal èn decidids, ma anc betg en vigur; l'UFSP fa quint cun il register en il segund semester 2027 e cun la regulaziun d'opposiziun a partir dal emprim semester 2028. Controllai per plaschair il stadi actual tar l'UFSP.",
     bagQuelle: "UFSP: consentiment u opposiziun",
     bagUrl: 'https://www.bag.admin.ch/de/organspende-zustimmungsregelung-oder-widerspruchsregelung',
     vertrauensperson: 'Persuna da confidenza (num e telefon)',
@@ -5368,10 +5368,10 @@ export default {
       hinweis: {
         title: 'Avant la disditga',
         frist: 'La disditga sto arrivar fin ils {frist} tar la cassa (KVG art. 7 al. 2).',
-        nachFrist: 'Per ina midada per la fin da {verpasstJahr} è il termin scadì ils {verpasstFrist}. La brev disda perquai per la fin da {jahr}; ella sto arrivar fin ils {frist} tar la cassa. Vus pudais era spetgar fin la communicaziun da las primas en l’atun.',
+        nachFrist: 'Per ina midada per la fin da {verpasstJahr} è il termin scadì ils {verpasstFrist}. La brev disda perquai per la fin da {jahr}; ella sto arrivar fin ils {frist} tar la cassa. Vus pudais era spetgar fin la communicaziun da las premias en l’atun.',
         semester: 'En il model da basa cun franschisa ordinaria (persunas creschidas 300 francs, uffants nagina) è era ina midada per la fin da zercladur pussaivla: arrivada fin ils 31 da mars (KVG art. 7 al. 1). Cun in model da medi da chasa, HMO u Telmed, cun ina assicuranza da bonus u cun ina franschisa elegibla mo per la fin da l’onn (KVV art. 94 al. 2, 100 al. 3).',
         anmelden: 'L’emprim s’annunziar tar la nova cassa: L’assicuranza actuala finescha pir, cur che la nova cassa ha annunzià l’admissiun (KVG art. 7 al. 5).',
-        ausstaende: 'Sch’i restan primas, participaziuns als custs, tschains da retard u custs da scussiun avertas, è ina midada mo pussaivla, sche tut è pajà fin la fin dal termin da disditga (KVG art. 64a al. 6, KVV art. 105l).',
+        ausstaende: 'Sch’i restan premias, participaziuns als custs, tschains da retard u custs da scussiun avertas, è ina midada mo pussaivla, sche tut è pajà fin la fin dal termin da disditga (KVG art. 64a al. 6, KVV art. 105l).',
       },
     },
     kkReklamation: {
