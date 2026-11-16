@@ -127,9 +127,10 @@ describe('Steuer-Rechner: 3a bei Verheirateten je Person', async () => {
     expect(steuer3aGrenzePartner(paar('4500', 'single'), 2026)).toBeNull();
     expect(steuer3aGrenzePartner(paar('4500', 'cohabiting'), 2026)).toBeNull();
   });
-  it('selbständig ohne Kasse und verheiratet: eigene grosse + Partner kleine, nicht 2 × gross', () => {
-    const src = readFileSync(fileURLToPath(new URL('../TaxCalculator.jsx', import.meta.url)), 'utf8');
-    expect(src).toMatch(/const max3a = max3aPerson \+ \(max3aPartner \|\| 0\);/);
-    expect(src).not.toMatch(/max3aPerson \* \(giltAlsVerheiratet/);
+  it('selbständig ohne Kasse und verheiratet: Partnerperson in derselben Lage, nie tiefer als vorher (× 2)', () => {
+    const selbst = { basis: { maritalStatus: 'married', household: { partnerIncome: '5000' } }, finanzen: { employmentType: 'selfEmployed' } };
+    expect(steuer3aGrenzePartner(selbst, 2026)).toBe(W26.ohnePensionskasse);
+    const angestellt = { ...selbst, finanzen: { employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 6000 } };
+    expect(steuer3aGrenzePartner(angestellt, 2026)).toBe(W26.mitPensionskasse);
   });
 });

@@ -109,13 +109,15 @@ export const steuer3aHinweisOhnePk = (data, steuerjahr) => {
 // 3a bei Verheirateten (Fachpunkte 16.11.2026, Entscheid Stebler Studios «Eigene + kleine Grenze»): Die Grenze gilt je
 // Person, und nur wer erwerbstätig ist, kann einzahlen (BVV 3 Art. 7 Abs. 2, Fassung 1.1.2025). Das Profil kennt von der
 // Partnerperson nur das Einkommen, nicht Pensionskasse oder Selbständigkeit: Eingerechnet wird darum der Betrag mit
-// Pensionskasse (Abs. 1 Bst. a), ein Hinweis nennt den grösseren. Ist ihr Einkommen ausdrücklich 0, zählt nur die eigene
+// Pensionskasse (Abs. 1 Bst. a), ein Hinweis nennt den grösseren. Ist die Person selbst selbständig ohne Kasse, gilt für
+// die Partnerperson dieselbe Lage (swiss-precision 16.11.2026: gemeinsamer Betrieb) — so nie tiefer als vorher (× 2). Ist ihr Einkommen ausdrücklich 0, zählt nur die eigene
 // Grenze; ist es leer, lieber mitrechnen als still kappen. Vorher: eigene Grenze × 2.
 export const steuer3aGrenzePartner = (data, steuerjahr) => {
   if (!giltAlsVerheiratet(data?.basis?.maritalStatus)) return null;
   const roh = partnerEinkommenRoh(data?.basis);
   if (roh !== undefined && roh !== null && roh !== '' && Number(roh) === 0) return 0;
-  return saeule3aGrenzePerson({ steuerjahr, hatPensionskasse: true }) ?? SAEULE3A_MAX;
+  const klein = saeule3aGrenzePerson({ steuerjahr, hatPensionskasse: true }) ?? SAEULE3A_MAX;
+  return Math.max(klein, steuer3aGrenzePerson(data, steuerjahr));
 };
 
 export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, vorlaeufig }) => {
