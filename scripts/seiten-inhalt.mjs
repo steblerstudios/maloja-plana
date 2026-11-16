@@ -959,6 +959,7 @@ export const SEITEN = [
   // AHVG Art. 29bis (Berechnungselemente), AHVG Art. 39 (Aufschub), AHVG Art. 43bis (HE), AHVV Art. 141 (IK-Auszug).
   {
     pfad: 'ahv-pensionierung',
+    bundesrecht: true,
     titel: 'AHV und Pensionierung — eine Orientierung',
     beschreibung:
       'Wie die drei Säulen zusammenspielen, was die AHV-Rente bestimmt, warum man sie anmelden muss und was Vorbezug und Aufschub bedeuten. Ohne Zahlen.',
@@ -996,9 +997,9 @@ export const SEITEN = [
         wege: ['arbeitslosigkeit'],
         titel: 'Was die Rente bestimmt, und warum Lücken zählen',
         absaetze: [
-          'Die Höhe der AHV-Rente hängt von den anrechenbaren <strong>Beitragsjahren</strong>, den <strong>Erwerbseinkommen</strong> und den <strong>Erziehungs- und Betreuungsgutschriften</strong> ab (AHVG Art. 29bis). Eine Vollrente erhält, wer vom Jahr nach dem zwanzigsten Geburtstag bis zum Jahr vor dem Referenzalter lückenlos Beiträge bezahlt hat. Fehlt ein Beitragsjahr, wird die Rente in der Regel gekürzt, und zwar lebenslang (AHVG Art. 29ter).',
+          'Die Höhe der AHV-Rente hängt von den anrechenbaren <strong>Beitragsjahren</strong>, den <strong>Erwerbseinkommen</strong> und den <strong>Erziehungs- und Betreuungsgutschriften</strong> ab (AHVG Art. 29bis). Eine Vollrente erhält, wer vom Jahr nach dem zwanzigsten Geburtstag bis zum Jahr vor dem Referenzalter stets die Beitragspflicht erfüllt hat. Fehlt ein Beitragsjahr, wird die Rente in der Regel gekürzt, und zwar lebenslang (AHVG Art. 29ter, 38).',
           'Beitragspflichtig sind auch Nichterwerbstätige, etwa im Studium, nach einer Aussteuerung oder bei einer frühen Pensionierung (AHVG Art. 10). Für Verheiratete ohne Erwerbseinkommen gelten die Beiträge als bezahlt, wenn die Ehepartnerin oder der Ehepartner mindestens den doppelten Mindestbeitrag zahlt (AHVG Art. 3 Abs. 3). Nachzahlen lassen sich fehlende Beiträge nur für eine begrenzte Zeit zurück (AHVG Art. 16).',
-          'Ob Sie Lücken haben, zeigt ein Auszug aus Ihrem individuellen Konto (IK), den Sie bei Ihrer Ausgleichskasse verlangen können (AHVV Art. 141). Je früher Sie eine Lücke kennen, desto eher lässt sie sich noch schliessen.',
+          'Ob Sie Lücken haben, zeigt ein Auszug aus Ihrem individuellen Konto (IK), den Sie bei Ihrer Ausgleichskasse verlangen können (AHVV Art. 141). Ältere Lücken lassen sich nicht mehr schliessen (AHVG Art. 16).',
         ],
       },
       {
@@ -1045,8 +1046,8 @@ export const SEITEN = [
         titel: 'Was im Alter sonst noch zusteht',
         absaetze: [
           'Reichen Renten und Vermögen nicht für das Nötigste, kommen <strong>Ergänzungsleistungen</strong> in Frage. Sie sind ein gesetzlicher Anspruch und keine Sozialhilfe.',
-          'Wer im Alltag dauernd auf die Hilfe anderer angewiesen ist, etwa beim Ankleiden, bei der Körperpflege oder beim Essen, kann eine <strong>Hilflosenentschädigung</strong> der AHV erhalten, wenn die Hilflosigkeit seit mindestens sechs Monaten ununterbrochen besteht. Sie hängt nicht von Einkommen und Vermögen ab (AHVG Art. 43bis, Merkblatt 3.01).',
-          'Bei der <strong>Pensionskasse</strong> entscheiden Sie zwischen Rente und Kapital. Einen Viertel können Sie gesetzlich als Kapital verlangen, mehr nur, wenn das Reglement es vorsieht; bei Verheirateten braucht es die schriftliche Zustimmung (BVG Art. 37, 37a). Der Entscheid ist endgültig. Lassen Sie sich früh beraten.',
+          'Wer eine Altersrente oder Ergänzungsleistungen bezieht, in der Schweiz wohnt und im Alltag dauernd auf die Hilfe anderer angewiesen ist, etwa beim Ankleiden, bei der Körperpflege oder beim Essen, kann eine <strong>Hilflosenentschädigung</strong> der AHV erhalten, wenn die Hilflosigkeit seit mindestens sechs Monaten ununterbrochen besteht und kein Anspruch auf eine Hilflosenentschädigung der Unfall- oder Militärversicherung besteht. Sie hängt nicht von Einkommen und Vermögen ab (AHVG Art. 43bis, Merkblatt 3.01).',
+          'Bei der <strong>Pensionskasse</strong> entscheiden Sie zwischen Rente und Kapital. Einen Viertel können Sie gesetzlich als Kapital verlangen, mehr nur, wenn das Reglement es vorsieht; bei Verheirateten braucht es die schriftliche Zustimmung (BVG Art. 37, 37a). Bis wann Sie wählen müssen, steht im Reglement; ist das Kapital einmal ausbezahlt, lässt sich das nicht rückgängig machen. Lassen Sie sich früh beraten.',
         ],
       },
     ],
@@ -1054,12 +1055,12 @@ export const SEITEN = [
       {
         frage: 'Wie hoch wird meine AHV-Rente?',
         antwort:
-          'Das hängt von Ihren Beitragsjahren, Ihren Einkommen und Ihren Gutschriften ab. Verbindlich berechnen lässt sich die Rente in der Regel erst beim Erreichen des Referenzalters. Eine Vorausberechnung können Sie bei Ihrer Ausgleichskasse verlangen (Merkblatt 3.01).',
+          'Das hängt von Ihren Beitragsjahren, Ihren Einkommen und Ihren Gutschriften ab. Verbindlich berechnen lässt sich die Rente in der Regel erst beim Erreichen des Referenzalters (Merkblatt 3.01). Eine Vorausberechnung können Sie bei Ihrer Ausgleichskasse verlangen.',
       },
       {
         frage: 'Was gilt für Ehepaare?',
         antwort:
-          'Die Einkommen aus den Ehejahren werden geteilt und je zur Hälfte beiden angerechnet, sobald beide rentenberechtigt sind, und ebenso bei einer Scheidung. Die beiden Renten eines Ehepaars zusammen sind gegen oben begrenzt; diese Begrenzung fällt weg, wenn der gemeinsame Haushalt durch ein Gericht aufgehoben wurde (Merkblatt 3.01).',
+          'Die Einkommen aus den Ehejahren werden geteilt und je zur Hälfte beiden angerechnet, unter anderem sobald beide rentenberechtigt sind und bei einer Scheidung. Die beiden Renten eines Ehepaars zusammen sind gegen oben begrenzt; diese Begrenzung fällt unter anderem weg, wenn der gemeinsame Haushalt durch ein Gericht aufgehoben wurde (Merkblatt 3.01).',
       },
       {
         frage: 'Ich habe auch im Ausland gearbeitet. Was nun?',
@@ -1069,7 +1070,7 @@ export const SEITEN = [
       {
         frage: 'Bekomme ich als Lebenspartnerin oder Lebenspartner eine Hinterlassenenrente?',
         antwort:
-          'Eine Witwen- oder Witwerrente der AHV gibt es nur nach einer Ehe oder eingetragenen Partnerschaft und nur unter weiteren Voraussetzungen. Ohne Trauschein gibt es keine. Gemeinsame Kinder erhalten aber eine Waisenrente. Bei der Pensionskasse kann das Reglement eine Leistung an Lebenspartnerinnen und Lebenspartner vorsehen.',
+          'Eine Witwen- oder Witwerrente der AHV gibt es nur nach einer Ehe oder eingetragenen Partnerschaft und nur unter weiteren Voraussetzungen. Für Paare ohne Ehe oder eingetragene Partnerschaft sieht die AHV keine Hinterlassenenrente vor. Kinder können eine Waisenrente erhalten (AHVG Art. 23, 25). Bei der Pensionskasse kann das Reglement eine Leistung an Lebenspartnerinnen und Lebenspartner vorsehen.',
       },
       {
         frage: 'Muss ich nach der Pensionierung noch AHV-Beiträge zahlen?',

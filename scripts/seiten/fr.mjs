@@ -472,9 +472,9 @@ export const SEITEN = [
       {
         titel: 'Ce qui détermine la rente, et pourquoi les lacunes comptent',
         absaetze: [
-          'Le montant de la rente AVS dépend des <strong>années de cotisation</strong> prises en compte, des <strong>revenus d’activité lucrative</strong> et des <strong>bonifications pour tâches éducatives et d’assistance</strong> (art. 29bis LAVS). Reçoit une rente complète la personne qui a cotisé sans lacune de l’année suivant son vingtième anniversaire jusqu’à l’année précédant l’âge de référence. S’il manque une année de cotisation, la rente est en règle générale réduite, et ce à vie (art. 29ter LAVS).',
+          'Le montant de la rente AVS dépend des <strong>années de cotisation</strong> prises en compte, des <strong>revenus d’activité lucrative</strong> et des <strong>bonifications pour tâches éducatives et d’assistance</strong> (art. 29bis LAVS). Reçoit une rente complète la personne qui a toujours rempli l’obligation de cotiser de l’année suivant son vingtième anniversaire jusqu’à l’année précédant l’âge de référence. S’il manque une année de cotisation, la rente est en règle générale réduite, et ce à vie (art. 29ter et 38 LAVS).',
           'Les personnes sans activité lucrative cotisent aussi, par exemple pendant les études, après une fin de droit au chômage ou en cas de retraite anticipée (art. 10 LAVS). Pour les personnes mariées sans revenu d’activité, les cotisations sont réputées payées si l’épouse ou l’époux verse au moins le double de la cotisation minimale (art. 3, al. 3, LAVS). Les cotisations manquantes ne peuvent être rattrapées que pour une période limitée dans le passé (art. 16 LAVS).',
-          'Un extrait de votre compte individuel (CI), que vous pouvez demander à votre caisse de compensation, montre si vous avez des lacunes (art. 141 RAVS). Plus tôt vous connaissez une lacune, plus il est probable qu’elle puisse encore être comblée.',
+          'Un extrait de votre compte individuel (CI), que vous pouvez demander à votre caisse de compensation, montre si vous avez des lacunes (art. 141 RAVS). Les lacunes plus anciennes ne peuvent plus être comblées (art. 16 LAVS).',
         ],
       },
       {
@@ -497,8 +497,8 @@ export const SEITEN = [
         titel: 'Ce à quoi l’on a encore droit à l’âge de la retraite',
         absaetze: [
           'Si les rentes et la fortune ne suffisent pas pour le minimum vital, des <strong>prestations complémentaires</strong> entrent en ligne de compte. Elles sont un droit légal et non de l’aide sociale.',
-          'Qui dépend en permanence de l’aide d’autrui au quotidien, par exemple pour s’habiller, pour l’hygiène corporelle ou pour manger, peut recevoir une <strong>allocation pour impotent</strong> de l’AVS si l’impotence dure sans interruption depuis au moins six mois. Elle ne dépend ni du revenu ni de la fortune (art. 43bis LAVS, mémento 3.01).',
-          'Pour la <strong>caisse de pension</strong>, vous choisissez entre rente et capital. Vous pouvez légalement exiger un quart sous forme de capital, davantage seulement si le règlement le prévoit ; pour les personnes mariées, le consentement écrit est nécessaire (art. 37 et 37a LPP). La décision est définitive. Faites-vous conseiller tôt.',
+          'Qui touche une rente de vieillesse ou des prestations complémentaires, vit en Suisse et dépend en permanence de l’aide d’autrui au quotidien, par exemple pour s’habiller, pour l’hygiène corporelle ou pour manger, peut recevoir une <strong>allocation pour impotent</strong> de l’AVS si l’impotence dure sans interruption depuis au moins six mois et qu’il n’existe pas de droit à une allocation pour impotent de l’assurance-accidents ou de l’assurance militaire. Elle ne dépend ni du revenu ni de la fortune (art. 43bis LAVS, mémento 3.01).',
+          'Pour la <strong>caisse de pension</strong>, vous choisissez entre rente et capital. Vous pouvez légalement exiger un quart sous forme de capital, davantage seulement si le règlement le prévoit ; pour les personnes mariées, le consentement écrit est nécessaire (art. 37 et 37a LPP). Le délai pour choisir figure dans le règlement ; une fois le capital versé, on ne peut plus revenir en arrière. Faites-vous conseiller tôt.',
         ],
       },
     ],
@@ -506,12 +506,12 @@ export const SEITEN = [
       {
         frage: 'À combien s’élèvera ma rente AVS ?',
         antwort:
-          'Cela dépend de vos années de cotisation, de vos revenus et de vos bonifications. La rente ne peut en règle générale être calculée de manière contraignante qu’à l’âge de référence. Vous pouvez demander un calcul anticipé à votre caisse de compensation (mémento 3.01).',
+          'Cela dépend de vos années de cotisation, de vos revenus et de vos bonifications. La rente ne peut en règle générale être calculée de manière contraignante qu’à l’âge de référence (mémento 3.01). Vous pouvez demander un calcul anticipé à votre caisse de compensation.',
       },
       {
         frage: 'Qu’en est-il pour les couples mariés ?',
         antwort:
-          'Les revenus des années de mariage sont partagés et attribués pour moitié à chacun, dès que les deux ont droit à une rente, ainsi qu’en cas de divorce. Les deux rentes d’un couple marié sont ensemble plafonnées ; ce plafonnement tombe si la vie commune a été suspendue par un tribunal (mémento 3.01).',
+          'Les revenus des années de mariage sont partagés et attribués pour moitié à chacun, entre autres dès que les deux ont droit à une rente et en cas de divorce. Les deux rentes d’un couple marié sont ensemble plafonnées ; ce plafonnement tombe entre autres si la vie commune a été suspendue par un tribunal (mémento 3.01).',
       },
       {
         frage: 'J’ai aussi travaillé à l’étranger. Et maintenant ?',
@@ -521,7 +521,7 @@ export const SEITEN = [
       {
         frage: 'Ai-je droit à une rente de survivant en tant que partenaire non marié ?',
         antwort:
-          'Une rente de veuve ou de veuf de l’AVS n’existe qu’après un mariage ou un partenariat enregistré et seulement à d’autres conditions. Sans mariage, il n’y en a pas. Les enfants communs reçoivent toutefois une rente d’orphelin. Pour la caisse de pension, le règlement peut prévoir une prestation en faveur des partenaires.',
+          'Une rente de veuve ou de veuf de l’AVS n’existe qu’après un mariage ou un partenariat enregistré et seulement à d’autres conditions. Pour les couples sans mariage ni partenariat enregistré, l’AVS ne prévoit pas de rente de survivant. Les enfants peuvent recevoir une rente d’orphelin (art. 23 et 25 LAVS). Pour la caisse de pension, le règlement peut prévoir une prestation en faveur des partenaires.',
       },
       {
         frage: 'Dois-je encore payer des cotisations AVS après la retraite ?',

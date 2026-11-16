@@ -466,9 +466,9 @@ export const SEITEN = [
       {
         titel: 'What determines the pension, and why gaps matter',
         absaetze: [
-          'The amount of the AHV pension depends on the countable <strong>contribution years</strong>, <strong>earned income</strong> and <strong>credits for child-raising and care</strong> (Art. 29bis AHVG). You receive a full pension if you paid contributions without gaps from the year after your twentieth birthday until the year before reference age. If a contribution year is missing, the pension is usually reduced, for life (Art. 29ter AHVG).',
+          'The amount of the AHV pension depends on the countable <strong>contribution years</strong>, <strong>earned income</strong> and <strong>credits for child-raising and care</strong> (Art. 29bis AHVG). You receive a full pension if you always met the contribution obligation from the year after your twentieth birthday until the year before reference age. If a contribution year is missing, the pension is usually reduced, for life (Art. 29ter and 38 AHVG).',
           'People without earned income must also pay contributions, for example while studying, after unemployment benefits have run out or in early retirement (Art. 10 AHVG). For married people without earned income, contributions count as paid if the spouse pays at least twice the minimum contribution (Art. 3 para. 3 AHVG). Missing contributions can only be paid in arrears for a limited period (Art. 16 AHVG).',
-          'An extract from your individual account (IK), which you can request from your compensation fund, shows whether you have gaps (Art. 141 AHVV). The sooner you know about a gap, the more likely it can still be closed.',
+          'An extract from your individual account (IK), which you can request from your compensation fund, shows whether you have gaps (Art. 141 AHVV). Older gaps can no longer be closed (Art. 16 AHVG).',
         ],
       },
       {
@@ -491,8 +491,8 @@ export const SEITEN = [
         titel: 'What else you may be entitled to in old age',
         absaetze: [
           'If pensions and assets are not enough for the bare necessities, <strong>supplementary benefits</strong> come into question. They are a legal entitlement, not social assistance.',
-          'Anyone who permanently depends on other people’s help in daily life, for example to dress, wash or eat, can receive a <strong>helplessness allowance</strong> from the AHV if the helplessness has lasted without interruption for at least six months. It does not depend on income or assets (Art. 43bis AHVG, leaflet 3.01).',
-          'With the <strong>pension fund</strong>, you choose between a pension and a lump sum. By law you can take a quarter as a lump sum, more only if the fund’s regulations allow it; married people need written consent (Art. 37 and 37a BVG). The decision is final. Seek advice early.',
+          'Anyone who receives an old-age pension or supplementary benefits, lives in Switzerland and permanently depends on other people’s help in daily life, for example to dress, wash or eat, can receive a <strong>helplessness allowance</strong> from the AHV if the helplessness has lasted without interruption for at least six months and there is no entitlement to a helplessness allowance from accident or military insurance. It does not depend on income or assets (Art. 43bis AHVG, leaflet 3.01).',
+          'With the <strong>pension fund</strong>, you choose between a pension and a lump sum. By law you can take a quarter as a lump sum, more only if the fund’s regulations allow it; married people need written consent (Art. 37 and 37a BVG). The deadline for choosing is in the regulations; once the lump sum has been paid out, it cannot be undone. Seek advice early.',
         ],
       },
     ],
@@ -500,12 +500,12 @@ export const SEITEN = [
       {
         frage: 'How high will my AHV pension be?',
         antwort:
-          'That depends on your contribution years, your earnings and your credits. As a rule, the pension can only be calculated bindingly when you reach reference age. You can request an advance calculation from your compensation fund (leaflet 3.01).',
+          'That depends on your contribution years, your earnings and your credits. As a rule, the pension can only be calculated bindingly when you reach reference age (leaflet 3.01). You can request an advance calculation from your compensation fund.',
       },
       {
         frage: 'What applies to married couples?',
         antwort:
-          'Income from the years of marriage is split and credited half to each spouse as soon as both are entitled to a pension, and also on divorce. The two pensions of a married couple are capped together; the cap no longer applies if the joint household was dissolved by a court (leaflet 3.01).',
+          'Income from the years of marriage is split and credited half to each spouse, among other cases as soon as both are entitled to a pension and on divorce. The two pensions of a married couple are capped together; the cap no longer applies, among other cases, if the joint household was dissolved by a court (leaflet 3.01).',
       },
       {
         frage: 'I have also worked abroad. What now?',
@@ -515,7 +515,7 @@ export const SEITEN = [
       {
         frage: 'Do I get a survivor’s pension as an unmarried partner?',
         antwort:
-          'An AHV widow’s or widower’s pension exists only after a marriage or registered partnership and only under further conditions. Without marriage there is none. Shared children do, however, receive an orphan’s pension. At the pension fund, the regulations may provide a benefit for partners.',
+          'An AHV widow’s or widower’s pension exists only after a marriage or registered partnership and only under further conditions. For couples without marriage or registered partnership, the AHV provides no survivor’s pension. Children may receive an orphan’s pension (Art. 23 and 25 AHVG). At the pension fund, the regulations may provide a benefit for partners.',
       },
       {
         frage: 'Do I still have to pay AHV contributions after retiring?',

@@ -464,15 +464,15 @@ export const SEITEN = [
       {
         titel: 'Che cosa determina la rendita, e perché le lacune contano',
         absaetze: [
-          'L’importo della rendita AVS dipende dagli <strong>anni di contribuzione</strong> computabili, dai <strong>redditi da attività lucrativa</strong> e dagli <strong>accrediti per compiti educativi e assistenziali</strong> (art. 29bis LAVS). Riceve una rendita completa chi ha versato contributi senza lacune dall’anno successivo al ventesimo compleanno fino all’anno precedente l’età di riferimento. Se manca un anno di contribuzione, la rendita di regola viene ridotta, e per tutta la vita (art. 29ter LAVS).',
+          'L’importo della rendita AVS dipende dagli <strong>anni di contribuzione</strong> computabili, dai <strong>redditi da attività lucrativa</strong> e dagli <strong>accrediti per compiti educativi e assistenziali</strong> (art. 29bis LAVS). Riceve una rendita completa chi ha sempre adempiuto l’obbligo contributivo dall’anno successivo al ventesimo compleanno fino all’anno precedente l’età di riferimento. Se manca un anno di contribuzione, la rendita di regola viene ridotta, e per tutta la vita (art. 29ter e 38 LAVS).',
           'Sono soggette all’obbligo contributivo anche le persone senza attività lucrativa, ad esempio durante gli studi, dopo l’esaurimento del diritto alle indennità di disoccupazione o in caso di pensionamento anticipato (art. 10 LAVS). Per le persone coniugate senza reddito da attività lucrativa i contributi sono considerati pagati se il coniuge versa almeno il doppio del contributo minimo (art. 3 cpv. 3 LAVS). I contributi mancanti possono essere recuperati solo per un periodo limitato a ritroso (art. 16 LAVS).',
-          'Se ha delle lacune lo mostra un estratto del suo conto individuale (CI), che può chiedere alla sua cassa di compensazione (art. 141 OAVS). Prima conosce una lacuna, più è probabile che si possa ancora colmare.',
+          'Se ha delle lacune lo mostra un estratto del suo conto individuale (CI), che può chiedere alla sua cassa di compensazione (art. 141 OAVS). Le lacune più vecchie non possono più essere colmate (art. 16 LAVS).',
         ],
       },
       {
         titel: 'La rendita non arriva da sola',
         absaetze: [
-          'La rendita AVS deve richiederla lei stessa o lui stesso, preferibilmente alcuni mesi prima dell’età di riferimento. È competente la cassa di compensazione che ha riscosso gli ultimi contributi; se non ha versato contributi, la cassa cantonale di compensazione del suo Cantone di domicilio (promemoria 3.01).',
+          'La rendita AVS deve richiederla personalmente, preferibilmente alcuni mesi prima dell’età di riferimento. È competente la cassa di compensazione che ha riscosso gli ultimi contributi; se non ha versato contributi, la cassa cantonale di compensazione del suo Cantone di domicilio (promemoria 3.01).',
           'Il diritto nasce il primo giorno del mese successivo al raggiungimento dell’età di riferimento e si estingue alla fine del mese del decesso (art. 21 LAVS). L’età di riferimento è la stessa per donne e uomini; per le donne della generazione di transizione valgono regole transitorie.',
           'Chi in dicembre riceve una rendita di vecchiaia riceve in più una tredicesima rendita di vecchiaia pari a un dodicesimo della rendita di vecchiaia annua. Le rendite per superstiti, d’invalidità e per figli continuano a essere versate solo dodici volte (promemoria 3.01).',
         ],
@@ -489,8 +489,8 @@ export const SEITEN = [
         titel: 'Che cos’altro spetta in età avanzata',
         absaetze: [
           'Se rendite e sostanza non bastano per il minimo vitale, entrano in considerazione le <strong>prestazioni complementari</strong>. Sono un diritto legale e non aiuto sociale.',
-          'Chi nella vita quotidiana dipende in modo permanente dall’aiuto di altri, ad esempio per vestirsi, per l’igiene personale o per mangiare, può ricevere un <strong>assegno per grandi invalidi</strong> dell’AVS se la grande invalidità dura ininterrottamente da almeno sei mesi. Non dipende né dal reddito né dalla sostanza (art. 43bis LAVS, promemoria 3.01).',
-          'Per la <strong>cassa pensioni</strong> sceglie tra rendita e capitale. Per legge può chiedere un quarto sotto forma di capitale, di più solo se il regolamento lo prevede; per le persone coniugate serve il consenso scritto (art. 37 e 37a LPP). La decisione è definitiva. Si faccia consigliare per tempo.',
+          'Chi riceve una rendita di vecchiaia o prestazioni complementari, vive in Svizzera e nella vita quotidiana dipende in modo permanente dall’aiuto di altri, ad esempio per vestirsi, per l’igiene personale o per mangiare, può ricevere un <strong>assegno per grandi invalidi</strong> dell’AVS se la grande invalidità dura ininterrottamente da almeno sei mesi e non esiste un diritto a un assegno per grandi invalidi dell’assicurazione contro gli infortuni o dell’assicurazione militare. Non dipende né dal reddito né dalla sostanza (art. 43bis LAVS, promemoria 3.01).',
+          'Per la <strong>cassa pensioni</strong> sceglie tra rendita e capitale. Per legge può chiedere un quarto sotto forma di capitale, di più solo se il regolamento lo prevede; per le persone coniugate serve il consenso scritto (art. 37 e 37a LPP). Entro quando scegliere lo stabilisce il regolamento; una volta versato il capitale non si torna indietro. Si faccia consigliare per tempo.',
         ],
       },
     ],
@@ -498,12 +498,12 @@ export const SEITEN = [
       {
         frage: 'A quanto ammonterà la mia rendita AVS?',
         antwort:
-          'Dipende dai suoi anni di contribuzione, dai suoi redditi e dai suoi accrediti. Di regola la rendita può essere calcolata in modo vincolante solo al raggiungimento dell’età di riferimento. Può chiedere un calcolo anticipato alla sua cassa di compensazione (promemoria 3.01).',
+          'Dipende dai suoi anni di contribuzione, dai suoi redditi e dai suoi accrediti. Di regola la rendita può essere calcolata in modo vincolante solo al raggiungimento dell’età di riferimento (promemoria 3.01). Può chiedere un calcolo anticipato alla sua cassa di compensazione.',
       },
       {
         frage: 'Che cosa vale per i coniugi?',
         antwort:
-          'I redditi degli anni di matrimonio vengono ripartiti e accreditati per metà a ciascuno, non appena entrambi hanno diritto a una rendita, e anche in caso di divorzio. Le due rendite di una coppia sposata sono complessivamente plafonate; il plafonamento decade se la comunione domestica è stata sciolta da un tribunale (promemoria 3.01).',
+          'I redditi degli anni di matrimonio vengono ripartiti e accreditati per metà a ciascuno, tra l’altro non appena entrambi hanno diritto a una rendita e in caso di divorzio. Le due rendite di una coppia sposata sono complessivamente plafonate; il plafonamento decade tra l’altro se la comunione domestica è stata sciolta da un tribunale (promemoria 3.01).',
       },
       {
         frage: 'Ho lavorato anche all’estero. E ora?',
@@ -513,7 +513,7 @@ export const SEITEN = [
       {
         frage: 'Come partner non sposato ricevo una rendita per superstiti?',
         antwort:
-          'Una rendita vedovile dell’AVS esiste solo dopo un matrimonio o un’unione domestica registrata e solo a ulteriori condizioni. Senza matrimonio non c’è. I figli comuni ricevono però una rendita per orfani. Nella cassa pensioni il regolamento può prevedere una prestazione a favore dei partner.',
+          'Una rendita vedovile dell’AVS esiste solo dopo un matrimonio o un’unione domestica registrata e solo a ulteriori condizioni. Per le coppie senza matrimonio né unione domestica registrata l’AVS non prevede una rendita per superstiti. I figli possono ricevere una rendita per orfani (art. 23 e 25 LAVS). Nella cassa pensioni il regolamento può prevedere una prestazione a favore dei partner.',
       },
       {
         frage: 'Devo ancora pagare contributi AVS dopo il pensionamento?',
