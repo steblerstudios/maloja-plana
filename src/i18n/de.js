@@ -149,7 +149,7 @@ export default {
         sozialhilfe: { titel: 'Sozialhilfe (auch nach der Aussteuerung)', text: 'Sind die Taggelder erschöpft, kann die Sozialhilfe die Lücke überbrücken. Ein Recht, kein Entgegenkommen — und getrennt vom RAV.' },
         franchise: { titel: 'Franchise prüfen', text: 'Bei tieferem Einkommen kann eine tiefe Franchise sicherer, eine hohe günstiger sein, wenn man selten in die Arztpraxis geht — jeden Herbst prüfen.' },
         // Kapitel 5, K (10.11.2026): Quellensteuer-Rückforderung genauer (DBG Art. 84 Abs. 2, Art. 89a).
-        steuern: { titel: 'Steuern bei tieferem Einkommen', text: 'Arbeitslosentaggelder sind steuerbar, doch ein tieferes Jahreseinkommen bedeutet meist weniger Steuern. Wer an der Quelle besteuert wird, dem zieht die Arbeitslosenkasse die Quellensteuer auch vom Taggeld ab (DBG Art. 84 Abs. 2 Bst. b). Wurde zu viel abgezogen, lässt sich bis zum 31. März des Folgejahres eine nachträgliche ordentliche Veranlagung beantragen (DBG Art. 89a Abs. 3). Sie gilt dann auch für die folgenden Jahre, solange Quellensteuer geschuldet wäre (DBG Art. 89a Abs. 5 mit Art. 89 Abs. 5). Für die Kantons- und Gemeindesteuer gelten die Regeln des Kantons.' },
+        steuern: { titel: 'Steuern bei tieferem Einkommen', text: 'Arbeitslosentaggelder sind steuerbar, doch ein tieferes Jahreseinkommen bedeutet meist weniger Steuern. Wer an der Quelle besteuert wird, dem zieht die Arbeitslosenkasse die Quellensteuer auch vom Taggeld ab (DBG Art. 84 Abs. 2 Bst. b). Wurde zu viel abgezogen, lässt sich bis zum 31. März des Folgejahres eine nachträgliche ordentliche Veranlagung beantragen (DBG Art. 89a Abs. 3). Sie gilt dann auch für die folgenden Jahre, solange Quellensteuer geschuldet wäre (DBG Art. 89a Abs. 5 mit Art. 89 Abs. 5); der Antrag lässt sich nicht zurückziehen (QStV Art. 10 Abs. 1). Für die Kantons- und Gemeindesteuer gelten die Regeln des Kantons.' },
       },
     },
     verschuldet: {
@@ -1727,7 +1727,7 @@ export default {
     ergebnisKeiner: 'Mit diesen Angaben zeigt sich kein klarer Geld-Anspruch — die Wege unten decken mehr ab, das meiste ist nicht allein vom Einkommen abhängig.',
     ergebnisEiner: 'Mit diesen Angaben zeigt sich ein möglicher Weg: {weg}.',
     ergebnisMehrere: 'Mit diesen Angaben zeigen sich mögliche Wege: {wege}.',
-    sozBewilligung: { sie: 'Falls Sie keinen Schweizer Pass haben: Der Bezug von Sozialhilfe kann Folgen für die Aufenthaltsbewilligung haben. Eine Beratungsstelle oder der Sozialdienst kann Ihre Lage einschätzen, auch schon vor einem Gesuch.', du: 'Falls du keinen Schweizer Pass hast: Der Bezug von Sozialhilfe kann Folgen für die Aufenthaltsbewilligung haben. Eine Beratungsstelle oder der Sozialdienst kann deine Lage einschätzen, auch schon vor einem Gesuch.' },
+    sozBewilligung: { sie: 'Falls Sie keinen Schweizer Pass haben: Der Bezug von Sozialhilfe kann Folgen für die Aufenthalts- oder Niederlassungsbewilligung haben. Eine Beratungsstelle oder der Sozialdienst kann Ihre Lage einschätzen, auch schon vor einem Gesuch.', du: 'Falls du keinen Schweizer Pass hast: Der Bezug von Sozialhilfe kann Folgen für die Aufenthalts- oder Niederlassungsbewilligung haben. Eine Beratungsstelle oder der Sozialdienst kann deine Lage einschätzen, auch schon vor einem Gesuch.' },
     sozBewilligungF: { sie: 'Mit Ausweis F kann der Bezug von Sozialhilfe ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren; eine Beratungsstelle kann Ihre Lage einschätzen.', du: 'Mit Ausweis F kann der Bezug von Sozialhilfe ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren; eine Beratungsstelle kann deine Lage einschätzen.' },
     markeNetto: 'Netto {betrag} / Mt.',
     markeNettoGeschaetzt: 'Netto ≈ {betrag} / Mt. (geschätzt)',
@@ -3050,7 +3050,7 @@ export default {
     skos: 'Die SKOS-Richtlinien empfehlen, wie hoch die Sozialhilfe sein soll. Verbindlich sind sie nur, soweit ein Kanton sie in sein Recht übernimmt.',
     iv: 'Die Invalidenversicherung (IV) unterstützt Menschen, die wegen Krankheit oder Unfall dauerhaft eingeschränkt sind.',
     // ─── P2: Referenz, erst später ─────────────────────────
-    selbstbehalt: { sie: 'Zusätzlich zur Franchise zahlen Sie 10% der Arztkosten selbst, bei gewissen Medikamenten 40 % — das nennt sich Selbstbehalt. Maximal CHF 700 pro Jahr.', du: 'Zusätzlich zur Franchise zahlst du 10% der Arztkosten selbst, bei gewissen Medikamenten 40 % — das nennt sich Selbstbehalt. Maximal CHF 700 pro Jahr.' },
+    selbstbehalt: { sie: 'Zusätzlich zur Franchise zahlen Sie 10 % der übrigen Kosten selbst, bei gewissen Medikamenten 40 % — das nennt sich Selbstbehalt. Maximal CHF 700 pro Jahr.', du: 'Zusätzlich zur Franchise zahlst du 10 % der übrigen Kosten selbst, bei gewissen Medikamenten 40 % — das nennt sich Selbstbehalt. Maximal CHF 700 pro Jahr.' },
     verlustschein: 'Ein Verlustschein bedeutet: Eine Betreibung ist abgeschlossen, aber die Schuld bleibt bestehen — 20 Jahre lang.',
     eo: { sie: 'Bei Militärdienst, Zivildienst oder Mutterschaft erhalten Sie einen Ersatz für den entgangenen Lohn.', du: 'Bei Militärdienst, Zivildienst oder Mutterschaft erhältst du einen Ersatz für den entgangenen Lohn.' },
   },
@@ -3234,7 +3234,7 @@ export default {
 
   sozialhilfe: {
     title: 'Sozialhilfe',
-    intro: { sie: 'Diese Übersicht hilft Ihnen, mögliche Unterstützung besser einzuordnen. Soziale Sicherung gehört zur Schweiz — sie steht Menschen in schwierigen Situationen zu. Falls Sie keinen Schweizer Pass haben: Der Bezug von Sozialhilfe kann Folgen für die Aufenthaltsbewilligung haben. Eine Beratungsstelle oder der Sozialdienst kann Ihre Lage einschätzen, auch schon vor einem Gesuch.', du: 'Diese Übersicht hilft dir, mögliche Unterstützung besser einzuordnen. Soziale Sicherung gehört zur Schweiz — sie steht Menschen in schwierigen Situationen zu. Falls du keinen Schweizer Pass hast: Der Bezug von Sozialhilfe kann Folgen für die Aufenthaltsbewilligung haben. Eine Beratungsstelle oder der Sozialdienst kann deine Lage einschätzen, auch schon vor einem Gesuch.' },
+    intro: { sie: 'Diese Übersicht hilft Ihnen, mögliche Unterstützung besser einzuordnen. Soziale Sicherung gehört zur Schweiz — sie steht Menschen in schwierigen Situationen zu. Falls Sie keinen Schweizer Pass haben: Der Bezug von Sozialhilfe kann Folgen für die Aufenthalts- oder Niederlassungsbewilligung haben. Eine Beratungsstelle oder der Sozialdienst kann Ihre Lage einschätzen, auch schon vor einem Gesuch.', du: 'Diese Übersicht hilft dir, mögliche Unterstützung besser einzuordnen. Soziale Sicherung gehört zur Schweiz — sie steht Menschen in schwierigen Situationen zu. Falls du keinen Schweizer Pass hast: Der Bezug von Sozialhilfe kann Folgen für die Aufenthalts- oder Niederlassungsbewilligung haben. Eine Beratungsstelle oder der Sozialdienst kann deine Lage einschätzen, auch schon vor einem Gesuch.' },
     householdSize: 'Haushaltgrösse: {count} Person(en)',
     enterCanton: 'Bitte Kanton eingeben für kantonale Berechnung.',
     weeklyResidence: 'Wochenaufenthalt',
@@ -3835,11 +3835,11 @@ export default {
       legalNote: 'Hinweis: Nach Mitteilung der neuen Prämie gilt für den Wechsel auf Ende Jahr eine Kündigungsfrist von einem Monat (KVG Art. 7 Abs. 2): Die Kündigung muss bis 30. November beim Versicherer eingehen. Fällt dieser Tag auf ein Wochenende oder einen Feiertag, nennt das BAG den letzten Werktag davor. Die bisherige Versicherung endet erst, wenn die neue Kasse die Aufnahme gemeldet hat (KVG Art. 7 Abs. 5). Eingeschrieben senden ist nicht vorgeschrieben, belegt aber den Versand.',
       hinweis: {
         title: 'Vor der Kündigung',
-        frist: 'Die Kündigung muss bis am {frist} bei der Kasse eingehen: ein Monat Kündigungsfrist auf Ende Jahr (KVG Art. 7 Abs. 2), fällt der 30. November aufs Wochenende, der Werktag davor (Angabe BAG).',
+        frist: 'Die Kündigung muss bis am {frist} bei der Kasse eingehen: ein Monat Kündigungsfrist auf Ende Jahr (KVG Art. 7 Abs. 2), fällt der 30. November auf ein Wochenende oder einen Feiertag, der Werktag davor (Angabe BAG).',
         nachFrist: 'Für einen Wechsel auf Ende {verpasstJahr} ist die Frist am {verpasstFrist} abgelaufen. Der Brief kündigt darum auf Ende {jahr}; er muss bis am {frist} bei der Kasse eingehen. Warten bis zur Prämienmitteilung im Herbst geht ebenso.',
         semester: 'Im Grundmodell mit ordentlicher Franchise (Erwachsene 300 Franken, Kinder keine) ist auch ein Wechsel auf Ende Juni möglich: Eingang bis 31. März (KVG Art. 7 Abs. 1). Mit Hausarzt-, HMO- oder Telmed-Modell, Bonusversicherung oder wählbarer Franchise nur auf Ende Jahr (KVV Art. 94 Abs. 2, 100 Abs. 3).',
         anmelden: 'Zuerst bei der neuen Kasse anmelden: Die bisherige Versicherung endet erst, wenn die neue Kasse die Aufnahme gemeldet hat (KVG Art. 7 Abs. 5).',
-        ausstaende: 'Sind gemahnte Prämien, Kostenbeteiligungen oder Verzugszinse offen, wirkt die Kündigung nur, wenn sie samt Betreibungskosten bis zum Ablauf der Kündigungsfrist vollständig bezahlt sind (KVG Art. 64a Abs. 6, KVV Art. 105l Abs. 1 und 2).',
+        ausstaende: 'Sind gemahnte Prämien, Kostenbeteiligungen oder Verzugszinse offen, wirkt die Kündigung nur, wenn sie samt Betreibungskosten bis zum Ablauf der Kündigungsfrist vollständig bezahlt sind (KVG Art. 64a Abs. 6, KVV Art. 105l Abs. 1 und 2). Ausstände nur für Kinder hindern den eigenen Wechsel nicht.',
       },
     },
     kkReklamation: {
@@ -6167,7 +6167,7 @@ export default {
     spitex: 'Spitex / Pflege zu Hause',
     spitexNote: 'Pflegeleistungen mit ärztlicher Verordnung.',
     franchiseTitle: 'Franchise & Selbstbehalt',
-    franchiseExplain: { sie: 'Die Franchise zahlen Sie in der Regel jedes Jahr zuerst selbst. Danach zahlen Sie 10 % der Kosten als Selbstbehalt, bei gewissen Medikamenten 40 % (KLV Art. 38a), höchstens CHF 700 im Jahr, für Kinder CHF 350 (KVG Art. 64, KVV Art. 103). Keine Kostenbeteiligung gibt es etwa bei Mutterschaft ab der 13. Schwangerschaftswoche (KVG Art. 64 Abs. 7).', du: 'Die Franchise zahlst du in der Regel jedes Jahr zuerst selbst. Danach zahlst du 10 % der Kosten als Selbstbehalt, bei gewissen Medikamenten 40 % (KLV Art. 38a), höchstens CHF 700 im Jahr, für Kinder CHF 350 (KVG Art. 64, KVV Art. 103). Keine Kostenbeteiligung gibt es etwa bei Mutterschaft ab der 13. Schwangerschaftswoche (KVG Art. 64 Abs. 7).' },
+    franchiseExplain: { sie: 'Die Franchise zahlen Sie in der Regel jedes Jahr zuerst selbst. Danach zahlen Sie 10 % der Kosten als Selbstbehalt, bei gewissen Medikamenten 40 % (KLV Art. 38a), höchstens CHF 700 im Jahr, für Kinder CHF 350 (KVG Art. 64, KVV Art. 103). Keine Kostenbeteiligung gibt es etwa für die Leistungen bei Mutterschaft (Kontrollen, Geburt, Stillberatung) und ab der 13. Schwangerschaftswoche bis acht Wochen nach der Geburt auch für andere Behandlungen (KVG Art. 64 Abs. 7).', du: 'Die Franchise zahlst du in der Regel jedes Jahr zuerst selbst. Danach zahlst du 10 % der Kosten als Selbstbehalt, bei gewissen Medikamenten 40 % (KLV Art. 38a), höchstens CHF 700 im Jahr, für Kinder CHF 350 (KVG Art. 64, KVV Art. 103). Keine Kostenbeteiligung gibt es etwa für die Leistungen bei Mutterschaft (Kontrollen, Geburt, Stillberatung) und ab der 13. Schwangerschaftswoche bis acht Wochen nach der Geburt auch für andere Behandlungen (KVG Art. 64 Abs. 7).' },
     personLabel: 'Versicherte Person',
     personErwachsen: 'Erwachsen (ab dem Jahr, in dem man 19 wird)',
     personKind: 'Kind (bis Ende des Jahres, in dem es 18 wird)',
