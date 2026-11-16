@@ -237,6 +237,24 @@ export const QUELLEN = {
       rm: 'arbeit.swiss, assicuranza cunter la dischoccupaziun e intermediaziun publica da lavur',
     },
   },
+  // Merkblatt 3.04 «Flexibler Rentenbezug», Stand 1. Januar 2026. Am 14.11.2026 per curl gemessen:
+  // .d/.f/.i/.e je ein PDF (200) mit dem passenden Titel in der Sprache; Gegenprobe /p/99.99.d 404.
+  // Die Seite /ahv-pensionierung/ ist an diesem Merkblatt und an 3.01 (Stand 1.1.2026) gegengelesen.
+  ahvMerkblattFlex: {
+    url: 'https://www.ahv-iv.ch/p/3.04.d',
+    text: 'Merkblatt 3.04 «Flexibler Rentenbezug»',
+    sprachen: {
+      fr: 'https://www.ahv-iv.ch/p/3.04.f',
+      it: 'https://www.ahv-iv.ch/p/3.04.i',
+      en: 'https://www.ahv-iv.ch/p/3.04.e',
+    },
+    texte: {
+      fr: 'Mémento 3.04 « Flexibilisation de la retraite »',
+      it: 'Promemoria 3.04 «Riscossione flessibile della rendita»',
+      en: 'Leaflet 3.04 “Flexible retirement”',
+      rm: 'Fegl d’infurmaziun 3.04 «Retratg flexibel da la renta»',
+    },
+  },
   ahvMerkblatt: {
     url: 'https://www.ahv-iv.ch/p/3.01.d',
     text: 'Merkblatt 3.01 «Altersrenten und Hilflosenentschädigungen der AHV»',
@@ -926,6 +944,141 @@ export const SEITEN = [
     ],
     quellen: ['arbeitSwiss'],
     hintergrund: ['kantonsatlas', 'kantone-im-vergleich'],
+  },
+
+  // ─── AHV und Pensionierung ────────────────────────────────────────────────
+  // Seitenlandkarte E3 / Organigramm C1: die dritte der drei geplanten Seiten, im Kapitel
+  // Versicherungen & Vorsorge unter «Zum Verstehen». Gebaut 16.11.2026.
+  //
+  // Belegt an AHV/IV-Merkblatt 3.01 (Stand 1.1.2026: Anspruchsbeginn, Anmeldung und Stelle,
+  // Berechnungselemente, Vollrente, Splitting, Erziehungs- und Betreuungsgutschriften, 13. Altersrente,
+  // Hilflosenentschädigung) und 3.04 (Stand 1.1.2026: Vorbezug, Teilbezug, Aufschub, Anmeldung) sowie an
+  // den fachgeprüften App-Texten `pensionierung.*` und `aussteuerung.step3Text` (AHVG Art. 3 Abs. 3, 10,
+  // 21, 29ter, 40, 40a; AHVV Art. 55quater; BVG Art. 37, 37a; BVV 3 Art. 7). Neu gegenüber der App,
+  // darum besonders zu prüfen: BV Art. 111–113 (Zweck der Säulen), AHVG Art. 16 (Nachzahlung),
+  // AHVG Art. 29bis (Berechnungselemente), AHVG Art. 39 (Aufschub), AHVG Art. 43bis (HE), AHVV Art. 141 (IK-Auszug).
+  {
+    pfad: 'ahv-pensionierung',
+    titel: 'AHV und Pensionierung — eine Orientierung',
+    beschreibung:
+      'Wie die drei Säulen zusammenspielen, was die AHV-Rente bestimmt, warum man sie anmelden muss und was Vorbezug und Aufschub bedeuten. Ohne Zahlen.',
+    brotkrume: 'AHV und Pensionierung',
+    vorspann:
+      'Die Alters- und Hinterlassenenversicherung (AHV) ist die erste Säule der Schweizer Altersvorsorge und für alle obligatorisch, die hier wohnen oder arbeiten. Wie hoch die Rente einmal ausfällt, entscheidet sich über viele Jahre: an den Beitragsjahren, den Einkommen und den Gutschriften für Kinder und Betreuung. Und sie kommt nicht von selbst: Man muss sie anmelden.',
+    schichten: true,
+    abschnitte: [
+      {
+        id: 'saeulen',
+        bild: `<ol class="zeit kern" role="list" aria-label="Die drei Säulen">
+          <li><span class="jahr">Erste Säule</span><span class="was">AHV, für alle obligatorisch; reicht sie nicht, kommen Ergänzungsleistungen dazu</span></li>
+          <li><span class="jahr">Zweite Säule</span><span class="was">Pensionskasse, für Angestellte ab einem Mindestlohn obligatorisch</span></li>
+          <li><span class="jahr">Dritte Säule</span><span class="was">freiwillig; die Säule 3a ist steuerlich begünstigt</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        wege: ['ergaenzungsleistungen'],
+        titel: 'Drei Säulen mit verschiedenen Aufgaben',
+        absaetze: [
+          'Die Altersvorsorge ruht auf drei Säulen (BV Art. 111). Die <strong>AHV</strong> ist die erste: Ihre Renten sollen den Existenzbedarf angemessen decken (BV Art. 112). Reichen sie dafür nicht, kommen Ergänzungsleistungen dazu (BV Art. 112a).',
+          'Die <strong>Pensionskasse</strong>, die berufliche Vorsorge, ist für Angestellte ab einem Mindestlohn obligatorisch. Zusammen mit der AHV soll sie die gewohnte Lebenshaltung in angemessener Weise ermöglichen (BV Art. 113).',
+          'Die <strong>dritte Säule</strong> ist freiwillig. Einzahlungen in die Säule 3a können vom steuerbaren Einkommen abgezogen werden; einzahlen kann aber nur, wer ein Erwerbseinkommen hat (BVV 3 Art. 7).',
+        ],
+      },
+      {
+        id: 'beitraege',
+        bild: `<div class="kern">
+          <p class="unter" id="rente">Was die Höhe der AHV-Rente bestimmt:</p>
+          <ul class="chips" role="list" aria-labelledby="rente">
+            <li>Beitragsjahre</li><li>Erwerbseinkommen</li><li>Erziehungsgutschriften</li><li>Betreuungsgutschriften</li>
+          </ul>
+          <p class="unter">Jedes fehlende Beitragsjahr kürzt die Rente in der Regel lebenslang.</p>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['arbeitslosigkeit'],
+        titel: 'Was die Rente bestimmt, und warum Lücken zählen',
+        absaetze: [
+          'Die Höhe der AHV-Rente hängt von den anrechenbaren <strong>Beitragsjahren</strong>, den <strong>Erwerbseinkommen</strong> und den <strong>Erziehungs- und Betreuungsgutschriften</strong> ab (AHVG Art. 29bis). Eine Vollrente erhält, wer vom Jahr nach dem zwanzigsten Geburtstag bis zum Jahr vor dem Referenzalter lückenlos Beiträge bezahlt hat. Fehlt ein Beitragsjahr, wird die Rente in der Regel gekürzt, und zwar lebenslang (AHVG Art. 29ter).',
+          'Beitragspflichtig sind auch Nichterwerbstätige, etwa im Studium, nach einer Aussteuerung oder bei einer frühen Pensionierung (AHVG Art. 10). Für Verheiratete ohne Erwerbseinkommen gelten die Beiträge als bezahlt, wenn die Ehepartnerin oder der Ehepartner mindestens den doppelten Mindestbeitrag zahlt (AHVG Art. 3 Abs. 3). Nachzahlen lassen sich fehlende Beiträge nur für eine begrenzte Zeit zurück (AHVG Art. 16).',
+          'Ob Sie Lücken haben, zeigt ein Auszug aus Ihrem individuellen Konto (IK), den Sie bei Ihrer Ausgleichskasse verlangen können (AHVV Art. 141). Je früher Sie eine Lücke kennen, desto eher lässt sie sich noch schliessen.',
+        ],
+      },
+      {
+        id: 'anmelden',
+        bild: `<ol class="zeit kern" role="list" aria-label="Der Weg zur Rente">
+          <li><span class="jahr">Einige Monate vorher</span><span class="was">bei der Ausgleichskasse anmelden</span></li>
+          <li><span class="jahr">Referenzalter</span><span class="was">die Rente beginnt im Monat danach</span></li>
+          <li><span class="jahr">Jeden Dezember</span><span class="was">dazu eine dreizehnte Altersrente</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        titel: 'Die Rente kommt nicht von selbst',
+        absaetze: [
+          'Die AHV-Rente müssen Sie selbst anmelden, am besten einige Monate vor dem Referenzalter. Zuständig ist die Ausgleichskasse, die zuletzt Ihre Beiträge erhalten hat; haben Sie keine Beiträge bezahlt, die kantonale Ausgleichskasse Ihres Wohnkantons (Merkblatt 3.01).',
+          'Der Anspruch entsteht am ersten Tag des Monats nach dem Erreichen des Referenzalters und erlischt am Ende des Monats, in dem die Person stirbt (AHVG Art. 21). Das Referenzalter ist für Frauen und Männer gleich; für Frauen der Übergangsgeneration gelten Übergangsregeln.',
+          'Wer im Dezember eine Altersrente bezieht, erhält zusätzlich eine dreizehnte Altersrente in der Höhe eines Zwölftels der jährlichen Altersrente. Hinterlassenen-, Invaliden- und Kinderrenten werden weiterhin nur zwölfmal ausbezahlt (Merkblatt 3.01).',
+        ],
+      },
+      {
+        id: 'flexibel',
+        bild: `<ol class="zeit kern" role="list" aria-label="Früher, regulär oder später">
+          <li><span class="jahr">Vorbezug</span><span class="was">ganz oder teilweise; die Rente wird lebenslang gekürzt</span></li>
+          <li><span class="jahr">Referenzalter</span><span class="was">die Rente ohne Kürzung und ohne Zuschlag</span></li>
+          <li><span class="jahr">Aufschub</span><span class="was">ganz oder teilweise; die Rente wird lebenslang erhöht</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        wege: ['ergaenzungsleistungen'],
+        titel: 'Früher oder später beziehen',
+        absaetze: [
+          'Die Rente lässt sich ganz oder teilweise <strong>vorbeziehen</strong>, frühestens ab dem dreiundsechzigsten Geburtstag, für Frauen der Übergangsgeneration früher. Der vorbezogene Teil wird lebenslang gekürzt, auch über das Referenzalter hinaus (AHVG Art. 40, 40a). Während des Vorbezugs gibt es keine Kinderrenten. Den Vorbezug müssen Sie spätestens im Monat vor dem gewünschten Beginn anmelden; rückwirkend geht es nicht (Merkblatt 3.04).',
+          'Sie können die Rente auch ganz oder teilweise <strong>aufschieben</strong>, um mindestens ein und höchstens fünf Jahre; sie wird dann lebenslang erhöht (AHVG Art. 39). Den Aufschub erklären Sie spätestens ein Jahr nach Erreichen des Referenzalters, sonst wird die Rente ohne Erhöhung ausbezahlt (AHVV Art. 55quater).',
+          'Ein Vorbezug kann Folgen haben, die man nicht gleich sieht: Wer arbeitslos ist, verliert mit dem Vorbezug den Anspruch auf Taggeld, und wer Überbrückungsleistungen bezieht, ebenfalls (AVIG Art. 8, ÜLG Art. 5 Abs. 3). Lassen Sie sich vorher bei Ihrer Ausgleichskasse beraten.',
+        ],
+      },
+      {
+        id: 'mehr',
+        bild: `<div class="kern">
+          <p class="unter" id="zusatz">Was im Alter dazukommen kann:</p>
+          <ul class="chips" role="list" aria-labelledby="zusatz">
+            <li>Ergänzungsleistungen</li><li>Hilflosenentschädigung</li><li>Prämienverbilligung</li><li>Beratung, etwa bei Pro Senectute</li>
+          </ul>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['ergaenzungsleistungen', 'praemienverbilligung'],
+        titel: 'Was im Alter sonst noch zusteht',
+        absaetze: [
+          'Reichen Renten und Vermögen nicht für das Nötigste, kommen <strong>Ergänzungsleistungen</strong> in Frage. Sie sind ein gesetzlicher Anspruch und keine Sozialhilfe.',
+          'Wer im Alltag dauernd auf die Hilfe anderer angewiesen ist, etwa beim Ankleiden, bei der Körperpflege oder beim Essen, kann eine <strong>Hilflosenentschädigung</strong> der AHV erhalten, wenn die Hilflosigkeit seit mindestens sechs Monaten ununterbrochen besteht. Sie hängt nicht von Einkommen und Vermögen ab (AHVG Art. 43bis, Merkblatt 3.01).',
+          'Bei der <strong>Pensionskasse</strong> entscheiden Sie zwischen Rente und Kapital. Einen Viertel können Sie gesetzlich als Kapital verlangen, mehr nur, wenn das Reglement es vorsieht; bei Verheirateten braucht es die schriftliche Zustimmung (BVG Art. 37, 37a). Der Entscheid ist endgültig. Lassen Sie sich früh beraten.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Wie hoch wird meine AHV-Rente?',
+        antwort:
+          'Das hängt von Ihren Beitragsjahren, Ihren Einkommen und Ihren Gutschriften ab. Verbindlich berechnen lässt sich die Rente in der Regel erst beim Erreichen des Referenzalters. Eine Vorausberechnung können Sie bei Ihrer Ausgleichskasse verlangen (Merkblatt 3.01).',
+      },
+      {
+        frage: 'Was gilt für Ehepaare?',
+        antwort:
+          'Die Einkommen aus den Ehejahren werden geteilt und je zur Hälfte beiden angerechnet, sobald beide rentenberechtigt sind, und ebenso bei einer Scheidung. Die beiden Renten eines Ehepaars zusammen sind gegen oben begrenzt; diese Begrenzung fällt weg, wenn der gemeinsame Haushalt durch ein Gericht aufgehoben wurde (Merkblatt 3.01).',
+      },
+      {
+        frage: 'Ich habe auch im Ausland gearbeitet. Was nun?',
+        antwort:
+          'Zeiten im Ausland fehlen in der Schweizer AHV in der Regel, sie können aber im anderen Staat zu einer Rente führen. Mit Versicherungszeiten in einem EU- oder EFTA-Staat löst ein einziger Antrag im Wohnsitzland das Verfahren in allen beteiligten Staaten aus (Merkblatt 3.01).',
+      },
+      {
+        frage: 'Bekomme ich als Lebenspartnerin oder Lebenspartner eine Hinterlassenenrente?',
+        antwort:
+          'Eine Witwen- oder Witwerrente der AHV gibt es nur nach einer Ehe oder eingetragenen Partnerschaft und nur unter weiteren Voraussetzungen. Ohne Trauschein gibt es keine. Gemeinsame Kinder erhalten aber eine Waisenrente. Bei der Pensionskasse kann das Reglement eine Leistung an Lebenspartnerinnen und Lebenspartner vorsehen.',
+      },
+      {
+        frage: 'Muss ich nach der Pensionierung noch AHV-Beiträge zahlen?',
+        antwort:
+          'Wer nach dem Referenzalter weiterarbeitet, zahlt weiter Beiträge. Unter gewissen Voraussetzungen kann die Rente dann neu berechnet werden. Wer die Rente vorbezieht und nicht mehr arbeitet, bleibt bis zum Referenzalter als nichterwerbstätige Person beitragspflichtig (AHVG Art. 10).',
+      },
+    ],
+    quellen: ['ahvMerkblatt', 'ahvMerkblattFlex'],
+    hintergrund: ['kantonsatlas'],
   },
 ];
 

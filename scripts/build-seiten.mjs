@@ -62,6 +62,8 @@ const WERKZEUG_IN_DER_APP = {
   ergaenzungsleistungen: 'ergaenzungsleistungen',
   // E3 (16.11.2026): der Taggeld-Rechner.
   arbeitslosigkeit: 'alv',
+  // E3 (16.11.2026): der Ablauf «Pensionierung».
+  'ahv-pensionierung': 'pensionierung',
   'kantone-im-vergleich': 'praemien',
   // E-A (Wege durch Maloja, 07.11.2026): dieselben Daten wie Kantone im Vergleich, erste Karte ist die Prämie.
   // Politsystem bleibt bei der Startseite: kein Werkzeug rechnet Politik.
