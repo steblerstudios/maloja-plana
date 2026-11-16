@@ -23,6 +23,8 @@ const ERKLAERSEITEN = [
   ['/krankenkasse/', 'Krankenkasse'],
   ['/sozialhilfe/', 'Sozialhilfe'],
   ['/steuern/', 'Steuern'],
+  // E3 (14.11.2026).
+  ['/ergaenzungsleistungen/', 'Ergänzungsleistungen'],
 ];
 // Seiten über alle Themen, im Organigramm oben «Die Schweiz verstehen» (Entscheid 07.11.2026,
 // docs/design/seiten-architektur-2026-11.md). Kantonsatlas seit 07.11.2026 auf main (#741), Nachtrag zu #743.

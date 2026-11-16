@@ -276,6 +276,95 @@ export const SEITEN = [
     ],
     quellen: ['estvRechner'],
   },
+
+  // ─── Prestations complémentaires (14.11.2026) ─────────────────────────────
+  // Termes repris de src/i18n/fr.js et du mémento 5.01 en français : PC, organe PC,
+  // dépenses reconnues, revenus déterminants, frais de maladie et d’invalidité.
+  // LPC = ELG · OPC = ELV · LEI = AIG.
+  {
+    pfad: 'ergaenzungsleistungen',
+    titel: 'Les prestations complémentaires à l’AVS et à l’AI',
+    beschreibung:
+      'Quand les prestations complémentaires (PC) entrent en ligne de compte, comment elles sont calculées et pourquoi elles ne sont pas de l’aide sociale. Un cadrage sans chiffres.',
+    brotkrume: 'Prestations complémentaires',
+    vorspann:
+      'Les prestations complémentaires, ou PC, interviennent là où une rente de l’AVS ou de l’AI et les autres revenus ne suffisent pas à couvrir le minimum vital. Elles sont réglées dans la loi fédérale sur les prestations complémentaires (LPC) et constituent un droit légal, pas une faveur. Elles sont versées par les cantons.',
+    abschnitte: [
+      {
+        titel: 'Sans prestation de l’AVS ou de l’AI, pas de PC',
+        absaetze: [
+          'Les PC supposent une prestation de l’AVS ou de l’AI : une rente de vieillesse ou de survivant de l’AVS, y compris une rente anticipée, une rente de l’AI, une allocation pour impotent de l’AI ou des indemnités journalières de l’AI versées sans interruption depuis au moins six mois. S’y ajoutent le domicile et la résidence habituelle en Suisse (art. 4 LPC).',
+          'Pour les étrangères et les étrangers s’applique en outre une durée minimale de séjour : en règle générale dix ans sans interruption en Suisse, cinq ans pour les réfugiés et les apatrides (art. 5 LPC). Elle ne s’applique pas aux ressortissants d’un État de l’UE ou de l’AELE.',
+          'Qui n’a pas de rente uniquement parce que les années de cotisation sont insuffisantes peut, à certaines conditions, tout de même toucher des PC (art. 4 LPC). Qui se trouve dans le besoin sans aucune prestation de l’AVS ou de l’AI s’adresse à l’aide sociale de sa commune de domicile.',
+        ],
+      },
+      {
+        titel: 'L’écart entre dépenses et revenus',
+        absaetze: [
+          'La PC annuelle correspond à la part des <strong>dépenses reconnues</strong> qui excède les <strong>revenus déterminants</strong> (art. 9 LPC). Les dépenses comprennent par exemple un montant pour les besoins vitaux, le loyer jusqu’à un plafond et un montant pour la prime d’assurance-maladie (art. 10 LPC). Les revenus comprennent les rentes, une partie du revenu de l’activité lucrative et une partie de la fortune (art. 11 LPC).',
+          'N’a droit aux PC que la personne dont la fortune est inférieure à un seuil légal ; un logement habité par son propriétaire n’est pas pris en compte pour ce seuil (art. 9a LPC). La fortune à laquelle une personne a renoncé sans contrepartie, par exemple par une donation, est prise en compte (art. 11a LPC).',
+          'La Confédération fixe les montants pour les besoins vitaux, et les plafonds de loyer échelonnés selon trois régions (art. 10 LPC). Nous ne les citons volontairement pas ici : ils sont adaptés régulièrement, et un chiffre sur une page comme celle-ci serait bientôt faux. Pour les personnes vivant en home, le calcul suit ses propres règles ; les cantons peuvent limiter les frais de home reconnus.',
+        ],
+      },
+      {
+        titel: 'Les frais de maladie et d’invalidité s’y ajoutent',
+        absaetze: [
+          'En plus de la PC annuelle, le canton rembourse les frais de maladie et d’invalidité dûment établis, par exemple pour le dentiste, l’aide, les soins et l’assistance à domicile, le transport vers le lieu de traitement, les moyens auxiliaires ainsi que la franchise et la quote-part de l’assurance-maladie (art. 14 LPC). Le canton détermine quels frais exactement et jusqu’à quel montant.',
+          'Même qui ne touche pas de PC annuelle parce que ses revenus sont un peu trop élevés peut obtenir le remboursement de tels frais, dans la mesure où ils dépassent l’excédent de revenus.',
+          'Conservez factures et justificatifs : seul ce qui est établi est remboursé, et seulement si vous le faites valoir dans un délai légal après la facturation (art. 15 LPC).',
+        ],
+      },
+      {
+        titel: 'S’annoncer : auprès du canton de domicile, et tôt',
+        absaetze: [
+          'Le canton de votre domicile est compétent. Il désigne l’organe qui reçoit la demande ; c’est le plus souvent la caisse cantonale de compensation ou l’office des assurances sociales, souvent par l’intermédiaire de l’agence AVS de la commune de domicile (art. 21 LPC).',
+          'Le droit naît en règle générale le mois au cours duquel la demande est déposée (art. 12 LPC). Il ne peut commencer plus tôt que dans certains cas, par exemple si la demande est déposée dans les six mois suivant une décision de rente ou une entrée en home ou à l’hôpital (art. 12, al. 2, LPC, art. 22 OPC). Qui attend peut donc perdre des mois.',
+          'Si vous ne savez pas si une demande en vaut la peine, renseignez-vous auprès de l’organe PC. Il examine le droit et motive sa décision par écrit.',
+        ],
+      },
+      {
+        titel: 'Les PC ne sont pas de l’aide sociale',
+        absaetze: [
+          'Les PC sont souvent confondues avec l’aide sociale. Elles sont autre chose : un droit fondé sur le droit fédéral, calculé selon des règles valables dans toute la Suisse. Un droit aux PC prime l’aide sociale.',
+          'De votre vivant, vous ne devez pas rembourser des PC perçues légalement. Après le décès, elles sont remboursées sur la succession, mais seulement sur la part qui dépasse une franchise légale ; pour les couples mariés, seulement sur la succession de la personne décédée en second (art. 16a LPC).',
+          'Sans passeport suisse et sans nationalité d’un État de l’UE ou de l’AELE, le regroupement familial n’est en règle générale pas autorisé si vous percevez des PC annuelles ou si vous en percevriez en raison du regroupement (art. 43, al. 1, let. e, et art. 44, al. 1, let. e, LEI). Faites-vous conseiller au préalable dans ce cas.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Ai-je droit aux prestations complémentaires ?',
+        antwort:
+          'Cela dépend de si vous touchez une prestation de l’AVS ou de l’AI, de votre lieu de domicile, de vos revenus, de vos dépenses et de votre fortune. Il n’existe pas de limite valable pour tous, car le loyer, la prime et le ménage comptent aussi. Le calculateur PC de l’AVS/AI donne une première orientation ; seule la décision de l’organe PC de votre canton fait foi.',
+      },
+      {
+        frage: 'Y a-t-il des PC avant l’âge de la retraite ?',
+        antwort:
+          'Oui. Qui touche une rente de l’AI, une rente de veuve, de veuf ou d’orphelin peut aussi obtenir des PC avant l’âge de la retraite. Qui anticipe sa rente AVS remplit également la condition d’une rente (art. 4 LPC) ; la rente réduite compte alors comme revenu (art. 11 LPC). Qui arrive en fin de droit dans l’assurance-chômage à partir de soixante ans peut, selon les cas, toucher des prestations transitoires ; elles aussi se demandent auprès de l’organe PC.',
+      },
+      {
+        frage: 'Ma maison ou mon appartement compte-t-il ?',
+        antwort:
+          'Pour le seuil de fortune, un logement habité par son propriétaire n’est pas pris en compte (art. 9a LPC). Dans le calcul lui-même, sa valeur est prise en compte, mais avec une franchise (art. 11 LPC). Ce que cela donne dans votre cas, l’organe PC le calcule.',
+      },
+      {
+        frage: 'Qu’en est-il si je dois entrer en home ?',
+        antwort:
+          'La PC est alors calculée selon ses propres règles : au lieu des besoins vitaux et du loyer, on compte la taxe journalière du home, que le canton peut plafonner, et un montant pour les dépenses personnelles fixé par le canton (art. 10, al. 2, LPC). Annoncez-vous dans les six mois suivant l’entrée ; le droit peut alors naître dès le mois de l’entrée, si les autres conditions sont remplies (art. 12, al. 2, LPC).',
+      },
+      {
+        frage: 'Dois-je annoncer les changements ?',
+        antwort:
+          'Oui. Toute modification de la situation personnelle et toute modification importante de la situation économique doit être annoncée sans délai à l’organe PC, par exemple un déménagement, un nouveau loyer, un héritage ou une entrée en home (art. 24 OPC). Les prestations perçues indûment doivent être restituées.',
+      },
+      {
+        frage: 'Que m’apporte encore une PC ?',
+        antwort:
+          'Les bénéficiaires de PC annuelles à l’AVS ou à l’AI sont exonérés de la redevance de radio-télévision ; l’exonération se demande auprès de l’organe de perception avec l’attestation de l’organe PC. Le montant pour la prime d’assurance-maladie qui entre dans le calcul est versé directement à la caisse-maladie. En cas de doute, renseignez-vous auprès de l’organe PC.',
+      },
+    ],
+    quellen: ['ahvMerkblattEL', 'bsvEL'],
+  },
 ];
 
 export const SONDERSEITEN = [

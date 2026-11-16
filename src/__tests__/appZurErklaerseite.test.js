@@ -20,14 +20,14 @@ const quelle = (datei) => fs.readFileSync(path.resolve(__dirname, '..', datei), 
 const t = createT({ de }, 'de', 'sie');
 
 describe('Werkzeuge verlinken ihre Erklärseite', () => {
-  it('vier Werkzeuge, je eine Erklärseite, die es gibt', () => {
-    expect(ERKLAERSEITE).toEqual({ sozialhilfe: '/sozialhilfe/', tax: '/steuern/', premium: '/praemienverbilligung/', praemien: '/krankenkasse/' });
+  it('fünf Werkzeuge, je eine Erklärseite, die es gibt', () => {
+    expect(ERKLAERSEITE).toEqual({ sozialhilfe: '/sozialhilfe/', tax: '/steuern/', premium: '/praemienverbilligung/', praemien: '/krankenkasse/', ergaenzungsleistungen: '/ergaenzungsleistungen/' });
     for (const pfad of Object.values(ERKLAERSEITE)) {
       expect(fs.existsSync(path.resolve(process.cwd(), 'public', pfad.slice(1), 'index.html')), pfad).toBe(true);
     }
   });
 
-  it.each([['SozialhilfeView.jsx', 'sozialhilfe'], ['TaxCalculator.jsx', 'tax'], ['PremiumSubsidy.jsx', 'premium'], ['PraemienOrientierung.jsx', 'praemien']])(
+  it.each([['SozialhilfeView.jsx', 'sozialhilfe'], ['TaxCalculator.jsx', 'tax'], ['PremiumSubsidy.jsx', 'premium'], ['PraemienOrientierung.jsx', 'praemien'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen']])(
     '%s zeigt den Link', (datei, view) => {
       expect(quelle(datei)).toContain(`ErklaerseiteLink, { palette, t, view: '${view}' }`);
     });
@@ -107,12 +107,13 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
       expect(cv.indexOf('React.createElement(ZumVerstehen')).toBeGreaterThan(cv.indexOf('    renderPassend(),'));
     });
 
-    it('Versicherungen: zwei Erklärseiten und drei Karten, mit Überschriften', () => {
+    it('Versicherungen: drei Erklärseiten und drei Karten, mit Überschriften', () => {
       const html = renderToStaticMarkup(React.createElement(ZumVerstehen, { palette: LIGHT_PALETTE, t, kapitel: 'versicherungen' }));
       expect(html).toContain(t('erklaerseite.zumVerstehen'));
       expect(html).toContain(t('erklaerseite.aufDerKarte'));
-      expect((html.match(/<a /g) || []).length).toBe(5);
+      expect((html.match(/<a /g) || []).length).toBe(6);
       expect(html).toContain('href="/krankenkasse/"');
+      expect(html).toContain('href="/ergaenzungsleistungen/"');
       expect(html).toContain('href="/kantonsatlas/#karte-el"');
     });
 

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten.
+       Quelle: scripts/seiten-inhalt.mjs
+       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
+       Generator: scripts/build-seiten.mjs
+       Neu bauen:  node scripts/build-seiten.mjs
+       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Freigegeben: diese Sprache ist gegengelesen und darf indexiert werden. -->
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Stebler Studios">
+  <meta name="theme-color" content="#F2F2F0">
+  <title>Ergänzungsleistungen zur AHV und IV — Maloja Plana</title>
+  <meta name="description" content="Wann Ergänzungsleistungen (EL) in Frage kommen, wie sie berechnet werden und warum sie keine Sozialhilfe sind. Eine Einordnung ohne Zahlen.">
+  <link rel="canonical" href="https://malojaplana.ch/ergaenzungsleistungen/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Ergänzungsleistungen zur AHV und IV">
+  <meta property="og:description" content="Wann Ergänzungsleistungen (EL) in Frage kommen, wie sie berechnet werden und warum sie keine Sozialhilfe sind. Eine Einordnung ohne Zahlen.">
+  <meta property="og:url" content="https://malojaplana.ch/ergaenzungsleistungen/">
+  <meta property="og:image" content="https://malojaplana.ch/og-image.png">
+  <meta property="og:locale" content="de_CH">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ergänzungsleistungen zur AHV und IV">
+  <meta name="twitter:description" content="Wann Ergänzungsleistungen (EL) in Frage kommen, wie sie berechnet werden und warum sie keine Sozialhilfe sind. Eine Einordnung ohne Zahlen.">
+  <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://malojaplana.ch/ergaenzungsleistungen/#webpage",
+        "url": "https://malojaplana.ch/ergaenzungsleistungen/",
+        "name": "Ergänzungsleistungen zur AHV und IV",
+        "description": "Wann Ergänzungsleistungen (EL) in Frage kommen, wie sie berechnet werden und warum sie keine Sozialhilfe sind. Eine Einordnung ohne Zahlen.",
+        "inLanguage": "de-CH",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/#website"
+        },
+        "publisher": {
+          "@id": "https://malojaplana.ch/#org"
+        },
+        "about": {
+          "@id": "https://malojaplana.ch/#app"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://malojaplana.ch/ergaenzungsleistungen/#krume",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Maloja Plana",
+            "item": "https://malojaplana.ch/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Ergänzungsleistungen",
+            "item": "https://malojaplana.ch/ergaenzungsleistungen/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://malojaplana.ch/ergaenzungsleistungen/#faq",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/ergaenzungsleistungen/#webpage"
+        },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Habe ich Anspruch auf Ergänzungsleistungen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Das hängt davon ab, ob Sie eine Leistung der AHV oder IV beziehen, wo Sie wohnen und wie Ihre Einnahmen, Ausgaben und Ihr Vermögen aussehen. Eine allgemein gültige Grenze gibt es nicht, weil die Miete, die Prämie und der Haushalt mitzählen. Eine erste Orientierung gibt der EL-Rechner der AHV/IV; verbindlich ist die Verfügung der EL-Stelle Ihres Kantons."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Gibt es EL auch vor dem Rentenalter?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ja. Wer eine Rente der IV, eine Witwen-, Witwer- oder Waisenrente bezieht, kann auch vor dem Rentenalter EL erhalten. Auch wer die AHV-Rente vorbezieht, erfüllt die Voraussetzung einer Rente (ELG Art. 4); die gekürzte Rente zählt dann als Einnahme (ELG Art. 11). Wer ab sechzig von der Arbeitslosenversicherung ausgesteuert wird, kann unter Umständen Überbrückungsleistungen erhalten; auch diese meldet man bei der EL-Stelle an."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Zählt mein Haus oder meine Wohnung?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bei der Vermögensschwelle zählt eine selbst bewohnte Liegenschaft nicht mit (ELG Art. 9a). In der Berechnung selbst wird ihr Wert berücksichtigt, aber mit einem Freibetrag (ELG Art. 11). Wie das in Ihrem Fall ausgeht, rechnet die EL-Stelle."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Was gilt, wenn ich ins Heim muss?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Dann wird die EL nach eigenen Regeln berechnet: Statt Lebensbedarf und Miete zählen die Tagestaxe des Heims, für die der Kanton einen Höchstbetrag festlegen kann, und ein Betrag für persönliche Auslagen, den der Kanton bestimmt (ELG Art. 10 Abs. 2). Melden Sie sich innert sechs Monaten nach dem Eintritt an; dann kann der Anspruch schon ab dem Monat des Eintritts beginnen, wenn die übrigen Voraussetzungen erfüllt sind (ELG Art. 12 Abs. 2)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Muss ich Änderungen melden?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ja. Jede Änderung der persönlichen und jede grössere Änderung der wirtschaftlichen Verhältnisse muss der EL-Stelle sofort gemeldet werden, etwa ein Umzug, eine neue Miete, eine Erbschaft oder ein Heimeintritt (ELV Art. 24). Zu Unrecht bezogene Leistungen müssen zurückerstattet werden."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Was bringt eine EL sonst noch?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Wer jährliche EL zur AHV oder IV bezieht, ist von der Radio- und Fernsehabgabe befreit; die Befreiung beantragt man bei der Erhebungsstelle mit der Bestätigung der EL-Stelle. Der Betrag für die Krankenkassenprämie, der in der Berechnung mitzählt, geht direkt an die Krankenkasse. Fragen Sie im Zweifel bei der EL-Stelle nach."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2');
+      font-weight:400; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gruppe E, Gestaltung B (12.11.2026): Titel in Hanken Grotesk wie die Startseite (Brand Book §3),
+       die Datei liegt schon unter /fonts/. Alles andere bleibt Lexend. */
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gestaltung C: ein Gold, ein Leise-Ton — dieselben Werte wie website/index.html.
+       --sand ist die Fläche (Knopf), --sand-tief die Schrift (Links), hell 7A5F30, dunkel C4A06A. */
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;
+           --rand:#E0DDD8; --sand:#C4A06A; --sand-tief:#7A5F30; --auf-sand:#2A2620 }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
+             --rand:#3A3936; --sand:#C4A06A; --sand-tief:#C4A06A; --auf-sand:#2A2620 }
+      html{ color-scheme:dark }
+    }
+    body{ background:var(--bg); color:var(--text); line-height:1.65;
+      font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
+    .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
+    a{ color:var(--sand-tief); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt über die dickere Unterstreichung. */
+    a:hover{ text-decoration-thickness:2px }
+    header{ padding:24px 0 0 }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px. Gruppe E, C: Bildmarke 28 px wie auf der Startseite. */
+    .marke{ display:inline-flex; align-items:center; gap:10px; min-height:44px; font-weight:600; text-decoration:none;
+      font-size:16px; color:var(--text) }
+    .marke svg{ height:28px; width:auto; flex:none }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:16px }
+    main{ padding:8px 0 16px }
+    /* Gestaltung B: Grössen nur von der Skala 13 · 15 · 16 · 19 · 23 · 28 · 36 (Brand Book §7a). */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-weight:600 }
+    h1{ font-size:36px; line-height:1.2; margin:16px 0 12px; letter-spacing:-0.015em }
+    .vorspann{ font-size:19px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:23px; line-height:1.3; margin:48px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:19px; line-height:1.35; margin:24px 0 8px }
+    p{ margin-bottom:16px }
+    ul{ margin:0 0 16px 24px } li{ margin-bottom:8px }
+    /* Gestaltung D: Karte 12 px Ecke, innen 32 (am Handy 24), Abstand 32. */
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:12px;
+      padding:32px; margin:32px 0 }
+    .karte p:last-child{ margin-bottom:0 }
+    .weiter{ list-style:none; margin:16px 0 0; padding:0 }
+    .weiter li{ margin-bottom:12px }
+    .weiter a{ font-weight:600; text-decoration:none }
+    .weiter a:hover{ text-decoration:underline }
+    .weiter span{ display:block; font-size:15px; color:var(--leise); font-weight:400 }
+    /* Knopf 10 px Ecke, 44 px hoch (Brand Book §7a, «6 px» überholt am 06.11.). */
+    .knopf{ display:inline-flex; align-items:center; min-height:44px; background:var(--sand); color:var(--auf-sand);
+      text-decoration:none; padding:12px 24px; border-radius:10px; font-weight:600; font-size:15px; margin-top:4px }
+    .knopf:hover{ filter:brightness(1.05) }
+    .hinweis{ font-size:13px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:13px; color:var(--leise) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:16px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:24px 0 64px;
+      font-size:13px; color:var(--leise) }
+    footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
+    footer p{ margin-bottom:8px }
+    /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
+    footer .sprachen{ margin-top:16px }
+    footer .sprachen a{ text-decoration:underline }
+    footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
+    /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. Hinweisstreifen: 6 px (kleinste Rolle). */
+    .entwurf{ border:1px solid var(--sand); border-radius:6px; padding:12px 16px;
+      margin-bottom:24px; font-size:15px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:24px; font-size:13px; color:var(--leise) }
+    /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
+    ul.kantone{ columns:2; column-gap:32px }
+    ul.kantone li{ break-inside:avoid }
+    @media (max-width:600px){ h1{ font-size:28px } .vorspann{ font-size:16px } h2{ font-size:19px; margin-top:32px }
+      .karte{ padding:24px } ul.kantone{ columns:1 } }
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
+  </style>
+</head>
+<body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/"><svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg>Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="Sie sind hier">
+        <a href="/">Start</a> › Ergänzungsleistungen
+      </nav>
+    </header>
+
+    <main>
+      <h1>Ergänzungsleistungen zur AHV und IV</h1>
+      <p class="vorspann">Ergänzungsleistungen, kurz EL, helfen dort, wo eine Rente der AHV oder IV und das übrige Einkommen nicht für das Nötigste zum Leben reichen. Sie sind im Bundesgesetz über Ergänzungsleistungen (ELG) geregelt und ein gesetzlicher Anspruch, kein Entgegenkommen. Ausgerichtet werden sie von den Kantonen.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge; Fristen nur, wo das Bundesrecht sie für alle gleich festlegt.<br>
+      <strong class="stand">Inhaltlich geprüft: November 2026.</strong></p>
+
+        <h2 id="voraussetzungen">Ohne Leistung der AHV oder IV gibt es keine EL</h2>
+        <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Was vorausgesetzt ist">
+          <li><span class="jahr">AHV oder IV</span><span class="was">eine Rente, eine Hilflosenentschädigung oder ein länger laufendes Taggeld der IV</span></li>
+          <li><span class="jahr">Schweiz</span><span class="was">Wohnsitz und gewöhnlicher Aufenthalt hier</span></li>
+          <li><span class="jahr">Vermögen</span><span class="was">unter einer gesetzlichen Schwelle</span></li>
+        </ol></div>
+        <p class="schicht-kurz">EL setzen eine Leistung der AHV oder IV voraus: eine Alters- oder Hinterlassenenrente der AHV, auch eine vorbezogene, eine Rente der IV, eine Hilflosenentschädigung der IV oder ein Taggeld der IV, das seit mindestens sechs Monaten ununterbrochen läuft. Dazu kommen Wohnsitz und gewöhnlicher Aufenthalt in der Schweiz (ELG Art. 4).</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Für Ausländerinnen und Ausländer gilt zusätzlich eine Mindestaufenthaltsdauer: in der Regel zehn Jahre ununterbrochen in der Schweiz, für Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Für Staatsangehörige eines EU- oder EFTA-Staates gilt sie nicht.</p>
+          <p>Wer keine Rente hat, nur weil zu wenige Beitragsjahre zusammenkamen, kann unter gewissen Voraussetzungen trotzdem EL erhalten (ELG Art. 4). Wer ganz ohne Leistung der AHV oder IV in Not gerät, wendet sich an die Sozialhilfe der Wohngemeinde.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Ohne Leistung der AHV oder IV gibt es keine EL"><a class="weg" href="/sozialhilfe/"><span aria-hidden="true">→</span> Sozialhilfe</a></nav>
+
+        <h2 id="berechnung">Die Lücke zwischen Ausgaben und Einnahmen</h2>
+        <div class="schicht-bild"><div class="kern">
+          <p class="formel" role="img" aria-label="Anerkannte Ausgaben minus anrechenbare Einnahmen ergibt die jährliche Ergänzungsleistung, wenn die Ausgaben höher sind.">
+            <span class="glied" aria-hidden="true"><strong>Ausgaben</strong>vom Gesetz anerkannt</span>
+            <span class="op" aria-hidden="true">−</span>
+            <span class="glied" aria-hidden="true"><strong>Einnahmen</strong>soweit anrechenbar</span>
+            <span class="op" aria-hidden="true">=</span>
+            <span class="glied" aria-hidden="true"><strong>EL</strong>wenn die Ausgaben höher sind</span>
+          </p>
+          <p class="unter">Die Beträge setzt das Gesetz fest. Ihren Anspruch rechnet die EL-Stelle aus.</p>
+        </div></div>
+        <p class="schicht-kurz">Die jährliche EL entspricht dem Betrag, um den die <strong>anerkannten Ausgaben</strong> die <strong>anrechenbaren Einnahmen</strong> übersteigen (ELG Art. 9). Zu den Ausgaben gehören etwa ein Betrag für den allgemeinen Lebensbedarf, die Miete bis zu einer Höchstgrenze und ein Betrag für die Krankenkassenprämie (ELG Art. 10). Zu den Einnahmen gehören Renten, ein Teil des Erwerbseinkommens und ein Teil des Vermögens (ELG Art. 11).</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Anspruch hat nur, wessen Vermögen unter einer gesetzlichen Schwelle liegt; eine selbst bewohnte Liegenschaft zählt dabei nicht mit (ELG Art. 9a). Vermögen, auf das jemand ohne Gegenleistung verzichtet hat, etwa durch eine Schenkung, wird mitgezählt (ELG Art. 11a).</p>
+          <p>Die Beträge für den Lebensbedarf legt der Bund fest, die Höchstgrenzen für die Miete abgestuft nach drei Regionen (ELG Art. 10). Wir nennen sie hier bewusst nicht: Sie werden regelmässig angepasst, und eine Zahl auf einer Seite wie dieser wäre bald falsch. Wer im Heim lebt, wird nach eigenen Regeln berechnet; die Kantone können die anerkannten Heimkosten begrenzen.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Die Lücke zwischen Ausgaben und Einnahmen"><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a></nav>
+
+        <h2 id="krankheitskosten">Krankheits- und Behinderungskosten kommen dazu</h2>
+        <div class="schicht-bild"><div class="kern">
+          <p class="unter" id="kosten">Zusätzlich zur jährlichen EL vergütet, soweit der Kanton es vorsieht:</p>
+          <ul class="chips" role="list" aria-labelledby="kosten">
+            <li>Zahnarzt</li><li>Hilfe, Pflege und Betreuung zu Hause</li><li>Transport zur Behandlung</li><li>Hilfsmittel</li><li>Franchise und Selbstbehalt</li><li>Diät, wenn sie lebensnotwendig ist</li>
+          </ul>
+        </div></div>
+        <p class="schicht-kurz">Neben der jährlichen EL vergütet der Kanton ausgewiesene Krankheits- und Behinderungskosten, etwa für den Zahnarzt, für Hilfe, Pflege und Betreuung zu Hause, für den Transport zur Behandlung, für Hilfsmittel sowie Franchise und Selbstbehalt der Krankenkasse (ELG Art. 14). Welche Kosten genau und bis zu welchem Betrag, bestimmt der Kanton.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Auch wer wegen etwas zu hoher Einnahmen keine jährliche EL erhält, kann solche Kosten vergütet bekommen, soweit sie den Einnahmenüberschuss übersteigen.</p>
+          <p>Heben Sie Rechnungen und Belege auf: Vergütet wird nur, was ausgewiesen ist, und nur, wenn Sie es innert einer gesetzlichen Frist nach der Rechnungsstellung geltend machen (ELG Art. 15).</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Krankheits- und Behinderungskosten kommen dazu"><a class="weg" href="/krankenkasse/"><span aria-hidden="true">→</span> Krankenkasse erklärt</a><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a></nav>
+
+        <h2 id="anmelden">Anmelden: beim Wohnkanton, und früh</h2>
+        <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Der Weg zur EL">
+          <li><span class="jahr">Anmeldung</span><span class="was">bei der Stelle, die Ihr Wohnkanton bestimmt</span></li>
+          <li><span class="jahr">Anspruch</span><span class="was">beginnt in der Regel mit dem Monat der Anmeldung</span></li>
+          <li><span class="jahr">Verfügung</span><span class="was">der schriftliche Entscheid, mit Berechnung</span></li>
+        </ol></div>
+        <p class="schicht-kurz">Der Anspruch beginnt in der Regel mit dem Monat, in dem die Anmeldung eingereicht wird (ELG Art. 12). Früher beginnen kann er nur in bestimmten Fällen, etwa wenn die Anmeldung innert sechs Monaten nach einer Rentenverfügung oder nach einem Eintritt ins Heim oder Spital erfolgt (ELG Art. 12 Abs. 2, ELV Art. 22). Wer zuwartet, kann darum Monate verlieren.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Zuständig ist der Kanton, in dem Sie Wohnsitz haben. Welche Stelle die Anmeldung entgegennimmt, bestimmt er; meist ist es die kantonale Ausgleichskasse oder Sozialversicherungsanstalt, oft über die AHV-Zweigstelle der Wohngemeinde (ELG Art. 21).</p>
+          <p>Sind Sie unsicher, ob sich eine Anmeldung lohnt, fragen Sie bei der EL-Stelle nach. Sie prüft den Anspruch und begründet ihren Entscheid in einer Verfügung.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Anmelden: beim Wohnkanton, und früh"><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
+
+        <h2 id="keine-sozialhilfe">EL sind keine Sozialhilfe</h2>
+        <div class="schicht-bild"><ul class="irrtum" role="list">
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>EL sind eine Form von Sozialhilfe.</span><span class="richtig"><span class="sr-only">Richtig: </span>EL sind ein Anspruch nach Bundesrecht und gehen der Sozialhilfe vor.</span></li>
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Wer EL bezieht, muss sie später zurückzahlen.</span><span class="richtig"><span class="sr-only">Richtig: </span>Rechtmässig bezogene EL werden erst aus dem Nachlass zurückerstattet, und nur über einem Freibetrag.</span></li>
+        </ul></div>
+        <p class="schicht-kurz">EL werden oft mit Sozialhilfe verwechselt. Sie sind etwas anderes: ein Anspruch nach Bundesrecht, berechnet nach Regeln, die in der ganzen Schweiz gelten. Ein Anspruch auf EL geht der Sozialhilfe vor.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Zu Lebzeiten müssen Sie rechtmässig bezogene EL nicht zurückzahlen. Nach dem Tod werden sie aus dem Nachlass zurückerstattet, aber nur aus dem Teil, der einen gesetzlichen Freibetrag übersteigt, bei Ehepaaren erst aus dem Nachlass der zweitverstorbenen Person (ELG Art. 16a).</p>
+          <p>Ohne Schweizer Pass und ohne Staatsangehörigkeit eines EU- oder EFTA-Staates wird der Nachzug von Familienangehörigen in der Regel nicht bewilligt, wenn Sie jährliche EL beziehen oder wegen des Nachzugs beziehen würden (AIG Art. 43 Abs. 1 Bst. e, Art. 44 Abs. 1 Bst. e). Lassen Sie sich in diesem Fall vorher beraten.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: EL sind keine Sozialhilfe"><a class="weg" href="/sozialhilfe/"><span aria-hidden="true">→</span> Sozialhilfe</a></nav>
+
+      <h2>Häufige Fragen</h2>
+        <h3>Habe ich Anspruch auf Ergänzungsleistungen?</h3>
+        <p>Das hängt davon ab, ob Sie eine Leistung der AHV oder IV beziehen, wo Sie wohnen und wie Ihre Einnahmen, Ausgaben und Ihr Vermögen aussehen. Eine allgemein gültige Grenze gibt es nicht, weil die Miete, die Prämie und der Haushalt mitzählen. Eine erste Orientierung gibt der EL-Rechner der AHV/IV; verbindlich ist die Verfügung der EL-Stelle Ihres Kantons.</p>
+
+        <h3>Gibt es EL auch vor dem Rentenalter?</h3>
+        <p>Ja. Wer eine Rente der IV, eine Witwen-, Witwer- oder Waisenrente bezieht, kann auch vor dem Rentenalter EL erhalten. Auch wer die AHV-Rente vorbezieht, erfüllt die Voraussetzung einer Rente (ELG Art. 4); die gekürzte Rente zählt dann als Einnahme (ELG Art. 11). Wer ab sechzig von der Arbeitslosenversicherung ausgesteuert wird, kann unter Umständen Überbrückungsleistungen erhalten; auch diese meldet man bei der EL-Stelle an.</p>
+
+        <h3>Zählt mein Haus oder meine Wohnung?</h3>
+        <p>Bei der Vermögensschwelle zählt eine selbst bewohnte Liegenschaft nicht mit (ELG Art. 9a). In der Berechnung selbst wird ihr Wert berücksichtigt, aber mit einem Freibetrag (ELG Art. 11). Wie das in Ihrem Fall ausgeht, rechnet die EL-Stelle.</p>
+
+        <h3>Was gilt, wenn ich ins Heim muss?</h3>
+        <p>Dann wird die EL nach eigenen Regeln berechnet: Statt Lebensbedarf und Miete zählen die Tagestaxe des Heims, für die der Kanton einen Höchstbetrag festlegen kann, und ein Betrag für persönliche Auslagen, den der Kanton bestimmt (ELG Art. 10 Abs. 2). Melden Sie sich innert sechs Monaten nach dem Eintritt an; dann kann der Anspruch schon ab dem Monat des Eintritts beginnen, wenn die übrigen Voraussetzungen erfüllt sind (ELG Art. 12 Abs. 2).</p>
+
+        <h3>Muss ich Änderungen melden?</h3>
+        <p>Ja. Jede Änderung der persönlichen und jede grössere Änderung der wirtschaftlichen Verhältnisse muss der EL-Stelle sofort gemeldet werden, etwa ein Umzug, eine neue Miete, eine Erbschaft oder ein Heimeintritt (ELV Art. 24). Zu Unrecht bezogene Leistungen müssen zurückerstattet werden.</p>
+
+        <h3>Was bringt eine EL sonst noch?</h3>
+        <p>Wer jährliche EL zur AHV oder IV bezieht, ist von der Radio- und Fernsehabgabe befreit; die Befreiung beantragt man bei der Erhebungsstelle mit der Bestätigung der EL-Stelle. Der Betrag für die Krankenkassenprämie, der in der Berechnung mitzählt, geht direkt an die Krankenkasse. Fragen Sie im Zweifel bei der EL-Stelle nach.</p>
+
+
+      <div class="karte">
+        <p><strong>Mit Ihren Angaben lässt sich das in der App durchrechnen.</strong></p>
+        <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/app/?beispiel#/ergaenzungsleistungen">Beispiel ansehen — ohne Zugangscode</a></p>
+      </div>
+
+      <h2>Quellen und Rechner</h2>
+      <ul>
+          <li><a href="https://www.ahv-iv.ch/p/5.01.d" rel="noopener">Merkblatt 5.01 «Ergänzungsleistungen zur AHV und IV»</a></li>
+          <li><a href="https://www.bsv.admin.ch/de/el" rel="noopener">Ergänzungsleistungen, Bundesamt für Sozialversicherungen</a></li>
+      </ul>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung.</p>
+
+      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, Sätze oder Einkommensgrenzen: die ändern regelmässig. Fristen und Altersgrenzen nennt sie nur, wo das Bundesrecht sie für die ganze Schweiz gleich festlegt. Massgebend ist immer die Auskunft beziehungsweise die Verfügung der zuständigen Stelle.<br>
+      <strong>Inhaltlich geprüft: November 2026.</strong></p>
+
+      <h2>Weiterlesen</h2>
+      <ul>
+          <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
+          <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
+          <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
+          <li><a href="/steuern/">Steuern</a></li>
+          <li><a href="/kantonsatlas/">Kantonsatlas: die 26 Kantone auf der Karte</a></li>
+          <li><a href="/kantone-im-vergleich/">Kantone im Vergleich: was der Wohnort ausmacht</a></li>
+          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
+      </ul>
+    </main>
+
+    <footer>
+      <p>Maloja Plana ist ein Projekt von Stebler Studios, Basel ·
+      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+      <p>Quelloffen unter
+      <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
+      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
+      <!-- Melde-Weg VOR dem Beta-Gate. Die Adresse steht schon oben als Kontakt; hier
+           mit Betreff, damit eine Meldung im Postfach als solche erkennbar ist und nicht
+           zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
+           Datenabfluss und widerspricht local-first / CSP self-only. -->
+      <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
+      <p class="sprachen">Sprache: <span aria-current="true">Deutsch</span> · <a href="/fr/ergaenzungsleistungen/" hreflang="fr" lang="fr">Français</a> · <a href="/it/ergaenzungsleistungen/" hreflang="it" lang="it">Italiano</a> · <a href="/en/ergaenzungsleistungen/" hreflang="en" lang="en">English</a> · <a href="/rm/ergaenzungsleistungen/" hreflang="rm" lang="rm">Rumantsch</a></p>
+    </footer>
+  </div>
+</body>
+</html>

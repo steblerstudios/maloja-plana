@@ -127,6 +127,12 @@ export const RAHMEN = {
     kurzhinweis:
       'Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. ' +
       'Diese Seite nennt bewusst keine Beträge und Fristen.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge; Fristen nur, wo das Bundesrecht sie für alle gleich festlegt.',
+    vorbehaltBund:
+      'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, Sätze oder Einkommensgrenzen: die ändern regelmässig. Fristen und Altersgrenzen nennt sie nur, wo das Bundesrecht sie für die ganze Schweiz gleich festlegt. Massgebend ist immer die Auskunft beziehungsweise die Verfügung der zuständigen Stelle.',
     karteTitel: 'Mit Ihren Angaben lässt sich das in der App durchrechnen.',
     karteText:
       'Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, ' +
@@ -172,6 +178,12 @@ export const RAHMEN = {
     kurzhinweis:
       'Une orientation, et non un conseil juridique ou financier — seul l’organe compétent fait foi. ' +
       'Cette page ne mentionne volontairement ni montants ni délais.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'Une orientation, et non un conseil juridique ou financier — seul l’organe compétent fait foi. Cette page ne mentionne volontairement aucun montant ; des délais seulement là où le droit fédéral les fixe de la même manière pour tous.',
+    vorbehaltBund:
+      'Cette page est une <strong>aide à l’orientation fondée sur des informations publiques — ni conseil juridique ni conseil financier</strong>. Elle ne mentionne volontairement ni montants, ni taux, ni limites de revenu : ceux-ci changent régulièrement. Elle ne cite des délais et des limites d’âge que là où le droit fédéral les fixe de la même manière pour toute la Suisse. Seuls le renseignement ou la décision de l’organe compétent font foi.',
     karteTitel: 'Maloja Plana fait le calcul pour votre situation.',
     karteText:
       'Un classeur de vie suisse — impôts, réduction des primes, aide sociale, salaire minimum, ' +
@@ -218,6 +230,12 @@ export const RAHMEN = {
     kurzhinweis:
       'Un orientamento, non una consulenza giuridica o finanziaria — fa fede il servizio competente. ' +
       'Questa pagina non indica deliberatamente né importi né termini.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'Un orientamento, non una consulenza giuridica o finanziaria — fa fede il servizio competente. Questa pagina non indica deliberatamente importi; termini solo dove il diritto federale li fissa allo stesso modo per tutti.',
+    vorbehaltBund:
+      'Questa pagina è un <strong>ausilio all’orientamento basato su informazioni pubbliche — non è una consulenza giuridica né finanziaria</strong>. Non indica deliberatamente importi, aliquote o limiti di reddito: cambiano regolarmente. Cita termini e limiti d’età solo dove il diritto federale li fissa allo stesso modo per tutta la Svizzera. Fanno fede sempre l’informazione o la decisione del servizio competente.',
     karteTitel: 'Maloja Plana esegue il calcolo per la sua situazione.',
     karteText:
       'Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, ' +
@@ -261,6 +279,12 @@ export const RAHMEN = {
     kurzhinweis:
       'Orientation, not legal or financial advice — the competent authority is what counts. ' +
       'This page deliberately gives no amounts and no deadlines.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'Orientation, not legal or financial advice — the competent authority is what counts. This page deliberately gives no amounts; deadlines only where federal law sets them the same for everyone.',
+    vorbehaltBund:
+      'This page is <strong>orientation based on public information — not legal or financial advice</strong>. It deliberately gives no amounts, rates or income limits: these change regularly. It mentions deadlines and age limits only where federal law sets them the same for all of Switzerland. What counts is always the information or the ruling of the competent authority.',
     karteTitel: 'Maloja Plana works this out for your situation.',
     karteText:
       'A Swiss life folder — taxes, premium reduction, social assistance, minimum wage, pension ' +
@@ -303,6 +327,12 @@ export const RAHMEN = {
     kurzhinweis:
       'In’orientaziun, betg ina cussegliaziun giuridica u finanziala — decisiv è il post cumpetent. ' +
       'Questa pagina numna a posta nagins imports e nagins termins.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'In’orientaziun, betg ina cussegliaziun giuridica u finanziala — decisiv è il post cumpetent. Questa pagina numna a posta nagins imports; termins mo là, nua ch’il dretg federal als fixescha per tuts en il medem moda.',
+    vorbehaltBund:
+      'Questa pagina è in <strong>agid d’orientaziun sin fundament d’infurmaziuns publicas — betg ina cussegliaziun giuridica u finanziala</strong>. Ella numna a posta nagins imports, naginas quotas e nagins limits d’entrada: quels midan regularmain. Termins e limits da vegliadetgna numna ella mo là, nua ch’il dretg federal als fixescha per tut la Svizra en il medem moda. Decisiv è adina l’infurmaziun respectivamain la disposiziun dal post cumpetent.',
     karteTitel: 'Maloja Plana calculescha quai per Vossa situaziun.',
     karteText:
       'In classeur da vita svizzer — taglias, reducziun da premi, agid social, salari minimal, ' +
