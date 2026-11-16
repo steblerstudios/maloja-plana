@@ -25,9 +25,9 @@ describe('Vorstellungsseite: Abschnitt Kantonsatlas', () => {
   });
 
   it('die Zahl der Karten kommt aus den Brillen, ausgeschrieben wie «sieben Kapitel»', () => {
-    expect(new Set(BRILLEN.flatMap((b) => b.karten)).size).toBe(10);
-    expect(abschnitt).toContain('<a class="knopf zweit" href="/kantonsatlas/">Alle zehn Karten ansehen</a>');
-    expect(abschnitt).toContain('zehn Karten der 26 Kantone');
+    expect(new Set(BRILLEN.flatMap((b) => b.karten)).size).toBe(12);
+    expect(abschnitt).toContain('<a class="knopf zweit" href="/kantonsatlas/">Alle zwölf Karten ansehen</a>');
+    expect(abschnitt).toContain('zwölf Karten der 26 Kantone');
   });
 
   it('die Wege in den Atlas und «Zum Nachlesen» sind gross genug zum Tippen (44 px)', () => {

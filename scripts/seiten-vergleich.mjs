@@ -33,7 +33,10 @@ const A = {
   alq: lies('arbeitslosenquote'),
   famz: lies('familienzulagen'),
   kita: lies('kita_abzug'),
+  alimente: lies('alimente'),
+  feiertage: lies('feiertage'),
 };
+export { A as ATLAS_DATEN };
 
 export const KANTONE = Object.keys(A.steuern).filter((k) => /^[A-Z]{2}$/.test(k)).sort((a, b) => de.cantons[a].localeCompare(de.cantons[b], 'de'));
 if (KANTONE.length !== 26) throw new Error(`Kantonsatlas: ${KANTONE.length} statt 26 Kantone`);
@@ -72,6 +75,10 @@ export const EBENEN = {
     wert: (k) => A.famz[k].kind, ch: null, fmt: fr, quelle: 'bsvFamz' },
   kita: { titel: 'Abzug für Kinderbetreuung', einheit: 'Fr. im Jahr je Kind', kurz: 'Kita-Abzug',
     wert: (k) => A.kita[k].chf, ch: null, fmt: fr, quelle: 'estvKantonsblaetter' },
+  // Höchster Vorschuss für Kinderalimente je Kind und Monat (Atlas 24.10.2026). Stand je Kanton
+  // verschieden (`jahr`), VD nicht gesichert (`sicher: false`, Befund B1) — beides steht in der Tabelle.
+  alimente: { titel: 'Alimentenbevorschussung', einheit: 'Fr. im Monat je Kind, höchstens', kurz: 'Höchster Vorschuss',
+    wert: (k) => A.alimente[k].chf, ch: null, fmt: fr, quelle: 'alimente', nurAtlas: true }, // Quellen je Kanton nur auf /kantonsatlas/
 };
 
 // Stand und wichtigster Vorbehalt je Zahl, für die Punktstreifen, die zuerst
@@ -285,6 +292,9 @@ export const BLOECKE_VERGLEICH = {
   'TAB:vkita': () => tabelle(['kita'], { caption: 'Höchster Abzug für Kinderbetreuung durch Dritte, Steuerjahr 2026, in Franken je Kind',
     zusatz: (k) => (k === null ? 'Hinweis' : KITA_NICHT_VERGLICHEN.includes(k) ? 'Wert 2025, auf Elternbeiträge begrenzt' : '') }),
   'TAB:valq': () => tabelle(['alq'], { caption: 'Arbeitslosenquote September 2026' }),
+  'TAB:valimente': () => tabelle(['alimente'], { caption: 'Höchster Vorschuss für Kinderalimente je Kind und Monat, in Franken',
+    zusatz: (k) => (k === null ? 'Stand und Hinweis'
+      : `${A.alimente[k].jahr}${A.alimente[k].sicher === false ? ' · <strong>nicht gesichert</strong>' : ''} [[q:alimente${k}]]`) }),
   'TAB:nebeneinander': nebeneinander,
   'FIG:spraemie': streifenKarte('praemie'),
   'FIG:ssteuer': streifenKarte('steuer'),
