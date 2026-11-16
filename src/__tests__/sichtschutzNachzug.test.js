@@ -64,6 +64,11 @@ describe('betragText — sichtbar «CHF ···», vorgelesen «Betrag verborgen�
     expect(danach).toBe(' / Monat');
     expect(text(k)).not.toMatch(/\d/);
   });
+  it('Spanne: «CHF a – b» wie bisher, mit Sichtschutz beide Enden verdeckt', () => {
+    expect(betragText(t, [1260, 2520], {}, '', ' / Monat')).toBe('CHF 1’260 – 2’520 / Monat');
+    document.documentElement.dataset.betraege = 'aus';
+    expect(text(betragText(t, [1260, 2520]))).not.toMatch(/\d/);
+  });
   it('Leeres bleibt «–», auch mit Sichtschutz', () => {
     document.documentElement.dataset.betraege = 'aus';
     expect(betragText(t, null)).toBe('–');

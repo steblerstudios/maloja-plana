@@ -62,7 +62,7 @@ export const HilflosenRechner = ({ palette, t }) => {
   } else if (r.grund === 'grad_offen') {
     ergebnisInhalt = [
       React.createElement('div', { key: 'l', style: s.resultLabel }, t('hilflos.spanneLabel')),
-      React.createElement('div', { key: 'b', style: s.big }, betragText(t, r.spanne.min), ' – ', betragText(t, r.spanne.max, {}, '', ' / ' + t('hilflos.monat'))),
+      React.createElement('div', { key: 'b', style: s.big }, betragText(t, [r.spanne.min, r.spanne.max], {}, '', ' / ' + t('hilflos.monat'))),
       React.createElement('div', { key: 's', style: s.sub }, t('hilflos.gradWaehlen')),
     ];
   } else {

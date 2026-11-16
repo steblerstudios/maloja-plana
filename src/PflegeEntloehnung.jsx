@@ -3,7 +3,7 @@ import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
-import { betrag } from './utils/geld.js';
+import { betragSpanne } from './utils/geld.js';
 import { betragText } from './components/BetragText.jsx';
 
 // Kleiner Orientierungs-Rechner: pflegende Angehörige können bei manchen
@@ -64,8 +64,8 @@ export const PflegeEntloehnung = ({ palette, t }) => {
       React.createElement('span', null, '1'), React.createElement('span', null, '40')),
     React.createElement('div', { style: s.result },
       React.createElement('div', { style: s.resultLabel }, t('pflege.entl.resultLabel')),
-      React.createElement('div', { style: s.big }, betragText(t, von), ' – ', betragText(t, bis, {}, '', ' / ' + t('pflege.entl.month'))),
-      React.createElement('div', { style: s.sub }, '≈ ' + betrag(jahr(LOHN_SPANNE.von)) + ' – ' + betrag(jahr(LOHN_SPANNE.bis)) + ' / ' + t('pflege.entl.year')),
+      React.createElement('div', { style: s.big }, betragText(t, [von, bis], {}, '', ' / ' + t('pflege.entl.month'))),
+      React.createElement('div', { style: s.sub }, '≈ ' + betragSpanne(jahr(LOHN_SPANNE.von), jahr(LOHN_SPANNE.bis)) + ' / ' + t('pflege.entl.year')),
       React.createElement('div', { style: s.sub }, t('pflege.entl.rateNote', { von: LOHN_SPANNE.von, bis: LOHN_SPANNE.bis }))
     ),
     React.createElement('div', { style: s.note }, t('pflege.entl.vergleich', { betrag: OKP_GRUNDPFLEGE_PRO_STUNDE }) /* Zahl → t() formatiert (S5) */),

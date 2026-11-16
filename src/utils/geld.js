@@ -73,3 +73,9 @@ export function betrag(n, optionen) {
   const echt = betragEcht(n, optionen);
   return echt !== '–' && betraegeVerborgen() ? VERBORGEN : echt;
 }
+
+// betragSpanne(1260, 2520) → "CHF 1’260 – 2’520"; mit Sichtschutz die eine Maske für beide Enden.
+export function betragSpanne(a, b, optionen) {
+  const von = betrag(a, optionen);
+  return von === VERBORGEN || von === '–' ? von : von + ' – ' + zahl(b, optionen);
+}

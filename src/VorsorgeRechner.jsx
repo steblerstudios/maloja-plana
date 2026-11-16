@@ -13,7 +13,7 @@ import { useIsMobile } from './hooks/useIsMobile.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { giltAlsVerheiratet, warVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
-import { zahl, betrag } from './utils/geld.js';
+import { zahl, betrag, betragSpanne } from './utils/geld.js';
 import { betragText } from './components/BetragText.jsx';
 import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './utils/beitragsjahreAnnahme.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
@@ -893,7 +893,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           t('vr.plafoniert') + ': ' + betrag(ahvResult.totalEhepaar) + ' / ' + t('vr.monat') + ' (' + t('vr.ehepaar') + ')'
         ),
         React.createElement('div', { style: { marginTop: space.sm + 'px', color: palette.mid, fontSize: text.xs } },
-          t('vr.minMax') + ': ' + betrag(ahvWerteHeute.minRente) + ' – ' + betrag(ahvWerteHeute.maxRente) + ' / ' + t('vr.monat') + ' (' + t('vr.stand', { jahr: ahvWerteHeute.jahr }) + ')'
+          t('vr.minMax') + ': ' + betragSpanne(ahvWerteHeute.minRente, ahvWerteHeute.maxRente) + ' / ' + t('vr.monat') + ' (' + t('vr.stand', { jahr: ahvWerteHeute.jahr }) + ')'
         )
       )
     ),
@@ -1131,7 +1131,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           return React.createElement('div', { 'aria-live': 'polite', style: { ...s.section, marginTop: space.sm + 'px' } },
             React.createElement('div', { style: s.label }, t('vr.kbOnCapital', { betrag: fmt(kapital) })),
             React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginTop: space.xs + 'px' } },
-              betragText(t, bandbreite.minTotal), ' – ', betragText(t, bandbreite.maxTotal)),
+              betragText(t, [bandbreite.minTotal, bandbreite.maxTotal])),
             React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
               t('vr.kbRange', { minK: bandbreite.minHauptort, maxK: bandbreite.maxHauptort })),
             React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px' } },
