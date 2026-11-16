@@ -129,10 +129,19 @@ describe('RueckgaengigMeldung', () => {
 // Suche nach Mustern — wer eine neue Lösch-Liste baut, trägt sie hier ein.
 // WCAG 2.4.3: nach «Rückgängig» nimmt der immer vorhandene Rahmen den Fokus.
 describe('RueckgaengigMeldung — Fokus nach Rückgängig', () => {
+  // Verhalten statt Schreibweise (a11y-Reste 16.11.2026): den Knopf drücken und die Reihenfolge ansehen.
   it('der Knopf ruft erst das Zurücklegen, dann den Fokus auf den Rahmen', () => {
-    const quelle = fs.readFileSync(path.join(__dirname, '..', 'components', 'RueckgaengigMeldung.jsx'), 'utf8');
-    expect(quelle).toMatch(/onRueckgaengig\(\);\s*if \(rahmen\.current && rahmen\.current\.focus\) rahmen\.current\.focus\(\);/);
-    expect(quelle).toContain("onClick: zurueck");
+    const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+    const ablauf = [];
+    neu(); zustand.i = 0;
+    const baum = RueckgaengigMeldung({ palette, t: (k) => k, entfernt: { item: {}, index: 0, text: 'Bank' }, onRueckgaengig: () => ablauf.push('zurück') });
+    zustand.slots[0].current = { focus: () => ablauf.push('fokus') };   // der Rahmen (useRef) im DOM
+    const knopf = [].concat(baum.props.children.props.children).find((k) => k && k.type === 'button');
+    knopf.props.onClick();
+    expect(ablauf).toEqual(['zurück', 'fokus']);
+    // Ohne Rahmen (noch nicht eingehängt) kein Fehler — nur das Zurücklegen.
+    zustand.slots[0].current = null;
+    expect(() => knopf.props.onClick()).not.toThrow();
   });
 
   // a11y-Prüfung 11.11.2026: der Fokus soll nicht auf einem leeren Rahmen liegen.

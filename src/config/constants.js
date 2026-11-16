@@ -4,7 +4,9 @@
 
 export const DARK_PALETTE = {
   bg: '#22211F', surface: '#2B2A26', up: '#343330', top: '#3D3B35',
-  border: '#423F39', text: '#E6E3DC', mid: '#9CA0A6', soft: '#989CA4',
+  // mid #9CA0A6→#A3A7AD (a11y-Reste 16.11.2026, Farbwahl Polygrafin): alt nur 4,26:1 auf top (#3D3B35),
+  // neu 4,63 (top) / 5,23 (up) / 5,94 (surface) / 6,66 (bg). Gleicher kühler Ton, Abstand zu soft wächst.
+  border: '#423F39', text: '#E6E3DC', mid: '#A3A7AD', soft: '#989CA4',
   // feldrand: Rand von Eingabefeldern (input/select/textarea). border ist Schmuck-Haarlinie
   // (1,20:1) und reicht für Bedienelemente nicht (WCAG 1.4.11, 3:1). #80838A: 3,33 auf up,
   // 3,78 auf surface, bleibt unter mid. Entscheid Querschnitt 1 C-A, 09.11.2026.

@@ -44,8 +44,21 @@ export const istSuchTaste = (e, { dialogOffen = false, slash = true } = {}) => {
 // sie ist). Danach der Fokus ins Suchfeld: main.jsx legt ihn nach jedem Ansichtswechsel im
 // nächsten Bild auf <main>, und die Suchansicht lädt selbst nach. Darum zwei Bilder warten und
 // dann höchstens rund eine Sekunde (60 Bilder) nach dem Feld suchen. Gibt das Abmelden zurück.
+// aria-keyshortcuts und Hinweis am Lupen-Knopf nennen «/» nur, solange die Taste an ist (WCAG 2.1.4 / 4.1.2,
+// a11y-Reste 16.11.2026). main.jsx nennt fest «/ Control+K Meta+K» und «(/)» (im Startbündel kein Platz für die
+// Abfrage); hier, nachgeladen, fällt «/» weg, wenn die Taste aus ist. SettingsView führt beim Umschalten nach.
+// React schreibt die Attribute nur neu, wenn sich die Vorgabe in main.jsx ändert (Sprache, Handy/Desktop).
+export const kuerzelNennen = (doc, an) => {
+  const knopf = doc?.querySelector('[aria-keyshortcuts]');
+  if (!knopf) return;
+  knopf.setAttribute('aria-keyshortcuts', (an ? '/ ' : '') + knopf.getAttribute('aria-keyshortcuts').replace(/^\/ /, ''));
+  const titel = (knopf.getAttribute('title') || '').replace(/ \(\/\)$/, '');
+  if (titel) knopf.setAttribute('title', titel + (an ? ' (/)' : ''));
+};
+
 export const suchTasteAnmelden = (oeffnen, fenster = window) => {
   const doc = fenster.document;
+  kuerzelNennen(doc, slashAn(fenster.localStorage));
   const onKey = (e) => {
     if (!istSuchTaste(e, { dialogOffen: !!doc.querySelector('[aria-modal="true"]'), slash: slashAn(fenster.localStorage) })) return;
     if (!oeffnen()) return;

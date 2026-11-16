@@ -19,6 +19,9 @@
   var ortText = ort && ort.querySelector('text');
   var gegangen = bruecke.querySelector('.reise-linie .gegangen');
   var bilder = [].slice.call(bruecke.querySelectorAll('.kehre-bild')); // [Passbild, Kehre 1 … Kehre 7]
+  // WCAG 2.2.2 (a11y-Reste 16.11.2026): die Luft (B) schwebt nicht endlos. 20 s nach jedem Kehrenwechsel legt sie sich
+  // (data-still, CSS blendet aus und hält an); die nächste Kehre bringt sie zurück. Dazu der Schalter «Bewegung anhalten».
+  var STILL_MS = 20000, stillUhr = 0;
   var namen = stationen.map(function (s) { var n = s.querySelector('.name'); return n ? n.textContent.split('·').pop().trim() : ''; });
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
   var bisher = null;
@@ -73,6 +76,11 @@
     // Fortschritt innerhalb der aktuellen Kehre: der Text wandert von unten (0) nach oben (1).
     var k = 0, s = stationen[Math.max(0, hier)];
     if (s) { var r = (s.querySelector('.reise-text') || s).getBoundingClientRect(); k = Math.min(1, Math.max(0, (schwelle - r.top) / h)); }
+    if (String(hier) !== buehne.getAttribute('data-hier')) {
+      buehne.removeAttribute('data-still');
+      window.clearTimeout(stillUhr);
+      stillUhr = window.setTimeout(function () { buehne.setAttribute('data-still', ''); }, STILL_MS);
+    }
     buehne.setAttribute('data-hier', String(hier));
     // B · Ist der Text der letzten Kehre oben hinaus, gehen Stock und Weglinie mit dem Bild weg (Ausklang).
     var letzte = stationen[stationen.length - 1];

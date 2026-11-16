@@ -27,6 +27,21 @@ const SPRACHEN = { de, fr, it: it_, en, rm };
 const nurText = (h) => h.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ');
 const render = (C, props = {}) => renderToStaticMarkup(React.createElement(C, { palette: LIGHT_PALETTE, t, onNavigate: () => {}, ...props }));
 
+// Holt aus einer Ablauf-Seite die Props der Frist-Karte mit dieser id — die Hooks der Seite laufen dabei
+// in einer echten (Server-)Darstellung, die Karte selbst wird nicht gezeichnet.
+const fristKarte = (Seite, id) => {
+  let baum = null;
+  const Fang = () => { baum = Seite({ palette: LIGHT_PALETTE, t, onNavigate: () => {} }); return null; };
+  renderToStaticMarkup(React.createElement(Fang));
+  const suche = (k) => {
+    if (!k || typeof k !== 'object') return null;
+    if (Array.isArray(k)) { for (const x of k) { const r = suche(x); if (r) return r; } return null; }
+    if (k.props && k.props.id === id && typeof k.props.frist === 'function') return k.props;
+    return suche(k.props && k.props.children);
+  };
+  return suche(baum);
+};
+
 describe('L1 · Wegzug mit Ausländerausweis', () => {
   const h = render(Wegzug);
   const text = nurText(h);
@@ -47,9 +62,11 @@ describe('L1 · Wegzug mit Ausländerausweis', () => {
     expect(ahvSchritt).toBeGreaterThan(-1);
     expect(h.indexOf('id="wegzug-datum"')).toBeLessThan(ahvSchritt);
   });
+  // Verhalten statt Schreibweise (a11y-Reste 16.11.2026): die Frist-Funktion der Karte selbst rechnen lassen.
   it('rechnet die Abmeldefrist 14 Tage vor dem Wegzug', () => {
-    const quelle = fs.readFileSync(path.resolve(__dirname, '../Wegzug.jsx'), 'utf8');
-    expect(quelle).toMatch(/id: 'wegzug-datum', frist: \(d\) => plusTage\(d, -14\)/);
+    const karte = fristKarte(Wegzug, 'wegzug-datum');
+    expect(karte.frist('2026-07-31')).toBe('2026-07-17');
+    expect(karte.frist('2027-01-10')).toBe('2026-12-27');
   });
 });
 
@@ -127,7 +144,9 @@ describe('L6–L8 · EU/EFTA, Einbürgerungsjahre, Fahren ohne gültigen Ausweis
   });
   it('L8: nach der Probezeit ohne Kurs und nach zwölf Monaten Wohnsitz nicht mehr fahren', () => {
     expect(t('fuehrerausweis.step4Text')).toContain('ist Fahren nicht mehr erlaubt');
-    expect(t('zuzug.step4Text')).toContain('dürfen Sie nur noch mit einem schweizerischen Ausweis fahren');
+    // Inhalt statt Wortlaut: nach zwölf Monaten Wohnsitz nur noch mit Schweizer Ausweis (VZV Art. 42).
+    expect(t('zuzug.step4Text')).toMatch(/zwölf Monaten[^.]*nur noch mit einem schweizerischen (Führer)?[aA]usweis/);
+    expect(t('zuzug.step4Text')).toContain('VZV Art. 42');
   });
 });
 

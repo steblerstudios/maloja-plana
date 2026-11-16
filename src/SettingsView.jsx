@@ -40,7 +40,17 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demo
   const slashKnopf = React.createElement('button', {
     key: 'slashsearch', type: 'button',
     'aria-label': t('search.tasteSchalter'), 'aria-pressed': slash, title: t('search.tasteSchalter'),
-    onClick: () => setSlash((an) => { try { localStorage.setItem('or5_suchtaste', an ? '0' : '1'); } catch { /* ohne Speicher */ } return !an; }),
+    onClick: () => setSlash((an) => {
+      try { localStorage.setItem('or5_suchtaste', an ? '0' : '1'); } catch { /* ohne Speicher */ }
+      // Lupen-Knopf nachführen, wie `kuerzelNennen` in utils/suchTaste.js: «/» nur, solange die Taste an ist.
+      const knopf = document.querySelector('[aria-keyshortcuts]');
+      if (knopf) {
+        knopf.setAttribute('aria-keyshortcuts', (an ? '' : '/ ') + 'Control+K Meta+K');
+        const titel = (knopf.getAttribute('title') || '').replace(/ \(\/\)$/, '');
+        if (titel) knopf.setAttribute('title', titel + (an ? '' : ' (/)'));
+      }
+      return !an;
+    }),
     style: {
       padding: '8px 8px', minHeight: '44px', minWidth: '44px', lineHeight: 1,
       background: slash ? palette.sand + '30' : 'transparent',

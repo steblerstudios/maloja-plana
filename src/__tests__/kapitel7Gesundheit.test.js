@@ -15,6 +15,7 @@ import { LIGHT_PALETTE } from '../config/constants.js';
 import { vorlageHtml } from '../data/vorsorgeauftrag.js';
 import { KVGLeistungen } from '../KVGLeistungen.jsx';
 import { IvVerfahren } from '../IvVerfahren.jsx';
+import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
 import { PflegeAblauf } from '../PflegeAblauf.jsx';
 import { UnfallKrankheit } from '../UnfallKrankheit.jsx';
 import { stufen, ELTERN_TITEL } from '../config/brotkrumePfade.js';
@@ -22,6 +23,21 @@ import { stufen, ELTERN_TITEL } from '../config/brotkrumePfade.js';
 beforeEach(() => { globalThis.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} }; });
 const t = createT({ de }, 'de', 'sie');
 const SPRACHEN = { de, fr, it: it_, en, rm };
+
+// Holt aus einer Ablauf-Seite die Props der Frist-Karte mit dieser id — die Hooks der Seite laufen dabei
+// in einer echten (Server-)Darstellung, die Karte selbst wird nicht gezeichnet.
+const fristKarte = (Seite, id) => {
+  let baum = null;
+  const Fang = () => { baum = Seite({ palette: LIGHT_PALETTE, t, onNavigate: () => {} }); return null; };
+  renderToStaticMarkup(React.createElement(Fang));
+  const suche = (k) => {
+    if (!k || typeof k !== 'object') return null;
+    if (Array.isArray(k)) { for (const x of k) { const r = suche(x); if (r) return r; } return null; }
+    if (k.props && k.props.id === id && typeof k.props.frist === 'function') return k.props;
+    return suche(k.props && k.props.children);
+  };
+  return suche(baum);
+};
 
 describe('L1 · Vorlage zum Vorsorgeauftrag ohne Unterschriftslinien (ZGB Art. 361 Abs. 2)', () => {
   const html = vorlageHtml({}, {}, t, 'de');
@@ -128,9 +144,11 @@ describe('L6 · IV: Vorbescheid und Beschwerde statt Einsprache (IVG Art. 57a, 6
     expect(x).toMatch(/Schritt 5 von 6 Vorbescheid und Entscheid/);
     expect(x).toMatch(/Schritt 6 von 6 Unterstützung/);
   });
+  // Verhalten statt Schreibweise (a11y-Reste 16.11.2026).
   it('rechnet 30 Tage ab Erhalt des Vorbescheids', () => {
-    const quelle = fs.readFileSync(path.resolve(__dirname, '../IvVerfahren.jsx'), 'utf8');
-    expect(quelle).toMatch(/id: 'iv-vorbescheid', frist: \(d\) => plusTage\(d, 30\)/);
+    const karte = fristKarte(IvVerfahren, 'iv-vorbescheid');
+    expect(karte.frist('2026-11-16')).toBe('2026-12-16');
+    expect(karte.frist('2027-02-01')).toBe('2027-03-03');
   });
 });
 
@@ -178,9 +196,15 @@ describe('Gestaltung C · nichts doppelt', () => {
     for (const [lang, d] of Object.entries(SPRACHEN)) expect(d.chapters.notfall.intro, lang).toBeUndefined();
   });
   it('die Frage «Patientenverfügung vorhanden?» ist eingeklappt unter einer eigenen Frage', () => {
-    const q = fs.readFileSync(path.resolve(__dirname, '../components/NotfallImKapitel.jsx'), 'utf8');
-    expect(q).toMatch(/h\('details', \{ 'data-teil': 'notfall-pv-antwort'/);
-    expect(t('notfallKapitel.pvSchonFrage')).toContain('zum Beispiel auf Papier');
+    // Verhalten statt Schreibweise (a11y-Reste 16.11.2026): gezeichnet, nicht im Quelltext gesucht.
+    const html = renderToStaticMarkup(React.createElement(NotfallImKapitel, {
+      palette: LIGHT_PALETTE, t, data: {}, chapters: [], onNavigate: () => {}, onUpdate: () => {},
+    }));
+    const frage = html.match(/<details data-teil="notfall-pv-antwort"[^>]*>\s*<summary[^>]*>([^<]*)<\/summary>/);
+    expect(frage, 'eingeklappt unter eigener Frage').not.toBeNull();
+    expect(html).not.toMatch(/<details data-teil="notfall-pv-antwort"[^>]* open/);
+    expect(frage[1]).toBe(t('notfallKapitel.pvSchonFrage'));
+    expect(t('notfallKapitel.pvSchonFrage')).toMatch(/Papier/);
   });
   it('der Abschnitt der Angaben heisst nicht ein zweites Mal «Vorsorge»', () => {
     expect(t('sections.notfall.provision')).not.toBe(t('notfallKapitel.vorsorgeTitel'));
