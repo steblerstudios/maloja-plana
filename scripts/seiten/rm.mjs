@@ -373,6 +373,90 @@ export const SEITEN = [
     ],
     quellen: ['ahvMerkblattEL', 'bsvEL'],
   },
+
+  // ─── Dischoccupaziun (16.11.2026) ─────────────────────────────────────────
+  // 🛑 Mit Sorgfalt gebaut, nicht geprüft. Abkürzungen nach dem Französischen: LACI = AVIG ·
+  // OACI = AVIV · LPtra = ÜLG · LAA = UVG · LAVS = AHVG · LSE = AVG · LPP = BVG · LIFD = DBG.
+  // RAV bleibt als Abkürzung stehen, im Vorspann ausgeschrieben — die amtliche rm-Bezeichnung ist nicht belegt.
+  {
+    pfad: 'arbeitslosigkeit',
+    titel: 'Dischoccupà: tge che l’assicuranza paja',
+    beschreibung:
+      'Tgi che ha dretg sin indemnisaziun da dischoccupaziun, pertge che l’annunzia tar il RAV quinta baud e tge che vegn suenter l’exclusiun. Senza cifras.',
+    brotkrume: 'Dischoccupaziun',
+    vorspann:
+      'L’assicuranza cunter la dischoccupaziun (AD) è obligatorica per emploiadas ed emploiads: tgi che lavura paja contribuziuns sin la paja, e tgi che perda la plazza survegn sut tschertas premissas in pajament per di che remplazza ina part da la paja. Ella è reglada en la lescha davart l’assicuranza cunter la dischoccupaziun (LACI) e vala en tut la Svizra en il medem moda. Ils chantuns mainan ils centers regiunals d’intermediaziun da lavur (RAV).',
+    abschnitte: [
+      {
+        titel: 'Tgi che ha dretg sin pajaments per di',
+        absaetze: [
+          'Dretg sin indemnisaziun da dischoccupaziun ha tgi ch’è dischoccupà dal tuttafatg u per part, ha ina perdita da lavur imputabla, abita en Svizra, n’ha anc betg cuntanschì la vegliadetgna da renta, ha avunda temp da contribuziun u è liberà da quel, è abel d’intermediar e satisfa a las prescripziuns da controlla (art. 8 LACI).',
+          'Temp da contribuziun vul dir: en in tschert temp avant la dischoccupaziun avais Vus lavurà avunda ditg sco emploiada u emploià e pajà contribuziuns (art. 13 LACI). Tgi che n’era betg emploià en quest temp pervia da scolaziun, malsogna, accident u maternitad, u tgi che sto tschertgar ina plazza suenter ina separaziun, in divorzi u la mort dal partenari u da la partenaria, po esser liberà dal temp da contribuziun (art. 14 LACI).',
+          'Persunas cun activitad da gudogn independenta n’èn betg assicuradas cunter la dischoccupaziun per lur activitad independenta. Quintar po mo temp da contribuziun or d’ina plazza sco emploià.',
+        ],
+      },
+      {
+        titel: 'S’annunziar tar il RAV, e baud',
+        absaetze: [
+          'Pajaments per di datti il pli baud a partir dal di da l’annunzia, betg retroactivamain. S’annunziai perquai il pli tard l’emprim di, per il qual Vus pretendais pajaments per di, tar il RAV cumpetent, online sur arbeit.swiss u persunalmain (art. 10 e 17 LACI).',
+          'Gia durant il termin da disdetga stuais Vus tschertgar ina nova plazza e documentar Voss sforzs. Sch’els mancan u na tanschan betg, datti dis da suspensiun, quai vul dir dis senza pajament per di (art. 17 e 30 LACI).',
+          'Suenter l’annunzia cumenza il pajament per di per regla pir suenter in pèr dis da spetga; quants dependa da l’entrada da fin qua e d’obligaziuns da mantegniment envers uffants (art. 18 LACI).',
+        ],
+      },
+      {
+        titel: 'Il pajament per di remplazza ina part da la paja',
+        absaetze: [
+          'Il pajament per di sa drizza tenor il <strong>gudogn assicurà</strong>, quai vul dir la paja da fin qua fin ad in maximum legal (art. 23 LACI). Pajada vegn ina part da quel; la part è pli auta, sche Vus avais obligaziuns da mantegniment envers uffants, avevas ina paja bassa u retschavais ina renta d’invaliditad (art. 22 LACI).',
+          'Quants pajaments per di ch’i dat il pli, dependa dal temp da contribuziun e da la vegliadetgna; els vegnan pajads entaifer in termin da basa (art. 9 e 27 LACI). Nus na numnain qua intenziunadamain ni las quotas ni ils dumbers maximals. Vossa cassa da dischoccupaziun als calcula en moda obligatorica.',
+          'Sco da la paja vegnan deducidas era dal pajament per di contribuziuns, per exempel per l’AVS (art. 22a LACI). El è entrada da substituziun e vegn taglià sco la paja (art. 23 lit. a LIFD).',
+        ],
+      },
+      {
+        titel: 'Gudogn intermediar e lavur supportabla',
+        absaetze: [
+          'Sche Vus gudagnais insatge durant la dischoccupaziun, vala quai sco gudogn intermediar. Sch’el è pli bass che Voss gudogn assicurà, cumpensescha la cassa da dischoccupaziun ina part da la differenza; ensemen survegnis Vus uschia per il solit dapli ch’il pajament per di sulet (art. 24 LACI).',
+          'Per princip stuais Vus acceptar mintga lavur supportabla. Betg supportabla è ina plazza per exempel, sch’ella na correspunda betg a las cundiziuns usitadas dal lieu e da la professiun, n’è betg adequata a Vossa vegliadetgna, a Vossas relaziuns persunalas u a Vossa sanadad, u pretenda in viadi da lavur fitg lung (art. 16 LACI).',
+          'Tgi che refusa ina plazza supportabla u disdi sez la plazza senza motiv impurtant, vegn suspendì: tenor la culpa na datti durant in tschert temp nagin pajament per di (art. 30 LACI). Laschai Vus cussegliar avant che disdir sez.',
+        ],
+      },
+      {
+        titel: 'Cura ch’ils pajaments per di èn consumads',
+        absaetze: [
+          'Exclus è tgi ch’ha retratg tut ils pajaments per di u il termin da basa dal qual è scadì, senza ch’in nov possia vegnir avert. L’intermediaziun publica da lavur resta averta e gratuita (art. 26 e 27 LSE). Tgi che rimna puspè avunda temp da contribuziun po acquistar in nov dretg (art. 9 e 13 LACI).',
+          'Suenter pon l’agid social e la reducziun individuala da premi entrar en dumonda. Tgi che vegn exclus a partir da sessanta onns po survegnir sut ulteriuras premissas prestaziuns transitoricas; quellas s’annunzia ins tar il post da PC dal chantun da domicil (art. 3, 5 e 19 LPtra).',
+          'Cun l’ultim pajament per di finescha, suenter ina curta cuvrida supplementara, era l’assicuranza cunter accidents tras l’assicuranza cunter la dischoccupaziun. Communitgai a temp a la cassa da malsauns ch’ella stoppia puspè cuvrir accidents (art. 3 al. 2 LAA, art. 8 LAMal). Scleriai tar la cassa da cumpensaziun AVS, sche Vus stuais pajar contribuziuns sco persuna senza activitad da gudogn, per evitar ina largia da contribuziun (art. 10 LAVS).',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Survegn jau pajaments per di, sche jau hai disdì sez?',
+        antwort:
+          'Per princip gea, sche las autras premissas èn ademplidas. Tgi che disdi senza garanzia d’ina nova plazza vegn dentant per regla suspendì e na survegn durant in tschert temp nagin pajament per di. Excepziun fa tgi che na pudeva betg raschunaivlamain restar en la plazza (art. 30 LACI, art. 44 OACI). Laschai Vus cussegliar ordavant.',
+      },
+      {
+        frage: 'Poss jau m’annunziar gia avant la fin da la plazza?',
+        antwort:
+          'Gea, e quai è raschunaivel. Il pli tard stuais Vus s’annunziar l’emprim di, per il qual Vus pretendais pajaments per di (art. 17 LACI). Sforzs da tschertgar lavur vegnan pretendids gia per il temp dal termin da disdetga.',
+      },
+      {
+        frage: 'Sun jau assicurà cunter accidents durant la dischoccupaziun?',
+        antwort:
+          'Gea, uschè ditg che Vus retschavais pajaments per di, essas Vus assicurà cunter accidents tras l’assicuranza cunter la dischoccupaziun (art. 1a LAA). Suenter finescha questa cuvrida suenter ina curta cuvrida supplementara, e la cassa da malsauns surpiglia accidents, sche Vus al communitgais quai.',
+      },
+      {
+        frage: 'Tge capita cun mia cassa da pensiun?',
+        antwort:
+          'Cun la sortida daventa l’avair exigibel e va sin in conto da libra circulaziun, fin che Vus avais ina nova plazza. Uschè ditg che Vus retschavais pajaments per di, restais Vus assicurà en la prevenziun professiunala per ils ristgs mort ed invaliditad (art. 2 al. 3 LPP). Per la vegliadetgna na spargnais Vus betg durant quest temp.',
+      },
+      {
+        frage: 'Dastg jau ir en vacanzas durant la dischoccupaziun?',
+        antwort:
+          'Gea, en mesira limitada: Vus avais dretg sin dis senza controlla, che Vus stuais annunziar ordavant al RAV (art. 27 OACI). Quants che Vus avais, di Voss RAV.',
+      },
+    ],
+    quellen: ['arbeitSwiss'],
+  },
 ];
 
 export const SONDERSEITEN = [
