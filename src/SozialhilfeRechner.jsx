@@ -8,7 +8,7 @@ import { VFB_KANTON_GELESEN } from './data/vermoegensfreibetragKanton.js';
 import { aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
-import { betrag, zahl } from './utils/geld.js';
+import { betrag } from './utils/geld.js';
 import { betragText, betragsZahl } from './components/BetragText.jsx';
 import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 import { gblStand } from './data/skosGrundbedarf.js';
@@ -121,7 +121,6 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
     source: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.mid, padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border, lineHeight: '1.5' },
   };
 
-  const fmt = (v) => v != null ? zahl(v) : '–';
 
   const field = (labelKey, value, setter, placeholder, hint) =>
     React.createElement('div', { style: s.inputGroup },
