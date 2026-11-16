@@ -107,6 +107,7 @@ const THEMEN = [
   { k: 3, x: '54.6%', y: '71.5%', berichte: [   // Versicherungen · (874 | 475)
     ['/praemienverbilligung/', 'Prämienverbilligung', 'Ein Beitrag an die Krankenkassenprämie — was das für Sie bedeutet.'],
     ['/krankenkasse/', 'Warum die Krankenkasse so viel kostet', 'Gemeinsamer Topf, Franchise und Prämie — Schritt für Schritt.'],
+    ['/ergaenzungsleistungen/', 'Ergänzungsleistungen', 'Wann EL in Frage kommen und warum sie keine Sozialhilfe sind.'],
   ] },
   { k: 2, x: '75.9%', y: '84.9%', berichte: [   // Finanzen · (1215 | 609)
     ['/steuern/', 'Steuern', 'Warum derselbe Lohn je nach Wohnort anders besteuert wird.'],
@@ -1326,6 +1327,7 @@ ${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; -
             <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
             <li><a href="/steuern/">Steuern</a></li>
             <li><a href="/krankenkasse/">Warum die Krankenkasse so viel kostet</a></li>
+            <li><a href="/ergaenzungsleistungen/">Ergänzungsleistungen</a></li>
           </ul>
         </nav>
         <nav aria-labelledby="f-recht">

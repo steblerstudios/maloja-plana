@@ -197,6 +197,26 @@ export const QUELLEN = {
       rm: 'Prestaziuns cumplementaras, Uffizi federal d’assicuranzas socialas',
     },
   },
+  // Merkblatt 5.01, Stand 1. Januar 2025. Am 14.11.2026 per curl gemessen: .d/.f/.i liefern
+  // je ein PDF (200, Titel «Ergänzungsleistungen zur AHV und IV» / «Prestations complémentaires
+  // à l’AVS et à l’AI» / «Prestazioni complementari all’AVS e all’AI»), .e liefert 404 — eine
+  // englische Fassung gibt es nicht. Gegenprobe /p/99.99.d: 404. Die Seite /ergaenzungsleistungen/
+  // ist an diesem Merkblatt gegengelesen (Karenzfrist, EU/EFTA, Frist für Krankheitskosten,
+  // Meldepflicht, Rückerstattung aus dem Nachlass, Haushaltabgabe).
+  ahvMerkblattEL: {
+    url: 'https://www.ahv-iv.ch/p/5.01.d',
+    text: 'Merkblatt 5.01 «Ergänzungsleistungen zur AHV und IV»',
+    sprachen: {
+      fr: 'https://www.ahv-iv.ch/p/5.01.f',
+      it: 'https://www.ahv-iv.ch/p/5.01.i',
+    },
+    texte: {
+      fr: 'Mémento 5.01 « Prestations complémentaires à l’AVS et à l’AI »',
+      it: 'Promemoria 5.01 «Prestazioni complementari all’AVS e all’AI»',
+      en: 'Leaflet 5.01 “Supplementary benefits to the AHV and IV”',
+      rm: 'Fegl d’infurmaziun 5.01 «Prestaziuns cumplementaras a l’AVS ed a l’AI»',
+    },
+  },
   ahvMerkblatt: {
     url: 'https://www.ahv-iv.ch/p/3.01.d',
     text: 'Merkblatt 3.01 «Altersrenten und Hilflosenentschädigungen der AHV»',
@@ -613,6 +633,147 @@ export const SEITEN = [
     quellen: ['estvRechner'],
     // Ergänzung B (07.11.2026): bisher ohne Weg zu den Kantonsseiten, obwohl der Atlas eine Karte Steuern hat.
     hintergrund: ['kantone-im-vergleich', 'kantonsatlas'],
+  },
+
+  // ─── Ergänzungsleistungen ─────────────────────────────────────────────────
+  // Seitenlandkarte E3 / Organigramm C1 (06.11.2026): die erste der drei geplanten Seiten, im
+  // Kapitel Versicherungen & Vorsorge unter «Zum Verstehen». Gebaut 14.11.2026.
+  //
+  // Belegt an: Merkblatt 5.01 (Stand 1.1.2025, s. QUELLEN.ahvMerkblattEL) und an den bereits
+  // fachgeprüften App-Texten `ergaenzungsleistungen.*` in src/i18n/de.js (ELG Art. 4, 5, 9, 9a, 11a,
+  // 12, 14, 16a, 21; ELV Art. 22). Neu gegenüber der App, darum besonders zu prüfen: ELG Art. 10
+  // (Mietzins nach Region), Art. 11 (Liegenschaft), Art. 15 (Frist Krankheitskosten), ELV Art. 24
+  // (Meldepflicht), AIG Art. 43/44 (Familiennachzug), RTVG Art. 69b (Haushaltabgabe).
+  {
+    pfad: 'ergaenzungsleistungen',
+    titel: 'Ergänzungsleistungen zur AHV und IV',
+    beschreibung:
+      'Wann Ergänzungsleistungen (EL) in Frage kommen, wie sie berechnet werden und warum sie keine Sozialhilfe sind. Eine Einordnung ohne Zahlen.',
+    brotkrume: 'Ergänzungsleistungen',
+    vorspann:
+      'Ergänzungsleistungen, kurz EL, helfen dort, wo eine Rente der AHV oder IV und das übrige Einkommen nicht für das Nötigste zum Leben reichen. Sie sind im Bundesgesetz über Ergänzungsleistungen (ELG) geregelt und ein gesetzlicher Anspruch, kein Entgegenkommen. Ausgerichtet werden sie von den Kantonen.',
+    schichten: true,
+    abschnitte: [
+      {
+        id: 'voraussetzungen',
+        bild: `<ol class="zeit kern" role="list" aria-label="Was vorausgesetzt ist">
+          <li><span class="jahr">AHV oder IV</span><span class="was">eine Rente, eine Hilflosenentschädigung oder ein länger laufendes Taggeld der IV</span></li>
+          <li><span class="jahr">Schweiz</span><span class="was">Wohnsitz und tatsächlicher Aufenthalt hier</span></li>
+          <li><span class="jahr">Vermögen</span><span class="was">unter einer gesetzlichen Schwelle</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        wege: ['sozialhilfe'],
+        titel: 'Ohne Leistung der AHV oder IV gibt es keine EL',
+        absaetze: [
+          'EL setzen eine Leistung der AHV oder IV voraus: eine Alters- oder Hinterlassenenrente der AHV, auch eine vorbezogene, eine Rente der IV, eine Hilflosenentschädigung der IV oder ein Taggeld der IV, das seit mindestens sechs Monaten ununterbrochen läuft. Dazu kommen Wohnsitz und tatsächlicher Aufenthalt in der Schweiz (ELG Art. 4).',
+          'Für Ausländerinnen und Ausländer gilt zusätzlich eine Mindestaufenthaltsdauer: in der Regel zehn Jahre ununterbrochen in der Schweiz, für Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Für Staatsangehörige eines EU- oder EFTA-Staates gilt sie nicht.',
+          'Wer keine Rente hat, nur weil zu wenige Beitragsjahre zusammenkamen, kann unter gewissen Voraussetzungen trotzdem EL erhalten (ELG Art. 4 Abs. 1 Bst. b und d). Wer ganz ohne Leistung der AHV oder IV in Not gerät, wendet sich an die Sozialhilfe der Wohngemeinde.',
+        ],
+      },
+      {
+        id: 'berechnung',
+        bild: `<div class="kern">
+          <p class="formel" role="img" aria-label="Anerkannte Ausgaben minus anrechenbare Einnahmen ergibt die jährliche Ergänzungsleistung, wenn die Ausgaben höher sind.">
+            <span class="glied" aria-hidden="true"><strong>Ausgaben</strong>vom Gesetz anerkannt</span>
+            <span class="op" aria-hidden="true">−</span>
+            <span class="glied" aria-hidden="true"><strong>Einnahmen</strong>soweit anrechenbar</span>
+            <span class="op" aria-hidden="true">=</span>
+            <span class="glied" aria-hidden="true"><strong>EL</strong>wenn die Ausgaben höher sind</span>
+          </p>
+          <p class="unter">Die Beträge setzt das Gesetz fest. Ihren Anspruch rechnet die EL-Stelle aus.</p>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['kantonsatlas'],
+        titel: 'Die Lücke zwischen Ausgaben und Einnahmen',
+        absaetze: [
+          'Die jährliche EL entspricht dem Betrag, um den die <strong>anerkannten Ausgaben</strong> die <strong>anrechenbaren Einnahmen</strong> übersteigen (ELG Art. 9). Zu den Ausgaben gehören etwa ein Betrag für den allgemeinen Lebensbedarf, die Miete bis zu einer Höchstgrenze und ein Betrag für die Krankenkassenprämie. Zu den Einnahmen gehören Renten, ein Teil des Erwerbseinkommens und ein Teil des Vermögens (ELG Art. 10 und 11).',
+          'Anspruch hat nur, wessen Vermögen unter einer gesetzlichen Schwelle liegt; eine selbst bewohnte Liegenschaft zählt dabei nicht mit (ELG Art. 9a). Vermögen, auf das jemand ohne Gegenleistung verzichtet hat, etwa durch eine Schenkung, wird mitgezählt (ELG Art. 11a).',
+          'Die Beträge für den Lebensbedarf legt der Bund fest, die Höchstgrenzen für die Miete abgestuft nach drei Regionen (ELG Art. 10). Wir nennen sie hier bewusst nicht: Sie werden regelmässig angepasst, und eine Zahl auf einer Seite wie dieser wäre bald falsch. Wer im Heim lebt, wird nach eigenen Regeln berechnet; die Kantone können die anerkannten Heimkosten begrenzen.',
+        ],
+      },
+      {
+        id: 'krankheitskosten',
+        bild: `<div class="kern">
+          <p class="unter" id="kosten">Zusätzlich zur jährlichen EL vergütet, soweit der Kanton es vorsieht:</p>
+          <ul class="chips" role="list" aria-labelledby="kosten">
+            <li>Zahnarzt</li><li>Hilfe, Pflege und Betreuung zu Hause</li><li>Transport zur Behandlung</li><li>Hilfsmittel</li><li>Franchise und Selbstbehalt</li><li>Diät, wenn sie lebensnotwendig ist</li>
+          </ul>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['krankenkasse', 'praemienverbilligung'],
+        titel: 'Krankheits- und Behinderungskosten kommen dazu',
+        absaetze: [
+          'Neben der jährlichen EL vergütet der Kanton ausgewiesene Krankheits- und Behinderungskosten, etwa für den Zahnarzt, für Hilfe, Pflege und Betreuung zu Hause, für den Transport zur Behandlung, für Hilfsmittel sowie Franchise und Selbstbehalt der Krankenkasse (ELG Art. 14). Welche Kosten genau und bis zu welchem Betrag, bestimmt der Kanton.',
+          'Auch wer wegen etwas zu hoher Einnahmen keine jährliche EL erhält, kann solche Kosten vergütet bekommen, soweit sie den Einnahmenüberschuss übersteigen.',
+          'Heben Sie Rechnungen und Belege auf: Vergütet wird nur, was ausgewiesen ist, und nur, wenn Sie es innert einer gesetzlichen Frist nach der Rechnungsstellung geltend machen (ELG Art. 15).',
+        ],
+      },
+      {
+        id: 'anmelden',
+        bild: `<ol class="zeit kern" role="list" aria-label="Der Weg zur EL">
+          <li><span class="jahr">Anmeldung</span><span class="was">bei der Stelle, die Ihr Wohnkanton bestimmt</span></li>
+          <li><span class="jahr">Anspruch</span><span class="was">beginnt in der Regel mit dem Monat der Anmeldung</span></li>
+          <li><span class="jahr">Verfügung</span><span class="was">der schriftliche Entscheid, mit Berechnung</span></li>
+        </ol>`,
+        kurzAbsatz: 1,
+        wege: ['was-steht-mir-zu'],
+        titel: 'Anmelden: beim Wohnkanton, und früh',
+        absaetze: [
+          'Zuständig ist der Kanton, in dem Sie Wohnsitz haben. Welche Stelle die Anmeldung entgegennimmt, bestimmt er; meist ist es die kantonale Ausgleichskasse oder Sozialversicherungsanstalt, oft über die AHV-Zweigstelle der Wohngemeinde, nie aber die Sozialhilfebehörde (ELG Art. 21).',
+          'Der Anspruch beginnt in der Regel mit dem Monat, in dem die Anmeldung eingereicht wird (ELG Art. 12). Früher beginnen kann er nur in bestimmten Fällen, etwa wenn die Anmeldung bald nach einer Rentenverfügung oder einem Eintritt ins Heim oder Spital erfolgt (ELG Art. 12 Abs. 2, ELV Art. 22). Wer zuwartet, verliert darum oft Monate.',
+          'Sind Sie unsicher, ob sich eine Anmeldung lohnt, fragen Sie bei der EL-Stelle nach. Sie prüft den Anspruch und begründet ihren Entscheid in einer Verfügung.',
+        ],
+      },
+      {
+        id: 'keine-sozialhilfe',
+        bild: `<ul class="irrtum" role="list">
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>EL sind eine Form von Sozialhilfe.</span><span class="richtig"><span class="sr-only">Richtig: </span>EL sind ein Anspruch nach Bundesrecht und gehen der Sozialhilfe vor.</span></li>
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Wer EL bezieht, muss sie später zurückzahlen.</span><span class="richtig"><span class="sr-only">Richtig: </span>Rechtmässig bezogene EL werden erst aus dem Nachlass zurückerstattet, und nur über einem Freibetrag.</span></li>
+        </ul>`,
+        kurzAbsatz: 0,
+        wege: ['sozialhilfe'],
+        titel: 'EL sind keine Sozialhilfe',
+        absaetze: [
+          'EL werden oft mit Sozialhilfe verwechselt. Sie sind etwas anderes: ein Anspruch nach Bundesrecht, berechnet nach Regeln, die in der ganzen Schweiz gelten. Ein Anspruch auf EL geht der Sozialhilfe vor.',
+          'Zu Lebzeiten müssen Sie rechtmässig bezogene EL nicht zurückzahlen. Nach dem Tod werden sie aus dem Nachlass zurückerstattet, aber nur aus dem Teil, der einen gesetzlichen Freibetrag übersteigt, bei Ehepaaren erst aus dem Nachlass der zweitverstorbenen Person (ELG Art. 16a).',
+          'Ohne Schweizer Pass kann der Bezug von EL eine Rolle spielen, wenn Sie Familienangehörige in die Schweiz nachziehen möchten (AIG Art. 43 Abs. 1 Bst. e, Art. 44 Abs. 1 Bst. e). Lassen Sie sich in diesem Fall vorher beraten.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Habe ich Anspruch auf Ergänzungsleistungen?',
+        antwort:
+          'Das hängt davon ab, ob Sie eine Leistung der AHV oder IV beziehen, wo Sie wohnen und wie Ihre Einnahmen, Ausgaben und Ihr Vermögen aussehen. Eine allgemein gültige Grenze gibt es nicht, weil die Miete, die Prämie und der Haushalt mitzählen. Eine erste Orientierung gibt der EL-Rechner der AHV/IV; verbindlich ist die Verfügung der EL-Stelle Ihres Kantons.',
+      },
+      {
+        frage: 'Gibt es EL auch vor dem Rentenalter?',
+        antwort:
+          'Ja. Wer eine Rente der IV, eine Witwen-, Witwer- oder Waisenrente bezieht, kann auch vor dem Rentenalter EL erhalten. Auch wer die AHV-Rente vorbezieht, erfüllt die Voraussetzung einer Rente; die gekürzte Rente zählt dann als Einnahme (ELG Art. 4). Wer ab sechzig von der Arbeitslosenversicherung ausgesteuert wird, kann unter Umständen Überbrückungsleistungen erhalten; auch diese meldet man bei der EL-Stelle an.',
+      },
+      {
+        frage: 'Zählt mein Haus oder meine Wohnung?',
+        antwort:
+          'Bei der Vermögensschwelle zählt eine selbst bewohnte Liegenschaft nicht mit (ELG Art. 9a). In der Berechnung selbst wird ihr Wert berücksichtigt, aber mit einem Freibetrag (ELG Art. 11). Wie das in Ihrem Fall ausgeht, rechnet die EL-Stelle.',
+      },
+      {
+        frage: 'Was gilt, wenn ich ins Heim muss?',
+        antwort:
+          'Dann wird die EL nach eigenen Regeln berechnet: Statt Lebensbedarf und Miete zählen die Heimtaxe und ein Betrag für persönliche Auslagen, die der Kanton festlegt (ELG Art. 10 Abs. 2). Melden Sie sich bald nach dem Eintritt an; dann besteht der Anspruch schon ab dem Monat des Eintritts (ELG Art. 12 Abs. 2).',
+      },
+      {
+        frage: 'Muss ich Änderungen melden?',
+        antwort:
+          'Ja. Jede Änderung der persönlichen und jede grössere Änderung der wirtschaftlichen Verhältnisse muss der EL-Stelle sofort gemeldet werden, etwa ein Umzug, eine neue Miete, eine Erbschaft oder ein Heimeintritt (ELV Art. 24). Zu Unrecht bezogene Leistungen müssen zurückerstattet werden.',
+      },
+      {
+        frage: 'Was bringt eine EL sonst noch?',
+        antwort:
+          'Wer jährliche EL zur AHV oder IV bezieht, ist von der Radio- und Fernsehabgabe befreit; die Befreiung beantragt man bei der Erhebungsstelle mit der Bestätigung der EL-Stelle. Der Betrag für die Krankenkassenprämie, der in der Berechnung mitzählt, geht direkt an die Krankenkasse. Fragen Sie im Zweifel bei der EL-Stelle nach.',
+      },
+    ],
+    quellen: ['ahvMerkblattEL', 'bsvEL'],
+    hintergrund: ['kantonsatlas', 'kantone-im-vergleich'],
   },
 ];
 

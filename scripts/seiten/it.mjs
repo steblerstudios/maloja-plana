@@ -268,6 +268,95 @@ export const SEITEN = [
     ],
     quellen: ['estvRechner'],
   },
+
+  // ─── Prestazioni complementari (14.11.2026) ───────────────────────────────
+  // Termini da src/i18n/it.js e dal promemoria 5.01 in italiano: PC, organo PC, spese
+  // riconosciute, redditi computabili, spese di malattia e d’invalidità.
+  // LPC = ELG · OPC = ELV · LStrI = AIG.
+  {
+    pfad: 'ergaenzungsleistungen',
+    titel: 'Le prestazioni complementari all’AVS e all’AI',
+    beschreibung:
+      'Quando entrano in considerazione le prestazioni complementari (PC), come vengono calcolate e perché non sono aiuto sociale. Un inquadramento senza cifre.',
+    brotkrume: 'Prestazioni complementari',
+    vorspann:
+      'Le prestazioni complementari, in breve PC, aiutano là dove una rendita dell’AVS o dell’AI e gli altri redditi non bastano per il minimo vitale. Sono disciplinate nella legge federale sulle prestazioni complementari (LPC) e sono un diritto legale, non una concessione. Vengono versate dai Cantoni.',
+    abschnitte: [
+      {
+        titel: 'Senza una prestazione dell’AVS o dell’AI non ci sono PC',
+        absaetze: [
+          'Le PC presuppongono una prestazione dell’AVS o dell’AI: una rendita di vecchiaia o per superstiti dell’AVS, anche anticipata, una rendita dell’AI, un assegno per grandi invalidi dell’AI o un’indennità giornaliera dell’AI versata ininterrottamente da almeno sei mesi. A ciò si aggiungono il domicilio e la dimora abituale in Svizzera (art. 4 LPC).',
+          'Per le straniere e gli stranieri vale inoltre una durata minima di soggiorno: di regola dieci anni ininterrotti in Svizzera, cinque anni per i rifugiati e gli apolidi (art. 5 LPC). Per i cittadini di uno Stato dell’UE o dell’AELS non vale.',
+          'Chi non ha una rendita solo perché mancano anni di contribuzione può, a determinate condizioni, ricevere comunque le PC (art. 4 cpv. 1 lett. b e d LPC). Chi si trova nel bisogno senza alcuna prestazione dell’AVS o dell’AI si rivolge all’aiuto sociale del Comune di domicilio.',
+        ],
+      },
+      {
+        titel: 'Il divario tra spese e redditi',
+        absaetze: [
+          'La PC annua corrisponde alla quota delle <strong>spese riconosciute</strong> che supera i <strong>redditi computabili</strong> (art. 9 LPC). Tra le spese figurano ad esempio un importo per il fabbisogno generale vitale, la pigione fino a un importo massimo e un importo per il premio della cassa malati. Tra i redditi figurano le rendite, una parte del reddito da attività lucrativa e una parte della sostanza (art. 10 e 11 LPC).',
+          'Ha diritto solo chi possiede una sostanza inferiore a una soglia legale; un immobile abitato dal proprietario non viene considerato per questa soglia (art. 9a LPC). La sostanza alla quale una persona ha rinunciato senza controprestazione, ad esempio con una donazione, viene computata (art. 11a LPC).',
+          'La Confederazione stabilisce gli importi per il fabbisogno vitale e gli importi massimi della pigione, graduati secondo tre regioni (art. 10 LPC). Qui non li citiamo di proposito: vengono adeguati regolarmente, e una cifra su una pagina come questa sarebbe presto sbagliata. Per chi vive in un istituto il calcolo segue regole proprie; i Cantoni possono limitare le spese riconosciute per l’istituto.',
+        ],
+      },
+      {
+        titel: 'Si aggiungono le spese di malattia e d’invalidità',
+        absaetze: [
+          'Oltre alla PC annua, il Cantone rimborsa le spese di malattia e d’invalidità comprovate, ad esempio per il dentista, per l’aiuto, la cura e l’assistenza a domicilio, per il trasporto verso il luogo di cura, per i mezzi ausiliari nonché la franchigia e l’aliquota percentuale della cassa malati (art. 14 LPC). Quali spese esattamente e fino a quale importo lo stabilisce il Cantone.',
+          'Anche chi non riceve una PC annua perché i suoi redditi sono un po’ troppo alti può ottenere il rimborso di tali spese, nella misura in cui superano l’eccedenza di reddito.',
+          'Conservi fatture e giustificativi: viene rimborsato solo ciò che è comprovato, e solo se lo fa valere entro un termine legale dalla fatturazione (art. 15 LPC).',
+        ],
+      },
+      {
+        titel: 'Annunciarsi: presso il Cantone di domicilio, e presto',
+        absaetze: [
+          'È competente il Cantone in cui ha il domicilio. È lui a stabilire quale organo riceve la richiesta; di solito è la cassa cantonale di compensazione o l’istituto delle assicurazioni sociali, spesso tramite l’agenzia AVS del Comune di domicilio, ma mai l’autorità di aiuto sociale (art. 21 LPC).',
+          'Il diritto nasce di regola nel mese in cui è presentata la richiesta (art. 12 LPC). Può iniziare prima solo in determinati casi, ad esempio se la richiesta segue a breve una decisione di rendita o l’entrata in un istituto o in ospedale (art. 12 cpv. 2 LPC, art. 22 OPC). Chi aspetta perde quindi spesso dei mesi.',
+          'Se non è sicuro che valga la pena annunciarsi, chieda all’organo PC. Esamina il diritto e motiva la sua decisione per iscritto.',
+        ],
+      },
+      {
+        titel: 'Le PC non sono aiuto sociale',
+        absaetze: [
+          'Le PC vengono spesso confuse con l’aiuto sociale. Sono un’altra cosa: un diritto secondo il diritto federale, calcolato secondo regole valide in tutta la Svizzera. Un diritto alle PC ha la precedenza sull’aiuto sociale.',
+          'Finché è in vita, non deve restituire le PC percepite legalmente. Dopo il decesso vengono restituite dall’eredità, ma solo dalla parte che supera una franchigia legale; per i coniugi solo dall’eredità della persona deceduta per seconda (art. 16a LPC).',
+          'Senza passaporto svizzero, la riscossione di PC può avere un ruolo se desidera far venire in Svizzera dei familiari (art. 43 cpv. 1 lett. e e art. 44 cpv. 1 lett. e LStrI). In tal caso si faccia consigliare prima.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Ho diritto alle prestazioni complementari?',
+        antwort:
+          'Dipende da se riceve una prestazione dell’AVS o dell’AI, da dove abita e da come sono i suoi redditi, le sue spese e la sua sostanza. Un limite valido per tutti non esiste, perché contano anche la pigione, il premio e l’economia domestica. Un primo orientamento lo dà il calcolatore PC dell’AVS/AI; fa stato la decisione dell’organo PC del suo Cantone.',
+      },
+      {
+        frage: 'Ci sono PC anche prima dell’età di pensionamento?',
+        antwort:
+          'Sì. Chi riceve una rendita dell’AI, una rendita per vedove, vedovi o orfani può ricevere le PC anche prima dell’età di pensionamento. Anche chi anticipa la rendita AVS soddisfa la condizione di una rendita; la rendita ridotta conta allora come reddito (art. 4 LPC). Chi esaurisce il diritto all’indennità di disoccupazione a partire dai sessant’anni può, a determinate condizioni, ricevere prestazioni transitorie; anche queste si chiedono all’organo PC.',
+      },
+      {
+        frage: 'La mia casa o il mio appartamento contano?',
+        antwort:
+          'Per la soglia di sostanza un immobile abitato dal proprietario non viene considerato (art. 9a LPC). Nel calcolo stesso il suo valore viene considerato, ma con una franchigia (art. 11 LPC). Che cosa ne risulta nel suo caso lo calcola l’organo PC.',
+      },
+      {
+        frage: 'Che cosa vale se devo entrare in un istituto?',
+        antwort:
+          'Allora la PC viene calcolata secondo regole proprie: al posto del fabbisogno vitale e della pigione contano la tassa giornaliera dell’istituto e un importo per le spese personali stabilito dal Cantone (art. 10 cpv. 2 LPC). Si annunci poco dopo l’entrata; il diritto esiste allora già dal mese dell’entrata (art. 12 cpv. 2 LPC).',
+      },
+      {
+        frage: 'Devo comunicare i cambiamenti?',
+        antwort:
+          'Sì. Ogni cambiamento della situazione personale e ogni cambiamento rilevante della situazione economica va comunicato subito all’organo PC, ad esempio un trasloco, una nuova pigione, un’eredità o l’entrata in un istituto (art. 24 OPC). Le prestazioni percepite indebitamente devono essere restituite.',
+      },
+      {
+        frage: 'Che cos’altro comporta una PC?',
+        antwort:
+          'Chi riceve PC annue all’AVS o all’AI è esentato dal canone radiotelevisivo; l’esenzione si chiede all’organo di riscossione con la conferma dell’organo PC. L’importo per il premio della cassa malati che entra nel calcolo viene versato direttamente alla cassa malati. In caso di dubbio chieda all’organo PC.',
+      },
+    ],
+    quellen: ['ahvMerkblattEL', 'bsvEL'],
+  },
 ];
 
 export const SONDERSEITEN = [

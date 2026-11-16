@@ -272,6 +272,94 @@ export const SEITEN = [
     ],
     quellen: ['estvRechner'],
   },
+
+  // ─── Supplementary benefits (14.11.2026) ──────────────────────────────────
+  // German terms in brackets where the reader will meet them on forms, as on the
+  // other English pages. ELG/ELV/AIG cited by their German abbreviation, like KVG.
+  {
+    pfad: 'ergaenzungsleistungen',
+    titel: 'Supplementary benefits to the AHV and IV',
+    beschreibung:
+      'When supplementary benefits (Ergänzungsleistungen, EL) come into question, how they are calculated and why they are not social assistance. An overview without figures.',
+    brotkrume: 'Supplementary benefits',
+    vorspann:
+      'Supplementary benefits (Ergänzungsleistungen, EL) help where a pension from the AHV or IV and other income are not enough to cover the bare necessities of life. They are governed by the Federal Act on Supplementary Benefits (ELG) and are a legal entitlement, not a favour. They are paid out by the cantons.',
+    abschnitte: [
+      {
+        titel: 'No AHV or IV benefit, no EL',
+        absaetze: [
+          'EL require a benefit from the AHV or IV: an AHV old-age or survivors’ pension, including an early one, an IV pension, an IV helplessness allowance or an IV daily allowance that has been paid without interruption for at least six months. In addition, you must be domiciled and actually reside in Switzerland (Art. 4 ELG).',
+          'Foreign nationals must also meet a minimum period of residence: as a rule ten years without interruption in Switzerland, five years for refugees and stateless persons (Art. 5 ELG). It does not apply to nationals of an EU or EFTA state.',
+          'Anyone who has no pension only because too few contribution years were reached may still receive EL under certain conditions (Art. 4 para. 1 let. b and d ELG). Anyone in need without any AHV or IV benefit turns to the social assistance office of their municipality of residence.',
+        ],
+      },
+      {
+        titel: 'The gap between expenses and income',
+        absaetze: [
+          'The annual EL equals the amount by which <strong>recognised expenses</strong> exceed <strong>countable income</strong> (Art. 9 ELG). Expenses include, for example, an amount for general living costs, rent up to a ceiling and an amount for the health insurance premium. Income includes pensions, part of earned income and part of assets (Art. 10 and 11 ELG).',
+          'Only people whose assets are below a statutory threshold are entitled; a home lived in by its owner does not count towards this threshold (Art. 9a ELG). Assets someone gave up without anything in return, for example through a gift, are counted (Art. 11a ELG).',
+          'The Confederation sets the amounts for living costs and the rent ceilings, graded by three regions (Art. 10 ELG). We deliberately do not state them here: they are adjusted regularly, and a figure on a page like this would soon be wrong. For people living in a care home, the calculation follows its own rules; the cantons may limit the recognised care home costs.',
+        ],
+      },
+      {
+        titel: 'Costs of illness and disability come on top',
+        absaetze: [
+          'In addition to the annual EL, the canton reimburses documented costs of illness and disability, for example for the dentist, for help, care and support at home, for transport to treatment, for aids, and for the deductible and co-payment of health insurance (Art. 14 ELG). The canton decides which costs exactly and up to what amount.',
+          'Even people who receive no annual EL because their income is slightly too high can have such costs reimbursed, to the extent that they exceed the income surplus.',
+          'Keep invoices and receipts: only documented costs are reimbursed, and only if you claim them within a statutory period after the invoice date (Art. 15 ELG).',
+        ],
+      },
+      {
+        titel: 'Applying: to your canton of residence, and early',
+        absaetze: [
+          'The canton where you are domiciled is responsible. It decides which office receives the application; usually the cantonal compensation fund or social insurance institution, often via the AHV branch office of your municipality, but never the social assistance authority (Art. 21 ELG).',
+          'Entitlement generally begins in the month in which the application is submitted (Art. 12 ELG). It can begin earlier only in certain cases, for example if the application follows soon after a pension ruling or after entering a care home or hospital (Art. 12 para. 2 ELG, Art. 22 ELV). Waiting therefore often costs months.',
+          'If you are unsure whether applying is worthwhile, ask the EL office. It examines the entitlement and gives reasons for its decision in a written ruling.',
+        ],
+      },
+      {
+        titel: 'EL are not social assistance',
+        absaetze: [
+          'EL are often confused with social assistance. They are something else: an entitlement under federal law, calculated by rules that apply throughout Switzerland. An entitlement to EL takes precedence over social assistance.',
+          'During your lifetime you do not have to repay EL received lawfully. After death they are repaid from the estate, but only from the part that exceeds a statutory allowance; for married couples only from the estate of the second spouse to die (Art. 16a ELG).',
+          'Without a Swiss passport, receiving EL may matter if you want to bring family members to Switzerland (Art. 43 para. 1 let. e and Art. 44 para. 1 let. e AIG). In that case, seek advice beforehand.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Am I entitled to supplementary benefits?',
+        antwort:
+          'That depends on whether you receive an AHV or IV benefit, where you live, and what your income, expenses and assets look like. There is no limit that applies to everyone, because rent, premium and household also count. The EL calculator of the AHV/IV gives a first orientation; the ruling of the EL office of your canton is binding.',
+      },
+      {
+        frage: 'Are there EL before retirement age?',
+        antwort:
+          'Yes. Anyone receiving an IV pension or a widow’s, widower’s or orphan’s pension can receive EL before retirement age too. Anyone drawing the AHV pension early also meets the pension requirement; the reduced pension then counts as income (Art. 4 ELG). Anyone whose unemployment benefits run out at sixty or later may, under certain conditions, receive bridging benefits (Überbrückungsleistungen); these too are applied for at the EL office.',
+      },
+      {
+        frage: 'Does my house or flat count?',
+        antwort:
+          'For the asset threshold, a home lived in by its owner does not count (Art. 9a ELG). In the calculation itself, its value is taken into account, but with an allowance (Art. 11 ELG). The EL office works out what that means in your case.',
+      },
+      {
+        frage: 'What applies if I have to move into a care home?',
+        antwort:
+          'Then EL are calculated by their own rules: instead of living costs and rent, the daily care home rate and an amount for personal expenses set by the canton are counted (Art. 10 para. 2 ELG). Apply soon after moving in; entitlement then exists from the month of entry (Art. 12 para. 2 ELG).',
+      },
+      {
+        frage: 'Do I have to report changes?',
+        antwort:
+          'Yes. Every change in personal circumstances and every significant change in financial circumstances must be reported to the EL office immediately, for example a move, a new rent, an inheritance or entering a care home (Art. 24 ELV). Benefits received unlawfully must be repaid.',
+      },
+      {
+        frage: 'What else do EL bring?',
+        antwort:
+          'People receiving annual EL to the AHV or IV are exempt from the radio and television fee; the exemption is requested from the collection agency with the confirmation from the EL office. The amount for the health insurance premium included in the calculation goes directly to the health insurer. If in doubt, ask the EL office.',
+      },
+    ],
+    quellen: ['ahvMerkblattEL', 'bsvEL'],
+  },
 ];
 
 export const SONDERSEITEN = [
