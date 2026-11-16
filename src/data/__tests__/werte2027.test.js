@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { werteFuerStichtag } from '../jahrestabelle.js';
-import { AHV_WERTE_JE_JAHR, ahvWerte, berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, vorbezugKuerzungsbetrag } from '../ahvRechner.js';
+import { AHV_WERTE_JE_JAHR, ahvWerte, berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, vorbezugKuerzungsbetrag, bvgMindestzins, BVG_MINDESTZINS_JE_JAHR } from '../ahvRechner.js';
 import { LOHN_WERTE_JE_JAHR, lohnWerte, bvgKoordinationsabzug } from '../lohnAbzuege.js';
 import { saeule3aMaximum, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR } from '../saeule3a.js';
 
@@ -147,11 +147,21 @@ describe('BVG 2027 (BVV 2 Art. 5, AS 2026 547)', () => {
     expect(bvgKoordinationsabzug(300000, J2026).koordinierterLohn).toBe(64260);
   });
 
-  it('das BVG-Guthaben rechnet mit dem Stichtag — Mindestzins bleibt 1,25 % (kein Entscheid 2027)', () => {
+  it('das BVG-Guthaben rechnet mit dem Stichtag — Mindestzins 2026 1,25 %, 2027 2 % (Bundesrat 4.11.2026)', () => {
     const g = (st) => berechneBVGGuthaben({ alter: 64, jahresbruttolohn: 300000, stichtag: st });
     expect(g(J2027).koordinierterLohn).toBe(65280);
     expect(g(J2026).koordinierterLohn).toBe(64260);
-    expect(g(J2027).zinssatz).toBe(1.25);
+    expect(g(J2027).zinssatz).toBe(2);
+    expect(g(J2026).zinssatz).toBe(1.25);
+    // ein eigener Satz geht vor
+    expect(berechneBVGGuthaben({ alter: 64, jahresbruttolohn: 300000, stichtag: J2027, zinssatz: 1 }).zinssatz).toBe(1);
+  });
+
+  it('Mindestzins je Jahr: 1,25 (BVV 2 Art. 12 Bst. k) · 2 (Bundesrat 4.11.2026); 2028 nicht belegt', () => {
+    expect(bvgMindestzins(J2026)).toMatchObject({ satz: 1.25, jahr: 2026, belegt: true });
+    expect(bvgMindestzins(J2027)).toMatchObject({ satz: 2, jahr: 2027, belegt: true });
+    expect(bvgMindestzins(2028)).toMatchObject({ satz: 2, jahr: 2027, belegt: false });
+    expect(BVG_MINDESTZINS_JE_JAHR[2027].quelle).toMatch(/4\.11\.2026/);
   });
 });
 

@@ -429,11 +429,24 @@ export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, be
 }
 
 
-// BVG-Mindestzins: BVV 2 Art. 12 Bst. k, Fedlex Stand 1.1.2027 (abgerufen 21.10.2026): «für den
-// Zeitraum ab dem 1. Januar 2024: mindestens mit 1,25 Prozent». Für 2027 hat der Bundesrat am
-// 22.10.2026 noch nicht entschieden (Empfehlung BVG-Kommission 1,75 %). Darum KEINE Jahreszeile:
-// Es gilt der Satz in Kraft, bis ein Entscheid publiziert ist. Dann hier nachtragen.
-const BVG_MINDESTZINS = 1.25;
+// BVG-Mindestzins je Kalenderjahr (Weg A wie die Grenzbeträge: im Dezember ausgeliefert, am 1.1. umgeschaltet).
+//   2026: BVV 2 Art. 12 Bst. k, Fedlex Stand 1.1.2027 (abgerufen 21.10.2026): «für den Zeitraum ab dem
+//         1. Januar 2024: mindestens mit 1,25 Prozent».
+//   2027: Medienmitteilung des Bundesrates vom 4.11.2026, «Der Bundesrat beschliesst eine Anhebung des
+//         Mindestzinssatzes auf 2%» (https://www.admin.ch/de/newnsb/8DF8zxcfvu7l, gelesen 16.11.2026):
+//         «Der Bundesrat hebt den Mindestzinssatz in der beruflichen Vorsorge ab Januar 2027 von bisher
+//         1,25% auf 2% an.» Die BVG-Kommission hatte 1,75 % empfohlen (BSV 31.08.2026).
+//         ⚠️ Gegenprobe offen: Die Fedlex-Konsolidierung BVV 2 «Stand 1.1.2027» zeigt am 16.11.2026 noch
+//         Bst. k mit 1,25 %, die AS-Fundstelle der Änderung war nicht auffindbar. Vor dem Deploy dort prüfen.
+// Der Rechner nimmt den Satz des Stichtagsjahres für die ganze Restlaufzeit: Künftige Sätze kennt niemand.
+export const BVG_MINDESTZINS_JE_JAHR = Object.freeze({
+  2026: Object.freeze({ satz: 1.25, quelle: 'BVV 2 Art. 12 Bst. k (seit 1.1.2024)' }),
+  2027: Object.freeze({ satz: 2, quelle: 'Bundesrat, Medienmitteilung 4.11.2026 (BVV 2 Art. 12, ab 1.1.2027)' }),
+});
+export function bvgMindestzins(stichtag) {
+  return werteFuerStichtag(BVG_MINDESTZINS_JE_JAHR, stichtag);
+}
+const BVG_MINDESTZINS = bvgMindestzins().satz; // Stand beim Laden der App
 
 /**
  * Berechne geschätztes BVG-Altersguthaben bei Pensionierung.
@@ -443,7 +456,7 @@ export function berechneBVGGuthaben({
   jahresbruttolohn,
   aktuellesGuthaben = 0,
   austrittsalter = 65,
-  zinssatz = BVG_MINDESTZINS,
+  zinssatz,
   // BVG-Mindestumwandlungssatz 2026. Die eigene Pensionskasse rechnet oft mit
   // einem abweichenden (im überobligatorischen Teil meist tieferen) Satz — darum
   // überschreibbar. Unter 1 oder über 10 wäre unplausibel → auf 6.8 zurückfallen.
@@ -460,6 +473,8 @@ export function berechneBVGGuthaben({
   geburtsmonat,
 }) {
   const koord = bvgKoordinationsabzug(jahresbruttolohn, stichtag);
+  // Ohne eigenen Satz der Mindestzins des Stichtagsjahres (bvgMindestzins).
+  if (!Number.isFinite(zinssatz)) zinssatz = bvgMindestzins(stichtag).satz;
   const tag = stichtag || new Date();
   const startJahr = tag.getFullYear();
   if (!koord.versichert) return { versichert: false, guthaben: 0 };
