@@ -1972,6 +1972,8 @@ export default {
     ganzeSchweiz: 'Toute la Suisse',
     stufenHinweis: 'Plus foncé signifie un chiffre plus élevé, pas mieux ou moins bien.',
     stufenHinweisDunkel: 'Plus clair signifie un chiffre plus élevé, pas mieux ou moins bien.',
+    nichtGesichert: 'non vérifié si adapté depuis',
+    standJahr: 'État {jahr}',
     belegWort: 'Source',
     nochmals: 'Réessayer',
     karteZeigtErwachsene: { sie: 'La carte montre les adultes dès 26 ans. Prime moyenne dans votre classe d’âge, même source :', du: 'La carte montre les adultes dès 26 ans. Prime moyenne dans ta classe d’âge, même source :' },

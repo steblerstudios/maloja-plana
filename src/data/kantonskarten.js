@@ -653,6 +653,38 @@ export const KARTEN = {
     "s": 4,
     "text": "1'732"
    }
+  },
+  "vergleich": {
+   "titel": "Leerwohnungsziffer",
+   "ch": "0,93 %",
+   "werte": {
+    "AG": "1,05 %",
+    "AR": "1,12 %",
+    "AI": "0,96 %",
+    "BL": "0,64 %",
+    "BS": "0,78 %",
+    "BE": "1,04 %",
+    "FR": "1,26 %",
+    "GE": "0,31 %",
+    "GL": "0,51 %",
+    "GR": "0,51 %",
+    "JU": "3,35 %",
+    "LU": "0,70 %",
+    "NE": "1,64 %",
+    "NW": "0,62 %",
+    "OW": "0,38 %",
+    "SH": "0,84 %",
+    "SZ": "0,50 %",
+    "SO": "1,91 %",
+    "SG": "1,16 %",
+    "TI": "1,78 %",
+    "TG": "1,10 %",
+    "UR": "0,42 %",
+    "VD": "0,87 %",
+    "VS": "1,04 %",
+    "ZG": "0,20 %",
+    "ZH": "0,52 %"
+   }
   }
  },
  "alq": {
@@ -1066,6 +1098,693 @@ export const KARTEN = {
    "ZH": {
     "s": 3,
     "text": "10,9 %"
+   }
+  }
+ },
+ "kinderzulage": {
+  "titel": "Kinderzulage",
+  "einheit": "Fr. im Monat je Kind",
+  "anker": "karte-kinderzulage",
+  "frucht": "zwetschge",
+  "legende": "Kinderzulage 2026 je Kind und Monat, erster Ansatz für Arbeitnehmende. Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr; das zeigt die Karte nicht. Kantone mit gleichem Betrag stehen in derselben Stufe, darum sind die Stufen nicht gleich gross.",
+  "quellen": [
+   {
+    "text": "Bundesamt für Sozialversicherungen, Arten und Ansätze der Familienzulagen 2026, Stand 1.1.2026",
+    "url": "https://www.bsv.admin.ch/dam/de/sd-web/acU7RgJgeisY/Arten%20und%20Ans%C3%A4tze%20der%20Familienzulagen_2026.pdf"
+   }
+  ],
+  "ch": null,
+  "spannen": [
+   {
+    "s": 1,
+    "text": "215"
+   },
+   {
+    "s": 2,
+    "text": "220 bis 240"
+   },
+   {
+    "s": 3,
+    "text": "245 bis 265"
+   },
+   {
+    "s": 4,
+    "text": "275 bis 330"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 2,
+    "text": "225"
+   },
+   "AR": {
+    "s": 2,
+    "text": "230"
+   },
+   "AI": {
+    "s": 3,
+    "text": "245"
+   },
+   "BL": {
+    "s": 1,
+    "text": "215"
+   },
+   "BS": {
+    "s": 4,
+    "text": "275"
+   },
+   "BE": {
+    "s": 3,
+    "text": "250"
+   },
+   "FR": {
+    "s": 3,
+    "text": "265"
+   },
+   "GE": {
+    "s": 4,
+    "text": "311"
+   },
+   "GL": {
+    "s": 1,
+    "text": "215"
+   },
+   "GR": {
+    "s": 2,
+    "text": "240"
+   },
+   "JU": {
+    "s": 4,
+    "text": "275"
+   },
+   "LU": {
+    "s": 1,
+    "text": "215"
+   },
+   "NE": {
+    "s": 2,
+    "text": "240"
+   },
+   "NW": {
+    "s": 3,
+    "text": "258"
+   },
+   "OW": {
+    "s": 2,
+    "text": "220"
+   },
+   "SH": {
+    "s": 2,
+    "text": "230"
+   },
+   "SZ": {
+    "s": 2,
+    "text": "230"
+   },
+   "SO": {
+    "s": 1,
+    "text": "215"
+   },
+   "SG": {
+    "s": 3,
+    "text": "245"
+   },
+   "TI": {
+    "s": 1,
+    "text": "215"
+   },
+   "TG": {
+    "s": 1,
+    "text": "215"
+   },
+   "UR": {
+    "s": 2,
+    "text": "240"
+   },
+   "VD": {
+    "s": 4,
+    "text": "322"
+   },
+   "VS": {
+    "s": 4,
+    "text": "327"
+   },
+   "ZG": {
+    "s": 4,
+    "text": "330"
+   },
+   "ZH": {
+    "s": 1,
+    "text": "215"
+   }
+  }
+ },
+ "kita": {
+  "titel": "Abzug für Kinderbetreuung",
+  "einheit": "Fr. im Jahr je Kind",
+  "anker": "karte-kita",
+  "frucht": "zwetschge",
+  "legende": "Höchster Steuerabzug für die Betreuung von Kindern durch Dritte, Steuerjahr 2026, je Kind. Für Neuenburg ist nur der Wert 2025 ausgewiesen; dort ist der Abzug auf die Elternbeiträge an die Betreuung begrenzt, die Zahl ist also kein fester Höchstbetrag.",
+  "quellen": [
+   {
+    "text": "Eidgenössische Steuerverwaltung und Schweizerische Steuerkonferenz, Kantonsblätter, Stand Februar 2026",
+    "url": "https://www.estv.admin.ch/de/kantonsblaetter"
+   },
+   {
+    "text": "Eidgenössische Steuerverwaltung, Steuermäppchen: Abzug der Kosten für die Drittbetreuung der Kinder, Steuerperiode 2025",
+    "url": "https://www.estv2.admin.ch/stp/sm/drittbetreuungskosten-de-fr.pdf"
+   }
+  ],
+  "ch": null,
+  "spannen": [
+   {
+    "s": 1,
+    "text": "8'000 bis 10'100"
+   },
+   {
+    "s": 2,
+    "text": "10'600 bis 20'200"
+   },
+   {
+    "s": 3,
+    "text": "20'400 bis 25'800"
+   },
+   {
+    "s": 4,
+    "text": "26'000 bis 27'300"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 3,
+    "text": "25'000"
+   },
+   "AR": {
+    "s": 3,
+    "text": "25'000"
+   },
+   "AI": {
+    "s": 2,
+    "text": "18'000"
+   },
+   "BL": {
+    "s": 1,
+    "text": "10'000"
+   },
+   "BS": {
+    "s": 4,
+    "text": "26'000"
+   },
+   "BE": {
+    "s": 2,
+    "text": "16'000"
+   },
+   "FR": {
+    "s": 2,
+    "text": "12'000"
+   },
+   "GE": {
+    "s": 4,
+    "text": "26'392"
+   },
+   "GL": {
+    "s": 3,
+    "text": "25'800"
+   },
+   "GR": {
+    "s": 4,
+    "text": "27'300"
+   },
+   "JU": {
+    "s": 2,
+    "text": "10'600"
+   },
+   "LU": {
+    "s": 2,
+    "text": "20'200"
+   },
+   "NE": {
+    "s": 3,
+    "text": "20'400"
+   },
+   "NW": {
+    "s": 1,
+    "text": "8'400"
+   },
+   "OW": {
+    "s": 1,
+    "text": "10'000"
+   },
+   "SH": {
+    "s": 1,
+    "text": "9'400"
+   },
+   "SZ": {
+    "s": 1,
+    "text": "8'000"
+   },
+   "SO": {
+    "s": 3,
+    "text": "25'800"
+   },
+   "SG": {
+    "s": 4,
+    "text": "26'800"
+   },
+   "TI": {
+    "s": 4,
+    "text": "26'200"
+   },
+   "TG": {
+    "s": 1,
+    "text": "10'100"
+   },
+   "UR": {
+    "s": 3,
+    "text": "25'800"
+   },
+   "VD": {
+    "s": 2,
+    "text": "15'200"
+   },
+   "VS": {
+    "s": 1,
+    "text": "10'000"
+   },
+   "ZG": {
+    "s": 3,
+    "text": "25'400"
+   },
+   "ZH": {
+    "s": 3,
+    "text": "25'300"
+   }
+  }
+ },
+ "alimente": {
+  "titel": "Alimentenbevorschussung",
+  "einheit": "Fr. im Monat je Kind, höchstens",
+  "anker": "karte-alimente",
+  "frucht": "zwetschge",
+  "legende": "Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. 17 Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch. Ob und wie viel jemand erhält, hängt vom Einkommen ab; die Grenzen sind je Kanton verschieden. Der Stand ist je Kanton verschieden. Für den Kanton Waadt ist nicht gesichert, ob der Betrag inzwischen angepasst wurde.",
+  "quellen": [],
+  "ch": null,
+  "spannen": [
+   {
+    "s": 1,
+    "text": "673 bis 980"
+   },
+   {
+    "s": 2,
+    "text": "1'008"
+   },
+   {
+    "s": 4,
+    "text": "1'362 bis 2'000"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Aargau, Alimentenbevorschussung: Gesetz ueber die oeffentliche Sozialhilfe und die soziale Praevention (SPG) SAR 851.200, § 35, Stand 2026",
+     "url": "https://www.ag.ch/alimentenbevorschussung/anspruchsvoraussetzungen"
+    }
+   },
+   "AR": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Appenzell Ausserrhoden, Alimentenbevorschussung: Gesetz ueber Inkassohilfe und Bevorschussung von Unterhaltsbeitraegen fuer Kinder, bGS 212.33, Art. 5, Stand 2026",
+     "url": "https://ar.clex.ch/app/de/texts_of_law/212.33"
+    }
+   },
+   "AI": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Appenzell Innerrhoden, Alimentenbevorschussung: Verordnung ueber die Inkassohilfe und Bevorschussung von Unterhaltsbeitraegen (IBV), GS 850.350, Art. 4, 7, 8, Stand 2026",
+     "url": "https://ai.clex.ch/app/de/texts_of_law/850.350"
+    }
+   },
+   "BL": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Basel-Landschaft, Alimentenbevorschussung: Gesetz ueber die Sozial- und die Jugendhilfe (SHG) SGS 850, § 23, Stand 2026",
+     "url": "https://bl.clex.ch/app/de/texts_of_law/850.12"
+    }
+   },
+   "BS": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Basel-Stadt, Alimentenbevorschussung: Verordnung ueber das Inkasso und die Bevorschussung von Unterhaltsbeitraegen (ABVV), SG 212.200, §§ 9-11, Stand 2026",
+     "url": "https://www.bs.ch/themen/finanzielle-hilfe/leistungen/alimentenhilfe"
+    }
+   },
+   "BE": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Bern, Alimentenbevorschussung: Verordnung ueber Inkassohilfe und Bevorschussung von Unterhaltsbeitraegen (IBV), BSG 213.221, Art. 12 und 19, Stand 2026",
+     "url": "https://www.belex.sites.be.ch/app/de/texts_of_law/213.221"
+    }
+   },
+   "FR": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Freiburg, Alimentenbevorschussung: Loi sur l'aide au recouvrement et l'avance de contributions d'entretien (LARACE), RSF 212.4.1, art. 9, Stand 2026",
+     "url": "https://bdlf.fr.ch/app/fr/texts_of_law/212.4.11"
+    }
+   },
+   "GE": {
+    "s": 1,
+    "text": "673",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Genf, Alimentenbevorschussung: Loi sur l'avance et le recouvrement des pensions alimentaires (LARPA) RSG E 1 25, Stand 2026",
+     "url": "https://www.ge.ch/pensions-alimentaires-impayees"
+    }
+   },
+   "GL": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Glarus, Alimentenbevorschussung: Verordnung ueber die Alimentenhilfe (ALVO), GS VIII E/21/10, Art. 7, 8, 10, Stand 2026",
+     "url": "https://gesetze.gl.ch/app/de/texts_of_law/VIII%20E%2F21%2F10"
+    }
+   },
+   "GR": {
+    "s": 1,
+    "text": "780",
+    "stand": "2025",
+    "quelle": {
+     "text": "Kanton Graubünden, Alimentenbevorschussung: Verordnung ueber die Bevorschussung von Unterhaltsbeitraegen fuer unterhaltsberechtigte Kinder, BR 215.050, Art. 3-4, Stand 2025",
+     "url": "https://www.gr-lex.gr.ch/app/de/texts_of_law/215.050"
+    }
+   },
+   "JU": {
+    "s": 1,
+    "text": "901",
+    "stand": "2025",
+    "quelle": {
+     "text": "Kanton Jura, Alimentenbevorschussung: Arrêté fixant les limites de revenu et de fortune ainsi que le montant maximal des avances (RSJU 851.111), Modification du 28.1.2025, Stand 2025",
+     "url": "https://rsju.jura.ch/Htdocs/Files/v/4cf9bc69fa36574e2dcc54aea4a2d940b27262e7977c685dacc24edaf34ca01f.pdf/JO_05_06.02.25_web.pdf?download=1"
+    }
+   },
+   "LU": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Luzern, Alimentenbevorschussung: Sozialhilfegesetz (SHG) SRL Nr. 892, § 46, Stand 2026",
+     "url": "https://srl.lu.ch/app/de/texts_of_law/892a"
+    }
+   },
+   "NE": {
+    "s": 4,
+    "text": "2'000",
+    "stand": "2025",
+    "quelle": {
+     "text": "Kanton Neuenburg, Alimentenbevorschussung: Loi (LRACE) RSN 213.221, Stand 2025",
+     "url": "https://rsn.ne.ch/DATA/program/books/rsne/pdf/2132211.pdf"
+    }
+   },
+   "NW": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Nidwalden, Alimentenbevorschussung: Verordnung zum Gesetz ueber die Sozialhilfe, NG 761.11, §§ 15-17, Stand 2026",
+     "url": "https://gesetze.nw.ch/app/de/texts_of_law/761.11"
+    }
+   },
+   "OW": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Obwalden, Alimentenbevorschussung: Verordnung ueber das Inkasso und die Bevorschussung von Unterhaltsbeitraegen, GDB 870.12, Art. 4, Stand 2026",
+     "url": "https://gdb.ow.ch/app/de/texts_of_law/870.12"
+    }
+   },
+   "SH": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2025",
+    "quelle": {
+     "text": "Kanton Schaffhausen, Alimentenbevorschussung: Alimentenbevorschussungsverordnung SHR 211.222, §§ 9, 12, Stand 2025",
+     "url": "https://sh.ch/CMS/get/file/4484ccee-9215-41fc-ab01-65c4418b197c"
+    }
+   },
+   "SZ": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Schwyz, Alimentenbevorschussung: Gesetz ueber Inkassohilfe und Bevorschussung von Unterhaltsbeitraegen, SRSZ 380.200, §§ 14-15, Stand 2026",
+     "url": "https://www.sz.ch/public/upload/assets/3747/380_200.pdf?fp=7"
+    }
+   },
+   "SO": {
+    "s": 1,
+    "text": "756",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Solothurn, Alimentenbevorschussung: Sozialgesetz (SG) BGS 831.1, §§ 96-97, Stand 2026",
+     "url": "https://bgs.so.ch/app/de/texts_of_law/831.1"
+    }
+   },
+   "SG": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton St. Gallen, Alimentenbevorschussung: Gesetz ueber Inkassohilfe und Vorschuesse fuer Unterhaltsbeitraege (GIVU), sGS 911.51, Art. 4-4quinquies, Stand 2026",
+     "url": "https://www.gesetzessammlung.sg.ch/app/de/texts_of_law/911.51"
+    }
+   },
+   "TI": {
+    "s": 1,
+    "text": "700",
+    "stand": "2023",
+    "quelle": {
+     "text": "Kanton Tessin, Alimentenbevorschussung: Regolamento concernente l'anticipo e l'incasso degli alimenti per i figli minorenni, RL 874.350, art. 4, Stand 2023",
+     "url": "https://m3.ti.ch/CAN/RLeggi/public/index.php/raccolta-leggi/pdfatto/atto/12521"
+    }
+   },
+   "TG": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Thurgau, Alimentenbevorschussung: Gesetz ueber die Inkassohilfe ... und die Bevorschussung von Kinderalimenten (AliG), RB 836.4, §§ 6-7, Stand 2026",
+     "url": "https://www.rechtsbuch.tg.ch/app/de/texts_of_law/836.4"
+    }
+   },
+   "UR": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Uri, Alimentenbevorschussung: Gesetz ueber die Bevorschussung von Unterhaltsbeitraegen, RB 20.3461, Art. 4-5, Stand 2026",
+     "url": "https://rechtsbuch.ur.ch/app/de/texts_of_law/20.3461"
+    }
+   },
+   "VD": {
+    "s": 1,
+    "text": "980",
+    "stand": "2024",
+    "quelle": {
+     "text": "Kanton Waadt, Alimentenbevorschussung: Loi sur le recouvrement et les avances sur pensions alimentaires (LRAPA) BLV 850.36, Stand 2024",
+     "url": "https://www.lexfind.ch/tolv/241701/fr"
+    },
+    "nichtGesichert": true
+   },
+   "VS": {
+    "s": 1,
+    "text": "950",
+    "stand": "2022",
+    "quelle": {
+     "text": "Kanton Wallis, Alimentenbevorschussung: Loi sur le recouvrement et les avances de contributions d'entretien (LRACE) 850.3, Stand 2022",
+     "url": "https://lex.vs.ch/app/fr/texts_of_law/850.301"
+    }
+   },
+   "ZG": {
+    "s": 4,
+    "text": "1'362",
+    "stand": "2025",
+    "quelle": {
+     "text": "Kanton Zug, Alimentenbevorschussung: Inkassohilfe- und Bevorschussungsgesetz BGS 213.711, §§ 4, 6, 7bis, Stand 2025",
+     "url": "https://bgs.zg.ch/app/de/texts_of_law/213.713"
+    }
+   },
+   "ZH": {
+    "s": 2,
+    "text": "1'008",
+    "stand": "2026",
+    "quelle": {
+     "text": "Kanton Zürich, Alimentenbevorschussung: § 23 Abs. 2 Kinder- und Jugendhilfegesetz (KJHG, ZH), Stand 2026",
+     "url": "https://www.zh.ch/content/dam/zhweb/bilder-dokumente/themen/familie/sorgerecht-unterhalt/alimentenhilfe/mb_berechnung_anspruch_alimentenbevorschussung.pdf"
+    }
+   }
+  }
+ },
+ "mindestlohn": {
+  "titel": "Kantonaler Mindestlohn",
+  "einheit": "Fr. pro Stunde, brutto, Stand 2026",
+  "anker": "karte-mindestlohn",
+  "frucht": "haselnuss",
+  "zweiGruppen": true,
+  "legende": "Kantone mit einem gesetzlichen Mindestlohn, Stand 2026. Die Farbe zeigt nur, ob es einen gibt, nicht, wie hoch er ist. Ausnahmen, etwa für Lernende, regelt jeder Kanton selbst.",
+  "quellen": [
+   {
+    "text": "Kanton Basel-Stadt, Amt für Wirtschaft und Arbeit, Merkblatt und FAQ zum kantonalen Mindestlohn, Stand 1.1.2026",
+    "url": "https://media.bs.ch/original_file_download/e7ce0ad1ebb1a946f5c6aab2ce99db95762ecfa2/2026-01-01-merkblatt-faq-homepage-deutsch.docx"
+   },
+   {
+    "text": "République et canton de Genève, Montant et calcul du salaire minimum, gelesen 14.11.2026",
+    "url": "https://www.ge.ch/appliquer-salaire-minimum-genevois/montant-calcul-du-salaire-minimum"
+   },
+   {
+    "text": "République et Canton du Jura, Salaires minimaux, Stand 2026",
+    "url": "https://www.jura.ch/fr/Autorites/Administration/DES/Economie-et-Emploi-SEE/Conditions-de-travail/Conditions-de-travail/Salaires-minimaux.html"
+   },
+   {
+    "text": "République et canton de Neuchâtel, Service de l'emploi, Service de l'emploi: salaire minimum, Stand 2026",
+    "url": "https://www.ne.ch/autorites/DECS/SEMP/Pages/accueil.aspx"
+   },
+   {
+    "text": "Repubblica e Cantone Ticino, Decreto esecutivo sui salari minimi, 11 dicembre 2025, in Kraft 1.1.2026",
+    "url": "https://m3.ti.ch/CAN/RLeggi/public/index.php/raccolta-leggi/pdfatto/atto/11921"
+   }
+  ],
+  "ch": null,
+  "spannen": [
+   {
+    "s": 3,
+    "text": "mit kantonalem Mindestlohn (5)"
+   },
+   {
+    "s": 1,
+    "text": "ohne (21)"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "AR": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "AI": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "BL": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "BS": {
+    "s": 3,
+    "text": "22.20 Fr. pro Stunde"
+   },
+   "BE": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "FR": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "GE": {
+    "s": 3,
+    "text": "24.59 Fr. pro Stunde"
+   },
+   "GL": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "GR": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "JU": {
+    "s": 3,
+    "text": "21.40 Fr. pro Stunde"
+   },
+   "LU": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "NE": {
+    "s": 3,
+    "text": "21.35 Fr. pro Stunde"
+   },
+   "NW": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "OW": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "SH": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "SZ": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "SO": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "SG": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "TI": {
+    "s": 3,
+    "text": "20.00 Fr. pro Stunde"
+   },
+   "TG": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "UR": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "VD": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "VS": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "ZG": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
+   },
+   "ZH": {
+    "s": 1,
+    "text": "kein kantonaler Mindestlohn"
    }
   }
  }

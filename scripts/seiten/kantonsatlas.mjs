@@ -183,7 +183,8 @@ function karteMindestlohn(ctx) {
             <p class="atlas-einheit">Kanton mit oder ohne eigenen Mindestlohn</p>
             <ul class="atlas-legende" role="list"><li><i class="k3" aria-hidden="true"></i>mit kantonalem Mindestlohn (${mit.length})</li><li><i class="k1" aria-hidden="true"></i>ohne (${KANTONE.length - mit.length})</li></ul>
           </div>
-          <figcaption><strong>Abb. ${ctx.abb}.</strong> Kantone mit einem gesetzlichen Mindestlohn, Stand 2026. Die Farbe zeigt nur, ob es einen gibt, nicht, wie hoch er ist. Ausnahmen, etwa für Lernende, regelt jeder Kanton selbst.</figcaption>
+          <figcaption><strong>Abb. ${ctx.abb}.</strong> ${LEGENDE.mindestlohn}</figcaption>${KARTE_WERKZEUG.mindestlohn ? `
+          <p class="atlas-weiter"><a href="${appBeispiel(KARTE_WERKZEUG.mindestlohn.view)}">Mit Ihren Angaben rechnen: ${esc(KARTE_WERKZEUG.mindestlohn.name)}</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>` : ''}
           <details class="atlas-werte">
             <summary>Mindestlohn je Kanton als Tabelle</summary>
             <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Kantonaler Mindestlohn 2026"><table>
@@ -257,6 +258,7 @@ export const KARTE_WERKZEUG = {
   alq: { view: 'alv', name: 'Arbeitslosentaggeld' },
   sozialhilfe: { view: 'sozialhilfe', name: 'Sozialhilfe' },
   el: { view: 'ergaenzungsleistungen', name: 'Ergänzungsleistungen' },
+  mindestlohn: { view: 'stundenlohn', name: 'Stundenlohn' }, // 14.11.2026
 };
 
 // Die Werte zu einer Karte: dieselbe Tabelle wie auf /kantone-im-vergleich/,
@@ -276,6 +278,11 @@ export const LEGENDE = {
   alq: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
   sozialhilfe: 'Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe, also Geld vom Sozialdienst, bezog. [[q:bfsSozialhilfe]]',
   el: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
+  // Seit 14.11.2026 auch in der App (Abläufe «Kind», «Trennung», Werkzeug Stundenlohn).
+  kinderzulage: 'Kinderzulage 2026 je Kind und Monat, erster Ansatz für Arbeitnehmende. Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr; das zeigt die Karte nicht. Kantone mit gleichem Betrag stehen in derselben Stufe, darum sind die Stufen nicht gleich gross. [[q:bsvFamz]]',
+  kita: `Höchster Steuerabzug für die Betreuung von Kindern durch Dritte, Steuerjahr 2026, je Kind. Für ${KITA_NICHT_VERGLICHEN.map((k) => de.cantons[k]).join(' und ')} ist nur der Wert 2025 ausgewiesen; dort ist der Abzug auf die Elternbeiträge an die Betreuung begrenzt, die Zahl ist also kein fester Höchstbetrag. [[q:estvKantonsblaetter]] [[q:estvDrittbetreuung]]`,
+  alimente: `Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. ${KANTONE.filter((k) => ATLAS_DATEN.alimente[k].chf === 1008).length} Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch. Ob und wie viel jemand erhält, hängt vom Einkommen ab; die Grenzen sind je Kanton verschieden. Der Stand ist je Kanton verschieden. ${ATLAS_DATEN.alimente.VD.sicher === false ? `Für den Kanton ${de.cantons.VD} ist nicht gesichert, ob der Betrag inzwischen angepasst wurde.` : ''}`.trim(),
+  mindestlohn: 'Kantone mit einem gesetzlichen Mindestlohn, Stand 2026. Die Farbe zeigt nur, ob es einen gibt, nicht, wie hoch er ist. Ausnahmen, etwa für Lernende, regelt jeder Kanton selbst.',
 };
 
 // Stufenfarben je Frucht, hell und dunkel, mit der Farbe der Seen. Im dunklen Modus ist die höchste Stufe
@@ -304,13 +311,13 @@ const BLOECKE_ATLAS = {
     legende: 'Leerwohnungsziffer am 1. Juni 2026: Anteil der Wohnungen und Einfamilienhäuser, die leer stehen und zur Miete oder zum Kauf angeboten sind. [[q:bfsLeer]]',
     nachher: werteTabelle('vleer', 'Leerwohnungsziffer je Kanton als Tabelle') }),
   'FIG:kinderzulage': (ctx) => karte(ctx, 'kinderzulage', {
-    legende: 'Kinderzulage 2026 je Kind und Monat, erster Ansatz für Arbeitnehmende. Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr; das zeigt die Karte nicht. Kantone mit gleichem Betrag stehen in derselben Stufe, darum sind die Stufen nicht gleich gross. [[q:bsvFamz]]',
+    legende: LEGENDE.kinderzulage,
     nachher: werteTabelle('vfamilie', 'Kinderzulage je Kanton als Tabelle') }),
   'FIG:kita': (ctx) => karte(ctx, 'kita', {
-    legende: `Höchster Steuerabzug für die Betreuung von Kindern durch Dritte, Steuerjahr 2026, je Kind. Für ${KITA_NICHT_VERGLICHEN.map((k) => de.cantons[k]).join(' und ')} ist nur der Wert 2025 ausgewiesen; dort ist der Abzug auf die Elternbeiträge an die Betreuung begrenzt, die Zahl ist also kein fester Höchstbetrag. [[q:estvKantonsblaetter]] [[q:estvDrittbetreuung]]`,
+    legende: LEGENDE.kita,
     nachher: werteTabelle('vkita', 'Kita-Abzug je Kanton als Tabelle') }),
   'FIG:alimente': (ctx) => karte(ctx, 'alimente', {
-    legende: `Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. ${KANTONE.filter((k) => ATLAS_DATEN.alimente[k].chf === 1008).length} Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch. Ob und wie viel jemand erhält, hängt vom Einkommen ab; die Grenzen sind je Kanton verschieden. Der Stand ist je Kanton verschieden, er steht in der Tabelle. ${ATLAS_DATEN.alimente.VD.sicher === false ? `Für den Kanton ${de.cantons.VD} ist nicht gesichert, ob der Betrag inzwischen angepasst wurde.` : ''}`.trim(),
+    legende: LEGENDE.alimente,
     nachher: werteTabelle('valimente', 'Vorschuss je Kanton als Tabelle, mit Stand und Quelle') }),
   'FIG:mindestlohn': (ctx) => karteMindestlohn(ctx),
   'FIG:feiertage': () => feiertageBlock(),

@@ -1972,6 +1972,8 @@ export default {
     ganzeSchweiz: 'Tutta la Svizzera',
     stufenHinweis: 'Più scuro significa un numero più alto, non migliore o peggiore.',
     stufenHinweisDunkel: 'Più chiaro significa un numero più alto, non migliore o peggiore.',
+    nichtGesichert: 'non verificato se adeguato nel frattempo',
+    standJahr: 'Stato {jahr}',
     belegWort: 'Fonte',
     nochmals: 'Riprova',
     karteZeigtErwachsene: { sie: 'La cartina mostra gli adulti dai 26 anni. Premio medio nella Sua classe d’età, stessa fonte:', du: 'La cartina mostra gli adulti dai 26 anni. Premio medio nella tua classe d’età, stessa fonte:' },

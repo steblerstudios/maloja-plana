@@ -1972,6 +1972,8 @@ export default {
     ganzeSchweiz: 'All of Switzerland',
     stufenHinweis: 'Darker means a higher number, not better or worse.',
     stufenHinweisDunkel: 'Lighter means a higher number, not better or worse.',
+    nichtGesichert: 'not confirmed whether updated since',
+    standJahr: 'As of {jahr}',
     belegWort: 'Source',
     nochmals: 'Try again',
     karteZeigtErwachsene: { sie: 'The map shows adults aged 26 and over. Average premium in your age group, same source:', du: 'The map shows adults aged 26 and over. Average premium in your age group, same source:' },

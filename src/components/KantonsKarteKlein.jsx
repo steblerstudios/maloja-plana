@@ -61,6 +61,10 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
   eigen && ring(RING_AUSSEN_PX, palette.surface, 'aussen'),
   eigen && ring(RING_INNEN_PX, palette.text, 'innen'));
 
+  // Ohne Kanton: der Weg zur Tabelle im Atlas, wo jede Quelle steht (keine Karte ohne Beleg).
+  const quellen = K.quellen.length > 0 ? K.quellen
+    : eigen && K.werte[eigen].quelle ? [K.werte[eigen].quelle]
+      : [{ text: 'Kantonsatlas, Quelle je Kanton in der Tabelle', url: `/kantonsatlas/#${K.anker}` }];
   const zeile = (stil, ...kinder) => h('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, ...stil } }, ...kinder);
   const leise = { color: palette.mid, fontSize: text.xs, marginTop: space.xs + 'px' };
   const link = { color: palette.skyDeep || palette.text, textDecoration: 'underline', textUnderlineOffset: '2px' };
@@ -104,7 +108,10 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
         ? vergleichsTabelle()
         : h(React.Fragment, null,
           eigen
-            ? zeile({ fontWeight: weight.semi }, `${name}: `, h('span', { lang: 'de' }, K.werte[eigen].text))
+            ? zeile({ fontWeight: weight.semi }, `${name}: `, h('span', { lang: 'de' }, K.werte[eigen].text),
+              // Alimente (14.11.2026): Stand je Kanton und, wo nötig, der Vorbehalt — wie die Tabelle auf /kantonsatlas/.
+              K.werte[eigen].stand && h('span', { style: { fontWeight: weight.normal, color: palette.mid } }, ` · ${t('erklaerseite.standJahr', { jahr: K.werte[eigen].stand })}`),
+              K.werte[eigen].nichtGesichert && h('span', { 'data-teil': 'nicht-gesichert', style: { fontWeight: weight.normal, color: palette.text } }, ` · ${t('erklaerseite.nichtGesichert')}`))
             : ohneKanton,
           K.ch && zeile({ color: palette.mid, marginTop: space.xs + 'px' }, `${t('erklaerseite.ganzeSchweiz')}: `, h('span', { lang: 'de' }, K.ch))),
       h('ul', { role: 'list', lang: 'de', style: { listStyle: 'none', padding: 0, margin: space.sm + 'px 0 0', display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px ' + space.ms + 'px', fontSize: text.xs, color: palette.mid } },
@@ -112,11 +119,13 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
           h('i', { 'aria-hidden': 'true', style: { display: 'inline-block', width: FELD_PX, height: FELD_PX, borderRadius: radius.hair, background: farben[s.s], boxShadow: `inset 0 0 0 1px ${palette.mid}` } }),
           s.text))),
       klassenZeilen,
-      zeile(leise, t(dunkel ? 'erklaerseite.stufenHinweisDunkel' : 'erklaerseite.stufenHinweis')),
+      // Zwei Gruppen (Mindestlohn) heissen nicht «höhere Zahl»: dort sagt die Legende selbst, was die Farbe zeigt.
+      !K.zweiGruppen && zeile(leise, t(dunkel ? 'erklaerseite.stufenHinweisDunkel' : 'erklaerseite.stufenHinweis')),
       // Legende wie auf der Atlas-Seite: Jahr und Rahmung («Rechenwert über alle Versicherten …»).
       h('p', { lang: 'de', style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: palette.text } }, K.legende),
-      K.quellen.length > 0 && h('p', { style: leise },
+      // Quelle je Kanton (Alimente): nur die des eigenen Kantons, sonst die der Karte.
+      quellen.length > 0 && h('p', { style: leise },
         `${t('erklaerseite.belegWort')}: `,
-        K.quellen.map((q, i) => h(React.Fragment, { key: q.url }, i > 0 && ' · ',
+        quellen.map((q, i) => h(React.Fragment, { key: q.url }, i > 0 && ' · ',
           h(ExternerLink, { t, href: q.url, hrefLang: 'de', lang: 'de', style: link }, q.text))))));
 }

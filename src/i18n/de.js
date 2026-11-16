@@ -1990,6 +1990,8 @@ export default {
     ganzeSchweiz: 'Ganze Schweiz',
     stufenHinweis: 'Dunkler heisst höhere Zahl, nicht besser oder schlechter.',
     stufenHinweisDunkel: 'Heller heisst höhere Zahl, nicht besser oder schlechter.',
+    nichtGesichert: 'nicht gesichert, ob seither angepasst',
+    standJahr: 'Stand {jahr}',
     belegWort: 'Quelle',
     nochmals: 'Nochmals versuchen',
     karteZeigtErwachsene: { sie: 'Die Karte zeigt Erwachsene ab 26 Jahren. Mittlere Prämie in Ihrer Altersklasse, gleiche Quelle:', du: 'Die Karte zeigt Erwachsene ab 26 Jahren. Mittlere Prämie in deiner Altersklasse, gleiche Quelle:' },

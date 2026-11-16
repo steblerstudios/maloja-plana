@@ -24,8 +24,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { EBENEN, KANTONE } from './seiten-vergleich.mjs';
-import { stufen, LEGENDE, STUFEN_FARBEN, KARTEN_FRUCHT } from './seiten/kantonsatlas.mjs';
+import { EBENEN, KANTONE, ATLAS_DATEN } from './seiten-vergleich.mjs';
+import { stufen, LEGENDE, STUFEN_FARBEN, KARTEN_FRUCHT, KANTONSATLAS, MINDESTLOHN, MINDESTLOHN_STUFE } from './seiten/kantonsatlas.mjs';
 import { KANTONE_IM_VERGLEICH } from './seiten/kantone-im-vergleich.mjs';
 import { standbildSvg, kostenteilAngaben } from './seiten-figuren.mjs';
 import { KRANKENKASSE } from './seiten/krankenkasse.mjs';
@@ -38,11 +38,14 @@ const KOPF = '// Erzeugt von scripts/app-verstehen.mjs — nicht von Hand änder
 // Welche Karten die App zeigt. Schlüssel = Ebene des Atlas; der Anker ist dieselbe id wie auf /kantonsatlas/.
 // Pilot 09.11.2026: praemie, lastNachIpv. Ausgeweitet am selben Abend (Stebler Studios «sauber weiter») auf die
 // fünf Werkzeuge, die schon auf ihre Atlas-Karte verlinkten.
-export const APP_KARTEN = ['praemie', 'lastNachIpv', 'steuer', 'miete', 'alq', 'sozialhilfe', 'el'];
+export const APP_KARTEN = ['praemie', 'lastNachIpv', 'steuer', 'miete', 'alq', 'sozialhilfe', 'el',
+  // 14.11.2026 (Stebler Studios «Ja, Kapitel», alle vier): Abläufe «Kind» und «Trennung», Werkzeug Stundenlohn.
+  'kinderzulage', 'kita', 'alimente', 'mindestlohn'];
 // Zu welcher Karte die App eine zweite Zahl daneben stellt (Stebler Studios 09.11.2026, «beides?»): bei der Last nach
 // Verbilligung auch die Last davor. Nur als Zahl, nicht als zweite Karte: Der Atlas teilt jede Karte in eigene
 // Viertel; zwei Karten hätten zwei Farbskalen, und ein Kanton könnte vorher und nachher gleich aussehen.
-export const APP_VERGLEICH = { lastNachIpv: 'last' };
+// Seit 14.11.2026 auch bei der Miete die Leerwohnungsziffer (Werkzeug Mietbeiträge), aus demselben Grund nur als Zahl.
+export const APP_VERGLEICH = { lastNachIpv: 'last', miete: 'leer' };
 
 // Prämie nach Altersklasse (Stebler Studios 09.11.2026, «sauber weiter»; Fachprüfung: die Karte zeigt Erwachsene,
 // das Werkzeug rechnet aber auch für Kinder und junge Erwachsene). Dieselbe BAG-Datei wie die Karte
@@ -57,6 +60,40 @@ function altersklassen(klassen, fmt) {
   }]));
 }
 
+// Quellen beider Seiten: die Mindestlohn- und Alimente-Quellen stehen nur auf /kantonsatlas/.
+const ALLE_QUELLEN = [...KANTONE_IM_VERGLEICH.quellen, ...KANTONSATLAS.quellen];
+const quelleText = (q) => ({ text: `${q.herausgeber}, ${q.titel}${q.datum ? `, ${q.datum}` : ''}`, url: q.url });
+const quelleMitKey = (key) => {
+  const q = ALLE_QUELLEN.find((x) => x.key === key);
+  if (!q) throw new Error(`app-verstehen: unbekannte Quelle ${key}`);
+  return quelleText(q);
+};
+
+// Alimente (14.11.2026): Jeder Kanton hat seine eigene Rechtsquelle, und VD ist nicht gesichert. Die App zeigt
+// beim eigenen Kanton dessen Quelle und den Vorbehalt, wie die Tabelle auf /kantonsatlas/.
+function jeKanton(key, k) {
+  if (key !== 'alimente') return {};
+  const a = ATLAS_DATEN.alimente[k];
+  return { stand: String(a.jahr), quelle: quelleMitKey(`alimente${k}`), ...(a.sicher === false ? { nichtGesichert: true } : {}) };
+}
+
+// Mindestlohn (14.11.2026): zwei Gruppen statt vier Stufen, wie die Karte auf /kantonsatlas/. Stufe 3 = mit, 1 = ohne.
+function mindestlohnKarte() {
+  const mit = KANTONE.filter((k) => MINDESTLOHN[k]);
+  return {
+    titel: 'Kantonaler Mindestlohn',
+    einheit: 'Fr. pro Stunde, brutto, Stand 2026',
+    anker: 'karte-mindestlohn',
+    frucht: KARTEN_FRUCHT.mindestlohn,
+    zweiGruppen: true,
+    legende: LEGENDE.mindestlohn,
+    quellen: mit.map((k) => quelleMitKey(`ml${k[0]}${k[1].toLowerCase()}`)),
+    ch: null,
+    spannen: [{ s: 3, text: `mit kantonalem Mindestlohn (${mit.length})` }, { s: 1, text: `ohne (${KANTONE.length - mit.length})` }],
+    werte: Object.fromEntries(KANTONE.map((k) => [k, { s: MINDESTLOHN_STUFE(k), text: MINDESTLOHN[k] ? `${MINDESTLOHN[k].chfStunde.toFixed(2)} Fr. pro Stunde` : 'kein kantonaler Mindestlohn' }])),
+  };
+}
+
 function vergleich(key) {
   const V = EBENEN[key];
   return { titel: V.titel, ch: V.ch != null ? V.fmt(V.ch) : null, werte: Object.fromEntries(KANTONE.map((k) => [k, V.fmt(V.wert(k))])) };
@@ -66,6 +103,7 @@ export function erzeugeKarten() {
   const geo = JSON.parse(readFileSync(resolve(HIER, 'daten', 'kantonsatlas', 'paths.json'), 'utf8'));
   const karten = {};
   for (const key of APP_KARTEN) {
+    if (key === 'mindestlohn') { karten[key] = mindestlohnKarte(); continue; }
     const E = EBENEN[key];
     const { stufe, spannen } = stufen(key);
     karten[key] = {
@@ -75,10 +113,10 @@ export function erzeugeKarten() {
       // Farbe der Karte = Frucht ihres Lebensbereichs, wie auf /kantonsatlas/ (Brand Book §7c).
       frucht: KARTEN_FRUCHT[key],
       // Legende wie auf /kantonsatlas/: Jahr, Rahmung («Rechenwert …»), Belege (Swiss-Precision-Prüfung 09.11.2026).
-      ...belege(LEGENDE[key], KANTONE_IM_VERGLEICH.quellen),
+      ...belege(LEGENDE[key], ALLE_QUELLEN),
       ch: E.ch != null ? E.fmt(E.ch) : null,
       spannen: spannen.map((s) => ({ s: s.s, text: s.min === s.max ? E.fmt(s.min) : `${E.fmt(s.min)} bis ${E.fmt(s.max)}` })),
-      werte: Object.fromEntries(KANTONE.map((k) => [k, { s: stufe[k], text: E.fmt(E.wert(k)) }])),
+      werte: Object.fromEntries(KANTONE.map((k) => [k, { s: stufe[k], text: E.fmt(E.wert(k)), ...jeKanton(key, k) }])),
       ...(APP_VERGLEICH[key] ? { vergleich: vergleich(APP_VERGLEICH[key]) } : {}),
       ...(APP_ALTERSKLASSEN[key] ? { altersklassen: altersklassen(APP_ALTERSKLASSEN[key], E.fmt) } : {}),
     };
