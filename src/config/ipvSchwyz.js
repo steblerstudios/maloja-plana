@@ -1,4 +1,4 @@
-// Prämienverbilligung (IPV) Kanton Schwyz — Richtprämie minus Selbstbehalt, Jahr 2026 (K31).
+// Prämienverbilligung (IPV) Kanton Schwyz — Richtprämie minus Selbstbehalt, Jahre 2026 und 2027 (K31).
 // Auf dem gemeinsamen Rahmen (config/kantonsModell.js).
 //
 // Belege (an der Quelle gelesen 28.09.2026), Wortlaute in docs/sources/ipv-kantone-2026.md,
@@ -23,6 +23,16 @@
 //   [5] SVA Schwyz, Merkblatt «Prämienverbilligung 2027 im Kanton Schwyz» (PDF, 23.03.2026).
 //       Die drei Beispiele rechnen mit den Richtprämien 2026 (5'583.60 / 1'285.20 / 3'931.20)
 //       und 11 % — das ist der Prüfstein der Tests (src/config/__tests__/ipvSchwyz.test.js).
+//       Dasselbe Merkblatt, Abschnitt «Höhe der Prämienverbilligung»: «Der Selbstbehalt liegt gemäss der
+//       Volksabstimmung zur Teilrevision des EGzKVG vom 4. März 2018 bei 11 Prozent.»
+//   [6] SVA Schwyz, «Prämienverbilligung 2027 — Durchschnittsprämien, Richtprämien, Kriterien Grenzwerte»
+//       (PDF «Grenzwerte-Internet.pdf», erstellt 06.11.2026, gelesen 16.11.2026,
+//       https://www.sva-sz.ch/uploads/Dateien/Merkblaetter/Individuelle-Praemienverbilligung/Grenzwerte-Internet.pdf):
+//       Richtprämien 2027 nach Jahrgang, Freibeträge, Vermögensobergrenzen, beide Tabellen «Höchsteinkommen».
+//       Gleicher Aufbau wie [4]; geändert haben nur Richtprämien und Höchsteinkommen.
+//       Der Selbstbehalt 2027 bleibt 11 %: [2] unverändert, und die hängige Teilrevision des EGzKVG (RRB 710/2026
+//       vom 22.09.2026, Selbstbehalt 10 %, Richtprämie 85–90 %) sieht vor, dass die Prämienverbilligung 2027
+//       «nach bisherigem Recht» durchgeführt wird.
 //
 // DAS MODELL IN EINEM SATZ
 // Verbilligt wird die Summe der Richtprämien, soweit sie 11 % des anrechenbaren Einkommens
@@ -84,6 +94,7 @@ import {
 } from './kantonsModell.js';
 
 // Werte 2026, wörtlich aus [1]–[4]. Alle Beträge sind Jahresbeträge in CHF.
+// Ab 2027 auch IPV_SZ_2027 (unten); welches Jahr gilt, entscheidet szWerte() nach dem Kalenderjahr.
 export const IPV_SZ = {
   jahr: 2026,
   // [4] «Richtprämien … Für das Jahr 2026»: Erwachsene (ab Jahrgang 2000) · Junge Erwachsene
@@ -118,12 +129,36 @@ export const IPV_SZ = {
   mindestbetrag: 50,
 };
 
+// Werte 2027, wörtlich aus [6] (Freibeträge, Vermögensgrenze, Selbstbehalt, Mindestanteil und Mindestbetrag
+// unverändert, siehe [1]–[3], [5], [6]).
+export const IPV_SZ_2027 = {
+  ...IPV_SZ,
+  jahr: 2027,
+  // [6] «Für das Jahr 2027 gelten folgende Richtprämien»: Erwachsene (ab Jahrgang 2001) 5'810.40 · Junge Erwachsene
+  // (Jahrgang 2002 - 2008) 4'093.20 · Kinder (Jahrgang 2009 und jünger) 1'350.00 — 90 % der Durchschnittsprämien
+  // 6'456.00 / 4'548.00 / 1'500.00 ([6], § 9 [1]).
+  richtpraemie: { e: 5810.40, j: 4093.20, k: 1350.00 },
+  // [6] «Höchsteinkommen», Spalte Alleinstehende, ohne Kind bis 4 Kinder (Mietzinsregion 3, Kinder unter 11).
+  hoechsteinkommenMinimal: [43806, 56376, 66241, 74811, 80701],
+  // [6] zweite Tabelle (Mindestanspruch der Kinder 80 %), Alleinstehende, ohne Kind bis 4 Kinder.
+  hoechsteinkommenKinderMinimal: [43806, 63441, 74887.25, 84774.75, 91762.25],
+};
+
+// Werte je Anspruchsjahr, gewählt nach dem Kalenderjahr (Muster wie IPV_AG_JAHRE). Fehlt ein Jahr, rechnet
+// die App nicht — der Jahres-Riegel. Für 2028 also wieder: erst eintragen, wenn die SVA publiziert hat.
+export const IPV_SZ_JAHRE = { 2026: IPV_SZ, 2027: IPV_SZ_2027 };
+
+export function szWerte(jahr = new Date().getFullYear()) {
+  return IPV_SZ_JAHRE[jahr] || null;
+}
+
 // Die Rechnung selbst — ohne App-Daten, damit die Tests sie gegen die Beispiele [5] prüfen
 // können. `personen`: 'e' Erwachsene, 'j' junge Erwachsene, 'k' Kinder (j und e nur für die
 // Beispiele; die App ruft sie mit einer erwachsenen Person und Kindern auf). `me` = anrechenbares
 // Einkommen im Jahr. Die Grenze nach § 5 Abs. 1 lit. c prüft der Einstieg, nicht diese Funktion.
-export function ipvSchwyzRechnen({ personen, me }) {
-  const p = IPV_SZ;
+// `werte`: Datensatz des Anspruchsjahres (Vorgabe 2026, wie die Beispiele [5]).
+export function ipvSchwyzRechnen({ personen, me, werte = IPV_SZ }) {
+  const p = werte;
   const refs = personen.map((c) => p.richtpraemie[c]);
   const summe = refs.reduce((a, b) => a + b, 0);
   // me nie negativ: sonst wüchse der Betrag über die Summe der Richtprämien hinaus, was § 10
@@ -141,7 +176,7 @@ export function ipvSchwyzRechnen({ personen, me }) {
   return {
     summe, selbstbehalt, differenz, anteil, mindestUnklar, erwachseneAnteil,
     erwachseneSumme: personen.reduce((s, c, i) => (c === 'e' ? s + refs[i] : s), 0),
-    // Rechnerischer Nullpunkt: 5'583.60 / 11 % = 50'760 für eine erwachsene Person.
+    // Rechnerischer Nullpunkt: 5'583.60 / 11 % = 50'760 für eine erwachsene Person (2027: 5'810.40 / 11 % = 52'821.82).
     nullpunkt: summe / p.selbstbehalt,
     grund: differenz >= p.mindestbetrag ? null : (differenz > 0 ? 'mindestbetrag' : 'ueberGrenze'),
   };
@@ -153,13 +188,15 @@ export function ipvSchwyzRechnen({ personen, me }) {
 export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
   const b = data.basis || {};
   const f = data.finanzen || {};
-  const p = IPV_SZ;
+  // Anspruchsjahr = laufendes Kalenderjahr (szWerte). 2027 ist seit 16.11.2026 eingetragen ([6]); für ein
+  // Jahr ohne Eintrag lieber keine Zahl.
+  const p = szWerte();
+  if (!p) return orientierung('jahr');
   const jahr = p.jahr;
-  // Die Richtprämien und Höchsteinkommen 2027 veröffentlicht die SVA «ab Anfang November 2026»
-  // [5]; am 28.09.2026 lagen sie nicht vor. Ab dem 01.01.2027 lieber keine Zahl.
+  // Zweite Sicherung, falls je ein Datensatz eines vergangenen Jahres hereingereicht wird.
   if (jahrVorbei(jahr)) return orientierung('jahr');
   if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
-  // Alter nach Jahrgang: [4] führt 2026 «Erwachsene (ab Jahrgang 2000)» — erwachsen ist, wer im
+  // Alter nach Jahrgang: [4] führt 2026 «Erwachsene (ab Jahrgang 2000)», [6] 2027 «ab Jahrgang 2001» — erwachsen ist, wer im
   // Anspruchsjahr 26 wird. Dieselbe Regel wie LU und AG, hier mit der amtlichen Tabelle für
   // genau dieses Anspruchsjahr belegt.
   // ⚠️ Der Stichtag der «persönlichen Verhältnisse» ist in den Quellen nicht einheitlich:
@@ -168,7 +205,7 @@ export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Widerspruch steht als Frage in FRAGEN-AN-DIE-AEMTER.md.
   const geburt = geburtsjahr(b);
   if (!geburt || !ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung('alter');
-  // Kinder: Jahrgang 2008 und jünger [4], also höchstens 18 im Anspruchsjahr — beim eingetippten
+  // Kinder: Jahrgang 2008 und jünger [4] (2027: 2009 und jünger [6]), also höchstens 18 im Anspruchsjahr — beim eingetippten
   // Alter ein Jahr dazu (wie LU, vorsichtig an der 18).
   const kinderJahre = kinderAlter(hh.children, jahr, 1);
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
@@ -200,7 +237,7 @@ export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
   if (regel.widerlegt(f, rohesEinkommenJahr(f), jahre)) return orientierung('saeule3aAbzugUnklar');
   const me = Math.max(0, einkommenJahr(f, regel, jahre) + p.vermoegenAnteil * vermoegenNachFreibetrag);
 
-  const r = ipvSchwyzRechnen({ personen: ['e', ...kinderJahre.map(() => 'k')], me });
+  const r = ipvSchwyzRechnen({ personen: ['e', ...kinderJahre.map(() => 'k')], me, werte: p });
   const cantonData = { ...ipvData, maxIncome: null };
   const gemeinsam = {
     canton: 'SZ', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltSZ',
