@@ -55,13 +55,13 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite deines Kantons nennt sie.' } },
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Voss chantun da domicil enconuscha prestaziuns cumplementaras per famiglias cun entradas modestas. Sche e quant che Vus survegnis, dependa da las cundiziuns dal chantun, per exempel da la vegliadetgna dals uffants, da las entradas, da la durada dal domicil en il chantun e dal status da dimora. La pagina uffiziala da Voss chantun las numna.', du: 'Tes chantun da domicil enconuscha prestaziuns cumplementaras per famiglias cun entradas modestas. Sche e quant che ti survegns, dependa da las cundiziuns dal chantun, per exempel da la vegliadetgna dals uffants, da las entradas, da la durada dal domicil en il chantun e dal status da dimora. La pagina uffiziala da tes chantun las numna.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         kulturlegi: { titel: 'KulturLegi (Caritas)', text: { sie: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — Vossa KulturLegi chantunala mussa tge che vala tar Vus.', du: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — tia KulturLegi chantunala mussa tge che vala tar tai.' } },
-        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
-        rekaFerien: { titel: 'Reka-Ferien für 200.–', text: 'Familien mit minderjährigen Kindern und knappem Budget verbringen eine Ferienwoche in einer Reka-Ferienwohnung oder Jugendherberge für einen Solidaritätsbeitrag von 200 Franken; für Alleinerziehende gibt es eigene günstige Ferienwochen.' },
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+        rekaFerien: { titel: 'Vacanzas Reka per 200.–', text: 'Famiglias cun uffants minorens e cun in budget stretg passentan in’emna da vacanzas en in’abitaziun da vacanzas Reka u en in albierg da giuventetgna per ina contribuziun da solidaritad da 200 francs; per geniturs sulets datti atgnas emnas da vacanzas favuraivlas.' },
       },
     },
     alleinerziehend: {
@@ -76,7 +76,7 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite deines Kantons nennt sie.' } },
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Voss chantun da domicil enconuscha prestaziuns cumplementaras per famiglias cun entradas modestas. Sche e quant che Vus survegnis, dependa da las cundiziuns dal chantun, per exempel da la vegliadetgna dals uffants, da las entradas, da la durada dal domicil en il chantun e dal status da dimora. La pagina uffiziala da Voss chantun las numna.', du: 'Tes chantun da domicil enconuscha prestaziuns cumplementaras per famiglias cun entradas modestas. Sche e quant che ti survegns, dependa da las cundiziuns dal chantun, per exempel da la vegliadetgna dals uffants, da las entradas, da la durada dal domicil en il chantun e dal status da dimora. La pagina uffiziala da tes chantun las numna.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital.' } },
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'L’agid social renconuscha il basegn pli grond d’ina chasada cun in sulet genitur e po cumplettar in bass retgav.' },
@@ -92,8 +92,8 @@ export default {
         iv: { titel: 'Prestaziuns da l’AI', text: 'Reintegraziun avant la renta: mesiras professiunalas, meds auxiliars e sche necessari ina renta. S’annunziar baud quinta il pli.' },
         // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für text]
         hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: { sie: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.', du: 'In import mensil sche ti has regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.' } },
-        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
-        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Decken die IV-Rente oder die Hilflosenentschädigung zusammen mit dem übrigen Einkommen die Lebenskosten nicht, stocken EL auf, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Das ist ein Recht, kein Entgegenkommen.' },
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta AI u l’indemnisaziun per persunas impotentas na cuvran ensemen cun las ulteriuras entradas betg ils custs da viver, cumplettan las PC, sut ulteriuras cundiziuns (facultad, durada da dimora). Quai è in dretg, betg carezza.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC survegn la premia quintada sco import forfetar — il pli aut la premia media chantunala. Quai n’è betg ina exoneraziun. Cun in bass retgav senza PC ha ins savens tuttina dretg sin in agid.' },
         steuern: { titel: 'Deducziuns fiscalas pervia da l’impediment', text: 'Las custas da malsogna ed impediment — chüra, meds auxiliars, viadis — pon vegnir deducidas dal retgav imponibel.' },
         serafe: { titel: 'Exoneraziun da la taxa da radio/televisiun', text: 'Tgi che survegn prestaziuns cumplementaras (PC) è exonerà da la taxa SERAFE sin dumonda — recuperabel retroactivamain.' },
@@ -138,8 +138,8 @@ export default {
         stipendien: { titel: 'Stipendis & contribuziuns da furmaziun', text: { sie: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor Vossa entrada e quella da Voss geniturs, cun termins d’annunzia.', du: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor tes entrada e quel da tes geniturs, cun termins d’annunzia.' } },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Giuvens creschids en furmaziun cun bass entrada han savens dretg sin agid per las premias da la cassa da malsauns — per sasezs.' },
         franchise: { titel: 'Tscherner la franchisa', text: 'Sut 26 onns è la premia pli bassa; cun paucas visitas medicinalas spargna ina franchisa pli auta dapli — da revair mintga atun.' },
-        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
-        ahv: { titel: 'AHV-Beiträge & Lücken', text: 'Ab dem Jahr nach dem 20. Geburtstag sind AHV-Beiträge fällig, auch ohne Job — Studierende ohne Erwerb zahlen bis Ende des Jahres, in dem sie 25 werden, den Mindestbeitrag. Fehlende Jahre senken später die Rente.' },
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+        ahv: { titel: 'Contribuziuns AVS & largias', text: 'A partir da l’onn suenter il 20avel anniversari èn las contribuziuns AVS debitas, era senza lavur — persunas che studeschan senza activitad da gudogn pajan fin la fin da l’onn, en il qual ellas vegnan 25 onns, la contribuziun minimala. Onns che mancan reduceschan pli tard la renta.' },
         waisenrente: { titel: 'Renta d’orfen en furmaziun', text: 'Sch’in genitur è mort, cuntinuescha la renta d’orfen durant la furmaziun — fin 25 onns. I va facilmain emblidà ch’ella na finescha betg simplamain cun 18.' },
       },
     },
@@ -161,8 +161,8 @@ export default {
       berechtigungen: {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         pensionierung: { titel: 'Transiziun en la pensiun', text: { sie: 'Stais Vus prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.', du: 'Stas ti prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.' } },
-        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
-        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Ein Recht, kein Entgegenkommen.' },
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta AVS na cuvra betg ils custs da viver e la pigiun, cumplettan las PC quella, sut ulteriuras cundiziuns (facultad, durada da dimora). In dretg, betg carezza.' },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Pensiunads cun bass entrada — e tuts cun prestaziuns cumplementaras — pon laschar gidar il chantun a pajar las premias da la cassa da malsauns.' },
         hilflosenentschaedigung: { titel: 'Indemnisaziun per impotenza', text: 'In import mensil sche ti dovras regularmain agid en il mintgadi — independent da l’entrada e separà da las PC.' },
         steuern: { titel: 'Deducziuns en la vegliadetgna', text: 'Cuosts da malsogna, tgira ed impediment pon vegnir deducids da l’entrada taxabla — igl è utigl da tegnair las quittanzas durant l’onn.' },
@@ -209,8 +209,8 @@ export default {
       intro: 'Suenter la mort d’in genitur han ils uffants dretgs clers che van facilmain a perder en in temp grev — ina renta d’orfen, e sustegn cumplementar sch’ella na tanscha betg.',
       berechtigungen: {
         waisenrente: { titel: 'Renta d’orfen (AVS/AI)', text: 'In uffant che ha pers in genitur retschaiva ina renta mensila — fin 18 onns, u 25 en furmaziun. Ella vegn dumandada tar la cassa da cumpensaziun.' },
-        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
-        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Deckt die Waisenrente die Lebenskosten nicht, kann die EL aufstocken — auch für Kinder und junge Menschen in Ausbildung, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Ein Recht, kein Entgegenkommen.' },
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta d’orfen na cuvra betg ils custs da viver, pon las PC cumplettar — era per uffants e persunas giuvnas en furmaziun, sut ulteriuras cundiziuns (facultad, durada da dimora). In dretg, betg carezza.' },
         stipendien: { titel: 'Stipendis', text: 'Ultra da la renta d’orfen pon stipendis chantunals sustegnair ina furmaziun u studi — controllar en parallel, cun agens termins.' },
         steuern: { titel: 'Facilitaziun fiscala', text: 'Il genitur survivent po far valair la tarifa parentala e las deducziuns per uffants; era tscherts cuosts en connex cun la mort pon sbassar la taglia.' },
       },
@@ -267,7 +267,8 @@ export default {
     fristLabel: 'Umzugsdatum',
     // TODO(rm): provisorisch — Quellenzeile deutsch wie de (fedlex ohne rm), Lücke gegenüber de geschlossen (16.11.2026)
     quelle: 'Quellen: [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[OR Art. 266c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_c]], [[AIG Art. 37|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_37]] (geprüft im September 2026).',
-    title: 'Umzug',
+    // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+    title: 'Midada d’abitaziun',
     intro: 'Ein Umzug zieht viele kleine Schritte nach sich. Hier der ruhige Überblick — Adresse, Gemeinde, alte Wohnung. Eines nach dem anderen.',
     step1Title: '1 · Neue Adresse',
     step1Known: 'Erfasst: {address}. Stimmt sie noch?',
@@ -4492,10 +4493,10 @@ export default {
     ergebnisEiner: 'Cun questas indicaziuns sa mussa ina via pussaivla: {weg}.',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     ergebnisMehrere: 'Cun questas indicaziuns sa mussan vias pussaivlas: {wege}.',
-    // TODO(rm): provisorisch — deutsch, Gruppe A L1 (11.11.2026), Übersetzung offen
-    sozBewilligung: { sie: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.', du: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lass dich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.' },
-    // TODO(rm): provisorisch — deutsch, Gruppe A rechts-pruefer (11.11.2026), Übersetzung offen
-    sozBewilligungF: { sie: 'Mit Ausweis F kann der Bezug von Sozialhilfe ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren; eine Beratungsstelle kann Ihre Lage einschätzen.', du: 'Mit Ausweis F kann der Bezug von Sozialhilfe ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren; eine Beratungsstelle kann deine Lage einschätzen.' },
+    // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+    sozBewilligung: { sie: 'Senza pass svizzer po il retratg d’agid social avair consequenzas per la permissiun da dimora; consultai ordavant in post da cussegliaziun u il servetsch social.', du: 'Senza pass svizzer po il retratg d’agid social avair consequenzas per la permissiun da dimora; consultescha ordavant in post da cussegliaziun u il servetsch social.' },
+    // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+    sozBewilligungF: { sie: 'Cun la permissiun F po il retratg d’agid social render pli grev ina dumonda posteriura per la reunificaziun da la famiglia u per ina permissiun da dimora; in post da cussegliaziun po giuditgar Vossa situaziun.', du: 'Cun la permissiun F po il retratg d’agid social render pli grev ina dumonda posteriura per la reunificaziun da la famiglia u per ina permissiun da dimora; in post da cussegliaziun po giuditgar tia situaziun.' },
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     markeNetto: 'Net {betrag} / mais',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
@@ -5325,18 +5326,18 @@ export default {
       body2: "Object da locaziun: {address}",
       body3: 'Jau As rog da confermar la recepziun da questa disditga per scrit e da fixar in termin per la surdat da la abitaziun.',
       closing: 'Cun salids amicaivels',
-      legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266l al. 1 succeder per scrit. Dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung des Ehegatten bzw. der eingetragenen Partnerin oder des eingetragenen Partners (OR Art. 266m). Resguardai per plaschair ils termins da disditga fixads en il contract.", // TODO(rm): Gegenlese Muttersprache (letzter Satz ergänzt 15.09.2026, Parität mit de/en/fr/it; OR-266m-Satz deutscher Rückfall nach Fachkorrektur 25.09.2026)
-        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
-      zustimmungTitel: 'Zustimmung zur Kündigung der Familienwohnung (OR Art. 266m)',
-        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
-      zustimmungText: 'Ich stimme dieser Kündigung als Ehegattin, Ehegatte, eingetragene Partnerin oder eingetragener Partner ausdrücklich zu (OR Art. 266m).',
-        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
-      zustimmungUnterschrift: 'Name, Ort, Datum und Unterschrift',
-        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266l al. 1 succeder per scrit. Sche l’abitaziun serva a la famiglia, dovra la disditga il consentiment explicit da la conjugada u dal conjugà resp. da la partenaria registrada u dal partenari registrà (OR art. 266m). Resguardai per plaschair ils termins da disditga fixads en il contract.", // TODO(rm): Gegenlese Muttersprache (letzter Satz ergänzt 15.09.2026, Parität mit de/en/fr/it; OR-266m-Satz provisorisch übersetzt 16.11.2026)
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+      zustimmungTitel: 'Consentiment a la disditga da l’abitaziun da la famiglia (OR art. 266m)',
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+      zustimmungText: 'Jau dun explicitamain mes consentiment a questa disditga sco conjugada, conjugà, partenaria registrada u partenari registrà (OR art. 266m).',
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
+      zustimmungUnterschrift: 'Num, lieu, data e suttascripziun',
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
       hinweis: {
-        title: 'Vor dem Versand',
-        zustimmung: { sie: 'Sind Sie verheiratet oder leben Sie in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift. Ist die Zustimmung nicht erhältlich oder wird sie ohne triftigen Grund verweigert, kann das Gericht angerufen werden (OR Art. 266m Abs. 2, ZGB Art. 169 Abs. 2).', du: 'Bist du verheiratet oder lebst du in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift. Ist die Zustimmung nicht erhältlich oder wird sie ohne triftigen Grund verweigert, kann das Gericht angerufen werden (OR Art. 266m Abs. 2, ZGB Art. 169 Abs. 2).' },
-        form: 'Von Hand unterschreiben (OR Art. 266l Abs. 1, Art. 14 Abs. 1) und eingeschrieben senden. Die Kündigung muss vor Beginn der Kündigungsfrist bei der Vermieterschaft sein (Frist: OR Art. 266c, oder länger laut Vertrag).',
+        title: 'Avant la spediziun',
+        zustimmung: { sie: 'Sche Vus vivais en matrimoni u en partenadi registrà e l’abitaziun serva a la famiglia, dovra la disditga il consentiment explicit da l’autra persuna; senza quel è ella nulla (OR art. 266m, 266o). La brev ha perquai ina segunda suttascripziun. Sch’il consentiment n’è betg da survegnir u vegn refusà senza motiv valaivel, po vegnir appellada la dretgira (OR art. 266m al. 2, ZGB art. 169 al. 2).', du: 'Sche ti vivas en matrimoni u en partenadi registrà e l’abitaziun serva a la famiglia, dovra la disditga il consentiment explicit da l’autra persuna; senza quel è ella nulla (OR art. 266m, 266o). La brev ha perquai ina segunda suttascripziun. Sch’il consentiment n’è betg da survegnir u vegn refusà senza motiv valaivel, po vegnir appellada la dretgira (OR art. 266m al. 2, ZGB art. 169 al. 2).' },
+        form: 'Suttascriver a maun (OR art. 266l al. 1, art. 14 al. 1) e trametter recumandà. La disditga sto esser tar il locatur u la locatura avant il cumenzament dal termin da disditga (termin: OR art. 266c, u pli lung tenor il contract).',
       },
     },
     taxExtension: {
@@ -5347,10 +5348,10 @@ export default {
       body1: 'cun quai As rog jau amicaivlamain per ina prolungaziun dal termin per la consegna da mia decleraziun da taglia {year}.',
       body2: "Jau dovr il temp supplementar per metter ensemen tut ils documents necessaris. Jau As engraziel per Vossa chapientscha.",
       closing: 'Cun salids amicaivels',
-      // TODO(rm): provisorisch — deutsch, Gruppe B K (11.11.2026), Übersetzung offen
+      // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
       hinweis: {
-        title: 'Vor dem Versand',
-        text: 'Die Verlängerung vor Ablauf der Frist beantragen. Viele Kantone bieten dafür ein Online-Formular an, die Verlängerung kann Gebühren kosten — beim kantonalen Steueramt nachsehen.',
+        title: 'Avant la spediziun',
+        text: 'Dumandar la prolungaziun avant la scadenza dal termin. Blers chantuns porschan per quai in formular online; la prolungaziun po custar taxas — guardar tar l’uffizi chantunal da taglia.',
       },
     },
     insuranceSwitch: {
@@ -5363,14 +5364,14 @@ export default {
       body2: 'Jau As rog da ma trametter ina conferma scritta da la disditga.',
       closing: 'Cun salids amicaivels',
       legalNote: "Indicaziun: La disditga da l'assicuranza da basa per la fin da l'onn sto tenor LAMal art. 7 al. 2 arrivar tar l'assicurader il pli tard ils 30 da november. Recumandà: trametter per posta recumandada.", // TODO(rm): Gegenlese Muttersprache (al. 2 + Einschreiben ergänzt 15.09.2026)
-        // TODO(rm): provisorisch — deutsch, Gruppe B L2/L3 (11.11.2026), Übersetzung offen
+        // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
       hinweis: {
-        title: 'Vor der Kündigung',
-        frist: 'Die Kündigung muss bis am {frist} bei der Kasse eingehen (KVG Art. 7 Abs. 2).',
-        nachFrist: 'Für einen Wechsel auf Ende {verpasstJahr} ist die Frist am {verpasstFrist} abgelaufen. Der Brief kündigt darum auf Ende {jahr}; er muss bis am {frist} bei der Kasse eingehen. Sie können auch bis zur Prämienmitteilung im Herbst warten.',
-        semester: 'Im Grundmodell mit ordentlicher Franchise (Erwachsene 300 Franken, Kinder keine) ist auch ein Wechsel auf Ende Juni möglich: Eingang bis 31. März (KVG Art. 7 Abs. 1). Mit Hausarzt-, HMO- oder Telmed-Modell, Bonusversicherung oder wählbarer Franchise nur auf Ende Jahr (KVV Art. 94 Abs. 2, 100 Abs. 3).',
-        anmelden: 'Zuerst bei der neuen Kasse anmelden: Die bisherige Versicherung endet erst, wenn die neue Kasse die Aufnahme gemeldet hat (KVG Art. 7 Abs. 5).',
-        ausstaende: 'Sind Prämien, Kostenbeteiligungen, Verzugszinse oder Betreibungskosten offen, ist ein Wechsel nur möglich, wenn alles bis zum Ablauf der Kündigungsfrist bezahlt ist (KVG Art. 64a Abs. 6, KVV Art. 105l).',
+        title: 'Avant la disditga',
+        frist: 'La disditga sto arrivar fin ils {frist} tar la cassa (KVG art. 7 al. 2).',
+        nachFrist: 'Per ina midada per la fin da {verpasstJahr} è il termin scadì ils {verpasstFrist}. La brev disda perquai per la fin da {jahr}; ella sto arrivar fin ils {frist} tar la cassa. Vus pudais era spetgar fin la communicaziun da las primas en l’atun.',
+        semester: 'En il model da basa cun franschisa ordinaria (persunas creschidas 300 francs, uffants nagina) è era ina midada per la fin da zercladur pussaivla: arrivada fin ils 31 da mars (KVG art. 7 al. 1). Cun in model da medi da chasa, HMO u Telmed, cun ina assicuranza da bonus u cun ina franschisa elegibla mo per la fin da l’onn (KVV art. 94 al. 2, 100 al. 3).',
+        anmelden: 'L’emprim s’annunziar tar la nova cassa: L’assicuranza actuala finescha pir, cur che la nova cassa ha annunzià l’admissiun (KVG art. 7 al. 5).',
+        ausstaende: 'Sch’i restan primas, participaziuns als custs, tschains da retard u custs da scussiun avertas, è ina midada mo pussaivla, sche tut è pajà fin la fin dal termin da disditga (KVG art. 64a al. 6, KVV art. 105l).',
       },
     },
     kkReklamation: {
