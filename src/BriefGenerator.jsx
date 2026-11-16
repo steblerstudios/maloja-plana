@@ -613,7 +613,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
             style: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
           }, React.createElement('button', {
             type: 'button', onClick: (e) => { e.stopPropagation(); aufdecken(); },
-            style: { minHeight: '44px', padding: '10px 16px', background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: textTokens.body, fontWeight: weight.semi },
+            style: { minHeight: '44px', padding: '10px 16px', background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontSize: textTokens.body, fontWeight: weight.semi },
           }, t('backup.letterPreviewZeigen')));
         })()
       );
