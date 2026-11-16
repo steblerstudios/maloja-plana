@@ -913,7 +913,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           parsedBezugAlter < refAlterJahre && !(Number(bvgUmwandlung) >= 1 && Number(bvgUmwandlung) <= 10)
             && React.createElement('div', { 'data-teil': 'uws-vor-referenzalter', style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '2px', lineHeight: 1.5 } },
               t('vr.umwandlungssatzVorReferenzalter', { referenzalter: fmtAlterMonate(refAlterMonate) })),
-          React.createElement('div', null, t('vr.mindestzins') + ': ' + bvgResult.zinssatz + '%')
+          React.createElement('div', null, t('vr.mindestzins') + (bvgResult.zinsJahr ? ' ' + bvgResult.zinsJahr : '') + ': ' + bvgResult.zinssatz + '%'),
+          // Der Satz eines Jahres gilt in der Rechnung für die ganze Restlaufzeit (Fachprüfung 16.11.2026, Werte 2027).
+          bvgResult.zinsJahr && React.createElement('div', { 'data-teil': 'mindestzins-annahme', style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '2px', lineHeight: 1.5 } },
+            t('vr.mindestzinsAnnahme'))
         )
       ),
       bvgResult && !bvgResult.versichert && React.createElement('div', { style: { ...s.section, color: palette.skyDeep } },

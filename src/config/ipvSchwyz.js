@@ -52,7 +52,7 @@
 //   · unter dem minimalen Höchsteinkommen → die App rechnet;
 //   · darüber, solange die Formel noch einen Betrag ergäbe → keine Zahl, Grund
 //     `szGrenzeMietzinsregion` (sie wäre in Region 3 null, in Region 1 womöglich nicht);
-//   · ohne Kinder und über dem Nullpunkt der Formel (5'583.60 / 11 % = 50'760) → sicher kein
+//   · ohne Kinder und über dem Nullpunkt der Formel (2026: 5'583.60 / 11 % = 50'760; 2027: 52'821.82) → sicher kein
 //     Anspruch, gleich in welcher Region.
 // Die tabellierten Werte gehen bis 4 Kinder; «ab dem 5. Kind erhöht sich der Höchstwert
 // weiter» [4] ohne Zahl — ab 5 Kindern darum keine Zahl.
@@ -70,7 +70,7 @@
 //
 // BEWUSST NICHT GEBAUT:
 //   · Paare, Konkubinat und mehrere Erwachsene — das zweite Einkommen fehlt der App (§ 11 [1]).
-//   · junge Erwachsene (Jahrgang 2001–2007): in Ausbildung rechnen sie mit den Eltern (§ 11 Abs. 2
+//   · junge Erwachsene (2026: Jahrgang 2001–2007; 2027: 2002–2008): in Ausbildung rechnen sie mit den Eltern (§ 11 Abs. 2
 //     [1]), der Ausbildungsstatus fehlt der App; allein erhalten sie eine eigene Richtprämie —
 //     beides `alter` wie in LU.
 //   · Quellenbesteuerte (§ 5 [3]: 80 % des Bruttolohns), EL-Beziehende (§ 6 Abs. 1 [3], von
@@ -92,6 +92,7 @@ import {
   kinderAlter, ALTER_UNERFASST, UEBER_18, deckelnProPerson,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
+import { zahl } from '../utils/geld.js';
 
 // Werte 2026, wörtlich aus [1]–[4]. Alle Beträge sind Jahresbeträge in CHF.
 // Ab 2027 auch IPV_SZ_2027 (unten); welches Jahr gilt, entscheidet szWerte() nach dem Kalenderjahr.
@@ -246,7 +247,7 @@ export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
 
   // Ohne Kinder und über dem Nullpunkt: kein Anspruch, gleich in welcher Mietzinsregion.
   if (kinderZahl === 0 && r.differenz <= 0) {
-    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.szKeinAnspruch' });
+    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.szKeinAnspruch', noteParams: { nullpunkt: zahl(Math.ceil(r.nullpunkt)) } });
   }
   // § 5 Abs. 1 lit. c [1]: «kleiner ist als» — am minimalen Höchsteinkommen selbst also nicht
   // mehr sicher. Darüber hängt der Anspruch an Mietzinsregion und Kinderalter.
@@ -259,7 +260,7 @@ export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
     // darunter). Dann ein eigener Grund, der das Sichere sagt, statt «vielleicht kein Anspruch».
     if (me >= p.hoechsteinkommenKinderMinimal[tabelle]) return orientierung('szGrenzeMietzinsregion');
     // ⚠️ Die erste Tabelle ändert hier heute nichts: mit Kindern ist `mindestUnklar` schon ab rund
-    // 12'500 (1 Kind) bis 21'800 (5 Kinder) wahr, weit unter 56'052. Sie steht da, damit die Regel
+    // 12'500 (1 Kind) bis 21'800 (5 Kinder) wahr, weit unter 56'052 (2027: 56'376). Sie steht da, damit die Regel
     // stimmt, sobald die SVA die Verteilung beantwortet (Frage 2) und `mindestUnklar` wegfällt.
     // (Mutationsprobe 28.09.2026: `[tabelle]` → `[0]` bleibt grün — aus diesem Grund.)
     if (me >= p.hoechsteinkommenMinimal[tabelle] || r.mindestUnklar) return orientierung('szKinderMindestanspruch');
@@ -276,7 +277,7 @@ export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
   // § 18 Abs. 2 [1]: gesamthaft unter 50 Franken wird nichts ausbezahlt — nach dem Deckel
   // geprüft, weil es um den ausbezahlten Betrag geht.
   if (annual < p.mindestbetrag) {
-    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: annual > 0 ? 'ipv.szUnterMindestbetrag' : 'ipv.szKeinAnspruch' });
+    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: annual > 0 ? 'ipv.szUnterMindestbetrag' : 'ipv.szKeinAnspruch', noteParams: { nullpunkt: zahl(Math.ceil(r.nullpunkt)) } });
   }
   // § 17 Abs. 1/2 [1]: Gesuch bis Ende des Anspruchsjahres, danach verwirkt. Im Anspruchsjahr
   // läuft die Frist also immer noch — nach dem 31.12. greift ohnehin `jahrVorbei`. Darum kein

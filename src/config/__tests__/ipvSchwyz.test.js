@@ -191,7 +191,7 @@ describe('K31 calculateIPV für SZ (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: 3629.4 }))).toMatchObject({ eligible: true, annual: Math.round(5583.6 - 0.11 * 43552.8) });
     expect(calculateIPV(person({ monthlyIncome: 3629.5 }))).toMatchObject({ belegt: false, amount: null, offen: 'szGrenzeMietzinsregion' });
     expect(calculateIPV(person({ monthlyIncome: 50000 / 12 }))).toMatchObject({ offen: 'szGrenzeMietzinsregion' });
-    expect(calculateIPV(person({ monthlyIncome: 4230 }))).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.szKeinAnspruch' });
+    expect(calculateIPV(person({ monthlyIncome: 4230 }))).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.szKeinAnspruch', noteParams: { nullpunkt: '50’760' } });
     expect(calculateIPV(person({ monthlyIncome: 8000 }))).toMatchObject({ belegt: true, eligible: false, noteKey: 'ipv.szKeinAnspruch' });
   });
 
@@ -310,7 +310,7 @@ describe('K31 calculateIPV für SZ (App-Angaben → Modell)', () => {
       am2027();
       expect(calculateIPV(person({ monthlyIncome: 3650.4 }))).toMatchObject({ eligible: true, annual: Math.round(5810.4 - 0.11 * 43804.8) });
       expect(calculateIPV(person({ monthlyIncome: 3650.5 }))).toMatchObject({ belegt: false, offen: 'szGrenzeMietzinsregion' });
-      expect(calculateIPV(person({ monthlyIncome: 4410 }))).toMatchObject({ belegt: true, eligible: false, noteKey: 'ipv.szKeinAnspruch' });
+      expect(calculateIPV(person({ monthlyIncome: 4410 }))).toMatchObject({ belegt: true, eligible: false, noteKey: 'ipv.szKeinAnspruch', noteParams: { nullpunkt: '52’822' } });
     });
     it('1 Kind 2027: Kinder-Tabelle 63 441 statt 63 117', () => {
       am2027();

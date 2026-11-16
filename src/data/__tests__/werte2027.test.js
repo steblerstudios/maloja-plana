@@ -153,8 +153,10 @@ describe('BVG 2027 (BVV 2 Art. 5, AS 2026 547)', () => {
     expect(g(J2026).koordinierterLohn).toBe(64260);
     expect(g(J2027).zinssatz).toBe(2);
     expect(g(J2026).zinssatz).toBe(1.25);
+    expect(g(J2027).zinsJahr).toBe(2027);
+    expect(g(new Date(2028, 2, 1)).zinsJahr).toBe(2027); // ab 2028 ohne Eintrag: Satz und Jahr 2027
     // ein eigener Satz geht vor
-    expect(berechneBVGGuthaben({ alter: 64, jahresbruttolohn: 300000, stichtag: J2027, zinssatz: 1 }).zinssatz).toBe(1);
+    expect(berechneBVGGuthaben({ alter: 64, jahresbruttolohn: 300000, stichtag: J2027, zinssatz: 1 })).toMatchObject({ zinssatz: 1, zinsJahr: null });
   });
 
   it('Mindestzins je Jahr: 1,25 (BVV 2 Art. 12 Bst. k) · 2 (Bundesrat 4.11.2026); 2028 nicht belegt', () => {

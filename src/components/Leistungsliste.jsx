@@ -60,7 +60,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         ? t('dashboard.quickCheckResult', { income: fmt(ipvJahreseinkommen(probe)), amount: fmt(ipv.annual) })
           + (ipv.annahmen?.ohneDreizehnten ? ' · ' + t('ipv.ohneDreizehntenKurz') : '')
           + (hatAusweisFNS(probe) ? ' ' + t('ipv.ruhtMitSozialhilfe') : '')
-        : t(ipv.noteKey),
+        : t(ipv.noteKey, ipv.noteParams),
     };
     // F7-K2-4 (Stebler Studios 27.10.2026): Ohne Anspruch stand hier «Hängt von Kanton und Einkommen ab — im
     // Rechner eingeben», während das Kapitel Finanzen aus denselben Daten «Einkommen über Grenze (CHF …)»

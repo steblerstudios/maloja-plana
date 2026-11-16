@@ -435,13 +435,13 @@ export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, be
 //   2027: Medienmitteilung des Bundesrates vom 4.11.2026, «Der Bundesrat beschliesst eine Anhebung des
 //         Mindestzinssatzes auf 2%» (https://www.admin.ch/de/newnsb/8DF8zxcfvu7l, gelesen 16.11.2026):
 //         «Der Bundesrat hebt den Mindestzinssatz in der beruflichen Vorsorge ab Januar 2027 von bisher
-//         1,25% auf 2% an.» Die BVG-Kommission hatte 1,75 % empfohlen (BSV 31.08.2026).
+//         1,25% auf 2% an.» Die BVG-Kommission hatte 1,75 % empfohlen (laut derselben Mitteilung).
 //         ⚠️ Gegenprobe offen: Die Fedlex-Konsolidierung BVV 2 «Stand 1.1.2027» zeigt am 16.11.2026 noch
 //         Bst. k mit 1,25 %, die AS-Fundstelle der Änderung war nicht auffindbar. Vor dem Deploy dort prüfen.
 // Der Rechner nimmt den Satz des Stichtagsjahres für die ganze Restlaufzeit: Künftige Sätze kennt niemand.
 export const BVG_MINDESTZINS_JE_JAHR = Object.freeze({
   2026: Object.freeze({ satz: 1.25, quelle: 'BVV 2 Art. 12 Bst. k (seit 1.1.2024)' }),
-  2027: Object.freeze({ satz: 2, quelle: 'Bundesrat, Medienmitteilung 4.11.2026 (BVV 2 Art. 12, ab 1.1.2027)' }),
+  2027: Object.freeze({ satz: 2, quelle: 'Bundesrat, Medienmitteilung 4.11.2026 (Änderung BVV 2, AS-Fundstelle ausstehend)' }),
 });
 export function bvgMindestzins(stichtag) {
   return werteFuerStichtag(BVG_MINDESTZINS_JE_JAHR, stichtag);
@@ -473,8 +473,10 @@ export function berechneBVGGuthaben({
   geburtsmonat,
 }) {
   const koord = bvgKoordinationsabzug(jahresbruttolohn, stichtag);
-  // Ohne eigenen Satz der Mindestzins des Stichtagsjahres (bvgMindestzins).
-  if (!Number.isFinite(zinssatz)) zinssatz = bvgMindestzins(stichtag).satz;
+  // Ohne eigenen Satz der Mindestzins des Stichtagsjahres (bvgMindestzins). `zinsJahr`: das Jahr dieses Satzes,
+  // für die Anzeige (ab 2028 ohne Eintrag also 2027); bei einem eigenen Satz null.
+  let zinsJahr = null;
+  if (!Number.isFinite(zinssatz)) { const z = bvgMindestzins(stichtag); zinssatz = z.satz; zinsJahr = z.jahr; }
   const tag = stichtag || new Date();
   const startJahr = tag.getFullYear();
   if (!koord.versichert) return { versichert: false, guthaben: 0 };
@@ -519,6 +521,7 @@ export function berechneBVGGuthaben({
     monatsrente: Math.round(jahresrente / 12),
     umwandlungssatz: uws,
     zinssatz,
+    zinsJahr,
     jahresDetail,
   };
 }
