@@ -91,8 +91,10 @@ describe('Schalter, Notfallkarte, Brief-Vorschau', () => {
   });
   it('Brief-Vorschau: unscharf und für Bildschirmleser verdeckt, bis man sie antippt', () => {
     const b = quelle('BriefGenerator.jsx');
-    expect(b).toMatch(/const verdeckt = betraegeVerborgen\(\) && !vorschauOffen;/);
+    expect(b).toMatch(/const verdeckt = sichtschutzAn && !vorschauOffen;/);
+    expect(b).toMatch(/useEffect\(\(\) => \{ setVorschauOffen\(false\); \}, \[selected, sichtschutzAn\]\);/);
     expect(b).toMatch(/filter: verdeckt \? 'blur\(6px\)' : 'none'/);
-    expect(b).toMatch(/onClick: \(\) => setVorschauOffen\(true\)/);
+    expect(b).toMatch(/const aufdecken = \(\) => \{ setVorschauOffen\(true\);/);
+    expect(b).not.toMatch(/'button', \{[^}]*inset: 0/);
   });
 });

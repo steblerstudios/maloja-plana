@@ -211,6 +211,11 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
   // (mitEchtenBetraegen). Am Bildschirm liegt sie unscharf, bis man sie antippt — wie die
   // Betragsfelder (tokens.css). Entscheid Sophie 16.11.2026, Auswahl «Unscharf, antippen».
   const [vorschauOffen, setVorschauOffen] = useState(false);
+  const vorschauRef = useRef(null);
+  // Aufgedeckt gilt nur für diese Vorlage und diesen Sichtschutz: Vorlagenwechsel oder Sichtschutz
+  // aus → wieder zu, beim nächsten Einschalten liegt die Vorschau wieder unscharf (a11y-Prüfung 16.11.).
+  const sichtschutzAn = betraegeVerborgen();
+  useEffect(() => { setVorschauOffen(false); }, [selected, sichtschutzAn]);
   const [printed, setPrinted] = useState(false);
   // Frist in den Kalender gelegt (ruhige Bestätigung statt Doppel-Anlage).
   // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts im echten Kalender).
@@ -582,7 +587,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
 
     // Preview
     preview && previewHtml && (() => {
-      const verdeckt = betraegeVerborgen() && !vorschauOffen;
+      const verdeckt = sichtschutzAn && !vorschauOffen;
       return React.createElement('div', {
         style: {
           position: 'relative',
@@ -594,12 +599,21 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
           srcDoc: previewHtml,
           style: { width: '100%', height: '700px', border: 'none', filter: verdeckt ? 'blur(6px)' : 'none' },
           title: t('backup.letterPreview'),
-          'aria-hidden': verdeckt || undefined, tabIndex: verdeckt ? -1 : undefined,
+          'aria-hidden': verdeckt || undefined, tabIndex: verdeckt ? -1 : undefined, ref: vorschauRef,
         }),
-        verdeckt && React.createElement('button', {
-          type: 'button', onClick: () => setVorschauOffen(true),
-          style: { position: 'absolute', inset: 0, width: '100%', background: 'transparent', border: 'none', cursor: 'pointer', color: palette.text, fontSize: textTokens.body, fontWeight: weight.semi },
-        }, React.createElement('span', { style: { background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '10px 16px' } }, t('backup.letterPreviewZeigen')))
+        // Die Fläche nimmt jedes Antippen an; fokussierbar ist nur der Knopf in der Mitte — so bleibt
+        // sein Fokusring (tokens.css, outline-offset 2px) innerhalb des Rahmens sichtbar (WCAG 2.4.7).
+        // Danach geht der Fokus in die Vorschau, statt auf <body> zu fallen.
+        verdeckt && (() => {
+          const aufdecken = () => { setVorschauOffen(true); requestAnimationFrame(() => vorschauRef.current?.focus()); };
+          return React.createElement('div', {
+            onClick: aufdecken,
+            style: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
+          }, React.createElement('button', {
+            type: 'button', onClick: (e) => { e.stopPropagation(); aufdecken(); },
+            style: { minHeight: '44px', padding: '10px 16px', background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: textTokens.body, fontWeight: weight.semi },
+          }, t('backup.letterPreviewZeigen')));
+        })()
       );
     })(),
   );
