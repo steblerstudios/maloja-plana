@@ -250,6 +250,11 @@ function seiteBauen(seite, sprache) {
   const inhalt = inhaltFuer(sprache.code);
   const seitenUrl = url(seite.pfad, sprache);
   const istErklaerseite = inhalt.seiten.includes(seite);
+  // Seiten zu reinem Bundesrecht (EL, ALV, AHV) tragen einen eigenen Hinweis: dort gelten Fristen und
+  // Altersgrenzen überall gleich (Rechtsprüfung 16.11.2026). Das Merkmal steht nur im deutschen Original.
+  const bund = !!(SEITEN.find((s) => s.pfad === seite.pfad) || {}).bundesrecht;
+  const kurzhinweis = bund ? R.kurzhinweisBund : R.kurzhinweis;
+  const vorbehalt = bund ? R.vorbehaltBund : R.vorbehalt;
   const andere = inhalt.seiten.filter((s) => s.pfad !== seite.pfad);
 
   const abschnitte = seite.abschnitte.map((a) => {
@@ -356,7 +361,7 @@ function seiteBauen(seite, sprache) {
     <main>
 ${hinweisOben(sprache)}      <h1>${esc(seite.titel)}</h1>
       <p class="vorspann">${seite.vorspann}</p>
-${istErklaerseite ? `      <p class="hinweis">${esc(R.kurzhinweis)}${sprache.geprueft
+${istErklaerseite ? `      <p class="hinweis">${esc(kurzhinweis)}${sprache.geprueft
         ? `<br>\n      <strong class="stand">${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>` : ''}</p>` : ''}
 
 ${abschnitte}${kantonsBlock}
@@ -378,7 +383,7 @@ ${quellen}
       </ul>
       <p class="leise">${esc((!seite.quellen.some((s) => s.startsWith('skos')) && R.quellenLeiseOhneSkos) || R.quellenLeise)}</p>` : ''}
 
-${istErklaerseite ? `      <p class="vorbehalt">${R.vorbehalt}${sprache.geprueft
+${istErklaerseite ? `      <p class="vorbehalt">${vorbehalt}${sprache.geprueft
         ? `<br>\n      <strong>${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>${R.originalGeprueft ? ` ${esc(R.originalGeprueft)}` : ''}` : ''}</p>` : ''}
 
       <h2>${esc(R.weiterlesenTitel)}</h2>

@@ -646,6 +646,7 @@ export const SEITEN = [
   // (Meldepflicht), AIG Art. 43/44 (Familiennachzug), RTVG Art. 69b (Haushaltabgabe).
   {
     pfad: 'ergaenzungsleistungen',
+    bundesrecht: true,
     titel: 'Ergänzungsleistungen zur AHV und IV',
     beschreibung:
       'Wann Ergänzungsleistungen (EL) in Frage kommen, wie sie berechnet werden und warum sie keine Sozialhilfe sind. Eine Einordnung ohne Zahlen.',
