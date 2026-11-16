@@ -2816,7 +2816,8 @@ export default {
       hostingTitle: 'Hosting & domena',
       hosting1: "Il hosting e la domena vegnan furnids da Infomaniak Network SA (Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra, manads tenor il purschider cun electricitad regenerabla.", // TODO(rm): Gegenlese Muttersprache
       disclaimerTitle: "Exclusiun da responsabladad",
-      disclaimer1: "Ils cuntegns da questa applicaziun èn vegnids creads cun la pli gronda premura. Per l'exactezza, cumplettezza ed actualitad na vegn surpigliada nagina garanzia.",
+      // TODO(rm): provisorisch — Gegenlese (Haftungsvorbehalt OR Art. 100 Abs. 1 wie de, 16.11.2026)
+      disclaimer1: "Ils cuntegns da questa applicaziun èn vegnids creads cun la pli gronda premura. Per l'exactezza, cumplettezza ed actualitad na vegn surpigliada nagina garanzia. La responsabladad per donns chaschunads intenziunadamain u per negligientscha greva resta resalvada.",
       jurisdictionTitle: 'Dretg applitgabel',
       jurisdiction1: "Il dretg svizzer è applitgabel. Il for giudizial è Basilea-Citad, Svizra.",
     },

@@ -2791,7 +2791,7 @@ export default {
       hostingTitle: 'Hosting & domain',
       hosting1: 'Hosting and domain are provided by Infomaniak Network SA (Geneva, Switzerland) — a Swiss provider with data centres in Switzerland, powered, according to the provider, by renewable electricity.',
       disclaimerTitle: 'Disclaimer',
-      disclaimer1: 'The content of this application has been created with the greatest care. No guarantee is given for the accuracy, completeness, or timeliness of the information.',
+      disclaimer1: 'The content of this application has been created with the greatest care. No guarantee is given for the accuracy, completeness, or timeliness of the information. Liability for damage caused intentionally or through gross negligence remains reserved.',
       jurisdictionTitle: 'Applicable law',
       jurisdiction1: 'Swiss law applies. Place of jurisdiction is Basel-Stadt, Switzerland.',
     },

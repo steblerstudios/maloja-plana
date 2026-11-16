@@ -2791,7 +2791,7 @@ export default {
       hostingTitle: 'Hosting & dominio',
       hosting1: 'L’hosting e il dominio sono forniti da Infomaniak Network SA (Ginevra, Svizzera) — un provider svizzero con data center in Svizzera, alimentati, secondo il fornitore, con elettricità rinnovabile.',
       disclaimerTitle: 'Esclusione di responsabilità',
-      disclaimer1: 'I contenuti di questa applicazione sono stati creati con la massima cura. Non si assume alcuna garanzia per la correttezza, completezza o attualità delle informazioni.',
+      disclaimer1: 'I contenuti di questa applicazione sono stati creati con la massima cura. Non si assume alcuna garanzia per la correttezza, completezza o attualità delle informazioni. Resta riservata la responsabilità per danni causati intenzionalmente o per negligenza grave.',
       jurisdictionTitle: 'Diritto applicabile',
       jurisdiction1: 'Si applica il diritto svizzero. Il foro competente è Basilea-Città, Svizzera.',
     },

@@ -2790,7 +2790,7 @@ export default {
       hostingTitle: 'Hébergement & domaine',
       hosting1: 'L’hébergement et le domaine sont fournis par Infomaniak Network SA (Genève, Suisse) — un prestataire suisse avec des centres de données en Suisse, alimentés, selon le prestataire, en électricité renouvelable.',
       disclaimerTitle: 'Clause de non-responsabilité',
-      disclaimer1: 'Le contenu de cette application a été créé avec le plus grand soin. Aucune garantie n\'est donnée quant à l\'exactitude, l\'exhaustivité ou l\'actualité des informations.',
+      disclaimer1: 'Le contenu de cette application a été créé avec le plus grand soin. Aucune garantie n\'est donnée quant à l\'exactitude, l\'exhaustivité ou l\'actualité des informations. La responsabilité pour les dommages causés intentionnellement ou par négligence grave demeure réservée.',
       jurisdictionTitle: 'Droit applicable',
       jurisdiction1: 'Le droit suisse s\'applique. Le for juridique est Bâle-Ville, Suisse.',
     },
