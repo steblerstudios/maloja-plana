@@ -6884,7 +6884,7 @@ export default {
     umwandlungssatzEigenMarker: { sie: '(Ihre Pensionskasse)', du: '(Deine Pensionskasse)' },
     umwandlungssatzMindest: '(gesetzlicher Mindestsatz)',
     mindestzins: 'BVG-Mindestzins',
-    mindestzinsAnnahme: 'Für alle folgenden Jahre gleich angenommen. Den Satz legt der Bundesrat jedes Jahr neu fest.',
+    mindestzinsAnnahme: 'Gerechnet wird bis {bisJahr} mit den vom Bundesrat festgelegten Sätzen, ab {abJahr} vorsichtig mit {annahme} %. Den Satz legt der Bundesrat jedes Jahr neu fest.',
     bvgNichtVersichert: 'Jahreslohn nicht über der BVG-Eintrittsschwelle',
     bvgSchwelle: 'CHF {schwelle}, Stand {jahr}',
     geburtsdatumFehlt: 'Geburtsdatum unter «Basis» eintragen für die Berechnung der Pensionskasse.',

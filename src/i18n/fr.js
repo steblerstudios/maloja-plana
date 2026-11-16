@@ -6777,7 +6777,7 @@ export default {
     umwandlungssatzEigenMarker: { sie: '(votre caisse)', du: '(ta caisse)' },
     umwandlungssatzMindest: '(minimum légal)',
     mindestzins: 'Taux d\'intérêt minimal LPP',
-    mindestzinsAnnahme: 'Supposé identique pour toutes les années suivantes. Le Conseil fédéral fixe le taux chaque année.',
+    mindestzinsAnnahme: 'Jusqu’en {bisJahr}, le calcul utilise les taux fixés par le Conseil fédéral, dès {abJahr} prudemment {annahme} %. Le Conseil fédéral fixe le taux chaque année.',
     bvgNichtVersichert: 'Salaire annuel pas supérieur au seuil d’entrée LPP',
     bvgSchwelle: 'CHF {schwelle}, état {jahr}',
     geburtsdatumFehlt: 'Saisir la date de naissance sous « Données personnelles » pour le calcul de la caisse de pension.',

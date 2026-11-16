@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { werteFuerStichtag } from '../jahrestabelle.js';
-import { AHV_WERTE_JE_JAHR, ahvWerte, berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, vorbezugKuerzungsbetrag, bvgMindestzins, BVG_MINDESTZINS_JE_JAHR } from '../ahvRechner.js';
+import { AHV_WERTE_JE_JAHR, ahvWerte, berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, vorbezugKuerzungsbetrag, bvgMindestzins, BVG_MINDESTZINS_JE_JAHR, bvgZinsFuerJahr, BVG_MINDESTZINS_ANNAHME } from '../ahvRechner.js';
 import { LOHN_WERTE_JE_JAHR, lohnWerte, bvgKoordinationsabzug } from '../lohnAbzuege.js';
 import { saeule3aMaximum, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR } from '../saeule3a.js';
 
@@ -154,7 +154,8 @@ describe('BVG 2027 (BVV 2 Art. 5, AS 2026 547)', () => {
     expect(g(J2027).zinssatz).toBe(2);
     expect(g(J2026).zinssatz).toBe(1.25);
     expect(g(J2027).zinsJahr).toBe(2027);
-    expect(g(new Date(2028, 2, 1)).zinsJahr).toBe(2027); // ab 2028 ohne Eintrag: Satz und Jahr 2027
+    // ab 2028 ohne Eintrag: die Annahme 1,25 %, nicht der Satz 2027 (Entscheid Stebler Studios 16.11.2026)
+    expect(g(new Date(2028, 2, 1))).toMatchObject({ zinssatz: 1.25, zinsJahr: 2028, zinsBelegtBis: 2027, zinsAnnahme: 1.25 });
     // ein eigener Satz geht vor
     expect(berechneBVGGuthaben({ alter: 64, jahresbruttolohn: 300000, stichtag: J2027, zinssatz: 1 })).toMatchObject({ zinssatz: 1, zinsJahr: null });
   });
@@ -164,6 +165,19 @@ describe('BVG 2027 (BVV 2 Art. 5, AS 2026 547)', () => {
     expect(bvgMindestzins(J2027)).toMatchObject({ satz: 2, jahr: 2027, belegt: true });
     expect(bvgMindestzins(2028)).toMatchObject({ satz: 2, jahr: 2027, belegt: false });
     expect(BVG_MINDESTZINS_JE_JAHR[2027].quelle).toMatch(/4\.11\.2026/);
+  });
+
+  it('Projektion je Jahr: 2026 1,25 · 2027 2 · ab 2028 Annahme 1,25 — nicht 2 % für die ganze Restlaufzeit', () => {
+    expect([2025, 2026, 2027, 2028, 2040].map(bvgZinsFuerJahr)).toEqual([1.25, 1.25, 2, 1.25, 1.25]);
+    expect(BVG_MINDESTZINS_ANNAHME).toBe(1.25);
+    const r = berechneBVGGuthaben({ alter: 40, jahresbruttolohn: 80000, aktuellesGuthaben: 100000, stichtag: J2026 });
+    expect(r.jahresDetail.slice(0, 4).map((d) => d.zinssatz)).toEqual([1.25, 2, 1.25, 1.25]);
+    // Zins des ersten Jahres auf dem Anfangsbestand: 1,25 % von 100 000
+    expect(r.jahresDetail[0].zins).toBe(1250);
+    // Gegenprobe: mit 2 % durchgehend wäre das Guthaben höher
+    const durchgehend = berechneBVGGuthaben({ alter: 40, jahresbruttolohn: 80000, aktuellesGuthaben: 100000, stichtag: J2026, zinssatz: 2 });
+    expect(durchgehend.guthaben).toBeGreaterThan(r.guthaben);
+    expect(durchgehend.jahresDetail.every((d) => d.zinssatz === 2)).toBe(true);
   });
 });
 

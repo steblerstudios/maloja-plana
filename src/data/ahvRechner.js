@@ -438,7 +438,12 @@ export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, be
 //         1,25% auf 2% an.» Die BVG-Kommission hatte 1,75 % empfohlen (laut derselben Mitteilung).
 //         ⚠️ Gegenprobe offen: Die Fedlex-Konsolidierung BVV 2 «Stand 1.1.2027» zeigt am 16.11.2026 noch
 //         Bst. k mit 1,25 %, die AS-Fundstelle der Änderung war nicht auffindbar. Vor dem Deploy dort prüfen.
-// Der Rechner nimmt den Satz des Stichtagsjahres für die ganze Restlaufzeit: Künftige Sätze kennt niemand.
+// In der Projektion rechnet jedes Kalenderjahr mit seinem festgelegten Satz; für die Jahre NACH dem letzten
+// festgelegten gilt die Annahme BVG_MINDESTZINS_ANNAHME (Entscheid Stebler Studios 16.11.2026, «Ab 2028 1,25 %»).
+// Grund: 2 % ist nur für 2027 belegt; 2017–2023 galt 1 %, 2024–2026 1,25 %. Den Höchststand 40 Jahre
+// fortzuschreiben, hätte die Rente bis +14 % zu hoch gezeigt (Fachprüfung 16.11.2026). Künftige Sätze kennt
+// niemand — 1,25 % ist eine benannte, vorsichtige Annahme, kein Wert.
+export const BVG_MINDESTZINS_ANNAHME = 1.25;
 export const BVG_MINDESTZINS_JE_JAHR = Object.freeze({
   2026: Object.freeze({ satz: 1.25, quelle: 'BVV 2 Art. 12 Bst. k (seit 1.1.2024)' }),
   2027: Object.freeze({ satz: 2, quelle: 'Bundesrat, Medienmitteilung 4.11.2026 (Änderung BVV 2, AS-Fundstelle ausstehend)' }),
@@ -447,6 +452,13 @@ export function bvgMindestzins(stichtag) {
   return werteFuerStichtag(BVG_MINDESTZINS_JE_JAHR, stichtag);
 }
 const BVG_MINDESTZINS = bvgMindestzins().satz; // Stand beim Laden der App
+const BVG_ZINS_JAHRE = Object.keys(BVG_MINDESTZINS_JE_JAHR).map(Number).sort((a, b) => a - b);
+export const BVG_MINDESTZINS_BELEGT_BIS = BVG_ZINS_JAHRE[BVG_ZINS_JAHRE.length - 1];
+// Satz für ein Kalenderjahr der Projektion: festgelegt → dieser; danach → die Annahme; davor → der erste.
+export function bvgZinsFuerJahr(jahr) {
+  if (BVG_MINDESTZINS_JE_JAHR[jahr]) return BVG_MINDESTZINS_JE_JAHR[jahr].satz;
+  return jahr > BVG_MINDESTZINS_BELEGT_BIS ? BVG_MINDESTZINS_ANNAHME : BVG_MINDESTZINS_JE_JAHR[BVG_ZINS_JAHRE[0]].satz;
+}
 
 /**
  * Berechne geschätztes BVG-Altersguthaben bei Pensionierung.
@@ -473,12 +485,14 @@ export function berechneBVGGuthaben({
   geburtsmonat,
 }) {
   const koord = bvgKoordinationsabzug(jahresbruttolohn, stichtag);
-  // Ohne eigenen Satz der Mindestzins des Stichtagsjahres (bvgMindestzins). `zinsJahr`: das Jahr dieses Satzes,
-  // für die Anzeige (ab 2028 ohne Eintrag also 2027); bei einem eigenen Satz null.
-  let zinsJahr = null;
-  if (!Number.isFinite(zinssatz)) { const z = bvgMindestzins(stichtag); zinssatz = z.satz; zinsJahr = z.jahr; }
+  // Ohne eigenen Satz: je Kalenderjahr der Mindestzins (bvgZinsFuerJahr) — festgelegte Jahre mit ihrem Satz,
+  // spätere mit der Annahme. `zinssatz`/`zinsJahr` in der Rückgabe: der Satz des Startjahres für die Anzeige;
+  // `zinsJeJahr` false bei einem eigenen Satz (dann gilt er für alle Jahre, wie bisher).
   const tag = stichtag || new Date();
   const startJahr = tag.getFullYear();
+  const zinsJeJahr = !Number.isFinite(zinssatz);
+  const zinsJahr = zinsJeJahr ? startJahr : null;
+  if (zinsJeJahr) zinssatz = bvgZinsFuerJahr(startJahr);
   if (!koord.versichert) return { versichert: false, guthaben: 0 };
 
   let guthaben = aktuellesGuthaben;
@@ -496,7 +510,8 @@ export function berechneBVGGuthaben({
     const stufenAlter = Number.isFinite(geburtsjahr) ? startJahr + i - geburtsjahr : a;
     const gutschrift = BVG_GUTSCHRIFTEN.find(g => stufenAlter >= g.von && stufenAlter <= g.bis);
     const beitrag = gutschrift ? koord.koordinierterLohn * gutschrift.satz / 100 * anteil : 0;
-    const zins = guthaben * zinssatz / 100 * anteil;
+    const satzJahr = zinsJeJahr ? bvgZinsFuerJahr(startJahr + i) : zinssatz;
+    const zins = guthaben * satzJahr / 100 * anteil;
     guthaben += beitrag + zins;
 
     jahresDetail.push({
@@ -505,6 +520,7 @@ export function berechneBVGGuthaben({
       anteil,
       beitrag: Math.round(beitrag),
       zins: Math.round(zins),
+      zinssatz: satzJahr,
       guthaben: Math.round(guthaben),
     });
   }
@@ -522,6 +538,9 @@ export function berechneBVGGuthaben({
     umwandlungssatz: uws,
     zinssatz,
     zinsJahr,
+    // für den Hinweis in der Anzeige: bis wann festgelegt, ab wann die Annahme
+    zinsBelegtBis: zinsJeJahr ? BVG_MINDESTZINS_BELEGT_BIS : null,
+    zinsAnnahme: zinsJeJahr ? BVG_MINDESTZINS_ANNAHME : null,
     jahresDetail,
   };
 }

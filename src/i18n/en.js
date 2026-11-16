@@ -6778,7 +6778,7 @@ export default {
     umwandlungssatzEigenMarker: '(your fund)',
     umwandlungssatzMindest: '(legal minimum)',
     mindestzins: 'BVG minimum interest',
-    mindestzinsAnnahme: 'Assumed to stay the same for all following years. The Federal Council sets the rate anew each year.',
+    mindestzinsAnnahme: 'Up to {bisJahr} the calculation uses the rates set by the Federal Council, from {abJahr} a cautious {annahme} %. The Federal Council sets the rate anew each year.',
     bvgNichtVersichert: 'Annual pay not above the BVG entry threshold',
     bvgSchwelle: 'CHF {schwelle}, as of {jahr}',
     geburtsdatumFehlt: 'Enter your date of birth under “Personal basics” for the pension fund calculation.',

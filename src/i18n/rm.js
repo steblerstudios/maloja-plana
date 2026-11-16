@@ -7925,7 +7925,7 @@ export default {
     umwandlungssatzEigenMarker: { sie: '(Vossa cassa)', du: '(Tia cassa)' },
     umwandlungssatzMindest: '(minim LPP)',
     mindestzins: 'Tschains minimal LPP',
-    mindestzinsAnnahme: 'Supponì sco medem per tut ils onns suandants. Il Cussegl federal fixescha il tschains mintga onn da nov.',  // TODO(rm): Gegenlese
+    mindestzinsAnnahme: 'Fin {bisJahr} vegn quintà cun las tariffas fixadas dal Cussegl federal, a partir da {abJahr} cun precauziun cun {annahme} %. Il Cussegl federal fixescha il tschains mintga onn da nov.',  // TODO(rm): Gegenlese
     bvgNichtVersichert: "Entrada sut la limita d'entrada LPP",
     bvgSchwelle: '≤ CHF {schwelle}, stadi {jahr}',
     geburtsdatumFehlt: 'Endatar la data da naschientscha sut «Basa» per la calculaziun LPP.',
