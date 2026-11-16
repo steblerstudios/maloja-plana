@@ -259,48 +259,62 @@ export default {
   },
   // TODO(rm): provisorischer DE-Fallback für umzug — sauberes Romanisch nachziehen.
   umzug: {
-    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
-    fristVorbei: { sie: 'Die 14 Tage waren am {date} vorbei. Melden Sie sich trotzdem sofort an — die Gemeinde sagt, was nun gilt.', du: 'Die 14 Tage waren am {date} vorbei. Melde dich trotzdem sofort an — die Gemeinde sagt, was nun gilt.' },
-    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
-    fristHinweis: 'Anmelden bis spätestens {date} — 14 Tage nach dem Umzug (RHG Art. 11).',
-    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
-    fristLabel: 'Umzugsdatum',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    fristVorbei: { sie: 'Ils 14 dis èn passads ils {date}. S’annunziai tuttina immediat — la vischnanca di, tge che vala ussa.', du: 'Ils 14 dis èn passads ils {date}. S’annunzia tuttina immediat — la vischnanca di, tge che vala ussa.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    fristHinweis: 'S’annunziar il pli tard fin ils {date} — 14 dis suenter la midada d’abitaziun (Lescha davart l’armonisaziun dals registers, RHG Art. 11).',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    fristLabel: 'Data da la midada d’abitaziun',
     // TODO(rm): provisorisch — Quellenzeile deutsch wie de (fedlex ohne rm), Lücke gegenüber de geschlossen (16.11.2026)
     quelle: 'Quellen: [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[OR Art. 266c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_c]], [[AIG Art. 37|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_37]] (geprüft im September 2026).',
     // TODO(rm): provisorisch — Gegenlese (Übersetzung aus de, 16.11.2026)
     title: 'Midada d’abitaziun',
-    intro: 'Ein Umzug zieht viele kleine Schritte nach sich. Hier der ruhige Überblick — Adresse, Gemeinde, alte Wohnung. Eines nach dem anderen.',
-    step1Title: '1 · Neue Adresse',
-    step1Known: 'Erfasst: {address}. Stimmt sie noch?',
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step1Note: { sie: 'Noch keine Adresse erfasst. Tragen Sie sie im Kapitel Wohnen ein — dann setzt sie sich überall richtig ein.', du: 'Noch keine Adresse erfasst. Trag sie im Kapitel Wohnen ein — dann setzt sie sich überall richtig ein.' },
-    step1Link: 'Adresse im Kapitel Wohnen',
-    step2Title: '2 · Bei der Gemeinde an- und abmelden',
-    typeLabel: 'Welche Art Umzug ist das?',
-    typeGemeinde: 'In derselben Gemeinde',
-    typeKanton: 'Andere Gemeinde, gleicher Kanton',
-    typeExtra: 'In einen anderen Kanton',
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2Text: { sie: 'In der Schweiz melden Sie sich innert 14 Tagen nach dem Umzug bei der neuen Gemeinde an und bei der alten ab. Nehmen Sie Ausweis und Mietvertrag mit.', du: 'In der Schweiz meldest du dich innert 14 Tagen nach dem Umzug bei der neuen Gemeinde an und bei der alten ab. Nimm Ausweis und Mietvertrag mit.' },
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2Text_gemeinde: { sie: 'Sie bleiben in derselben Gemeinde — eine richtige Ab- und Anmeldung entfällt. Melden Sie nur Ihre neue Adresse der Einwohnerkontrolle, innert 14 Tagen. Nehmen Sie Ausweis und Mietvertrag mit.', du: 'Du bleibst in derselben Gemeinde — eine richtige Ab- und Anmeldung entfällt. Melde nur deine neue Adresse der Einwohnerkontrolle, innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.' },
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2Text_kanton: { sie: 'Sie wechseln die Gemeinde im selben Kanton: bei der alten Gemeinde abmelden, bei der neuen anmelden — innert 14 Tagen. Nehmen Sie Ausweis und Mietvertrag mit.', du: 'Du wechselst die Gemeinde im selben Kanton: bei der alten Gemeinde abmelden, bei der neuen anmelden — innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.' },
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2Text_extra: { sie: 'Sie ziehen in einen anderen Kanton: bei der alten Gemeinde abmelden, im neuen Kanton anmelden — innert 14 Tagen. Nehmen Sie Ausweis und Mietvertrag mit.', du: 'Du ziehst in einen anderen Kanton: bei der alten Gemeinde abmelden, im neuen Kanton anmelden — innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.' },
-    changes_gemeinde: 'Kanton, Steueramt und Krankenkassen-Prämienregion bleiben gleich — ausser der Adresse ändert sich wenig.',
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    changes_kanton: { sie: 'Der Kanton bleibt, aber die neue Gemeinde kann einen anderen Steuerfuss haben, und Ihre Krankenkassen-Prämienregion kann sich ändern. Beides lohnt sich zu prüfen.', du: 'Der Kanton bleibt, aber die neue Gemeinde kann einen anderen Steuerfuss haben, und deine Krankenkassen-Prämienregion kann sich ändern. Beides lohnt sich zu prüfen.' },
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    changes_extra: { sie: 'Ein anderer Kanton bedeutet neue kantonale Steuern, oft eine andere Krankenkassen-Prämie (neue Region) und das Ummelden von Fahrzeugen und Kontrollschildern. Prüfen Sie Prämie und Steuern für den neuen Kanton.', du: 'Ein anderer Kanton bedeutet neue kantonale Steuern, oft eine andere Krankenkassen-Prämie (neue Region) und das Ummelden von Fahrzeugen und Kontrollschildern. Prüf Prämie und Steuern für den neuen Kanton.' },
-    changesLinkPraemien: 'Krankenkassen-Prämie prüfen',
-    changesLinkTax: 'Steuern ansehen',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    intro: 'Ina midada d’abitaziun porta cun sai blers pass pitschens. Qua la survista quieta — adressa, vischnanca, abitaziun veglia. Ina chaussa suenter l’autra.',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step1Title: '1 · Nova adressa',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step1Known: 'Registrà: {address}. È ella anc gista?',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step1Note: { sie: 'Anc nagina adressa registrada. Inscrivai ella en il chapitel Abitar — lura vegn ella inserida dapertut correctamain.', du: 'Anc nagina adressa registrada. Inscriva ella en il chapitel Abitar — lura vegn ella inserida dapertut correctamain.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step1Link: 'Adressa en il chapitel Abitar',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step2Title: '2 · S’annunziar e s’annunziar giu tar la vischnanca',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    typeLabel: 'Tge gener da midada d’abitaziun è quai?',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    typeGemeinde: 'En la medema vischnanca',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    typeKanton: 'Autra vischnanca, medem chantun',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    typeExtra: 'En in auter chantun',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step2Text: { sie: 'En Svizra As annunziais Vus entaifer 14 dis suenter la midada d’abitaziun tar la nova vischnanca ed As annunziais giu tar la veglia. Prendai cun Vus il document d’identitad ed il contract da locaziun.', du: 'En Svizra t’annunzias ti entaifer 14 dis suenter la midada d’abitaziun tar la nova vischnanca e t’annunzias giu tar la veglia. Prenda cun tai il document d’identitad ed il contract da locaziun.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step2Text_gemeinde: { sie: 'Vus restais en la medema vischnanca — ina vaira annunzia e deregistraziun crouda davent. Annunziai mo Vossa nova adressa a la controlla dals abitants, entaifer 14 dis. Prendai cun Vus il document d’identitad ed il contract da locaziun.', du: 'Ti restas en la medema vischnanca — ina vaira annunzia e deregistraziun crouda davent. Annunzia mo tia nova adressa a la controlla dals abitants, entaifer 14 dis. Prenda cun tai il document d’identitad ed il contract da locaziun.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step2Text_kanton: { sie: 'Vus midais la vischnanca en il medem chantun: s’annunziar giu tar la vischnanca veglia, s’annunziar tar la nova — entaifer 14 dis. Prendai cun Vus il document d’identitad ed il contract da locaziun.', du: 'Ti midas la vischnanca en il medem chantun: s’annunziar giu tar la vischnanca veglia, s’annunziar tar la nova — entaifer 14 dis. Prenda cun tai il document d’identitad ed il contract da locaziun.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step2Text_extra: { sie: 'Vus midais en in auter chantun: s’annunziar giu tar la vischnanca veglia, s’annunziar en il nov chantun — entaifer 14 dis. Prendai cun Vus il document d’identitad ed il contract da locaziun. Sche Vus avais in permiss da dimora curta u in permiss da dimora (L u B), dovra la midada en in auter chantun ordavant ina permissiun dal nov chantun (Lescha davart ils esters e l’integraziun, AIG Art. 37).', du: 'Ti midas en in auter chantun: s’annunziar giu tar la vischnanca veglia, s’annunziar en il nov chantun — entaifer 14 dis. Prenda cun tai il document d’identitad ed il contract da locaziun. Sche ti has in permiss da dimora curta u in permiss da dimora (L u B), dovra la midada en in auter chantun ordavant ina permissiun dal nov chantun (Lescha davart ils esters e l’integraziun, AIG Art. 37).' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    changes_gemeinde: 'Chantun, uffizi da taglia e regiun da premias da la cassa da malsauns restan ils medems — ultra da l’adressa sa mida pauc.',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    changes_kanton: { sie: 'Il chantun resta, ma la nova vischnanca po avair in auter pe da taglia, e Vossa regiun da premias da la cassa da malsauns po sa midar. Omaduas chaussas valan la paina da controllar.', du: 'Il chantun resta, ma la nova vischnanca po avair in auter pe da taglia, e tia regiun da premias da la cassa da malsauns po sa midar. Omaduas chaussas valan la paina da controllar.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    changes_extra: { sie: 'In auter chantun munta novas taglias chantunalas, savens in’autra premia da la cassa da malsauns (nova regiun) e l’annunzia nova da vehichels e da numers da controlla. Controllai la premia e las taglias per il nov chantun.', du: 'In auter chantun munta novas taglias chantunalas, savens in’autra premia da la cassa da malsauns (nova regiun) e l’annunzia nova da vehichels e da numers da controlla. Controllescha la premia e las taglias per il nov chantun.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    changesLinkPraemien: 'Controllar la premia da la cassa da malsauns',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    changesLinkTax: 'Guardar las taglias',
     linkMietzins: 'Verifitgar ils contributs da fittanza',
     linkAddressChange: 'Crear ina brev da midada d’adressa',
     linkKkErst: 'Nov en Svizra? Cassa da malsauns per l’emprima giada',
     step2Button: 'Termin «Annunzia a la vischnanca» en il chalender ({date})',
-    step2Done: 'Im Kalender notiert.',
-    step2CalendarLink: 'Zum Kalender',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step2Done: 'Notà en il chalender.',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step2CalendarLink: 'Al chalender',
     // rm ungeprüft F5
     fristKarteTitel: 'Annunzia a la vischnanca',
     // rm ungeprüft F5
@@ -313,29 +327,42 @@ export default {
     passNachfuehren: 'Actualisar',
     // rm ungeprüft F5
     passKuendigen: 'Desdir',
-    reminderTitle: 'Bei der neuen Gemeinde anmelden',
-    reminderNotes: 'Innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (und bei der alten abmelden). Ausweis und Mietvertrag mitnehmen.',
-    step3Title: '3 · Adresse überall nachführen',
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step3Text: { sie: 'Diese Stellen sollten Ihre neue Adresse kennen:', du: 'Diese Stellen sollten deine neue Adresse kennen:' },
-    step3Post: 'Post — Nachsendeauftrag einrichten',
-    step3Kk: 'Krankenkasse',
-    step3Employer: 'Arbeitgeber',
-    step3Ahv: 'Ausgleichskasse / AHV',
-    step3Tax: 'Steueramt',
-    step3Insurance: 'Weitere Versicherungen (Hausrat, Haftpflicht, Auto)',
-    step3Bank: 'Bank & Karten',
-    step3Subs: 'Abos, Vereine, Ärztin/Arzt',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    reminderTitle: 'S’annunziar tar la nova vischnanca',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    reminderNotes: 'S’annunziar entaifer 14 dis suenter la midada d’abitaziun tar la nova vischnanca (e s’annunziar giu tar la veglia). Prender cun sai il document d’identitad ed il contract da locaziun.',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Title: '3 · Actualisar l’adressa dapertut',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Text: { sie: 'Quests posts duessan enconuscher Vossa nova adressa:', du: 'Quests posts duessan enconuscher tia nova adressa:' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Post: 'Posta — endrizzar in urden da renviament',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Kk: 'Cassa da malsauns',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Employer: 'Patrun u patruna',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Ahv: 'Cassa da cumpensaziun / AVS',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Tax: 'Uffizi da taglia',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Insurance: 'Ulteriuras assicuranzas (inventari da chasa, responsabladad civila, auto)',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Bank: 'Banca & cartas',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step3Subs: 'Abunaments, uniuns, medica/medi',
     step3Add: 'notar',
     step3Added: 'notà',
     step3AddAll: 'Agiuntar tut a la glista',
     step3TodoPrefix: 'Midar adressa:',
-    step4Title: '4 · Alte Wohnung kündigen',
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step4Text: { sie: 'Falls Sie zur Miete wohnen: kündigen Sie die alte Wohnung fristgerecht. Eine Vorlage finden Sie bei den Briefvorlagen.', du: 'Falls du zur Miete wohnst: kündige die alte Wohnung fristgerecht. Eine Vorlage findest du bei den Briefvorlagen.' },
-    step4Link: 'Zur Mietkündigung',
-    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    footerFrist: { sie: 'Die 14-Tage-Frist ist eine Orientierung — manche Gemeinden handhaben sie etwas anders. Fragen Sie im Zweifel bei Ihrer Gemeinde nach.', du: 'Die 14-Tage-Frist ist eine Orientierung — manche Gemeinden handhaben sie etwas anders. Frag im Zweifel bei deiner Gemeinde nach.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step4Title: '4 · Desdir l’abitaziun veglia',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step4Text: { sie: 'Sche Vus abitais a fit, stuais Vus desdir l’abitaziun veglia a temp. In model chattais Vus tar ils models da brevs.', du: 'Sche ti abitas a fit, stos ti desdir l’abitaziun veglia a temp. In model chattas ti tar ils models da brevs.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    step4Link: 'A la disditga da l’abitaziun',
+    // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    footerFrist: { sie: 'Il termin da 14 dis prescriva il dretg federal (RHG Art. 11); co che l’annunzia funcziunescha exactamain, reglan chantun e vischnanca. En cas da dubi dumandai là.', du: 'Ils 14 dis prescriva il dretg federal (RHG Art. 11); co che l’annunzia funcziunescha exactamain, reglescha tia vischnanca. En cas da dubi dumonda là.' },
   },
   // TODO(rm): provisorischer DE-Fallback für unfallKrankheit — sauberes Romanisch nachziehen.
   unfallKrankheit: {
@@ -3510,7 +3537,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Organspende-Entscheid neu, 27.09.2026)
     nichtFestgehalten: 'Anc betg fixà',
     // TODO(rm): provisorisch — Gegenlese (Satz zu 16 Jahren / TxG Art. 8 Abs. 7 aus de ergänzt, 16.11.2026)
-    rechtsstand: "Stadi dals 27.09.2026: En Svizra vala la regulaziun da consentiment extendida. Tgi che ha 16 onns, po fixar ina decisiun (TxG Art. 8 al. 7). Sch'i n'è nagina decisiun fixada, vegnan dumandads ils proxims confamigliars. La regulaziun d'opposiziun ed in register naziunal èn decidids, ma anc betg en vigur; l'UFSP fa quint cun il register en il segund semester 2027 e cun la regulaziun d'opposiziun a partir dal emprim semester 2028. Controllai per plaschair il stadi actual tar l'UFSP.",
+    rechtsstand: "Stadi dals 27.09.2026: En Svizra vala la regulaziun da consentiment extendida. Tgi che ha 16 onns, po fixar ina decisiun (TxG Art. 8 al. 7). Sch'i n'è nagina decisiun fixada, vegnan dumandads ils proxims confamigliars. La regulaziun d'opposiziun extendida ed in register naziunal èn decidids, ma anc betg en vigur; l'UFSP fa quint cun il register en il segund semester 2027 e cun la regulaziun d'opposiziun a partir dal emprim semester 2028. Controllai per plaschair il stadi actual tar l'UFSP.",
     bagQuelle: "UFSP: consentiment u opposiziun",
     bagUrl: 'https://www.bag.admin.ch/de/organspende-zustimmungsregelung-oder-widerspruchsregelung',
     vertrauensperson: 'Persuna da confidenza (num e telefon)',
