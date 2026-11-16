@@ -159,7 +159,8 @@ const MINDESTLOHN_ANGABE = {
 for (const k of Object.keys(MINDESTLOHN)) if (!MINDESTLOHN_ANGABE[k]) throw new Error(`Kantonsatlas: Mindestlohn ${k} ohne Angabe`);
 const rp2 = (n) => Number(n).toFixed(2);
 const mlText = (k) => (MINDESTLOHN[k] ? `${rp2(MINDESTLOHN[k].chfStunde)} Fr. pro Stunde` : 'kein kantonaler Mindestlohn');
-export const MINDESTLOHN_STUFE = (k) => (MINDESTLOHN[k] ? 3 : 1);
+// Stufe 4 für «mit»: k1 gegen k3 trug hell nur 2,75:1 (a11y-Prüfung 16.11.2026), k1 gegen k4 trägt über 3:1.
+export const MINDESTLOHN_STUFE = (k) => (MINDESTLOHN[k] ? 4 : 1);
 
 function karteMindestlohn(ctx) {
   ctx.abb += 1;
@@ -181,7 +182,7 @@ function karteMindestlohn(ctx) {
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>Kantonaler Mindestlohn</span></p>
             <div class="abb-bild">${svg}</div>
             <p class="atlas-einheit">Kanton mit oder ohne eigenen Mindestlohn</p>
-            <ul class="atlas-legende" role="list"><li><i class="k3" aria-hidden="true"></i>mit kantonalem Mindestlohn (${mit.length})</li><li><i class="k1" aria-hidden="true"></i>ohne (${KANTONE.length - mit.length})</li></ul>
+            <ul class="atlas-legende" role="list"><li><i class="k4" aria-hidden="true"></i>mit kantonalem Mindestlohn (${mit.length})</li><li><i class="k1" aria-hidden="true"></i>ohne (${KANTONE.length - mit.length})</li></ul>
           </div>
           <figcaption><strong>Abb. ${ctx.abb}.</strong> ${LEGENDE.mindestlohn}</figcaption>${KARTE_WERKZEUG.mindestlohn ? `
           <p class="atlas-weiter"><a href="${appBeispiel(KARTE_WERKZEUG.mindestlohn.view)}">Mit Ihren Angaben rechnen: ${esc(KARTE_WERKZEUG.mindestlohn.name)}</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>` : ''}
@@ -196,6 +197,11 @@ ${zeilen}
         </figure>`;
 }
 
+// Alimente: Kantone, deren Höchstbetrag laut Daten an die höchste AHV-Waisenrente gekoppelt ist (Feld `bezug`),
+// nicht bloss gleich hoch (Fachprüfung 16.11.2026: vorher über chf === 1008 gezählt).
+export const ALIMENTE_GEKOPPELT = KANTONE.filter((k) => /waise|orphelin/i.test(ATLAS_DATEN.alimente[k].bezug) && ATLAS_DATEN.alimente[k].chf === 1008);
+const und = (xs) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} und ${xs[xs.length - 1]}` : xs[0]);
+
 // ─── Feiertage: Tabelle statt Karte ─────────────────────────────────────────
 // 23 Kantone haben neun dem Sonntag gleichgestellte Feiertage, drei haben acht (Atlas, SECO-Stand
 // 12.12.2024): Eine Karte zeigte fast nur eine Farbe. Darum ein Satz und eine aufklappbare Tabelle.
@@ -204,10 +210,12 @@ export function feiertageBlock() {
   const anzahl = [...new Set(KANTONE.map((k) => F[k].n))].sort((a, b) => a - b);
   const mit = (n) => KANTONE.filter((k) => F[k].n === n);
   // Grösste Gruppe zuerst: «23 Kantone haben 9 solche Feiertage, Appenzell Ausserrhoden, Graubünden und Neuenburg 8».
-  const und = (xs) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} und ${xs[xs.length - 1]}` : xs[0]);
   const gruppen = anzahl.map((n) => ({ n, ks: mit(n) })).sort((a, b) => b.ks.length - a.ks.length);
+  // Zahlen im Fliesstext ausgeschrieben (Copy-Prüfung 16.11.2026).
+  const WORT = { 6: 'sechs', 7: 'sieben', 8: 'acht', 9: 'neun' };
+  const wort = (n) => WORT[n] || String(n);
   const wer = (ks) => (ks.length > 3 ? `${ks.length} Kantone` : und(ks.map((k) => de.cantons[k])));
-  const satz = `${wer(gruppen[0].ks)} ${gruppen[0].n} solche Feiertage${gruppen.slice(1).map((g) => `, ${wer(g.ks)} ${g.n}`).join('')}`;
+  const satz = `${wer(gruppen[0].ks)} ${wort(gruppen[0].n)} solche Feiertage${gruppen.slice(1).map((g) => `; ${wer(g.ks)} ${g.ks.length > 1 ? 'haben' : 'hat'} ${wort(g.n)}`).join('')}`;
   const hinweis = (k) => [
     F[k].uneinheitlich ? 'nicht im ganzen Kanton gleich' : '',
     F[k].n26 !== F[k].n ? `2026: ${F[k].n26}, weil einzelne Feiertage nur an bestimmten Wochentagen gelten` : '',
@@ -215,11 +223,11 @@ export function feiertageBlock() {
   ].filter(Boolean).join(' · ');
   const zeilen = KANTONE.map((k) => `              <tr><th scope="row">${de.cantons[k]}</th><td class="n">${F[k].n}</td><td>${hinweis(k)}</td></tr>`).join('\n');
   return `
-        <p>Das Arbeitsgesetz stellt den 1. August dem Sonntag gleich; dazu dürfen die Kantone bis zu acht weitere Feiertage bestimmen. [[q:arg]] Gezählt mit dem 1. August haben ${satz}. An diesen Tagen gelten für die Arbeit die Regeln für den Sonntag. Welche Tage es sind, unterscheidet sich stärker als ihre Zahl. [[q:secoFeiertage]]</p>
+        <p>Im Geltungsbereich des Arbeitsgesetzes ist der 1. August dem Sonntag gleichgestellt; dazu dürfen die Kantone höchstens acht weitere Feiertage den Sonntagen gleichstellen. [[q:arg]] Gezählt mit dem 1. August haben ${satz}. An diesen Tagen gelten für die Arbeit die Regeln für den Sonntag. Welche Tage es sind, unterscheidet sich stärker als ihre Zahl. [[q:secoFeiertage]]</p>
         <details class="atlas-werte">
           <summary>Feiertage je Kanton als Tabelle</summary>
           <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Dem Sonntag gleichgestellte Feiertage je Kanton"><table>
-            <caption>Dem Sonntag gleichgestellte Feiertage je Kanton, mit dem 1. August, Grundregel, alphabetisch</caption>
+            <caption>Dem Sonntag gleichgestellte Feiertage je Kanton, mit dem 1. August, ohne Sonderregeln einzelner Gebiete, alphabetisch</caption>
             <tr><th scope="col">Kanton</th><th scope="col" class="n">Anzahl</th><th scope="col">Hinweis</th></tr>
 ${zeilen}
           </table></div>
@@ -281,7 +289,7 @@ export const LEGENDE = {
   // Seit 14.11.2026 auch in der App (Abläufe «Kind», «Trennung», Werkzeug Stundenlohn).
   kinderzulage: 'Kinderzulage 2026 je Kind und Monat, erster Ansatz für Arbeitnehmende. Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr; das zeigt die Karte nicht. Kantone mit gleichem Betrag stehen in derselben Stufe, darum sind die Stufen nicht gleich gross. [[q:bsvFamz]]',
   kita: `Höchster Steuerabzug für die Betreuung von Kindern durch Dritte, Steuerjahr 2026, je Kind. Für ${KITA_NICHT_VERGLICHEN.map((k) => de.cantons[k]).join(' und ')} ist nur der Wert 2025 ausgewiesen; dort ist der Abzug auf die Elternbeiträge an die Betreuung begrenzt, die Zahl ist also kein fester Höchstbetrag. [[q:estvKantonsblaetter]] [[q:estvDrittbetreuung]]`,
-  alimente: `Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. ${KANTONE.filter((k) => ATLAS_DATEN.alimente[k].chf === 1008).length} Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch. Ob und wie viel jemand erhält, hängt vom Einkommen ab; die Grenzen sind je Kanton verschieden. Der Stand ist je Kanton verschieden. ${ATLAS_DATEN.alimente.VD.sicher === false ? `Für den Kanton ${de.cantons.VD} ist nicht gesichert, ob der Betrag inzwischen angepasst wurde.` : ''}`.trim(),
+  alimente: `Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. ${ALIMENTE_GEKOPPELT.length} Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch (${EBENEN.alimente.fmt(1008)} Franken); bei mehreren steht der Betrag nicht im Gesetz, sondern folgt aus dieser Kopplung. Ob und wie viel jemand erhält, hängt in den meisten Kantonen von Einkommen und Vermögen ab; die Regeln sind je Kanton verschieden. ${KANTONE.filter((x) => ATLAS_DATEN.alimente[x].einheit).map((x) => `${de.cantons[x]} rechnet ${ATLAS_DATEN.alimente[x].einheit.replace(/^pro /, 'je ').replace(/ und Monat$/, '')}, nicht je Kind. `).join('')}${KANTONE.filter((x) => ATLAS_DATEN.alimente[x].sicher === false).length ? `Nicht gesichert ist der Betrag für ${und(KANTONE.filter((x) => ATLAS_DATEN.alimente[x].sicher === false).map((x) => `den Kanton ${de.cantons[x]}`))}.` : ''}`.trim(),
   mindestlohn: 'Kantone mit einem gesetzlichen Mindestlohn, Stand 2026. Die Farbe zeigt nur, ob es einen gibt, nicht, wie hoch er ist. Ausnahmen, etwa für Lernende, regelt jeder Kanton selbst.',
 };
 
@@ -467,7 +475,7 @@ export const KANTONSATLAS = {
   hinweis:
     'Orientierung, keine Rechts- oder Finanzberatung. Eine Karte zeigt einen Wert je Kanton; für einen einzelnen Haushalt kann es ganz anders aussehen.',
   vorbehalt:
-    'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Statistiken und Geodaten — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Die Karten zeigen Durchschnitte, die verschieden erhoben werden und verschieden alt sind. Sie bewerten die Kantone nicht: Eine dunkle Fläche heisst nur, dass die Zahl höher ist. Massgebend sind die zuständigen Stellen.',
+    'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Statistiken, kantonaler Erlasse und Geodaten — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Die Karten zeigen Durchschnitte oder gesetzliche Beträge, die verschieden erhoben werden und verschieden alt sind. Sie bewerten die Kantone nicht: Eine dunkle Fläche heisst nur, dass die Zahl höher ist. Massgebend sind der Erlass und die zuständigen Stellen.',
   vorspann:
     'Wie hoch ist die Prämie, wie viel kostet eine Wohnung, wie viele Menschen beziehen Unterstützung? Das hängt in der Schweiz oft vom Kanton ab. Dieser Atlas zeigt die Zahlen als Karten, damit sichtbar wird, wo sich etwas ähnelt und wo nicht. Die genauen Werte stehen zu jeder Karte in einer aufklappbaren Tabelle.',
   inhaltsverzeichnis: true,
@@ -565,7 +573,12 @@ export const KANTONSATLAS = {
     // Alimente: je Kanton die Quelle aus dem Atlas (alimente.json), in der Tabelle verlinkt.
     ...KANTONE.map((k) => {
       const a = ATLAS_DATEN.alimente[k];
-      return { key: `alimente${k}`, herausgeber: `Kanton ${de.cantons[k]}`, titel: `Alimentenbevorschussung: ${a.recht.split(';')[0]}`, datum: `Stand ${a.jahr}`, url: a.url, belegt: `höchster Vorschuss ${a.chf} Fr. je Kind und Monat${a.sicher === false ? '; ob seither angepasst, nicht gesichert' : ''}`, amtlich: true };
+      // Rechtsprüfung 16.11.2026: Wo der Betrag aus der Kopplung folgt, belegt die Quelle die Regel, nicht die Zahl;
+      // LexFind ist eine Sammlung, keine amtliche Publikation.
+      const abgeleitet = /abgeleitet/i.test(a.notiz || '');
+      const lexfind = /lexfind\.ch/.test(a.url);
+      return { key: `alimente${k}`, herausgeber: lexfind ? `LexFind (Sammlung der Erlasse), Kanton ${de.cantons[k]}` : `Kanton ${de.cantons[k]}`, titel: `Alimentenbevorschussung: ${a.recht.split(';')[0]}`, datum: `Stand ${a.jahr}`, url: a.url,
+        belegt: abgeleitet ? `Kopplung an die höchste AHV-Waisenrente; der Betrag ${a.chf} Fr. ist daraus abgeleitet, nicht im Erlass genannt` : `höchster Vorschuss ${a.chf} Fr. ${a.einheit ? a.einheit.replace(/^pro /, 'pro ') : 'je Kind und Monat'}${a.sicher === false ? '; ob seither angepasst, nicht gesichert' : ''}`, amtlich: !lexfind };
     }),
     { key: 'swissmaps', herausgeber: 'Interactive Things, swiss-maps 4.5.0', titel: 'swiss-maps: Geodaten der Schweiz als TopoJSON', datum: 'Version 4.5.0, BSD-3-Clause', url: 'https://github.com/interactivethings/swiss-maps', belegt: 'Aufbereitung der BFS-Grenzen, für diese Karten zusätzlich vereinfacht', amtlich: false },
   ],

@@ -294,7 +294,7 @@ export const BLOECKE_VERGLEICH = {
   'TAB:valq': () => tabelle(['alq'], { caption: 'Arbeitslosenquote September 2026' }),
   'TAB:valimente': () => tabelle(['alimente'], { caption: 'Höchster Vorschuss für Kinderalimente je Kind und Monat, in Franken',
     zusatz: (k) => (k === null ? 'Stand und Hinweis'
-      : `${A.alimente[k].jahr}${A.alimente[k].sicher === false ? ' · <strong>nicht gesichert</strong>' : ''} [[q:alimente${k}]]`) }),
+      : `${A.alimente[k].jahr}${A.alimente[k].einheit ? ` · ${A.alimente[k].einheit}` : ''}${A.alimente[k].sicher === false ? ' · <strong>nicht gesichert</strong>' : ''} [[q:alimente${k}]]`) }),
   'TAB:nebeneinander': nebeneinander,
   'FIG:spraemie': streifenKarte('praemie'),
   'FIG:ssteuer': streifenKarte('steuer'),
