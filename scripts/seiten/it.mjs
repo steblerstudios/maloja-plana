@@ -268,6 +268,178 @@ export const SEITEN = [
     ],
     quellen: ['estvRechner'],
   },
+
+  // ─── Prestazioni complementari (14.11.2026) ───────────────────────────────
+  // Termini da src/i18n/it.js e dal promemoria 5.01 in italiano: PC, organo PC, spese
+  // riconosciute, redditi computabili, spese di malattia e d’invalidità.
+  // LPC = ELG · OPC = ELV · LStrI = AIG.
+  {
+    pfad: 'ergaenzungsleistungen',
+    titel: 'Le prestazioni complementari all’AVS e all’AI',
+    beschreibung:
+      'Quando entrano in considerazione le prestazioni complementari (PC), come vengono calcolate e perché non sono aiuto sociale. Un inquadramento senza cifre.',
+    brotkrume: 'Prestazioni complementari',
+    vorspann:
+      'Le prestazioni complementari, in breve PC, aiutano là dove una rendita dell’AVS o dell’AI e gli altri redditi non bastano per il minimo vitale. Sono disciplinate nella legge federale sulle prestazioni complementari (LPC) e sono un diritto legale, non una concessione. Vengono versate dai Cantoni.',
+    abschnitte: [
+      {
+        titel: 'Senza una prestazione dell’AVS o dell’AI non ci sono PC',
+        absaetze: [
+          'Le PC presuppongono una prestazione dell’AVS o dell’AI: una rendita di vecchiaia o per superstiti dell’AVS, anche anticipata, una rendita dell’AI, un assegno per grandi invalidi dell’AI o un’indennità giornaliera dell’AI versata ininterrottamente da almeno sei mesi. A ciò si aggiungono il domicilio e la dimora abituale in Svizzera (art. 4 LPC).',
+          'Per le straniere e gli stranieri vale inoltre una durata minima di soggiorno: di regola dieci anni ininterrotti in Svizzera, cinque anni per i rifugiati e gli apolidi (art. 5 LPC). Per i cittadini di uno Stato dell’UE o dell’AELS non vale.',
+          'Chi non ha una rendita solo perché mancano anni di contribuzione può, a determinate condizioni, ricevere comunque le PC (art. 4 LPC). Chi si trova nel bisogno senza alcuna prestazione dell’AVS o dell’AI si rivolge all’aiuto sociale del Comune di domicilio.',
+        ],
+      },
+      {
+        titel: 'Il divario tra spese e redditi',
+        absaetze: [
+          'La PC annua corrisponde alla quota delle <strong>spese riconosciute</strong> che supera i <strong>redditi computabili</strong> (art. 9 LPC). Tra le spese figurano ad esempio un importo per il fabbisogno generale vitale, la pigione fino a un importo massimo e un importo per il premio della cassa malati (art. 10 LPC). Tra i redditi figurano le rendite, una parte del reddito da attività lucrativa e una parte della sostanza (art. 11 LPC).',
+          'Ha diritto solo chi possiede una sostanza inferiore a una soglia legale; un immobile abitato dal proprietario non viene considerato per questa soglia (art. 9a LPC). La sostanza alla quale una persona ha rinunciato senza controprestazione, ad esempio con una donazione, viene computata (art. 11a LPC).',
+          'La Confederazione stabilisce gli importi per il fabbisogno vitale e gli importi massimi della pigione, graduati secondo tre regioni (art. 10 LPC). Qui non li citiamo di proposito: vengono adeguati regolarmente, e una cifra su una pagina come questa sarebbe presto sbagliata. Per chi vive in un istituto il calcolo segue regole proprie; i Cantoni possono limitare le spese riconosciute per l’istituto.',
+        ],
+      },
+      {
+        titel: 'Si aggiungono le spese di malattia e d’invalidità',
+        absaetze: [
+          'Oltre alla PC annua, il Cantone rimborsa le spese di malattia e d’invalidità comprovate, ad esempio per il dentista, per l’aiuto, la cura e l’assistenza a domicilio, per il trasporto verso il luogo di cura, per i mezzi ausiliari nonché la franchigia e l’aliquota percentuale della cassa malati (art. 14 LPC). Quali spese esattamente e fino a quale importo lo stabilisce il Cantone.',
+          'Anche chi non riceve una PC annua perché i suoi redditi sono un po’ troppo alti può ottenere il rimborso di tali spese, nella misura in cui superano l’eccedenza di reddito.',
+          'Conservi fatture e giustificativi: viene rimborsato solo ciò che è comprovato, e solo se lo fa valere entro un termine legale dalla fatturazione (art. 15 LPC).',
+        ],
+      },
+      {
+        titel: 'Annunciarsi: presso il Cantone di domicilio, e presto',
+        absaetze: [
+          'È competente il Cantone in cui ha il domicilio. È lui a stabilire quale organo riceve la richiesta; di solito è la cassa cantonale di compensazione o l’istituto delle assicurazioni sociali, spesso tramite l’agenzia AVS del Comune di domicilio (art. 21 LPC).',
+          'Il diritto nasce di regola nel mese in cui è presentata la richiesta (art. 12 LPC). Può iniziare prima solo in determinati casi, ad esempio se la richiesta è presentata entro sei mesi da una decisione di rendita o dall’entrata in un istituto o in ospedale (art. 12 cpv. 2 LPC, art. 22 OPC). Chi aspetta può quindi perdere dei mesi.',
+          'Se non è sicuro che valga la pena annunciarsi, chieda all’organo PC. Esamina il diritto e motiva la sua decisione per iscritto.',
+        ],
+      },
+      {
+        titel: 'Le PC non sono aiuto sociale',
+        absaetze: [
+          'Le PC vengono spesso confuse con l’aiuto sociale. Sono un’altra cosa: un diritto secondo il diritto federale, calcolato secondo regole valide in tutta la Svizzera. Un diritto alle PC ha la precedenza sull’aiuto sociale.',
+          'Finché è in vita, non deve restituire le PC percepite legalmente. Dopo il decesso vengono restituite dall’eredità, ma solo dalla parte che supera una franchigia legale; per i coniugi solo dall’eredità della persona deceduta per seconda (art. 16a LPC).',
+          'Senza passaporto svizzero e senza la cittadinanza di uno Stato dell’UE o dell’AELS, il ricongiungimento familiare di regola non è autorizzato se riceve PC annue o se le riceverebbe a causa del ricongiungimento (art. 43 cpv. 1 lett. e e art. 44 cpv. 1 lett. e LStrI). In tal caso si faccia consigliare prima.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Ho diritto alle prestazioni complementari?',
+        antwort:
+          'Dipende da se riceve una prestazione dell’AVS o dell’AI, da dove abita e da come sono i suoi redditi, le sue spese e la sua sostanza. Un limite valido per tutti non esiste, perché contano anche la pigione, il premio e l’economia domestica. Un primo orientamento lo dà il calcolatore PC dell’AVS/AI; fa stato la decisione dell’organo PC del suo Cantone.',
+      },
+      {
+        frage: 'Ci sono PC anche prima dell’età di pensionamento?',
+        antwort:
+          'Sì. Chi riceve una rendita dell’AI, una rendita per vedove, vedovi o orfani può ricevere le PC anche prima dell’età di pensionamento. Anche chi anticipa la rendita AVS soddisfa la condizione di una rendita (art. 4 LPC); la rendita ridotta conta allora come reddito (art. 11 LPC). Chi esaurisce il diritto all’indennità di disoccupazione a partire dai sessant’anni può, a determinate condizioni, ricevere prestazioni transitorie; anche queste si chiedono all’organo PC.',
+      },
+      {
+        frage: 'La mia casa o il mio appartamento contano?',
+        antwort:
+          'Per la soglia di sostanza un immobile abitato dal proprietario non viene considerato (art. 9a LPC). Nel calcolo stesso il suo valore viene considerato, ma con una franchigia (art. 11 LPC). Che cosa ne risulta nel suo caso lo calcola l’organo PC.',
+      },
+      {
+        frage: 'Che cosa vale se devo entrare in un istituto?',
+        antwort:
+          'Allora la PC viene calcolata secondo regole proprie: al posto del fabbisogno vitale e della pigione contano la tassa giornaliera dell’istituto, per la quale il Cantone può fissare un importo massimo, e un importo per le spese personali stabilito dal Cantone (art. 10 cpv. 2 LPC). Si annunci entro sei mesi dall’entrata; il diritto può allora nascere già dal mese dell’entrata, se le altre condizioni sono adempiute (art. 12 cpv. 2 LPC).',
+      },
+      {
+        frage: 'Devo comunicare i cambiamenti?',
+        antwort:
+          'Sì. Ogni cambiamento della situazione personale e ogni cambiamento rilevante della situazione economica va comunicato subito all’organo PC, ad esempio un trasloco, una nuova pigione, un’eredità o l’entrata in un istituto (art. 24 OPC). Le prestazioni percepite indebitamente devono essere restituite.',
+      },
+      {
+        frage: 'Che cos’altro comporta una PC?',
+        antwort:
+          'Chi riceve PC annue all’AVS o all’AI è esentato dal canone radiotelevisivo; l’esenzione si chiede all’organo di riscossione con la conferma dell’organo PC. L’importo per il premio della cassa malati che entra nel calcolo viene versato direttamente alla cassa malati. In caso di dubbio chieda all’organo PC.',
+      },
+    ],
+    quellen: ['ahvMerkblattEL', 'bsvEL'],
+  },
+
+  // ─── Disoccupazione (16.11.2026) ──────────────────────────────────────────
+  // LADI = AVIG · OADI = AVIV · LPTD = ÜLG · LAINF = UVG · LAVS = AHVG · LC = AVG ·
+  // LPP = BVG · LIFD = DBG · URC = RAV · indennità giornaliera = Taggeld.
+  {
+    pfad: 'arbeitslosigkeit',
+    titel: 'Disoccupati: che cosa versa l’assicurazione',
+    beschreibung:
+      'Chi ha diritto all’indennità di disoccupazione, perché l’iscrizione all’URC conta fin dall’inizio e che cosa viene dopo l’esaurimento del diritto. Senza cifre.',
+    brotkrume: 'Disoccupazione',
+    vorspann:
+      'L’assicurazione contro la disoccupazione (AD) è obbligatoria per i salariati: chi lavora paga contributi sul salario, e chi perde il posto riceve, a determinate condizioni, un’indennità giornaliera che sostituisce una parte del salario. È disciplinata nella legge sull’assicurazione contro la disoccupazione (LADI) e vale allo stesso modo in tutta la Svizzera. I Cantoni gestiscono gli uffici regionali di collocamento (URC).',
+    abschnitte: [
+      {
+        titel: 'Chi ha diritto alle indennità',
+        absaetze: [
+          'Ha diritto all’indennità di disoccupazione, tra l’altro, chi è disoccupato totalmente o parzialmente, ha subito una perdita di lavoro computabile, risiede in Svizzera, non ha ancora raggiunto l’età di riferimento e non riceve una rendita di vecchiaia dell’AVS, ha adempiuto il periodo di contribuzione o ne è esonerato, è idoneo al collocamento e soddisfa le prescrizioni sul controllo (art. 8 LADI). Chi anticipa la rendita AVS perde quindi il diritto.',
+          'Periodo di contribuzione significa: in un determinato periodo prima della disoccupazione ha lavorato abbastanza a lungo come salariata o salariato e pagato contributi (art. 13 LADI). Chi in questo periodo non era salariato per formazione, malattia, infortunio o maternità, o chi deve cercare un posto dopo una separazione, un divorzio o il decesso del coniuge, anche in unione domestica registrata, può essere esonerato dall’adempimento del periodo di contribuzione (art. 14 LADI).',
+          'I lavoratori indipendenti non sono assicurati contro la disoccupazione per la loro attività indipendente; l’attività indipendente non conta come periodo di contribuzione. Senza passaporto svizzero, l’idoneità al collocamento presuppone che sia autorizzato a lavorare in Svizzera (art. 15 LADI). Per domande sul permesso si faccia consigliare.',
+        ],
+      },
+      {
+        titel: 'Iscriversi all’URC, e presto',
+        absaetze: [
+          'L’indennità è versata al più presto dal giorno dell’iscrizione, non retroattivamente. Si iscriva quindi al più tardi il primo giorno per cui chiede l’indennità presso l’ufficio regionale di collocamento (URC) competente, online su arbeit.swiss o di persona (art. 10 e 17 LADI).',
+          'Già durante il termine di disdetta deve cercare un nuovo posto e documentare le ricerche. Se mancano o sono insufficienti, ci sono giorni di sospensione, cioè giorni senza indennità (art. 17 e 30 LADI).',
+          'Dopo l’iscrizione l’indennità inizia di regola solo dopo alcuni giorni di attesa; quanti dipende dal reddito precedente e dagli obblighi di mantenimento verso figli. Per chi è esonerato dal periodo di contribuzione può valere un termine d’attesa particolare (art. 18 LADI).',
+        ],
+      },
+      {
+        titel: 'L’indennità sostituisce una parte del salario',
+        absaetze: [
+          'L’indennità si basa sul <strong>guadagno assicurato</strong>, cioè il salario precedente fino a un importo massimo legale (art. 23 LADI). Ne viene versata una parte; la quota è più alta se ha obblighi di mantenimento verso figli, aveva un salario basso o riceve una rendita dell’AI a partire da un determinato grado d’invalidità (art. 22 LADI).',
+          'Il numero massimo di indennità dipende dal periodo di contribuzione e dall’età; sono versate entro un termine quadro (art. 9 e 27 LADI). Qui non citiamo di proposito né le aliquote né i numeri massimi. La sua cassa di disoccupazione li calcola in modo vincolante.',
+          'Come sul salario, sull’indennità vengono dedotti contributi, ad esempio per l’AVS (art. 22a LADI). È un reddito sostitutivo ed è tassata come il salario (art. 23 lett. a LIFD).',
+        ],
+      },
+      {
+        titel: 'Guadagno intermedio e lavoro adeguato',
+        absaetze: [
+          'Se durante la disoccupazione guadagna qualcosa, si tratta di un guadagno intermedio. Se è inferiore al suo guadagno assicurato, la cassa di disoccupazione compensa una parte della differenza; così riceve di solito più dell’indennità da sola. Come salario conta almeno quello usuale nel luogo per questo lavoro (art. 24 LADI).',
+          'In linea di principio deve accettare qualsiasi lavoro adeguato. Un posto non è adeguato ad esempio se non rispetta le condizioni usuali del luogo e della professione, non è adatto alla sua età, alla sua situazione personale o al suo stato di salute, o richiede un tragitto molto lungo (art. 16 LADI).',
+          'Chi rifiuta un posto adeguato o disdice il proprio impiego senza motivo imperativo viene sospeso: secondo la colpa, per un certo periodo non c’è indennità (art. 30 LADI). Si faccia consigliare prima di disdire lei stessa o lui stesso.',
+        ],
+      },
+      {
+        titel: 'Quando le indennità sono esaurite',
+        absaetze: [
+          'Ha esaurito il diritto chi ha ricevuto tutte le indennità o il cui termine quadro è scaduto senza che se ne possa aprire uno nuovo. Il servizio pubblico di collocamento resta aperto e gratuito (art. 26 e 27 LC). Chi accumula di nuovo un periodo di contribuzione sufficiente può acquisire un nuovo diritto (art. 9 e 13 LADI).',
+          'In seguito possono entrare in considerazione l’aiuto sociale e la riduzione dei premi. Chi esaurisce il diritto a partire dai sessant’anni può, a ulteriori condizioni, ricevere prestazioni transitorie; si chiedono all’organo PC del Cantone di domicilio (art. 3, 5 e 19 LPTD).',
+          'Con l’ultima indennità termina, dopo una breve proroga, anche l’assicurazione contro gli infortuni tramite l’assicurazione contro la disoccupazione. Comunichi per tempo alla cassa malati che deve di nuovo coprire gli infortuni; paga allora come in caso di malattia, con franchigia e aliquota percentuale (art. 3 cpv. 2 LAINF, art. 8 e 10 LAMal). Chiarisca con la cassa di compensazione AVS se deve versare contributi come persona senza attività lucrativa, per evitare una lacuna contributiva (art. 10 LAVS).',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Ricevo l’indennità se ho dato io la disdetta?',
+        antwort:
+          'Sì, ma per lo più dopo una sospensione: chi dà la disdetta senza avere la garanzia di un nuovo posto di regola per un certo periodo non riceve indennità, spesso per la durata più lunga prevista dalla legge. Fa eccezione chi non poteva ragionevolmente restare al posto (art. 30 LADI, art. 44 e 45 OADI). Si faccia consigliare prima.',
+      },
+      {
+        frage: 'Posso iscrivermi già prima della fine dell’impiego?',
+        antwort:
+          'Sì, ed è opportuno. Deve iscriversi al più tardi il primo giorno per cui chiede l’indennità (art. 17 LADI). Le ricerche di lavoro sono richieste già per il periodo del termine di disdetta.',
+      },
+      {
+        frage: 'Sono assicurato contro gli infortuni durante la disoccupazione?',
+        antwort:
+          'Sì, finché riceve l’indennità è assicurato contro gli infortuni tramite l’assicurazione contro la disoccupazione (art. 1a LAINF). In seguito questa copertura termina dopo una breve proroga. Comunichi alla cassa malati che deve di nuovo coprire gli infortuni; paga allora come in caso di malattia, con franchigia e aliquota percentuale.',
+      },
+      {
+        frage: 'Che cosa succede con la mia cassa pensioni?',
+        antwort:
+          'All’uscita deve comunicare alla cassa pensioni su quale conto di libero passaggio deve andare l’avere finché non ha un nuovo posto (art. 4 LFLP). Finché riceve l’indennità resta di regola assicurato nella previdenza professionale per i rischi di decesso e invalidità (art. 2 cpv. 3 LPP); per la vecchiaia in questo periodo di regola non risparmia. Chi perde il posto dopo il cinquantottesimo compleanno può, a determinate condizioni, restare nella sua cassa pensioni (art. 47a LPP).',
+      },
+      {
+        frage: 'Posso andare in vacanza durante la disoccupazione?',
+        antwort:
+          'Sì, in misura limitata: ha diritto a giorni esenti da controllo, che deve annunciare prima all’URC (art. 27 OADI). Quanti gliene spettano glielo dice il suo URC.',
+      },
+    ],
+    quellen: ['arbeitSwiss'],
+  },
 ];
 
 export const SONDERSEITEN = [
