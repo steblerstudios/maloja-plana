@@ -1719,6 +1719,7 @@ export default {
     zurueckgeholt: 'Zurückgeholt', // TODO(rm): übersetzen
     pickDate: 'Tscherner ina data',
     betraegeVerbergen: 'Zuppar ils imports',
+    betragVerborgen: 'Import zuppà',
     simpleView: 'Vista simpla',
     grayscale: 'Stgala da grisch',
     colorBlind: 'Modus daltonic',
@@ -4058,6 +4059,7 @@ export default {
     sessionCount: 'Sessiun: {count} backup creà',
     sessionCountPlural: 'Sessiun: {count} backups creads',
     letterPreview: 'Prevista da la brev',
+    letterPreviewZeigen: 'Mussar la prevista',
     confirmRestore: { sie: 'Quai remplazza Vossas datas actualas. Cuntinuar?', du: 'Quai remplazza Tes datas actualas. Cuntinuar?' },
     restoreJa: 'Gea, restituir',
     encryptionInfo: { sie: 'Criptaziun AES-256, elavurada localmain. Voss pled-clav na banduna mai quest apparat.', du: 'Criptaziun AES-256, elavurada localmain. Tes pled-clav na banduna mai quest apparat.' },

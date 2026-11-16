@@ -9,6 +9,7 @@ import { aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { betrag, zahl } from './utils/geld.js';
+import { betragText } from './components/BetragText.jsx';
 import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 import { hatAusweisFNS } from './data/ausweis.js';
@@ -160,11 +161,11 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
           style: { ...s.big, color: result.hatAnspruch ? (palette.sageDeep || palette.sage) : palette.mid }
         },
           result.hatAnspruch
-            ? 'CHF ' + fmt(result.totalUnterstuetzung) + ' / ' + t('sh.monat')
+            ? betragText(t, result.totalUnterstuetzung, {}, '', ' / ' + t('sh.monat'))
             : t(result.vermoegenZuerst && !result.knapp && (String(vermoegen) !== String(vorbefuellt.vermoegen) || verfuegbarUeberFreibetrag(data?.finanzen, result.vermoegensfreibetrag)) ? 'sh.vermoegenZuerstTitel' : result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
         ),
         result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
-          t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)
+          t('sh.inklusiveIzu') + ': ' + betrag(result.izu)
         ),
         // Erst der Einkommensfreibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
         !result.hatAnspruch && result.efbEntscheidet && React.createElement('div', { style: s.hint },
@@ -175,7 +176,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
         // R4: der Anspruch hängt am Freibetrag (Vermögen darunter) — ist er kantonal nicht
         // bestätigt, hier leise sagen (über dem Freibetrag steht es unten beim Vermögen).
         result.hatAnspruch && result.vfbUnbestaetigt && React.createElement('div', { style: s.hint },
-          t('sozialhilfe.assetLimitUnconfirmedUnder', { freibetrag: 'CHF ' + fmt(result.vermoegensfreibetrag) })
+          t('sozialhilfe.assetLimitUnconfirmedUnder', { freibetrag: betrag(result.vermoegensfreibetrag) })
         )
       ),
       React.createElement('table', { style: s.table },

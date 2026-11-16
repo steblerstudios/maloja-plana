@@ -14,7 +14,7 @@ import { openPrintWindow } from './utils/helpers.js';
 import { erinnerungSichern } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { zahl } from './utils/geld.js';
+import { zahl, betrag, betraegeVerborgen } from './utils/geld.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
 import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { I18nContext, deutschT } from './i18n/index.js';
@@ -202,15 +202,15 @@ const fmtDate = (iso) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso));
   return m ? `${m[3]}.${m[2]}.${m[1]}` : String(iso);
 };
-const fmtAmount = (n) => {
-  const num = Number(n);
-  return isFinite(num) ? zahl(num, { hoechstens: 2 }) : String(n);
-};
 
 const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initialAngaben }) => {
   const isMobile = useIsMobile();
   const [selected, setSelected] = useState(initialTemplate || null);
   const [preview, setPreview] = useState(false);
+  // Sichtschutz «Beträge verbergen»: die Vorschau ist das Dokument und zeigt darum echte Beträge
+  // (mitEchtenBetraegen). Am Bildschirm liegt sie unscharf, bis man sie antippt — wie die
+  // Betragsfelder (tokens.css). Entscheid Sophie 16.11.2026, Auswahl «Unscharf, antippen».
+  const [vorschauOffen, setVorschauOffen] = useState(false);
   const [printed, setPrinted] = useState(false);
   // Frist in den Kalender gelegt (ruhige Bestätigung statt Doppel-Anlage).
   // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts im echten Kalender).
@@ -476,7 +476,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
                 onChange: () => setBelegIds(ids => ids.includes(b.id) ? ids.filter(x => x !== b.id) : [...ids, b.id]),
               }),
               React.createElement('span', null,
-                (fmtDate(b.datum) || t('briefe.kkBelegPicker.undated')) + ' · CHF ' + fmtAmount(b.betrag))
+                (fmtDate(b.datum) || t('briefe.kkBelegPicker.undated')) + ' · ' + (isFinite(Number(b.betrag)) ? betrag(Number(b.betrag), { hoechstens: 2 }) : String(b.betrag)))
             ))
           )
     ),
@@ -581,18 +581,27 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     ),
 
     // Preview
-    preview && previewHtml && React.createElement('div', {
-      style: {
-        border: '1px solid ' + palette.border, borderRadius: radius.sm,
-        overflow: 'hidden', background: '#fff',
-      }
-    },
-      React.createElement('iframe', {
-        srcDoc: previewHtml,
-        style: { width: '100%', height: '700px', border: 'none' },
-        title: t('backup.letterPreview'),
-      })
-    ),
+    preview && previewHtml && (() => {
+      const verdeckt = betraegeVerborgen() && !vorschauOffen;
+      return React.createElement('div', {
+        style: {
+          position: 'relative',
+          border: '1px solid ' + palette.border, borderRadius: radius.sm,
+          overflow: 'hidden', background: '#fff',
+        }
+      },
+        React.createElement('iframe', {
+          srcDoc: previewHtml,
+          style: { width: '100%', height: '700px', border: 'none', filter: verdeckt ? 'blur(6px)' : 'none' },
+          title: t('backup.letterPreview'),
+          'aria-hidden': verdeckt || undefined, tabIndex: verdeckt ? -1 : undefined,
+        }),
+        verdeckt && React.createElement('button', {
+          type: 'button', onClick: () => setVorschauOffen(true),
+          style: { position: 'absolute', inset: 0, width: '100%', background: 'transparent', border: 'none', cursor: 'pointer', color: palette.text, fontSize: textTokens.body, fontWeight: weight.semi },
+        }, React.createElement('span', { style: { background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '10px 16px' } }, t('backup.letterPreviewZeigen')))
+      );
+    })(),
   );
 };
 
