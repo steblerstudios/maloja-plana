@@ -49,7 +49,7 @@ describe('WCAG 2.5.5 · 3a-Übernahmeknopf im Steuerrechner mobil 44 px hoch', (
   });
 });
 
-describe('WCAG 2.2.2 · die Luft-Teilchen der Startseite laufen nicht endlos', () => {
+describe('WCAG 2.2.2 · Luft-Teilchen und Wolken der Startseite laufen nicht endlos', () => {
   const reise = lies('website/reise.js');
   const html = lies('website/index.html');
   it('reise.js setzt 20 s nach jedem Kehrenwechsel data-still und nimmt es beim Wechsel zurück', () => {
@@ -58,8 +58,15 @@ describe('WCAG 2.2.2 · die Luft-Teilchen der Startseite laufen nicht endlos', (
     expect(reise).toMatch(/setTimeout\(function \(\) \{ buehne\.setAttribute\('data-still', ''\); \}, STILL_MS\)/);
   });
   it('data-still blendet die Luft aus und hält sie an', () => {
-    expect(html).toContain('.js .reise-buehne[data-still] .reise-luft, .reise-bruecke:has(#anhalten:checked) .reise-luft{ opacity:0 }');
-    expect(html).toContain('.js .reise-buehne[data-still] .reise-luft i, .reise-bruecke:has(#anhalten:checked) :is(.reise-luft i, .reise-wolken){ animation-play-state:paused }');
+    expect(html).toContain('.js .reise-buehne[data-still] .reise-luft{ opacity:0 }');
+    expect(html).toContain('.js .reise-buehne[data-still] .reise-luft i, .js .reise-buehne[data-still] .reise-wolken{ animation-play-state:paused }');
+    expect(html).toContain('.reise-bruecke:has(#anhalten:checked) .reise-luft{ opacity:0 }');
+    expect(html).toContain('.reise-bruecke:has(#anhalten:checked) .reise-luft i, .reise-bruecke:has(#anhalten:checked) .reise-wolken{ animation-play-state:paused }');
+    // Der Auto-Stopp steht in keiner Regel mit :has() — sonst verwürfe ein Browser ohne :has() auch ihn.
+    const ohneKommentare = html.replace(/\/\*[\s\S]*?\*\//g, '');
+    const selektoren = ohneKommentare.split('}').map((t) => t.split('{')[0]).filter((sel) => sel.includes('[data-still]'));
+    expect(selektoren.length).toBeGreaterThanOrEqual(2);
+    for (const sel of selektoren) expect(sel).not.toContain(':has(');
   });
   it('der Schalter beim Telefon heisst «Bewegung anhalten» und liegt in derselben Brücke wie die Bühne', () => {
     expect(html).toContain('<label class="schalter" for="anhalten">Bewegung anhalten</label>');

@@ -118,10 +118,10 @@ describe('suchTasteAnmelden', () => {
     f.druecke(ereignis('/'));
     expect(offen).toBe(0);
   });
-  it('abmelden entfernt den Zuhörer', () => {
+  it('abmelden entfernt die Zuhörer (Taste und Nachführen der Lupe)', () => {
     const f = fenster();
     const ab = suchTasteAnmelden(() => true, f);
-    expect(f.zuhoerer.size).toBe(1);
+    expect(f.zuhoerer.size).toBeGreaterThan(0);
     ab();
     expect(f.zuhoerer.size).toBe(0);
   });
@@ -210,7 +210,7 @@ describe('Lupe nennt «/» nur, wenn es wirkt', () => {
     const a = { 'aria-keyshortcuts': kuerzel, title: titel };
     return { getAttribute: (k) => (k in a ? a[k] : null), setAttribute: (k, v) => { a[k] = v; }, a };
   };
-  const doc = (k) => ({ querySelector: (sel) => (sel === '[aria-keyshortcuts]' ? k : null) });
+  const doc = (k) => ({ querySelector: (sel) => (sel === '[aria-keyshortcuts~="Meta+K"]' ? k : null) });
 
   it('aus: «/» und «(/)» fallen weg, ⌘K/Strg+K bleiben', () => {
     const k = knopf();
@@ -232,14 +232,33 @@ describe('Lupe nennt «/» nur, wenn es wirkt', () => {
     const k = knopf();
     const f = fenster();
     const frage = f.document.querySelector;
-    f.document.querySelector = (sel) => (sel === '[aria-keyshortcuts]' ? k : frage(sel));
+    f.document.querySelector = (sel) => (sel === '[aria-keyshortcuts~="Meta+K"]' ? k : frage(sel));
     f.localStorage = { getItem: () => '0', setItem: () => {} };
     suchTasteAnmelden(() => true, f);
     expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
   });
-  it('die Einstellungen führen den Knopf beim Umschalten gleich nach', () => {
-    const quelle = fs.readFileSync(path.join(__dirname, '..', 'SettingsView.jsx'), 'utf8');
-    expect(quelle).toContain("document.querySelector('[aria-keyshortcuts]')");
-    expect(quelle).toContain("(an ? '' : '/ ') + 'Control+K Meta+K'");
+  it('Fokus auf die Lupe holt nach, was React zurückgesetzt hat oder der Schalter geändert hat', () => {
+    const k = knopf();
+    const f = fenster();
+    let wert = '1';
+    f.localStorage = { getItem: () => wert, setItem: () => {} };
+    suchTasteAnmelden(() => true, f);
+    expect(k.a['aria-keyshortcuts']).toBe('/ Control+K Meta+K');
+    wert = '0';                                            // Schalter in den Einstellungen aus
+    const lupe = { ...k, matches: (sel) => sel === '[aria-keyshortcuts~="Meta+K"]' };
+    f.druecke({ ...ereignis('Tab'), target: lupe });     // focusin/pointerover (die Attrappe kennt keine Typen)
+    expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
+    expect(k.a.title).toBe('Suchen');
+    k.a['aria-keyshortcuts'] = '/ Control+K Meta+K'; k.a.title = 'Search (/)';   // React nach Sprachwechsel
+    f.druecke({ ...ereignis('Tab'), target: lupe });
+    expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
+    expect(k.a.title).toBe('Search');
+  });
+  it('angemeldet wird auf keydown, focusin und pointerover — abgemeldet auf allen dreien', () => {
+    const an = [], ab = [];
+    const f = { document: { querySelector: () => null }, addEventListener: (typ) => an.push(typ), removeEventListener: (typ) => ab.push(typ) };
+    suchTasteAnmelden(() => true, f)();
+    expect(an.sort()).toEqual(['focusin', 'keydown', 'pointerover']);
+    expect(ab.sort()).toEqual(an);
   });
 });

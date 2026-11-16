@@ -316,10 +316,13 @@
     .js .reise-buehne:is([data-hier="3"], [data-hier="4"], [data-hier="5"]) .hell,
     .js .reise-buehne[data-hier="6"] .schnee{ opacity:1 }
     html:not(.js) .reise-luft{ display:none }
-    /* WCAG 2.2.2 (16.11.2026): die Luft legt sich 20 s nach jedem Kehrenwechsel (data-still, reise.js), und
+    /* WCAG 2.2.2 (16.11.2026): Luft und Wolken legen sich 20 s nach jedem Kehrenwechsel (data-still, reise.js), und
        «Bewegung anhalten» beim Telefon hält Wolken und Bildfolge an und nimmt die Luft ganz weg. */
-    .js .reise-buehne[data-still] .reise-luft, .reise-bruecke:has(#anhalten:checked) .reise-luft{ opacity:0 }
-    .js .reise-buehne[data-still] .reise-luft i, .reise-bruecke:has(#anhalten:checked) :is(.reise-luft i, .reise-wolken){ animation-play-state:paused }
+    /* Getrennte Regeln: ein Browser ohne :has() verwirft sonst die ganze Liste — und mit ihr den Auto-Stopp. */
+    .js .reise-buehne[data-still] .reise-luft{ opacity:0 }
+    .js .reise-buehne[data-still] .reise-luft i, .js .reise-buehne[data-still] .reise-wolken{ animation-play-state:paused }
+    .reise-bruecke:has(#anhalten:checked) .reise-luft{ opacity:0 }
+    .reise-bruecke:has(#anhalten:checked) .reise-luft i, .reise-bruecke:has(#anhalten:checked) .reise-wolken{ animation-play-state:paused }
     /* Zwei Schichten für die Lesbarkeit: hell links/oben unter dem Hero (dunkle Schrift), dunkel rechts unter
        den Kehren (weisse Schrift, mind. 62 % unter dem Text). Das Skript schaltet über data-hier um. */
     .reise-buehne::before, .reise-buehne::after{ content:""; position:absolute; inset:0; z-index:3; pointer-events:none }

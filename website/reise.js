@@ -19,8 +19,8 @@
   var ortText = ort && ort.querySelector('text');
   var gegangen = bruecke.querySelector('.reise-linie .gegangen');
   var bilder = [].slice.call(bruecke.querySelectorAll('.kehre-bild')); // [Passbild, Kehre 1 … Kehre 7]
-  // WCAG 2.2.2 (a11y-Reste 16.11.2026): die Luft (B) schwebt nicht endlos. 20 s nach jedem Kehrenwechsel legt sie sich
-  // (data-still, CSS blendet aus und hält an); die nächste Kehre bringt sie zurück. Dazu der Schalter «Bewegung anhalten».
+  // WCAG 2.2.2 (a11y-Reste 16.11.2026): Luft (B) und Wolken ziehen nicht endlos. 20 s nach jedem Kehrenwechsel legen sie
+  // sich (data-still: Luft blendet aus, beide halten an); die nächste Kehre bringt sie zurück. Dazu der Schalter «Bewegung anhalten».
   var STILL_MS = 20000, stillUhr = 0;
   var namen = stationen.map(function (s) { var n = s.querySelector('.name'); return n ? n.textContent.split('·').pop().trim() : ''; });
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
