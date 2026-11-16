@@ -373,9 +373,9 @@ export const SEITEN = [
       {
         titel: 'Chi ha diritto alle indennità',
         absaetze: [
-          'Ha diritto all’indennità di disoccupazione chi è disoccupato totalmente o parzialmente, ha subito una perdita di lavoro computabile, risiede in Svizzera, non ha ancora raggiunto l’età di pensionamento, ha adempiuto il periodo di contribuzione o ne è esonerato, è idoneo al collocamento e soddisfa le prescrizioni sul controllo (art. 8 LADI).',
-          'Periodo di contribuzione significa: in un determinato periodo prima della disoccupazione ha lavorato abbastanza a lungo come salariata o salariato e pagato contributi (art. 13 LADI). Chi in questo periodo non era salariato per formazione, malattia, infortunio o maternità, o chi deve cercare un posto dopo una separazione, un divorzio o il decesso del coniuge, può essere esonerato dall’adempimento del periodo di contribuzione (art. 14 LADI).',
-          'I lavoratori indipendenti non sono assicurati contro la disoccupazione per la loro attività indipendente. Può contare solo un periodo di contribuzione derivante da un impiego salariato.',
+          'Ha diritto all’indennità di disoccupazione, tra l’altro, chi è disoccupato totalmente o parzialmente, ha subito una perdita di lavoro computabile, risiede in Svizzera, non ha ancora raggiunto l’età di riferimento e non riceve una rendita di vecchiaia dell’AVS, ha adempiuto il periodo di contribuzione o ne è esonerato, è idoneo al collocamento e soddisfa le prescrizioni sul controllo (art. 8 LADI). Chi anticipa la rendita AVS perde quindi il diritto.',
+          'Periodo di contribuzione significa: in un determinato periodo prima della disoccupazione ha lavorato abbastanza a lungo come salariata o salariato e pagato contributi (art. 13 LADI). Chi in questo periodo non era salariato per formazione, malattia, infortunio o maternità, o chi deve cercare un posto dopo una separazione, un divorzio o il decesso del coniuge, anche in unione domestica registrata, può essere esonerato dall’adempimento del periodo di contribuzione (art. 14 LADI).',
+          'I lavoratori indipendenti non sono assicurati contro la disoccupazione per la loro attività indipendente; l’attività indipendente non conta come periodo di contribuzione. Senza passaporto svizzero, l’idoneità al collocamento presuppone che sia autorizzato a lavorare in Svizzera (art. 15 LADI). Per domande sul permesso si faccia consigliare.',
         ],
       },
       {
@@ -383,13 +383,13 @@ export const SEITEN = [
         absaetze: [
           'L’indennità è versata al più presto dal giorno dell’iscrizione, non retroattivamente. Si iscriva quindi al più tardi il primo giorno per cui chiede l’indennità presso l’ufficio regionale di collocamento (URC) competente, online su arbeit.swiss o di persona (art. 10 e 17 LADI).',
           'Già durante il termine di disdetta deve cercare un nuovo posto e documentare le ricerche. Se mancano o sono insufficienti, ci sono giorni di sospensione, cioè giorni senza indennità (art. 17 e 30 LADI).',
-          'Dopo l’iscrizione l’indennità inizia di regola solo dopo alcuni giorni di attesa; quanti dipende dal reddito precedente e dagli obblighi di mantenimento verso figli (art. 18 LADI).',
+          'Dopo l’iscrizione l’indennità inizia di regola solo dopo alcuni giorni di attesa; quanti dipende dal reddito precedente e dagli obblighi di mantenimento verso figli. Per chi è esonerato dal periodo di contribuzione può valere un termine d’attesa particolare (art. 18 LADI).',
         ],
       },
       {
         titel: 'L’indennità sostituisce una parte del salario',
         absaetze: [
-          'L’indennità si basa sul <strong>guadagno assicurato</strong>, cioè il salario precedente fino a un importo massimo legale (art. 23 LADI). Ne viene versata una parte; la quota è più alta se ha obblighi di mantenimento verso figli, aveva un salario basso o riceve una rendita d’invalidità (art. 22 LADI).',
+          'L’indennità si basa sul <strong>guadagno assicurato</strong>, cioè il salario precedente fino a un importo massimo legale (art. 23 LADI). Ne viene versata una parte; la quota è più alta se ha obblighi di mantenimento verso figli, aveva un salario basso o riceve una rendita dell’AI a partire da un determinato grado d’invalidità (art. 22 LADI).',
           'Il numero massimo di indennità dipende dal periodo di contribuzione e dall’età; sono versate entro un termine quadro (art. 9 e 27 LADI). Qui non citiamo di proposito né le aliquote né i numeri massimi. La sua cassa di disoccupazione li calcola in modo vincolante.',
           'Come sul salario, sull’indennità vengono dedotti contributi, ad esempio per l’AVS (art. 22a LADI). È un reddito sostitutivo ed è tassata come il salario (art. 23 lett. a LIFD).',
         ],
@@ -397,7 +397,7 @@ export const SEITEN = [
       {
         titel: 'Guadagno intermedio e lavoro adeguato',
         absaetze: [
-          'Se durante la disoccupazione guadagna qualcosa, si tratta di un guadagno intermedio. Se è inferiore al suo guadagno assicurato, la cassa di disoccupazione compensa una parte della differenza; così riceve di solito più dell’indennità da sola (art. 24 LADI).',
+          'Se durante la disoccupazione guadagna qualcosa, si tratta di un guadagno intermedio. Se è inferiore al suo guadagno assicurato, la cassa di disoccupazione compensa una parte della differenza; così riceve di solito più dell’indennità da sola. Come salario conta almeno quello usuale nel luogo per questo lavoro (art. 24 LADI).',
           'In linea di principio deve accettare qualsiasi lavoro adeguato. Un posto non è adeguato ad esempio se non rispetta le condizioni usuali del luogo e della professione, non è adatto alla sua età, alla sua situazione personale o al suo stato di salute, o richiede un tragitto molto lungo (art. 16 LADI).',
           'Chi rifiuta un posto adeguato o disdice il proprio impiego senza motivo imperativo viene sospeso: secondo la colpa, per un certo periodo non c’è indennità (art. 30 LADI). Si faccia consigliare prima di disdire lei stessa o lui stesso.',
         ],
@@ -407,7 +407,7 @@ export const SEITEN = [
         absaetze: [
           'Ha esaurito il diritto chi ha ricevuto tutte le indennità o il cui termine quadro è scaduto senza che se ne possa aprire uno nuovo. Il servizio pubblico di collocamento resta aperto e gratuito (art. 26 e 27 LC). Chi accumula di nuovo un periodo di contribuzione sufficiente può acquisire un nuovo diritto (art. 9 e 13 LADI).',
           'In seguito possono entrare in considerazione l’aiuto sociale e la riduzione dei premi. Chi esaurisce il diritto a partire dai sessant’anni può, a ulteriori condizioni, ricevere prestazioni transitorie; si chiedono all’organo PC del Cantone di domicilio (art. 3, 5 e 19 LPTD).',
-          'Con l’ultima indennità termina, dopo una breve proroga, anche l’assicurazione contro gli infortuni tramite l’assicurazione contro la disoccupazione. Comunichi per tempo alla cassa malati che deve di nuovo coprire gli infortuni (art. 3 cpv. 2 LAINF, art. 8 LAMal). Chiarisca con la cassa di compensazione AVS se deve versare contributi come persona senza attività lucrativa, per evitare una lacuna contributiva (art. 10 LAVS).',
+          'Con l’ultima indennità termina, dopo una breve proroga, anche l’assicurazione contro gli infortuni tramite l’assicurazione contro la disoccupazione. Comunichi per tempo alla cassa malati che deve di nuovo coprire gli infortuni; paga allora come in caso di malattia, con franchigia e aliquota percentuale (art. 3 cpv. 2 LAINF, art. 8 e 10 LAMal). Chiarisca con la cassa di compensazione AVS se deve versare contributi come persona senza attività lucrativa, per evitare una lacuna contributiva (art. 10 LAVS).',
         ],
       },
     ],
@@ -415,7 +415,7 @@ export const SEITEN = [
       {
         frage: 'Ricevo l’indennità se ho dato io la disdetta?',
         antwort:
-          'In linea di principio sì, se le altre condizioni sono adempiute. Chi dà la disdetta senza avere la garanzia di un nuovo posto viene però di regola sospeso e per un certo periodo non riceve indennità. Fa eccezione chi non poteva ragionevolmente restare al posto (art. 30 LADI, art. 44 OADI). Si faccia consigliare prima.',
+          'Sì, ma per lo più dopo una sospensione: chi dà la disdetta senza avere la garanzia di un nuovo posto di regola per un certo periodo non riceve indennità, spesso per la durata più lunga prevista dalla legge. Fa eccezione chi non poteva ragionevolmente restare al posto (art. 30 LADI, art. 44 e 45 OADI). Si faccia consigliare prima.',
       },
       {
         frage: 'Posso iscrivermi già prima della fine dell’impiego?',
@@ -425,12 +425,12 @@ export const SEITEN = [
       {
         frage: 'Sono assicurato contro gli infortuni durante la disoccupazione?',
         antwort:
-          'Sì, finché riceve l’indennità è assicurato contro gli infortuni tramite l’assicurazione contro la disoccupazione (art. 1a LAINF). In seguito questa copertura termina dopo una breve proroga, e la cassa malati copre gli infortuni se glielo comunica.',
+          'Sì, finché riceve l’indennità è assicurato contro gli infortuni tramite l’assicurazione contro la disoccupazione (art. 1a LAINF). In seguito questa copertura termina dopo una breve proroga. Comunichi alla cassa malati che deve di nuovo coprire gli infortuni; paga allora come in caso di malattia, con franchigia e aliquota percentuale.',
       },
       {
         frage: 'Che cosa succede con la mia cassa pensioni?',
         antwort:
-          'All’uscita l’avere diventa esigibile e va su un conto di libero passaggio finché non ha un nuovo posto. Finché riceve l’indennità resta assicurato nella previdenza professionale per i rischi di decesso e invalidità (art. 2 cpv. 3 LPP). Per la vecchiaia in questo periodo non risparmia.',
+          'All’uscita deve comunicare alla cassa pensioni su quale conto di libero passaggio deve andare l’avere finché non ha un nuovo posto (art. 4 LFLP). Finché riceve l’indennità resta di regola assicurato nella previdenza professionale per i rischi di decesso e invalidità (art. 2 cpv. 3 LPP); per la vecchiaia in questo periodo di regola non risparmia. Chi perde il posto dopo il cinquantottesimo compleanno può, a determinate condizioni, restare nella sua cassa pensioni (art. 47a LPP).',
       },
       {
         frage: 'Posso andare in vacanza durante la disoccupazione?',

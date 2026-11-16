@@ -381,9 +381,9 @@ export const SEITEN = [
       {
         titel: 'Qui a droit aux indemnités',
         absaetze: [
-          'A droit à l’indemnité de chômage la personne qui est sans emploi ou partiellement sans emploi, subit une perte de travail à prendre en considération, est domiciliée en Suisse, n’a pas encore atteint l’âge de la retraite, remplit les conditions relatives à la période de cotisation ou en est libérée, est apte au placement et satisfait aux exigences du contrôle (art. 8 LACI).',
-          'Période de cotisation signifie : durant une période déterminée avant le chômage, vous avez travaillé assez longtemps comme salariée ou salarié et payé des cotisations (art. 13 LACI). Qui n’était pas salarié durant cette période pour cause de formation, de maladie, d’accident ou de maternité, ou qui doit chercher un emploi après une séparation, un divorce ou le décès de son conjoint, peut être libéré des conditions relatives à la période de cotisation (art. 14 LACI).',
-          'Les indépendants ne sont pas assurés contre le chômage pour leur activité indépendante. Seule peut compter une période de cotisation issue d’un emploi salarié.',
+          'A droit à l’indemnité de chômage, entre autres, la personne qui est sans emploi ou partiellement sans emploi, subit une perte de travail à prendre en considération, est domiciliée en Suisse, n’a pas encore atteint l’âge de référence et ne touche pas de rente de vieillesse de l’AVS, remplit les conditions relatives à la période de cotisation ou en est libérée, est apte au placement et satisfait aux exigences du contrôle (art. 8 LACI). Qui anticipe sa rente AVS perd donc le droit.',
+          'Période de cotisation signifie : durant une période déterminée avant le chômage, vous avez travaillé assez longtemps comme salariée ou salarié et payé des cotisations (art. 13 LACI). Qui n’était pas salarié durant cette période pour cause de formation, de maladie, d’accident ou de maternité, ou qui doit chercher un emploi après une séparation, un divorce ou le décès de son conjoint, y compris en partenariat enregistré, peut être libéré des conditions relatives à la période de cotisation (art. 14 LACI).',
+          'Les indépendants ne sont pas assurés contre le chômage pour leur activité indépendante ; l’activité indépendante ne compte pas comme période de cotisation. Sans passeport suisse, l’aptitude au placement suppose que vous soyez autorisé à travailler en Suisse (art. 15 LACI). Faites-vous conseiller pour les questions d’autorisation.',
         ],
       },
       {
@@ -391,13 +391,13 @@ export const SEITEN = [
         absaetze: [
           'L’indemnité est versée au plus tôt dès le jour de l’inscription, pas rétroactivement. Inscrivez-vous donc au plus tard le premier jour pour lequel vous demandez l’indemnité auprès de l’office régional de placement (ORP) compétent, en ligne sur arbeit.swiss ou en personne (art. 10 et 17 LACI).',
           'Pendant le délai de congé déjà, vous devez chercher un nouvel emploi et consigner vos recherches. Si elles manquent ou sont insuffisantes, il y a des jours de suspension, c’est-à-dire des jours sans indemnité (art. 17 et 30 LACI).',
-          'Après l’inscription, l’indemnité ne commence en règle générale qu’après quelques jours d’attente ; leur nombre dépend du revenu antérieur et des obligations d’entretien envers des enfants (art. 18 LACI).',
+          'Après l’inscription, l’indemnité ne commence en règle générale qu’après quelques jours d’attente ; leur nombre dépend du revenu antérieur et des obligations d’entretien envers des enfants. Pour les personnes libérées des conditions relatives à la période de cotisation, un délai d’attente spécial peut s’appliquer (art. 18 LACI).',
         ],
       },
       {
         titel: 'L’indemnité remplace une partie du salaire',
         absaetze: [
-          'L’indemnité se calcule sur le <strong>gain assuré</strong>, c’est-à-dire le salaire antérieur jusqu’à un plafond légal (art. 23 LACI). Une partie en est versée ; elle est plus élevée si vous avez une obligation d’entretien envers des enfants, aviez un salaire bas ou touchez une rente d’invalidité (art. 22 LACI).',
+          'L’indemnité se calcule sur le <strong>gain assuré</strong>, c’est-à-dire le salaire antérieur jusqu’à un plafond légal (art. 23 LACI). Une partie en est versée ; elle est plus élevée si vous avez une obligation d’entretien envers des enfants, aviez un salaire bas ou touchez une rente de l’AI à partir d’un certain taux d’invalidité (art. 22 LACI).',
           'Le nombre maximal d’indemnités dépend de la période de cotisation et de l’âge ; elles sont versées dans un délai-cadre (art. 9 et 27 LACI). Nous ne citons volontairement ni les taux ni les nombres maximaux. Votre caisse de chômage les calcule de manière contraignante.',
           'Comme sur le salaire, des cotisations sont prélevées sur l’indemnité, par exemple pour l’AVS (art. 22a LACI). Elle constitue un revenu de remplacement et est imposée comme le salaire (art. 23, let. a, LIFD).',
         ],
@@ -405,7 +405,7 @@ export const SEITEN = [
       {
         titel: 'Gain intermédiaire et travail convenable',
         absaetze: [
-          'Si vous gagnez quelque chose pendant le chômage, cela constitue un gain intermédiaire. S’il est inférieur à votre gain assuré, la caisse de chômage compense une partie de la différence ; vous recevez ainsi généralement davantage que l’indemnité seule (art. 24 LACI).',
+          'Si vous gagnez quelque chose pendant le chômage, cela constitue un gain intermédiaire. S’il est inférieur à votre gain assuré, la caisse de chômage compense une partie de la différence ; vous recevez ainsi généralement davantage que l’indemnité seule. Est pris en compte au moins le salaire usuel du lieu pour ce travail (art. 24 LACI).',
           'En principe, vous devez accepter tout travail convenable. Un emploi n’est pas convenable notamment s’il ne respecte pas les conditions usuelles du lieu et de la profession, ne tient pas compte de votre âge, de votre situation personnelle ou de votre état de santé, ou impose un trajet très long (art. 16 LACI).',
           'Qui refuse un emploi convenable ou résilie lui-même son emploi sans raison impérieuse est suspendu : selon la faute, il n’y a pas d’indemnité pendant un certain temps (art. 30 LACI). Faites-vous conseiller avant de résilier vous-même.',
         ],
@@ -415,7 +415,7 @@ export const SEITEN = [
         absaetze: [
           'Arrive en fin de droit qui a touché toutes les indemnités ou dont le délai-cadre a expiré sans qu’un nouveau puisse être ouvert. Le service public de l’emploi reste ouvert et gratuit (art. 26 et 27 LSE). Qui accumule à nouveau une période de cotisation suffisante peut acquérir un nouveau droit (art. 9 et 13 LACI).',
           'L’aide sociale et la réduction des primes peuvent ensuite entrer en ligne de compte. Qui arrive en fin de droit à partir de soixante ans peut, à d’autres conditions, toucher des prestations transitoires ; elles se demandent auprès de l’organe PC du canton de domicile (art. 3, 5 et 19 LPtra).',
-          'Avec la dernière indemnité prend fin aussi, après une brève prolongation, l’assurance-accidents par l’assurance-chômage. Annoncez à temps à votre caisse-maladie qu’elle doit à nouveau couvrir les accidents (art. 3, al. 2, LAA, art. 8 LAMal). Clarifiez auprès de la caisse de compensation AVS si vous devez cotiser en tant que personne sans activité lucrative, afin d’éviter une lacune de cotisations (art. 10 LAVS).',
+          'Avec la dernière indemnité prend fin aussi, après une brève prolongation, l’assurance-accidents par l’assurance-chômage. Annoncez à temps à votre caisse-maladie qu’elle doit à nouveau couvrir les accidents ; elle paie alors comme en cas de maladie, avec franchise et quote-part (art. 3, al. 2, LAA, art. 8 et 10 LAMal). Clarifiez auprès de la caisse de compensation AVS si vous devez cotiser en tant que personne sans activité lucrative, afin d’éviter une lacune de cotisations (art. 10 LAVS).',
         ],
       },
     ],
@@ -423,7 +423,7 @@ export const SEITEN = [
       {
         frage: 'Ai-je droit aux indemnités si j’ai démissionné ?',
         antwort:
-          'En principe oui, si les autres conditions sont remplies. Qui démissionne sans avoir l’assurance d’un nouvel emploi est toutefois en règle générale suspendu et ne reçoit pas d’indemnité pendant un certain temps. Sauf si l’on ne pouvait pas exiger de lui qu’il reste à son poste (art. 30 LACI, art. 44 OACI). Faites-vous conseiller au préalable.',
+          'Oui, mais le plus souvent après une suspension : qui démissionne sans avoir l’assurance d’un nouvel emploi ne reçoit en règle générale pas d’indemnité pendant un certain temps, souvent pour la durée la plus longue prévue par la loi. Sauf si l’on ne pouvait pas exiger de lui qu’il reste à son poste (art. 30 LACI, art. 44 et 45 OACI). Faites-vous conseiller au préalable.',
       },
       {
         frage: 'Puis-je m’inscrire avant la fin de mon emploi ?',
@@ -433,12 +433,12 @@ export const SEITEN = [
       {
         frage: 'Suis-je assuré contre les accidents pendant le chômage ?',
         antwort:
-          'Oui, tant que vous touchez l’indemnité, vous êtes assuré contre les accidents par l’assurance-chômage (art. 1a LAA). Cette couverture prend fin ensuite après une brève prolongation, et la caisse-maladie couvre les accidents si vous le lui annoncez.',
+          'Oui, tant que vous touchez l’indemnité, vous êtes assuré contre les accidents par l’assurance-chômage (art. 1a LAA). Cette couverture prend fin ensuite après une brève prolongation. Annoncez à la caisse-maladie qu’elle doit à nouveau couvrir les accidents ; elle paie alors comme en cas de maladie, avec franchise et quote-part.',
       },
       {
         frage: 'Qu’advient-il de ma caisse de pension ?',
         antwort:
-          'À la sortie, l’avoir devient exigible et est versé sur un compte de libre passage jusqu’à ce que vous ayez un nouvel emploi. Tant que vous touchez l’indemnité, vous restez assuré dans la prévoyance professionnelle pour les risques de décès et d’invalidité (art. 2, al. 3, LPP). Vous n’épargnez pas pour la vieillesse pendant cette période.',
+          'À la sortie, vous devez indiquer à la caisse de pension sur quel compte de libre passage l’avoir doit être versé jusqu’à ce que vous ayez un nouvel emploi (art. 4 LFLP). Tant que vous touchez l’indemnité, vous restez en règle générale assuré dans la prévoyance professionnelle pour les risques de décès et d’invalidité (art. 2, al. 3, LPP) ; en règle générale, vous n’épargnez pas pour la vieillesse pendant cette période. Qui perd son emploi après son cinquante-huitième anniversaire peut, selon les cas, rester dans sa caisse de pension (art. 47a LPP).',
       },
       {
         frage: 'Puis-je partir en vacances pendant le chômage ?',

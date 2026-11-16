@@ -809,6 +809,7 @@ export const SEITEN = [
   // (kontrollfreie Tage), BVG Art. 2 Abs. 3 (Risikoversicherung Arbeitsloser), DBG Art. 23 Bst. a.
   {
     pfad: 'arbeitslosigkeit',
+    bundesrecht: true,
     titel: 'Arbeitslosigkeit: was die Versicherung leistet',
     beschreibung:
       'Wer Anspruch auf Arbeitslosenentschädigung hat, warum die Anmeldung beim RAV früh zählt und was nach der Aussteuerung kommt. Eine Einordnung ohne Zahlen.',
@@ -829,9 +830,9 @@ export const SEITEN = [
         wege: ['was-steht-mir-zu'],
         titel: 'Wer Anspruch auf Taggeld hat',
         absaetze: [
-          'Anspruch auf Arbeitslosenentschädigung hat, wer ganz oder teilweise arbeitslos ist, einen anrechenbaren Arbeitsausfall erleidet, in der Schweiz wohnt, das Rentenalter noch nicht erreicht hat, genug Beitragszeit hat oder davon befreit ist, vermittlungsfähig ist und die Kontrollvorschriften erfüllt (AVIG Art. 8).',
-          'Beitragszeit heisst: In einer bestimmten Zeit vor der Arbeitslosigkeit haben Sie lange genug als Angestellte oder Angestellter gearbeitet und Beiträge bezahlt (AVIG Art. 13). Wer in dieser Zeit wegen Ausbildung, Krankheit, Unfall oder Mutterschaft nicht angestellt war, oder wer nach einer Trennung, Scheidung oder dem Tod der Partnerin oder des Partners eine Stelle suchen muss, kann von der Beitragszeit befreit sein (AVIG Art. 14).',
-          'Selbständigerwerbende sind über ihre selbständige Tätigkeit nicht gegen Arbeitslosigkeit versichert. Zählen kann nur Beitragszeit aus einer Anstellung.',
+          'Anspruch auf Arbeitslosenentschädigung hat unter anderem, wer ganz oder teilweise arbeitslos ist, einen anrechenbaren Arbeitsausfall erleidet, in der Schweiz wohnt, das Referenzalter noch nicht erreicht hat und keine Altersrente der AHV bezieht, genug Beitragszeit hat oder davon befreit ist, vermittlungsfähig ist und die Kontrollvorschriften erfüllt (AVIG Art. 8). Wer die AHV-Rente vorbezieht, verliert darum den Anspruch.',
+          'Beitragszeit heisst: In einer bestimmten Zeit vor der Arbeitslosigkeit haben Sie lange genug als Angestellte oder Angestellter gearbeitet und Beiträge bezahlt (AVIG Art. 13). Wer in dieser Zeit wegen Ausbildung, Krankheit, Unfall oder Mutterschaft nicht angestellt war, oder wer nach einer Trennung, einer Scheidung oder dem Tod der Ehepartnerin oder des Ehepartners, auch in eingetragener Partnerschaft, eine Stelle suchen muss, kann von der Beitragszeit befreit sein (AVIG Art. 14).',
+          'Selbständigerwerbende sind über ihre selbständige Tätigkeit nicht gegen Arbeitslosigkeit versichert; selbständige Tätigkeit zählt nicht als Beitragszeit. Ohne Schweizer Pass gehört zur Vermittlungsfähigkeit, dass Sie in der Schweiz arbeiten dürfen (AVIG Art. 15). Lassen Sie sich bei Fragen zur Bewilligung beraten.',
         ],
       },
       {
@@ -846,21 +847,21 @@ export const SEITEN = [
         absaetze: [
           'Taggeld gibt es frühestens ab dem Tag der Anmeldung, nicht rückwirkend. Melden Sie sich darum spätestens am ersten Tag, für den Sie Taggeld beanspruchen, beim zuständigen Regionalen Arbeitsvermittlungszentrum (RAV) an, online über arbeit.swiss oder persönlich (AVIG Art. 10, 17).',
           'Schon während der Kündigungsfrist müssen Sie sich um eine neue Stelle bemühen und die Bemühungen festhalten. Fehlen sie oder reichen sie nicht, gibt es Einstelltage, also Tage ohne Taggeld (AVIG Art. 17, 30).',
-          'Nach der Anmeldung beginnt das Taggeld in der Regel erst nach einigen Wartetagen; wie viele, hängt vom bisherigen Einkommen und von Unterhaltspflichten gegenüber Kindern ab (AVIG Art. 18).',
+          'Nach der Anmeldung beginnt das Taggeld in der Regel erst nach einigen Wartetagen; wie viele, hängt vom bisherigen Einkommen und von Unterhaltspflichten gegenüber Kindern ab. Für Personen, die von der Beitragszeit befreit sind, kann eine besondere Wartezeit gelten (AVIG Art. 18).',
         ],
       },
       {
         id: 'taggeld',
         bild: `<ol class="zeit kern" role="list" aria-label="Wovon das Taggeld abhängt">
           <li><span class="jahr">Versicherter Verdienst</span><span class="was">der bisherige Lohn, bis zu einer Höchstgrenze</span></li>
-          <li><span class="jahr">Taggeldsatz</span><span class="was">ein Teil davon, höher mit Kindern, tiefem Lohn oder einer IV-Rente</span></li>
+          <li><span class="jahr">Taggeldsatz</span><span class="was">ein Teil davon, höher mit Unterhaltspflichten für Kinder, tiefem Lohn oder einer IV-Rente</span></li>
           <li><span class="jahr">Höchstzahl</span><span class="was">der Taggelder, je nach Beitragszeit und Alter</span></li>
         </ol>`,
         kurzAbsatz: 0,
         wege: ['steuern', 'kantonsatlas'],
         titel: 'Das Taggeld ersetzt einen Teil des Lohns',
         absaetze: [
-          'Das Taggeld richtet sich nach dem <strong>versicherten Verdienst</strong>, also dem bisherigen Lohn bis zu einer gesetzlichen Höchstgrenze (AVIG Art. 23). Ausbezahlt wird ein Teil davon; der Anteil ist höher, wenn Sie Kinder unterhalten müssen, einen tiefen Lohn hatten oder eine Invalidenrente beziehen (AVIG Art. 22).',
+          'Das Taggeld richtet sich nach dem <strong>versicherten Verdienst</strong>, also dem bisherigen Lohn bis zu einer gesetzlichen Höchstgrenze (AVIG Art. 23). Ausbezahlt wird ein Teil davon; der Anteil ist höher, wenn Sie gegenüber Kindern unterhaltspflichtig sind, einen tiefen Lohn hatten oder eine Rente der IV ab einem bestimmten Invaliditätsgrad beziehen (AVIG Art. 22).',
           'Wie viele Taggelder es höchstens gibt, hängt von der Beitragszeit und vom Alter ab; sie werden innerhalb einer Rahmenfrist ausgerichtet (AVIG Art. 9, 27). Sätze und Höchstzahlen nennen wir hier bewusst nicht. Ihre Arbeitslosenkasse rechnet sie verbindlich aus.',
           'Vom Taggeld werden wie vom Lohn Beiträge abgezogen, etwa für die AHV (AVIG Art. 22a). Es ist Ersatzeinkommen und wird wie Lohn versteuert (DBG Art. 23 Bst. a).',
         ],
@@ -874,7 +875,7 @@ export const SEITEN = [
         kurzAbsatz: 0,
         titel: 'Zwischenverdienst und zumutbare Arbeit',
         absaetze: [
-          'Verdienen Sie während der Arbeitslosigkeit etwas, gilt das als Zwischenverdienst. Liegt er unter Ihrem versicherten Verdienst, gleicht die Arbeitslosenkasse einen Teil der Differenz aus; zusammen erhalten Sie so meist mehr als das Taggeld allein (AVIG Art. 24).',
+          'Verdienen Sie während der Arbeitslosigkeit etwas, gilt das als Zwischenverdienst. Liegt er unter Ihrem versicherten Verdienst, gleicht die Arbeitslosenkasse einen Teil der Differenz aus; zusammen erhalten Sie so meist mehr als das Taggeld allein. Als Lohn zählt dabei mindestens, was für diese Arbeit am Ort üblich ist (AVIG Art. 24).',
           'Grundsätzlich müssen Sie jede zumutbare Arbeit annehmen. Unzumutbar ist eine Stelle etwa, wenn sie nicht den orts- und berufsüblichen Bedingungen entspricht, Ihrem Alter, Ihren persönlichen Verhältnissen oder Ihrer Gesundheit nicht angemessen ist oder einen sehr langen Arbeitsweg verlangt (AVIG Art. 16).',
           'Wer eine zumutbare Stelle ablehnt oder die eigene Stelle ohne zwingenden Grund selbst kündigt, wird eingestellt: Je nach Verschulden gibt es eine Zeit lang kein Taggeld (AVIG Art. 30). Lassen Sie sich vor einer eigenen Kündigung beraten.',
         ],
@@ -892,7 +893,7 @@ export const SEITEN = [
         absaetze: [
           'Ausgesteuert ist, wer alle Taggelder bezogen hat oder wessen Rahmenfrist abgelaufen ist, ohne dass eine neue eröffnet werden kann. Die öffentliche Arbeitsvermittlung steht weiter offen und ist unentgeltlich (AVG Art. 26, 27). Wer wieder genug Beitragszeit sammelt, kann einen neuen Anspruch erwerben (AVIG Art. 9, 13).',
           'Danach können Sozialhilfe und Prämienverbilligung in Frage kommen. Wer ab sechzig ausgesteuert wird, kann unter weiteren Voraussetzungen Überbrückungsleistungen erhalten; angemeldet werden sie bei der EL-Stelle des Wohnkantons (ÜLG Art. 3, 5, 19).',
-          'Mit dem letzten Taggeld endet nach einer kurzen Nachdeckung auch die Unfallversicherung über die Arbeitslosenversicherung. Melden Sie der Krankenkasse rechtzeitig, dass sie Unfälle wieder decken muss (UVG Art. 3 Abs. 2, KVG Art. 8). Klären Sie bei der AHV-Ausgleichskasse, ob Sie als Nichterwerbstätige Beiträge zahlen müssen, damit keine Beitragslücke entsteht (AHVG Art. 10).',
+          'Mit dem letzten Taggeld endet nach einer kurzen Nachdeckung auch die Unfallversicherung über die Arbeitslosenversicherung. Melden Sie der Krankenkasse rechtzeitig, dass sie Unfälle wieder decken muss; sie zahlt dann wie bei Krankheit, mit Franchise und Selbstbehalt (UVG Art. 3 Abs. 2, KVG Art. 8, 10). Klären Sie bei der AHV-Ausgleichskasse, ob Sie als Nichterwerbstätige Beiträge zahlen müssen, damit keine Beitragslücke entsteht (AHVG Art. 10).',
         ],
       },
     ],
@@ -900,7 +901,7 @@ export const SEITEN = [
       {
         frage: 'Bekomme ich Taggeld, wenn ich selbst gekündigt habe?',
         antwort:
-          'Grundsätzlich ja, wenn die übrigen Voraussetzungen erfüllt sind. Wer ohne Zusicherung einer neuen Stelle selbst kündigt, wird aber in der Regel eingestellt und erhält eine Zeit lang kein Taggeld. Ausgenommen ist, wem das Bleiben an der Stelle nicht zuzumuten war (AVIG Art. 30, AVIV Art. 44). Lassen Sie sich vorher beraten.',
+          'Ja, aber meist erst nach einer Einstellung: Wer ohne Zusicherung einer neuen Stelle selbst kündigt, erhält in der Regel eine Zeit lang kein Taggeld, oft für die längste Dauer, die das Gesetz vorsieht. Ausgenommen ist, wem das Bleiben an der Stelle nicht zuzumuten war (AVIG Art. 30, AVIV Art. 44, 45). Lassen Sie sich vorher beraten.',
       },
       {
         frage: 'Kann ich mich schon vor dem Ende der Stelle anmelden?',
@@ -910,12 +911,12 @@ export const SEITEN = [
       {
         frage: 'Bin ich während der Arbeitslosigkeit gegen Unfall versichert?',
         antwort:
-          'Ja, solange Sie Taggeld beziehen, sind Sie über die Arbeitslosenversicherung gegen Unfall versichert (UVG Art. 1a). Danach endet diese Deckung nach einer kurzen Nachdeckung, und die Krankenkasse übernimmt Unfälle, wenn Sie es ihr melden.',
+          'Ja, solange Sie Taggeld beziehen, sind Sie über die Arbeitslosenversicherung gegen Unfall versichert (UVG Art. 1a). Danach endet diese Deckung nach einer kurzen Nachdeckung. Melden Sie der Krankenkasse, dass sie Unfälle wieder decken muss; sie zahlt dann wie bei Krankheit, mit Franchise und Selbstbehalt.',
       },
       {
         frage: 'Was geschieht mit meiner Pensionskasse?',
         antwort:
-          'Beim Austritt wird das Guthaben fällig und kommt auf ein Freizügigkeitskonto, bis Sie eine neue Stelle haben. Während Sie Taggeld beziehen, sind Sie für die Risiken Tod und Invalidität weiter beruflich versichert (BVG Art. 2 Abs. 3). Fürs Alter sparen Sie in dieser Zeit nicht.',
+          'Beim Austritt müssen Sie der Pensionskasse mitteilen, auf welches Freizügigkeitskonto das Guthaben gehen soll, bis Sie eine neue Stelle haben (FZG Art. 4). Während Sie Taggeld beziehen, sind Sie in der Regel für die Risiken Tod und Invalidität weiter beruflich versichert (BVG Art. 2 Abs. 3); fürs Alter sparen Sie in dieser Zeit in der Regel nicht. Wer nach dem achtundfünfzigsten Geburtstag die Stelle verliert, kann unter Umständen in der bisherigen Pensionskasse bleiben (BVG Art. 47a).',
       },
       {
         frage: 'Darf ich während der Arbeitslosigkeit in die Ferien?',
