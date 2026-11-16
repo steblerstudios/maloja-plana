@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { VerstehenImWerkzeug, VERSTEHEN, KANTONSKARTE, NachladeGrenze } from '../components/ErklaerseiteLink.jsx';
+import { VerstehenImWerkzeug, VERSTEHEN, KANTONSKARTE, NachladeGrenze, KARTEN_NAME } from '../components/ErklaerseiteLink.jsx';
 import KantonsKarteKlein from '../components/KantonsKarteKlein.jsx';
 import ErklaerFigurKlein from '../components/ErklaerFigurKlein.jsx';
 import { KARTEN, KARTE_GEO, STUFEN_FARBEN } from '../data/kantonskarten.js';
@@ -326,11 +326,33 @@ describe('Atlas in den Kapiteln: Kind, Trennung, Mietbeiträge, Stundenlohn', ()
 
   it('Mindestlohn: zwei Gruppen, kein Satz «höhere Zahl», Betrag des eigenen Kantons', () => {
     expect(KARTEN.mindestlohn.zweiGruppen).toBe(true);
-    expect(KARTEN.mindestlohn.spannen.map((s) => s.s)).toEqual([3, 1]);
+    expect(KARTEN.mindestlohn.spannen.map((s) => s.s)).toEqual([4, 1]);
     const ge = karte(P, 'mindestlohn', 'GE');
     expect(ge).toContain('24.59 Fr. pro Stunde');
     expect(ge).not.toContain(t('erklaerseite.stufenHinweis'));
     expect(karte(P, 'mindestlohn', 'ZH')).toContain('kein kantonaler Mindestlohn');
+  });
+
+  // Prüfer 16.11.2026
+  it('Abläufe: der Aufklapper nennt die Karte (zwei Karten im Ablauf «Kind» sind unterscheidbar)', () => {
+    for (const [k, name] of Object.entries(KARTEN_NAME)) {
+      expect(name, k).toBe(KARTEN[k].titel);
+      const html = renderToStaticMarkup(React.createElement(VerstehenImWerkzeug, { palette: P, t, karte: k, kanton: 'ZH' }));
+      expect(html).toContain(`${t('erklaerseite.karteMitKanton')}: <span lang="de">${name}</span>`);
+    }
+  });
+
+  it('Mindestlohn-Karte hält die Jahressperre: im Folgejahr kein Betrag, aber der Hinweis', () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      vi.setSystemTime(new Date('2026-12-20T12:00:00'));
+      expect(karte(P, 'mindestlohn', 'NE')).toContain('21.35 Fr. pro Stunde');
+      vi.setSystemTime(new Date('2027-01-05T12:00:00'));
+      const html = karte(P, 'mindestlohn', 'NE');
+      expect(html).not.toContain('21.35');
+      expect(html).toContain('mit kantonalem Mindestlohn');
+      expect(html).toContain(t('erklaerseite.anderesJahr', { jahr: 2026 }));
+    } finally { vi.useRealTimers(); }
   });
 
   it('Mietbeiträge: neben der Miete die Leerwohnungsziffer als Zahl', () => {

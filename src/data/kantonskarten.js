@@ -1386,7 +1386,7 @@ export const KARTEN = {
   "einheit": "Fr. im Monat je Kind, höchstens",
   "anker": "karte-alimente",
   "frucht": "zwetschge",
-  "legende": "Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. 17 Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch. Ob und wie viel jemand erhält, hängt vom Einkommen ab; die Grenzen sind je Kanton verschieden. Der Stand ist je Kanton verschieden. Für den Kanton Waadt ist nicht gesichert, ob der Betrag inzwischen angepasst wurde.",
+  "legende": "Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. 17 Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch (1'008 Franken); bei mehreren steht der Betrag nicht im Gesetz, sondern folgt aus dieser Kopplung. Ob und wie viel jemand erhält, hängt in den meisten Kantonen von Einkommen und Vermögen ab; die Regeln sind je Kanton verschieden. Neuenburg rechnet je Unterhaltsbeitrag, nicht je Kind. Nicht gesichert ist der Betrag für den Kanton Freiburg und den Kanton Waadt.",
   "quellen": [],
   "ch": null,
   "spannen": [
@@ -1465,7 +1465,8 @@ export const KARTEN = {
     "quelle": {
      "text": "Kanton Freiburg, Alimentenbevorschussung: Loi sur l'aide au recouvrement et l'avance de contributions d'entretien (LARACE), RSF 212.4.1, art. 9, Stand 2026",
      "url": "https://bdlf.fr.ch/app/fr/texts_of_law/212.4.11"
-    }
+    },
+    "nichtGesichert": true
    },
    "GE": {
     "s": 1,
@@ -1607,7 +1608,7 @@ export const KARTEN = {
     "text": "980",
     "stand": "2024",
     "quelle": {
-     "text": "Kanton Waadt, Alimentenbevorschussung: Loi sur le recouvrement et les avances sur pensions alimentaires (LRAPA) BLV 850.36, Stand 2024",
+     "text": "LexFind (Sammlung der Erlasse), Kanton Waadt, Alimentenbevorschussung: Loi sur le recouvrement et les avances sur pensions alimentaires (LRAPA) BLV 850.36, Stand 2024",
      "url": "https://www.lexfind.ch/tolv/241701/fr"
     },
     "nichtGesichert": true
@@ -1647,6 +1648,7 @@ export const KARTEN = {
   "anker": "karte-mindestlohn",
   "frucht": "haselnuss",
   "zweiGruppen": true,
+  "jahr": 2026,
   "legende": "Kantone mit einem gesetzlichen Mindestlohn, Stand 2026. Die Farbe zeigt nur, ob es einen gibt, nicht, wie hoch er ist. Ausnahmen, etwa für Lernende, regelt jeder Kanton selbst.",
   "quellen": [
    {
@@ -1673,7 +1675,7 @@ export const KARTEN = {
   "ch": null,
   "spannen": [
    {
-    "s": 3,
+    "s": 4,
     "text": "mit kantonalem Mindestlohn (5)"
    },
    {
@@ -1699,7 +1701,7 @@ export const KARTEN = {
     "text": "kein kantonaler Mindestlohn"
    },
    "BS": {
-    "s": 3,
+    "s": 4,
     "text": "22.20 Fr. pro Stunde"
    },
    "BE": {
@@ -1711,7 +1713,7 @@ export const KARTEN = {
     "text": "kein kantonaler Mindestlohn"
    },
    "GE": {
-    "s": 3,
+    "s": 4,
     "text": "24.59 Fr. pro Stunde"
    },
    "GL": {
@@ -1723,7 +1725,7 @@ export const KARTEN = {
     "text": "kein kantonaler Mindestlohn"
    },
    "JU": {
-    "s": 3,
+    "s": 4,
     "text": "21.40 Fr. pro Stunde"
    },
    "LU": {
@@ -1731,7 +1733,7 @@ export const KARTEN = {
     "text": "kein kantonaler Mindestlohn"
    },
    "NE": {
-    "s": 3,
+    "s": 4,
     "text": "21.35 Fr. pro Stunde"
    },
    "NW": {
@@ -1759,7 +1761,7 @@ export const KARTEN = {
     "text": "kein kantonaler Mindestlohn"
    },
    "TI": {
-    "s": 3,
+    "s": 4,
     "text": "20.00 Fr. pro Stunde"
    },
    "TG": {

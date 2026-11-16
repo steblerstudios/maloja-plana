@@ -1974,6 +1974,7 @@ export default {
     stufenHinweisDunkel: 'Lighter means a higher number, not better or worse.',
     nichtGesichert: 'not confirmed whether updated since',
     standJahr: 'As of {jahr}',
+    anderesJahr: 'The map shows the status as of {jahr}. The calculation above uses the current year\'s values where they are confirmed.',
     belegWort: 'Source',
     nochmals: 'Try again',
     karteZeigtErwachsene: { sie: 'The map shows adults aged 26 and over. Average premium in your age group, same source:', du: 'The map shows adults aged 26 and over. Average premium in your age group, same source:' },

@@ -1992,6 +1992,7 @@ export default {
     stufenHinweisDunkel: 'Heller heisst höhere Zahl, nicht besser oder schlechter.',
     nichtGesichert: 'nicht gesichert, ob seither angepasst',
     standJahr: 'Stand {jahr}',
+    anderesJahr: 'Die Karte zeigt den Stand {jahr}. Gerechnet wird oben mit den Werten des laufenden Jahres, soweit sie belegt sind.',
     belegWort: 'Quelle',
     nochmals: 'Nochmals versuchen',
     karteZeigtErwachsene: { sie: 'Die Karte zeigt Erwachsene ab 26 Jahren. Mittlere Prämie in Ihrer Altersklasse, gleiche Quelle:', du: 'Die Karte zeigt Erwachsene ab 26 Jahren. Mittlere Prämie in deiner Altersklasse, gleiche Quelle:' },

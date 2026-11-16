@@ -2137,8 +2137,11 @@ export default {
     ganzeSchweiz: 'Tut la Svizra',
     stufenHinweis: 'Pli stgir munta in dumber pli aut, betg meglier u mender.',
     stufenHinweisDunkel: 'Pli cler munta in dumber pli aut, betg meglier u mender.',
-    nichtGesichert: 'betg segirà, sch\'i è vegnì adattà dapi lura',
+    // TODO(rm): provisorisch — Gegenlese (Atlas in den Kapiteln, 16.11.2026)
+    nichtGesichert: 'betg cumprovà, sch\'i è vegnì adattà dapi lura',
     standJahr: 'Stadi {jahr}',
+    // TODO(rm): provisorisch — Gegenlese (Atlas in den Kapiteln, 16.11.2026)
+    anderesJahr: 'La charta mussa il stadi {jahr}. Survart vegn quintà cun las valurs da l\'onn current, sche quellas èn cumprovadas.',
     belegWort: 'Funtauna',
     nochmals: 'Empruvar anc ina giada',
     karteZeigtErwachsene: { sie: 'La charta mussa creschids a partir da 26 onns. Prima media en Vossa classa da vegliadetgna, medema funtauna:', du: 'La charta mussa creschids a partir da 26 onns. Prima media en tia classa da vegliadetgna, medema funtauna:' },

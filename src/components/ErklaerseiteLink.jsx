@@ -189,13 +189,21 @@ const Aufklapper = ({ palette, t, titel, teil, laden, props }) => {
 // Sie zeigt Franchise 1'000 und Dach 700 für Erwachsene; für Kinder gibt es diese Franchise nicht (Fachprüfung 09.11.2026).
 // `karte` statt `view` (14.11.2026): in Abläufen steht die Karte an einem Schritt, nicht an einem Werkzeug
 // («Kind»: Kinderzulage, Kita-Abzug; «Trennung»: Alimente). Ein Ablauf kann so mehrere Karten zeigen.
+// Kartennamen für den Titel des Aufklappers, wenn ein Ablauf mehrere Karten zeigt (a11y-Prüfung 16.11.2026:
+// zweimal «Ihr Kanton auf der Karte» war für Vorlese-Programme nicht zu unterscheiden). Deutsch wie im Atlas.
+export const KARTEN_NAME = { kinderzulage: 'Kinderzulage', kita: 'Abzug für Kinderbetreuung', alimente: 'Alimentenbevorschussung' };
+
 export const VerstehenImWerkzeug = ({ palette, t, view, karte, kanton, altersklasse }) => {
   const v = karte ? { karte } : VERSTEHEN[view];
+  const grund = t(kanton ? 'erklaerseite.karteMitKanton' : 'erklaerseite.karteOhneKanton');
+  const kartenTitel = karte && KARTEN_NAME[karte]
+    ? React.createElement(React.Fragment, null, grund, ': ', React.createElement('span', { lang: 'de' }, KARTEN_NAME[karte]))
+    : grund;
   if (!v) return null;
   return React.createElement('div', { 'data-teil': 'verstehen-im-werkzeug', style: { marginTop: space.md + 'px' } },
     v.karte && React.createElement(Aufklapper, {
       palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte: v.karte, kanton, altersklasse },
-      titel: t(kanton ? 'erklaerseite.karteMitKanton' : 'erklaerseite.karteOhneKanton'),
+      titel: kartenTitel,
     }),
     v.figur && altersklasse !== 'kind' && React.createElement(Aufklapper, {
       palette, t, teil: 'aufklapper-figur', laden: TEILE.figur, props: { figur: v.figur }, titel: t('erklaerseite.imBild'),

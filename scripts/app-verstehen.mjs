@@ -86,10 +86,12 @@ function mindestlohnKarte() {
     anker: 'karte-mindestlohn',
     frucht: KARTEN_FRUCHT.mindestlohn,
     zweiGruppen: true,
+    // Stand der Beträge. Weicht das laufende Jahr ab, zeigt die App keinen Betrag (Fachprüfung 16.11.2026: Jahressperre wie lohnCheck.js).
+    jahr: 2026,
     legende: LEGENDE.mindestlohn,
     quellen: mit.map((k) => quelleMitKey(`ml${k[0]}${k[1].toLowerCase()}`)),
     ch: null,
-    spannen: [{ s: 3, text: `mit kantonalem Mindestlohn (${mit.length})` }, { s: 1, text: `ohne (${KANTONE.length - mit.length})` }],
+    spannen: [{ s: 4, text: `mit kantonalem Mindestlohn (${mit.length})` }, { s: 1, text: `ohne (${KANTONE.length - mit.length})` }],
     werte: Object.fromEntries(KANTONE.map((k) => [k, { s: MINDESTLOHN_STUFE(k), text: MINDESTLOHN[k] ? `${MINDESTLOHN[k].chfStunde.toFixed(2)} Fr. pro Stunde` : 'kein kantonaler Mindestlohn' }])),
   };
 }

@@ -37,6 +37,9 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
   if (!satz) return null;
   const farben = dunkel ? satz.dunkel : satz.hell;
   const eigen = kanton && K.werte[kanton] ? kanton : null;
+  // Karte mit festem Stand (Mindestlohn 2026): im Folgejahr kein Betrag, nur «mit»/«ohne» (Jahressperre wie lohnCheck.js).
+  const anderesJahr = K.jahr && new Date().getFullYear() !== K.jahr;
+  const eigenText = eigen && (anderesJahr ? (K.spannen.find((s) => s.s === K.werte[eigen].s) || {}).text : K.werte[eigen].text);
   const name = eigen ? getCantonName(eigen, t) : '';
   const beschreibung = eigen
     ? t('erklaerseite.karteBeschreibungMit', { titel: K.titel, kanton: name })
@@ -108,10 +111,10 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
         ? vergleichsTabelle()
         : h(React.Fragment, null,
           eigen
-            ? zeile({ fontWeight: weight.semi }, `${name}: `, h('span', { lang: 'de' }, K.werte[eigen].text),
+            ? zeile({ fontWeight: weight.semi }, `${name}: `, h('span', { lang: 'de' }, eigenText),
               // Alimente (14.11.2026): Stand je Kanton und, wo nötig, der Vorbehalt — wie die Tabelle auf /kantonsatlas/.
               K.werte[eigen].stand && h('span', { style: { fontWeight: weight.normal, color: palette.mid } }, ` · ${t('erklaerseite.standJahr', { jahr: K.werte[eigen].stand })}`),
-              K.werte[eigen].nichtGesichert && h('span', { 'data-teil': 'nicht-gesichert', style: { fontWeight: weight.normal, color: palette.text } }, ` · ${t('erklaerseite.nichtGesichert')}`))
+              K.werte[eigen].nichtGesichert && h('span', { 'data-teil': 'nicht-gesichert', style: { fontWeight: weight.medium, color: palette.text } }, ` · ${t('erklaerseite.nichtGesichert')}`))
             : ohneKanton,
           K.ch && zeile({ color: palette.mid, marginTop: space.xs + 'px' }, `${t('erklaerseite.ganzeSchweiz')}: `, h('span', { lang: 'de' }, K.ch))),
       h('ul', { role: 'list', lang: 'de', style: { listStyle: 'none', padding: 0, margin: space.sm + 'px 0 0', display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px ' + space.ms + 'px', fontSize: text.xs, color: palette.mid } },
@@ -119,6 +122,7 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
           h('i', { 'aria-hidden': 'true', style: { display: 'inline-block', width: FELD_PX, height: FELD_PX, borderRadius: radius.hair, background: farben[s.s], boxShadow: `inset 0 0 0 1px ${palette.mid}` } }),
           s.text))),
       klassenZeilen,
+      anderesJahr && zeile({ ...leise, color: palette.text }, t('erklaerseite.anderesJahr', { jahr: K.jahr })),
       // Zwei Gruppen (Mindestlohn) heissen nicht «höhere Zahl»: dort sagt die Legende selbst, was die Farbe zeigt.
       !K.zweiGruppen && zeile(leise, t(dunkel ? 'erklaerseite.stufenHinweisDunkel' : 'erklaerseite.stufenHinweis')),
       // Legende wie auf der Atlas-Seite: Jahr und Rahmung («Rechenwert über alle Versicherten …»).
