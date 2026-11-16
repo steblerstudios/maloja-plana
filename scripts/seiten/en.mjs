@@ -360,6 +360,88 @@ export const SEITEN = [
     ],
     quellen: ['ahvMerkblattEL', 'bsvEL'],
   },
+
+  // ─── Unemployment (16.11.2026) ────────────────────────────────────────────
+  // German abbreviations as on the other English pages; RAV kept with its English gloss.
+  {
+    pfad: 'arbeitslosigkeit',
+    titel: 'Unemployed: what unemployment insurance pays',
+    beschreibung:
+      'Who is entitled to unemployment benefits, why registering with the RAV early matters, and what comes after benefits run out. An overview without figures.',
+    brotkrume: 'Unemployment',
+    vorspann:
+      'Unemployment insurance (Arbeitslosenversicherung, ALV) is compulsory for employees: anyone who works pays contributions on their salary, and anyone who loses their job receives, under certain conditions, a daily allowance that replaces part of the salary. It is governed by the Unemployment Insurance Act (AVIG) and applies in the same way throughout Switzerland. The cantons run the regional employment centres (RAV).',
+    abschnitte: [
+      {
+        titel: 'Who is entitled to benefits',
+        absaetze: [
+          'You are entitled to unemployment benefits if, among other things, you are fully or partly unemployed, have suffered a loss of work that counts, live in Switzerland, have not yet reached reference age and do not receive an AHV old-age pension, have enough contribution time or are exempt from it, are available for placement and meet the control requirements (Art. 8 AVIG). Drawing the AHV pension early therefore ends the entitlement.',
+          'Contribution time means: during a certain period before unemployment, you worked long enough as an employee and paid contributions (Art. 13 AVIG). Anyone who was not employed during that period because of education, illness, accident or maternity, or who has to look for work after a separation, divorce or the death of their spouse or registered partner, may be exempt from the contribution requirement (Art. 14 AVIG).',
+          'Self-employed people are not insured against unemployment for their self-employed activity; self-employment does not count as contribution time. Without a Swiss passport, being available for placement includes being allowed to work in Switzerland (Art. 15 AVIG). Seek advice on questions about your permit.',
+        ],
+      },
+      {
+        titel: 'Register with the RAV, and early',
+        absaetze: [
+          'Benefits are paid at the earliest from the day you register, not retroactively. Register therefore at the latest on the first day for which you claim benefits with the responsible regional employment centre (RAV), online at arbeit.swiss or in person (Art. 10 and 17 AVIG).',
+          'Already during the notice period you must look for a new job and record your efforts. If they are missing or insufficient, there are suspension days, that is, days without benefits (Art. 17 and 30 AVIG).',
+          'After registering, benefits generally start only after a few waiting days; how many depends on your previous income and on maintenance obligations towards children. A special waiting period may apply to people exempt from the contribution requirement (Art. 18 AVIG).',
+        ],
+      },
+      {
+        titel: 'The daily allowance replaces part of the salary',
+        absaetze: [
+          'The daily allowance is based on the <strong>insured earnings</strong>, that is, your previous salary up to a statutory ceiling (Art. 23 AVIG). Part of it is paid out; the share is higher if you have maintenance obligations towards children, had a low salary or receive an IV pension above a certain degree of disability (Art. 22 AVIG).',
+          'The maximum number of daily allowances depends on contribution time and age; they are paid within a framework period (Art. 9 and 27 AVIG). We deliberately do not state rates or maximum numbers here. Your unemployment fund calculates them bindingly.',
+          'As with a salary, contributions are deducted from the allowance, for example for the AHV (Art. 22a AVIG). It is replacement income and is taxed like a salary (Art. 23 let. a DBG).',
+        ],
+      },
+      {
+        titel: 'Interim earnings and suitable work',
+        absaetze: [
+          'If you earn something while unemployed, it counts as interim earnings. If they are lower than your insured earnings, the unemployment fund makes up part of the difference; together you usually receive more than the allowance alone. At least the usual local pay for this work is counted as salary (Art. 24 AVIG).',
+          'In principle you must accept any suitable work. A job is not suitable, for example, if it does not meet the usual local and professional conditions, is not appropriate to your age, personal circumstances or health, or requires a very long commute (Art. 16 AVIG).',
+          'Anyone who refuses a suitable job or quits their own job without a compelling reason is suspended: depending on the degree of fault, there are no benefits for a period of time (Art. 30 AVIG). Seek advice before quitting yourself.',
+        ],
+      },
+      {
+        titel: 'When the benefits run out',
+        absaetze: [
+          'Your benefits have run out (Aussteuerung) when you have drawn all daily allowances or your framework period has expired without a new one being opened. The public employment service remains open and free of charge (Art. 26 and 27 AVG). Anyone who builds up enough contribution time again can acquire a new entitlement (Art. 9 and 13 AVIG).',
+          'After that, social assistance and premium reduction may come into question. Anyone whose benefits run out at sixty or later may, under further conditions, receive bridging benefits; they are applied for at the EL office of the canton of residence (Art. 3, 5 and 19 ÜLG).',
+          'With the last allowance, accident insurance through unemployment insurance also ends, after a short extension. Tell your health insurer in good time that it must cover accidents again; it then pays as for illness, with deductible and co-payment (Art. 3 para. 2 UVG, Art. 8 and 10 KVG). Check with the AHV compensation fund whether you must pay contributions as a non-employed person so that no contribution gap arises (Art. 10 AHVG).',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Do I get benefits if I quit my job myself?',
+        antwort:
+          'Yes, but usually only after a suspension: anyone who quits without being assured of a new job generally receives no benefits for a period of time, often the longest the law provides. The exception is if staying in the job could not reasonably be expected (Art. 30 AVIG, Art. 44 and 45 AVIV). Seek advice beforehand.',
+      },
+      {
+        frage: 'Can I register before my job ends?',
+        antwort:
+          'Yes, and it makes sense. You must register at the latest on the first day for which you claim benefits (Art. 17 AVIG). Job search efforts are already required for the notice period.',
+      },
+      {
+        frage: 'Am I insured against accidents while unemployed?',
+        antwort:
+          'Yes, as long as you receive benefits you are insured against accidents through unemployment insurance (Art. 1a UVG). After that, this cover ends following a short extension. Tell your health insurer that it must cover accidents again; it then pays as for illness, with deductible and co-payment.',
+      },
+      {
+        frage: 'What happens to my pension fund?',
+        antwort:
+          'When you leave, you must tell the pension fund which vested benefits account the assets should go to until you have a new job (Art. 4 FZG). While you receive benefits, you usually remain covered in occupational pension provision for the risks of death and disability (Art. 2 para. 3 BVG); as a rule you do not save for old age during this time. Anyone who loses their job after their fifty-eighth birthday may, under certain conditions, stay in their pension fund (Art. 47a BVG).',
+      },
+      {
+        frage: 'May I go on holiday while unemployed?',
+        antwort:
+          'Yes, to a limited extent: you are entitled to control-free days, which you must report to the RAV in advance (Art. 27 AVIV). Your RAV will tell you how many you have.',
+      },
+    ],
+    quellen: ['arbeitSwiss'],
+  },
 ];
 
 export const SONDERSEITEN = [

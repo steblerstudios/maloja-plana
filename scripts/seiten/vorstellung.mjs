@@ -1328,6 +1328,7 @@ ${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; -
             <li><a href="/steuern/">Steuern</a></li>
             <li><a href="/krankenkasse/">Warum die Krankenkasse so viel kostet</a></li>
             <li><a href="/ergaenzungsleistungen/">Ergänzungsleistungen</a></li>
+            <li><a href="/arbeitslosigkeit/">Arbeitslosigkeit</a></li>
           </ul>
         </nav>
         <nav aria-labelledby="f-recht">
