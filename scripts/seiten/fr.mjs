@@ -276,6 +276,261 @@ export const SEITEN = [
     ],
     quellen: ['estvRechner'],
   },
+
+  // ─── Prestations complémentaires (14.11.2026) ─────────────────────────────
+  // Termes repris de src/i18n/fr.js et du mémento 5.01 en français : PC, organe PC,
+  // dépenses reconnues, revenus déterminants, frais de maladie et d’invalidité.
+  // LPC = ELG · OPC = ELV · LEI = AIG.
+  {
+    pfad: 'ergaenzungsleistungen',
+    titel: 'Les prestations complémentaires à l’AVS et à l’AI',
+    beschreibung:
+      'Quand les prestations complémentaires (PC) entrent en ligne de compte, comment elles sont calculées et pourquoi elles ne sont pas de l’aide sociale. Un cadrage sans chiffres.',
+    brotkrume: 'Prestations complémentaires',
+    vorspann:
+      'Les prestations complémentaires, ou PC, interviennent là où une rente de l’AVS ou de l’AI et les autres revenus ne suffisent pas à couvrir le minimum vital. Elles sont réglées dans la loi fédérale sur les prestations complémentaires (LPC) et constituent un droit légal, pas une faveur. Elles sont versées par les cantons.',
+    abschnitte: [
+      {
+        titel: 'Sans prestation de l’AVS ou de l’AI, pas de PC',
+        absaetze: [
+          'Les PC supposent une prestation de l’AVS ou de l’AI : une rente de vieillesse ou de survivant de l’AVS, y compris une rente anticipée, une rente de l’AI, une allocation pour impotent de l’AI ou des indemnités journalières de l’AI versées sans interruption depuis au moins six mois. S’y ajoutent le domicile et la résidence habituelle en Suisse (art. 4 LPC).',
+          'Pour les étrangères et les étrangers s’applique en outre une durée minimale de séjour : en règle générale dix ans sans interruption en Suisse, cinq ans pour les réfugiés et les apatrides (art. 5 LPC). Elle ne s’applique pas aux ressortissants d’un État de l’UE ou de l’AELE.',
+          'Qui n’a pas de rente uniquement parce que les années de cotisation sont insuffisantes peut, à certaines conditions, tout de même toucher des PC (art. 4 LPC). Qui se trouve dans le besoin sans aucune prestation de l’AVS ou de l’AI s’adresse à l’aide sociale de sa commune de domicile.',
+        ],
+      },
+      {
+        titel: 'L’écart entre dépenses et revenus',
+        absaetze: [
+          'La PC annuelle correspond à la part des <strong>dépenses reconnues</strong> qui excède les <strong>revenus déterminants</strong> (art. 9 LPC). Les dépenses comprennent par exemple un montant pour les besoins vitaux, le loyer jusqu’à un plafond et un montant pour la prime d’assurance-maladie (art. 10 LPC). Les revenus comprennent les rentes, une partie du revenu de l’activité lucrative et une partie de la fortune (art. 11 LPC).',
+          'N’a droit aux PC que la personne dont la fortune est inférieure à un seuil légal ; un logement habité par son propriétaire n’est pas pris en compte pour ce seuil (art. 9a LPC). La fortune à laquelle une personne a renoncé sans contrepartie, par exemple par une donation, est prise en compte (art. 11a LPC).',
+          'La Confédération fixe les montants pour les besoins vitaux, et les plafonds de loyer échelonnés selon trois régions (art. 10 LPC). Nous ne les citons volontairement pas ici : ils sont adaptés régulièrement, et un chiffre sur une page comme celle-ci serait bientôt faux. Pour les personnes vivant en home, le calcul suit ses propres règles ; les cantons peuvent limiter les frais de home reconnus.',
+        ],
+      },
+      {
+        titel: 'Les frais de maladie et d’invalidité s’y ajoutent',
+        absaetze: [
+          'En plus de la PC annuelle, le canton rembourse les frais de maladie et d’invalidité dûment établis, par exemple pour le dentiste, l’aide, les soins et l’assistance à domicile, le transport vers le lieu de traitement, les moyens auxiliaires ainsi que la franchise et la quote-part de l’assurance-maladie (art. 14 LPC). Le canton détermine quels frais exactement et jusqu’à quel montant.',
+          'Même qui ne touche pas de PC annuelle parce que ses revenus sont un peu trop élevés peut obtenir le remboursement de tels frais, dans la mesure où ils dépassent l’excédent de revenus.',
+          'Conservez factures et justificatifs : seul ce qui est établi est remboursé, et seulement si vous le faites valoir dans un délai légal après la facturation (art. 15 LPC).',
+        ],
+      },
+      {
+        titel: 'S’annoncer : auprès du canton de domicile, et tôt',
+        absaetze: [
+          'Le canton de votre domicile est compétent. Il désigne l’organe qui reçoit la demande ; c’est le plus souvent la caisse cantonale de compensation ou l’office des assurances sociales, souvent par l’intermédiaire de l’agence AVS de la commune de domicile (art. 21 LPC).',
+          'Le droit naît en règle générale le mois au cours duquel la demande est déposée (art. 12 LPC). Il ne peut commencer plus tôt que dans certains cas, par exemple si la demande est déposée dans les six mois suivant une décision de rente ou une entrée en home ou à l’hôpital (art. 12, al. 2, LPC, art. 22 OPC). Qui attend peut donc perdre des mois.',
+          'Si vous ne savez pas si une demande en vaut la peine, renseignez-vous auprès de l’organe PC. Il examine le droit et motive sa décision par écrit.',
+        ],
+      },
+      {
+        titel: 'Les PC ne sont pas de l’aide sociale',
+        absaetze: [
+          'Les PC sont souvent confondues avec l’aide sociale. Elles sont autre chose : un droit fondé sur le droit fédéral, calculé selon des règles valables dans toute la Suisse. Un droit aux PC prime l’aide sociale.',
+          'De votre vivant, vous ne devez pas rembourser des PC perçues légalement. Après le décès, elles sont remboursées sur la succession, mais seulement sur la part qui dépasse une franchise légale ; pour les couples mariés, seulement sur la succession de la personne décédée en second (art. 16a LPC).',
+          'Sans passeport suisse et sans nationalité d’un État de l’UE ou de l’AELE, le regroupement familial n’est en règle générale pas autorisé si vous percevez des PC annuelles ou si vous en percevriez en raison du regroupement (art. 43, al. 1, let. e, et art. 44, al. 1, let. e, LEI). Faites-vous conseiller au préalable dans ce cas.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Ai-je droit aux prestations complémentaires ?',
+        antwort:
+          'Cela dépend de si vous touchez une prestation de l’AVS ou de l’AI, de votre lieu de domicile, de vos revenus, de vos dépenses et de votre fortune. Il n’existe pas de limite valable pour tous, car le loyer, la prime et le ménage comptent aussi. Le calculateur PC de l’AVS/AI donne une première orientation ; seule la décision de l’organe PC de votre canton fait foi.',
+      },
+      {
+        frage: 'Y a-t-il des PC avant l’âge de la retraite ?',
+        antwort:
+          'Oui. Qui touche une rente de l’AI, une rente de veuve, de veuf ou d’orphelin peut aussi obtenir des PC avant l’âge de la retraite. Qui anticipe sa rente AVS remplit également la condition d’une rente (art. 4 LPC) ; la rente réduite compte alors comme revenu (art. 11 LPC). Qui arrive en fin de droit dans l’assurance-chômage à partir de soixante ans peut, selon les cas, toucher des prestations transitoires ; elles aussi se demandent auprès de l’organe PC.',
+      },
+      {
+        frage: 'Ma maison ou mon appartement compte-t-il ?',
+        antwort:
+          'Pour le seuil de fortune, un logement habité par son propriétaire n’est pas pris en compte (art. 9a LPC). Dans le calcul lui-même, sa valeur est prise en compte, mais avec une franchise (art. 11 LPC). Ce que cela donne dans votre cas, l’organe PC le calcule.',
+      },
+      {
+        frage: 'Qu’en est-il si je dois entrer en home ?',
+        antwort:
+          'La PC est alors calculée selon ses propres règles : au lieu des besoins vitaux et du loyer, on compte la taxe journalière du home, que le canton peut plafonner, et un montant pour les dépenses personnelles fixé par le canton (art. 10, al. 2, LPC). Annoncez-vous dans les six mois suivant l’entrée ; le droit peut alors naître dès le mois de l’entrée, si les autres conditions sont remplies (art. 12, al. 2, LPC).',
+      },
+      {
+        frage: 'Dois-je annoncer les changements ?',
+        antwort:
+          'Oui. Toute modification de la situation personnelle et toute modification importante de la situation économique doit être annoncée sans délai à l’organe PC, par exemple un déménagement, un nouveau loyer, un héritage ou une entrée en home (art. 24 OPC). Les prestations perçues indûment doivent être restituées.',
+      },
+      {
+        frage: 'Que m’apporte encore une PC ?',
+        antwort:
+          'Les bénéficiaires de PC annuelles à l’AVS ou à l’AI sont exonérés de la redevance de radio-télévision ; l’exonération se demande auprès de l’organe de perception avec l’attestation de l’organe PC. Le montant pour la prime d’assurance-maladie qui entre dans le calcul est versé directement à la caisse-maladie. En cas de doute, renseignez-vous auprès de l’organe PC.',
+      },
+    ],
+    quellen: ['ahvMerkblattEL', 'bsvEL'],
+  },
+
+  // ─── Chômage (16.11.2026) ─────────────────────────────────────────────────
+  // LACI = AVIG · OACI = AVIV · LPtra = ÜLG · LAA = UVG · LAVS = AHVG · LSE = AVG ·
+  // LPP = BVG · LIFD = DBG · ORP = RAV · indemnité journalière = Taggeld.
+  {
+    pfad: 'arbeitslosigkeit',
+    titel: 'Au chômage : ce que verse l’assurance-chômage',
+    beschreibung:
+      'Qui a droit à l’indemnité de chômage, pourquoi l’inscription à l’ORP compte dès le début et ce qui vient après la fin de droit. Un cadrage sans chiffres.',
+    brotkrume: 'Chômage',
+    vorspann:
+      'L’assurance-chômage (AC) est obligatoire pour les salariés : qui travaille paie des cotisations sur son salaire, et qui perd son emploi reçoit, à certaines conditions, une indemnité journalière qui remplace une partie du salaire. Elle est réglée dans la loi sur l’assurance-chômage (LACI) et s’applique de la même manière dans toute la Suisse. Les cantons gèrent les offices régionaux de placement (ORP).',
+    abschnitte: [
+      {
+        titel: 'Qui a droit aux indemnités',
+        absaetze: [
+          'A droit à l’indemnité de chômage, entre autres, la personne qui est sans emploi ou partiellement sans emploi, subit une perte de travail à prendre en considération, est domiciliée en Suisse, n’a pas encore atteint l’âge de référence et ne touche pas de rente de vieillesse de l’AVS, remplit les conditions relatives à la période de cotisation ou en est libérée, est apte au placement et satisfait aux exigences du contrôle (art. 8 LACI). Qui anticipe sa rente AVS perd donc le droit.',
+          'Période de cotisation signifie : durant une période déterminée avant le chômage, vous avez travaillé assez longtemps comme salariée ou salarié et payé des cotisations (art. 13 LACI). Qui n’était pas salarié durant cette période pour cause de formation, de maladie, d’accident ou de maternité, ou qui doit chercher un emploi après une séparation, un divorce ou le décès de son conjoint, y compris en partenariat enregistré, peut être libéré des conditions relatives à la période de cotisation (art. 14 LACI).',
+          'Les indépendants ne sont pas assurés contre le chômage pour leur activité indépendante ; l’activité indépendante ne compte pas comme période de cotisation. Sans passeport suisse, l’aptitude au placement suppose que vous soyez autorisé à travailler en Suisse (art. 15 LACI). Faites-vous conseiller pour les questions d’autorisation.',
+        ],
+      },
+      {
+        titel: 'S’inscrire à l’ORP, et tôt',
+        absaetze: [
+          'L’indemnité est versée au plus tôt dès le jour de l’inscription, pas rétroactivement. Inscrivez-vous donc au plus tard le premier jour pour lequel vous demandez l’indemnité auprès de l’office régional de placement (ORP) compétent, en ligne sur arbeit.swiss ou en personne (art. 10 et 17 LACI).',
+          'Pendant le délai de congé déjà, vous devez chercher un nouvel emploi et consigner vos recherches. Si elles manquent ou sont insuffisantes, il y a des jours de suspension, c’est-à-dire des jours sans indemnité (art. 17 et 30 LACI).',
+          'Après l’inscription, l’indemnité ne commence en règle générale qu’après quelques jours d’attente ; leur nombre dépend du revenu antérieur et des obligations d’entretien envers des enfants. Pour les personnes libérées des conditions relatives à la période de cotisation, un délai d’attente spécial peut s’appliquer (art. 18 LACI).',
+        ],
+      },
+      {
+        titel: 'L’indemnité remplace une partie du salaire',
+        absaetze: [
+          'L’indemnité se calcule sur le <strong>gain assuré</strong>, c’est-à-dire le salaire antérieur jusqu’à un plafond légal (art. 23 LACI). Une partie en est versée ; elle est plus élevée si vous avez une obligation d’entretien envers des enfants, aviez un salaire bas ou touchez une rente de l’AI à partir d’un certain taux d’invalidité (art. 22 LACI).',
+          'Le nombre maximal d’indemnités dépend de la période de cotisation et de l’âge ; elles sont versées dans un délai-cadre (art. 9 et 27 LACI). Nous ne citons volontairement ni les taux ni les nombres maximaux. Votre caisse de chômage les calcule de manière contraignante.',
+          'Comme sur le salaire, des cotisations sont prélevées sur l’indemnité, par exemple pour l’AVS (art. 22a LACI). Elle constitue un revenu de remplacement et est imposée comme le salaire (art. 23, let. a, LIFD).',
+        ],
+      },
+      {
+        titel: 'Gain intermédiaire et travail convenable',
+        absaetze: [
+          'Si vous gagnez quelque chose pendant le chômage, cela constitue un gain intermédiaire. S’il est inférieur à votre gain assuré, la caisse de chômage compense une partie de la différence ; vous recevez ainsi généralement davantage que l’indemnité seule. Est pris en compte au moins le salaire usuel du lieu pour ce travail (art. 24 LACI).',
+          'En principe, vous devez accepter tout travail convenable. Un emploi n’est pas convenable notamment s’il ne respecte pas les conditions usuelles du lieu et de la profession, ne tient pas compte de votre âge, de votre situation personnelle ou de votre état de santé, ou impose un trajet très long (art. 16 LACI).',
+          'Qui refuse un emploi convenable ou résilie lui-même son emploi sans raison impérieuse est suspendu : selon la faute, il n’y a pas d’indemnité pendant un certain temps (art. 30 LACI). Faites-vous conseiller avant de résilier vous-même.',
+        ],
+      },
+      {
+        titel: 'Quand les indemnités sont épuisées',
+        absaetze: [
+          'Arrive en fin de droit qui a touché toutes les indemnités ou dont le délai-cadre a expiré sans qu’un nouveau puisse être ouvert. Le service public de l’emploi reste ouvert et gratuit (art. 26 et 27 LSE). Qui accumule à nouveau une période de cotisation suffisante peut acquérir un nouveau droit (art. 9 et 13 LACI).',
+          'L’aide sociale et la réduction des primes peuvent ensuite entrer en ligne de compte. Qui arrive en fin de droit à partir de soixante ans peut, à d’autres conditions, toucher des prestations transitoires ; elles se demandent auprès de l’organe PC du canton de domicile (art. 3, 5 et 19 LPtra).',
+          'Avec la dernière indemnité prend fin aussi, après une brève prolongation, l’assurance-accidents par l’assurance-chômage. Annoncez à temps à votre caisse-maladie qu’elle doit à nouveau couvrir les accidents ; elle paie alors comme en cas de maladie, avec franchise et quote-part (art. 3, al. 2, LAA, art. 8 et 10 LAMal). Clarifiez auprès de la caisse de compensation AVS si vous devez cotiser en tant que personne sans activité lucrative, afin d’éviter une lacune de cotisations (art. 10 LAVS).',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Ai-je droit aux indemnités si j’ai démissionné ?',
+        antwort:
+          'Oui, mais le plus souvent après une suspension : qui démissionne sans avoir l’assurance d’un nouvel emploi ne reçoit en règle générale pas d’indemnité pendant un certain temps, souvent pour la durée la plus longue prévue par la loi. Sauf si l’on ne pouvait pas exiger de lui qu’il reste à son poste (art. 30 LACI, art. 44 et 45 OACI). Faites-vous conseiller au préalable.',
+      },
+      {
+        frage: 'Puis-je m’inscrire avant la fin de mon emploi ?',
+        antwort:
+          'Oui, et c’est judicieux. Vous devez vous inscrire au plus tard le premier jour pour lequel vous demandez l’indemnité (art. 17 LACI). Des recherches d’emploi sont déjà exigées pour la durée du délai de congé.',
+      },
+      {
+        frage: 'Suis-je assuré contre les accidents pendant le chômage ?',
+        antwort:
+          'Oui, tant que vous touchez l’indemnité, vous êtes assuré contre les accidents par l’assurance-chômage (art. 1a LAA). Cette couverture prend fin ensuite après une brève prolongation. Annoncez à la caisse-maladie qu’elle doit à nouveau couvrir les accidents ; elle paie alors comme en cas de maladie, avec franchise et quote-part.',
+      },
+      {
+        frage: 'Qu’advient-il de ma caisse de pension ?',
+        antwort:
+          'À la sortie, vous devez indiquer à la caisse de pension sur quel compte de libre passage l’avoir doit être versé jusqu’à ce que vous ayez un nouvel emploi (art. 4 LFLP). Tant que vous touchez l’indemnité, vous restez en règle générale assuré dans la prévoyance professionnelle pour les risques de décès et d’invalidité (art. 2, al. 3, LPP) ; en règle générale, vous n’épargnez pas pour la vieillesse pendant cette période. Qui perd son emploi après son cinquante-huitième anniversaire peut, selon les cas, rester dans sa caisse de pension (art. 47a LPP).',
+      },
+      {
+        frage: 'Puis-je partir en vacances pendant le chômage ?',
+        antwort:
+          'Oui, dans une mesure limitée : vous avez droit à des jours sans contrôle, que vous devez annoncer à l’avance à l’ORP (art. 27 OACI). Votre ORP vous dit combien vous en avez.',
+      },
+    ],
+    quellen: ['arbeitSwiss'],
+  },
+
+  // ─── AVS et retraite (16.11.2026) ─────────────────────────────────────────
+  // LAVS = AHVG · RAVS = AHVV · Cst. = BV · LPP = BVG · OPP 3 = BVV 3 · LACI = AVIG ·
+  // LPtra = ÜLG · âge de référence = Referenzalter · compte individuel (CI) = IK.
+  {
+    pfad: 'ahv-pensionierung',
+    titel: 'AVS et retraite — une orientation',
+    beschreibung:
+      'Comment les trois piliers s’articulent, ce qui détermine la rente AVS, pourquoi il faut la demander et ce que signifient anticipation et ajournement. Sans chiffres.',
+    brotkrume: 'AVS et retraite',
+    vorspann:
+      'L’assurance-vieillesse et survivants (AVS) est le premier pilier de la prévoyance vieillesse suisse et obligatoire pour toutes les personnes qui vivent ou travaillent ici. Le montant de la rente se décide sur de nombreuses années : selon les années de cotisation, les revenus et les bonifications pour enfants et pour tâches d’assistance. Et elle ne vient pas d’elle-même : il faut la demander.',
+    abschnitte: [
+      {
+        titel: 'Trois piliers aux tâches différentes',
+        absaetze: [
+          'La prévoyance vieillesse repose sur trois piliers (art. 111 Cst.). L’<strong>AVS</strong> est le premier : ses rentes doivent couvrir les besoins vitaux de manière appropriée (art. 112 Cst.). Si elles n’y suffisent pas, des prestations complémentaires s’y ajoutent (art. 112a Cst.).',
+          'La <strong>caisse de pension</strong>, la prévoyance professionnelle, est obligatoire pour les salariés à partir d’un salaire minimal. Avec l’AVS, elle doit permettre de maintenir de manière appropriée le niveau de vie antérieur (art. 113 Cst.).',
+          'Le <strong>troisième pilier</strong> est facultatif. Les versements au pilier 3a peuvent être déduits du revenu imposable ; mais seule une personne ayant un revenu d’activité lucrative peut y verser (art. 7 OPP 3).',
+        ],
+      },
+      {
+        titel: 'Ce qui détermine la rente, et pourquoi les lacunes comptent',
+        absaetze: [
+          'Le montant de la rente AVS dépend des <strong>années de cotisation</strong> prises en compte, des <strong>revenus d’activité lucrative</strong> et des <strong>bonifications pour tâches éducatives et d’assistance</strong> (art. 29bis LAVS). Reçoit une rente complète la personne qui a toujours rempli l’obligation de cotiser de l’année suivant son vingtième anniversaire jusqu’à l’année précédant l’âge de référence. S’il manque une année de cotisation, la rente est en règle générale réduite, et ce à vie (art. 29ter et 38 LAVS).',
+          'Les personnes sans activité lucrative cotisent aussi, par exemple pendant les études, après une fin de droit au chômage ou en cas de retraite anticipée (art. 10 LAVS). Pour les personnes mariées sans revenu d’activité, les cotisations sont réputées payées si l’épouse ou l’époux verse au moins le double de la cotisation minimale (art. 3, al. 3, LAVS). Les cotisations manquantes ne peuvent être rattrapées que pour une période limitée dans le passé (art. 16 LAVS).',
+          'Un extrait de votre compte individuel (CI), que vous pouvez demander à votre caisse de compensation, montre si vous avez des lacunes (art. 141 RAVS). Les lacunes plus anciennes ne peuvent plus être comblées (art. 16 LAVS).',
+        ],
+      },
+      {
+        titel: 'La rente ne vient pas d’elle-même',
+        absaetze: [
+          'Vous devez demander vous-même la rente AVS, de préférence quelques mois avant l’âge de référence. La caisse de compensation compétente est celle qui a perçu vos dernières cotisations ; si vous n’avez pas cotisé, la caisse cantonale de compensation de votre canton de domicile (mémento 3.01).',
+          'Le droit naît le premier jour du mois qui suit l’âge de référence et s’éteint à la fin du mois du décès (art. 21 LAVS). L’âge de référence est le même pour les femmes et les hommes ; des règles transitoires s’appliquent aux femmes de la génération transitoire.',
+          'Qui touche une rente de vieillesse en décembre reçoit en plus une treizième rente de vieillesse égale à un douzième de la rente de vieillesse annuelle. Les rentes de survivants, d’invalidité et pour enfant continuent d’être versées douze fois seulement (mémento 3.01).',
+        ],
+      },
+      {
+        titel: 'Percevoir plus tôt ou plus tard',
+        absaetze: [
+          'La rente peut être <strong>anticipée</strong> en tout ou en partie, au plus tôt dès le soixante-troisième anniversaire, plus tôt pour les femmes de la génération transitoire. La part anticipée est réduite à vie, y compris au-delà de l’âge de référence (art. 40 et 40a LAVS). Pendant l’anticipation, il n’y a pas de rentes pour enfant. Vous devez demander l’anticipation au plus tard le mois précédant le début souhaité ; elle n’est pas possible rétroactivement (mémento 3.04).',
+          'Vous pouvez aussi <strong>ajourner</strong> la rente en tout ou en partie, d’un an au moins et de cinq ans au plus ; elle est alors augmentée à vie (art. 39 LAVS). Vous déclarez l’ajournement au plus tard un an après avoir atteint l’âge de référence, sinon la rente est versée sans augmentation (art. 55quater RAVS).',
+          'Une anticipation peut avoir des conséquences qu’on ne voit pas tout de suite : qui est au chômage perd avec l’anticipation le droit aux indemnités, et qui touche des prestations transitoires également (art. 8 LACI, art. 5, al. 3, LPtra). Faites-vous conseiller au préalable par votre caisse de compensation.',
+        ],
+      },
+      {
+        titel: 'Ce à quoi l’on a encore droit à l’âge de la retraite',
+        absaetze: [
+          'Si les rentes et la fortune ne suffisent pas pour le minimum vital, des <strong>prestations complémentaires</strong> entrent en ligne de compte. Elles sont un droit légal et non de l’aide sociale.',
+          'Qui touche une rente de vieillesse ou des prestations complémentaires, vit en Suisse et dépend en permanence de l’aide d’autrui au quotidien, par exemple pour s’habiller, pour l’hygiène corporelle ou pour manger, peut recevoir une <strong>allocation pour impotent</strong> de l’AVS si l’impotence dure sans interruption depuis au moins six mois et qu’il n’existe pas de droit à une allocation pour impotent de l’assurance-accidents ou de l’assurance militaire. Elle ne dépend ni du revenu ni de la fortune (art. 43bis LAVS, mémento 3.01).',
+          'Pour la <strong>caisse de pension</strong>, vous choisissez entre rente et capital. Vous pouvez légalement exiger un quart sous forme de capital, davantage seulement si le règlement le prévoit ; pour les personnes mariées, le consentement écrit est nécessaire (art. 37 et 37a LPP). Le délai pour choisir figure dans le règlement ; une fois le capital versé, on ne peut plus revenir en arrière. Faites-vous conseiller tôt.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'À combien s’élèvera ma rente AVS ?',
+        antwort:
+          'Cela dépend de vos années de cotisation, de vos revenus et de vos bonifications. La rente ne peut en règle générale être calculée de manière contraignante qu’à l’âge de référence (mémento 3.01). Vous pouvez demander un calcul anticipé à votre caisse de compensation.',
+      },
+      {
+        frage: 'Qu’en est-il pour les couples mariés ?',
+        antwort:
+          'Les revenus des années de mariage sont partagés et attribués pour moitié à chacun, entre autres dès que les deux ont droit à une rente et en cas de divorce. Les deux rentes d’un couple marié sont ensemble plafonnées ; ce plafonnement tombe entre autres si la vie commune a été suspendue par un tribunal (mémento 3.01).',
+      },
+      {
+        frage: 'J’ai aussi travaillé à l’étranger. Et maintenant ?',
+        antwort:
+          'Les périodes à l’étranger manquent en règle générale dans l’AVS suisse, mais elles peuvent donner droit à une rente dans l’autre État. Avec des périodes d’assurance dans un État de l’UE ou de l’AELE, une seule demande dans le pays de domicile déclenche la procédure dans tous les États concernés (mémento 3.01).',
+      },
+      {
+        frage: 'Ai-je droit à une rente de survivant en tant que partenaire non marié ?',
+        antwort:
+          'Une rente de veuve ou de veuf de l’AVS n’existe qu’après un mariage ou un partenariat enregistré et seulement à d’autres conditions. Pour les couples sans mariage ni partenariat enregistré, l’AVS ne prévoit pas de rente de survivant. Les enfants peuvent recevoir une rente d’orphelin (art. 23 et 25 LAVS). Pour la caisse de pension, le règlement peut prévoir une prestation en faveur des partenaires.',
+      },
+      {
+        frage: 'Dois-je encore payer des cotisations AVS après la retraite ?',
+        antwort:
+          'Qui continue de travailler après l’âge de référence continue de cotiser. À certaines conditions, la rente peut alors être recalculée. Qui anticipe sa rente et ne travaille plus reste tenu de cotiser jusqu’à l’âge de référence en tant que personne sans activité lucrative (art. 10 LAVS).',
+      },
+    ],
+    quellen: ['ahvMerkblatt', 'ahvMerkblattFlex'],
+  },
 ];
 
 export const SONDERSEITEN = [
