@@ -12,7 +12,7 @@ import { aufklappZeichen } from './IconSystem.jsx';
 import { betrag } from './utils/geld.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.js';
-import { getFamilienEL, familienELPasstZumKindesalter, kleinkindUnterZweiJahren } from './data/familienEL.js';
+import { getFamilienEL, familienELPasstZumKindesalter } from './data/familienEL.js';
 import { getMutterschaftsbeihilfe } from './data/mutterschaftsbeihilfe.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -172,8 +172,8 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
           .filter((b) => !b.familienEL || familienELPasstZumKindesalter(userCanton, data?.basis?.household?.children))
           // Mutterschaftsbeihilfe: gleiches kanton-bewusste Muster.
           .filter((b) => !b.mutterschaftsbeihilfe || getMutterschaftsbeihilfe(userCanton).has)
-          // … und nur in den ersten Monaten nach der Geburt (Gruppe A K, 11.11.2026).
-          .filter((b) => !b.mutterschaftsbeihilfe || kleinkindUnterZweiJahren(data?.basis?.household?.children))
+          // Kein Altersfilter (Entscheid Stebler Studios 16.11.2026): Das Profil kennt kein «Kind unterwegs»; mit
+          // älteren Kindern verschwand die Karte sonst gerade vor einer Geburt. Der Text nennt die Monate nach der Geburt.
           .map((b) => {
           // Familien-EL / Mutterschaftsbeihilfe tragen keine statische URL — sie kommt kanton-abhängig dazu.
           const felUrl = b.familienEL ? getFamilienEL(userCanton).url : null;

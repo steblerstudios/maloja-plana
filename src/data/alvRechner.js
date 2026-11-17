@@ -98,6 +98,8 @@ export function bestimmeAnspruchstage({ beitragsmonate, alter, hatKinder, ivGrad
   if (beitragsmonate >= 22 && (alter >= 55 || ivGrad40)) return 520;
   // Kapitel 5, L1 (10.11.2026): ohne Alter keine Zahl. Vorher fiel die Prüfung «unter 25» still weg und es
   // standen 400 Taggelder da — unter 25 ohne Kinder sind es 200 (AVIG Art. 27 Abs. 5bis), ab 55 bis 520.
+  // Mit Unterhaltspflicht gegenüber Kindern fällt die Grenze von 200 weg (Abs. 5bis); unter 22 Monaten zählt das Alter dann nicht.
+  if (hatKinder && beitragsmonate < 22) return beitragsmonate >= 18 ? 400 : 260;
   if (alter == null || alter === '' || !Number.isFinite(Number(alter))) return null;
   if (alter < 25 && !hatKinder) return 200; // jung, ohne Unterhaltspflicht
   if (beitragsmonate >= 18) return 400;
@@ -127,7 +129,8 @@ export function berechneTaggeld({ versicherterVerdienst, hatKinder, ivGrad40, be
     anspruchstageOffen: beitragsmonate >= 12 && bestimmeAnspruchstage({ beitragsmonate, alter, hatKinder, ivGrad40 }) == null,
     // Spanne ohne Alter, aus den Beitragsmonaten (rechts-pruefer 10.11.2026): 520 gibt es erst ab 22 Monaten,
     // bei 12–17 höchstens 260, bei 18–21 höchstens 400 — das Alter entscheidet dort nur über 200 (AVIG Art. 27).
-    anspruchSpanne: beitragsmonate >= 12 ? { min: 200, max: beitragsmonate >= 22 ? 520 : beitragsmonate >= 18 ? 400 : 260 } : null,
+    // Mit Unterhaltspflicht gegenüber Kindern gilt die Grenze von 200 nicht (AVIG Art. 27 Abs. 5bis): dann 260 bzw. ab 18 Monaten 400.
+    anspruchSpanne: beitragsmonate >= 12 ? { min: hatKinder ? (beitragsmonate >= 18 ? 400 : 260) : 200, max: beitragsmonate >= 22 ? 520 : beitragsmonate >= 18 ? 400 : 260 } : null,
   };
 }
 

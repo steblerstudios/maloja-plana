@@ -3,7 +3,7 @@ import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
 import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b, brauchtZustimmungFamilienwohnung } from './briefGenerator.js';
 import { istVorbei, heuteIso } from './utils/fristen.js';
-import { kvgKuendigungsTermin } from './utils/festeFristen.js';
+import { kvgKuendigungsTermin, zeigeSemesterHinweis } from './utils/festeFristen.js';
 import { formatDE } from './utils/helpers.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
@@ -112,7 +112,7 @@ function lebensereignisHinweis(selected, a, palette, t, data) {
     const p = { jahr: tm.jahr, frist: formatDE(tm.frist), verpasstJahr: tm.verpasstJahr, verpasstFrist: formatDE(tm.verpasstFrist) };
     return hinweisBox(palette, t(k + 'title'), [
       { text: t(tm.nachFrist ? k + 'nachFrist' : k + 'frist', p), stark: true },
-      tm.nachFrist && t(k + 'semester'), t(k + 'anmelden'), t(k + 'ausstaende'),
+      zeigeSemesterHinweis(heuteIso()) && t(k + 'semester'), t(k + 'anmelden'), t(k + 'ausstaende'),
     ], 'calendar');
   }
   if (selected === 'taxExtension') {
