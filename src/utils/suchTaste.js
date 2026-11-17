@@ -46,21 +46,33 @@ export const istSuchTaste = (e, { dialogOffen = false, slash = true } = {}) => {
 // dann höchstens rund eine Sekunde (60 Bilder) nach dem Feld suchen. Gibt das Abmelden zurück.
 // aria-keyshortcuts und Hinweis am Lupen-Knopf nennen «/» nur, solange die Taste an ist (WCAG 2.1.4 / 4.1.2,
 // a11y-Reste 16.11.2026). main.jsx nennt fest «/ Control+K Meta+K» und «(/)» (im Startbündel kein Platz für die
-// Abfrage); hier, nachgeladen, fällt «/» weg, wenn die Taste aus ist — beim Anmelden und jedes Mal, wenn die Lupe
-// den Fokus oder den Zeiger bekommt. So holt es auch ein, was React nach Sprachwechsel, Neu-Einhängen oder der
-// Einführung wieder auf die Vorgabe setzt, und den Schalter in den Einstellungen.
+// Abfrage); hier, nachgeladen, fällt «/» weg, wenn die Taste aus ist. Ein MutationObserver holt jedes Neusetzen
+// durch React ein, bevor es gezeichnet wird: Sprachwechsel (neuer title), Neu-Einhängen, Ende der Einführung,
+// Handy/Desktop. Der Schalter in den Einstellungen meldet sich mit dem Ereignis «or5:suchtaste» (SettingsView).
+// Fokus und Zeiger auf der Lupe bleiben als Rückfall, wo es keinen MutationObserver gibt. (Entscheid Stebler Studios 16.11.:
+// «zuerst eine Lösung» — ohne Zuwachs im Startbündel.)
 const LUPE = '[aria-keyshortcuts~="Meta+K"]';
+const setzeWennAnders = (el, name, wert) => { if (el.getAttribute(name) !== wert) el.setAttribute(name, wert); };
 export const kuerzelNennen = (doc, an, knopf = doc?.querySelector(LUPE)) => {
   if (!knopf) return;
-  knopf.setAttribute('aria-keyshortcuts', (an ? '/ ' : '') + knopf.getAttribute('aria-keyshortcuts').replace(/^\/ /, ''));
+  // Nur schreiben, was sich ändert — sonst weckte jedes Schreiben den Beobachter erneut.
+  setzeWennAnders(knopf, 'aria-keyshortcuts', (an ? '/ ' : '') + knopf.getAttribute('aria-keyshortcuts').replace(/^\/ /, ''));
   const titel = (knopf.getAttribute('title') || '').replace(/ \(\/\)$/, '');
-  if (titel) knopf.setAttribute('title', titel + (an ? ' (/)' : ''));
+  if (titel) setzeWennAnders(knopf, 'title', titel + (an ? ' (/)' : ''));
 };
 
 export const suchTasteAnmelden = (oeffnen, fenster = window) => {
   const doc = fenster.document;
   kuerzelNennen(doc, slashAn(fenster.localStorage));
   const nachfuehren = (e) => { if (e.target?.matches?.(LUPE)) kuerzelNennen(doc, slashAn(fenster.localStorage), e.target); };
+  // Den Knopf merken, solange er hängt — der Beobachter läuft bei jeder DOM-Änderung, die Suche nur bei Bedarf.
+  let lupe = null;
+  const nennen = () => {
+    if (!lupe || lupe.isConnected === false) lupe = doc.querySelector(LUPE);
+    kuerzelNennen(doc, slashAn(fenster.localStorage), lupe);
+  };
+  const beobachter = fenster.MutationObserver && doc.body ? new fenster.MutationObserver(nennen) : null;
+  beobachter?.observe(doc.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['title', 'aria-keyshortcuts'] });
   const onKey = (e) => {
     if (!istSuchTaste(e, { dialogOffen: !!doc.querySelector('[aria-modal="true"]'), slash: slashAn(fenster.localStorage) })) return;
     if (!oeffnen()) return;
@@ -77,7 +89,10 @@ export const suchTasteAnmelden = (oeffnen, fenster = window) => {
   fenster.addEventListener('keydown', onKey);
   fenster.addEventListener('focusin', nachfuehren);
   fenster.addEventListener('pointerover', nachfuehren);
+  fenster.addEventListener('or5:suchtaste', nennen);
   return () => {
+    fenster.removeEventListener('or5:suchtaste', nennen);
+    beobachter?.disconnect();
     fenster.removeEventListener('keydown', onKey);
     fenster.removeEventListener('focusin', nachfuehren);
     fenster.removeEventListener('pointerover', nachfuehren);
