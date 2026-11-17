@@ -19,7 +19,9 @@ describe('Kantonsatlas: Lesart der Farben stimmt in beiden Modi', () => {
   });
 
   it('Beschreibungen der Karten und Vorlesetext der Legende ohne Farbwort', () => {
-    const beschreibungen = [...seite.matchAll(/<desc id="karte-[a-z]+-d">([^<]+)<\/desc>/g)].map((m) => m[1]);
+    // Mindestlohn hat zwei Gruppen statt Stufen (14.11.2026): ohne Farbwort, aber ohne «tiefer/höher».
+    const beschreibungen = [...seite.matchAll(/<desc id="karte-(?!mindestlohn)[a-z]+-d">([^<]+)<\/desc>/g)].map((m) => m[1]);
+    expect(seite.match(/<desc id="karte-mindestlohn-d">([^<]+)<\/desc>/)[1]).not.toMatch(/\bhell\b|\bdunkel\b|Farbe/i);
     expect(beschreibungen.length).toBeGreaterThan(5);
     for (const d of beschreibungen) {
       expect(d).not.toMatch(/\bhell\b|\bdunkel\b/i);

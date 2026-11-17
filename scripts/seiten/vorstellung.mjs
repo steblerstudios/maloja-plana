@@ -22,7 +22,7 @@ import { BRILLEN, KARTE_MASS } from './kantonsatlas.mjs';
 // Brillen aus kantonsatlas.mjs, damit Name und Frage hier und dort dieselben sind.
 const ATLAS_KARTEN = new Set(BRILLEN.flatMap((b) => b.karten)).size;
 // Zahlen im Fliesstext ausgeschrieben wie «sieben Kapitel» (Copy-Prüfung 09.11.2026). Ändert sich die Zahl, hier ergänzen.
-const ATLAS_KARTEN_WORT = { 10: 'zehn' }[ATLAS_KARTEN];
+const ATLAS_KARTEN_WORT = { 10: 'zehn', 11: 'elf', 12: 'zwölf' }[ATLAS_KARTEN];
 if (!ATLAS_KARTEN_WORT) throw new Error(`vorstellung.mjs: ${ATLAS_KARTEN} Atlas-Karten, Wort fehlt`);
 
 // Warteliste (Entscheid Stebler Studios 09.11.2026, Plan «Sichtbarkeit», Weg 1): nur ein Mail-Entwurf.
