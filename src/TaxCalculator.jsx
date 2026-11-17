@@ -220,7 +220,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     return React.createElement('button', {
       type: 'button', className: 'mp-link', 'data-teil': 'aus-3a-tracker',
       onClick: () => { handleInputChange('pension3a', wert); document.querySelector('[data-abzug="pension3a"]')?.focus(); }, // Der Knopf verschwindet danach: Fokus ins Feld.
-      style: { ...knopfStil(palette, 'neben'), padding: '8px 12px', fontSize: text.xs, textAlign: 'left' },
+      // Mobil 44 px Tippfläche (WCAG 2.5.5 / Kapitel 3) — vorher ~32 px hoch.
+      style: { ...knopfStil(palette, 'neben'), padding: '8px 12px', fontSize: text.xs, textAlign: 'left', ...(isMobile ? { minHeight: '44px' } : {}) },
     }, t('tax.aus3aUebernehmen', { betrag: betrag(wert, { hoechstens: 2 }) }));
   };
 

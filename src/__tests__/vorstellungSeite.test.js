@@ -194,11 +194,26 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     expect(naegel).toHaveLength(7);
     for (const n of naegel) {
       expect(n).toMatch(/^<g transform="rotate\(0 60 \d+\)">/);
-      expect(n).toMatch(/<g class="bild" style="color:var\(--k\d\)"><svg x="42"/);
+      expect(n).toMatch(/<g class="bild" style="color:var\(--p\d\)"><svg x="42"/);
       expect(n).toMatch(/<g class="schild"[^>]*><circle /);
       expect(n).not.toContain('woelbung');
       expect(n).not.toContain('unterschatten');
       expect(n).not.toContain('<text x="60"');
+    }
+  });
+
+  it('a11y-Reste 16.11.: die Plakette bleibt creme — ihre Kapitelfarben sind fest (auch dunkel) und halten ≥ 3:1', () => {
+    const lum = (hex) => {
+      const k = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+      return 0.2126 * k[0] + 0.7152 * k[1] + 0.0722 * k[2];
+    };
+    const kontrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
+    expect(stil).toContain('.nagel .schild > *{ fill:#FCF0E4;');
+    const dunkel = stil.slice(stil.indexOf('@media (prefers-color-scheme: dark)'));
+    for (let i = 0; i < 7; i++) {
+      const wert = stil.match(new RegExp(`--p${i}:(#[0-9A-F]{6});`))[1];
+      expect(kontrast(wert, '#FCF0E4'), `Kapitel ${i + 1}`).toBeGreaterThanOrEqual(3);
+      expect(dunkel.slice(0, dunkel.indexOf('}\n')), `--p${i} nicht im Dunkeln überschrieben`).not.toContain(`--p${i}:`);
     }
   });
 

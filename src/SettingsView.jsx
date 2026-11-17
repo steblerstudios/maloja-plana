@@ -40,7 +40,12 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demo
   const slashKnopf = React.createElement('button', {
     key: 'slashsearch', type: 'button',
     'aria-label': t('search.tasteSchalter'), 'aria-pressed': slash, title: t('search.tasteSchalter'),
-    onClick: () => setSlash((an) => { try { localStorage.setItem('or5_suchtaste', an ? '0' : '1'); } catch { /* ohne Speicher */ } return !an; }),
+    // Danach das Signal «or5:suchtaste»: utils/suchTaste.js führt die Lupe sofort nach («/» und «(/)» nur, solange
+    // die Taste an ist). Ein Ereignis statt eines Imports — der Import setzte suchTaste.js aufs Startbündel.
+    onClick: () => {
+      setSlash((an) => { try { localStorage.setItem('or5_suchtaste', an ? '0' : '1'); } catch { /* ohne Speicher */ } return !an; });
+      window.dispatchEvent(new Event('or5:suchtaste'));
+    },
     style: {
       padding: '8px 8px', minHeight: '44px', minWidth: '44px', lineHeight: 1,
       background: slash ? palette.sand + '30' : 'transparent',

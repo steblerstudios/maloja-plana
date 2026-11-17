@@ -2,7 +2,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { istSuchTaste, istEingabeFeld, suchTasteAnmelden, slashAn, slashSetzen, SLASH_SCHLUESSEL } from '../utils/suchTaste.js';
+import { istSuchTaste, istEingabeFeld, suchTasteAnmelden, slashAn, slashSetzen, SLASH_SCHLUESSEL, kuerzelNennen } from '../utils/suchTaste.js';
 
 const taste = (key, mehr = {}) => ({ key, metaKey: false, ctrlKey: false, shiftKey: false, altKey: false, target: { tagName: 'BODY' }, ...mehr });
 const feld = (tagName, extra = {}) => ({ tagName, ...extra });
@@ -118,10 +118,10 @@ describe('suchTasteAnmelden', () => {
     f.druecke(ereignis('/'));
     expect(offen).toBe(0);
   });
-  it('abmelden entfernt den Zuhörer', () => {
+  it('abmelden entfernt die Zuhörer (Taste und Nachführen der Lupe)', () => {
     const f = fenster();
     const ab = suchTasteAnmelden(() => true, f);
-    expect(f.zuhoerer.size).toBe(1);
+    expect(f.zuhoerer.size).toBeGreaterThan(0);
     ab();
     expect(f.zuhoerer.size).toBe(0);
   });
@@ -143,7 +143,7 @@ describe('Einbau', () => {
   it('das Suchfeld trägt die Marke, an der der Fokus landet', () => {
     expect(suche).toMatch(/'data-suchfeld': 'true'/);
   });
-  it('die Lupe nennt die Tasten für Vorleseprogramme', () => {
+  it('die Lupe nennt die Tasten für Vorleseprogramme (Vorgabe im Startbündel, mit «/»)', () => {
     expect(main).toMatch(/'aria-keyshortcuts': isMobile \? undefined : '\/ Control\+K Meta\+K'/);
   });
 });
@@ -192,12 +192,123 @@ describe('«/» abschaltbar', () => {
     expect(quelle).toContain("'aria-pressed': slash");
     // Die Einstellungs-Seite liest und schreibt denselben Schlüssel, ohne suchTaste.js zu importieren
     // (der Import kostete Platz im Startbündel, Vorlade-Liste).
-    expect(SLASH_SCHLUESSEL).toBe('or5_suchtaste');
-    expect(quelle.match(/'or5_suchtaste'/g)).toHaveLength(2);
+    // Verhalten statt Zählen (a11y-Reste 16.11.2026): jeder Suchtasten-Schlüssel dort ist derselbe.
+    const schluessel = quelle.match(/'or5_[a-z]*such[a-z]*'/g);
+    expect(schluessel.length).toBeGreaterThan(0);
+    expect(new Set(schluessel)).toEqual(new Set([`'${SLASH_SCHLUESSEL}'`]));
     expect(quelle).not.toMatch(/from '\.\/utils\/suchTaste\.js'/);
     for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
       const t = (await import(`../i18n/${l}.js`)).default;
       expect(t.search.tasteSchalter, l).toMatch(/\//);
     }
+  });
+});
+
+// a11y-Reste 16.11.2026: aria-keyshortcuts und Hinweis nennen «/» nur, solange die Taste an ist.
+describe('Lupe nennt «/» nur, wenn es wirkt', () => {
+  const knopf = (kuerzel = '/ Control+K Meta+K', titel = 'Suchen (/)') => {
+    const a = { 'aria-keyshortcuts': kuerzel, title: titel };
+    return { getAttribute: (k) => (k in a ? a[k] : null), setAttribute: (k, v) => { a[k] = v; }, a };
+  };
+  const doc = (k) => ({ querySelector: (sel) => (sel === '[aria-keyshortcuts~="Meta+K"]' ? k : null) });
+
+  it('aus: «/» und «(/)» fallen weg, ⌘K/Strg+K bleiben', () => {
+    const k = knopf();
+    kuerzelNennen(doc(k), false);
+    expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
+    expect(k.a.title).toBe('Suchen');
+  });
+  it('wieder an: genau einmal «/» — auch mehrfach aufgerufen', () => {
+    const k = knopf();
+    kuerzelNennen(doc(k), false); kuerzelNennen(doc(k), true); kuerzelNennen(doc(k), true);
+    expect(k.a['aria-keyshortcuts']).toBe('/ Control+K Meta+K');
+    expect(k.a.title).toBe('Suchen (/)');
+  });
+  it('ohne Knopf (Handy, Einführung) passiert nichts', () => {
+    expect(() => kuerzelNennen(doc(null), false)).not.toThrow();
+    expect(() => kuerzelNennen(undefined, false)).not.toThrow();
+  });
+  it('das Anmelden des Zuhörers setzt den Knopf nach dem Schalter', () => {
+    const k = knopf();
+    const f = fenster();
+    const frage = f.document.querySelector;
+    f.document.querySelector = (sel) => (sel === '[aria-keyshortcuts~="Meta+K"]' ? k : frage(sel));
+    f.localStorage = { getItem: () => '0', setItem: () => {} };
+    suchTasteAnmelden(() => true, f);
+    expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
+  });
+  it('Fokus auf die Lupe holt nach, was React zurückgesetzt hat oder der Schalter geändert hat', () => {
+    const k = knopf();
+    const f = fenster();
+    let wert = '1';
+    f.localStorage = { getItem: () => wert, setItem: () => {} };
+    suchTasteAnmelden(() => true, f);
+    expect(k.a['aria-keyshortcuts']).toBe('/ Control+K Meta+K');
+    wert = '0';                                            // Schalter in den Einstellungen aus
+    const lupe = { ...k, matches: (sel) => sel === '[aria-keyshortcuts~="Meta+K"]' };
+    f.druecke({ ...ereignis('Tab'), target: lupe });     // focusin/pointerover (die Attrappe kennt keine Typen)
+    expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
+    expect(k.a.title).toBe('Suchen');
+    k.a['aria-keyshortcuts'] = '/ Control+K Meta+K'; k.a.title = 'Search (/)';   // React nach Sprachwechsel
+    f.druecke({ ...ereignis('Tab'), target: lupe });
+    expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
+    expect(k.a.title).toBe('Search');
+  });
+  // Entscheid Stebler Studios 16.11. «zuerst eine Lösung»: was React nach einem Sprachwechsel wieder setzt, holt der
+  // Beobachter ein — ohne dass jemand die Lupe berührt.
+  it('Sprachwechsel bei abgeschalteter Taste: der Beobachter nimmt «(/)» und «/» sofort wieder weg', () => {
+    const k = knopf();
+    let melde = null, beobachtet = null, getrennt = false;
+    const f = fenster();
+    f.document.body = {};
+    const frage = f.document.querySelector;
+    f.document.querySelector = (sel) => (sel === '[aria-keyshortcuts~="Meta+K"]' ? k : frage(sel));
+    f.localStorage = { getItem: () => '0', setItem: () => {} };
+    f.MutationObserver = class { constructor(cb) { melde = cb; } observe(ziel, opt) { beobachtet = opt; } disconnect() { getrennt = true; } };
+    const ab = suchTasteAnmelden(() => true, f);
+    expect(beobachtet).toMatchObject({ subtree: true, childList: true, attributeFilter: ['title', 'aria-keyshortcuts'] });
+    expect(k.a.title).toBe('Suchen');
+    k.a.title = 'Rechercher (/)'; k.a['aria-keyshortcuts'] = '/ Control+K Meta+K';   // React nach Wechsel auf fr
+    melde([{ type: 'attributes' }]);
+    expect(k.a.title).toBe('Rechercher');
+    expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
+    ab();
+    expect(getrennt).toBe(true);
+  });
+  it('der Schalter in den Einstellungen meldet sich mit «or5:suchtaste» — die Lupe folgt sofort', () => {
+    const k = knopf();
+    const f = fenster();
+    let wert = '1';
+    const frage = f.document.querySelector;
+    f.document.querySelector = (sel) => (sel === '[aria-keyshortcuts~="Meta+K"]' ? k : frage(sel));
+    f.localStorage = { getItem: () => wert, setItem: () => {} };
+    const ereignisse = {};
+    f.addEventListener = (typ, cb) => { ereignisse[typ] = cb; };
+    suchTasteAnmelden(() => true, f);
+    expect(k.a.title).toBe('Suchen (/)');
+    wert = '0';
+    ereignisse['or5:suchtaste']();
+    expect(k.a.title).toBe('Suchen');
+    expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
+    const quelle = fs.readFileSync(path.join(__dirname, '..', 'SettingsView.jsx'), 'utf8');
+    expect(quelle).toContain("window.dispatchEvent(new Event('or5:suchtaste'))");
+  });
+  it('schreibt nur, was sich ändert (kein Wecken des Beobachters im Kreis)', () => {
+    const k = knopf('Control+K Meta+K', 'Suchen');
+    let schreibe = 0;
+    const set = k.setAttribute; k.setAttribute = (n, v) => { schreibe++; set(n, v); };
+    kuerzelNennen({ querySelector: () => k }, false);
+    expect(schreibe).toBe(0);
+    kuerzelNennen({ querySelector: () => k }, true);
+    expect(schreibe).toBe(2);
+    kuerzelNennen({ querySelector: () => k }, true);
+    expect(schreibe).toBe(2);
+  });
+  it('angemeldet wird auf keydown, focusin, pointerover und or5:suchtaste — abgemeldet auf allen', () => {
+    const an = [], ab = [];
+    const f = { document: { querySelector: () => null }, addEventListener: (typ) => an.push(typ), removeEventListener: (typ) => ab.push(typ) };
+    suchTasteAnmelden(() => true, f)();
+    expect(an.sort()).toEqual(['focusin', 'keydown', 'or5:suchtaste', 'pointerover']);
+    expect(ab.sort()).toEqual(an);
   });
 });

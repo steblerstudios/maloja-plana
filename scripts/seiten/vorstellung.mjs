@@ -55,11 +55,11 @@ export const VORSTELLUNG = {
 export const KAPITEL = [
   { name: 'Basis', farbe: '#5A7868', dunkel: '#7E9F8C', titel: 'Was überall gebraucht wird', text: 'Ihre Angaben einmal erfasst — und dort zur Hand, wo sie wieder gefragt sind.' },
   { name: 'Wohnen', farbe: '#6C8343', dunkel: '#9DBA6A', titel: 'Miete, Umzug, Adresse', text: 'Was zum Wohnen gehört, an einem Ort — auch wenn sich etwas ändert.' },
-  { name: 'Finanzen', farbe: '#C4A870', dunkel: '#D2B77E', titel: 'Einkommen und Steuern', text: 'Eine grobe Steuer-Einschätzung und Richtwerte fürs Budget — als Orientierung, nicht als Kontrolle.' },
+  { name: 'Finanzen', farbe: '#C4A870', dunkel: '#D2B77E', plakette: '#9A7F4A', titel: 'Einkommen und Steuern', text: 'Eine grobe Steuer-Einschätzung und Richtwerte fürs Budget — als Orientierung, nicht als Kontrolle.' },
   { name: 'Versicherungen', farbe: '#6787A5', dunkel: '#86A6C2', titel: 'Krankenkasse und Vorsorge', text: 'Franchise, Prämienverbilligung, AHV und Pensionskasse — ohne Fachsprache erklärt.' },
   { name: 'Ausbildung', farbe: '#8A6D4B', dunkel: '#A98A64', titel: 'Ausbildung und Arbeit', text: 'Abschlüsse, Lebenslauf und Arbeitsstelle geordnet — für die nächste Bewerbung.' },
   { name: 'Behörden', farbe: '#5A6472', dunkel: '#7C8798', titel: 'Briefe und Fristen', text: 'Schreiben an Ämter vorbereiten und Fristen im Blick behalten.' },
-  { name: 'Gesundheit', farbe: '#C67A4A', dunkel: '#D98F5C', titel: 'Gesundheit und Ernstfall', text: 'Notfallkarte, Kontaktperson und Verfügungen — und eine Karte mit dem, was Sie bei einem Notruf sagen, zum Vorlesen.' },
+  { name: 'Gesundheit', farbe: '#C67A4A', dunkel: '#D98F5C', plakette: '#BA7346', titel: 'Gesundheit und Ernstfall', text: 'Notfallkarte, Kontaktperson und Verfügungen — und eine Karte mit dem, was Sie bei einem Notruf sagen, zum Vorlesen.' },
 ];
 
 const SITUATIONEN = [
@@ -180,6 +180,9 @@ const STIL = `
       --radius-m:12px;
       --abstand-m:32px; --abstand-l:96px;  /* 96 = 64 × 1.5, Kapitelstufe der Startseite (§7a B) */
 ${KAPITEL.map((k, i) => `      --k${i}:${k.farbe};`).join('\n')}
+      /* Plakette (a11y-Reste 16.11.2026): die Plakette bleibt creme, also auch im Dunkeln die hellen Kapitelfarben —
+         die dunklen lagen bei 1,73–3,24:1. Gold und Gesundheit dunkler, damit alle ≥ 3:1 auf #FCF0E4 (Polygrafin). */
+${KAPITEL.map((k, i) => `      --p${i}:${k.plakette || k.farbe};`).join('\n')}
       --pinsel:${PINSEL};
       --sand:#C4A06A; --auf-sand:#2A2620; --sand-tief:#7A5F30; --radius-knopf:10px;
     }
@@ -341,6 +344,13 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .js .reise-buehne:is([data-hier="3"], [data-hier="4"], [data-hier="5"]) .hell,
     .js .reise-buehne[data-hier="6"] .schnee{ opacity:1 }
     html:not(.js) .reise-luft{ display:none }
+    /* WCAG 2.2.2 (16.11.2026): Luft und Wolken legen sich 20 s nach jedem Kehrenwechsel (data-still, reise.js), und
+       «Bewegung anhalten» beim Telefon hält Wolken und Bildfolge an und nimmt die Luft ganz weg. */
+    /* Getrennte Regeln: ein Browser ohne :has() verwirft sonst die ganze Liste — und mit ihr den Auto-Stopp. */
+    .js .reise-buehne[data-still] .reise-luft{ opacity:0 }
+    .js .reise-buehne[data-still] .reise-luft i, .js .reise-buehne[data-still] .reise-wolken{ animation-play-state:paused }
+    .reise-bruecke:has(#anhalten:checked) .reise-luft{ opacity:0 }
+    .reise-bruecke:has(#anhalten:checked) .reise-luft i, .reise-bruecke:has(#anhalten:checked) .reise-wolken{ animation-play-state:paused }
     /* Zwei Schichten für die Lesbarkeit: hell links/oben unter dem Hero (dunkle Schrift), dunkel rechts unter
        den Kehren (weisse Schrift, mind. 62 % unter dem Text). Das Skript schaltet über data-hier um. */
     .reise-buehne::before, .reise-buehne::after{ content:""; position:absolute; inset:0; z-index:3; pointer-events:none }
@@ -936,8 +946,8 @@ function reiseStock() {
     const f = stickerForm(form, y);
     return `<g class="nagel-dreh" data-kehre="${i + 1}"><g class="nagel"><g transform="rotate(${neigung} 60 ${y + 30})">`
       + `<circle class="schein" cx="60" cy="${y + 30}" r="35"/>`
-      + `<g class="schild" style="stroke:var(--k${i})">${f}</g>`
-      + `<g class="bild" style="color:var(--k${i})">${zeichen(i, `nagel${i + 1}`, `x="42" y="${y + 12}" width="36" height="36" `)}</g>`
+      + `<g class="schild" style="stroke:var(--p${i})">${f}</g>`
+      + `<g class="bild" style="color:var(--p${i})">${zeichen(i, `nagel${i + 1}`, `x="42" y="${y + 12}" width="36" height="36" `)}</g>`
       + `<g class="staub">${STAUB.map(([dx, dy, r, fall]) => `<circle cx="${60 + dx}" cy="${y + 30 + dy}" r="${r}" style="--f:${fall}px"/>`).join('')}</g>`
       + `</g></g></g>`;
   }).join('');
@@ -1096,7 +1106,7 @@ ${[1, 2, 3, 4, 5].map((n) => `                  <img src="${BILD(n)}" alt="" wid
               </div>
               <figcaption class="unter-telefon">
                 <span>Beispiel mit erfundenen Daten</span>
-                <label class="schalter" for="anhalten">Bildfolge anhalten</label>
+                <label class="schalter" for="anhalten">Bewegung anhalten</label>
               </figcaption>
             </figure>
 

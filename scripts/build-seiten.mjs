@@ -1315,7 +1315,10 @@ const RAHMEN_SEITEN = {
 };
 const stilRahmenSeite = `
     .sprachzeilen{ font-size:13px; color:var(--leise); border-top:1px solid var(--rand); margin-top:48px; padding-top:24px }
-    .sprachzeilen span{ display:block; margin-bottom:8px }`;
+    .sprachzeilen span{ display:block; margin-bottom:8px }
+    /* WCAG 2.4.7 (a11y-Reste 16.11.2026): 404 und Wartung bekommen einen eigenen, sichtbaren Fokus — wie die
+       Erklärseiten (Textfarbe, 2 px), hell und dunkel ≥ 3:1 gegen den Grund. */
+    a:focus-visible, .knopf:focus-visible{ outline:2px solid var(--text); outline-offset:2px }`;
 function rahmenSeiteBauen(name) {
   const s = RAHMEN_SEITEN[name];
   return `<!DOCTYPE html>
