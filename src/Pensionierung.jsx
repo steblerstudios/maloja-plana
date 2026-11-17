@@ -3,6 +3,7 @@ import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, abl
 import { inDays, formatDE } from './utils/helpers.js';
 import { referenzalterMonate } from './data/ahvRechner.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 
 // Pensionierung — geführter Ablauf für den Übergang in den Ruhestand. Ruhige Orientierung
 // mit den Dingen, die NICHT automatisch laufen: AHV anmelden (Rente kommt nicht von selbst),
@@ -47,7 +48,9 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
           recurrence: 'once',
         },
       }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step1Link'), onClick: () => onNavigate('vorsorge') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step1Link'), onClick: () => onNavigate('vorsorge') }),
+      // E3 (16.11.2026): Rückweg zur Erklärseite «AHV und Pensionierung», wie beim Ablauf EL.
+      React.createElement(ErklaerseiteLink, { palette, t, view: 'pensionierung' })
     ),
 
     // Schritt 2 — Pensionskasse: Rente oder Kapital

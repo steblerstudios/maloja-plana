@@ -17,6 +17,10 @@ export const ERKLAERSEITE = {
   tax: '/steuern/',
   premium: '/praemienverbilligung/',
   praemien: '/krankenkasse/',
+  // E3 (14.11.2026): die erste der drei geplanten Erklärseiten.
+  ergaenzungsleistungen: '/ergaenzungsleistungen/',
+  alv: '/arbeitslosigkeit/',
+  pensionierung: '/ahv-pensionierung/',
 };
 
 // Ergänzung A (Wege durch Maloja, Entscheid Stebler Studios 07.11.2026): aus dem Werkzeug zur passenden Karte
@@ -61,10 +65,10 @@ export const ZUM_VERSTEHEN = {
     karten: [[ATLAS + 'steuer', "Steuern bei 80'000 Fr. Lohn"], [ATLAS + 'sozialhilfe', 'Sozialhilfequote']],
   },
   versicherungen: {
-    seiten: [['/krankenkasse/', 'Krankenkasse'], ['/praemienverbilligung/', 'Prämienverbilligung']],
+    seiten: [['/krankenkasse/', 'Krankenkasse'], ['/praemienverbilligung/', 'Prämienverbilligung'], ['/ergaenzungsleistungen/', 'Ergänzungsleistungen'], ['/ahv-pensionierung/', 'AHV und Pensionierung']],
     karten: [[ATLAS + 'praemie', 'Prämie Erwachsene'], [ATLAS + 'lastnachipv', 'Prämienlast nach Verbilligung'], [ATLAS + 'el', 'Ergänzungsleistungen zur AHV']],
   },
-  ausbildung: { seiten: [], karten: [[ATLAS + 'alq', 'Arbeitslosenquote']] },
+  ausbildung: { seiten: [['/arbeitslosigkeit/', 'Arbeitslosigkeit']], karten: [[ATLAS + 'alq', 'Arbeitslosenquote']] },
 };
 
 const kleinerLink = (palette, t, href, name) => React.createElement(ExternerLink, {

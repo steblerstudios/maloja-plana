@@ -30,6 +30,17 @@ const MINDESTLOHN_JE_JAHR = {
     // 0.0 % betrug — richtiges Ergebnis, falsche Begründung. Also: jährlich prüfen.
     TI: { chfStunde: 20.00, indexiert: true },
   },
+  // Werte 2027, eingetragen 14.11.2026. Nur, was der Kanton selbst veröffentlicht hat:
+  //   GE 24.73 — ge.ch «Montant et calcul du salaire minimum»: «Il s'élèvera à 24.73 fr. en 2027»
+  //     (Conseil d'État, Communiqué hebdomadaire du 7 octobre 2026).
+  //   BS 22.50 — bs.ch Medienmitteilung WSU 26.10.2026: «Per 1. Januar 2027 beträgt der kantonale
+  //     Mindestlohn 22.50 Franken brutto pro Arbeitsstunde» (§ 3 Abs. 2 Mindestlohngesetz, Mischindex).
+  // Noch nicht veröffentlicht (gemessen 14.11.2026): NE (Teuerung Nov.), TI (neues Gesetz 2027,
+  // Decreto ausstehend), JU (Regierungsentscheid). Für sie greift ab 1.1.2027 der Jahres-Riegel.
+  2027: {
+    GE: { chfStunde: 24.73, indexiert: true },
+    BS: { chfStunde: 22.50, indexiert: true },
+  },
 };
 
 const KANTONE_MIT_MINDESTLOHN = [...new Set(Object.values(MINDESTLOHN_JE_JAHR).flatMap((j) => Object.keys(j)))];
