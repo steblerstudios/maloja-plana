@@ -394,7 +394,7 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(koerper.indexOf('id="nachlesen"')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
     expect(d).toMatch(/<figure class="bildwahl-blick">\s*<div class="bildwahl-kopf">[\s\S]*?<h2 id="t-nachlesen">Zum Nachlesen\.<\/h2>[\s\S]*?<\/div>\s*<div class="bildwahl-flaeche">\s*<img src="\/vorstellung\/pass-blick-papier\.svg"/);
     // Themen = Kapitel der App, Einordnung wie werkzeugRegister.js; jede Erklärseite der Website genau einmal
-    const themen = [[5, ['/was-steht-mir-zu/', '/politsystem/', '/kantone-im-vergleich/']], [3, ['/praemienverbilligung/', '/krankenkasse/']], [2, ['/steuern/', '/sozialhilfe/']]];
+    const themen = [[5, ['/was-steht-mir-zu/', '/politsystem/', '/kantone-im-vergleich/']], [3, ['/praemienverbilligung/', '/krankenkasse/', '/ergaenzungsleistungen/', '/ahv-pensionierung/']], [2, ['/steuern/', '/sozialhilfe/']]];
     themen.forEach(([k, ziele], n) => {
       expect(d).toMatch(new RegExp(`<label for="n${n + 1}" style="--x:[\\d.]+%; --y:[\\d.]+%; --farbe:var\\(--k${k}\\)"><span class="zeichen" aria-hidden="true"><svg`));
       const pop = d.match(new RegExp(`<div class="bildwahl-pop t${n + 1}"[\\s\\S]*?<\\/ul><\\/div>`))[0];
