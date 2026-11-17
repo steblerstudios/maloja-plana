@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
-import { zahl } from './utils/geld.js';
+import { betrag } from './utils/geld.js';
+import { betragText } from './components/BetragText.jsx';
 import { berechneHilflosenentschaedigung, heErgebnis, GRADE } from './data/hilflosenentschaedigung.js';
 import { auswahlStil, linkStil } from './components/PrimaryButton.jsx';
 
@@ -24,7 +25,7 @@ export const HilflosenRechner = ({ palette, t }) => {
   const minderjaehrig = person === 'kind';
   const traeger = person === 'ahv' ? 'ahv' : 'iv';
   const r = berechneHilflosenentschaedigung({ traeger, grad, wohnen, minderjaehrig, besitzstandIV, intensivStunden });
-  const chf = (v) => 'CHF ' + zahl(v);
+  const chf = (v) => betrag(v); // utils/geld.js: verbirgt mit dem Sichtschutz
 
   const s = {
     wrap: { marginTop: space.sm + 'px' },
@@ -61,13 +62,13 @@ export const HilflosenRechner = ({ palette, t }) => {
   } else if (r.grund === 'grad_offen') {
     ergebnisInhalt = [
       React.createElement('div', { key: 'l', style: s.resultLabel }, t('hilflos.spanneLabel')),
-      React.createElement('div', { key: 'b', style: s.big }, chf(r.spanne.min) + ' – ' + chf(r.spanne.max) + ' / ' + t('hilflos.monat')),
+      React.createElement('div', { key: 'b', style: s.big }, betragText(t, [r.spanne.min, r.spanne.max], {}, '', ' / ' + t('hilflos.monat'))),
       React.createElement('div', { key: 's', style: s.sub }, t('hilflos.gradWaehlen')),
     ];
   } else {
     ergebnisInhalt = [
       React.createElement('div', { key: 'l', style: s.resultLabel }, t('hilflos.resultLabel')),
-      React.createElement('div', { key: 'b', style: s.big }, chf(r.totalMonat) + ' / ' + t('hilflos.monat')),
+      React.createElement('div', { key: 'b', style: s.big }, betragText(t, r.totalMonat, {}, '', ' / ' + t('hilflos.monat'))),
       React.createElement('div', { key: 's', style: s.sub },
         '≈ ' + chf(r.totalJahr) + ' / ' + t('hilflos.jahr')
         + (r.intensivMonat ? ' · ' + t('hilflos.davonIntensiv', { betrag: chf(r.intensivMonat) }) : '')),

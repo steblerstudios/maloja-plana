@@ -1144,7 +1144,7 @@ const AppInner = ({ demo }) => {
       onClick: umschaltenBetraege,
       style: ctrlBtn(betraegeAus)
     },
-      zeichen('auge', 17)
+      zeichen(betraegeAus ? 'augeZu' : 'auge', 17)
     ),
     React.createElement('button', {
       key: 'simpleview',
