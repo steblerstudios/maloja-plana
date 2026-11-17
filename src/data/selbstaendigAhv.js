@@ -26,7 +26,7 @@ import { werteFuerStichtag } from './jahrestabelle.js';
 
 export const SELBST_AHV_JE_JAHR = Object.freeze({
   2026: Object.freeze({ satzVoll: 10, grenzeVoll: 60500, mindestbeitrag: 530, verzugszins: 5, quelle: 'AHV-Merkblatt 2.02, Stand 1.1.2026' }),
-  2027: Object.freeze({ satzVoll: 10, grenzeVoll: 61500, mindestbeitrag: 541, verzugszins: 5, quelle: 'AHVG Art. 8, AHVV Art. 21 und 42 (Stand 1.1.2027, AS 2026 541), Bundesrat 2.10.2026' }),
+  2027: Object.freeze({ satzVoll: 10, grenzeVoll: 61500, mindestbeitrag: 541, verzugszins: 5, quelle: 'AHVG Art. 8, AHVV Art. 21 und 42; Stand 1.1.2027, AS 2026 541; Bundesrat 2.10.2026' }),
 });
 
 export function selbstAhvWerte(stichtag) {

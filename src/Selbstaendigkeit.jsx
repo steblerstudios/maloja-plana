@@ -13,7 +13,7 @@ import { zahl } from './utils/geld.js';
 
 const ahvParameter = () => {
   const w = selbstAhvWerte();
-  return { satz: w.satzVoll, grenze: zahl(w.grenzeVoll), mindest: zahl(w.mindestbeitrag), zins: w.verzugszins, jahr: w.jahr, quelle: w.quelle };
+  return { satz: w.satzVoll, grenze: zahl(w.grenzeVoll), mindest: zahl(w.mindestbeitrag), zins: w.verzugszins, jahr: w.jahr };
 };
 
 export const Selbstaendigkeit = ({ palette, t, onNavigate }) => {
