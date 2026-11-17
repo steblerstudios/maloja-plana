@@ -432,7 +432,7 @@ export const SEITEN = [
       {
         frage: 'Survegn jau pajaments per di, sche jau hai disdì sez?',
         antwort:
-          'Gea, ma per il solit pir suenter ina suspensiun: tgi che disdi senza garanzia d’ina nova plazza na survegn per regla durant in tschert temp nagin pajament per di, savens per la durada la pli lunga che la lescha prevesa. Excepziun fa tgi che na pudeva betg raschunaivlamain restar en la plazza (art. 30 LACI, art. 44 e 45 OACI). Laschai Vus cussegliar ordavant.',
+          'Gea, ma per il solit pir suenter ina suspensiun: tgi che disdi senza garanzia d’ina nova plazza na survegn durant in tschert temp nagin pajament per di. Quai vala per regla sco culpa greva, il stgalim il pli aut, cun 31 fin 60 dis da suspensiun. Excepziun fa tgi che na pudeva betg raschunaivlamain restar en la plazza (art. 30 LACI, art. 44 e 45 OACI). Laschai Vus cussegliar ordavant.',
       },
       {
         frage: 'Poss jau m’annunziar gia avant la fin da la plazza?',
@@ -490,7 +490,7 @@ export const SEITEN = [
         titel: 'La renta na vegn betg da sasezza',
         absaetze: [
           'La renta da l’AVS stuais Vus dumandar sez, il meglier in pèr mais avant la vegliadetgna da referenza. Cumpetenta è la cassa da cumpensaziun che ha retschavì Vossas ultimas contribuziuns; sche Vus n’avais pajà naginas contribuziuns, la cassa chantunala da cumpensaziun da Voss chantun da domicil (fegl d’infurmaziun 3.01).',
-          'Il dretg cumenza l’emprim di dal mais suenter avair cuntanschì la vegliadetgna da referenza e scada la fin dal mais da la mort (art. 21 LAVS). La vegliadetgna da referenza è la medema per dunnas ed umens; per dunnas da la generaziun da transiziun valan reglas transitoricas.',
+          'Il dretg cumenza l’emprim di dal mais suenter avair cuntanschì la vegliadetgna da referenza e scada cun la mort (art. 21 al. 2 LAVS). La vegliadetgna da referenza è la medema per dunnas ed umens; per dunnas da la generaziun da transiziun valan reglas transitoricas.',
           'Tgi che retschaiva il december ina renta da vegliadetgna, survegn ultra da quai ina tredeschavla renta da vegliadetgna en l’autezza d’in dudeschavel da la renta da vegliadetgna annuala. Rentas da survivents, d’invaliditad e d’uffants vegnan pajadas vinavant mo dudesch giadas (fegl d’infurmaziun 3.01).',
         ],
       },
@@ -506,7 +506,7 @@ export const SEITEN = [
         titel: 'Tge che Vus tutga en la vegliadetgna anc',
         absaetze: [
           'Sche rentas e facultad na tanschan betg per il minimum per viver, entran <strong>prestaziuns cumplementaras</strong> en dumonda. Ellas èn in dretg legal e betg agid social.',
-          'Tgi che retschaiva ina renta da vegliadetgna u prestaziuns cumplementaras, abita en Svizra e dependa en la vita da mintgadi permanentamain da l’agid d’auters, per exempel per sa trair en, per la tgira dal corp u per mangiar, po survegnir ina <strong>indemnisaziun d’impotenza</strong> da l’AVS, sche l’impotenza dura senza interrupziun dapi almain sis mais e sch’i na exista nagin dretg sin ina indemnisaziun d’impotenza da l’assicuranza cunter accidents u da l’assicuranza militara. Ella na dependa betg da l’entrada e da la facultad (art. 43bis LAVS, fegl d’infurmaziun 3.01).',
+          'Tgi che retschaiva l’entira renta da vegliadetgna u prestaziuns cumplementaras, abita en Svizra e dependa en la vita da mintgadi permanentamain da l’agid d’auters, per exempel per sa trair en, per la tgira dal corp u per mangiar, po survegnir ina <strong>indemnisaziun d’impotenza</strong> da l’AVS, sche l’impotenza dura senza interrupziun dapi almain sis mais e sch’i na exista nagin dretg sin ina indemnisaziun d’impotenza da l’assicuranza cunter accidents u da l’assicuranza militara. Ella na dependa betg da l’entrada e da la facultad (art. 43bis LAVS, fegl d’infurmaziun 3.01).',
           'Tar la <strong>cassa da pensiun</strong> decidais Vus tranter renta e chapital. In quart pudais Vus pretender legalmain sco chapital, dapli mo sch’il reglament prevesa quai; per persunas maridadas dovri il consentiment en scrit (art. 37 e 37a LPP). Fin cura che Vus stuais tscherner, stat en il reglament; sch’il chapital è pajà ora, na sa lascha quai betg pli far nunfatg. Laschai Vus cussegliar baud.',
         ],
       },

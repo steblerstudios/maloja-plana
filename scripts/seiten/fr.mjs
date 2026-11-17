@@ -423,7 +423,7 @@ export const SEITEN = [
       {
         frage: 'Ai-je droit aux indemnités si j’ai démissionné ?',
         antwort:
-          'Oui, mais le plus souvent après une suspension : qui démissionne sans avoir l’assurance d’un nouvel emploi ne reçoit en règle générale pas d’indemnité pendant un certain temps, souvent pour la durée la plus longue prévue par la loi. Sauf si l’on ne pouvait pas exiger de lui qu’il reste à son poste (art. 30 LACI, art. 44 et 45 OACI). Faites-vous conseiller au préalable.',
+          'Oui, mais le plus souvent après une suspension : qui démissionne sans avoir l’assurance d’un nouvel emploi ne reçoit pas d’indemnité pendant un certain temps. Cela compte en règle générale comme une faute grave, le degré le plus élevé, avec 31 à 60 jours de suspension. Sauf si l’on ne pouvait pas exiger de lui qu’il reste à son poste (art. 30 LACI, art. 44 et 45 OACI). Faites-vous conseiller au préalable.',
       },
       {
         frage: 'Puis-je m’inscrire avant la fin de mon emploi ?',
@@ -481,7 +481,7 @@ export const SEITEN = [
         titel: 'La rente ne vient pas d’elle-même',
         absaetze: [
           'Vous devez demander vous-même la rente AVS, de préférence quelques mois avant l’âge de référence. La caisse de compensation compétente est celle qui a perçu vos dernières cotisations ; si vous n’avez pas cotisé, la caisse cantonale de compensation de votre canton de domicile (mémento 3.01).',
-          'Le droit naît le premier jour du mois qui suit l’âge de référence et s’éteint à la fin du mois du décès (art. 21 LAVS). L’âge de référence est le même pour les femmes et les hommes ; des règles transitoires s’appliquent aux femmes de la génération transitoire.',
+          'Le droit naît le premier jour du mois qui suit l’âge de référence et s’éteint au décès (art. 21, al. 2, LAVS). L’âge de référence est le même pour les femmes et les hommes ; des règles transitoires s’appliquent aux femmes de la génération transitoire.',
           'Qui touche une rente de vieillesse en décembre reçoit en plus une treizième rente de vieillesse égale à un douzième de la rente de vieillesse annuelle. Les rentes de survivants, d’invalidité et pour enfant continuent d’être versées douze fois seulement (mémento 3.01).',
         ],
       },
@@ -497,7 +497,7 @@ export const SEITEN = [
         titel: 'Ce à quoi l’on a encore droit à l’âge de la retraite',
         absaetze: [
           'Si les rentes et la fortune ne suffisent pas pour le minimum vital, des <strong>prestations complémentaires</strong> entrent en ligne de compte. Elles sont un droit légal et non de l’aide sociale.',
-          'Qui touche une rente de vieillesse ou des prestations complémentaires, vit en Suisse et dépend en permanence de l’aide d’autrui au quotidien, par exemple pour s’habiller, pour l’hygiène corporelle ou pour manger, peut recevoir une <strong>allocation pour impotent</strong> de l’AVS si l’impotence dure sans interruption depuis au moins six mois et qu’il n’existe pas de droit à une allocation pour impotent de l’assurance-accidents ou de l’assurance militaire. Elle ne dépend ni du revenu ni de la fortune (art. 43bis LAVS, mémento 3.01).',
+          'Qui touche la totalité de sa rente de vieillesse ou des prestations complémentaires, vit en Suisse et dépend en permanence de l’aide d’autrui au quotidien, par exemple pour s’habiller, pour l’hygiène corporelle ou pour manger, peut recevoir une <strong>allocation pour impotent</strong> de l’AVS si l’impotence dure sans interruption depuis au moins six mois et qu’il n’existe pas de droit à une allocation pour impotent de l’assurance-accidents ou de l’assurance militaire. Elle ne dépend ni du revenu ni de la fortune (art. 43bis LAVS, mémento 3.01).',
           'Pour la <strong>caisse de pension</strong>, vous choisissez entre rente et capital. Vous pouvez légalement exiger un quart sous forme de capital, davantage seulement si le règlement le prévoit ; pour les personnes mariées, le consentement écrit est nécessaire (art. 37 et 37a LPP). Le délai pour choisir figure dans le règlement ; une fois le capital versé, on ne peut plus revenir en arrière. Faites-vous conseiller tôt.',
         ],
       },

@@ -1386,7 +1386,7 @@ export const KARTEN = {
   "einheit": "Fr. im Monat je Kind, höchstens",
   "anker": "karte-alimente",
   "frucht": "zwetschge",
-  "legende": "Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. 17 Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch (1'008 Franken); bei mehreren steht der Betrag nicht im Gesetz, sondern folgt aus dieser Kopplung. Ob und wie viel jemand erhält, hängt in den meisten Kantonen von Einkommen und Vermögen ab; die Regeln sind je Kanton verschieden. Neuenburg rechnet je Unterhaltsbeitrag, nicht je Kind. Nicht gesichert ist der Betrag für den Kanton Freiburg und den Kanton Waadt.",
+  "legende": "Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. 17 Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch (1'008 Franken, Stand 2026); bei mehreren steht der Betrag nicht im Gesetz, sondern folgt aus dieser Kopplung. Ob und wie viel jemand erhält, hängt in den meisten Kantonen von Einkommen und Vermögen ab; die Regeln sind je Kanton verschieden. Neuenburg rechnet je Unterhaltsbeitrag, nicht je Kind. Nicht gesichert ist der Betrag für den Kanton Freiburg und den Kanton Waadt.",
   "quellen": [],
   "ch": null,
   "spannen": [

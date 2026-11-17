@@ -79,11 +79,12 @@ describe('A1 · Selbständig: AHV-Akontobeiträge (AHV-Merkblatt 2.02, Stand 1.1
     expect(w.belegt).toBe(false);
   });
   it('der Satz nennt vierteljährlich, Mindestbeitrag, Verzugszins und den Stand', () => {
-    const s = tDe('selbstaendigkeit.step4Text', { satz: 10, grenze: '60’500', mindest: '530', zins: 5, jahr: 2026 });
+    const s = tDe('selbstaendigkeit.step4Text', { satz: 10, grenze: '60’500', mindest: '530', zins: 5, jahr: 2026, quelle: 'AHV-Merkblatt 2.02, Stand 1.1.2026' });
     expect(s).toMatch(/jedes Quartal/);
     expect(s).toMatch(/mindestens aber 530 Franken/);
     expect(s).toMatch(/5 % Verzugszins/);
-    expect(s).toMatch(/Stand 2026/);
+    // Die Quelle steht wieder im Text (Vortor 17.11.2026, swiss-precision): Beträge nie ohne Beleg.
+    expect(s).toMatch(/\(AHV-Merkblatt 2\.02, Stand 1\.1\.2026\)/);
     expect(s).not.toMatch(/an der Quelle/);
     expect(s).toMatch(/steuerbarem Umsatz im Jahr, im In- und Ausland zusammengezählt, ohne von der Steuer ausgenommene Leistungen \(MWSTG Art\. 10\)/);
     expect(s).toMatch(/Nebenerwerb bis 2 500 Franken im Jahr gibt es Beiträge nur auf Wunsch/);

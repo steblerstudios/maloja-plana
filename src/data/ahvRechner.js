@@ -436,8 +436,9 @@ export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, be
 //         Mindestzinssatzes auf 2%» (https://www.admin.ch/de/newnsb/8DF8zxcfvu7l, gelesen 16.11.2026):
 //         «Der Bundesrat hebt den Mindestzinssatz in der beruflichen Vorsorge ab Januar 2027 von bisher
 //         1,25% auf 2% an.» Die BVG-Kommission hatte 1,75 % empfohlen (laut derselben Mitteilung).
-//         ⚠️ Gegenprobe offen: Die Fedlex-Konsolidierung BVV 2 «Stand 1.1.2027» zeigt am 16.11.2026 noch
-//         Bst. k mit 1,25 %, die AS-Fundstelle der Änderung war nicht auffindbar. Vor dem Deploy dort prüfen.
+//         Die Fedlex-Konsolidierung BVV 2 «Stand 1.1.2027» zeigt am 17.11.2026 noch Bst. k mit 1,25 %, die
+//         AS-Fundstelle fehlt noch. Entscheid Stebler Studios 17.11.2026: mit 2 % deployen (amtliche Mitteilung).
+//         Gegenprobe AS-Fundstelle im Dezember beim Werte-Nachzug 2027.
 // In der Projektion rechnet jedes Kalenderjahr mit seinem festgelegten Satz; für die Jahre NACH dem letzten
 // festgelegten gilt die Annahme BVG_MINDESTZINS_ANNAHME (Entscheid Stebler Studios 16.11.2026, «Ab 2028 1,25 %»).
 // Grund: 2 % ist nur für 2027 belegt; 2017–2023 galt 1 %, 2024–2026 1,25 %. Den Höchststand 40 Jahre
