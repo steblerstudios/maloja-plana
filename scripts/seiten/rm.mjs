@@ -566,7 +566,7 @@ export const SONDERSEITEN = [
         absaetze: [
           'Maloja Plana è in <strong>utensil d’orientaziun</strong>. Ils calculaturs e las survistas sa basan sin fundaments giuridics accessibels publicamain e servan exclusivamain a l’infurmaziun persunala.',
           '<strong>Maloja Plana na remplazza nagina cussegliaziun giuridica, fiscala, d’assicuranza u finanziala.</strong>',
-          'La purschidra na surpiglia nagina garanzia per la correctadad, la cumplettadad u l’actualitad dals quints, per l’idoneitad dals resultats per decisiuns individualas, ni per donns che resultan da lur utilisaziun. Decisivas èn exclusivamain las leschas en vigur e las autoritads cumpetentas.',
+          'La purschidra na surpiglia nagina garanzia per la correctadad, la cumplettadad u l’actualitad dals quints, per l’idoneitad dals resultats per decisiuns individualas, ni per donns che resultan da lur utilisaziun. La responsabladad per donns chaschunads intenziunadamain u per negligientscha greva resta resalvada. Decisivas èn exclusivamain las leschas en vigur e las autoritads cumpetentas.',
         ],
       },
       {

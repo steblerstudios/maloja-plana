@@ -4,7 +4,8 @@ import { RechnerForm, ErgebnisZahl } from './components/RechnerForm.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
-import { zahl } from './utils/geld.js';
+import { betrag } from './utils/geld.js';
+import { betragText } from './components/BetragText.jsx';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 
 // Rechner-Form X (F7-A2, 27.10.2026): Taggeld gross zuerst, die Leistungen als Tabelle darunter, dann die Angabe.
@@ -28,7 +29,6 @@ export const EOrechner = ({ palette, t, data, onNavigate }) => {
     fuss: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.sm + 'px 0 0' },
   };
 
-  const fmt = (v) => v != null ? zahl(v) : '–';
 
   const leistungRow = (leistung, labelKey) => {
     if (!leistung || !leistung.anspruch) return null;
@@ -40,16 +40,16 @@ export const EOrechner = ({ palette, t, data, onNavigate }) => {
       // Betreuung: Taggelder, nicht Urlaubstage (EOG Art. 16q Abs. 3), und ein Höchstwert —
       // bei zwei erwerbstätigen Eltern je nach eigenem Einkommen (Art. 16q Abs. 4, 16r Abs. 1).
       React.createElement('td', { style: s.td }, leistung.typ === 'betreuung' ? t('eo.betreuungDauer', { n: leistung.tage }) : leistung.tage + ' ' + t('eo.tage')),
-      React.createElement('td', { style: s.td }, 'CHF ' + fmt(leistung.taggeld)),
-      React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, (leistung.typ === 'betreuung' ? t('eo.hoechstens') + ' ' : '') + 'CHF ' + fmt(leistung.totalEntschaedigung))
+      React.createElement('td', { style: s.td }, betragText(t, leistung.taggeld)),
+      React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, betragText(t, leistung.totalEntschaedigung, {}, leistung.typ === 'betreuung' ? t('eo.hoechstens') + ' ' : ''))
     );
   };
 
   const ergebnis = result && React.createElement(React.Fragment, null,
-    React.createElement(ErgebnisZahl, { palette, label: t('eo.taggeld'), wert: 'CHF ' + fmt(result.mutterschaft.taggeld) + ' / ' + t('eo.tag') }),
+    React.createElement(ErgebnisZahl, { palette, label: t('eo.taggeld'), wert: betragText(t, result.mutterschaft.taggeld, {}, '', ' / ' + t('eo.tag')) }),
     React.createElement('p', { style: { ...s.fuss, marginTop: space.xs + 'px' } },
       t('eo.entschaedigungssatz') + ': ' + EO_PARAMS.entschaedigungssatz + '% · ' +
-      t('eo.maximum') + ': CHF ' + fmt(EO_PARAMS.maxTaggeld) + '/' + t('eo.tag')),
+      t('eo.maximum') + ': ' + betrag(EO_PARAMS.maxTaggeld) + '/' + t('eo.tag')),
     React.createElement('div', { style: { overflowX: 'auto' } },
       React.createElement('table', { style: s.table },
         React.createElement('thead', null,

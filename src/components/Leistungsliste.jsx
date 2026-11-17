@@ -8,6 +8,7 @@ import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen, getGrundbedarf, ladeIPVModelle } from '../config/cantonalData.js';
 import { zahl, betrag } from '../utils/geld.js';
+import { betragText } from './BetragText.jsx';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
 import { gblStand } from '../data/skosGrundbedarf.js';
 import { linkStil } from './PrimaryButton.jsx';
@@ -60,7 +61,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         ? t('dashboard.quickCheckResult', { income: fmt(ipvJahreseinkommen(probe)), amount: fmt(ipv.annual) })
           + (ipv.annahmen?.ohneDreizehnten ? ' · ' + t('ipv.ohneDreizehntenKurz') : '')
           + (hatAusweisFNS(probe) ? ' ' + t('ipv.ruhtMitSozialhilfe') : '')
-        : t(ipv.noteKey),
+        : t(ipv.noteKey, ipv.noteParams),
     };
     // F7-K2-4 (Stebler Studios 27.10.2026): Ohne Anspruch stand hier «Hängt von Kanton und Einkommen ab — im
     // Rechner eingeben», während das Kapitel Finanzen aus denselben Daten «Einkommen über Grenze (CHF …)»
@@ -170,7 +171,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
             React.createElement('div', { style: { position: 'absolute', top: '-3px', bottom: '-3px', width: '2px', left: 'calc(' + (sozPegel.bedarf / max * 100).toFixed(1) + '% - 1px)', background: palette.text } })));
       })(),
       zaehlt && React.createElement('div', { style: { flexShrink: 0, width: '116px', textAlign: 'right' } },
-        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, '≈ CHF ' + fmt(f.monthly)),
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, betragText(t, f.monthly, { hoechstens: 2 }, '≈ ')),
         React.createElement('div', { 'aria-hidden': true, style: { height: '6px', marginTop: '4px', borderRadius: radius.full + 'px', background: palette.up, overflow: 'hidden' } },
           React.createElement('div', { style: { height: '100%', width: (maxMonthly > 0 ? f.monthly / maxMonthly * 100 : 0).toFixed(1) + '%', background: palette.sage, borderRadius: radius.full + 'px' } }))
       )
@@ -214,7 +215,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       totalMonthly > 0 && React.createElement('div', { style: { textAlign: 'right' } },
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('dashboard.quickCheckWithIncome')),
         React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } },
-          '≈ CHF ' + fmt(totalMonthly) + ' / ' + t('schnellcheck.monat'))
+          betragText(t, totalMonthly, { hoechstens: 2 }, '≈ ', ' / ' + t('schnellcheck.monat')))
       )
     ),
     React.createElement('div', { style: { borderBottom: '1px solid ' + palette.border + '55' } }, leistungen.map(row)),

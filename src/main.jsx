@@ -1144,7 +1144,7 @@ const AppInner = ({ demo }) => {
       onClick: umschaltenBetraege,
       style: ctrlBtn(betraegeAus)
     },
-      zeichen('auge', 17)
+      zeichen(betraegeAus ? 'augeZu' : 'auge', 17)
     ),
     React.createElement('button', {
       key: 'simpleview',
@@ -1710,8 +1710,8 @@ const AppInner = ({ demo }) => {
         view === 'wohnunggekuendigt' && React.createElement(WohnungGekuendigt, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'selbstaendigkeit' && React.createElement(Selbstaendigkeit, { palette, t, onNavigate: handleNavigate }),
         view === 'heirat' && React.createElement(Heirat, { palette, t, onNavigate: handleNavigate }),
-        view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate }),
-        view === 'trennung' && React.createElement(Trennung, { palette, t, onNavigate: handleNavigate }),
+        view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate, kanton: activeData?.basis?.canton }),
+        view === 'trennung' && React.createElement(Trennung, { palette, t, onNavigate: handleNavigate, kanton: activeData?.basis?.canton }),
         view === 'bewilligung' && React.createElement(BewilligungFristen, { palette, t, onNavigate: handleNavigate }),
         view === 'fuehrerausweis' && React.createElement(Fuehrerausweis, { palette, t, onNavigate: handleNavigate }),
         view === 'todesfall' && React.createElement(Todesfall, { palette, t, onNavigate: handleNavigate }),

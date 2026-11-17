@@ -49,9 +49,10 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
   describe('Werkzeuge verlinken ihre Karte im Kantonsatlas', () => {
     const atlas = fs.readFileSync(path.resolve(process.cwd(), 'public', 'kantonsatlas', 'index.html'), 'utf8');
     const WERKZEUGE = [['PraemienOrientierung.jsx', 'praemien'], ['PremiumSubsidy.jsx', 'premium'], ['TaxCalculator.jsx', 'tax'],
-      ['MietzinsOrientierung.jsx', 'mietzins'], ['AlvRechner.jsx', 'alv'], ['SozialhilfeView.jsx', 'sozialhilfe'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen']];
+      ['MietzinsOrientierung.jsx', 'mietzins'], ['AlvRechner.jsx', 'alv'], ['SozialhilfeView.jsx', 'sozialhilfe'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen'],
+      ['Stundenlohn.jsx', 'stundenlohn']]; // Stundenlohn seit 14.11.2026
 
-    it('sieben Werkzeuge, jedes Ziel ist eine Karte, die auf der Seite steht', () => {
+    it('acht Werkzeuge, jedes Ziel ist eine Karte, die auf der Seite steht', () => {
       expect(Object.keys(KANTONSKARTE).sort()).toEqual(WERKZEUGE.map(([, v]) => v).sort());
       for (const ziel of Object.values(KANTONSKARTE)) {
         expect(ziel, ziel).toMatch(/^\/kantonsatlas\/#karte-[a-z]+$/);

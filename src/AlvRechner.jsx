@@ -6,6 +6,7 @@ import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { zahl, betrag } from './utils/geld.js';
+import { betragText } from './components/BetragText.jsx';
 import { lohnBasis, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
@@ -104,7 +105,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   const ergebnis = result && (result.anspruch
     ? React.createElement(React.Fragment, null,
-        React.createElement(ErgebnisZahl, { palette, label: t('alv.monatlichLabel'), wert: 'CHF ' + fmt(result.monatlich) }),
+        React.createElement(ErgebnisZahl, { palette, label: t('alv.monatlichLabel'), wert: betragText(t, result.monatlich) }),
         React.createElement('div', { style: { marginTop: space.xs + 'px' } },
           React.createElement(ErgebnisZeile, { palette, label: t('alv.taggeldLabel'), wert: betrag(result.taggeld, { stellen: 2 }) }),
           React.createElement(ErgebnisZeile, { palette, label: t('alv.satzLabel'), wert: t('alv.satzValue', { p: Math.round(result.satz * 100) }) }),

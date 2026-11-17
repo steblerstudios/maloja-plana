@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { VerstehenImWerkzeug, VERSTEHEN, KANTONSKARTE, NachladeGrenze } from '../components/ErklaerseiteLink.jsx';
+import { VerstehenImWerkzeug, VERSTEHEN, KANTONSKARTE, NachladeGrenze, KARTEN_NAME } from '../components/ErklaerseiteLink.jsx';
 import KantonsKarteKlein from '../components/KantonsKarteKlein.jsx';
 import ErklaerFigurKlein from '../components/ErklaerFigurKlein.jsx';
 import { KARTEN, KARTE_GEO, STUFEN_FARBEN } from '../data/kantonskarten.js';
@@ -71,7 +71,9 @@ describe('Die Karte (C)', () => {
     const last = karte(P, 'lastNachIpv', 'ZH');
     expect(last).toContain('nicht die Last einer bestimmten Person');
     expect(last).toContain('Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025');
-    for (const K of Object.values(KARTEN)) {
+    for (const [k, K] of Object.entries(KARTEN)) {
+      // Alimente: keine gemeinsame Quelle, sondern je Kanton eine (14.11.2026).
+      if (k === 'alimente') { for (const w of Object.values(K.werte)) expect(w.quelle.url).toMatch(/^https:\/\//); continue; }
       expect(K.quellen.length).toBeGreaterThan(0);
       for (const q of K.quellen) expect(q.url).toMatch(/^https:\/\/[^/]+\/.+/);
     }
@@ -285,7 +287,8 @@ describe('Erst beim Aufklappen geladen', () => {
 
   // Ausgeweitet 09.11.2026 abends: jedes Werkzeug mit einer Karte in VERSTEHEN zeigt den Block, mit seinem Kanton.
   const WERKZEUGE = [['PraemienOrientierung.jsx', 'praemien'], ['PremiumSubsidy.jsx', 'premium'], ['TaxCalculator.jsx', 'tax'],
-    ['MietzinsOrientierung.jsx', 'mietzins'], ['AlvRechner.jsx', 'alv'], ['SozialhilfeView.jsx', 'sozialhilfe'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen']];
+    ['MietzinsOrientierung.jsx', 'mietzins'], ['AlvRechner.jsx', 'alv'], ['SozialhilfeView.jsx', 'sozialhilfe'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen'],
+    ['Stundenlohn.jsx', 'stundenlohn']];
   it('jede Ansicht in VERSTEHEN hat ein Werkzeug, und umgekehrt', () => {
     expect(WERKZEUGE.map(([, v]) => v).sort()).toEqual(Object.keys(VERSTEHEN).sort());
   });
@@ -297,5 +300,65 @@ describe('Erst beim Aufklappen geladen', () => {
     expect(html, view).toContain('data-eigen="ja"');
     expect(html, view).toContain(KARTEN[v.karte].legende.slice(0, 40).replace(/'/g, '&#x27;'));
     expect(KARTEN[v.karte].quellen.length, view).toBeGreaterThan(0);
+  });
+});
+
+// ─── Atlas in den Kapiteln (Stebler Studios 14.11.2026, «Ja, Kapitel», alle vier) ─────────────────────────
+describe('Atlas in den Kapiteln: Kind, Trennung, Mietbeiträge, Stundenlohn', () => {
+  it('Abläufe «Kind» (Kinderzulage, Kita-Abzug) und «Trennung» (Alimente) zeigen ihre Karte mit dem Profilkanton', () => {
+    expect(quelle('KindBekommen.jsx')).toContain("VerstehenImWerkzeug, { palette, t, karte: 'kinderzulage', kanton })");
+    expect(quelle('KindBekommen.jsx')).toContain("VerstehenImWerkzeug, { palette, t, karte: 'kita', kanton })");
+    expect(quelle('Trennung.jsx')).toContain("VerstehenImWerkzeug, { palette, t, karte: 'alimente', kanton })");
+    expect(quelle('main.jsx')).toContain("React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate, kanton: activeData?.basis?.canton })");
+    expect(quelle('main.jsx')).toContain("React.createElement(Trennung, { palette, t, onNavigate: handleNavigate, kanton: activeData?.basis?.canton })");
+    const html = renderToStaticMarkup(React.createElement(VerstehenImWerkzeug, { palette: P, t, karte: 'alimente', kanton: 'VD' }));
+    expect(html).toContain('data-teil="aufklapper-karte"');
+  });
+
+  it('Alimente: eigener Kanton mit Stand und Quelle, VD «nicht gesichert», ohne Kanton der Weg zur Tabelle', () => {
+    const vd = karte(P, 'alimente', 'VD');
+    expect(vd).toContain('data-teil="nicht-gesichert"');
+    expect(vd).toContain(KARTEN.alimente.werte.VD.quelle.url.replace(/&/g, '&amp;'));
+    expect(vd).toContain(`Stand ${KARTEN.alimente.werte.VD.stand}`);
+    expect(karte(P, 'alimente', 'ZH')).not.toContain('nicht-gesichert');
+    expect(karte(P, 'alimente', null)).toContain('href="/kantonsatlas/#karte-alimente"');
+  });
+
+  it('Mindestlohn: zwei Gruppen, kein Satz «höhere Zahl», Betrag des eigenen Kantons', () => {
+    expect(KARTEN.mindestlohn.zweiGruppen).toBe(true);
+    expect(KARTEN.mindestlohn.spannen.map((s) => s.s)).toEqual([4, 1]);
+    const ge = karte(P, 'mindestlohn', 'GE');
+    expect(ge).toContain('24.59 Fr. pro Stunde');
+    expect(ge).not.toContain(t('erklaerseite.stufenHinweis'));
+    expect(karte(P, 'mindestlohn', 'ZH')).toContain('kein kantonaler Mindestlohn');
+  });
+
+  // Prüfer 16.11.2026
+  it('Abläufe: der Aufklapper nennt die Karte (zwei Karten im Ablauf «Kind» sind unterscheidbar)', () => {
+    for (const [k, name] of Object.entries(KARTEN_NAME)) {
+      expect(name, k).toBe(KARTEN[k].titel);
+      const html = renderToStaticMarkup(React.createElement(VerstehenImWerkzeug, { palette: P, t, karte: k, kanton: 'ZH' }));
+      expect(html).toContain(`${t('erklaerseite.karteMitKanton')}: <span lang="de">${name}</span>`);
+    }
+  });
+
+  it('Mindestlohn-Karte hält die Jahressperre: im Folgejahr kein Betrag, aber der Hinweis', () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      vi.setSystemTime(new Date('2026-12-20T12:00:00'));
+      expect(karte(P, 'mindestlohn', 'NE')).toContain('21.35 Fr. pro Stunde');
+      vi.setSystemTime(new Date('2027-01-05T12:00:00'));
+      const html = karte(P, 'mindestlohn', 'NE');
+      expect(html).not.toContain('21.35');
+      expect(html).toContain('mit kantonalem Mindestlohn');
+      expect(html).toContain(t('erklaerseite.anderesJahr', { jahr: 2026 }));
+    } finally { vi.useRealTimers(); }
+  });
+
+  it('Mietbeiträge: neben der Miete die Leerwohnungsziffer als Zahl', () => {
+    expect(KARTEN.miete.vergleich.titel).toBe('Leerwohnungsziffer');
+    const html = karte(P, 'miete', 'ZH');
+    expect(html).toContain('data-teil="vor-nach"');
+    expect(html).toContain(KARTEN.miete.vergleich.werte.ZH);
   });
 });

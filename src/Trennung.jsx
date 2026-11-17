@@ -1,5 +1,6 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 
 // Trennung / Scheidung — geführter Ablauf, würdevoll und ruhig (kein Konflikt-Frame).
 // Beratung & Trennung vs. Scheidung, Wohnen & Adresse, Kinder & Unterhalt (inkl.
@@ -8,7 +9,8 @@ import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } f
 // neu berechnen) und führt zum Lebenszustand „Alleinerziehend". Orientierung, keine
 // Rechtsberatung.
 
-export const Trennung = ({ palette, t, onNavigate }) => {
+// Karte Alimentenbevorschussung des Kantonsatlas an Schritt 3 (14.11.2026), VD als «nicht gesichert».
+export const Trennung = ({ palette, t, onNavigate, kanton }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
@@ -24,7 +26,8 @@ export const Trennung = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('trennung.step2Link'), onClick: () => onNavigate('umzug') })
     ),
     React.createElement(AblaufStep, { palette, title: t('trennung.step3Title') },
-      React.createElement('p', { style: s.stepText }, t('trennung.step3Text'))
+      React.createElement('p', { style: s.stepText }, t('trennung.step3Text')),
+      React.createElement(VerstehenImWerkzeug, { palette, t, karte: 'alimente', kanton })
     ),
     React.createElement(AblaufStep, { palette, title: t('trennung.step4Title') },
       React.createElement('p', { style: s.stepText }, t('trennung.step4Text')),

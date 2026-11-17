@@ -118,6 +118,15 @@ describe('Rechtliches (L2, L4, L5, L6, S5)', () => {
     expect(lies('public/fr/rechtliches/index.html')).toContain('négligence grave demeure réservée');
     expect(lies('public/it/rechtliches/index.html')).toContain('negligenza grave');
     expect(lies('public/en/rechtliches/index.html')).toContain('gross negligence remains reserved');
+    expect(lies('public/rm/rechtliches/index.html')).toContain('negligientscha greva resta resalvada');
+  });
+
+  it('Haftung: derselbe Vorbehalt steht in der App (legal.imprint.disclaimer1), in allen fünf Sprachen', () => {
+    const vorbehalt = { de: 'grobfahrlässig verursachte Schäden bleibt vorbehalten', fr: 'négligence grave demeure réservée', it: 'negligenza grave', en: 'gross negligence remains reserved', rm: 'negligientscha greva resta resalvada' };
+    for (const [l, satz] of Object.entries(vorbehalt)) {
+      const zeile = lies('src', 'i18n', l + '.js').split('\n').find((z) => z.includes('disclaimer1:'));
+      expect(zeile, l).toContain(satz);
+    }
   });
 
   it('die Skriptliste nennt auch den Abschieds-Service-Worker, fr/it/en nennen die Startseite', () => {
