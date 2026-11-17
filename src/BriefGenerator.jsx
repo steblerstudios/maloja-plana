@@ -209,7 +209,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
   const [preview, setPreview] = useState(false);
   // Sichtschutz «Beträge verbergen»: die Vorschau ist das Dokument und zeigt darum echte Beträge
   // (mitEchtenBetraegen). Am Bildschirm liegt sie unscharf, bis man sie antippt — wie die
-  // Betragsfelder (tokens.css). Entscheid Sophie 16.11.2026, Auswahl «Unscharf, antippen».
+  // Betragsfelder (tokens.css). Entscheid Stebler Studios 16.11.2026, Auswahl «Unscharf, antippen».
   const [offenFuer, setOffenFuer] = useState(null);
   const vorschauRef = useRef(null);
   // Aufgedeckt gilt nur für diese Vorlage und diesen Sichtschutz: Vorlagenwechsel oder Sichtschutz
