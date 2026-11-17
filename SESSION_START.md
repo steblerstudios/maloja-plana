@@ -17,6 +17,13 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 16.11.2026 — `ffe82b6d` ist LIVE** (0.1.49-beta, gebaut 14.11. 11:06:30, Deploy Stebler Studios, zweiter Anlauf). Überholt alle Stände darunter.
+> - Neu live: Startseiten-Stapel (#825 #833 #837 #843) · Beträge verbergen (#826) mit Fix «Dokumente immer mit echten Beträgen» (#875, `mitEchtenBetraegen()` in `utils/geld.js`) · Altlasten rm-Stipendien und Rechtsseite «Skripte vom selben Server» (#874) · OpenStreetMap-Namensnennung nach ODbL (#876) · Doku (#873).
+> - Vortor 13.11. auf `6590334e` fand einen Blocker (Sichtschutz verbarg Beträge auch in Briefen und Dossiers) → #875; Nachprüfung auf `ffe82b6d`: 593 Testdateien, Lint 0, SEO 0/0, 64 593 / 65 000 B, PII sauber.
+> - Erster Deploy-Anlauf scheiterte vor dem Upload (`node_modules` im Haupt-Checkout leer seit 12.11.) → `npm ci`. 🛑 `node_modules` im Haupt-Checkout nie leeren, `deploy.sh` baut dort.
+> - Live gegengeprüft 14.11.: `version.json`, 146 Dateien, Bündel = Build (`index-uHtMS-Pf.js`, `de-rest-DXYDLarD.js`). Erneut 16.11.: `version.json` = `ffe82b6d`, `/` und `/app/` 200 (404-Probe wegen Netz-Zeitüberschreitung nicht erneut). Browser, Konsole, Handy nicht geprüft.
+> - Offen (Arbeit läuft ab 16.11. in eigenen Sitzungen, je Entwurfs-PR): Sichtschutz-Nacharbeit · fachliche ⚠️ aus #845/#859/d439855d/7ba06d80 · Barrierefreiheit-Reste · Übersetzungs-Quellenzeilen + OR 100 · Werte 2027. Instrumente-PRs #827–#867 brauchen Rebase nach #826. Liste: `stebler-studios/_handoffs/2026-11-10-maloja-deploy-tag.md`.
+>
 > 🧾 **Nachtrag 12.11.2026, 01:50 — `7ba06d80` ist LIVE** (0.1.49-beta, gebaut 01:42:21, Deploy Stebler Studios). Überholt alle Stände darunter.
 > - Neu live: freiwillige AHV/IV-Mindestbeitrag 1 010 Fr. (2026) / 1 030 Fr. (2027) statt nur AHV-Anteil 870 (#869; VFV Art. 13b, IVG Art. 3 Abs. 1bis, 5 % nach VFV 18a + SR 831.143.41) · Gruppe D Restpunkte: Preisüberwacher-Quelle, Stipendien-Konkordat Art. 5 (#871) · Gruppe E Rahmen: 404 und Wartung im Rahmen der Erklärseiten (#872) · Doku (#870).
 > - Vortor auf `7ba06d80`, Merge-Pause vorher: 592 Testdateien, Lint 0 Fehler, SEO 0, 64 985 / 65 000 B, PII sauber, ESTV gleich; fünf Prüfer ohne Blocker.

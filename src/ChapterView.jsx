@@ -14,7 +14,7 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
-import { betrag } from './utils/geld.js';
+import { betrag, betraegeVerborgen, VERBORGEN, mitEchtenBetraegen } from './utils/geld.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { arbeitsKanton, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, wochenstundenZuTiefFuerMonatslohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
@@ -1224,7 +1224,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     return sections;
   };
 
-  const handleSaveCard = () => {
+  // Notfallkarte verlässt die App (Druck) → wahre Beträge, wie alle Dokument-Erzeuger (utils/geld.js).
+  // Heute steht darin kein Betrag; die Hülle hält das so, falls einer dazukommt (Nachzug #875).
+  const handleSaveCard = () => mitEchtenBetraegen(() => {
     const sections = notfallkarteAbschnitte();
     const sectionHtml = sections.map(s =>
       '<div style="margin-bottom:16px"><div style="font-size:11px;color:#888;margin-bottom:4px">' + s.title + '</div>' + s.html + '</div>'
@@ -1240,7 +1242,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       sectionHtml +
       '<div class="footer">' + tr('notfallSummary.cardFooter') + '</div></div></body></html>';
     openPrintWindow(html);
-  };
+  });
 
   const chapterAccent = {
     basis: { bg: palette.sageMist, border: palette.sage, icon: palette.sageDeep },
@@ -1848,7 +1850,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const w = abschnittWert(f);
     if (trifftNichtZu(data, f.k)) return w;
     if ((f.k === 'workHoursPerWeek' || f.k === 'sideHoursPerWeek') && /^\d+([.,]\d+)?$/.test(String(data[f.k]).trim())) return w + '\u00a0' + tr('chapterView.stdProWoche');
-    if (f.type === 'select' && /(\sCHF|\(CHF\))\s*$/.test(String(f.label || '')) && /^[\d’']+$/.test(String(w))) return 'CHF\u00a0' + w;
+    if (f.type === 'select' && /(\sCHF|\(CHF\))\s*$/.test(String(f.label || '')) && /^[\d’']+$/.test(String(w))) return betraegeVerborgen() ? VERBORGEN : 'CHF\u00a0' + w;
     return w;
   };
   // PLZ und Ort in einer Zeile («PLZ · Ort  8004 Zürich»), wenn beide erfasst sind.

@@ -285,6 +285,261 @@ export const SEITEN = [
     ],
     quellen: ['estvRechner'],
   },
+
+  // ─── Prestaziuns cumplementaras (14.11.2026) ──────────────────────────────
+  // 🛑 Wie alles hier: mit Sorgfalt gebaut, nicht geprüft. Abkürzungen wie bisher
+  // nach dem Französischen (LAMal, LEI): LPC = ELG · OPC = ELV · LEI = AIG.
+  {
+    pfad: 'ergaenzungsleistungen',
+    titel: 'Las prestaziuns cumplementaras a l’AVS ed a l’AI',
+    beschreibung:
+      'Cura che prestaziuns cumplementaras (PC) entran en dumonda, co ch’ellas vegnan calculadas e pertge ch’ellas n’èn betg agid social. In’orientaziun senza cifras.',
+    brotkrume: 'Prestaziuns cumplementaras',
+    vorspann:
+      'Las prestaziuns cumplementaras, curt PC, gidan là, nua ch’ina renta da l’AVS u da l’AI e las ulteriuras entradas na tanschan betg per il minimum per viver. Ellas èn regladas en la lescha federala davart las prestaziuns cumplementaras (LPC) ed èn in dretg legal, betg ina favur. Ellas vegnan pajadas dals chantuns.',
+    abschnitte: [
+      {
+        titel: 'Senza prestaziun da l’AVS u da l’AI na datti nagina PC',
+        absaetze: [
+          'Las PC premettan ina prestaziun da l’AVS u da l’AI: ina renta da vegliadetgna u da survivents da l’AVS, era ina renta anticipada, ina renta da l’AI, ina indemnisaziun d’impotenza da l’AI u in pajament per di da l’AI che vegn pajà senza interrupziun dapi almain sis mais. Ultra da quai èn necessaris il domicil e la dimora usitada en Svizra (art. 4 LPC).',
+          'Per persunas estras vala ultra da quai ina durada minimala da dimora: per regla diesch onns senza interrupziun en Svizra, tschintg onns per fugitivs e persunas senza naziunalitad (art. 5 LPC). Per persunas burgaisas d’in stadi da l’UE u da l’AECL na vala ella betg.',
+          'Tgi che n’ha nagina renta mo perquai ch’i mancan onns da contribuziun, po survegnir tuttina PC sut tschertas premissas (art. 4 LPC). Tgi che croda en basegns senza nagina prestaziun da l’AVS u da l’AI, sa drizza a l’agid social da la vischnanca da domicil.',
+        ],
+      },
+      {
+        titel: 'La largia tranter expensas ed entradas',
+        absaetze: [
+          'La PC annuala correspunda a la part da las <strong>expensas renconuschidas</strong> che surpassa las <strong>entradas imputablas</strong> (art. 9 LPC). Tar las expensas tutgan per exempel in import per il basegn general da viver, il tschains fin ad in maximum ed in import per la premia da la cassa da malsauns (art. 10 LPC). Tar las entradas tutgan rentas, ina part da l’entrada da gudogn ed ina part da la facultad (art. 11 LPC).',
+          'Dretg ha mo tgi che posseda ina facultad sut ina limita legala; ina immobiglia abitada da la proprietaria u dal proprietari na vegn betg quintada per questa limita (art. 9a LPC). Facultad, a la quala insatgi ha renunzià senza cuntraprestaziun, per exempel tras ina donaziun, vegn quintada (art. 11a LPC).',
+          'La Confederaziun fixescha ils imports per il basegn da viver ed ils maximums dal tschains, graduads tenor trais regiuns (art. 10 LPC). Nus na ls numnain betg intenziunadamain qua: els vegnan adattads regularmain, ed ina cifra sin ina pagina sco questa fiss baud fallada. Per persunas che vivan en ina chasa da tgira suonda il calcul agens reglas; ils chantuns pon limitar ils custs renconuschids da la chasa da tgira.',
+        ],
+      },
+      {
+        titel: 'Ils custs da malsogna e d’invaliditad vegnan anc tiers',
+        absaetze: [
+          'Ultra da la PC annuala bonifitgescha il chantun custs da malsogna e d’invaliditad cumprovads, per exempel per il dentist, per agid, tgira e assistenza a chasa, per il transport al lieu da tractament, per meds auxiliars sco er la franchisa e la part da custs da la cassa da malsauns (art. 14 LPC). Tge custs precisamain e fin a tge import, decida il chantun.',
+          'Era tgi che na survegn nagina PC annuala, perquai che sias entradas èn in pau memia autas, po survegnir bonifitgads tals custs, uschenavant ch’els surpassan il surpli d’entradas.',
+          'Tegnai quints e mussaments: bonifitgà vegn mo quai ch’è cumprovà, e mo sche Vus faschais valair quai entaifer in termin legal suenter la facturaziun (art. 15 LPC).',
+        ],
+      },
+      {
+        titel: 'S’annunziar: tar il chantun da domicil, e baud',
+        absaetze: [
+          'Cumpetent è il chantun, en il qual Vus avais Voss domicil. El decida tge post che retschaiva l’annunzia; per il solit è quai la cassa chantunala da cumpensaziun u l’institut d’assicuranzas socialas, savens tras l’agentura AVS da la vischnanca da domicil (art. 21 LPC).',
+          'Il dretg cumenza per regla cun il mais, en il qual l’annunzia vegn inoltrada (art. 12 LPC). Pli baud po el cumenzar mo en tscherts cas, per exempel sche l’annunzia vegn fatga entaifer sis mais suenter ina disposiziun da renta u suenter l’entrada en ina chasa da tgira u en l’ospital (art. 12 al. 2 LPC, art. 22 OPC). Tgi che spetga, po perquai perder mais.',
+          'Sche Vus n’essas betg segir, sch’ina annunzia vala la paina, dumandai tar il post da PC. El examinescha il dretg e motivescha sia decisiun en ina disposiziun.',
+        ],
+      },
+      {
+        titel: 'Las PC n’èn betg agid social',
+        absaetze: [
+          'Las PC vegnan savens confundidas cun l’agid social. Ellas èn insatge auter: in dretg tenor il dretg federal, calculà tenor reglas che valan en tut la Svizra. In dretg sin PC ha la precedenza envers l’agid social.',
+          'Durant Vossa vita na stuais Vus betg restituir PC retratgas legalmain. Suenter la mort vegnan ellas restituidas da l’ierta, ma mo da la part che surpassa in import liber legal; tar pèrs maridads pir da l’ierta da la persuna che mora sco segunda (art. 16a LPC).',
+          'Senza pass svizzer e senza la naziunalitad d’in stadi da l’UE u da l’AECL na vegn la reuniun da la famiglia per regla betg permessa, sche Vus retschavais PC annualas u las retschavessas pervia da la reuniun (art. 43 al. 1 lit. e ed art. 44 al. 1 lit. e LEI). Laschai Vus cussegliar ordavant en quest cas.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Hai jau dretg sin prestaziuns cumplementaras?',
+        antwort:
+          'Quai dependa da quai, sche Vus retschavais ina prestaziun da l’AVS u da l’AI, nua che Vus abitais e co che Vossas entradas, expensas e Vossa facultad vesan ora. Ina limita valaivla per tuts na datti betg, perquai ch’il tschains, la premia e la chasada quintan era. In’emprima orientaziun dat il calculatur da PC da l’AVS/AI; obligatorica è la disposiziun dal post da PC da Voss chantun.',
+      },
+      {
+        frage: 'Datti PC era avant la vegliadetgna da renta?',
+        antwort:
+          'Gea. Tgi che retschaiva ina renta da l’AI, ina renta da vaiva, da vaiv u d’orfen po survegnir PC era avant la vegliadetgna da renta. Era tgi che anticipescha la renta da l’AVS ademplescha la premissa d’ina renta (art. 4 LPC); la renta reducida quinta lura sco entrada (art. 11 LPC). Tgi che vegn exclus da l’assicuranza cunter la dischoccupaziun a partir da sessanta onns, po survegnir sut tschertas premissas prestaziuns transitoricas; era quellas s’annunzia ins tar il post da PC.',
+      },
+      {
+        frage: 'Quinta mia chasa u mi appartament?',
+        antwort:
+          'Per la limita da facultad na quinta ina immobiglia abitada da la proprietaria u dal proprietari betg (art. 9a LPC). En il calcul sez vegn sia valur resguardada, ma cun in import liber (art. 11 LPC). Tge che resulta en Voss cas, calcula il post da PC.',
+      },
+      {
+        frage: 'Tge vala, sche jau stoss ir en ina chasa da tgira?',
+        antwort:
+          'Lura vegn la PC calculada tenor agens reglas: empè dal basegn da viver e dal tschains quintan la taxa dal di da la chasa da tgira, per la quala il chantun po fixar in maximum, ed in import per expensas persunalas che fixescha il chantun (art. 10 al. 2 LPC). S’annunziai entaifer sis mais suenter l’entrada; lura po il dretg cumenzar gia a partir dal mais da l’entrada, sche las autras premissas èn ademplidas (art. 12 al. 2 LPC).',
+      },
+      {
+        frage: 'Stoss jau annunziar midadas?',
+        antwort:
+          'Gea. Mintga midada da la situaziun persunala e mintga midada pli gronda da la situaziun economica sto vegnir annunziada immediatamain al post da PC, per exempel ina midada d’abitaziun, in nov tschains, in’ierta u l’entrada en ina chasa da tgira (art. 24 OPC). Prestaziuns retratgas nungiustifitgadamain ston vegnir restituidas.',
+      },
+      {
+        frage: 'Tge porta ina PC anc?',
+        antwort:
+          'Tgi che retschaiva PC annualas a l’AVS u a l’AI è liberà da la taxa da radio e televisiun; la liberaziun dumonda ins tar il post d’incassament cun la conferma dal post da PC. L’import per la premia da la cassa da malsauns che quinta en il calcul va directamain a la cassa da malsauns. En cas da dubi dumandai tar il post da PC.',
+      },
+    ],
+    quellen: ['ahvMerkblattEL', 'bsvEL'],
+  },
+
+  // ─── Dischoccupaziun (16.11.2026) ─────────────────────────────────────────
+  // 🛑 Mit Sorgfalt gebaut, nicht geprüft. Abkürzungen nach dem Französischen: LACI = AVIG ·
+  // OACI = AVIV · LPtra = ÜLG · LAA = UVG · LAVS = AHVG · LSE = AVG · LPP = BVG · LIFD = DBG.
+  // RAV bleibt als Abkürzung stehen, im Vorspann ausgeschrieben — die amtliche rm-Bezeichnung ist nicht belegt.
+  {
+    pfad: 'arbeitslosigkeit',
+    titel: 'Dischoccupà: tge che l’assicuranza paja',
+    beschreibung:
+      'Tgi che ha dretg sin indemnisaziun da dischoccupaziun, pertge che l’annunzia tar il RAV quinta baud e tge che vegn suenter l’exclusiun. Senza cifras.',
+    brotkrume: 'Dischoccupaziun',
+    vorspann:
+      'L’assicuranza cunter la dischoccupaziun (AD) è obligatorica per emploiadas ed emploiads: tgi che lavura paja contribuziuns sin la paja, e tgi che perda la plazza survegn sut tschertas premissas in pajament per di che remplazza ina part da la paja. Ella è reglada en la lescha davart l’assicuranza cunter la dischoccupaziun (LACI) e vala en tut la Svizra en il medem moda. Ils chantuns mainan ils centers regiunals d’intermediaziun da lavur (RAV).',
+    abschnitte: [
+      {
+        titel: 'Tgi che ha dretg sin pajaments per di',
+        absaetze: [
+          'Dretg sin indemnisaziun da dischoccupaziun ha tranter auter tgi ch’è dischoccupà dal tuttafatg u per part, ha ina perdita da lavur imputabla, abita en Svizra, n’ha anc betg cuntanschì la vegliadetgna da referenza e na retschaiva nagina renta da vegliadetgna da l’AVS, ha avunda temp da contribuziun u è liberà da quel, è abel d’intermediar e satisfa a las prescripziuns da controlla (art. 8 LACI). Tgi che anticipescha la renta da l’AVS perda perquai il dretg.',
+          'Temp da contribuziun vul dir: en in tschert temp avant la dischoccupaziun avais Vus lavurà avunda ditg sco emploiada u emploià e pajà contribuziuns (art. 13 LACI). Tgi che n’era betg emploià en quest temp pervia da scolaziun, malsogna, accident u maternitad, u tgi che sto tschertgar ina plazza suenter ina separaziun, in divorzi u la mort dal consort u da la consorta, era en partenadi registrà, po esser liberà dal temp da contribuziun (art. 14 LACI).',
+          'Persunas cun activitad da gudogn independenta n’èn betg assicuradas cunter la dischoccupaziun per lur activitad independenta; activitad independenta na quinta betg sco temp da contribuziun. Senza pass svizzer fa part da l’abilitad d’intermediar che Vus dastgais lavurar en Svizra (art. 15 LACI). Laschai Vus cussegliar tar dumondas davart la permissiun.',
+        ],
+      },
+      {
+        titel: 'S’annunziar tar il RAV, e baud',
+        absaetze: [
+          'Pajaments per di datti il pli baud a partir dal di da l’annunzia, betg retroactivamain. S’annunziai perquai il pli tard l’emprim di, per il qual Vus pretendais pajaments per di, tar il RAV cumpetent, online sur arbeit.swiss u persunalmain (art. 10 e 17 LACI).',
+          'Gia durant il termin da disdetga stuais Vus tschertgar ina nova plazza e documentar Voss sforzs. Sch’els mancan u na tanschan betg, datti dis da suspensiun, quai vul dir dis senza pajament per di (art. 17 e 30 LACI).',
+          'Suenter l’annunzia cumenza il pajament per di per regla pir suenter in pèr dis da spetga; quants dependa da l’entrada da fin qua e d’obligaziuns da mantegniment envers uffants. Per persunas liberadas dal temp da contribuziun po valair in temp da spetga spezial (art. 18 LACI).',
+        ],
+      },
+      {
+        titel: 'Il pajament per di remplazza ina part da la paja',
+        absaetze: [
+          'Il pajament per di sa drizza tenor il <strong>gudogn assicurà</strong>, quai vul dir la paja da fin qua fin ad in maximum legal (art. 23 LACI). Pajada vegn ina part da quel; la part è pli auta, sche Vus avais obligaziuns da mantegniment envers uffants, avevas ina paja bassa u retschavais ina renta da l’AI a partir d’in tschert grad d’invaliditad (art. 22 LACI).',
+          'Quants pajaments per di ch’i dat il pli, dependa dal temp da contribuziun e da la vegliadetgna; els vegnan pajads entaifer in termin da basa (art. 9 e 27 LACI). Nus na numnain qua intenziunadamain ni las quotas ni ils dumbers maximals. Vossa cassa da dischoccupaziun als calcula en moda obligatorica.',
+          'Sco da la paja vegnan deducidas era dal pajament per di contribuziuns, per exempel per l’AVS (art. 22a LACI). El è entrada da substituziun e vegn taglià sco la paja (art. 23 lit. a LIFD).',
+        ],
+      },
+      {
+        titel: 'Gudogn intermediar e lavur supportabla',
+        absaetze: [
+          'Sche Vus gudagnais insatge durant la dischoccupaziun, vala quai sco gudogn intermediar. Sch’el è pli bass che Voss gudogn assicurà, cumpensescha la cassa da dischoccupaziun ina part da la differenza; ensemen survegnis Vus uschia per il solit dapli ch’il pajament per di sulet. Sco paja quinta almain quai ch’è usità al lieu per questa lavur (art. 24 LACI).',
+          'Per princip stuais Vus acceptar mintga lavur supportabla. Betg supportabla è ina plazza per exempel, sch’ella na correspunda betg a las cundiziuns usitadas dal lieu e da la professiun, n’è betg adequata a Vossa vegliadetgna, a Vossas relaziuns persunalas u a Vossa sanadad, u pretenda in viadi da lavur fitg lung (art. 16 LACI).',
+          'Tgi che refusa ina plazza supportabla u disdi sez la plazza senza motiv impurtant, vegn suspendì: tenor la culpa na datti durant in tschert temp nagin pajament per di (art. 30 LACI). Laschai Vus cussegliar avant che disdir sez.',
+        ],
+      },
+      {
+        titel: 'Cura ch’ils pajaments per di èn consumads',
+        absaetze: [
+          'Exclus è tgi ch’ha retratg tut ils pajaments per di u il termin da basa dal qual è scadì, senza ch’in nov possia vegnir avert. L’intermediaziun publica da lavur resta averta e gratuita (art. 26 e 27 LSE). Tgi che rimna puspè avunda temp da contribuziun po acquistar in nov dretg (art. 9 e 13 LACI).',
+          'Suenter pon l’agid social e la reducziun individuala da premi entrar en dumonda. Tgi che vegn exclus a partir da sessanta onns po survegnir sut ulteriuras premissas prestaziuns transitoricas; quellas s’annunzia ins tar il post da PC dal chantun da domicil (art. 3, 5 e 19 LPtra).',
+          'Cun l’ultim pajament per di finescha, suenter ina curta cuvrida supplementara, era l’assicuranza cunter accidents tras l’assicuranza cunter la dischoccupaziun. Communitgai a temp a la cassa da malsauns ch’ella stoppia puspè cuvrir accidents; ella paja lura sco tar malsogna, cun franchisa e part da custs (art. 3 al. 2 LAA, art. 8 e 10 LAMal). Scleriai tar la cassa da cumpensaziun AVS, sche Vus stuais pajar contribuziuns sco persuna senza activitad da gudogn, per evitar ina largia da contribuziun (art. 10 LAVS).',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Survegn jau pajaments per di, sche jau hai disdì sez?',
+        antwort:
+          'Gea, ma per il solit pir suenter ina suspensiun: tgi che disdi senza garanzia d’ina nova plazza na survegn per regla durant in tschert temp nagin pajament per di, savens per la durada la pli lunga che la lescha prevesa. Excepziun fa tgi che na pudeva betg raschunaivlamain restar en la plazza (art. 30 LACI, art. 44 e 45 OACI). Laschai Vus cussegliar ordavant.',
+      },
+      {
+        frage: 'Poss jau m’annunziar gia avant la fin da la plazza?',
+        antwort:
+          'Gea, e quai è raschunaivel. Il pli tard stuais Vus s’annunziar l’emprim di, per il qual Vus pretendais pajaments per di (art. 17 LACI). Sforzs da tschertgar lavur vegnan pretendids gia per il temp dal termin da disdetga.',
+      },
+      {
+        frage: 'Sun jau assicurà cunter accidents durant la dischoccupaziun?',
+        antwort:
+          'Gea, uschè ditg che Vus retschavais pajaments per di, essas Vus assicurà cunter accidents tras l’assicuranza cunter la dischoccupaziun (art. 1a LAA). Suenter finescha questa cuvrida suenter ina curta cuvrida supplementara. Communitgai a la cassa da malsauns ch’ella stoppia puspè cuvrir accidents; ella paja lura sco tar malsogna, cun franchisa e part da custs.',
+      },
+      {
+        frage: 'Tge capita cun mia cassa da pensiun?',
+        antwort:
+          'Cun la sortida stuais Vus communitgar a la cassa da pensiun, sin tge conto da libra circulaziun che l’avair duai ir, fin che Vus avais ina nova plazza (art. 4 LFLP). Uschè ditg che Vus retschavais pajaments per di, restais Vus per regla assicurà en la prevenziun professiunala per ils ristgs mort ed invaliditad (art. 2 al. 3 LPP); per la vegliadetgna na spargnais Vus per regla betg durant quest temp. Tgi che perda la plazza suenter il tschuncantottavel anniversari po sut tschertas premissas restar en sia cassa da pensiun (art. 47a LPP).',
+      },
+      {
+        frage: 'Dastg jau ir en vacanzas durant la dischoccupaziun?',
+        antwort:
+          'Gea, en mesira limitada: Vus avais dretg sin dis senza controlla, che Vus stuais annunziar ordavant al RAV (art. 27 OACI). Quants che Vus avais, di Voss RAV.',
+      },
+    ],
+    quellen: ['arbeitSwiss'],
+  },
+
+  // ─── AVS e pensiun (16.11.2026) ───────────────────────────────────────────
+  // 🛑 Mit Sorgfalt gebaut, nicht geprüft. Abkürzungen nach dem Französischen: LAVS = AHVG ·
+  // RAVS = AHVV · Cst. = BV · LPP = BVG · OPP 3 = BVV 3 · LACI = AVIG · LPtra = ÜLG.
+  {
+    pfad: 'ahv-pensionierung',
+    titel: 'AVS e pensiun — in’orientaziun',
+    beschreibung:
+      'Co che las trais pitgas funcziunan ensemen, tge che determinescha la renta da l’AVS, pertge ch’ins sto la dumandar e tge ch’anticipaziun e spustament muntan. Senza cifras.',
+    brotkrume: 'AVS e pensiun',
+    vorspann:
+      'L’assicuranza per la vegliadetgna e per survivents (AVS) è l’emprima pitga da la prevenziun per la vegliadetgna en Svizra ed obligatorica per tut las persunas che vivan u lavuran qua. Quant auta che la renta vegn ina giada, sa decida durant blers onns: tenor ils onns da contribuziun, las entradas e las bonificaziuns per uffants e per tgira. Ed ella na vegn betg da sasezza: ins la sto dumandar.',
+    abschnitte: [
+      {
+        titel: 'Trais pitgas cun incumbensas differentas',
+        absaetze: [
+          'La prevenziun per la vegliadetgna sa basa sin trais pitgas (art. 111 Cst.). L’<strong>AVS</strong> è l’emprima: sias rentas duain cuvrir adequatamain il basegn per viver (art. 112 Cst.). Sch’ellas na tanschan betg, vegnan tiers prestaziuns cumplementaras (art. 112a Cst.).',
+          'La <strong>cassa da pensiun</strong>, la prevenziun professiunala, è obligatorica per emploiadas ed emploiads a partir d’ina paja minimala. Ensemen cun l’AVS duai ella pussibilitar da mantegnair en moda adequata il standard da viver usità (art. 113 Cst.).',
+          'La <strong>terza pitga</strong> è facultativa. Pajaments en la pitga 3a pon vegnir deducids da l’entrada taxabla; pajar en po dentant mo tgi che ha in’entrada da gudogn (art. 7 OPP 3).',
+        ],
+      },
+      {
+        titel: 'Tge che determinescha la renta, e pertge che largias quintan',
+        absaetze: [
+          'L’autezza da la renta da l’AVS dependa dals <strong>onns da contribuziun</strong> imputabels, da las <strong>entradas da gudogn</strong> e da las <strong>bonificaziuns per l’educaziun e per la tgira</strong> (art. 29bis LAVS). Ina renta cumpletta survegn tgi che ha adina ademplì l’obligaziun da contribuziun da l’onn suenter il ventavel anniversari fin a l’onn avant la vegliadetgna da referenza. Sch’i manca in onn da contribuziun, vegn la renta per regla reducida, e quai per tut la vita (art. 29ter e 38 LAVS).',
+          'Era persunas senza activitad da gudogn ston pajar contribuziuns, per exempel durant il studi, suenter l’exclusiun da l’assicuranza cunter la dischoccupaziun u tar ina pensiun anticipada (art. 10 LAVS). Per persunas maridadas senza entrada da gudogn valan las contribuziuns sco pajadas, sche la consorta u il consort paja almain la dubla contribuziun minimala (art. 3 al. 3 LAVS). Contribuziuns che mancan pon vegnir pajadas suenter mo per in temp limità enavos (art. 16 LAVS).',
+          'Sche Vus avais largias, mussa in extract da Voss conto individual (CI) che Vus pudais dumandar tar Vossa cassa da cumpensaziun (art. 141 RAVS). Largias pli veglias na sa laschan betg pli serrar (art. 16 LAVS).',
+        ],
+      },
+      {
+        titel: 'La renta na vegn betg da sasezza',
+        absaetze: [
+          'La renta da l’AVS stuais Vus dumandar sez, il meglier in pèr mais avant la vegliadetgna da referenza. Cumpetenta è la cassa da cumpensaziun che ha retschavì Vossas ultimas contribuziuns; sche Vus n’avais pajà naginas contribuziuns, la cassa chantunala da cumpensaziun da Voss chantun da domicil (fegl d’infurmaziun 3.01).',
+          'Il dretg cumenza l’emprim di dal mais suenter avair cuntanschì la vegliadetgna da referenza e scada la fin dal mais da la mort (art. 21 LAVS). La vegliadetgna da referenza è la medema per dunnas ed umens; per dunnas da la generaziun da transiziun valan reglas transitoricas.',
+          'Tgi che retschaiva il december ina renta da vegliadetgna, survegn ultra da quai ina tredeschavla renta da vegliadetgna en l’autezza d’in dudeschavel da la renta da vegliadetgna annuala. Rentas da survivents, d’invaliditad e d’uffants vegnan pajadas vinavant mo dudesch giadas (fegl d’infurmaziun 3.01).',
+        ],
+      },
+      {
+        titel: 'Retrair pli baud u pli tard',
+        absaetze: [
+          'La renta po vegnir <strong>anticipada</strong> dal tut u per part, il pli baud a partir dal sessantatravel anniversari, pli baud per dunnas da la generaziun da transiziun. La part anticipada vegn reducida per tut la vita, era suenter la vegliadetgna da referenza (art. 40 e 40a LAVS). Durant l’anticipaziun na datti naginas rentas d’uffants. L’anticipaziun stuais Vus dumandar il pli tard il mais avant il cumenzament giavischà; retroactivamain na va quai betg (fegl d’infurmaziun 3.04).',
+          'Vus pudais era <strong>spustar</strong> la renta dal tut u per part, per almain in e maximalmain tschintg onns; ella vegn lura augmentada per tut la vita (art. 39 LAVS). Il spustament declerais Vus il pli tard in onn suenter avair cuntanschì la vegliadetgna da referenza, uschiglio vegn la renta pajada senza augment (art. 55quater RAVS).',
+          'Ina anticipaziun po avair consequenzas ch’ins na vesa betg dalunga: tgi ch’è dischoccupà perda cun l’anticipaziun il dretg sin pajaments per di, e tgi che retschaiva prestaziuns transitoricas era (art. 8 LACI, art. 5 al. 3 LPtra). Laschai Vus cussegliar ordavant da Vossa cassa da cumpensaziun.',
+        ],
+      },
+      {
+        titel: 'Tge che Vus tutga en la vegliadetgna anc',
+        absaetze: [
+          'Sche rentas e facultad na tanschan betg per il minimum per viver, entran <strong>prestaziuns cumplementaras</strong> en dumonda. Ellas èn in dretg legal e betg agid social.',
+          'Tgi che retschaiva ina renta da vegliadetgna u prestaziuns cumplementaras, abita en Svizra e dependa en la vita da mintgadi permanentamain da l’agid d’auters, per exempel per sa trair en, per la tgira dal corp u per mangiar, po survegnir ina <strong>indemnisaziun d’impotenza</strong> da l’AVS, sche l’impotenza dura senza interrupziun dapi almain sis mais e sch’i na exista nagin dretg sin ina indemnisaziun d’impotenza da l’assicuranza cunter accidents u da l’assicuranza militara. Ella na dependa betg da l’entrada e da la facultad (art. 43bis LAVS, fegl d’infurmaziun 3.01).',
+          'Tar la <strong>cassa da pensiun</strong> decidais Vus tranter renta e chapital. In quart pudais Vus pretender legalmain sco chapital, dapli mo sch’il reglament prevesa quai; per persunas maridadas dovri il consentiment en scrit (art. 37 e 37a LPP). Fin cura che Vus stuais tscherner, stat en il reglament; sch’il chapital è pajà ora, na sa lascha quai betg pli far nunfatg. Laschai Vus cussegliar baud.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Quant auta vegn mia renta da l’AVS?',
+        antwort:
+          'Quai dependa da Voss onns da contribuziun, da Vossas entradas e da Vossas bonificaziuns. Per regla sa lascha la renta calcular en moda obligatorica pir cun cuntanscher la vegliadetgna da referenza (fegl d’infurmaziun 3.01). In quint ordavant pudais Vus dumandar tar Vossa cassa da cumpensaziun.',
+      },
+      {
+        frage: 'Tge vala per pèrs maridads?',
+        antwort:
+          'Las entradas dals onns da lètg vegnan partidas ed imputadas mintgamai per la mesadad ad omadus, tranter auter uschespert ch’omadus han dretg sin ina renta e tar in divorzi. Las duas rentas d’in pèr maridà èn ensemen limitadas ensi; questa limitaziun croda tranter auter davent, sch’ina dretgira ha annullà la chasada cuminaivla (fegl d’infurmaziun 3.01).',
+      },
+      {
+        frage: 'Jau hai era lavurà a l’exteriur. E uss?',
+        antwort:
+          'Temps a l’exteriur mancan per regla en l’AVS svizra, els pon dentant manar ad ina renta en l’auter stadi. Cun temps d’assicuranza en in stadi da l’UE u da l’AECL inizia ina suletta dumonda en il pajais da domicil la procedura en tut ils stadis participads (fegl d’infurmaziun 3.01).',
+      },
+      {
+        frage: 'Survegn jau sco partenaria u partenari betg maridà ina renta da survivents?',
+        antwort:
+          'Ina renta da vaiva u da vaiv da l’AVS datti mo suenter in lètg u in partenadi registrà e mo sut ulteriuras premissas. Per pèrs senza lètg u partenadi registrà na prevesa l’AVS nagina renta da survivents. Uffants pon survegnir ina renta d’orfen (art. 23 e 25 LAVS). Tar la cassa da pensiun po il reglament prevair ina prestaziun per partenarias e partenaris.',
+      },
+      {
+        frage: 'Stoss jau anc pajar contribuziuns da l’AVS suenter la pensiun?',
+        antwort:
+          'Tgi che lavura vinavant suenter la vegliadetgna da referenza paja vinavant contribuziuns. Sut tschertas premissas po la renta lura vegnir calculada da nov. Tgi che anticipescha la renta e na lavura betg pli, resta obligà da pajar contribuziuns fin a la vegliadetgna da referenza sco persuna senza activitad da gudogn (art. 10 LAVS).',
+      },
+    ],
+    quellen: ['ahvMerkblatt', 'ahvMerkblattFlex'],
+  },
 ];
 
 export const SONDERSEITEN = [
@@ -311,7 +566,7 @@ export const SONDERSEITEN = [
         absaetze: [
           'Maloja Plana è in <strong>utensil d’orientaziun</strong>. Ils calculaturs e las survistas sa basan sin fundaments giuridics accessibels publicamain e servan exclusivamain a l’infurmaziun persunala.',
           '<strong>Maloja Plana na remplazza nagina cussegliaziun giuridica, fiscala, d’assicuranza u finanziala.</strong>',
-          'La purschidra na surpiglia nagina garanzia per la correctadad, la cumplettadad u l’actualitad dals quints, per l’idoneitad dals resultats per decisiuns individualas, ni per donns che resultan da lur utilisaziun. Decisivas èn exclusivamain las leschas en vigur e las autoritads cumpetentas.',
+          'La purschidra na surpiglia nagina garanzia per la correctadad, la cumplettadad u l’actualitad dals quints, per l’idoneitad dals resultats per decisiuns individualas, ni per donns che resultan da lur utilisaziun. La responsabladad per donns chaschunads intenziunadamain u per negligientscha greva resta resalvada. Decisivas èn exclusivamain las leschas en vigur e las autoritads cumpetentas.',
         ],
       },
       {

@@ -65,7 +65,17 @@ export function mitEchtenBetraegen(erzeugen) {
 
 export const betraegeVerborgen = () => echteBetraegeTiefe === 0 && typeof document !== 'undefined' && document.documentElement.dataset.betraege === 'aus';
 
+// Die eine Maske — t() und betrag() setzen genau diesen Text. BetragText.jsx erkennt ihn daran
+// und gibt dem Bildschirmleser statt der drei Punkte «Betrag verborgen».
+export const VERBORGEN = 'CHF ···';
+
 export function betrag(n, optionen) {
   const echt = betragEcht(n, optionen);
-  return echt !== '–' && betraegeVerborgen() ? 'CHF ···' : echt;
+  return echt !== '–' && betraegeVerborgen() ? VERBORGEN : echt;
+}
+
+// betragSpanne(1260, 2520) → "CHF 1’260 – 2’520"; mit Sichtschutz die eine Maske für beide Enden.
+export function betragSpanne(a, b, optionen) {
+  const von = betrag(a, optionen);
+  return von === VERBORGEN || von === '–' ? von : von + ' – ' + zahl(b, optionen);
 }

@@ -285,3 +285,16 @@ Betreibungsauszug · `KAPITEL_OHNE_EIGENES` und `lebensbereiche.js` (Gesundheit 
   Behörden-Ast» — zur Balance, max. 2 Früchte je Ast) · Schnellcheck Salbei (`Schnellcheck.jsx`).
 - **IPV** hängt an vier Orten, dreimal Versicherungen, einmal als Querverweis im Kapitel Finanzen.
 - **Prämien** (`praemien`, «Versicherungs-Übersicht») ist überall Versicherungen.
+
+### ✅ Die drei geplanten Erklärseiten gebaut (14.–16.11.2026)
+
+Auf «wir wollen alle Erklärseiten fertig bauen» (Entscheid: alle drei, Reihenfolge EL → ALV → AHV, alle fünf
+Sprachen): `/ergaenzungsleistungen/`, `/arbeitslosigkeit/`, `/ahv-pensionierung/`, je auf eigenem Zweig, gestapelt
+(`feat/erklaerseite-ergaenzungsleistungen` → `…-arbeitslosigkeit` → `…-ahv-pensionierung`). Je Seite Fach- und
+Rechtsprüfung, alle Punkte ohne Blocker, «sollte» eingearbeitet. Gegengelesen an AHV/IV-Merkblatt 5.01, 3.01, 3.04
+und an den fachgeprüften App-Texten. Neu: `bundesrecht: true` mit eigenem Hinweis (Fristen nur, wo Bundesrecht sie
+gleich festlegt). fr/it/en/rm bleiben noindex bis zur Gegenlesung.
+
+Offen: Gesetzesartikel, die nur aus Merkblatt und App belegt sind, nicht am Fedlex-Wortlaut (Fedlex per curl nur
+SPA-Hülle, Browser nicht freigegeben) · Arbeitslosigkeit hat auf dem Bild der Vorstellungsseite keinen Punkt
+(Kapitel Arbeit fehlt dort) · rm braucht eine bezahlte Gegenlesung.

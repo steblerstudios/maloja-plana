@@ -22,7 +22,7 @@ import { BRILLEN, KARTE_MASS } from './kantonsatlas.mjs';
 // Brillen aus kantonsatlas.mjs, damit Name und Frage hier und dort dieselben sind.
 const ATLAS_KARTEN = new Set(BRILLEN.flatMap((b) => b.karten)).size;
 // Zahlen im Fliesstext ausgeschrieben wie «sieben Kapitel» (Copy-Prüfung 09.11.2026). Ändert sich die Zahl, hier ergänzen.
-const ATLAS_KARTEN_WORT = { 10: 'zehn' }[ATLAS_KARTEN];
+const ATLAS_KARTEN_WORT = { 10: 'zehn', 11: 'elf', 12: 'zwölf' }[ATLAS_KARTEN];
 if (!ATLAS_KARTEN_WORT) throw new Error(`vorstellung.mjs: ${ATLAS_KARTEN} Atlas-Karten, Wort fehlt`);
 
 // Warteliste (Entscheid Stebler Studios 09.11.2026, Plan «Sichtbarkeit», Weg 1): nur ein Mail-Entwurf.
@@ -107,6 +107,8 @@ const THEMEN = [
   { k: 3, x: '54.6%', y: '71.5%', berichte: [   // Versicherungen · (874 | 475)
     ['/praemienverbilligung/', 'Prämienverbilligung', 'Ein Beitrag an die Krankenkassenprämie — was das für Sie bedeutet.'],
     ['/krankenkasse/', 'Warum die Krankenkasse so viel kostet', 'Gemeinsamer Topf, Franchise und Prämie — Schritt für Schritt.'],
+    ['/ergaenzungsleistungen/', 'Ergänzungsleistungen', 'Wann EL in Frage kommen und warum sie keine Sozialhilfe sind.'],
+    ['/ahv-pensionierung/', 'AHV und Pensionierung', 'Drei Säulen, Beitragslücken, Vorbezug und Aufschub.'],
   ] },
   { k: 2, x: '75.9%', y: '84.9%', berichte: [   // Finanzen · (1215 | 609)
     ['/steuern/', 'Steuern', 'Warum derselbe Lohn je nach Wohnort anders besteuert wird.'],
@@ -1336,6 +1338,9 @@ ${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; -
             <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
             <li><a href="/steuern/">Steuern</a></li>
             <li><a href="/krankenkasse/">Warum die Krankenkasse so viel kostet</a></li>
+            <li><a href="/ergaenzungsleistungen/">Ergänzungsleistungen</a></li>
+            <li><a href="/arbeitslosigkeit/">Arbeitslosigkeit</a></li>
+            <li><a href="/ahv-pensionierung/">AHV und Pensionierung</a></li>
           </ul>
         </nav>
         <nav aria-labelledby="f-recht">

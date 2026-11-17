@@ -6,6 +6,7 @@ import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { zahl, betrag } from './utils/geld.js';
+import { betragText } from './components/BetragText.jsx';
 import { lohnBasis, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
@@ -104,7 +105,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   const ergebnis = result && (result.anspruch
     ? React.createElement(React.Fragment, null,
-        React.createElement(ErgebnisZahl, { palette, label: t('alv.monatlichLabel'), wert: 'CHF ' + fmt(result.monatlich) }),
+        React.createElement(ErgebnisZahl, { palette, label: t('alv.monatlichLabel'), wert: betragText(t, result.monatlich) }),
         React.createElement('div', { style: { marginTop: space.xs + 'px' } },
           React.createElement(ErgebnisZeile, { palette, label: t('alv.taggeldLabel'), wert: betrag(result.taggeld, { stellen: 2 }) }),
           React.createElement(ErgebnisZeile, { palette, label: t('alv.satzLabel'), wert: t('alv.satzValue', { p: Math.round(result.satz * 100) }) }),
@@ -127,7 +128,8 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const vorbehalt = !unter12 && result && result.anspruch && React.createElement(React.Fragment, null,
     result.anspruchstage == null && !result.anspruchstageOffen && React.createElement('p', { style: fussText }, t('alv.anspruchLabel') + ': ' + t('alv.anspruchUnklar')),
     // AVIV Art. 41b: in den letzten vier Jahren vor dem Referenzalter 120 Taggelder mehr — nicht gerechnet, gesagt.
-    alter != null && alter >= 60 && React.createElement('p', { style: fussText }, t('alv.vorRentenalter')),
+    // Ohne Alter ebenso (swiss-precision 16.11.2026): Mit Kindern steht die Zahl dann fest, kann aber 120 zu tief sein.
+    (alter == null || alter >= 60) && React.createElement('p', { style: fussText }, t('alv.vorRentenalter')),
     result.gedeckelt && React.createElement('p', { style: fussText }, t('alv.gedeckeltHint', { max: fmt(ALV_PARAMS.versicherterVerdienstMax) })),
     // Werte 2027 (26.10.2026): Grenzbetrag 80 % fürs laufende Jahr nicht belegt → sagen, nicht still rechnen.
     !ALV_PARAMS.satz80Belegt && React.createElement('p', { style: fussText }, t('alv.satz80NichtBelegt', { jahr: ALV_PARAMS.satz80Jahr, laufend: new Date().getFullYear(), betrag: ALV_PARAMS.satz80Schwelle })),

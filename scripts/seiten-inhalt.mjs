@@ -197,6 +197,64 @@ export const QUELLEN = {
       rm: 'Prestaziuns cumplementaras, Uffizi federal d’assicuranzas socialas',
     },
   },
+  // Merkblatt 5.01, Stand 1. Januar 2025. Am 14.11.2026 per curl gemessen: .d/.f/.i liefern
+  // je ein PDF (200, Titel «Ergänzungsleistungen zur AHV und IV» / «Prestations complémentaires
+  // à l’AVS et à l’AI» / «Prestazioni complementari all’AVS e all’AI»), .e liefert 404 — eine
+  // englische Fassung gibt es nicht. Gegenprobe /p/99.99.d: 404. Die Seite /ergaenzungsleistungen/
+  // ist an diesem Merkblatt gegengelesen (Karenzfrist, EU/EFTA, Frist für Krankheitskosten,
+  // Meldepflicht, Rückerstattung aus dem Nachlass, Haushaltabgabe).
+  ahvMerkblattEL: {
+    url: 'https://www.ahv-iv.ch/p/5.01.d',
+    text: 'Merkblatt 5.01 «Ergänzungsleistungen zur AHV und IV»',
+    sprachen: {
+      fr: 'https://www.ahv-iv.ch/p/5.01.f',
+      it: 'https://www.ahv-iv.ch/p/5.01.i',
+    },
+    texte: {
+      fr: 'Mémento 5.01 « Prestations complémentaires à l’AVS et à l’AI »',
+      it: 'Promemoria 5.01 «Prestazioni complementari all’AVS e all’AI»',
+      en: 'Leaflet 5.01 “Supplementary benefits to the AHV and IV”',
+      rm: 'Fegl d’infurmaziun 5.01 «Prestaziuns cumplementaras a l’AVS ed a l’AI»',
+    },
+  },
+  // arbeit.swiss, das Portal von Arbeitslosenversicherung und öffentlicher Arbeitsvermittlung (SECO).
+  // Am 16.11.2026 per curl gemessen: /de, /fr, /it, /en je 200 mit lang="de|fr|it|en" und passendem
+  // Titel («Arbeitslosenversicherung und öffentliche Arbeitsvermittlung in der Schweiz» usw.);
+  // Gegenprobe /de/xxyyzz-erfunden 404, /rm 404. Die alten Adressen /secoalv/<sprache>/home.html
+  // leiten um oder laufen ins Leere — nicht mehr verwenden.
+  arbeitSwiss: {
+    url: 'https://www.arbeit.swiss/de',
+    text: 'arbeit.swiss, Arbeitslosenversicherung und öffentliche Arbeitsvermittlung',
+    sprachen: {
+      fr: 'https://www.arbeit.swiss/fr',
+      it: 'https://www.arbeit.swiss/it',
+      en: 'https://www.arbeit.swiss/en',
+    },
+    texte: {
+      fr: 'arbeit.swiss, assurance-chômage et service public de l’emploi',
+      it: 'arbeit.swiss, assicurazione contro la disoccupazione e servizio pubblico di collocamento',
+      en: 'arbeit.swiss, unemployment insurance and public employment service',
+      rm: 'arbeit.swiss, assicuranza cunter la dischoccupaziun e intermediaziun publica da lavur',
+    },
+  },
+  // Merkblatt 3.04 «Flexibler Rentenbezug», Stand 1. Januar 2026. Am 14.11.2026 per curl gemessen:
+  // .d/.f/.i/.e je ein PDF (200) mit dem passenden Titel in der Sprache; Gegenprobe /p/99.99.d 404.
+  // Die Seite /ahv-pensionierung/ ist an diesem Merkblatt und an 3.01 (Stand 1.1.2026) gegengelesen.
+  ahvMerkblattFlex: {
+    url: 'https://www.ahv-iv.ch/p/3.04.d',
+    text: 'Merkblatt 3.04 «Flexibler Rentenbezug»',
+    sprachen: {
+      fr: 'https://www.ahv-iv.ch/p/3.04.f',
+      it: 'https://www.ahv-iv.ch/p/3.04.i',
+      en: 'https://www.ahv-iv.ch/p/3.04.e',
+    },
+    texte: {
+      fr: 'Mémento 3.04 « Flexibilisation de la retraite »',
+      it: 'Promemoria 3.04 «Riscossione flessibile della rendita»',
+      en: 'Leaflet 3.04 “Flexible retirement”',
+      rm: 'Fegl d’infurmaziun 3.04 «Retratg flexibel da la renta»',
+    },
+  },
   ahvMerkblatt: {
     url: 'https://www.ahv-iv.ch/p/3.01.d',
     text: 'Merkblatt 3.01 «Altersrenten und Hilflosenentschädigungen der AHV»',
@@ -614,6 +672,415 @@ export const SEITEN = [
     // Ergänzung B (07.11.2026): bisher ohne Weg zu den Kantonsseiten, obwohl der Atlas eine Karte Steuern hat.
     hintergrund: ['kantone-im-vergleich', 'kantonsatlas'],
   },
+
+  // ─── Ergänzungsleistungen ─────────────────────────────────────────────────
+  // Seitenlandkarte E3 / Organigramm C1 (06.11.2026): die erste der drei geplanten Seiten, im
+  // Kapitel Versicherungen & Vorsorge unter «Zum Verstehen». Gebaut 14.11.2026.
+  //
+  // Belegt an: Merkblatt 5.01 (Stand 1.1.2025, s. QUELLEN.ahvMerkblattEL) und an den bereits
+  // fachgeprüften App-Texten `ergaenzungsleistungen.*` in src/i18n/de.js (ELG Art. 4, 5, 9, 9a, 11a,
+  // 12, 14, 16a, 21; ELV Art. 22). Neu gegenüber der App, darum besonders zu prüfen: ELG Art. 10
+  // (Mietzins nach Region), Art. 11 (Liegenschaft), Art. 15 (Frist Krankheitskosten), ELV Art. 24
+  // (Meldepflicht), AIG Art. 43/44 (Familiennachzug), RTVG Art. 69b (Haushaltabgabe).
+  {
+    pfad: 'ergaenzungsleistungen',
+    bundesrecht: true,
+    titel: 'Ergänzungsleistungen zur AHV und IV',
+    beschreibung:
+      'Wann Ergänzungsleistungen (EL) in Frage kommen, wie sie berechnet werden und warum sie keine Sozialhilfe sind. Eine Einordnung ohne Zahlen.',
+    brotkrume: 'Ergänzungsleistungen',
+    vorspann:
+      'Ergänzungsleistungen, kurz EL, helfen dort, wo eine Rente der AHV oder IV und das übrige Einkommen nicht für das Nötigste zum Leben reichen. Sie sind im Bundesgesetz über Ergänzungsleistungen (ELG) geregelt und ein gesetzlicher Anspruch, kein Entgegenkommen. Ausgerichtet werden sie von den Kantonen.',
+    schichten: true,
+    abschnitte: [
+      {
+        id: 'voraussetzungen',
+        bild: `<ol class="zeit kern" role="list" aria-label="Was vorausgesetzt ist">
+          <li><span class="jahr">AHV oder IV</span><span class="was">eine Rente, eine Hilflosenentschädigung oder ein länger laufendes Taggeld der IV</span></li>
+          <li><span class="jahr">Schweiz</span><span class="was">Wohnsitz und gewöhnlicher Aufenthalt hier</span></li>
+          <li><span class="jahr">Vermögen</span><span class="was">unter einer gesetzlichen Schwelle</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        wege: ['sozialhilfe'],
+        titel: 'Ohne Leistung der AHV oder IV gibt es keine EL',
+        absaetze: [
+          'EL setzen eine Leistung der AHV oder IV voraus: eine Alters- oder Hinterlassenenrente der AHV, auch eine vorbezogene, eine Rente der IV, eine Hilflosenentschädigung der IV oder ein Taggeld der IV, das seit mindestens sechs Monaten ununterbrochen läuft. Dazu kommen Wohnsitz und gewöhnlicher Aufenthalt in der Schweiz (ELG Art. 4).',
+          'Für Ausländerinnen und Ausländer gilt zusätzlich eine Mindestaufenthaltsdauer: in der Regel zehn Jahre ununterbrochen in der Schweiz, für Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Für Staatsangehörige eines EU- oder EFTA-Staates gilt sie nicht.',
+          'Wer keine Rente hat, nur weil zu wenige Beitragsjahre zusammenkamen, kann unter gewissen Voraussetzungen trotzdem EL erhalten (ELG Art. 4). Wer ganz ohne Leistung der AHV oder IV in Not gerät, wendet sich an die Sozialhilfe der Wohngemeinde.',
+        ],
+      },
+      {
+        id: 'berechnung',
+        bild: `<div class="kern">
+          <p class="formel" role="img" aria-label="Anerkannte Ausgaben minus anrechenbare Einnahmen ergibt die jährliche Ergänzungsleistung, wenn die Ausgaben höher sind.">
+            <span class="glied" aria-hidden="true"><strong>Ausgaben</strong>vom Gesetz anerkannt</span>
+            <span class="op" aria-hidden="true">−</span>
+            <span class="glied" aria-hidden="true"><strong>Einnahmen</strong>soweit anrechenbar</span>
+            <span class="op" aria-hidden="true">=</span>
+            <span class="glied" aria-hidden="true"><strong>EL</strong>wenn die Ausgaben höher sind</span>
+          </p>
+          <p class="unter">Die Beträge setzt das Gesetz fest. Ihren Anspruch rechnet die EL-Stelle aus.</p>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['kantonsatlas'],
+        titel: 'Die Lücke zwischen Ausgaben und Einnahmen',
+        absaetze: [
+          'Die jährliche EL entspricht dem Betrag, um den die <strong>anerkannten Ausgaben</strong> die <strong>anrechenbaren Einnahmen</strong> übersteigen (ELG Art. 9). Zu den Ausgaben gehören etwa ein Betrag für den allgemeinen Lebensbedarf, die Miete bis zu einer Höchstgrenze und ein Betrag für die Krankenkassenprämie (ELG Art. 10). Zu den Einnahmen gehören Renten, ein Teil des Erwerbseinkommens und ein Teil des Vermögens (ELG Art. 11).',
+          'Anspruch hat nur, wessen Vermögen unter einer gesetzlichen Schwelle liegt; eine selbst bewohnte Liegenschaft zählt dabei nicht mit (ELG Art. 9a). Vermögen, auf das jemand ohne Gegenleistung verzichtet hat, etwa durch eine Schenkung, wird mitgezählt (ELG Art. 11a).',
+          'Die Beträge für den Lebensbedarf legt der Bund fest, die Höchstgrenzen für die Miete abgestuft nach drei Regionen (ELG Art. 10). Wir nennen sie hier bewusst nicht: Sie werden regelmässig angepasst, und eine Zahl auf einer Seite wie dieser wäre bald falsch. Wer im Heim lebt, wird nach eigenen Regeln berechnet; die Kantone können die anerkannten Heimkosten begrenzen.',
+        ],
+      },
+      {
+        id: 'krankheitskosten',
+        bild: `<div class="kern">
+          <p class="unter" id="kosten">Zusätzlich zur jährlichen EL vergütet, soweit der Kanton es vorsieht:</p>
+          <ul class="chips" role="list" aria-labelledby="kosten">
+            <li>Zahnarzt</li><li>Hilfe, Pflege und Betreuung zu Hause</li><li>Transport zur Behandlung</li><li>Hilfsmittel</li><li>Franchise und Selbstbehalt</li><li>Diät, wenn sie lebensnotwendig ist</li>
+          </ul>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['krankenkasse', 'praemienverbilligung'],
+        titel: 'Krankheits- und Behinderungskosten kommen dazu',
+        absaetze: [
+          'Neben der jährlichen EL vergütet der Kanton ausgewiesene Krankheits- und Behinderungskosten, etwa für den Zahnarzt, für Hilfe, Pflege und Betreuung zu Hause, für den Transport zur Behandlung, für Hilfsmittel sowie Franchise und Selbstbehalt der Krankenkasse (ELG Art. 14). Welche Kosten genau und bis zu welchem Betrag, bestimmt der Kanton.',
+          'Auch wer wegen etwas zu hoher Einnahmen keine jährliche EL erhält, kann solche Kosten vergütet bekommen, soweit sie den Einnahmenüberschuss übersteigen.',
+          'Heben Sie Rechnungen und Belege auf: Vergütet wird nur, was ausgewiesen ist, und nur, wenn Sie es innert einer gesetzlichen Frist nach der Rechnungsstellung geltend machen (ELG Art. 15).',
+        ],
+      },
+      {
+        id: 'anmelden',
+        bild: `<ol class="zeit kern" role="list" aria-label="Der Weg zur EL">
+          <li><span class="jahr">Anmeldung</span><span class="was">bei der Stelle, die Ihr Wohnkanton bestimmt</span></li>
+          <li><span class="jahr">Anspruch</span><span class="was">beginnt in der Regel mit dem Monat der Anmeldung</span></li>
+          <li><span class="jahr">Verfügung</span><span class="was">der schriftliche Entscheid, mit Berechnung</span></li>
+        </ol>`,
+        kurzAbsatz: 1,
+        wege: ['was-steht-mir-zu'],
+        titel: 'Anmelden: beim Wohnkanton, und früh',
+        absaetze: [
+          'Zuständig ist der Kanton, in dem Sie Wohnsitz haben. Welche Stelle die Anmeldung entgegennimmt, bestimmt er; meist ist es die kantonale Ausgleichskasse oder Sozialversicherungsanstalt, oft über die AHV-Zweigstelle der Wohngemeinde (ELG Art. 21).',
+          'Der Anspruch beginnt in der Regel mit dem Monat, in dem die Anmeldung eingereicht wird (ELG Art. 12). Früher beginnen kann er nur in bestimmten Fällen, etwa wenn die Anmeldung innert sechs Monaten nach einer Rentenverfügung oder nach einem Eintritt ins Heim oder Spital erfolgt (ELG Art. 12 Abs. 2, ELV Art. 22). Wer zuwartet, kann darum Monate verlieren.',
+          'Sind Sie unsicher, ob sich eine Anmeldung lohnt, fragen Sie bei der EL-Stelle nach. Sie prüft den Anspruch und begründet ihren Entscheid in einer Verfügung.',
+        ],
+      },
+      {
+        id: 'keine-sozialhilfe',
+        bild: `<ul class="irrtum" role="list">
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>EL sind eine Form von Sozialhilfe.</span><span class="richtig"><span class="sr-only">Richtig: </span>EL sind ein Anspruch nach Bundesrecht und gehen der Sozialhilfe vor.</span></li>
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Wer EL bezieht, muss sie später zurückzahlen.</span><span class="richtig"><span class="sr-only">Richtig: </span>Rechtmässig bezogene EL werden erst aus dem Nachlass zurückerstattet, und nur über einem Freibetrag.</span></li>
+        </ul>`,
+        kurzAbsatz: 0,
+        wege: ['sozialhilfe'],
+        titel: 'EL sind keine Sozialhilfe',
+        absaetze: [
+          'EL werden oft mit Sozialhilfe verwechselt. Sie sind etwas anderes: ein Anspruch nach Bundesrecht, berechnet nach Regeln, die in der ganzen Schweiz gelten. Ein Anspruch auf EL geht der Sozialhilfe vor.',
+          'Zu Lebzeiten müssen Sie rechtmässig bezogene EL nicht zurückzahlen. Nach dem Tod werden sie aus dem Nachlass zurückerstattet, aber nur aus dem Teil, der einen gesetzlichen Freibetrag übersteigt, bei Ehepaaren erst aus dem Nachlass der zweitverstorbenen Person (ELG Art. 16a).',
+          'Ohne Schweizer Pass und ohne Staatsangehörigkeit eines EU- oder EFTA-Staates wird der Nachzug von Familienangehörigen in der Regel nicht bewilligt, wenn Sie jährliche EL beziehen oder wegen des Nachzugs beziehen würden (AIG Art. 43 Abs. 1 Bst. e, Art. 44 Abs. 1 Bst. e). Lassen Sie sich in diesem Fall vorher beraten.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Habe ich Anspruch auf Ergänzungsleistungen?',
+        antwort:
+          'Das hängt davon ab, ob Sie eine Leistung der AHV oder IV beziehen, wo Sie wohnen und wie Ihre Einnahmen, Ausgaben und Ihr Vermögen aussehen. Eine allgemein gültige Grenze gibt es nicht, weil die Miete, die Prämie und der Haushalt mitzählen. Eine erste Orientierung gibt der EL-Rechner der AHV/IV; verbindlich ist die Verfügung der EL-Stelle Ihres Kantons.',
+      },
+      {
+        frage: 'Gibt es EL auch vor dem Rentenalter?',
+        antwort:
+          'Ja. Wer eine Rente der IV, eine Witwen-, Witwer- oder Waisenrente bezieht, kann auch vor dem Rentenalter EL erhalten. Auch wer die AHV-Rente vorbezieht, erfüllt die Voraussetzung einer Rente (ELG Art. 4); die gekürzte Rente zählt dann als Einnahme (ELG Art. 11). Wer ab sechzig von der Arbeitslosenversicherung ausgesteuert wird, kann unter Umständen Überbrückungsleistungen erhalten; auch diese meldet man bei der EL-Stelle an.',
+      },
+      {
+        frage: 'Zählt mein Haus oder meine Wohnung?',
+        antwort:
+          'Bei der Vermögensschwelle zählt eine selbst bewohnte Liegenschaft nicht mit (ELG Art. 9a). In der Berechnung selbst wird ihr Wert berücksichtigt, aber mit einem Freibetrag (ELG Art. 11). Wie das in Ihrem Fall ausgeht, rechnet die EL-Stelle.',
+      },
+      {
+        frage: 'Was gilt, wenn ich ins Heim muss?',
+        antwort:
+          'Dann wird die EL nach eigenen Regeln berechnet: Statt Lebensbedarf und Miete zählen die Tagestaxe des Heims, für die der Kanton einen Höchstbetrag festlegen kann, und ein Betrag für persönliche Auslagen, den der Kanton bestimmt (ELG Art. 10 Abs. 2). Melden Sie sich innert sechs Monaten nach dem Eintritt an; dann kann der Anspruch schon ab dem Monat des Eintritts beginnen, wenn die übrigen Voraussetzungen erfüllt sind (ELG Art. 12 Abs. 2).',
+      },
+      {
+        frage: 'Muss ich Änderungen melden?',
+        antwort:
+          'Ja. Jede Änderung der persönlichen und jede grössere Änderung der wirtschaftlichen Verhältnisse muss der EL-Stelle sofort gemeldet werden, etwa ein Umzug, eine neue Miete, eine Erbschaft oder ein Heimeintritt (ELV Art. 24). Zu Unrecht bezogene Leistungen müssen zurückerstattet werden.',
+      },
+      {
+        frage: 'Was bringt eine EL sonst noch?',
+        antwort:
+          'Wer jährliche EL zur AHV oder IV bezieht, ist von der Radio- und Fernsehabgabe befreit; die Befreiung beantragt man bei der Erhebungsstelle mit der Bestätigung der EL-Stelle. Der Betrag für die Krankenkassenprämie, der in der Berechnung mitzählt, geht direkt an die Krankenkasse. Fragen Sie im Zweifel bei der EL-Stelle nach.',
+      },
+    ],
+    quellen: ['ahvMerkblattEL', 'bsvEL'],
+    hintergrund: ['kantonsatlas', 'kantone-im-vergleich'],
+  },
+
+  // ─── Arbeitslosigkeit ─────────────────────────────────────────────────────
+  // Seitenlandkarte E3 / Organigramm C1: die zweite der drei geplanten Seiten, im Kapitel Arbeit &
+  // Ausbildung (CHAPTER_KEYS 'ausbildung') unter «Zum Verstehen». Gebaut 16.11.2026.
+  //
+  // Belegt an den fachgeprüften App-Texten `stelleVerloren.*`, `aussteuerung.*` und `alv.*` in
+  // src/i18n/de.js (AVIG Art. 9, 10, 13, 14, 17, 22a, 23, 24, 27, 30; AVIV Art. 44, 45; ÜLG Art. 3,
+  // 5, 19; UVG Art. 1a, 3; KVG Art. 8, 10; AHVG Art. 10; AVG Art. 26, 27). Neu gegenüber der App,
+  // darum besonders zu prüfen: AVIG Art. 8 (Anspruchsvoraussetzungen), Art. 16 (Zumutbarkeit),
+  // Art. 18 (Wartetage), Art. 22 (Satz höher mit Kindern, tiefem Lohn, IV-Rente), AVIV Art. 27
+  // (kontrollfreie Tage), BVG Art. 2 Abs. 3 (Risikoversicherung Arbeitsloser), DBG Art. 23 Bst. a.
+  {
+    pfad: 'arbeitslosigkeit',
+    bundesrecht: true,
+    titel: 'Arbeitslosigkeit: was die Versicherung leistet',
+    beschreibung:
+      'Wer Anspruch auf Arbeitslosenentschädigung hat, warum die Anmeldung beim RAV früh zählt und was nach der Aussteuerung kommt. Eine Einordnung ohne Zahlen.',
+    brotkrume: 'Arbeitslosigkeit',
+    vorspann:
+      'Die Arbeitslosenversicherung (ALV) ist für Angestellte obligatorisch: Wer arbeitet, zahlt mit dem Lohn Beiträge, und wer die Stelle verliert, erhält unter bestimmten Voraussetzungen ein Taggeld, das einen Teil des Lohns ersetzt. Sie ist im Arbeitslosenversicherungsgesetz (AVIG) geregelt und gilt in der ganzen Schweiz gleich. Die Kantone führen die Regionalen Arbeitsvermittlungszentren (RAV).',
+    schichten: true,
+    abschnitte: [
+      {
+        id: 'anspruch',
+        bild: `<div class="kern">
+          <p class="unter" id="voraus">Vorausgesetzt ist unter anderem:</p>
+          <ul class="chips" role="list" aria-labelledby="voraus">
+            <li>ganz oder teilweise arbeitslos</li><li>Wohnsitz in der Schweiz</li><li>genug Beitragszeit oder davon befreit</li><li>vermittlungsfähig</li><li>die Kontrollvorschriften erfüllt</li>
+          </ul>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['was-steht-mir-zu'],
+        titel: 'Wer Anspruch auf Taggeld hat',
+        absaetze: [
+          'Anspruch auf Arbeitslosenentschädigung hat unter anderem, wer ganz oder teilweise arbeitslos ist, einen anrechenbaren Arbeitsausfall erleidet, in der Schweiz wohnt, das Referenzalter noch nicht erreicht hat und keine Altersrente der AHV bezieht, genug Beitragszeit hat oder davon befreit ist, vermittlungsfähig ist und die Kontrollvorschriften erfüllt (AVIG Art. 8). Wer die AHV-Rente vorbezieht, verliert darum den Anspruch.',
+          'Beitragszeit heisst: In einer bestimmten Zeit vor der Arbeitslosigkeit haben Sie lange genug als Angestellte oder Angestellter gearbeitet und Beiträge bezahlt (AVIG Art. 13). Wer in dieser Zeit wegen Ausbildung, Krankheit, Unfall oder Mutterschaft nicht angestellt war, oder wer nach einer Trennung, einer Scheidung oder dem Tod der Ehepartnerin oder des Ehepartners, auch in eingetragener Partnerschaft, eine Stelle suchen muss, kann von der Beitragszeit befreit sein (AVIG Art. 14).',
+          'Selbständigerwerbende sind über ihre selbständige Tätigkeit nicht gegen Arbeitslosigkeit versichert; selbständige Tätigkeit zählt nicht als Beitragszeit. Ohne Schweizer Pass gehört zur Vermittlungsfähigkeit, dass Sie in der Schweiz arbeiten dürfen (AVIG Art. 15). Lassen Sie sich bei Fragen zur Bewilligung beraten.',
+        ],
+      },
+      {
+        id: 'anmelden',
+        bild: `<ol class="zeit kern" role="list" aria-label="Der Weg zum Taggeld">
+          <li><span class="jahr">Kündigung</span><span class="was">schon jetzt Stellen suchen und die Bemühungen festhalten</span></li>
+          <li><span class="jahr">Anmeldung</span><span class="was">beim RAV, spätestens am ersten Tag, für den Sie Taggeld wollen</span></li>
+          <li><span class="jahr">Taggeld</span><span class="was">ab der Anmeldung, nicht rückwirkend, nach einigen Wartetagen</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        titel: 'Beim RAV anmelden, und zwar früh',
+        absaetze: [
+          'Taggeld gibt es frühestens ab dem Tag der Anmeldung, nicht rückwirkend. Melden Sie sich darum spätestens am ersten Tag, für den Sie Taggeld beanspruchen, beim zuständigen Regionalen Arbeitsvermittlungszentrum (RAV) an, online über arbeit.swiss oder persönlich (AVIG Art. 10, 17).',
+          'Schon während der Kündigungsfrist müssen Sie sich um eine neue Stelle bemühen und die Bemühungen festhalten. Fehlen sie oder reichen sie nicht, gibt es Einstelltage, also Tage ohne Taggeld (AVIG Art. 17, 30).',
+          'Nach der Anmeldung beginnt das Taggeld in der Regel erst nach einigen Wartetagen; wie viele, hängt vom bisherigen Einkommen und von Unterhaltspflichten gegenüber Kindern ab. Für Personen, die von der Beitragszeit befreit sind, kann eine besondere Wartezeit gelten (AVIG Art. 18).',
+        ],
+      },
+      {
+        id: 'taggeld',
+        bild: `<ol class="zeit kern" role="list" aria-label="Wovon das Taggeld abhängt">
+          <li><span class="jahr">Versicherter Verdienst</span><span class="was">der bisherige Lohn, bis zu einer Höchstgrenze</span></li>
+          <li><span class="jahr">Taggeldsatz</span><span class="was">ein Teil davon, höher mit Unterhaltspflichten für Kinder, tiefem Lohn oder einer IV-Rente</span></li>
+          <li><span class="jahr">Höchstzahl</span><span class="was">der Taggelder, je nach Beitragszeit und Alter</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        wege: ['steuern', 'kantonsatlas'],
+        titel: 'Das Taggeld ersetzt einen Teil des Lohns',
+        absaetze: [
+          'Das Taggeld richtet sich nach dem <strong>versicherten Verdienst</strong>, also dem bisherigen Lohn bis zu einer gesetzlichen Höchstgrenze (AVIG Art. 23). Ausbezahlt wird ein Teil davon; der Anteil ist höher, wenn Sie gegenüber Kindern unterhaltspflichtig sind, einen tiefen Lohn hatten oder eine Rente der IV ab einem bestimmten Invaliditätsgrad beziehen (AVIG Art. 22).',
+          'Wie viele Taggelder es höchstens gibt, hängt von der Beitragszeit und vom Alter ab; sie werden innerhalb einer Rahmenfrist ausgerichtet (AVIG Art. 9, 27). Sätze und Höchstzahlen nennen wir hier bewusst nicht. Ihre Arbeitslosenkasse rechnet sie verbindlich aus.',
+          'Vom Taggeld werden wie vom Lohn Beiträge abgezogen, etwa für die AHV (AVIG Art. 22a). Es ist Ersatzeinkommen und wird wie Lohn versteuert (DBG Art. 23 Bst. a).',
+        ],
+      },
+      {
+        id: 'zumutbar',
+        bild: `<ul class="irrtum" role="list">
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Wer eine schlechter bezahlte Arbeit annimmt, verliert das Taggeld.</span><span class="richtig"><span class="sr-only">Richtig: </span>Ein Zwischenverdienst wird teilweise ausgeglichen; zusammen bleibt meist mehr.</span></li>
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Man muss jede Stelle annehmen.</span><span class="richtig"><span class="sr-only">Richtig: </span>Annehmen muss man zumutbare Arbeit; was unzumutbar ist, sagt das Gesetz.</span></li>
+        </ul>`,
+        kurzAbsatz: 0,
+        titel: 'Zwischenverdienst und zumutbare Arbeit',
+        absaetze: [
+          'Verdienen Sie während der Arbeitslosigkeit etwas, gilt das als Zwischenverdienst. Liegt er unter Ihrem versicherten Verdienst, gleicht die Arbeitslosenkasse einen Teil der Differenz aus; zusammen erhalten Sie so meist mehr als das Taggeld allein. Als Lohn zählt dabei mindestens, was für diese Arbeit am Ort üblich ist (AVIG Art. 24).',
+          'Grundsätzlich müssen Sie jede zumutbare Arbeit annehmen. Unzumutbar ist eine Stelle etwa, wenn sie nicht den orts- und berufsüblichen Bedingungen entspricht, Ihrem Alter, Ihren persönlichen Verhältnissen oder Ihrer Gesundheit nicht angemessen ist oder einen sehr langen Arbeitsweg verlangt (AVIG Art. 16).',
+          'Wer eine zumutbare Stelle ablehnt oder die eigene Stelle ohne zwingenden Grund selbst kündigt, wird eingestellt: Je nach Verschulden gibt es eine Zeit lang kein Taggeld (AVIG Art. 30). Lassen Sie sich vor einer eigenen Kündigung beraten.',
+        ],
+      },
+      {
+        id: 'aussteuerung',
+        bild: `<ol class="zeit kern" role="list" aria-label="Wenn die Taggelder aufgebraucht sind">
+          <li><span class="jahr">Aussteuerung</span><span class="was">keine Taggelder mehr; die Arbeitsvermittlung bleibt offen</span></li>
+          <li><span class="jahr">Danach</span><span class="was">Sozialhilfe und Prämienverbilligung können in Frage kommen</span></li>
+          <li><span class="jahr">Ab sechzig</span><span class="was">Überbrückungsleistungen, wenn die Voraussetzungen erfüllt sind</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        wege: ['sozialhilfe', 'praemienverbilligung', 'ergaenzungsleistungen'],
+        titel: 'Wenn die Taggelder aufgebraucht sind',
+        absaetze: [
+          'Ausgesteuert ist, wer alle Taggelder bezogen hat oder wessen Rahmenfrist abgelaufen ist, ohne dass eine neue eröffnet werden kann. Die öffentliche Arbeitsvermittlung steht weiter offen und ist unentgeltlich (AVG Art. 26, 27). Wer wieder genug Beitragszeit sammelt, kann einen neuen Anspruch erwerben (AVIG Art. 9, 13).',
+          'Danach können Sozialhilfe und Prämienverbilligung in Frage kommen. Wer ab sechzig ausgesteuert wird, kann unter weiteren Voraussetzungen Überbrückungsleistungen erhalten; angemeldet werden sie bei der EL-Stelle des Wohnkantons (ÜLG Art. 3, 5, 19).',
+          'Mit dem letzten Taggeld endet nach einer kurzen Nachdeckung auch die Unfallversicherung über die Arbeitslosenversicherung. Melden Sie der Krankenkasse rechtzeitig, dass sie Unfälle wieder decken muss; sie zahlt dann wie bei Krankheit, mit Franchise und Selbstbehalt (UVG Art. 3 Abs. 2, KVG Art. 8, 10). Klären Sie bei der AHV-Ausgleichskasse, ob Sie als Nichterwerbstätige Beiträge zahlen müssen, damit keine Beitragslücke entsteht (AHVG Art. 10).',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Bekomme ich Taggeld, wenn ich selbst gekündigt habe?',
+        antwort:
+          'Ja, aber meist erst nach einer Einstellung: Wer ohne Zusicherung einer neuen Stelle selbst kündigt, erhält in der Regel eine Zeit lang kein Taggeld, oft für die längste Dauer, die das Gesetz vorsieht. Ausgenommen ist, wem das Bleiben an der Stelle nicht zuzumuten war (AVIG Art. 30, AVIV Art. 44, 45). Lassen Sie sich vorher beraten.',
+      },
+      {
+        frage: 'Kann ich mich schon vor dem Ende der Stelle anmelden?',
+        antwort:
+          'Ja, und das ist sinnvoll. Spätestens müssen Sie sich am ersten Tag anmelden, für den Sie Taggeld beanspruchen (AVIG Art. 17). Arbeitsbemühungen werden schon für die Zeit der Kündigungsfrist verlangt.',
+      },
+      {
+        frage: 'Bin ich während der Arbeitslosigkeit gegen Unfall versichert?',
+        antwort:
+          'Ja, solange Sie Taggeld beziehen, sind Sie über die Arbeitslosenversicherung gegen Unfall versichert (UVG Art. 1a). Danach endet diese Deckung nach einer kurzen Nachdeckung. Melden Sie der Krankenkasse, dass sie Unfälle wieder decken muss; sie zahlt dann wie bei Krankheit, mit Franchise und Selbstbehalt.',
+      },
+      {
+        frage: 'Was geschieht mit meiner Pensionskasse?',
+        antwort:
+          'Beim Austritt müssen Sie der Pensionskasse mitteilen, auf welches Freizügigkeitskonto das Guthaben gehen soll, bis Sie eine neue Stelle haben (FZG Art. 4). Während Sie Taggeld beziehen, sind Sie in der Regel für die Risiken Tod und Invalidität weiter beruflich versichert (BVG Art. 2 Abs. 3); fürs Alter sparen Sie in dieser Zeit in der Regel nicht. Wer nach dem achtundfünfzigsten Geburtstag die Stelle verliert, kann unter Umständen in der bisherigen Pensionskasse bleiben (BVG Art. 47a).',
+      },
+      {
+        frage: 'Darf ich während der Arbeitslosigkeit in die Ferien?',
+        antwort:
+          'Ja, in beschränktem Umfang: Sie haben Anspruch auf kontrollfreie Tage, die Sie vorher beim RAV melden müssen (AVIV Art. 27). Wie viele Ihnen zustehen, sagt Ihr RAV.',
+      },
+    ],
+    quellen: ['arbeitSwiss'],
+    hintergrund: ['kantonsatlas', 'kantone-im-vergleich'],
+  },
+
+  // ─── AHV und Pensionierung ────────────────────────────────────────────────
+  // Seitenlandkarte E3 / Organigramm C1: die dritte der drei geplanten Seiten, im Kapitel
+  // Versicherungen & Vorsorge unter «Zum Verstehen». Gebaut 16.11.2026.
+  //
+  // Belegt an AHV/IV-Merkblatt 3.01 (Stand 1.1.2026: Anspruchsbeginn, Anmeldung und Stelle,
+  // Berechnungselemente, Vollrente, Splitting, Erziehungs- und Betreuungsgutschriften, 13. Altersrente,
+  // Hilflosenentschädigung) und 3.04 (Stand 1.1.2026: Vorbezug, Teilbezug, Aufschub, Anmeldung) sowie an
+  // den fachgeprüften App-Texten `pensionierung.*` und `aussteuerung.step3Text` (AHVG Art. 3 Abs. 3, 10,
+  // 21, 29ter, 40, 40a; AHVV Art. 55quater; BVG Art. 37, 37a; BVV 3 Art. 7). Neu gegenüber der App,
+  // darum besonders zu prüfen: BV Art. 111–113 (Zweck der Säulen), AHVG Art. 16 (Nachzahlung),
+  // AHVG Art. 29bis (Berechnungselemente), AHVG Art. 39 (Aufschub), AHVG Art. 43bis (HE), AHVV Art. 141 (IK-Auszug).
+  {
+    pfad: 'ahv-pensionierung',
+    bundesrecht: true,
+    titel: 'AHV und Pensionierung — eine Orientierung',
+    beschreibung:
+      'Wie die drei Säulen zusammenspielen, was die AHV-Rente bestimmt, warum man sie anmelden muss und was Vorbezug und Aufschub bedeuten. Ohne Zahlen.',
+    brotkrume: 'AHV und Pensionierung',
+    vorspann:
+      'Die Alters- und Hinterlassenenversicherung (AHV) ist die erste Säule der Schweizer Altersvorsorge und für alle obligatorisch, die hier wohnen oder arbeiten. Wie hoch die Rente einmal ausfällt, entscheidet sich über viele Jahre: an den Beitragsjahren, den Einkommen und den Gutschriften für Kinder und Betreuung. Und sie kommt nicht von selbst: Man muss sie anmelden.',
+    schichten: true,
+    abschnitte: [
+      {
+        id: 'saeulen',
+        bild: `<ol class="zeit kern" role="list" aria-label="Die drei Säulen">
+          <li><span class="jahr">Erste Säule</span><span class="was">AHV, für alle obligatorisch; reicht sie nicht, kommen Ergänzungsleistungen dazu</span></li>
+          <li><span class="jahr">Zweite Säule</span><span class="was">Pensionskasse, für Angestellte ab einem Mindestlohn obligatorisch</span></li>
+          <li><span class="jahr">Dritte Säule</span><span class="was">freiwillig; die Säule 3a ist steuerlich begünstigt</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        wege: ['ergaenzungsleistungen'],
+        titel: 'Drei Säulen mit verschiedenen Aufgaben',
+        absaetze: [
+          'Die Altersvorsorge ruht auf drei Säulen (BV Art. 111). Die <strong>AHV</strong> ist die erste: Ihre Renten sollen den Existenzbedarf angemessen decken (BV Art. 112). Reichen sie dafür nicht, kommen Ergänzungsleistungen dazu (BV Art. 112a).',
+          'Die <strong>Pensionskasse</strong>, die berufliche Vorsorge, ist für Angestellte ab einem Mindestlohn obligatorisch. Zusammen mit der AHV soll sie die gewohnte Lebenshaltung in angemessener Weise ermöglichen (BV Art. 113).',
+          'Die <strong>dritte Säule</strong> ist freiwillig. Einzahlungen in die Säule 3a können vom steuerbaren Einkommen abgezogen werden; einzahlen kann aber nur, wer ein Erwerbseinkommen hat (BVV 3 Art. 7).',
+        ],
+      },
+      {
+        id: 'beitraege',
+        bild: `<div class="kern">
+          <p class="unter" id="rente">Was die Höhe der AHV-Rente bestimmt:</p>
+          <ul class="chips" role="list" aria-labelledby="rente">
+            <li>Beitragsjahre</li><li>Erwerbseinkommen</li><li>Erziehungsgutschriften</li><li>Betreuungsgutschriften</li>
+          </ul>
+          <p class="unter">Jedes fehlende Beitragsjahr kürzt die Rente in der Regel lebenslang.</p>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['arbeitslosigkeit'],
+        titel: 'Was die Rente bestimmt, und warum Lücken zählen',
+        absaetze: [
+          'Die Höhe der AHV-Rente hängt von den anrechenbaren <strong>Beitragsjahren</strong>, den <strong>Erwerbseinkommen</strong> und den <strong>Erziehungs- und Betreuungsgutschriften</strong> ab (AHVG Art. 29bis). Eine Vollrente erhält, wer vom Jahr nach dem zwanzigsten Geburtstag bis zum Jahr vor dem Referenzalter stets die Beitragspflicht erfüllt hat. Fehlt ein Beitragsjahr, wird die Rente in der Regel gekürzt, und zwar lebenslang (AHVG Art. 29ter, 38).',
+          'Beitragspflichtig sind auch Nichterwerbstätige, etwa im Studium, nach einer Aussteuerung oder bei einer frühen Pensionierung (AHVG Art. 10). Für Verheiratete ohne Erwerbseinkommen gelten die Beiträge als bezahlt, wenn die Ehepartnerin oder der Ehepartner mindestens den doppelten Mindestbeitrag zahlt (AHVG Art. 3 Abs. 3). Nachzahlen lassen sich fehlende Beiträge nur für eine begrenzte Zeit zurück (AHVG Art. 16).',
+          'Ob Sie Lücken haben, zeigt ein Auszug aus Ihrem individuellen Konto (IK), den Sie bei Ihrer Ausgleichskasse verlangen können (AHVV Art. 141). Ältere Lücken lassen sich nicht mehr schliessen (AHVG Art. 16).',
+        ],
+      },
+      {
+        id: 'anmelden',
+        bild: `<ol class="zeit kern" role="list" aria-label="Der Weg zur Rente">
+          <li><span class="jahr">Einige Monate vorher</span><span class="was">bei der Ausgleichskasse anmelden</span></li>
+          <li><span class="jahr">Referenzalter</span><span class="was">die Rente beginnt im Monat danach</span></li>
+          <li><span class="jahr">Jeden Dezember</span><span class="was">dazu eine dreizehnte Altersrente</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        titel: 'Die Rente kommt nicht von selbst',
+        absaetze: [
+          'Die AHV-Rente müssen Sie selbst anmelden, am besten einige Monate vor dem Referenzalter. Zuständig ist die Ausgleichskasse, die zuletzt Ihre Beiträge erhalten hat; haben Sie keine Beiträge bezahlt, die kantonale Ausgleichskasse Ihres Wohnkantons (Merkblatt 3.01).',
+          'Der Anspruch entsteht am ersten Tag des Monats nach dem Erreichen des Referenzalters und erlischt am Ende des Monats, in dem die Person stirbt (AHVG Art. 21). Das Referenzalter ist für Frauen und Männer gleich; für Frauen der Übergangsgeneration gelten Übergangsregeln.',
+          'Wer im Dezember eine Altersrente bezieht, erhält zusätzlich eine dreizehnte Altersrente in der Höhe eines Zwölftels der jährlichen Altersrente. Hinterlassenen-, Invaliden- und Kinderrenten werden weiterhin nur zwölfmal ausbezahlt (Merkblatt 3.01).',
+        ],
+      },
+      {
+        id: 'flexibel',
+        bild: `<ol class="zeit kern" role="list" aria-label="Früher, regulär oder später">
+          <li><span class="jahr">Vorbezug</span><span class="was">ganz oder teilweise; die Rente wird lebenslang gekürzt</span></li>
+          <li><span class="jahr">Referenzalter</span><span class="was">die Rente ohne Kürzung und ohne Zuschlag</span></li>
+          <li><span class="jahr">Aufschub</span><span class="was">ganz oder teilweise; die Rente wird lebenslang erhöht</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
+        wege: ['ergaenzungsleistungen'],
+        titel: 'Früher oder später beziehen',
+        absaetze: [
+          'Die Rente lässt sich ganz oder teilweise <strong>vorbeziehen</strong>, frühestens ab dem dreiundsechzigsten Geburtstag, für Frauen der Übergangsgeneration früher. Der vorbezogene Teil wird lebenslang gekürzt, auch über das Referenzalter hinaus (AHVG Art. 40, 40a). Während des Vorbezugs gibt es keine Kinderrenten. Den Vorbezug müssen Sie spätestens im Monat vor dem gewünschten Beginn anmelden; rückwirkend geht es nicht (Merkblatt 3.04).',
+          'Sie können die Rente auch ganz oder teilweise <strong>aufschieben</strong>, um mindestens ein und höchstens fünf Jahre; sie wird dann lebenslang erhöht (AHVG Art. 39). Den Aufschub erklären Sie spätestens ein Jahr nach Erreichen des Referenzalters, sonst wird die Rente ohne Erhöhung ausbezahlt (AHVV Art. 55quater).',
+          'Ein Vorbezug kann Folgen haben, die man nicht gleich sieht: Wer arbeitslos ist, verliert mit dem Vorbezug den Anspruch auf Taggeld, und wer Überbrückungsleistungen bezieht, ebenfalls (AVIG Art. 8, ÜLG Art. 5 Abs. 3). Lassen Sie sich vorher bei Ihrer Ausgleichskasse beraten.',
+        ],
+      },
+      {
+        id: 'mehr',
+        bild: `<div class="kern">
+          <p class="unter" id="zusatz">Was im Alter dazukommen kann:</p>
+          <ul class="chips" role="list" aria-labelledby="zusatz">
+            <li>Ergänzungsleistungen</li><li>Hilflosenentschädigung</li><li>Prämienverbilligung</li><li>Beratung, etwa bei Pro Senectute</li>
+          </ul>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['ergaenzungsleistungen', 'praemienverbilligung'],
+        titel: 'Was im Alter sonst noch zusteht',
+        absaetze: [
+          'Reichen Renten und Vermögen nicht für das Nötigste, kommen <strong>Ergänzungsleistungen</strong> in Frage. Sie sind ein gesetzlicher Anspruch und keine Sozialhilfe.',
+          'Wer eine Altersrente oder Ergänzungsleistungen bezieht, in der Schweiz wohnt und im Alltag dauernd auf die Hilfe anderer angewiesen ist, etwa beim Ankleiden, bei der Körperpflege oder beim Essen, kann eine <strong>Hilflosenentschädigung</strong> der AHV erhalten, wenn die Hilflosigkeit seit mindestens sechs Monaten ununterbrochen besteht und kein Anspruch auf eine Hilflosenentschädigung der Unfall- oder Militärversicherung besteht. Sie hängt nicht von Einkommen und Vermögen ab (AHVG Art. 43bis, Merkblatt 3.01).',
+          'Bei der <strong>Pensionskasse</strong> entscheiden Sie zwischen Rente und Kapital. Einen Viertel können Sie gesetzlich als Kapital verlangen, mehr nur, wenn das Reglement es vorsieht; bei Verheirateten braucht es die schriftliche Zustimmung (BVG Art. 37, 37a). Bis wann Sie wählen müssen, steht im Reglement; ist das Kapital einmal ausbezahlt, lässt sich das nicht rückgängig machen. Lassen Sie sich früh beraten.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        frage: 'Wie hoch wird meine AHV-Rente?',
+        antwort:
+          'Das hängt von Ihren Beitragsjahren, Ihren Einkommen und Ihren Gutschriften ab. Verbindlich berechnen lässt sich die Rente in der Regel erst beim Erreichen des Referenzalters (Merkblatt 3.01). Eine Vorausberechnung können Sie bei Ihrer Ausgleichskasse verlangen.',
+      },
+      {
+        frage: 'Was gilt für Ehepaare?',
+        antwort:
+          'Die Einkommen aus den Ehejahren werden geteilt und je zur Hälfte beiden angerechnet, unter anderem sobald beide rentenberechtigt sind und bei einer Scheidung. Die beiden Renten eines Ehepaars zusammen sind gegen oben begrenzt; diese Begrenzung fällt unter anderem weg, wenn der gemeinsame Haushalt durch ein Gericht aufgehoben wurde (Merkblatt 3.01).',
+      },
+      {
+        frage: 'Ich habe auch im Ausland gearbeitet. Was nun?',
+        antwort:
+          'Zeiten im Ausland fehlen in der Schweizer AHV in der Regel, sie können aber im anderen Staat zu einer Rente führen. Mit Versicherungszeiten in einem EU- oder EFTA-Staat löst ein einziger Antrag im Wohnsitzland das Verfahren in allen beteiligten Staaten aus (Merkblatt 3.01).',
+      },
+      {
+        frage: 'Bekomme ich als Lebenspartnerin oder Lebenspartner eine Hinterlassenenrente?',
+        antwort:
+          'Eine Witwen- oder Witwerrente der AHV gibt es nur nach einer Ehe oder eingetragenen Partnerschaft und nur unter weiteren Voraussetzungen. Für Paare ohne Ehe oder eingetragene Partnerschaft sieht die AHV keine Hinterlassenenrente vor. Kinder können eine Waisenrente erhalten (AHVG Art. 23, 25). Bei der Pensionskasse kann das Reglement eine Leistung an Lebenspartnerinnen und Lebenspartner vorsehen.',
+      },
+      {
+        frage: 'Muss ich nach der Pensionierung noch AHV-Beiträge zahlen?',
+        antwort:
+          'Wer nach dem Referenzalter weiterarbeitet, zahlt weiter Beiträge. Unter gewissen Voraussetzungen kann die Rente dann neu berechnet werden. Wer die Rente vorbezieht und nicht mehr arbeitet, bleibt bis zum Referenzalter als nichterwerbstätige Person beitragspflichtig (AHVG Art. 10).',
+      },
+    ],
+    quellen: ['ahvMerkblatt', 'ahvMerkblattFlex'],
+    hintergrund: ['kantonsatlas'],
+  },
 ];
 
 export const seiteNachPfad = (pfad) => SEITEN.find((s) => s.pfad === pfad);
@@ -709,7 +1176,7 @@ export const SONDERSEITEN = [
         titel: 'Datenschutz auf diesen Seiten',
         absaetze: [
           'Die Erklärseiten sind statisches HTML. Sie laden <strong>keine Cookies und keine Ressourcen von Dritten</strong>; die Schriften liegen auf demselben Server. Die Startseite lädt zusätzlich eigene kleine Skripte vom selben Server: eines leitet alte App-Adressen nach /app/ weiter, eines bewegt die Bilder der Reise. Wer die App früher unter der Hauptadresse benutzt hat, erhält beim nächsten Besuch einer dieser Seiten einmal ein drittes: Es leert den alten Zwischenspeicher der App im Browser, meldet sich danach selbst ab und lädt die Seite einmal neu; Ihre Angaben auf dem Gerät fasst es nicht an. Auch die bewegten Seiten zur Krankenkasse (unter /krankenkasse/bewegt/) laden Skripte vom selben Server; sie zeichnen die bewegten Figuren. Diese Skripte setzen keine Cookies und senden keine Daten. Es gibt kein Tracking, keine Analyse und keine Werbung.',
-          'Beim Abruf fallen dennoch technische Daten bei der Hosting-Anbieterin an — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Genf, mit Rechenzentren in der Schweiz: IP-Adresse in den Server-Logs, Browsertyp, Betriebssystem und Zeitpunkt des Zugriffs. Das ist für die Auslieferung und die Betriebssicherheit technisch notwendig. Infomaniak handelt dabei als Auftragsbearbeiterin (Art. 9 nDSG). Die Zugriffs- und Fehlerlogs bewahrt Infomaniak nach eigener Angabe mindestens 7 Tage auf (Infomaniak Support-FAQ 1926, abgerufen am 23.09.2026).',
+          'Beim Abruf fallen dennoch technische Daten bei der Hosting-Anbieterin an — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias GE, mit Rechenzentren in der Schweiz: IP-Adresse in den Server-Logs, Browsertyp, Betriebssystem und Zeitpunkt des Zugriffs. Das ist für die Auslieferung und die Betriebssicherheit technisch notwendig. Infomaniak handelt dabei als Auftragsbearbeiterin (Art. 9 nDSG). Die Zugriffs- und Fehlerlogs bewahrt Infomaniak nach eigener Angabe mindestens 7 Tage auf (Infomaniak Support-FAQ 1926, abgerufen am 23.09.2026).',
           'Weitere Empfänger gibt es nicht: keine Analyse-Dienste, keine Social-Media-Einbindungen, keine Weitergabe und kein Verkauf von Daten.',
         ],
       },

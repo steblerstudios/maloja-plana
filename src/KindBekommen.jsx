@@ -1,6 +1,7 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusMonate } from './utils/fristen.js';
+import { VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 
 // Kind bekommen — geführter Ablauf. Geburt/Vaterschaft anmelden, Kind versichern (KK
 // innert 3 Monaten, rückwirkend), Familienzulagen (inkl. kantonaler Geburtszulage),
@@ -8,7 +9,8 @@ import { plusMonate } from './utils/fristen.js';
 // Ansprüche (IPV neu, da der Haushalt wächst) und führt zu passenden Lebenszuständen.
 // «Verwandte Ereignisse» setzt die Ablauf-Schale (config/ablaufVerwandte.js, F7-A4). Kein Rat — Orientierung.
 
-export const KindBekommen = ({ palette, t, onNavigate }) => {
+// Karten des Kantonsatlas an den Schritten 3 und 4 (14.11.2026): Kinderzulage, Abzug für Kinderbetreuung.
+export const KindBekommen = ({ palette, t, onNavigate, kanton }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
@@ -30,10 +32,12 @@ export const KindBekommen = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('kind.step2Link'), onClick: () => onNavigate('praemien') })
     ),
     React.createElement(AblaufStep, { palette, title: t('kind.step3Title') },
-      React.createElement('p', { style: s.stepText }, t('kind.step3Text'))
+      React.createElement('p', { style: s.stepText }, t('kind.step3Text')),
+      React.createElement(VerstehenImWerkzeug, { palette, t, karte: 'kinderzulage', kanton })
     ),
     React.createElement(AblaufStep, { palette, title: t('kind.step4Title') },
       React.createElement('p', { style: s.stepText }, t('kind.step4Text')),
+      React.createElement(VerstehenImWerkzeug, { palette, t, karte: 'kita', kanton }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('kind.step4Link'), onClick: () => onNavigate('eo') })
     ),
     React.createElement(AblaufStep, { palette, title: t('kind.step5Title') },
