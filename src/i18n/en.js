@@ -6094,7 +6094,7 @@ export default {
     spitex: 'Home care (Spitex)',
     spitexNote: 'Care services with doctor\'s prescription.',
     franchiseTitle: 'Deductible & Co-payment',
-    franchiseExplain: 'As a rule, each year you first pay the deductible yourself. After that you pay 10% of the costs as co-payment, at most CHF 700 a year, CHF 350 for children (KVG Art. 64, KVV Art. 103); for certain medicines it is 40% (KLV Art. 38a). There is no cost-sharing, for example, for maternity services (check-ups, birth, breastfeeding advice) and, from the 13th week of pregnancy until eight weeks after the birth, not for other treatment either (KVG Art. 64 para. 7).',
+    franchiseExplain: 'As a rule, each year you first pay the deductible yourself. After that you pay 10% of the costs as co-payment, at most CHF 700 a year, CHF 350 for children (KVG Art. 64, KVV Art. 103); for certain medicines it is 40% (KLV Art. 38a). There is no cost-sharing, for example, for maternity services (check-ups, birth, breastfeeding advice) and, from the 13th week of pregnancy until eight weeks after the birth, nor for other treatment (KVG Art. 64 para. 7).',
     personLabel: 'Insured person',
     personErwachsen: 'Adult (from the year they turn 19)',
     personKind: 'Child (until the end of the year they turn 18)',
