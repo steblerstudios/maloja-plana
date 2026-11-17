@@ -2813,7 +2813,7 @@ export default {
       hostingTitle: 'Hosting & Domain',
       hosting1: 'Hosting und Domain werden von Infomaniak Network SA (Genf, Schweiz) bereitgestellt — einem Schweizer Anbieter mit Rechenzentren in der Schweiz, nach Angaben des Anbieters betrieben mit erneuerbarem Strom.',
       disclaimerTitle: 'Haftungsausschluss',
-      disclaimer1: 'Die Inhalte dieser Anwendung wurden mit grösster Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität wird keine Gewähr übernommen.',
+      disclaimer1: 'Die Inhalte dieser Anwendung wurden mit grösster Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität wird keine Gewähr übernommen. Die Haftung für vorsätzlich oder grobfahrlässig verursachte Schäden bleibt vorbehalten.',
       jurisdictionTitle: 'Anwendbares Recht',
       jurisdiction1: 'Es gilt Schweizer Recht. Gerichtsstand ist Basel-Stadt, Schweiz.',
     },

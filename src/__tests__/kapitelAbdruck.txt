@@ -806,7 +806,7 @@ rm   k=betreibungsStatus type="select" orientation~8fb40474 label~00044cb2 optio
 rm   k=courtCases type="select" label~ecccbeb4 options=2 optWerte~2bfd19fd optLabels~1534032f
 rm   k=legalRepresentative type="text" section~2fc92f34 label~c55bf97d sectionIntro~130b06d6
 rm   k=representativePhone type="tel" label~4f1460dc
-rm   k=willMade type="select" orientation~f9d30efb link~2c2317f6 label~343cbd22 options=6 optWerte~d51cb516 optLabels~c894eab4
+rm   k=willMade type="select" orientation~3c7ca434 link~2c2317f6 label~343cbd22 options=6 optWerte~d51cb516 optLabels~c894eab4
 rm   doc k=betreibungsauszug label~8328c5f6
 rm   doc k=will label~aa111790
 rm   doc k=power_of_attorney label~c432f491
