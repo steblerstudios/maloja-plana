@@ -107,3 +107,30 @@ describe('Steuer-Rechner mit echten Profilen: Grenze und Hinweis', async () => {
     }
   });
 });
+
+// Fachpunkte 16.11.2026 (Entscheid Stebler Studios «Eigene + kleine Grenze»): je erwerbstätige Person eine Grenze
+// (BVV 3 Art. 7 Abs. 2, Fassung 1.1.2025), statt der eigenen Grenze × 2.
+describe('Steuer-Rechner: 3a bei Verheirateten je Person', async () => {
+  const { steuer3aGrenzePartner } = await import('../TaxCalculator.jsx');
+  const paar = (partnerIncome, maritalStatus = 'married') => ({ basis: { maritalStatus, household: { partnerIncome } } });
+
+  it('Partnerin oder Partner mit Einkommen oder ohne Angabe: der kleine Betrag kommt dazu', () => {
+    expect(steuer3aGrenzePartner(paar('4500'), 2026)).toBe(W26.mitPensionskasse);
+    expect(steuer3aGrenzePartner(paar(''), 2026)).toBe(W26.mitPensionskasse);
+    expect(steuer3aGrenzePartner(paar(undefined), 2026)).toBe(W26.mitPensionskasse);
+  });
+  it('Einkommen ausdrücklich 0: keine zweite Grenze (nur wer erwerbstätig ist, kann einzahlen)', () => {
+    expect(steuer3aGrenzePartner(paar('0'), 2026)).toBe(0);
+    expect(steuer3aGrenzePartner(paar(0), 2026)).toBe(0);
+  });
+  it('nicht verheiratet: keine Partner-Grenze', () => {
+    expect(steuer3aGrenzePartner(paar('4500', 'single'), 2026)).toBeNull();
+    expect(steuer3aGrenzePartner(paar('4500', 'cohabiting'), 2026)).toBeNull();
+  });
+  it('selbständig ohne Kasse und verheiratet: Partnerperson in derselben Lage, nie tiefer als vorher (× 2)', () => {
+    const selbst = { basis: { maritalStatus: 'married', household: { partnerIncome: '5000' } }, finanzen: { employmentType: 'selfEmployed' } };
+    expect(steuer3aGrenzePartner(selbst, 2026)).toBe(W26.ohnePensionskasse);
+    const angestellt = { ...selbst, finanzen: { employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 6000 } };
+    expect(steuer3aGrenzePartner(angestellt, 2026)).toBe(W26.mitPensionskasse);
+  });
+});

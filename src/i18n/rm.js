@@ -5189,6 +5189,7 @@ export default {
     otherDeductions: 'Autras deducziuns',
     grenze_pension3a: 'Gesetzlich höchstens {max} (Säule 3a, Steuerjahr {jahr})', // TODO(rm): übersetzen
     hinweis3aOhnePk: 'Lohn bis zur BVG-Eintrittsschwelle: Ohne Pensionskasse lassen sich höchstens 20 % des Erwerbseinkommens einzahlen und abziehen (BVV 3 Art. 7 Abs. 1 Bst. b), aus dem Hauptlohn gerechnet rund {betrag} je Person. Mit Pensionskasse gilt der Betrag oben; die Kasse dann bei den Versicherungen eintragen.', // TODO(rm): übersetzen
+    hinweis3aPartner: 'Verheiratet oder eingetragen: Die Grenze gilt je erwerbstätige Person (BVV 3 Art. 7 Abs. 2). Für die Partnerin oder den Partner sind {betrag} eingerechnet. Ohne Pensionskasse sind bis 20 % des Erwerbseinkommens möglich (Abs. 1 Bst. b); mehr als hier angenommen lässt sich in der Steuererklärung abziehen. Hat die Partnerin oder der Partner gar kein eigenes Einkommen, beim Partnereinkommen 0 eintragen; dann zählt nur die eigene Grenze.', // TODO(rm): übersetzen
     grenze_education: 'Bei der direkten Bundessteuer höchstens {max}, unter Voraussetzungen (erster Abschluss auf Sekundarstufe II oder ab 20 Jahren). Die Kantone haben eigene Höchstbeträge', // TODO(rm): übersetzen
     gekappt: 'Für die Schätzung auf {max} begrenzt.', // TODO(rm): übersetzen
     calculation: 'Calculaziun',

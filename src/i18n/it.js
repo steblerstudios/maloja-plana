@@ -3307,6 +3307,7 @@ export default {
     otherDeductions: 'Altre deduzioni',
     grenze_pension3a: 'Per legge al massimo {max} (pilastro 3a, anno fiscale {jahr})',
     hinweis3aOhnePk: 'Salario fino alla soglia d’entrata LPP: senza cassa pensione si può versare e dedurre al massimo il 20 % del reddito da attività lucrativa (OPP 3 art. 7 cpv. 1 lett. b), cioè circa {betrag} per persona calcolato sul salario principale. Con una cassa pensione vale l’importo sopra; registrare allora la cassa nelle assicurazioni.',
+    hinweis3aPartner: 'Coniugati o in unione domestica registrata: il limite vale per ogni persona che esercita un’attività lucrativa (OPP 3 art. 7 cpv. 2). Per la o il partner sono inclusi {betrag}. Senza cassa pensione è possibile fino al 20 % del reddito da attività lucrativa (cpv. 1 lett. b); un importo più alto di quello considerato qui si può dedurre nella dichiarazione d’imposta. Se la o il partner non ha alcun reddito proprio, indicare 0 come reddito del partner; vale allora solo il proprio limite.',
     grenze_education: 'Imposta federale diretta: al massimo {max}, a determinate condizioni (primo diploma del livello secondario II o a partire dai 20 anni). I Cantoni hanno propri importi massimi',
     gekappt: 'Per la stima limitato a {max}.',
     calculation: 'Calcolo',

@@ -3372,6 +3372,7 @@ export default {
     otherDeductions: 'Other deductions',
     grenze_pension3a: 'Legal maximum {max} (pillar 3a, tax year {jahr})',
     hinweis3aOhnePk: 'Salary up to the BVG entry threshold: without a pension fund, at most 20% of earned income can be paid in and deducted (BVV 3 Art. 7 para. 1 let. b), about {betrag} per person based on the main salary. With a pension fund, the amount above applies; then enter the fund under insurance.',
+    hinweis3aPartner: 'Married or in a registered partnership: the limit applies per person in gainful employment (BVV 3 Art. 7 para. 2). For the partner, {betrag} is included. Without a pension fund, up to 20% of earned income is possible (para. 1 let. b); more than assumed here can be deducted in the tax return. If the partner has no income of their own at all, enter 0 as partner income; then only the own limit applies.',
     grenze_education: 'Direct federal tax: at most {max}, subject to conditions (first upper-secondary qualification or from age 20). Cantons set their own maximums',
     gekappt: 'Limited to {max} for the estimate.',
     calculation: 'Calculation',
