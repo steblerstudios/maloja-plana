@@ -1,6 +1,6 @@
 import React from 'react';
 import { text, weight, space, leading } from '../config/tokens.js';
-import { kantonsAnlaufstelle } from '../data/direktLinks.js';
+import { kantonsAnlaufstelle, kantonMehrsprachig } from '../data/direktLinks.js';
 import { hatAusweisFNS } from '../data/ausweis.js';
 import { ExternerLink } from './ExternerLink.jsx';
 import { Belege } from './Belege.jsx';
@@ -18,6 +18,16 @@ export const KantonsAnlaufstelle = ({ palette, t, canton, style }) => {
   return React.createElement('p', { 'data-teil': 'kantons-anlaufstelle', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.xs + 'px 0 0', ...style } },
     t('nichtbezug.imKanton') + ' ',
     React.createElement(ExternerLink, { t, href: a.url, style: { ...linkStil(palette), fontSize: text.xs } }, t('dl.cantonal.' + a.key)));
+};
+
+// Brücke 6 (19.11.2026): die «Hallo»-Plattform des Kantons, Erstinformation in vielen Sprachen. Ohne Kanton
+// oder ohne Plattform: nichts.
+export const KantonMehrsprachig = ({ palette, t, canton, style }) => {
+  const url = kantonMehrsprachig(canton);
+  if (!url) return null;
+  return React.createElement('p', { 'data-teil': 'kanton-mehrsprachig', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.xs + 'px 0 0', ...style } },
+    t('nichtbezug.imKanton') + ' ',
+    React.createElement(ExternerLink, { t, href: url, style: { ...linkStil(palette), fontSize: text.xs } }, t('dl.cantonal.mehrsprachig')));
 };
 
 // Restprämienübernahme Kanton Zürich (18.11.2026): nur die Krankenkassenprämie übernehmen lassen, ohne Sozialhilfe
@@ -46,7 +56,9 @@ export const NichtbezugHuerden = ({ palette, t, canton }) => {
       React.createElement('dl', { style: { margin: 0 } },
         HUERDEN.map((k) => React.createElement(React.Fragment, { key: k },
           React.createElement('dt', { style: { fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } }, t('nichtbezug.' + k + 'Titel')),
-          React.createElement('dd', { style: { margin: '2px 0 0', color: palette.mid } }, t('nichtbezug.' + k + 'Text'))))),
+          React.createElement('dd', { style: { margin: '2px 0 0', color: palette.mid } }, t('nichtbezug.' + k + 'Text'),
+            // Brücke 6: bei «Zeit, Kraft und Sprache» die mehrsprachige Plattform des Kantons.
+            k === 'aufwand' && React.createElement(KantonMehrsprachig, { palette, t, canton }))))),
       React.createElement(KantonsAnlaufstelle, { palette, t, canton, style: { marginTop: space.sm + 'px' } }),
       React.createElement(Belege, { palette, t, zeile: t('nichtbezug.quelle'), style: { marginTop: space.xs + 'px' } })));
 };

@@ -7036,6 +7036,8 @@ export default {
       leistungsrechner: 'Estimate social benefits (benefits calculator)',
       anlaufstelle: 'Regional social services desk (GSR): one form for several benefits',
       orientierung: 'Free, confidential guidance on social benefits (JU-lien)',
+      // Brücke 6 (19.11.2026): «Hallo»-Plattform des Kantons.
+      mehrsprachig: 'First information in many languages, including social assistance and insurance (the canton’s «Hallo» site)',
     },
   },
   medications: {

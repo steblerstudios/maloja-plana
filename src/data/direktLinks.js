@@ -431,6 +431,22 @@ CANTONAL_LINKS_GEPRUEFT.BS.leistungsrechner = '2026-11-18';
 CANTONAL_LINKS_GEPRUEFT.NE.anlaufstelle = '2026-11-18';
 CANTONAL_LINKS_GEPRUEFT.JU.orientierung = '2026-11-18';
 
+// Brücke 6 (19.11.2026): «Hallo»-Plattformen der Kantone, Erstinformation in vielen Sprachen, darunter ein Teil
+// «Soziale Sicherheit» mit Sozialhilfe, Krankheit, Familie, Alter. Gegen die Hürde «Zeit, Kraft und Sprache»
+// (Maloja hat fünf Sprachen, die Plattformen 15 bis 20). Herausgeber laut Impressum je der Kanton; Basel-Stadt
+// nach dem Vorbild «Hallo Aargau» (Medienmitteilung BS 06.11.2023). Je curl 200, Titel «Hallo …», Seite
+// /de/soziale-sicherheit vorhanden, Impressum gelesen (19.11.2026). St. Gallen (hallo.sg.ch) ist anders
+// gebaut und ohne Teil «Soziale Sicherheit»: bewusst nicht dabei.
+const H = '2026-11-19';
+for (const [k, url] of Object.entries({
+  BS: 'https://www.hallo-baselstadt.ch/', AG: 'https://www.hallo-aargau.ch/', BL: 'https://www.hallo-baselland.ch/',
+  BE: 'https://www.hallo-bern.ch/', GL: 'https://www.hallo-glarus.ch/',
+})) {
+  CANTONAL_LINKS[k].mehrsprachig = url;
+  CANTONAL_LINKS_GEPRUEFT[k].mehrsprachig = H;
+}
+export const kantonMehrsprachig = (canton) => CANTONAL_LINKS[canton]?.mehrsprachig || null;
+
 // Kantonale Angebote gegen den Nichtbezug (Brücke 5, 18.11.2026): ein Feld je Kanton, das über die
 // einzelne Leistung hinausgeht. Reihenfolge = Vorrang. Prüfdatum in CANTONAL_LINKS_GEPRUEFT.
 export const ANLAUFSTELLE_FELDER = ['orientierung', 'anlaufstelle', 'leistungsrechner'];
