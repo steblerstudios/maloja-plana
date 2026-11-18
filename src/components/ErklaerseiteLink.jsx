@@ -17,6 +17,10 @@ export const ERKLAERSEITE = {
   tax: '/steuern/',
   premium: '/praemienverbilligung/',
   praemien: '/krankenkasse/',
+  // E3 (14.11.2026): die erste der drei geplanten Erklärseiten.
+  ergaenzungsleistungen: '/ergaenzungsleistungen/',
+  alv: '/arbeitslosigkeit/',
+  pensionierung: '/ahv-pensionierung/',
 };
 
 // Ergänzung A (Wege durch Maloja, Entscheid Stebler Studios 07.11.2026): aus dem Werkzeug zur passenden Karte
@@ -30,6 +34,7 @@ export const KANTONSKARTE = {
   alv: '/kantonsatlas/#karte-alq',
   sozialhilfe: '/kantonsatlas/#karte-sozialhilfe',
   ergaenzungsleistungen: '/kantonsatlas/#karte-el',
+  stundenlohn: '/kantonsatlas/#karte-mindestlohn', // 14.11.2026
 };
 
 const linkStil = (palette) => ({ color: palette.skyDeep || palette.text, fontWeight: weight.medium, textDecoration: 'underline', textUnderlineOffset: '2px' });
@@ -61,10 +66,10 @@ export const ZUM_VERSTEHEN = {
     karten: [[ATLAS + 'steuer', "Steuern bei 80'000 Fr. Lohn"], [ATLAS + 'sozialhilfe', 'Sozialhilfequote']],
   },
   versicherungen: {
-    seiten: [['/krankenkasse/', 'Krankenkasse'], ['/praemienverbilligung/', 'Prämienverbilligung']],
+    seiten: [['/krankenkasse/', 'Krankenkasse'], ['/praemienverbilligung/', 'Prämienverbilligung'], ['/ergaenzungsleistungen/', 'Ergänzungsleistungen'], ['/ahv-pensionierung/', 'AHV und Pensionierung']],
     karten: [[ATLAS + 'praemie', 'Prämie Erwachsene'], [ATLAS + 'lastnachipv', 'Prämienlast nach Verbilligung'], [ATLAS + 'el', 'Ergänzungsleistungen zur AHV']],
   },
-  ausbildung: { seiten: [], karten: [[ATLAS + 'alq', 'Arbeitslosenquote']] },
+  ausbildung: { seiten: [['/arbeitslosigkeit/', 'Arbeitslosigkeit']], karten: [[ATLAS + 'alq', 'Arbeitslosenquote']] },
 };
 
 const kleinerLink = (palette, t, href, name) => React.createElement(ExternerLink, {
@@ -117,6 +122,7 @@ export const VERSTEHEN = {
   alv: { karte: 'alq' },
   sozialhilfe: { karte: 'sozialhilfe' },
   ergaenzungsleistungen: { karte: 'el' },
+  stundenlohn: { karte: 'mindestlohn' }, // 14.11.2026
 };
 
 // Die beiden Teile werden nur dynamisch importiert (Wächter verstehenImWerkzeug.test.js).
@@ -185,13 +191,23 @@ const Aufklapper = ({ palette, t, titel, teil, laden, props }) => {
 
 // altersklasse wie ageClassFromBirth (franchiseTacho.js): 'kind' · 'jung' · 'erwachsen'. Bei Kindern keine Figur:
 // Sie zeigt Franchise 1'000 und Dach 700 für Erwachsene; für Kinder gibt es diese Franchise nicht (Fachprüfung 09.11.2026).
-export const VerstehenImWerkzeug = ({ palette, t, view, kanton, altersklasse }) => {
-  const v = VERSTEHEN[view];
+// `karte` statt `view` (14.11.2026): in Abläufen steht die Karte an einem Schritt, nicht an einem Werkzeug
+// («Kind»: Kinderzulage, Kita-Abzug; «Trennung»: Alimente). Ein Ablauf kann so mehrere Karten zeigen.
+// Kartennamen für den Titel des Aufklappers, wenn ein Ablauf mehrere Karten zeigt (a11y-Prüfung 16.11.2026:
+// zweimal «Ihr Kanton auf der Karte» war für Vorlese-Programme nicht zu unterscheiden). Deutsch wie im Atlas.
+export const KARTEN_NAME = { kinderzulage: 'Kinderzulage', kita: 'Abzug für Kinderbetreuung', alimente: 'Alimentenbevorschussung' };
+
+export const VerstehenImWerkzeug = ({ palette, t, view, karte, kanton, altersklasse }) => {
+  const v = karte ? { karte } : VERSTEHEN[view];
+  const grund = t(kanton ? 'erklaerseite.karteMitKanton' : 'erklaerseite.karteOhneKanton');
+  const kartenTitel = karte && KARTEN_NAME[karte]
+    ? React.createElement(React.Fragment, null, grund, ': ', React.createElement('span', { lang: 'de' }, KARTEN_NAME[karte]))
+    : grund;
   if (!v) return null;
   return React.createElement('div', { 'data-teil': 'verstehen-im-werkzeug', style: { marginTop: space.md + 'px' } },
     v.karte && React.createElement(Aufklapper, {
       palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte: v.karte, kanton, altersklasse },
-      titel: t(kanton ? 'erklaerseite.karteMitKanton' : 'erklaerseite.karteOhneKanton'),
+      titel: kartenTitel,
     }),
     v.figur && altersklasse !== 'kind' && React.createElement(Aufklapper, {
       palette, t, teil: 'aufklapper-figur', laden: TEILE.figur, props: { figur: v.figur }, titel: t('erklaerseite.imBild'),

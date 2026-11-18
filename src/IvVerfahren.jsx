@@ -1,5 +1,6 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, FristButton, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { plusTage } from './utils/fristen.js';
 import { inDays, formatDE } from './utils/helpers.js';
 import { HilflosenRechner } from './HilflosenRechner.jsx';
 
@@ -41,6 +42,20 @@ export const IvVerfahren = ({ palette, t, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('iv.stepHeTitle'), icon: 'ergaenzungsleistungen' },
       React.createElement('p', { style: s.stepText }, t('iv.stepHeText')),
       React.createElement(HilflosenRechner, { palette, t })
+    ),
+    // Kapitel 7, L6 (10.11.2026): der Rechtsweg. Einwände zum Vorbescheid innert 30 Tagen (IVG Art. 57a Abs. 3),
+    // gegen die Verfügung direkt Beschwerde ans kantonale Versicherungsgericht, keine Einsprache (IVG Art. 69 Abs. 1
+    // Bst. a, ATSG Art. 60). Die Frist rechnet ab dem Tag, an dem der Vorbescheid ankam
+    // (ATSG Art. 38 Abs. 1: Beginn am Folgetag, also Erhalt + 30); fällt das Ende auf ein Wochenende, gibt das Gesetz
+    // mehr Zeit (Abs. 3) — angezeigt wird nie ein späterer Tag.
+    React.createElement(AblaufStep, { palette, title: t('iv.stepRechtTitle') },
+      React.createElement('p', { style: s.stepText }, t('iv.stepRechtText')),
+      React.createElement(EreignisFrist, {
+        palette, t, onNavigate, id: 'iv-vorbescheid', frist: (d) => plusTage(d, 30),
+        labelKey: 'iv.stepRechtLabel', hinweisKey: 'iv.stepRechtHinweis', vorbeiKey: 'iv.stepRechtVorbei',
+        art: 'frist', buttonKey: 'iv.stepRechtButton', doneKey: 'iv.step2Done', calendarKey: 'iv.step2CalendarLink',
+        reminderTitle: t('iv.stepRechtReminder'), category: 'admin',
+      })
     ),
     React.createElement(AblaufStep, { palette, title: t('iv.step4Title') },
       React.createElement('p', { style: s.stepText }, t('iv.step4Text'))

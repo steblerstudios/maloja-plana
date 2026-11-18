@@ -14,6 +14,7 @@
 // K97-Nachtrag: dieselbe Escape-Funktion wie Dossier/Brief (maskiert auch ').
 import { escapeHtml as esc } from './utils/helpers.js';
 import { LOGO_PFADE, LOGO_FARBEN } from './components/MarkenLogo.jsx';
+import { mitEchtenBetraegen } from './utils/geld.js';
 
 const FARBE = {
   text: '#22211F',
@@ -55,7 +56,7 @@ function bildmarke(hoeheMm) {
     + '</svg>';
 }
 
-export function buildFlyerHtml({ t, qrDataUrl, ursprung = (typeof location !== 'undefined' ? location.origin : '') }) {
+function buildFlyerHtmlRoh({ t, qrDataUrl, ursprung = (typeof location !== 'undefined' ? location.origin : '') }) {
   const [claimA, claimB] = claimTeilen(t('flyer.claim')).map(esc);
   const lead = esc(t('flyer.lead'));
   const points = [t('flyer.point1'), t('flyer.point2'), t('flyer.point3')]
@@ -130,4 +131,9 @@ export function buildFlyerHtml({ t, qrDataUrl, ursprung = (typeof location !== '
     + '</div>'
     + '</section>'
     + '</body></html>';
+}
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export function buildFlyerHtml(...args) {
+  return mitEchtenBetraegen(() => buildFlyerHtmlRoh(...args));
 }

@@ -1301,6 +1301,27 @@ Haushalt · Rückwirkung einer späten Anmeldung.
 
 ---
 
+
+### Nachtrag 16.11.2026 — Werte 2027 (Zweig `feat/werte-2027-nov`)
+
+Abgerufen mit `curl`, gelesen mit `pdftotext -layout`, Gegenprobe wie oben:
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://www.sva-sz.ch/uploads/Dateien/Merkblaetter/Individuelle-Praemienverbilligung/Grenzwerte-Internet.pdf` | 200, 76'008 B, PDF (erstellt 06.11.2026 11:32, «Last-Modified: Fri, 06 Nov 2026», SHA-256 `c9296c61dc618740…`) | `…Grenzwerte-Internet-2099.pdf` → **404**, HTML |
+| `…/Merkblatt-IPV-2027.pdf` | 200, 8'577'242 B, unverändert seit 23.03.2026 | — |
+
+Wortlaut (Auszug) «Prämienverbilligung 2027»:
+- «Für das Jahr 2027 gelten folgende Durchschnittsprämien»: Erwachsene (ab Jahrgang 2001) Fr. 6'456.00 · Junge Erwachsene (Jahrgang 2002 - 2008) Fr. 4'548.00 · Kinder (Jahrgang 2009 und jünger) Fr. 1'500.00
+- «Verbilligt werden die Richtprämien, welche den 90% der Durchschnittsprämien entsprechen. Für das Jahr 2027 gelten folgende Richtprämien»: Fr. 5'810.40 · Fr. 4'093.20 · Fr. 1'350.00
+- Freibeträge 25'000 / 50'000 (Ehepaar) / 15'000 je Kind und je junge erwachsene Person in Ausbildung; Vermögensobergrenzen 250'000 / 500'000 — wie 2026
+- «Höchsteinkommen», Alleinstehende ohne Kind bis 4 Kinder: 43'806 · 56'376 · 66'241 · 74'811 · 80'701 (Ehepaar 64'077 · 75'207 · 84'832 · 91'602 · 97'492); «ab dem 5. Kind erhöht sich der Höchstwert weiter»; «minimalen Höchsteinkommen im Kanton Schwyz (für Kinder unter 11 Jahren, Mietzinsregion 3)»
+- zweite Tabelle (Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 %), Alleinstehende: 43'806 · 63'441 · 74'887.25 · 84'774.75 · 91'762.25 (Ehepaar 64'077 · 84'855.75 · 96'062 · 104'149.50 · 111'137)
+
+Selbstbehalt 2027: 11 % — KRBzEGzKVG § 1 unverändert; Merkblatt IPV 2027: «Der Selbstbehalt liegt gemäss der Volksabstimmung zur Teilrevision des EGzKVG vom 4. März 2018 bei 11 Prozent.» Die Teilrevision (RRB 710/2026 vom 22.09.2026: Selbstbehalt 10 %, Richtprämie 85–90 %) ist hängig; ihr Entwurf führt die Prämienverbilligung 2027 «nach bisherigem Recht» durch.
+
+Im Code: `src/config/ipvSchwyz.js`, `IPV_SZ_2027` und `IPV_SZ_JAHRE`, Quelle [6].
+
 ## OW — Obwalden
 
 **Beurteilung:** abbildbar — **in der App gebaut 28.09.2026 (K31)**, siehe «Nachprüfung 28.09.2026» unten

@@ -6,6 +6,7 @@ import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
 import { grundbedarfFuerHaushalt } from './data/sozialhilfeRechner.js';
 import { haushaltsEinnahmen } from './data/haushaltsEinnahmen.js';
 import { monatsAusgaben, zahltBeitraegeSelbst } from './utils/monatsrechnung.js';
+import { mitEchtenBetraegen } from './utils/geld.js';
 
 // Budget Light V1 — Grouped expense structure
 // See docs/product/budget-light-v1.md for product definition
@@ -291,7 +292,7 @@ const getBudgetRecommendations = (budget, t) => {
   return recommendations;
 };
 
-export const createBudgetReport = (data, t) => {
+const createBudgetReportRoh = (data, t) => {
   const budget = calculateMonthlyBudget(data, t);
 
   return {
@@ -322,3 +323,6 @@ export const createBudgetReport = (data, t) => {
     }
   };
 };
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export const createBudgetReport = (...args) => mitEchtenBetraegen(() => createBudgetReportRoh(...args));

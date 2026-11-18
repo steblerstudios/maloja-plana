@@ -45,7 +45,8 @@ export const LEBENSZUSTAENDE = [
       { key: 'mutterschaftsbeihilfe', mutterschaftsbeihilfe: true, nurMitKindern: true, quelle: 'Kanton', stand: '2026' },
       // Externe Vergünstigungen (national, der Schlüssel zu regionalen Angeboten) — Braindump #26.
       { key: 'kulturlegi',  url: 'https://www.kulturlegi.ch/',        quelle: 'Caritas',                   stand: '2026' },
-      { key: 'rekaFerien',  url: 'https://www.reka-ferienhilfe.ch/',  quelle: 'Reka-Stiftung Ferienhilfe', stand: '2026' },
+      // Gruppe A L5 (11.11.2026): reka-ferienhilfe.ch nennt Familien mit minderjährigen Kindern und Alleinerziehende.
+      { key: 'rekaFerien',  url: 'https://www.reka-ferienhilfe.ch/',  nurMitKindern: true, quelle: 'Reka-Stiftung Ferienhilfe', stand: '2026' },
     ],
   },
   {

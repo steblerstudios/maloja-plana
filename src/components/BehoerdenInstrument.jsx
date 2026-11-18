@@ -5,6 +5,7 @@ import { auswahlLabel } from '../utils/auswahlLabel.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
 import { zahl } from '../utils/geld.js';
 
+// Kapitel 6 · B (10.11.2026): die drei Teile tragen Stufe 3 unter der Kapitelüberschrift (Stufe 2), vorher Stufe 4.
 // Kapitel Behörden · oben (Fassung 6, Runde 9, Entwurf AD, Entscheid Stebler Studios 24.10.2026; gebaut Abnahme 25.10.2026).
 // Ersetzt den Kasten «Folgende Stände und Fristen sind erfasst» (er wiederholte die Angaben) und die zugeklappte
 // «Behörden-Checkliste»:
@@ -59,7 +60,7 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
   const n = new Date();
   const heute = n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
   const frist = datum && h('section', { 'data-teil': 'steuerfrist', 'aria-labelledby': 'mp-steuerfrist' },
-    h('h4', { id: 'mp-steuerfrist', style: { ...kapH, marginTop: 0 } }, tr('behördenStatus.taxDeadline')),
+    h('h3', { id: 'mp-steuerfrist', style: { ...kapH, marginTop: 0 } }, tr('behördenStatus.taxDeadline')),
     h('div', { style: { display: 'flex', gap: space.md + 'px', alignItems: 'center' } },
       // Kalenderblatt (F9-A14, Variante E): das Datum steht im Satz daneben — fürs Vorlesen stumm.
       h(Kalenderblatt, { iso: String(iso).slice(0, 10), palette, locale: loc, vorbei: steuerfristVorbei(d, heute), thema: { bereich: 'behoerden', icon: 'behoerden' } }),
@@ -79,7 +80,7 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
   // 2. Behördengänge
   const erledigt = GAENGE.filter((g) => gangErledigt(g.id, checked, d)).length;
   const gaenge = h('section', { 'data-teil': 'behoerdengaenge', 'aria-labelledby': 'mp-behoerdengaenge' },
-    h('h4', { id: 'mp-behoerdengaenge', style: datum ? kapH : { ...kapH, marginTop: 0 } }, tr('behoerdenInstrument.gaenge')),
+    h('h3', { id: 'mp-behoerdengaenge', style: datum ? kapH : { ...kapH, marginTop: 0 } }, tr('behoerdenInstrument.gaenge')),
     h('p', { style: { ...klein, margin: '0 0 ' + space.xs + 'px' } }, tr('checklist.intro'), ' ', tr('behoerdenInstrument.vonErledigt', { n: erledigt, total: GAENGE.length })),
     ...GAENGE.map((g) => {
       const ist = gangErledigt(g.id, checked, d);
@@ -102,7 +103,7 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
   // 3. Für den Fall der Fälle
   const testament = auswahlLabel('behoerden', 'willMade', d.willMade, tr) || tr('behoerdenInstrument.nichtErfasst');
   const fall = h('section', { 'data-teil': 'fall-der-faelle', 'aria-labelledby': 'mp-fall-der-faelle' },
-    h('h4', { id: 'mp-fall-der-faelle', style: kapH }, tr('behoerdenInstrument.fallTitel')),
+    h('h3', { id: 'mp-fall-der-faelle', style: kapH }, tr('behoerdenInstrument.fallTitel')),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, tr('behoerdenInstrument.fallSatz')),
     h('div', { style: { padding: space.sm + 'px', borderRadius: radius.md, background: palette.up } },
       h('div', { style: { fontSize: text.xs, color: palette.mid } }, tr('behördenStatus.will')),

@@ -1,5 +1,5 @@
 import React, { useState, Suspense } from 'react';
-import { LIGHT_PALETTE } from './config/constants.js';
+import { LIGHT_PALETTE, DARK_PALETTE } from './config/constants.js';
 
 // Startbündel-Diät (23.10.2026, size-limit stand bei 64,99 / 65 kB): wer den Zugang schon hat
 // — also fast alle, die die App öffnen —, sieht die Code-Wand nie. Darum prüft hier nur der
@@ -20,7 +20,8 @@ export const BetaGateTor = ({ children }) => {
   if (hatZugang) return children;
   // Ruhiger Grund in der Farbe der Wand, solange sie lädt — kein Spinner, kein Sprung.
   return React.createElement(Suspense, {
-    fallback: React.createElement('div', { style: { minHeight: '100vh', background: LIGHT_PALETTE.bg } }),
+    // Grund in der Farbe, die theme-init.js schon gesetzt hat (Gruppe C, D: das Tor folgt dem Erscheinungsbild).
+    fallback: React.createElement('div', { style: { minHeight: '100vh', background: (typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme') === 'light' ? LIGHT_PALETTE : DARK_PALETTE).bg } }),
   }, React.createElement(BetaGate, null, children));
 };
 

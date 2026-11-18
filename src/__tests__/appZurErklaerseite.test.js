@@ -20,14 +20,14 @@ const quelle = (datei) => fs.readFileSync(path.resolve(__dirname, '..', datei), 
 const t = createT({ de }, 'de', 'sie');
 
 describe('Werkzeuge verlinken ihre Erklärseite', () => {
-  it('vier Werkzeuge, je eine Erklärseite, die es gibt', () => {
-    expect(ERKLAERSEITE).toEqual({ sozialhilfe: '/sozialhilfe/', tax: '/steuern/', premium: '/praemienverbilligung/', praemien: '/krankenkasse/' });
+  it('sieben Werkzeuge, je eine Erklärseite, die es gibt', () => {
+    expect(ERKLAERSEITE).toEqual({ sozialhilfe: '/sozialhilfe/', tax: '/steuern/', premium: '/praemienverbilligung/', praemien: '/krankenkasse/', ergaenzungsleistungen: '/ergaenzungsleistungen/', alv: '/arbeitslosigkeit/', pensionierung: '/ahv-pensionierung/' });
     for (const pfad of Object.values(ERKLAERSEITE)) {
       expect(fs.existsSync(path.resolve(process.cwd(), 'public', pfad.slice(1), 'index.html')), pfad).toBe(true);
     }
   });
 
-  it.each([['SozialhilfeView.jsx', 'sozialhilfe'], ['TaxCalculator.jsx', 'tax'], ['PremiumSubsidy.jsx', 'premium'], ['PraemienOrientierung.jsx', 'praemien']])(
+  it.each([['SozialhilfeView.jsx', 'sozialhilfe'], ['TaxCalculator.jsx', 'tax'], ['PremiumSubsidy.jsx', 'premium'], ['PraemienOrientierung.jsx', 'praemien'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen'], ['AlvRechner.jsx', 'alv'], ['Pensionierung.jsx', 'pensionierung']])(
     '%s zeigt den Link', (datei, view) => {
       expect(quelle(datei)).toContain(`ErklaerseiteLink, { palette, t, view: '${view}' }`);
     });
@@ -49,9 +49,10 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
   describe('Werkzeuge verlinken ihre Karte im Kantonsatlas', () => {
     const atlas = fs.readFileSync(path.resolve(process.cwd(), 'public', 'kantonsatlas', 'index.html'), 'utf8');
     const WERKZEUGE = [['PraemienOrientierung.jsx', 'praemien'], ['PremiumSubsidy.jsx', 'premium'], ['TaxCalculator.jsx', 'tax'],
-      ['MietzinsOrientierung.jsx', 'mietzins'], ['AlvRechner.jsx', 'alv'], ['SozialhilfeView.jsx', 'sozialhilfe'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen']];
+      ['MietzinsOrientierung.jsx', 'mietzins'], ['AlvRechner.jsx', 'alv'], ['SozialhilfeView.jsx', 'sozialhilfe'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen'],
+      ['Stundenlohn.jsx', 'stundenlohn']]; // Stundenlohn seit 14.11.2026
 
-    it('sieben Werkzeuge, jedes Ziel ist eine Karte, die auf der Seite steht', () => {
+    it('acht Werkzeuge, jedes Ziel ist eine Karte, die auf der Seite steht', () => {
       expect(Object.keys(KANTONSKARTE).sort()).toEqual(WERKZEUGE.map(([, v]) => v).sort());
       for (const ziel of Object.values(KANTONSKARTE)) {
         expect(ziel, ziel).toMatch(/^\/kantonsatlas\/#karte-[a-z]+$/);
@@ -107,12 +108,14 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
       expect(cv.indexOf('React.createElement(ZumVerstehen')).toBeGreaterThan(cv.indexOf('    renderPassend(),'));
     });
 
-    it('Versicherungen: zwei Erklärseiten und drei Karten, mit Überschriften', () => {
+    it('Versicherungen: vier Erklärseiten und drei Karten, mit Überschriften', () => {
       const html = renderToStaticMarkup(React.createElement(ZumVerstehen, { palette: LIGHT_PALETTE, t, kapitel: 'versicherungen' }));
       expect(html).toContain(t('erklaerseite.zumVerstehen'));
       expect(html).toContain(t('erklaerseite.aufDerKarte'));
-      expect((html.match(/<a /g) || []).length).toBe(5);
+      expect((html.match(/<a /g) || []).length).toBe(7);
+      expect(html).toContain('href="/ahv-pensionierung/"');
       expect(html).toContain('href="/krankenkasse/"');
+      expect(html).toContain('href="/ergaenzungsleistungen/"');
       expect(html).toContain('href="/kantonsatlas/#karte-el"');
     });
 

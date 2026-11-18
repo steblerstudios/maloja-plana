@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
-import { LIGHT_PALETTE } from './config/constants.js';
+import { LIGHT_PALETTE, DARK_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { text, weight, radius , leading , space } from './config/tokens.js';
@@ -23,6 +23,10 @@ const ERKLAERSEITEN = [
   ['/krankenkasse/', 'Krankenkasse'],
   ['/sozialhilfe/', 'Sozialhilfe'],
   ['/steuern/', 'Steuern'],
+  // E3 (14.11.2026).
+  ['/ergaenzungsleistungen/', 'Ergänzungsleistungen'],
+  ['/arbeitslosigkeit/', 'Arbeitslosigkeit'],
+  ['/ahv-pensionierung/', 'AHV und Pensionierung'],
 ];
 // Seiten über alle Themen, im Organigramm oben «Die Schweiz verstehen» (Entscheid 07.11.2026,
 // docs/design/seiten-architektur-2026-11.md). Kantonsatlas seit 07.11.2026 auf main (#741), Nachtrag zu #743.
@@ -70,6 +74,11 @@ export function beispielAusAdresse(ort = typeof location !== 'undefined' ? locat
   zusaetze.delete('beispiel');
   const rest = zusaetze.toString();
   return (ort.pathname || '/') + (rest ? '?' + rest : '') + (ort.hash || '');
+}
+
+export function torPalette() {
+  try { return JSON.parse(localStorage.getItem('or5_theme') || 'true') ? DARK_PALETTE : LIGHT_PALETTE; }
+  catch { return DARK_PALETTE; }
 }
 
 export const BetaGate = ({ children }) => {
@@ -129,7 +138,10 @@ export const BetaGate = ({ children }) => {
   if (granted) return children;
   if (demo?.data) return React.cloneElement(children, { demo });
 
-  const palette = LIGHT_PALETTE;
+  // Gruppe C, Gestaltung D (11.11.2026): das Tor folgt dem Erscheinungsbild der App (dieselbe Regel
+  // wie theme-init.js und main.jsx: Schlüssel or5_theme, ohne Eintrag dunkel). Vorher war es fest hell,
+  // und nach «Öffnen» sprang die App auf dunkel.
+  const palette = torPalette();
 
   // Rechtliche Ansicht ohne Zugangscode — LegalView mit eigener Tab-Navigation.
   if (legalSection) {
@@ -184,7 +196,8 @@ export const BetaGate = ({ children }) => {
         // Der Name steckt als versteckter Text im Logo: Screenreader UND Text-Extraktion
         // (Suchmaschine, KI-Crawler) lesen «Maloja Plana» (Wächter: markennameImTitel.test.js).
         // Anthrazit, weil es auf dem hellen Himmel steht (Farbe nach Fläche, MarkenLogo.jsx).
-        React.createElement(MarkenLogo, { palette, breite: 180 })
+        // Das Logo steht auf dem hellen Himmel des Bildes — darum immer die helle Fassung, auch im Dunkeln.
+        React.createElement(MarkenLogo, { palette: LIGHT_PALETTE, breite: 180 })
       )
     ),
     React.createElement('form', {
@@ -216,14 +229,19 @@ export const BetaGate = ({ children }) => {
       React.createElement('p', {
         style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.sm + 'px', lineHeight: leading.normal }
       }, t('beta.gateMessage')),
+      // Sichtbare Beschriftung statt nur Platzhalter (Gesamtbefund U12, Gruppe C D).
+      React.createElement('label', {
+        htmlFor: 'beta-code',
+        style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, margin: '0 0 ' + space.xs + 'px' }
+      }, t('beta.codePlaceholder')),
       React.createElement('input', {
+        id: 'beta-code',
         type: 'text',
         // Ein Code ist kein Satz: keine Autokorrektur, kein Grossbuchstabe, keine Vorschläge
         // (iPhone-Safari ersetzte sonst Wörter und Striche — «Code ungültig» trotz richtigem Code).
         autoComplete: 'off', autoCorrect: 'off', autoCapitalize: 'none', spellCheck: false,
         value: input,
         onChange: (e) => { setInput(e.target.value); setError(false); },
-        placeholder: t('beta.codePlaceholder'), 'aria-label': t('beta.codePlaceholder'),
         ref: codeFeld,
         'aria-invalid': error ? 'true' : undefined,
         'aria-describedby': error ? 'beta-error' : undefined,
@@ -239,6 +257,13 @@ export const BetaGate = ({ children }) => {
         role: 'alert',
         style: { fontSize: text.sm, color: palette.roseDeep, marginTop: space.sm }
       }, t('beta.codeWrong')),
+      // Woher der Code kommt (Gruppe C, D): die Warteliste auf der Website, die es schon gibt.
+      React.createElement('p', {
+        style: { fontSize: text.sm, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.normal }
+      },
+        t('beta.keinCode'), ' ',
+        React.createElement('a', { href: '/#warteliste', style: { ...linkStil(palette), fontSize: text.sm } }, t('beta.wartelisteLink'))
+      ),
       React.createElement(PrimaryButton, {
         palette, type: 'submit',
         style: { marginTop: space.md, width: '100%', padding: '12px', fontSize: text.body },

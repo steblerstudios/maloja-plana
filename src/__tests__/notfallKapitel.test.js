@@ -173,7 +173,7 @@ describe('Barrierefreiheit (A11y-Prüfung 25.10.2026)', () => {
 describe('Im Kapitel', () => {
   it('Zusammenfassung mit Blutgruppe und Allergien, vor dem Ernstfall', () => {
     const text = nurText(kapitelHtml());
-    expect(text).toContain('Ein Hausarzt ist eingetragen. Blutgruppe A+. Allergien: Penicillin.');
+    expect(text).toContain('Die Hausarztpraxis ist eingetragen. Blutgruppe A+. Allergien: Penicillin.');
     expect(text.indexOf('Allergien: Penicillin.')).toBeLessThan(text.indexOf('Im Ernstfall: Notfallkarte öffnen'));
   });
   // Muster M2 (25.10.2026): «x von n» am Abschnitt, das Übrige in EINER leisen Zeile «Nicht erfasst: …».

@@ -14,6 +14,8 @@ const EMERGENCY = [
   { num: '144', key: 'sani' },
   { num: '1414', key: 'rega' },
   { num: '145', key: 'tox' },
+  // Kapitel 7, Gestaltung B (10.11.2026): 117 fehlte hier, auf der Kapitelseite steht sie im Ernstfall-Knopf.
+  { num: '117', key: 'polizei' },
   { num: '112', key: 'euro' },
 ];
 
@@ -27,7 +29,10 @@ export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
     cardTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' },
     cardText: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal },
     telList: { display: 'flex', flexDirection: 'column', gap: '8px', marginTop: space.sm + 'px' },
-    tel: { fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.semi, textDecoration: 'none', fontFamily: 'inherit' },
+    // Kapitel 7, Gestaltung B (10.11.2026): Knöpfe von 48 px statt 19 px hoher Textlinks — wer zitternd tippt,
+    // soll nicht die Nummer daneben treffen. Rand in palette.mid (3:1 gegen den Grund).
+    tel: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minHeight: '48px', boxSizing: 'border-box', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.mid, background: palette.surface, fontSize: text.body, color: palette.text, fontWeight: weight.semi, textDecoration: 'none', fontFamily: 'inherit' },
+    telNummer: { minWidth: '3.2em', color: palette.sandDeep, fontVariantNumeric: 'tabular-nums' },
   };
 
   return React.createElement(AblaufContainer, {
@@ -41,7 +46,7 @@ export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
       React.createElement('div', { style: s.telList },
         EMERGENCY.map(e => React.createElement('a', {
           key: e.key, href: 'tel:' + e.num, style: s.tel,
-        }, e.num + ' · ' + t('unfallKrankheit.num_' + e.key)))
+        }, React.createElement('span', { style: s.telNummer }, e.num), t('unfallKrankheit.num_' + e.key)))
       ),
       React.createElement('div', { style: s.note }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('unfallKrankheit.step1Note'))),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('unfallKrankheit.step1Link'), onClick: () => onNavigate('notfalleinstieg') })

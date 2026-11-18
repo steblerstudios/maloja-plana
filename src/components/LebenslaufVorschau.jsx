@@ -53,8 +53,10 @@ export const LebenslaufVorschau = ({ palette, t, ausbildung, allData, onNavigate
 
   const h = React.createElement;
   return h('section', { 'data-teil': 'lebenslauf-vorschau', 'aria-labelledby': 'mp-lebenslauf-vorschau', style: { marginBottom: space.lg + 'px' } },
-    h('h4', { id: 'mp-lebenslauf-vorschau', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('lebenslaufVorschau.titel')),
-    h(LebenslaufBlatt, { palette, inhalt }),
+    // Kapitel 5, Gestaltung (10.11.2026): unter der Kapitelüberschrift (h2) war das h4 — Sprung 2 → 4. Jetzt h3,
+    // das Blatt eine Stufe darunter (Name h4, Abschnitte h5), wie die übrigen Abschnitte der Kapitelseite.
+    h('h3', { id: 'mp-lebenslauf-vorschau', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('lebenslaufVorschau.titel')),
+    h(LebenslaufBlatt, { palette, inhalt, ebene: 4 }),
     onNavigate && h('button', {
       type: 'button', className: 'mp-link', onClick: () => onNavigate('cv'),
       // Fassung 9 (M2): echter Bedienknopf, führt nur zum Lebenslauf → Link. Das Blatt (Druckbild) bleibt.

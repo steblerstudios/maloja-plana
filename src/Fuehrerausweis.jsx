@@ -1,6 +1,6 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
-import { inDays } from './utils/helpers.js';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { plusMonate } from './utils/fristen.js';
 
 // Führerausweis — ruhiger Orientierungs-Ablauf (keine Rechner, keine Rechtsberatung).
 // Belegte Fakten (ch.ch / Bundesamt für Strassen ASTRA, Stand 2026):
@@ -14,7 +14,8 @@ import { inDays } from './utils/helpers.js';
 
 export const Fuehrerausweis = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
-  const kontrolle = inDays(730); // ~2 Jahre — Orientierungs-Rhythmus der 75+-Untersuchung (verschiebbar)
+  // A2 (Kapitel 6, 10.11.2026): die Erinnerung rechnet ab der letzten Untersuchung (oder dem 75. Geburtstag),
+  // nicht mehr 730 Tage ab dem Klick (VZV Art. 27 Abs. 1 Bst. b: ab 75 alle zwei Jahre).
 
   return React.createElement(AblaufContainer, {
     palette, t, onNavigate, ablauf: 'fuehrerausweis', icon: 'ereignisFuehrerausweis',
@@ -39,13 +40,11 @@ export const Fuehrerausweis = ({ palette, t, onNavigate }) => {
     // 4 — Ab 75: verkehrsmedizinische Kontrolluntersuchung, alle 2 Jahre → Kalender
     React.createElement(AblaufStep, { palette, title: t('fuehrerausweis.step3Title') },
       React.createElement('p', { style: s.stepText }, t('fuehrerausweis.step3Text')),
-      React.createElement(FristButton, {
-        palette, t,
-        buttonLabel: t('fuehrerausweis.step3Button'),
-        doneLabel: t('fuehrerausweis.step3Done'),
-        calendarLabel: t('fuehrerausweis.step3CalendarLink'),
-        onNavigate,
-        reminder: { title: t('fuehrerausweis.reminderTitle'), dueDate: kontrolle, category: 'health', recurrence: 'once' },
+      React.createElement(EreignisFrist, {
+        palette, t, onNavigate, id: 'fuehrerausweis-kontrolle', frist: (d) => plusMonate(d, 24),
+        labelKey: 'fuehrerausweis.kontrolleLabel', hinweisKey: 'fuehrerausweis.kontrolleHinweis', vorbeiKey: 'fuehrerausweis.kontrolleVorbei',
+        art: 'erinnerung', buttonKey: 'fuehrerausweis.step3Button', doneKey: 'fuehrerausweis.step3Done', calendarKey: 'fuehrerausweis.step3CalendarLink',
+        reminderTitle: t('fuehrerausweis.reminderTitle'), category: 'health',
       })
     ),
     // 5 — Neulenkende: Führerausweis auf Probe

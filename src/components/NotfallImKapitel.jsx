@@ -373,7 +373,12 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
       })),
     // F7-K6-1: Die Antwort «vorhanden?» steht hier statt in den Angaben. Das Formular setzt sie nicht selbst — wer
     // schon eine Verfügung hat, sagt es hier. Bei «Ja» bleibt der Weg zum Formular, die Kachel führt dann nicht hin.
-    h('div', { 'data-teil': 'notfall-pv-antwort', style: { marginTop: space.sm + 'px' } },
+    // Kapitel 7, Gestaltung C (10.11.2026): die Kachel fragt schon «Patientenverfügung · Noch nicht»; die Auswahl
+    // darunter stellte dieselbe Frage ein zweites Mal. Sie bleibt (für eine Verfügung auf Papier), aber aufgeklappt
+    // nur auf Wunsch, unter einer eigenen Frage.
+    h('details', { 'data-teil': 'notfall-pv-antwort', style: { marginTop: space.sm + 'px' } },
+      // Ohne display:flex — sonst blendet der Browser das Aufklapp-Dreieck aus.
+      h('summary', { style: { cursor: 'pointer', minHeight: '44px', boxSizing: 'border-box', padding: '12px 0', fontSize: text.sm, color: palette.text } }, t('notfallKapitel.pvSchonFrage')),
       h('label', { htmlFor: 'mp-notfall-pv', style: { display: 'block', fontSize: text.sm, color: palette.text } }, feldName('notfall', 'patientenverfuegung')),
       h('select', {
         id: 'mp-notfall-pv', 'aria-describedby': 'mp-notfall-pv-hinweis', value: nf.patientenverfuegung || '', disabled: !!demoMode,

@@ -111,7 +111,8 @@ describe('Hintergrundseiten', () => {
     });
 
     it('jede Figur ist ein beschriftetes Bild mit Titel und Beschreibung', () => {
-      const svgs = [...html.matchAll(/<svg [^>]*>([\s\S]*?)<\/svg>/g)];
+      // Ohne Schmuck (aria-hidden): seit Gruppe E, Gestaltung C (12.11.2026) trägt der Kopf die Bildmarke als SVG.
+    const svgs = [...html.matchAll(/<svg [^>]*>([\s\S]*?)<\/svg>/g)].filter(([g]) => !/^<svg [^>]*aria-hidden="true"/.test(g));
       if (pfad === 'krankenkasse') expect(svgs.length).toBe(5);
       for (const [ganz, innen] of svgs) {
         expect(ganz).toMatch(/role="img"/);
@@ -295,7 +296,8 @@ describe('Hintergrundseiten', () => {
     });
 
     it('nennt bei jeder Ebene, woher die Zahl kommt, und die Vorbehalte des Atlas', () => {
-      for (const key of Object.keys(EBENEN)) {
+      // nurAtlas: Ebene nur auf /kantonsatlas/, dort mit Quelle je Kanton (Alimente, 14.11.2026).
+      for (const key of Object.keys(EBENEN).filter((k) => !EBENEN[k].nurAtlas)) {
         expect(KANTONE_IM_VERGLEICH.quellen.map((q) => q.key), key).toContain(EBENEN[key].quelle);
       }
       expect(text).toContain('Median-Reineinkommen 2022');
