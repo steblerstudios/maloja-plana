@@ -8,6 +8,9 @@ import { MarkenLogo } from './components/MarkenLogo.jsx';
 // Dieselben Zeichen wie in der App (Kopfzeile, Navigation) — aus dem Kern, der ohnehin im
 // Startbündel liegt: kostet die Wand keine Bytes und zeigt Neuen schon die Bildsprache.
 import { Icon } from './IconKern.jsx';
+// Die Ast-Farben der Seiten-Zeichen setzt sonst main.jsx — aber erst, wenn die App rendert,
+// also hinter dem Tor. Liegt ohnehin im Startbündel (main.jsx importiert es).
+import { LEBENSBEREICHE } from './data/lebensbereiche.js';
 // Dieselbe Landschaft wie auf der Übersicht (BergLandschaft) — kein zweites Bild.
 import landschaft from './assets/berge/landschaft.webp?url';
 
@@ -19,22 +22,22 @@ const LegalView = React.lazy(() => import('./LegalView.jsx'));
 // Zugangs-Gate braucht den Server (Login-/Backend-Grundsatzentscheid).
 const BETA_CODE_HASH = 'bc0d786f0beb06f7442b099a677ee08642acec8050aa56abd7a19711095f15b9';
 const STORAGE_KEY = 'or5_beta_access';
-// Dritte Spalte: dasselbe Zeichen, das die App für dieses Thema zeigt (werkzeugRegister.js,
-// ansichtenRegister.js). Drei stehen im Kern, die übrigen in IconSystem.jsx — die kommen nach,
-// sobald die Wand steht (siehe `vollesRegister` unten), damit die Wand nicht auf sie wartet.
+// Dritte Spalte: das Seiten-Zeichen, das die App im Titel derselben Seite zeigt (Leitform des
+// Lebensbereichs mit Abzeichen, z. B. Sozialhilfe = Behörde mit Schirm; seitenZeichen.js,
+// ansichtIkon in ansichtenRegister.js). «Was steht mir zu?» hat dort keins, nur den Wegweiser
+// aus dem Kern. Die Seiten-Zeichen stehen in IconSystem.jsx und kommen nach, sobald die Wand
+// steht (siehe `vollesRegister` unten), damit die Wand nicht auf sie wartet.
 const ERKLAERSEITEN = [
   ['/was-steht-mir-zu/', 'Was steht mir zu?', 'wegweiser'],
-  ['/praemienverbilligung/', 'Prämienverbilligung', 'praemienverbilligung'],
+  ['/praemienverbilligung/', 'Prämienverbilligung', 'seite:premium'],
   // Seit 06.11.2026 (Verbesserungen D2): indexiert, stand aber hier nicht.
-  ['/krankenkasse/', 'Krankenkasse', 'ereignisKkerst'],
-  ['/sozialhilfe/', 'Sozialhilfe', 'sozialhilfe'],
-  // Nicht 'money' wie im Menü: die Münze steht dort auch für Kreditkarte, Stundenlohn und
-  // Mindestlohn. 'steuern' ist das eigene Zeichen (iconInventar.js: «Steuererklärung mit Prozent»).
-  ['/steuern/', 'Steuern', 'steuern'],
+  ['/krankenkasse/', 'Krankenkasse', 'seite:kkerst'],
+  ['/sozialhilfe/', 'Sozialhilfe', 'seite:sozialhilfe'],
+  ['/steuern/', 'Steuern', 'seite:tax'],
   // E3 (14.11.2026).
-  ['/ergaenzungsleistungen/', 'Ergänzungsleistungen', 'ereignisErgaenzungsleistungen'],
-  ['/arbeitslosigkeit/', 'Arbeitslosigkeit', 'work'],
-  ['/ahv-pensionierung/', 'AHV und Pensionierung', 'vorsorge'],
+  ['/ergaenzungsleistungen/', 'Ergänzungsleistungen', 'seite:ergaenzungsleistungen'],
+  ['/arbeitslosigkeit/', 'Arbeitslosigkeit', 'seite:alv'],
+  ['/ahv-pensionierung/', 'AHV und Pensionierung', 'seite:vorsorge'],
 ];
 // Seiten über alle Themen, im Organigramm oben «Die Schweiz verstehen» (Entscheid 07.11.2026,
 // docs/design/seiten-architektur-2026-11.md). Kantonsatlas seit 07.11.2026 auf main (#741), Nachtrag zu #743.
@@ -123,6 +126,9 @@ export const BetaGate = ({ children }) => {
   const [, setVollesRegister] = useState(false);
   useEffect(() => {
     import('./IconSystem.jsx').then(() => setVollesRegister(true)).catch(() => {});
+    // Dieselbe Zeile wie in main.jsx (Ast-Farben, Bauplan B4), mit dem Erscheinungsbild des Tors.
+    const dunkel = torPalette() === DARK_PALETTE;
+    try { for (const b of LEBENSBEREICHE) document.documentElement.style.setProperty('--mp-ast-' + b.key, dunkel ? b.dark : b.light); } catch {}
   }, []);
   useEffect(() => {
     try {
@@ -329,8 +335,9 @@ export const BetaGate = ({ children }) => {
               textDecoration: 'underline', textUnderlineOffset: '2px',
             }
           },
-            zeichen && React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', width: '14px', height: '14px', flexShrink: 0 } },
-              React.createElement(Icon, { name: zeichen, size: 14 })),
+            // 18 px: die Seiten-Zeichen tragen ein Abzeichen in der Ecke, das kleiner nicht mehr lesbar ist.
+            zeichen && React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', width: '18px', height: '18px', flexShrink: 0 } },
+              React.createElement(Icon, { name: zeichen, size: 18 })),
             name
           ))
         )
