@@ -30,7 +30,9 @@ export const RECHTSREGELN = [
     id: 'nbu8h',
     regel: 'Nichtberufsunfall über die Stelle ab mindestens 8 Stunden pro Woche bei derselben Arbeitgeberin oder demselben Arbeitgeber',
     artikel: '13',
-    kuerzel: { de: ['UVV'], en: ['UVV'], fr: ['OLAA'], it: ['OAINF'], rm: ['UVV', 'OAAc'] },
+    // rm: UVV, UVG und KVG gibt es auf Fedlex nicht auf Romanisch, darum das deutsche Kürzel.
+    // «OAAc» war amtlich nicht belegt, seit 18.11.2026 einheitlich «UVV».
+    kuerzel: { de: ['UVV'], en: ['UVV'], fr: ['OLAA'], it: ['OAINF'], rm: ['UVV'] },
     quelle: 'https://www.fedlex.admin.ch/eli/cc/1983/38_38_38/de#art_13',
     fundstellen: {
       'kkErst.step3Text': [8],
@@ -55,7 +57,7 @@ export const RECHTSREGELN = [
     // (Fachprüfung 18.11.2026). Die Verordnung SR 837.171 ist nicht gegengeprüft.
     regel: 'Die Unfallversicherung endet mit dem 31. Tag nach dem Tag, an dem der Anspruch auf mindestens den halben Lohn aufhört; für arbeitslose Personen mit dem 31. Tag nach dem Tag, an dem letztmals die Voraussetzungen nach AVIG Art. 8 erfüllt oder Entschädigungen nach AVIG Art. 29 bezogen wurden',
     artikel: '3',
-    kuerzel: { de: ['UVG'], en: ['UVG'], fr: ['LAA'], it: ['LAINF'], rm: ['UVG', 'LAAc'] },
+    kuerzel: { de: ['UVG'], en: ['UVG'], fr: ['LAA'], it: ['LAINF'], rm: ['UVG'] },
     quelle: 'https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_3',
     fundstellen: {
       'aussteuerung.fristHinweis': [],
