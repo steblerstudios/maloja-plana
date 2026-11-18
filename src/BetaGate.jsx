@@ -19,17 +19,20 @@ const LegalView = React.lazy(() => import('./LegalView.jsx'));
 // Zugangs-Gate braucht den Server (Login-/Backend-Grundsatzentscheid).
 const BETA_CODE_HASH = 'bc0d786f0beb06f7442b099a677ee08642acec8050aa56abd7a19711095f15b9';
 const STORAGE_KEY = 'or5_beta_access';
+// Dritte Spalte: dasselbe Zeichen, das die App für dieses Thema zeigt (werkzeugRegister.js,
+// ansichtenRegister.js). Vier stehen im Kern, die übrigen in IconSystem.jsx — die kommen nach,
+// sobald die Wand steht (siehe `vollesRegister` unten), damit die Wand nicht auf sie wartet.
 const ERKLAERSEITEN = [
-  ['/was-steht-mir-zu/', 'Was steht mir zu?'],
-  ['/praemienverbilligung/', 'Prämienverbilligung'],
+  ['/was-steht-mir-zu/', 'Was steht mir zu?', 'wegweiser'],
+  ['/praemienverbilligung/', 'Prämienverbilligung', 'praemienverbilligung'],
   // Seit 06.11.2026 (Verbesserungen D2): indexiert, stand aber hier nicht.
-  ['/krankenkasse/', 'Krankenkasse'],
-  ['/sozialhilfe/', 'Sozialhilfe'],
-  ['/steuern/', 'Steuern'],
+  ['/krankenkasse/', 'Krankenkasse', 'ereignisKkerst'],
+  ['/sozialhilfe/', 'Sozialhilfe', 'sozialhilfe'],
+  ['/steuern/', 'Steuern', 'money'],
   // E3 (14.11.2026).
-  ['/ergaenzungsleistungen/', 'Ergänzungsleistungen'],
-  ['/arbeitslosigkeit/', 'Arbeitslosigkeit'],
-  ['/ahv-pensionierung/', 'AHV und Pensionierung'],
+  ['/ergaenzungsleistungen/', 'Ergänzungsleistungen', 'ereignisErgaenzungsleistungen'],
+  ['/arbeitslosigkeit/', 'Arbeitslosigkeit', 'work'],
+  ['/ahv-pensionierung/', 'AHV und Pensionierung', 'vorsorge'],
 ];
 // Seiten über alle Themen, im Organigramm oben «Die Schweiz verstehen» (Entscheid 07.11.2026,
 // docs/design/seiten-architektur-2026-11.md). Kantonsatlas seit 07.11.2026 auf main (#741), Nachtrag zu #743.
@@ -112,6 +115,13 @@ export const BetaGate = ({ children }) => {
   // Landschaft aus dem Bild. Nur mit Maus/Trackpad — auf Touch-Geräten öffnete der
   // Sofort-Fokus die Tastatur, bevor man den Eingang überhaupt gesehen hatte.
   const codeFeld = useRef(null);
+  // Das volle Icon-Register (für die Erklärseiten-Links) erst nach dem ersten Bild: es hängt
+  // sich in dasselbe `Icons`-Objekt ein, der Zähler zeichnet danach neu. Bis dahin hält ein
+  // leerer Platz gleicher Grösse die Zeile ruhig. Ladefehler (offline): Links ohne Zeichen.
+  const [, setVollesRegister] = useState(false);
+  useEffect(() => {
+    import('./IconSystem.jsx').then(() => setVollesRegister(true)).catch(() => {});
+  }, []);
   useEffect(() => {
     try {
       if (codeFeld.current && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
@@ -308,14 +318,19 @@ export const BetaGate = ({ children }) => {
         React.createElement('nav', { key: titel, 'aria-label': titel, lang: 'de', style: { marginTop: oben } },
           // Die zweite Zeile nennt ihren Namen sichtbar, damit sie nicht wie eine Fortsetzung der ersten wirkt.
           i > 0 && React.createElement('span', { style: { color: palette.mid, fontSize: text.xs, padding: '0 8px' } }, `${titel}:`),
-          liste.map(([pfad, name]) => React.createElement('a', {
+          liste.map(([pfad, name, zeichen]) => React.createElement('a', {
             key: pfad, href: pfad,
             style: {
-              display: 'inline-block', minHeight: '44px', lineHeight: '44px', padding: '0 8px',
+              display: 'inline-flex', alignItems: 'center', gap: '5px',
+              minHeight: '44px', padding: '0 8px', verticalAlign: 'middle',
               color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
               textDecoration: 'underline', textUnderlineOffset: '2px',
             }
-          }, name))
+          },
+            zeichen && React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', width: '14px', height: '14px', flexShrink: 0 } },
+              React.createElement(Icon, { name: zeichen, size: 14 })),
+            name
+          ))
         )
       ),
       React.createElement('button', {
