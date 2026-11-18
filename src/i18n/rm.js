@@ -3025,6 +3025,7 @@ export default {
       heartfelt27: 'il tracker d’usits (App Store e Google Play, Crewz) — Notar usits senza squitsch da seria e senza mala conscienza. Tenor il purschider utilisabel senza conto, tut las datas exportablas da tut temp sco datoteca.',
       heartfelt28: 'Englisches Gratis-Spiel zum Datenschutz: Konten sichern und Betrug erkennen, Mission für Mission. Die Seite nutzt Analyse- und Fehlerdienste. Für die Schweiz führt Maloja durch «Digitale Ordnung».', // TODO(rm): Übersetzung
       heartfelt29: 'Beispiel für einen E-Mail-Dienst: Proton AG, Plan-les-Ouates GE, laut Anbieter verschlüsselt und Schweizer Recht unterstellt. Standort der Daten vor dem Wechsel beim Anbieter prüfen.', // TODO(rm): Übersetzung
+      heartfelt30: 'Noah Müller da Basilea — informaticher e magister. El sviluppa websites, pitschens instruments e pipelines da datas ed instruescha informatica.', // TODO(rm): Übersetzung prüfen lassen
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',

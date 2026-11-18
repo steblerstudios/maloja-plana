@@ -2901,6 +2901,7 @@ export default {
       heartfelt27: 'the habit tracker (App Store and Google Play, Crewz) — Keep track of habits without streak pressure or guilt. According to the maker, usable without an account, with all data exportable as a file at any time.',
       heartfelt28: 'Free English game about data privacy: secure accounts and spot scams, mission by mission. The site uses analytics and error services. For Switzerland, Maloja guides you through “Digital order”.',
       heartfelt29: 'Example of an email service: Proton AG, Plan-les-Ouates GE, according to the provider encrypted and subject to Swiss law. Check the location of the data with the provider before switching.',
+      heartfelt30: 'Noah Müller from Basel — computer scientist and teacher. Builds websites, small tools and data pipelines, and teaches computer science.',
     },
     faq: {
       q1: 'Where is my data stored?',

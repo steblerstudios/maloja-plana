@@ -2900,6 +2900,7 @@ export default {
       heartfelt27: 'le suivi d’habitudes (App Store et Google Play, Crewz) — Suivre ses habitudes sans pression de série ni mauvaise conscience. Selon l’éditeur, utilisable sans compte, toutes les données exportables à tout moment dans un fichier.',
       heartfelt28: 'Jeu gratuit en anglais sur la protection des données : sécuriser ses comptes et repérer les arnaques, mission après mission. Le site utilise des services d’analyse et d’erreurs. Pour la Suisse, Maloja guide à travers « Ordre numérique ».',
       heartfelt29: 'Exemple de service d’e-mail : Proton AG, Plan-les-Ouates GE, selon le prestataire chiffré et soumis au droit suisse. Vérifier le lieu des données auprès du prestataire avant de changer.',
+      heartfelt30: 'Noah Müller, de Bâle — informaticien et enseignant. Développe des sites web, de petits outils et des pipelines de données, et enseigne l’informatique.',
     },
     faq: {
       q1: 'Où sont stockées mes données ?',
