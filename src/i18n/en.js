@@ -1798,7 +1798,8 @@ export default {
       kvg: { title: 'Benefits & deductible', desc: 'What basic insurance covers and how your deductible works.' },
       kkbeleg: { title: 'Receipts folder', desc: 'Collect medical bills, keep deductible & co-payment in view.' },
       notfall: { title: 'Emergency', desc: 'Emergency card and the key details for a crisis.' },
-      thermometer: { title: 'Thermometer', desc: 'Track symptoms and fever over the days.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Fever diary', desc: 'Track symptoms and fever over the days.' },
       blister: { title: 'Pill organizer', desc: 'Medications and intake at a glance.' },
       karteikarten: { title: 'Index cards', desc: 'Doctors, diagnoses and contacts in one place.' },
       impfausweis: { title: 'Vaccination record', desc: 'Vaccinations on paper and digital together.' },

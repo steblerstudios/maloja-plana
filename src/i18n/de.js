@@ -1812,7 +1812,8 @@ export default {
       kvg: { title: 'Leistungen & Franchise', desc: { sie: 'Was die Grundversicherung zahlt und wie Ihre Franchise wirkt.', du: 'Was die Grundversicherung zahlt und wie deine Franchise wirkt.' } },
       kkbeleg: { title: 'Beleg-Ordner', desc: 'Arztrechnungen sammeln, Franchise & Selbstbehalt im Blick behalten.' },
       notfall: { title: 'Notfall', desc: 'Notfallkarte und die wichtigsten Angaben für den Ernstfall.' },
-      thermometer: { title: 'Fieberthermometer', desc: 'Symptome und Fieber über die Tage festhalten.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Fiebertagebuch', desc: 'Symptome und Fieber über die Tage festhalten.' },
       blister: { title: 'Wochenblister', desc: 'Medikamente und Einnahme im Überblick.' },
       karteikarten: { title: 'Karteikarten', desc: 'Ärztinnen, Diagnosen und Kontakte an einem Ort.' },
       impfausweis: { title: 'Impfausweis', desc: 'Impfungen auf Papier und digital beisammen.' },

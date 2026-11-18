@@ -4682,7 +4682,8 @@ export default {
       kvg: { title: 'Prestaziuns & franchisa', desc: { sie: 'Tge che l’assicuranza da basa paja e co che vossa franchisa funcziuna.', du: 'Tge che l’assicuranza da basa paja e co che tia franchisa funcziuna.' } },
       kkbeleg: { title: 'Register da quittanzas', desc: 'Rimnar quintas da medi, tegnair egl’egl franchisa & participaziun.' },
       notfall: { title: 'Urgenza', desc: 'Carta d’urgenza e las infurmaziuns pli impurtantas per il cas serius.' },
-      thermometer: { title: 'Termometer', desc: 'Registrar simptoms e fevra durant ils dis.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Diari da fevra', desc: 'Registrar simptoms e fevra durant ils dis.' },
       blister: { title: 'Blister da mesemna', desc: 'Medicaments ed ingla d’in sguard.' },
       karteikarten: { title: 'Cartotecas', desc: 'Medis, diagnosas e contacts en in lieu.' },
       impfausweis: { title: 'Attest da vaccinaziun', desc: 'Vaccinaziuns sin palpiri e digital ensemen.' },

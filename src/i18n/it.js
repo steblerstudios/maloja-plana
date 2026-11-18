@@ -1798,7 +1798,8 @@ export default {
       kvg: { title: 'Prestazioni & franchigia', desc: { sie: 'Cosa copre l’assicurazione di base e come funziona la franchigia.', du: 'Cosa copre l’assicurazione di base e come funziona la franchigia.' } },
       kkbeleg: { title: 'Raccoglitore ricevute', desc: 'Raccogliere le fatture, tenere d’occhio franchigia e partecipazione.' },
       notfall: { title: 'Emergenza', desc: 'Scheda d’emergenza e i dati essenziali per il caso serio.' },
-      thermometer: { title: 'Termometro', desc: 'Annotare sintomi e febbre nei giorni.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Diario della febbre', desc: 'Annotare sintomi e febbre nei giorni.' },
       blister: { title: 'Portapillole', desc: 'Farmaci e assunzione a colpo d’occhio.' },
       karteikarten: { title: 'Schede', desc: 'Medici, diagnosi e contatti in un unico posto.' },
       impfausweis: { title: 'Libretto vaccinazioni', desc: 'Vaccinazioni cartacee e digitali insieme.' },

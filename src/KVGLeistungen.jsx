@@ -18,6 +18,8 @@ import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
 import { belegeImJahr } from './data/franchiseTacho.js';
 import { FranchiseAblesung, naechsteVorsorge } from './bereiche/notfall/notfall.js';
+import { bereichTextColor } from './data/lebensbereiche.js';
+import { DARK_PALETTE } from './config/constants.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
@@ -435,7 +437,9 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       },
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.eigenanteil')),
         React.createElement('span', {
-          style: { fontWeight: weight.semi, color: palette.skyDeep }
+          // Was Sie selbst zahlen = Farbe Gesundheit (Hagebutte), was die Kasse zahlt = Farbe Versicherungen
+          // (Sophie 18.11.2026). Schrifttöne aus bereichTextColor (4.5:1).
+          'data-teil': 'eigenanteil', style: { fontWeight: weight.semi, color: bereichTextColor('gesundheit', palette.bg === DARK_PALETTE.bg) || palette.text }
         }, betrag(result.eigenanteil))
       ),
       React.createElement('div', {
@@ -443,7 +447,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       },
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.kasseZahlt')),
         React.createElement('span', {
-          style: { fontWeight: weight.semi, color: palette.sageDeep || '#5a7a5a' }
+          'data-teil': 'kasse-zahlt', style: { fontWeight: weight.semi, color: bereichTextColor('versicherungen', palette.bg === DARK_PALETTE.bg) || palette.text }
         }, betrag(result.kasseZahlt))
       )
     ) || null,

@@ -1798,7 +1798,8 @@ export default {
       kvg: { title: 'Prestations & franchise', desc: { sie: 'Ce que l’assurance de base couvre et comment fonctionne votre franchise.', du: 'Ce que l’assurance de base couvre et comment fonctionne ta franchise.' } },
       kkbeleg: { title: 'Classeur de justificatifs', desc: 'Rassembler les factures, garder franchise et quote-part en vue.' },
       notfall: { title: 'Urgence', desc: 'Carte d’urgence et les informations clés en cas de besoin.' },
-      thermometer: { title: 'Thermomètre', desc: 'Suivre symptômes et fièvre au fil des jours.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Journal de fièvre', desc: 'Suivre symptômes et fièvre au fil des jours.' },
       blister: { title: 'Pilulier', desc: 'Médicaments et prise en un coup d’œil.' },
       karteikarten: { title: 'Fiches', desc: 'Médecins, diagnostics et contacts au même endroit.' },
       impfausweis: { title: 'Carnet de vaccination', desc: 'Vaccinations papier et numérique réunies.' },
