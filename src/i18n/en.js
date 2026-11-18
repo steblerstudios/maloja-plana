@@ -1776,6 +1776,18 @@ export default {
     accountNote: 'Everything stays local on this device — no account, no login needed. Your data is yours.',
     backup: 'Backup & export',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Deductible not entered yet. Once it is, this shows how much of it has been reached.",
+    zurFranchise: "To the deductible calculator",
+    faelligTitel: "Next due",
+    faelligVorsorge: "next recommended check-up",
+    faelligBeleg: "payment due on an open bill",
+    faelligVorbei: "The date has passed.",
+    faelligLeer: "Nothing entered. The last screening check-up can be noted in the catalogue.",
+    zumKatalog: "To the catalogue",
+    zuDenBelegen: "To the receipts",
+  },
   arztkoffer: {
     title: 'Your health case',
     subtitle: 'Your health matters in one place — insurance, benefits, emergencies and more to come.',

@@ -17,7 +17,7 @@ import { AblaufLink } from './AblaufSchale.jsx';
 import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
 import { belegeImJahr } from './data/franchiseTacho.js';
-import { FranchiseThermometer } from './components/FranchiseThermometer.jsx';
+import { FranchiseThermometer, naechsteVorsorge } from './bereiche/notfall/notfall.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
@@ -159,10 +159,11 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                 }
               }),
               lastVisit && (() => {
-                const next = new Date(lastVisit);
-                next.setMonth(next.getMonth() + recMonths);
-                const nextStr = ('0' + (next.getMonth() + 1)).slice(-2) + '.' + next.getFullYear();
-                const overdue = next <= new Date();
+                // Eine Rechnung mit der Arztkoffer-Seite (bereiche/notfall/rechnung.js, Bauplan 18.11.2026).
+                const nextIso = naechsteVorsorge(lastVisit, recMonths);
+                if (!nextIso) return null;
+                const nextStr = nextIso.slice(5, 7) + '.' + nextIso.slice(0, 4);
+                const overdue = nextIso <= inDays(0);
                 return React.createElement('div', { style: { marginTop: '4px' } },
                   React.createElement('div', { style: { color: palette.mid } }, t('kvg.nextRecommended', { date: nextStr })),
                   overdue && React.createElement('div', { style: { color: palette.mid, marginTop: '4px' } }, t('kvg.overdueHint')),

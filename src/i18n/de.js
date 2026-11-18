@@ -1790,6 +1790,18 @@ export default {
     accountNote: { sie: 'Alles bleibt lokal auf diesem Gerät — kein Konto, kein Login nötig. Ihre Daten gehören Ihnen.', du: 'Alles bleibt lokal auf diesem Gerät — kein Konto, kein Login nötig. Deine Daten gehören dir.' },
     backup: 'Backup & Export',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Franchise noch nicht erfasst. Mit der Franchise steht hier, wie viel davon erreicht ist.",
+    zurFranchise: "Zum Franchise-Rechner",
+    faelligTitel: "Als Nächstes fällig",
+    faelligVorsorge: "nächste empfohlene Untersuchung",
+    faelligBeleg: "Zahlungsfrist einer offenen Rechnung",
+    faelligVorbei: "Das Datum ist vorbei.",
+    faelligLeer: "Nichts eingetragen. Im Katalog lässt sich die letzte Vorsorge-Untersuchung eintragen.",
+    zumKatalog: "Zum Katalog",
+    zuDenBelegen: "Zu den Belegen",
+  },
   arztkoffer: {
     title: 'Arztkoffer',
     subtitle: { sie: 'Ihre Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.', du: 'Deine Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.' },

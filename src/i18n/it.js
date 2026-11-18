@@ -1776,6 +1776,18 @@ export default {
     accountNote: { sie: 'Tutto resta locale su questo dispositivo — nessun account, nessun login. I Suoi dati appartengono a Lei.', du: 'Tutto resta locale su questo dispositivo — nessun account, nessun login. I tuoi dati sono tuoi.' },
     backup: 'Backup ed esporta',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Franchigia non ancora inserita. Una volta inserita, qui si vede quanta parte è raggiunta.",
+    zurFranchise: "Al calcolo della franchigia",
+    faelligTitel: "Prossima scadenza",
+    faelligVorsorge: "prossimo controllo consigliato",
+    faelligBeleg: "scadenza di una fattura aperta",
+    faelligVorbei: "La data è passata.",
+    faelligLeer: "Nulla inserito. Nel catalogo si può annotare l’ultimo controllo preventivo.",
+    zumKatalog: "Al catalogo",
+    zuDenBelegen: "Ai giustificativi",
+  },
   arztkoffer: {
     title: 'La valigetta della salute',
     subtitle: { sie: 'I Suoi temi di salute in un unico posto — assicurazione, prestazioni, emergenze e altro in arrivo.', du: 'I tuoi temi di salute in un unico posto — assicurazione, prestazioni, emergenze e altro in arrivo.' },

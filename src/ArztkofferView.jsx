@@ -5,6 +5,7 @@ import { text, weight, leading, space, radius, ease, duration } from './config/t
 import { PageTitle } from './components/Heading.jsx';
 import { linkStil } from './components/PrimaryButton.jsx';
 import { Brotkrume } from './components/Brotkrume.jsx';
+import { GesundheitZuhause } from './bereiche/notfall/notfall.js';
 
 // ─── Arztkoffer — das Zuhause für Gesundheit ────────────────────────────────
 //
@@ -35,7 +36,7 @@ const WEGE = [
   { key: 'unfall',  view: 'unfallkrankheit' },
 ];
 
-export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
+export const ArztkofferView = ({ palette, t, data, onNavigate, isDarkMode }) => {
   const bereich = getBereich('gesundheit');
   const accent = bereich ? (isDarkMode ? bereich.dark : bereich.light) : palette.rose;
 
@@ -110,6 +111,9 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '460px', marginLeft: 'auto', marginRight: 'auto' },
       }, t('arztkoffer.subtitle')),
     ),
+
+    // Bauplan Lebensbereich (18.11.2026): oben vor den Fächern die zwei Fragen der Gesundheit, je Bild → Zahl → Satz → Weg.
+    React.createElement(GesundheitZuhause, { palette, t, data: data || {}, onNavigate }),
 
     // Nutzbare Fächer zuerst
     React.createElement('div', {

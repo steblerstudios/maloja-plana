@@ -1776,6 +1776,18 @@ export default {
     accountNote: { sie: 'Tout reste local sur cet appareil — aucun compte, aucune connexion nécessaire. Vos données vous appartiennent.', du: 'Tout reste local sur cet appareil — aucun compte, aucune connexion nécessaire. Tes données t’appartiennent.' },
     backup: 'Sauvegarde et export',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Franchise pas encore saisie. Une fois saisie, on voit ici quelle part est atteinte.",
+    zurFranchise: "Vers le calcul de la franchise",
+    faelligTitel: "Prochaine échéance",
+    faelligVorsorge: "prochain contrôle recommandé",
+    faelligBeleg: "échéance d’une facture ouverte",
+    faelligVorbei: "La date est passée.",
+    faelligLeer: "Rien de saisi. Le dernier contrôle de dépistage peut être noté dans le catalogue.",
+    zumKatalog: "Vers le catalogue",
+    zuDenBelegen: "Vers les justificatifs",
+  },
   arztkoffer: {
     title: 'Trousse santé',
     subtitle: { sie: 'Vos sujets de santé au même endroit — assurance, prestations, urgences et plus à venir.', du: 'Tes sujets de santé au même endroit — assurance, prestations, urgences et plus à venir.' },

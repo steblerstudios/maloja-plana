@@ -4658,6 +4658,18 @@ export default {
     accountNote: { sie: 'Tut resta local sin quest apparat — nagin conto, nagin login necessari. Vossas datas As appartegnan.', du: 'Tut resta local sin quest apparat — nagin conto, nagin login necessari. Tias datas ta appartegnan.' },
     backup: 'Backup & export',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Franchisa anc betg registrada. Cun la franchisa stat qua, quant ch’è cuntanschì.",
+    zurFranchise: "Al calculader da la franchisa",
+    faelligTitel: "Proxim termin",
+    faelligVorsorge: "proxima controlla recumandada",
+    faelligBeleg: "termin da pajament d’in quint avert",
+    faelligVorbei: "La data è passada.",
+    faelligLeer: "Nagut registrà. En il catalog sa la davosa controlla da prevenziun vegnir registrada.",
+    zumKatalog: "Al catalog",
+    zuDenBelegen: "Als mussaments",
+  },
   arztkoffer: {
     title: 'Vossa valisch da sanadad',
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
