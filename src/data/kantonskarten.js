@@ -1134,6 +1134,47 @@ export const KARTEN = {
     "s": 3,
     "text": "10,9 %"
    }
+  },
+  "merkmale": {
+   "titel": "Ganze Schweiz nach Rentenart und Alter",
+   "monat": "Dezember 2025",
+   "zeilen": [
+    {
+     "key": "av",
+     "name": "Mit Altersrente, alle",
+     "text": "12,3 %",
+     "anteil": 0.247
+    },
+    {
+     "key": "av65",
+     "name": "Mit Altersrente, 65 Jahre alt",
+     "text": "9,5 %",
+     "anteil": 0.191
+    },
+    {
+     "key": "av95",
+     "name": "Mit Altersrente, 95 Jahre alt",
+     "text": "23,5 %",
+     "anteil": 0.472
+    },
+    {
+     "key": "iv",
+     "name": "Mit IV-Rente, alle",
+     "text": "49,8 %",
+     "anteil": 1
+    }
+   ],
+   "total": {
+    "name": "Alle mit Rente (Alter, Hinterlassene, IV)",
+    "text": "16,4 %"
+   },
+   "legende": "Anteil der Menschen mit dieser Rente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. Die Aufteilung gibt es nur für die ganze Schweiz, nicht je Kanton. Mit dem Alter steigt der Anteil; das BSV führt das auf die Kosten eines Heimaufenthalts zurück, die viele nicht lange selbst tragen können.",
+   "quellen": [
+    {
+     "text": "Bundesamt für Sozialversicherungen (BSV), Statistik der Ergänzungsleistungen zur AHV und IV 2025, Tabelle T1 (S. 3) und Abschnitt EL-Quoten (S. 4), Dezember 2025, publiziert 26.05.2026",
+     "url": "https://www.bsv.admin.ch/dam/de/sd-web/pOeXq3eVysUG/el_stat_2025_d.pdf"
+    }
+   ]
   }
  },
  "kinderzulage": {

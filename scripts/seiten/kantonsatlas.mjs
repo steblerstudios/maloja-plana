@@ -249,6 +249,40 @@ ${reihen(ALQ_MERKMALE.region)}
           </div>`;
 }
 
+// ─── EL-Quote nach Rentenart und Alter: nur ganze Schweiz ───────────────────
+// Stebler Studios 19.11.2026 («Ja, C1 und C2»). Dieselbe BSV-Ausgabe wie die Karte el (Dezember 2025):
+// Tabelle T1 auf S. 3 (EL-Quote Total, zur AV, zur IV), die Quoten mit 65 und 95 Jahren im Text auf S. 4.
+// Nicht dabei: «18 % im Heim» zählt die EL-Beziehenden, nicht alle mit Rente (anderer Nenner).
+// Belege und Prüfsumme: docs/STATISTIK-SYSTEMBLICK.md, Abschnitt «Ergänzungsleistungen (BSV)».
+export const EL_MERKMALE = {
+  monat: 'Dezember 2025',
+  total: 16.4,
+  zeilen: [
+    { key: 'av', name: 'Mit Altersrente, alle', wert: 12.3 },
+    { key: 'av65', name: 'Mit Altersrente, 65 Jahre alt', wert: 9.5 },
+    { key: 'av95', name: 'Mit Altersrente, 95 Jahre alt', wert: 23.5 },
+    { key: 'iv', name: 'Mit IV-Rente, alle', wert: 49.8 },
+  ],
+};
+// Gleiche Ausgabe wie die Karte: Die Quote zur Altersrente muss der Schweizer Wert der Karte sein.
+if (EBENEN.el.ch !== EL_MERKMALE.zeilen[0].wert) throw new Error(`Kantonsatlas: EL_MERKMALE av ${EL_MERKMALE.zeilen[0].wert} ≠ Karte el ${EBENEN.el.ch}`);
+
+export function elMerkmaleBlock() {
+  const fmt = EBENEN.el.fmt;
+  const max = Math.max(...EL_MERKMALE.zeilen.map((z) => z.wert));
+  return `
+          <div class="atlas-merkmale">
+            <p class="atlas-merkmale-titel">Ganze Schweiz nach Rentenart und Alter</p>
+            <div class="tabelle zahlen" tabindex="0" role="region" aria-label="EL-Quote nach Rentenart und Alter, ganze Schweiz"><table>
+              <caption>Anteil mit Ergänzungsleistungen ${EL_MERKMALE.monat} nach Rentenart und Alter, ganze Schweiz, in Prozent</caption>
+              <tr><th scope="col">Gruppe</th><td aria-hidden="true"></td><th scope="col" class="n">Quote</th></tr>
+${EL_MERKMALE.zeilen.map((z) => `              <tr><th scope="row">${esc(z.name)}</th><td class="balken" aria-hidden="true"><span class="b0" style="width:${(z.wert / max * 100).toFixed(1)}%"></span></td><td class="n">${fmt(z.wert)}</td></tr>`).join('\n')}
+              <tr class="ch"><th scope="row">Alle mit Rente (Alter, Hinterlassene, IV)</th><td class="balken" aria-hidden="true"></td><td class="n">${fmt(EL_MERKMALE.total)}</td></tr>
+            </table></div>
+            <p class="leise">${LEGENDE.elMerkmale}</p>
+          </div>`;
+}
+
 // ─── Feiertage: Tabelle statt Karte ─────────────────────────────────────────
 // 23 Kantone haben neun dem Sonntag gleichgestellte Feiertage, drei haben acht (Atlas, SECO-Stand
 // 12.12.2024): Eine Karte zeigte fast nur eine Farbe. Darum ein Satz und eine aufklappbare Tabelle.
@@ -337,6 +371,8 @@ export const LEGENDE = {
   alqAusbildung: 'Anteil der Erwerbspersonen mit dieser höchsten abgeschlossenen Ausbildung, die im September 2026 beim RAV als arbeitslos gemeldet waren. Die Aufteilung gibt es nur für die ganze Schweiz, nicht je Kanton. Sie zeigt, wie häufig, nicht warum. [[q:secoAusbildung]]',
   sozialhilfe: 'Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe, also Geld vom Sozialdienst, bezog. [[q:bfsSozialhilfe]]',
   el: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
+  // Seit 19.11.2026: dieselbe Quote nach Rentenart und Alter, nur ganze Schweiz (EL_MERKMALE). Auch in der App.
+  elMerkmale: 'Anteil der Menschen mit dieser Rente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. Die Aufteilung gibt es nur für die ganze Schweiz, nicht je Kanton. Mit dem Alter steigt der Anteil; das BSV führt das auf die Kosten eines Heimaufenthalts zurück, die viele nicht lange selbst tragen können. [[q:bsvElQuoten]]',
   // Seit 14.11.2026 auch in der App (Abläufe «Kind», «Trennung», Werkzeug Stundenlohn).
   kinderzulage: 'Kinderzulage 2026 je Kind und Monat, erster Ansatz für Arbeitnehmende. Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr; das zeigt die Karte nicht. Kantone mit gleichem Betrag stehen in derselben Stufe, darum sind die Stufen nicht gleich gross. [[q:bsvFamz]]',
   kita: `Höchster Steuerabzug für die Betreuung von Kindern durch Dritte, Steuerjahr 2026, je Kind. Für ${KITA_NICHT_VERGLICHEN.map((k) => de.cantons[k]).join(' und ')} ist nur der Wert 2025 ausgewiesen; dort ist der Abzug auf die Elternbeiträge an die Betreuung begrenzt, die Zahl ist also kein fester Höchstbetrag. [[q:estvKantonsblaetter]] [[q:estvDrittbetreuung]]`,
@@ -387,7 +423,7 @@ const BLOECKE_ATLAS = {
     legende: LEGENDE.sozialhilfe }),
   'FIG:el': (ctx) => karte(ctx, 'el', {
     legende: LEGENDE.el,
-    nachher: werteTabelle('vunterstuetzung', 'Sozialhilfe und Ergänzungsleistungen je Kanton als Tabelle') }),
+    nachher: werteTabelle('vunterstuetzung', 'Sozialhilfe und Ergänzungsleistungen je Kanton als Tabelle') + elMerkmaleBlock() }),
 };
 
 const QUELLEN_AUS_VERGLEICH = ['praemienKantone', 'estvStatistik', 'bagOkp', 'estvSteuerrechner', 'bfsMiete', 'bfsLeer', 'bsvFamz', 'estvKantonsblaetter', 'seco', 'bfsSozialhilfe', 'bsvEl', 'estvDrittbetreuung', 'dbg'];
@@ -631,6 +667,7 @@ export const KANTONSATLAS = {
       return { key: `alimente${k}`, herausgeber: lexfind ? `LexFind (Sammlung der Erlasse), Kanton ${de.cantons[k]}` : `Kanton ${de.cantons[k]}`, titel: `Alimentenbevorschussung: ${a.recht.split(';')[0]}`, datum: `Stand ${a.jahr}`, url: a.url,
         belegt: abgeleitet ? `Kopplung an die höchste AHV-Waisenrente; der Betrag ${a.chf} Fr. ist daraus abgeleitet, nicht im Erlass genannt` : `höchster Vorschuss ${a.chf} Fr. ${a.einheit ? a.einheit.replace(/^pro /, 'pro ') : 'je Kind und Monat'}${a.sicher === false ? '; ob seither angepasst, nicht gesichert' : ''}`, amtlich: !lexfind };
     }),
+    { key: 'bsvElQuoten', herausgeber: 'Bundesamt für Sozialversicherungen (BSV)', titel: 'Statistik der Ergänzungsleistungen zur AHV und IV 2025, Tabelle T1 (S. 3) und Abschnitt EL-Quoten (S. 4)', datum: 'Dezember 2025, publiziert 26.05.2026', url: 'https://www.bsv.admin.ch/dam/de/sd-web/pOeXq3eVysUG/el_stat_2025_d.pdf', belegt: 'EL-Quote insgesamt, zur Altersrente und zur IV-Rente; Quote mit 65 und mit 95 Jahren', amtlich: true },
     { key: 'secoAusbildung', herausgeber: 'Staatssekretariat für Wirtschaft (SECO)', titel: 'Die Lage auf dem Arbeitsmarkt, September 2026, Tabelle 5 (S. 9) und Definitionen (S. 26)', datum: 'publiziert 6.10.2026', url: 'https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/10/05/4ca16d08-004c-4678-84c6-93fac35c7463.pdf', belegt: 'Arbeitslosenquote nach Ausbildungsstufe, Alter und Sprachregion, ganze Schweiz; Einteilung nach der höchsten abgeschlossenen Ausbildung', amtlich: true },
     { key: 'swissmaps', herausgeber: 'Interactive Things, swiss-maps 4.5.0', titel: 'swiss-maps: Geodaten der Schweiz als TopoJSON', datum: 'Version 4.5.0, BSD-3-Clause', url: 'https://github.com/interactivethings/swiss-maps', belegt: 'Aufbereitung der BFS-Grenzen, für diese Karten zusätzlich vereinfacht', amtlich: false },
   ],

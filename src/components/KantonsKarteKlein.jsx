@@ -107,11 +107,12 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
       !eigen && h('div', { style: { marginTop: space.xs + 'px' } }, ohneKanton));
   };
 
-  // Arbeitslosenquote nach Ausbildung (18.11.2026): nur ganze Schweiz, darum Balken statt Karte. Die eigene Stufe
-  // steht fett mit Zusatz, nicht nur in Farbe; ohne erfassten Abschluss ist keine markiert.
+  // «Ganze Schweiz nach Merkmal» (Arbeitslosenquote nach Ausbildung 18.11.2026, EL nach Rentenart und Alter 19.11.2026):
+  // nur ganze Schweiz, darum Balken statt Karte. Bei der Arbeitslosenquote steht die eigene Stufe fett mit Zusatz, nicht nur
+  // in Farbe; ohne erfassten Abschluss ist keine markiert. Bei der EL markiert die App nichts.
   const M = K.merkmale;
   const eigeneStufe = M && ABSCHLUSS_STUFE[abschluss];
-  const nachAusbildung = M && h('div', { 'data-teil': 'nach-ausbildung', style: { marginTop: space.md + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border } },
+  const nachAusbildung = M && h('div', { 'data-teil': 'nach-merkmal', style: { marginTop: space.md + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border } },
     h('p', { lang: 'de', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, M.titel),
     h('table', { style: { borderCollapse: 'collapse', fontSize: text.sm, width: '100%' } },
       h('tbody', null,

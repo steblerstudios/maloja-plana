@@ -9,7 +9,7 @@ import ErklaerFigurKlein from '../components/ErklaerFigurKlein.jsx';
 import { KARTEN, KARTE_GEO, STUFEN_FARBEN } from '../data/kantonskarten.js';
 import { ERKLAERFIGUREN } from '../data/erklaerfiguren.js';
 import { erzeugeKarten, erzeugeFiguren, svgVerstoesse } from '../../scripts/app-verstehen.mjs';
-import { STUFEN_FARBEN as ATLAS_FARBEN, LEGENDE, KARTEN_FRUCHT, ALQ_MERKMALE } from '../../scripts/seiten/kantonsatlas.mjs';
+import { STUFEN_FARBEN as ATLAS_FARBEN, LEGENDE, KARTEN_FRUCHT, ALQ_MERKMALE, EL_MERKMALE } from '../../scripts/seiten/kantonsatlas.mjs';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import { LIGHT_PALETTE, DARK_PALETTE } from '../config/constants.js';
@@ -430,14 +430,14 @@ describe('Arbeitslosenquote nach Ausbildung', () => {
     expect(html).toContain('<li id="quelle-secoAusbildung">');
   });
 
-  it('nur bei der Karte Arbeitslosenquote', () => {
-    for (const k of Object.keys(KARTEN)) if (k !== 'alq') expect(KARTEN[k].merkmale, k).toBeUndefined();
-    expect(karte(P, 'steuer', 'ZH')).not.toContain('data-teil="nach-ausbildung"');
+  it('nur bei den Karten Arbeitslosenquote und EL', () => {
+    for (const k of Object.keys(KARTEN)) if (!['alq', 'el'].includes(k)) expect(KARTEN[k].merkmale, k).toBeUndefined();
+    expect(karte(P, 'steuer', 'ZH')).not.toContain('data-teil="nach-merkmal"');
   });
 
   it('ohne erfassten Abschluss: drei Zeilen, keine markiert', () => {
     const html = mit(undefined);
-    expect(html).toContain('data-teil="nach-ausbildung"');
+    expect(html).toContain('data-teil="nach-merkmal"');
     expect((html.match(/data-stufe=/g) || []).length).toBe(3);
     expect(html).not.toContain('data-eigen="ja"><th');
     expect(html).not.toContain(t('erklaerseite.ihreAusbildung'));
@@ -458,6 +458,43 @@ describe('Arbeitslosenquote nach Ausbildung', () => {
   it('Werkzeug und Kapitel reichen den Abschluss aus dem Kapitel Ausbildung weiter', () => {
     expect(quelle('AlvRechner.jsx')).toContain("VerstehenImWerkzeug, { palette, t, view: 'alv', kanton: canton, abschluss: data.ausbildung?.educationLevel })");
     expect(quelle('components/ErklaerseiteLink.jsx')).toContain('props: { karte, kanton, ohneVergleich: true, abschluss }');
+  });
+});
+
+// Stebler Studios 19.11.2026 («Ja, C1 und C2»): EL-Quote nach Rentenart und Alter (BSV, EL-Statistik 2025, T1 S. 3, Text S. 4).
+describe('EL-Quote nach Rentenart und Alter', () => {
+  it('Werte aus der BSV-Statistik, die Quote zur Altersrente ist der Schweizer Wert der Karte', () => {
+    const M = KARTEN.el.merkmale;
+    expect(M.zeilen.map((z) => [z.key, z.text])).toEqual([['av', '12,3 %'], ['av65', '9,5 %'], ['av95', '23,5 %'], ['iv', '49,8 %']]);
+    expect(M.zeilen[0].text).toBe(KARTEN.el.ch);
+    expect(M.total.text).toBe('16,4 %');
+    expect(M.quellen[0].url).toBe('https://www.bsv.admin.ch/dam/de/sd-web/pOeXq3eVysUG/el_stat_2025_d.pdf');
+    expect(M.quellen[0].text).toContain('T1 (S. 3)');
+    expect(LEGENDE.elMerkmale).toContain(M.legende.slice(0, 40));
+  });
+
+  it('kein «im Heim» als Quote: anderer Nenner', () => {
+    expect(EL_MERKMALE.zeilen.map((z) => z.name).join(' ')).not.toMatch(/Heim/);
+    expect(KARTEN.el.merkmale.zeilen.map((z) => z.text)).not.toContain('18,0 %');
+  });
+
+  it('App: Balken unter der Karte, keine Gruppe markiert, auch mit erfasstem Abschluss', () => {
+    const html = renderToStaticMarkup(React.createElement(KantonsKarteKlein, { palette: P, t, karte: 'el', kanton: 'BE', abschluss: 'master' }));
+    expect(html).toContain('data-teil="nach-merkmal"');
+    expect((html.match(/data-stufe=/g) || []).length).toBe(4);
+    expect(html).not.toContain('data-eigen="ja"><th');
+    expect(html).not.toContain(t('erklaerseite.ihreAusbildung'));
+  });
+
+  it('Atlas-Seite: Balken in der Figur der EL-Karte, mit Beleg', () => {
+    const html = fs.readFileSync(path.resolve(process.cwd(), 'public', 'kantonsatlas', 'index.html'), 'utf8');
+    const start = html.indexOf('<figure class="abb atlas" id="karte-el"');
+    const figur = html.slice(start, html.indexOf('</figure>', start));
+    expect(figur).toContain('Ganze Schweiz nach Rentenart und Alter');
+    for (const z of EL_MERKMALE.zeilen) expect(figur).toContain(z.name);
+    expect(figur).toContain('<td class="n">49,8 %</td>');
+    expect(figur).toContain('href="#quelle-bsvElQuoten"');
+    expect(html).toContain('<li id="quelle-bsvElQuoten">');
   });
 });
 

@@ -25,7 +25,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EBENEN, KANTONE, ATLAS_DATEN } from './seiten-vergleich.mjs';
-import { stufen, LEGENDE, STUFEN_FARBEN, KARTEN_FRUCHT, KANTONSATLAS, MINDESTLOHN, MINDESTLOHN_STUFE, ALQ_MERKMALE } from './seiten/kantonsatlas.mjs';
+import { stufen, LEGENDE, STUFEN_FARBEN, KARTEN_FRUCHT, KANTONSATLAS, MINDESTLOHN, MINDESTLOHN_STUFE, ALQ_MERKMALE, EL_MERKMALE } from './seiten/kantonsatlas.mjs';
 import { KANTONE_IM_VERGLEICH } from './seiten/kantone-im-vergleich.mjs';
 import { standbildSvg, kostenteilAngaben } from './seiten-figuren.mjs';
 import { KRANKENKASSE } from './seiten/krankenkasse.mjs';
@@ -52,6 +52,9 @@ export const APP_VERGLEICH = { lastNachIpv: 'last', miete: 'leer' };
 // Prämie nach Altersklasse (Stebler Studios 09.11.2026, «sauber weiter»; Fachprüfung: die Karte zeigt Erwachsene,
 // das Werkzeug rechnet aber auch für Kinder und junge Erwachsene). Dieselbe BAG-Datei wie die Karte
 // (praemien.json, Felder kind/jung, y27), dasselbe Format. Klassen wie ageClassFromBirth in franchiseTacho.js.
+// Karten mit einem Vergleich «ganze Schweiz nach Merkmal» darunter (18./19.11.2026).
+export const APP_MERKMALE = ['alq', 'el'];
+
 export const APP_ALTERSKLASSEN = { praemie: ['kind', 'jung'] };
 
 function altersklassen(klassen, fmt) {
@@ -98,18 +101,30 @@ function mindestlohnKarte() {
   };
 }
 
-// Arbeitslosenquote nach Ausbildung (Stebler Studios 18.11.2026, «Ja, A1 und A2»): nur ganze Schweiz, dieselben Werte,
+// «Ganze Schweiz nach Merkmal» unter einer Karte (APP_MERKMALE). Arbeitslosenquote nach Ausbildung (Stebler Studios
+// 18.11.2026, «Ja, A1 und A2»), EL-Quote nach Rentenart und Alter (19.11.2026, «Ja, C1 und C2»): nur ganze Schweiz, dieselben Werte,
 // dieselbe Legende und Quelle wie unter der Karte auf /kantonsatlas/. Die App markiert die eigene Stufe, wenn im Kapitel
 // Ausbildung der höchste Abschluss erfasst ist (Zuordnung: ABSCHLUSS_STUFE in src/components/ErklaerseiteLink.jsx).
-function merkmale() {
-  const fmt = EBENEN.alq.fmt;
-  const max = Math.max(...ALQ_MERKMALE.ausbildung.map((a) => a.wert));
-  return {
+function merkmale(key) {
+  const fmt = EBENEN[key].fmt;
+  const balken = (liste) => {
+    const max = Math.max(...liste.map((z) => z.wert));
+    return liste.map((z) => ({ key: z.key, name: z.name, text: fmt(z.wert), anteil: Math.round((z.wert / max) * 1000) / 1000 }));
+  };
+  if (key === 'alq') return {
     titel: 'Ganze Schweiz nach Ausbildung',
     monat: ALQ_MERKMALE.monat,
-    zeilen: ALQ_MERKMALE.ausbildung.map((a) => ({ key: a.key, name: `${a.name} (${a.stufe})`, text: fmt(a.wert), anteil: Math.round((a.wert / max) * 1000) / 1000 })),
+    zeilen: balken(ALQ_MERKMALE.ausbildung.map((a) => ({ key: a.key, name: `${a.name} (${a.stufe})`, wert: a.wert }))),
     total: { name: 'Alle zusammen', text: fmt(ALQ_MERKMALE.total) },
     ...belege(LEGENDE.alqAusbildung, ALLE_QUELLEN),
+  };
+  // EL (19.11.2026, «Ja, C1 und C2»): ohne Markierung einer eigenen Gruppe, die App weiss die Rentenart nicht sicher.
+  return {
+    titel: 'Ganze Schweiz nach Rentenart und Alter',
+    monat: EL_MERKMALE.monat,
+    zeilen: balken(EL_MERKMALE.zeilen),
+    total: { name: 'Alle mit Rente (Alter, Hinterlassene, IV)', text: fmt(EL_MERKMALE.total) },
+    ...belege(LEGENDE.elMerkmale, ALLE_QUELLEN),
   };
 }
 
@@ -138,7 +153,7 @@ export function erzeugeKarten() {
       werte: Object.fromEntries(KANTONE.map((k) => [k, { s: stufe[k], text: E.fmt(E.wert(k)), ...jeKanton(key, k) }])),
       ...(APP_VERGLEICH[key] ? { vergleich: vergleich(APP_VERGLEICH[key]) } : {}),
       ...(APP_ALTERSKLASSEN[key] ? { altersklassen: altersklassen(APP_ALTERSKLASSEN[key], E.fmt) } : {}),
-      ...(key === 'alq' ? { merkmale: merkmale() } : {}),
+      ...(APP_MERKMALE.includes(key) ? { merkmale: merkmale(key) } : {}),
     };
   }
   // Nur die Früchte, die eine App-Karte trägt, damit das nachgeladene Stück klein bleibt.
