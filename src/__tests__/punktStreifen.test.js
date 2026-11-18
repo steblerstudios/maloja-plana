@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { streifenLage, beschriftungsLage, STREIFEN } from '../data/punktStreifen.js';
-import { KARTEN } from '../data/kantonskarten.js';
+import { streifenLage, beschriftungsLage, schriftAuf, kontrast, STREIFEN } from '../data/punktStreifen.js';
+import { KARTEN, STUFEN_FARBEN } from '../data/kantonskarten.js';
 import { STREIFEN_KARTEN, streifenFuer } from '../../scripts/seiten/kantonsatlas.mjs';
 
 // Brücke (Entscheid 5 der Instrumente-Matrix, Probe Miete 18.11.2026): eine Rechnung für Website und App.
@@ -14,11 +14,12 @@ describe('Punktstreifen', () => {
     expect(L.ch.x).toBeLessThan(x.C);
     // A, B, D liegen fast gleich: sie weichen aus, abwechselnd über und unter die Linie (nicht nur nach unten,
     // das las sich wie Balken; Stebler Studios 18.11.2026).
-    const ebenen = ['A', 'B', 'D'].map((k) => L.punkte.find((p) => p.k === k).ebene).sort();
-    expect(ebenen).toEqual([-1, 0, 1]);
-    for (const e of new Set(L.punkte.map((p) => p.ebene))) {
-      const xs = L.punkte.filter((p) => p.ebene === e).map((p) => p.x).sort((a, b) => a - b);
-      for (let i = 1; i < xs.length; i++) expect(xs[i] - xs[i - 1]).toBeGreaterThanOrEqual(2 * STREIFEN.radius);
+    const hoehen = ['A', 'B', 'D'].map((k) => L.punkte.find((p) => p.k === k).dy);
+    expect(hoehen).toContain(0);
+    expect(hoehen.some((d) => d < 0) && hoehen.some((d) => d > 0)).toBe(true);
+    // Kein Punkt berührt einen anderen.
+    for (const a of L.punkte) for (const b of L.punkte) {
+      if (a !== b) expect(Math.hypot(a.x - b.x, a.y - b.y)).toBeGreaterThanOrEqual(2 * STREIFEN.radius - 0.15);
     }
     // Die Enden sind benannt.
     expect([L.minK, L.maxK]).toEqual(['A', 'C']);
@@ -26,6 +27,21 @@ describe('Punktstreifen', () => {
     for (const p of L.punkte) {
       expect(p.y - STREIFEN.radius).toBeGreaterThanOrEqual(0);
       expect(p.y + STREIFEN.radius).toBeLessThanOrEqual(L.hoehe);
+    }
+  });
+
+  it('Kürzel im Punkt sind lesbar: mindestens 13 Einheiten und 4,5:1 auf jeder Stufe, hell und dunkel', () => {
+    expect(STREIFEN.schrift).toBeGreaterThanOrEqual(13);
+    // Das Kürzel (zwei Grossbuchstaben, halbfett, rund 0,7 em breit je Zeichen) passt in den Punkt.
+    expect(2 * 0.7 * STREIFEN.schrift).toBeLessThanOrEqual(2 * STREIFEN.radius);
+    for (const key of STREIFEN_KARTEN) {
+      const satz = STUFEN_FARBEN[KARTEN[key].frucht];
+      for (const modus of ['hell', 'dunkel']) {
+        for (const s of [1, 2, 3, 4]) {
+          const grund = satz[modus][s];
+          expect(kontrast(grund, schriftAuf(grund)), `${key} ${modus} Stufe ${s}`).toBeGreaterThanOrEqual(4.5);
+        }
+      }
     }
   });
 

@@ -39,7 +39,7 @@ import { KANTONE_IM_VERGLEICH } from './kantone-im-vergleich.mjs';
 import { zahlen as zahlenKrankenkasse } from '../seiten-figuren.mjs';
 import { vergleichZahlen } from '../seiten-vergleich.mjs';
 import { appBeispiel } from '../seiten-ziele.mjs';
-import { streifenLage, beschriftungsLage } from '../../src/data/punktStreifen.js';
+import { streifenLage, beschriftungsLage, schriftAuf, STREIFEN } from '../../src/data/punktStreifen.js';
 
 const GEO = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'daten', 'kantonsatlas', 'paths.json'), 'utf8'));
 for (const k of KANTONE) if (!GEO.cantons[k]) throw new Error(`Kantonsatlas-Karte: ${k} fehlt in paths.json`);
@@ -67,7 +67,9 @@ export const FRUCHT_STUFEN = {
   traube:      { hell: ['#E0DBE8', '#B3A7C2', '#8D7CA2', '#605174'], dunkel: ['#393440', '#6E647B', '#AB9BC0', '#E2DCEB'] },
   zwetschge:   { hell: ['#D9DDE2', '#A5ADB8', '#7A8593', '#4F5966'], dunkel: ['#32373D', '#616874', '#98A4B5', '#DADFE6'] },
 };
-const stufenVars = (s) => s.map((c, i) => `--k${i + 1}:${c}`).join('; ');
+// --ktN: Schrift im Punktstreifen auf Stufe N, dunkel oder hell nach Kontrast (schriftAuf).
+// Die vier --kN stehen zusammen vorne (atlasStufenAbstand.test.js liest sie so), die Schriftfarben danach.
+const stufenVars = (s) => [...s.map((c, i) => `--k${i + 1}:${c}`), ...s.map((c, i) => `--kt${i + 1}:${schriftAuf(c)}`)].join('; ');
 const FRUCHT_CSS_HELL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `    .atlas .f-${f}{ ${stufenVars(s.hell)} }`).join('\n');
 const FRUCHT_CSS_DUNKEL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `      .atlas .f-${f}{ ${stufenVars(s.dunkel)} }`).join('\n');
 
@@ -105,7 +107,9 @@ function streifenSvg(key) {
   const id = `streifen-${key.toLowerCase()}`;
   const E = EBENEN[key];
   const L = streifenFuer(key);
-  const punkte = L.punkte.map((p) => `<g><title>${esc(`${de.cantons[p.k]}: ${E.fmt(p.v)}`)}</title><circle cx="${p.x}" cy="${p.y}" r="${L.radius}" class="k${p.s}"/></g>`).join('');
+  // Kürzel im Punkt (Stebler Studios 18.11.2026), Schriftfarbe je Stufe über --ktN.
+  const punkte = L.punkte.map((p) => `<g><title>${esc(`${de.cantons[p.k]}: ${E.fmt(p.v)}`)}</title><circle cx="${p.x}" cy="${p.y}" r="${L.radius}" class="k${p.s}"/>` +
+    `<text x="${p.x}" y="${p.y}" class="t${p.s}" text-anchor="middle" dominant-baseline="central" font-size="${STREIFEN.schrift}">${p.k}</text></g>`).join('');
   const ch = L.ch ? `<line x1="${L.ch.x}" y1="1" x2="${L.ch.x}" y2="${L.hoehe - 1}" class="streifen-ch"/>` : '';
   const beschreibung = `Jeder Punkt ist ein Kanton. Am günstigsten ${de.cantons[L.minK]} mit ${E.fmt(L.min)}, am teuersten ${de.cantons[L.maxK]} mit ${E.fmt(L.max)} ${E.einheit}${L.ch ? `, der Strich zeigt die ganze Schweiz mit ${E.fmt(L.ch.v)}` : ''}. Die Farbe ist dieselbe Stufe wie auf der Karte. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
   // Namen direkt an den Punkten, als Text unter dem Bild (im SVG wären sie auf dem Handy unter 13 px).
@@ -652,12 +656,14 @@ ${FRUCHT_CSS_DUNKEL}
     .atlas svg .see{ fill:var(--k-see); stroke:none }
     /* Punktstreifen (Brücke zur App, 18.11.2026): dieselben Stufen, Rand wie die Kantonsgrenzen. */
     .atlas-streifen{ margin:4px 0 0 }
-    .atlas-streifen svg{ display:block; width:100%; height:auto; max-width:560px }
-    .atlas-streifen circle{ stroke:var(--leise); stroke-width:.6 }
+    .atlas-streifen svg{ display:block; width:100%; height:auto; max-width:400px }
+    .atlas-streifen text{ font-family:inherit; font-weight:500; pointer-events:none }
+    .atlas-streifen .t1{ fill:var(--kt1) } .atlas-streifen .t2{ fill:var(--kt2) }
+    .atlas-streifen .t3{ fill:var(--kt3) } .atlas-streifen .t4{ fill:var(--kt4) }    .atlas-streifen circle{ stroke:var(--leise); stroke-width:.6 }
     .atlas-streifen .streifen-achse{ stroke:var(--leise); stroke-width:.75 }
     .atlas-streifen .streifen-ch{ stroke:var(--text); stroke-width:1; stroke-dasharray:2 2 }
     .atlas-streifen .streifen-satz{ margin:0 0 8px; font-size:15px; color:var(--text) }
-    .atlas-streifen .streifen-namen{ position:relative; height:1.5em; margin:4px 0 0; max-width:560px;
+    .atlas-streifen .streifen-namen{ position:relative; height:1.5em; margin:4px 0 0; max-width:400px;
       font-size:13px; color:var(--leise); font-variant-numeric:tabular-nums }
     .atlas-streifen .streifen-marke{ position:absolute; top:0; white-space:nowrap }
     .atlas-streifen .streifen-mitte{ transform:translateX(-50%) }

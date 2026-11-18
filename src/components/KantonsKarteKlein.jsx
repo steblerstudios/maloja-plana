@@ -1,6 +1,6 @@
 import React from 'react';
 import { KARTE_GEO, KARTEN, STUFEN_FARBEN } from '../data/kantonskarten.js';
-import { beschriftungsLage } from '../data/punktStreifen.js';
+import { beschriftungsLage, schriftAuf, STREIFEN } from '../data/punktStreifen.js';
 import { DARK_PALETTE } from '../config/constants.js';
 import { getCantonName } from '../config/kantonPLZ.js';
 import { ExternerLink } from './ExternerLink.jsx';
@@ -94,9 +94,10 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
       },
       h('line', { x1: St.xMin, y1: St.achseY, x2: St.xMax, y2: St.achseY, stroke: palette.mid, strokeWidth: 0.75 }),
       St.ch && h('line', { x1: St.ch.x, y1: 1, x2: St.ch.x, y2: St.hoehe - 1, stroke: palette.text, strokeWidth: 1, strokeDasharray: '2 2' }),
-      Object.entries(St.punkte).map(([k, p]) => h('circle', {
-        key: k, cx: p.x, cy: p.y, r: St.radius, fill: farben[p.s], stroke: palette.mid, strokeWidth: 0.6, 'data-kanton': k,
-      })),
+      Object.entries(St.punkte).map(([k, p]) => h('g', { key: k, 'data-kanton': k },
+        h('circle', { cx: p.x, cy: p.y, r: St.radius, fill: farben[p.s], stroke: palette.mid, strokeWidth: 0.6 }),
+        // Kürzel im Punkt (Stebler Studios 18.11.2026), dunkel oder hell nach Kontrast zur Stufe (schriftAuf).
+        h('text', { x: p.x, y: p.y, textAnchor: 'middle', dominantBaseline: 'central', fill: schriftAuf(farben[p.s]), style: { fontSize: STREIFEN.schrift, fontWeight: weight.medium, fontFamily: 'inherit' } }, k))),
       // Der eigene Punkt zuletzt, mit Ringen wie die Karte (aussen Grundfarbe, innen Textfarbe).
       eigenPunkt && h('circle', { cx: eigenPunkt.x, cy: eigenPunkt.y, r: St.radius + 1.5, fill: 'none', stroke: palette.surface, strokeWidth: RING_AUSSEN_PX / 2, vectorEffect: 'non-scaling-stroke' }),
       eigenPunkt && h('circle', { cx: eigenPunkt.x, cy: eigenPunkt.y, r: St.radius + 1.5, fill: 'none', stroke: palette.text, strokeWidth: RING_INNEN_PX, vectorEffect: 'non-scaling-stroke', 'data-eigen': 'ja' })),

@@ -16,19 +16,51 @@
 // Die Farbe ist die Stufe der Karte, also dieselbe Lesart wie die Fläche im Atlas.
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Kantonskürzel in den Punkten (Stebler Studios 18.11.2026, «Ja, Kürzel rein»): Ein Punkt ist so gross, dass
+// das Kürzel in 13 Einheiten hineinpasst. Bei 320 Einheiten auf 343 px (Handy) sind das knapp 14 px Schrift.
+// Die Website hält den Streifen darum schmal (max. 400 px), sonst würde die Schrift dort unnötig gross.
 export const STREIFEN = {
   breite: 320, // Einheiten der viewBox
-  rand: 10, // links und rechts, damit der halbe Punkt nicht abgeschnitten wird
-  radius: 5,
+  rand: 14, // links und rechts, damit der halbe Punkt nicht abgeschnitten wird
+  radius: 12.5, // «OW», «NW» brauchen bei 13 Einheiten rund 22 Einheiten Breite
   abstand: 1, // zusätzliche Luft zwischen zwei Punkten
-  zeilenHoehe: 11,
   luft: 3, // oben und unten
+  schrift: 13, // Kürzel, nie kleiner (querschnittGestaltung.test.js: keine Schrift unter 13 px)
 };
+
+// Schrift im Punkt: dunkel oder hell, je nachdem, was gegen die Farbe des Punkts mehr Kontrast hat.
+// Wächter punktStreifen.test.js: mindestens 4,5:1 (WCAG 1.4.3) für jede Stufe, hell und dunkel.
+export const SCHRIFT_DUNKEL = '#111111';
+export const SCHRIFT_HELL = '#FFFFFF';
+const kanal = (c) => { const v = c / 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+export function leuchtdichte(hex) {
+  const n = parseInt(hex.replace('#', ''), 16);
+  return 0.2126 * kanal((n >> 16) & 255) + 0.7152 * kanal((n >> 8) & 255) + 0.0722 * kanal(n & 255);
+}
+export const kontrast = (a, b) => {
+  const [h, d] = [leuchtdichte(a), leuchtdichte(b)].sort((x, y) => y - x);
+  return (h + 0.05) / (d + 0.05);
+};
+export const schriftAuf = (hex) => (kontrast(hex, SCHRIFT_DUNKEL) >= kontrast(hex, SCHRIFT_HELL) ? SCHRIFT_DUNKEL : SCHRIFT_HELL);
 
 const runde = (n) => Math.round(n * 10) / 10;
 
-// Reihenfolge der Ausweichplätze: auf der Linie, dann eins darüber, eins darunter, zwei darüber …
-const ebene = (i) => (i === 0 ? 0 : (i % 2 === 1 ? -1 : 1) * Math.ceil(i / 2));
+// Ausweichen wie Perlen (Bienenschwarm): Jeder Punkt bleibt bei seinem Wert (x) und sucht die Höhe, die
+// am nächsten an der Linie liegt und keinen schon gesetzten Punkt berührt. Die Kandidaten sind die Linie
+// selbst und die Höhen, auf denen er einen Nachbarn gerade berührt, darüber und darunter. So legen sich
+// die Punkte schräg aneinander statt in Säulen (Fassung mit festen Ebenen: bis zu sieben Punkte übereinander).
+function ausweichHoehe(x, gesetzt, abstandMitte) {
+  const nah = gesetzt.filter((p) => Math.abs(p.x - x) < abstandMitte);
+  const frei = (dy) => nah.every((p) => Math.hypot(p.x - x, p.dy - dy) >= abstandMitte - 1e-6);
+  const kandidaten = [0];
+  for (const p of nah) {
+    const h = Math.sqrt(abstandMitte ** 2 - (p.x - x) ** 2);
+    kandidaten.push(p.dy + h, p.dy - h);
+  }
+  // Nächst an der Linie zuerst; bei gleichem Abstand oben vor unten, damit das Bild immer gleich wird.
+  kandidaten.sort((a, b) => Math.abs(a) - Math.abs(b) || a - b);
+  return kandidaten.find(frei);
+}
 
 // werte: { KANTON: Zahl } · ch: Zahl oder null · stufe: { KANTON: 1–4 }
 // Gibt die Lage jedes Punkts zurück, dazu den Strich für die ganze Schweiz und die Höhe der Zeichnung.
@@ -42,23 +74,19 @@ export function streifenLage({ werte, ch = null, stufe = {} }) {
   const xVon = (v) => runde(S.rand + (max === min ? innen / 2 : ((v - min) / (max - min)) * innen));
   // Sortiert nach Wert, bei Gleichstand nach Kürzel: dieselbe Eingabe gibt immer dasselbe Bild.
   const reihe = eintraege.sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]));
-  const frei = new Map(); // je Ebene: ab welchem x der nächste Punkt Platz hat
-  const durchmesser = 2 * S.radius + S.abstand;
-  const punkte = reihe.map(([k, v]) => {
+  const abstandMitte = 2 * S.radius + S.abstand;
+  const punkte = [];
+  for (const [k, v] of reihe) {
     const x = xVon(v);
-    let i = 0;
-    while ((frei.get(ebene(i)) ?? -Infinity) > x) i++;
-    const e = ebene(i);
-    frei.set(e, x + durchmesser);
-    return { k, v, x, ebene: e, s: stufe[k] || null };
-  });
-  const oben = Math.max(0, ...punkte.map((p) => -p.ebene));
-  const unten = Math.max(0, ...punkte.map((p) => p.ebene));
-  const achseY = runde(S.luft + S.radius + oben * S.zeilenHoehe);
-  for (const p of punkte) p.y = runde(achseY + p.ebene * S.zeilenHoehe);
+    punkte.push({ k, v, x, dy: ausweichHoehe(x, punkte, abstandMitte), s: stufe[k] || null });
+  }
+  const oben = Math.max(0, ...punkte.map((p) => -p.dy));
+  const unten = Math.max(0, ...punkte.map((p) => p.dy));
+  const achseY = runde(S.luft + S.radius + oben);
+  for (const p of punkte) { p.y = runde(achseY + p.dy); p.dy = runde(p.dy); }
   return {
     breite: S.breite,
-    hoehe: runde(achseY + unten * S.zeilenHoehe + S.radius + S.luft),
+    hoehe: runde(achseY + unten + S.radius + S.luft),
     radius: S.radius,
     min, max,
     minK: punkte[0].k, maxK: punkte[punkte.length - 1].k,
