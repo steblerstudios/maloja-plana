@@ -7,3 +7,7 @@ export const appAnsicht = (view) => `/app/#/${view}`;
 // fällt sofort weg, der Anker bleibt). Wer Zugang hat, bekommt die eigene App. Seit «App nach /app/» (#776/#779)
 // zeigen beide direkt auf /app/; alte Links auf / leitet /weiterleitung.js weiter.
 export const appBeispiel = (view) => `/app/?beispiel#/${view}`;
+// Die Startseite einer Sprache führt ins Beispiel in dieser Sprache (Gruppe E, H1, 11.11.2026): `lang` stellt die
+// App um (src/i18n/index.js), `beispiel` öffnet das Beispiel ohne Code. Vorher stand hier nur `/?lang=xx`, und der
+// Knopf «… ohne Zugangscode» endete vor dem Beta-Tor.
+export const appBeispielSprache = (code) => `/app/?lang=${code}&beispiel`;

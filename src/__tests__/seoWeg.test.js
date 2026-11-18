@@ -19,7 +19,8 @@ describe('S6 · Sprach-Startseiten', () => {
     const html = lies(`public/${s.praefix}index.html`);
     expect(html).toContain(`<html lang="${s.htmlLang}">`);
     expect(html).toContain(`<link rel="canonical" href="https://malojaplana.ch/${s.praefix}">`);
-    expect(html).toContain(`href="/?lang=${code}"`);
+    // Seit Gruppe E (11.11.2026, H1) direkt ins Beispiel: «/?lang=xx» endete vor dem Beta-Tor.
+    expect(html).toContain(`href="/app/?lang=${code}&amp;beispiel"`);
     expect(html).toContain(`content="${s.freigegeben ? 'index, follow' : 'noindex, follow'}"`);
   });
 

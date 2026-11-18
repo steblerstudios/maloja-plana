@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
-import { IPV_SZ, ipvSchwyzRechnen } from '../ipvSchwyz.js';
+import { IPV_SZ, IPV_SZ_2027, IPV_SZ_JAHRE, szWerte, ipvSchwyzRechnen } from '../ipvSchwyz.js';
 import { SAEULE_3A } from '../kantonsModell.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, IPV_MODULE } from '../cantonalData.js';
 
@@ -191,7 +191,7 @@ describe('K31 calculateIPV für SZ (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: 3629.4 }))).toMatchObject({ eligible: true, annual: Math.round(5583.6 - 0.11 * 43552.8) });
     expect(calculateIPV(person({ monthlyIncome: 3629.5 }))).toMatchObject({ belegt: false, amount: null, offen: 'szGrenzeMietzinsregion' });
     expect(calculateIPV(person({ monthlyIncome: 50000 / 12 }))).toMatchObject({ offen: 'szGrenzeMietzinsregion' });
-    expect(calculateIPV(person({ monthlyIncome: 4230 }))).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.szKeinAnspruch' });
+    expect(calculateIPV(person({ monthlyIncome: 4230 }))).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.szKeinAnspruch', noteParams: { nullpunkt: '50’760' } });
     expect(calculateIPV(person({ monthlyIncome: 8000 }))).toMatchObject({ belegt: true, eligible: false, noteKey: 'ipv.szKeinAnspruch' });
   });
 
@@ -287,9 +287,72 @@ describe('K31 calculateIPV für SZ (App-Angaben → Modell)', () => {
       expect(r).toMatchObject({ noteKey: 'ipv.szFristLaeuft', noteParams: { jahr: 2026, vorjahr: 2025 } });
       expect(r.anmeldefristVorbei).toBeUndefined();
     });
-    it('ab 2027 keine Zahl mehr, bis die Werte nachgeführt sind', () => {
-      vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));
+    it('ab 2028 keine Zahl mehr, bis die Werte nachgeführt sind', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2028-01-01T12:00:00'));
       expect(calculateIPV(person({}))).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
     });
+  });
+
+  // Werte 2027 aus [6] (SVA Schwyz, «Prämienverbilligung 2027», erstellt 06.11.2026). Am 1.1. schaltet die App um.
+  describe('Anspruchsjahr 2027 [6]', () => {
+    const am2027 = () => { vi.useFakeTimers(); vi.setSystemTime(new Date('2027-03-01T12:00:00')); };
+    it('rechnet mit den Richtprämien 2027 und nennt das Jahr', () => {
+      am2027();
+      const r = calculateIPV(person({ monthlyIncome: 2000 }));
+      expect(r).toMatchObject({ belegt: true, eligible: true, jahr: 2027, annual: Math.round(5810.4 - 0.11 * 24000), noteParams: { jahr: 2027, vorjahr: 2026 } });
+      expect(r.maxAnnual).toBe(5400); // Prämie 450 × 12 deckelt die Richtprämie 5 810.40
+    });
+    it('am 31.12.2026 noch die Werte 2026', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2026-12-31T20:00:00'));
+      expect(calculateIPV(person({ monthlyIncome: 2000 }))).toMatchObject({ jahr: 2026, annual: Math.round(5583.6 - 0.11 * 24000) });
+    });
+    it('🛑 Klippe 2027 bei 43 806; ohne Kinder über dem Nullpunkt 52 821.82 kein Anspruch', () => {
+      am2027();
+      expect(calculateIPV(person({ monthlyIncome: 3650.4 }))).toMatchObject({ eligible: true, annual: Math.round(5810.4 - 0.11 * 43804.8) });
+      expect(calculateIPV(person({ monthlyIncome: 3650.5 }))).toMatchObject({ belegt: false, offen: 'szGrenzeMietzinsregion' });
+      expect(calculateIPV(person({ monthlyIncome: 4410 }))).toMatchObject({ belegt: true, eligible: false, noteKey: 'ipv.szKeinAnspruch', noteParams: { nullpunkt: '52’822' } });
+    });
+    it('1 Kind 2027: Kinder-Tabelle 63 441 statt 63 117', () => {
+      am2027();
+      // 63 200 liegt 2026 schon über der Kinder-Tabelle, 2027 noch darunter.
+      expect(calculateIPV(person({ monthlyIncome: 63200 / 12, children: [{ age: 5 }] }))).toMatchObject({ offen: 'szKinderMindestanspruch' });
+      expect(calculateIPV(person({ monthlyIncome: 63450 / 12, children: [{ age: 5 }] }))).toMatchObject({ offen: 'szGrenzeMietzinsregion' });
+    });
+    it('Jahrgänge 2027 [6]: erwachsen ab 2001, Kinder 2009 und jünger', () => {
+      am2027();
+      expect(calculateIPV(person({ dob: '2001-12-31' })).belegt).toBe(true);
+      expect(calculateIPV(person({ dob: '2002-01-01' }))).toMatchObject({ offen: 'alter' });
+      expect(calculateIPV(person({ children: [{ birthDate: '2009-12-31' }] })).belegt).toBe(true);
+      expect(calculateIPV(person({ children: [{ birthDate: '2008-12-31' }] }))).toMatchObject({ offen: 'haushalt' });
+    });
+  });
+});
+
+describe('K31 SZ Werte 2027 [6] (SVA Schwyz, erstellt 06.11.2026)', () => {
+  // Absichtlich nicht aus IPV_SZ_2027 abgeleitet, damit ein Zahlendreher auffällt.
+  it('Richtprämien 5 810.40 / 4 093.20 / 1 350.00 = 90 % von 6 456 / 4 548 / 1 500', () => {
+    expect(IPV_SZ_2027.richtpraemie).toEqual({ e: 5810.40, j: 4093.20, k: 1350.00 });
+    expect(0.9 * 6456).toBeCloseTo(IPV_SZ_2027.richtpraemie.e, 9);
+    expect(0.9 * 4548).toBeCloseTo(IPV_SZ_2027.richtpraemie.j, 9);
+    expect(0.9 * 1500).toBeCloseTo(IPV_SZ_2027.richtpraemie.k, 9);
+  });
+  it('Höchsteinkommen, beide Tabellen, Alleinstehende 0–4 Kinder', () => {
+    expect(IPV_SZ_2027.hoechsteinkommenMinimal).toEqual([43806, 56376, 66241, 74811, 80701]);
+    expect(IPV_SZ_2027.hoechsteinkommenKinderMinimal).toEqual([43806, 63441, 74887.25, 84774.75, 91762.25]);
+  });
+  it('unverändert: Selbstbehalt 11 %, Freibeträge, Vermögensgrenze, 80 %, 50 Franken', () => {
+    expect(IPV_SZ_2027).toMatchObject({ jahr: 2027, selbstbehalt: 0.11, vermoegenAnteil: 0.10, freibetrag: { erwachsen: 25000, kind: 15000 }, vermoegensgrenze: 250000, mindestanteilKind: 0.8, mindestbetrag: 50 });
+  });
+  it('Auswahl nach Jahr: 2026 und 2027 belegt, 2028 nicht; 2026 unverändert', () => {
+    expect(szWerte(2026)).toBe(IPV_SZ);
+    expect(szWerte(2027)).toBe(IPV_SZ_2027);
+    expect(szWerte(2028)).toBe(null);
+    expect(Object.keys(IPV_SZ_JAHRE)).toEqual(['2026', '2027']);
+    expect(IPV_SZ.richtpraemie.e).toBe(5583.60);
+  });
+  it('Rechnung mit den Werten 2027: Nullpunkt 5 810.40 / 11 %', () => {
+    const r = ipvSchwyzRechnen({ personen: ['e'], me: 0, werte: IPV_SZ_2027 });
+    expect(r.differenz).toBeCloseTo(5810.40, 9);
+    expect(r.nullpunkt).toBeCloseTo(52821.818, 2);
   });
 });

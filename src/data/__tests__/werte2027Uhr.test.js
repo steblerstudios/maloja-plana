@@ -23,15 +23,14 @@ describe('Uhr 15.01.2027: die Konstanten zeigen die Werte 2027', () => {
     expect(r.monatsrente).toBe(1280);
     expect(r.werteJahr).toBe(2027);
   });
-  // Mindestzins: 1.25 % ist der Satz, der bis zu einem Entscheid des Bundesrats gilt — NICHT ein belegter
-  // Wert 2027 (Entscheid am 22.10.2026 offen, BVG-Kommission empfiehlt 1.75 %; ahvRechner.js:400–403).
-  // Vor dem Dezember-Deploy gegen den Entscheid prüfen (Fachprüfung 26.10.2026).
-  it('BVG — eine Quelle für die Eintrittsschwelle; Mindestzins gilt bis Entscheid (nicht Wert 2027)', () => {
+  // Mindestzins 2027: 2 % (Bundesrat, Medienmitteilung 4.11.2026; ahvRechner.js BVG_MINDESTZINS_JE_JAHR).
+  // Bis 16.11.2026 stand hier 1.25 % als «Satz bis zum Entscheid».
+  it('BVG — eine Quelle für die Eintrittsschwelle; Mindestzins 2027 = 2 %', () => {
     expect(BVG_PARAMS.eintrittsschwelle).toBe(23040);
     expect(BVG_EINTRITTSSCHWELLE_JAHR).toBe(23040);
     expect(BVG_PARAMS.koordinationsabzug).toBe(26880);
     expect(KOORDINATIONSABZUG).toBe(26880);
-    expect(BVG_PARAMS.mindestzins).toBe(1.25);
+    expect(BVG_PARAMS.mindestzins).toBe(2);
   });
   // ALV: seit 26.10.2026 (Werte 2027 vorbereiten) bleibt die Version auf 2026, solange der Grenzbetrag
   // für den 80-%-Satz (AVIV Art. 33 Abs. 2) für 2027 nicht belegt ist — vorher wies der Rechner «2027» aus.

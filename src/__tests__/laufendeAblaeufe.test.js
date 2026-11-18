@@ -265,15 +265,14 @@ describe('Kalender: Band über der Tagesleiste', () => {
     expect(block).not.toMatch(/überfällig|roseDeep/);
   });
 
-  it('Lösch-Hinweis unter den Reitern, nur wenn es Einträge gibt', async () => {
-    expect(await render()).not.toContain('data-loesch-hinweis');
+  // Gruppe B Gestaltung C (Entscheid Stebler Studios 11.11.2026): gelöscht wird am Eintrag, der Hinweis entfällt.
+  it('Löschen am Eintrag: jede Erinnerung hat «Entfernen: …», kein Lösch-Hinweis mehr', async () => {
     localStorage.setItem('or5_reminders', JSON.stringify([
       { id: 's', title: 'Später', dueDate: inDays(9), category: 'personal', recurrence: 'once', done: false },
     ]));
     const html = await render();
-    const hinweis = html.indexOf('Zum Löschen den Tag oben antippen.');
-    expect(hinweis).toBeGreaterThan(html.indexOf('Bevorstehend'));
-    expect(hinweis).toBeLessThan(html.indexOf('+ Erinnerung hinzufügen', html.indexOf('Bevorstehend')));
+    expect(html).not.toContain('data-loesch-hinweis');
+    expect(html).toContain('aria-label="Entfernen: Später"');
   });
 
   it('«Als Nächstes» künftig: kein «Was jetzt?»', async () => {

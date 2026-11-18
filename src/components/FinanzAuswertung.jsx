@@ -29,6 +29,7 @@ import { Lebensbaum } from '../Lebensbaum.jsx';
 import { astFarben, bereichsFruechte } from '../utils/lebensbereichFruechte.js';
 import { GeldflussImKapitel } from './Geldfluss.jsx';
 import { knopfStil, linkStil, KNOPF_RADIUS } from './PrimaryButton.jsx';
+import { mitEchtenBetraegen } from '../utils/geld.js';
 
 // Die Auswertung der Finanzen — bis 24.10.2026 nur in FinanzUebersicht.jsx, seit der
 // Zusammenlegung mit dem Kapitel Finanzen (docs/entscheide/finanzen-fusion.md, Bauschritt 2)
@@ -48,9 +49,7 @@ const ipvAnnahmenTexte = (t, a) => [
 ].filter(Boolean);
 
 export function formatCHF(value) {
-  const n = Math.round(value);
-  if (n === 0) return 'CHF 0';
-  return betrag(n); // utils/geld.js — eine Quelle
+  return betrag(Math.round(value)); // utils/geld.js — auch «CHF 0» verbirgt der Sichtschutz // utils/geld.js — eine Quelle
 }
 
 export const StatusCard = ({ palette, icon, title, status, statusColor, detail, onClick }) =>
@@ -236,7 +235,7 @@ export const druckAbschnitte = (t, w) => {
   return abschnitte;
 };
 
-const generatePrintHTML = (t, data, w) => {
+const generatePrintHTMLRoh = (t, data, w) => {
   const name = [data.basis?.firstName, data.basis?.lastName].filter(Boolean).join(' ') || '';
   const date = new Date().toLocaleDateString('de-CH');
   const rows = druckAbschnitte(t, w).flatMap(a => [...(a.kopfHtml ? [a.kopfHtml] : []), ...a.zeilen.map(z => z.html)]);
@@ -670,3 +669,6 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     )
   );
 };
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+const generatePrintHTML = (...args) => mitEchtenBetraegen(() => generatePrintHTMLRoh(...args));

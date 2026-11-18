@@ -12,6 +12,9 @@ export const PFADE = Object.freeze({
   briefe:           { eltern: 'tresor',         titel: 'briefe.title' },
   notfallpass:      { eltern: 'notfalleinstieg', titel: 'notfallpass.title' },
   notfallkarte:     { eltern: 'notfalleinstieg', titel: 'notfallkarte.title' },
+  // Kapitel 7, Gestaltung A (10.11.2026): der Arztkoffer unter dem Kapitel Gesundheit — vorher «Übersicht › Arztkoffer»
+  // ohne Weg ins Kapitel.
+  gesundheit:       { eltern: 'notfalleinstieg', titel: 'nav.arztkoffer' },
   // F7-S10 (27.10.2026): die drei Vorsorge-Formulare unter Notfall — die Stufe führt zum Block «Vorsorge».
   patientenverfuegung: { eltern: 'notfallvorsorge', titel: 'pv.ui.title' },
   bestattung:       { eltern: 'notfallvorsorge', titel: 'bw.ui.title' },
@@ -26,7 +29,9 @@ export const PFADE = Object.freeze({
 // «Meine Unterlagen», die es als eigenen Ort nicht gibt (nur eine Umleitung auf die Ablage).
 export const ELTERN_TITEL = Object.freeze({
   tresor: 'nav.tresor',
-  notfalleinstieg: 'arztkoffer.faecher.notfall.title',
+  // Kapitel 7, S6 (10.11.2026): die Stufe heisst wie das Kapitel, «Gesundheit» — vorher «Notfall», ein zweiter
+  // Name für dasselbe Kapitel (Notfallkarte und Notfallpass unter «Notfall», die Vorsorge-Formulare unter «Gesundheit»).
+  notfalleinstieg: 'chapters.notfall.title',
   versicherungskapitel: 'chapters.versicherungen.title',
   notfallvorsorge: 'chapters.notfall.title',
 });

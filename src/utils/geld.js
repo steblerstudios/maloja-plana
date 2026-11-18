@@ -32,12 +32,50 @@ export function zahl(n, { stellen, hoechstens } = {}) {
   return (negativ ? MINUS : '') + gruppieren(ganz) + (rest ? '.' + rest : '');
 }
 
-// betrag(-1234)                 → "− CHF 1’234"
-// betrag(12.5, { stellen: 2 })  → "CHF 12.50"
-export function betrag(n, optionen = {}) {
+// betragEcht(-1234)                 → "− CHF 1’234"
+// betragEcht(12.5, { stellen: 2 })  → "CHF 12.50"
+// Immer der wahre Betrag — für alles, was die App verlässt (Export, Dossier).
+export function betragEcht(n, optionen = {}) {
   const x = Number(n);
   if (n === null || n === undefined || !Number.isFinite(x)) return '–';
   const z = zahl(Math.abs(x), optionen);
   const negativ = x < 0 && z !== '0' && !/^0(\.0+)?$/.test(z);
   return (negativ ? MINUS + ' ' : '') + 'CHF ' + z;
+}
+
+// Sichtschutz «Beträge verbergen» (Kopfzeile, seit 10.11.2026, Idee aus dem Nessie-Abgleich):
+// Solange <html data-betraege="aus"> gesetzt ist, zeigt der Bildschirm «CHF ···» statt der Zahl.
+// Nur die Anzeige — gespeichert, gerechnet und exportiert wird weiter mit dem wahren Wert
+// (Exporte nehmen betragEcht, Dokumente laufen in mitEchtenBetraegen). Gesetzt von public/theme-init.js und vom Schalter in main.jsx,
+// jeweils VOR dem Rendern, darum genügt hier ein Blick aufs Attribut.
+// Dokumente zeigen immer den wahren Betrag (Vortor 13.11.2026, Blocker): t() verbirgt jeden
+// «CHF {x}»-Platzhalter, und Briefe, Dossiers, Druck und Exporte bauen ihren Text mit demselben t().
+// Ohne diese Ausnahme stand in der gedruckten Lohnforderung «brutto CHF ···». Alles, was die App
+// verlässt, läuft darum in mitEchtenBetraegen(); solange es läuft, ist der Sichtschutz aus.
+// Nur für synchrone Erzeuger (alle heutigen sind es); Wächter: betraegeVerbergen.test.js.
+let echteBetraegeTiefe = 0;
+export function mitEchtenBetraegen(erzeugen) {
+  echteBetraegeTiefe += 1;
+  try {
+    return erzeugen();
+  } finally {
+    echteBetraegeTiefe -= 1;
+  }
+}
+
+export const betraegeVerborgen = () => echteBetraegeTiefe === 0 && typeof document !== 'undefined' && document.documentElement.dataset.betraege === 'aus';
+
+// Die eine Maske — t() und betrag() setzen genau diesen Text. BetragText.jsx erkennt ihn daran
+// und gibt dem Bildschirmleser statt der drei Punkte «Betrag verborgen».
+export const VERBORGEN = 'CHF ···';
+
+export function betrag(n, optionen) {
+  const echt = betragEcht(n, optionen);
+  return echt !== '–' && betraegeVerborgen() ? VERBORGEN : echt;
+}
+
+// betragSpanne(1260, 2520) → "CHF 1’260 – 2’520"; mit Sichtschutz die eine Maske für beide Enden.
+export function betragSpanne(a, b, optionen) {
+  const von = betrag(a, optionen);
+  return von === VERBORGEN || von === '–' ? von : von + ' – ' + zahl(b, optionen);
 }

@@ -54,7 +54,7 @@ export const SPRACHEN = [
     ldLang: 'de-CH',
     praefix: '',
     freigegeben: true,
-    geprueft: 'September 2026', // Fach- + Rechtsprüfung 20.09.2026
+    geprueft: 'November 2026', // Fach- + Rechtsprüfung 20.09.2026; Gruppe D (Ausländerrecht, IPV, Sprache) 11.11.2026
   },
   {
     code: 'fr',
@@ -127,7 +127,13 @@ export const RAHMEN = {
     kurzhinweis:
       'Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. ' +
       'Diese Seite nennt bewusst keine Beträge und Fristen.',
-    karteTitel: 'Maloja Plana rechnet das für Ihre Situation durch.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge; Fristen nur, wo das Bundesrecht sie für alle gleich festlegt.',
+    vorbehaltBund:
+      'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, Sätze oder Einkommensgrenzen: die ändern regelmässig. Fristen und Altersgrenzen nennt sie nur, wo das Bundesrecht sie für die ganze Schweiz gleich festlegt. Massgebend ist immer die Auskunft beziehungsweise die Verfügung der zuständigen Stelle.',
+    karteTitel: 'Mit Ihren Angaben lässt sich das in der App durchrechnen.',
     karteText:
       'Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, ' +
       'Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, ' +
@@ -141,6 +147,10 @@ export const RAHMEN = {
       'Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine ' +
       'Zusammenarbeit und keine Billigung. Nicht alle davon sind Behörden — die SKOS etwa ist ein ' +
       'Fachverband, ihre Richtlinien sind Empfehlungen.',
+    // Gruppe D K (11.11.2026): ohne SKOS-Quelle auf der Seite ohne den SKOS-Satz.
+    quellenLeiseOhneSkos:
+      'Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine ' +
+      'Zusammenarbeit und keine Billigung.',
     nurDeutsch: 'nur auf Deutsch verfügbar',
     vorbehalt:
       'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — ' +
@@ -168,6 +178,12 @@ export const RAHMEN = {
     kurzhinweis:
       'Une orientation, et non un conseil juridique ou financier — seul l’organe compétent fait foi. ' +
       'Cette page ne mentionne volontairement ni montants ni délais.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'Une orientation, et non un conseil juridique ou financier — seul l’organe compétent fait foi. Cette page ne mentionne volontairement aucun montant ; des délais seulement là où le droit fédéral les fixe de la même manière pour tous.',
+    vorbehaltBund:
+      'Cette page est une <strong>aide à l’orientation fondée sur des informations publiques — ni conseil juridique ni conseil financier</strong>. Elle ne mentionne volontairement ni montants, ni taux, ni limites de revenu : ceux-ci changent régulièrement. Elle ne cite des délais et des limites d’âge que là où le droit fédéral les fixe de la même manière pour toute la Suisse. Seuls le renseignement ou la décision de l’organe compétent font foi.',
     karteTitel: 'Maloja Plana fait le calcul pour votre situation.',
     karteText:
       'Un classeur de vie suisse — impôts, réduction des primes, aide sociale, salaire minimum, ' +
@@ -214,10 +230,16 @@ export const RAHMEN = {
     kurzhinweis:
       'Un orientamento, non una consulenza giuridica o finanziaria — fa fede il servizio competente. ' +
       'Questa pagina non indica deliberatamente né importi né termini.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'Un orientamento, non una consulenza giuridica o finanziaria — fa fede il servizio competente. Questa pagina non indica deliberatamente importi; termini solo dove il diritto federale li fissa allo stesso modo per tutti.',
+    vorbehaltBund:
+      'Questa pagina è un <strong>ausilio all’orientamento basato su informazioni pubbliche — non è una consulenza giuridica né finanziaria</strong>. Non indica deliberatamente importi, aliquote o limiti di reddito: cambiano regolarmente. Cita termini e limiti d’età solo dove il diritto federale li fissa allo stesso modo per tutta la Svizzera. Fanno fede sempre l’informazione o la decisione del servizio competente.',
     karteTitel: 'Maloja Plana esegue il calcolo per la sua situazione.',
     karteText:
       'Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, ' +
-      'previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: ' +
+      'previdenza e scheda d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: ' +
       'nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.',
     karteBeta:
       'L’applicazione è attualmente in <strong>beta chiusa</strong> e richiede un codice d’accesso. ' +
@@ -257,6 +279,12 @@ export const RAHMEN = {
     kurzhinweis:
       'Orientation, not legal or financial advice — the competent authority is what counts. ' +
       'This page deliberately gives no amounts and no deadlines.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'Orientation, not legal or financial advice — the competent authority is what counts. This page deliberately gives no amounts; deadlines only where federal law sets them the same for everyone.',
+    vorbehaltBund:
+      'This page is <strong>orientation based on public information — not legal or financial advice</strong>. It deliberately gives no amounts, rates or income limits: these change regularly. It mentions deadlines and age limits only where federal law sets them the same for all of Switzerland. What counts is always the information or the ruling of the competent authority.',
     karteTitel: 'Maloja Plana works this out for your situation.',
     karteText:
       'A Swiss life folder — taxes, premium reduction, social assistance, minimum wage, pension ' +
@@ -299,6 +327,12 @@ export const RAHMEN = {
     kurzhinweis:
       'In’orientaziun, betg ina cussegliaziun giuridica u finanziala — decisiv è il post cumpetent. ' +
       'Questa pagina numna a posta nagins imports e nagins termins.',
+    // Seiten, die nur Bundesrecht erklären (bundesrecht: true, E3 16.11.2026): dort gibt es Fristen und
+    // Altersgrenzen, die überall gleich gelten. Der allgemeine Satz «keine Fristen» würde dort nicht stimmen.
+    kurzhinweisBund:
+      'In’orientaziun, betg ina cussegliaziun giuridica u finanziala — decisiv è il post cumpetent. Questa pagina numna a posta nagins imports; termins mo là, nua ch’il dretg federal als fixescha per tuts en il medem moda.',
+    vorbehaltBund:
+      'Questa pagina è in <strong>agid d’orientaziun sin fundament d’infurmaziuns publicas — betg ina cussegliaziun giuridica u finanziala</strong>. Ella numna a posta nagins imports, naginas quotas e nagins limits d’entrada: quels midan regularmain. Termins e limits da vegliadetgna numna ella mo là, nua ch’il dretg federal als fixescha per tut la Svizra en il medem moda. Decisiv è adina l’infurmaziun respectivamain la disposiziun dal post cumpetent.',
     karteTitel: 'Maloja Plana calculescha quai per Vossa situaziun.',
     karteText:
       'In classeur da vita svizzer — taglias, reducziun da premi, agid social, salari minimal, ' +
@@ -329,6 +363,9 @@ export const RAHMEN = {
     spracheLabel: 'Lingua',
     entwurfBanner:
       'Questa translaziun n’è anc betg vegnida legida d’ina persuna. Decisiv è il text tudestg.',
+    // Gruppe E, S10: ohne diesen Satz fiele bei der Freigabe «Deutsch gilt» ganz weg. Nur aus Wörtern des
+    // Banners gebaut; vor der Freigabe muttersprachlich lesen lassen wie den ganzen rm-Rahmen.
+    verbindlich: 'Translaziun. Decisiv è il text tudestg.',
   },
 };
 

@@ -31,7 +31,7 @@ export const LINK_TARGETS = [
   { view: 'direktlinks', label: 'nav.direktlinks' },
 ];
 
-// «Entfernt · Rückgängig» bleibt rund fünf Sekunden stehen (Entscheid C, §15) —
+// «Entfernt · Rückgängig» (Entscheid C, §15; seit 11.11.2026 ohne Zeitgrenze, WCAG 2.2.1) —
 // seit 10.11.2026 als gemeinsamer Baustein (hooks/useRueckgaengig.js), den alle Lösch-Listen teilen.
 
 // Seit 27.10.2026 (F7-L10, docs/entscheide/seiten-buendeln.md §2 H) keine eigene Seite mehr, sondern der

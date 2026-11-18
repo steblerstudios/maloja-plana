@@ -10,9 +10,12 @@
 //   · Gewählte Bereiche erscheinen als Sätze (Art. 360 Abs. 2); ohne Bereich eine Lücke.
 //   · Entschädigung wie Art. 366: unentgeltlich (Spesen werden ohnehin ersetzt) oder angemessen.
 //   · Nichts erfunden: fehlende Angaben werden zu Lücken, kein Datum vorbelegt.
+//   · Keine Linien für Ort, Datum und Unterschrift (Kapitel 7, L1, 10.11.2026): Ein unterschriebener Ausdruck wäre
+//     formungültig (Art. 361 Abs. 2). Statt der Linien ein Satz: von Hand auf die Abschrift, nicht auf dieses Blatt.
 
 import { escapeHtml as esc } from '../utils/helpers.js';
-import { OFFEN, LUECKE, leer, datumCH, druckSeite, druckLinie } from './patientenverfuegung.js';
+import { OFFEN, LUECKE, leer, datumCH, druckSeite } from './patientenverfuegung.js';
+import { mitEchtenBetraegen } from '../utils/geld.js';
 
 const PERSON_FELDER = ['name', 'beziehung', 'geburt', 'adresse'];
 
@@ -71,15 +74,14 @@ export function vorlage(antworten, daten, t) {
   return { saetze };
 }
 
-export function vorlageHtml(antworten, daten, t, lang = 'de') {
+function vorlageHtmlRoh(antworten, daten, t, lang = 'de') {
   const v = vorlage(antworten, daten, t);
   const koerper = `<div class="pv-blatt">
 <div class="va-warnung"><strong>${esc(t('va.vorlage.nichtAbschreiben'))}</strong><br>${esc(t('va.vorlage.warnung'))}</div>
 <div class="va-abschreiben">
 <h1>${esc(t('va.doc.titel'))}</h1>
 ${v.saetze.map((s) => `<p>${esc(s)}</p>`).join('\n')}
-<div class="pv-linien">${druckLinie(t('va.doc.ortDatum'))}</div>
-<div class="pv-linien">${druckLinie(t('va.doc.unterschrift'))}</div>
+<p class="va-hand">${esc(t('va.doc.handschrift'))}</p>
 </div>
 </div>`;
   return druckSeite({
@@ -90,4 +92,9 @@ ${v.saetze.map((s) => `<p>${esc(s)}</p>`).join('\n')}
     begleitPunkte: [t('va.begleit.form'), t('va.begleit.alter'), t('va.begleit.zivilstandsamt'), t('va.begleit.kesb'),
       t('va.begleit.besondere'), t('va.begleit.patientenverfuegung'), t('va.begleit.keineBeratung')],
   });
+}
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export function vorlageHtml(...args) {
+  return mitEchtenBetraegen(() => vorlageHtmlRoh(...args));
 }

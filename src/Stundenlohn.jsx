@@ -5,6 +5,7 @@ import { text, weight, radius, space, leading } from './config/tokens.js';
 import { CANTON_CODES, getCantonName } from './config/kantonPLZ.js';
 import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
 import { betrag } from './utils/geld.js';
+import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 import { stundenlohnRechnen, stundenlohnErgebnis, lies, ARTEN, FERIEN_FORMEN, ANTWORTEN, TI_MINDESTLOHN_OBERGRENZE } from './utils/stundenlohn.js';
 
 // «Was steht mir im Stundenlohn zu?» — Wunsch Stebler Studios 25.09.2026.
@@ -216,7 +217,10 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData, onNavigate }) => {
       ),
     } : null,
     quelle: t('stundenlohnView.quellen'),
-  });
+  },
+    // 14.11.2026: die Mindestlohn-Karte des Kantonsatlas (zwei Gruppen), der eigene Kanton markiert.
+    React.createElement(VerstehenImWerkzeug, { palette, t, view: 'stundenlohn', kanton: e.kanton }),
+    React.createElement(ErklaerseiteLink, { palette, t, view: 'stundenlohn' }));
 };
 
 export default Stundenlohn;

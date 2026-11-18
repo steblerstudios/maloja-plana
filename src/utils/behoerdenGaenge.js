@@ -20,13 +20,15 @@ export const offeneErklaerungen = (behoerden) => {
   return Number.isFinite(n) ? n : null;
 };
 
-// Welches Steuerjahr mit «0 offen» erledigt ist (Fachprüfung 25.10.2026): die erfasste Frist gilt für das Jahr davor;
-// liegt sie noch vor uns, ist erst die Erklärung des Jahres davor eingereicht. Ohne Frist kein Jahr, kein Vorschlag.
+// Welches Steuerjahr mit «0 offen» erledigt ist (Fachprüfung 25.10.2026): die erfasste Frist im Jahr Y gilt für das
+// Steuerjahr Y − 1. Ist dieses Jahr noch nicht vorbei (Frist 31.03.2027, heute 2026), kann erst das Jahr davor
+// eingereicht sein. Kapitel 6 (10.11.2026): vorher entschied der Vergleich mit dem Fristdatum; eine verlängerte Frist im
+// laufenden Jahr (30.11.2026 für 2025) ergab dann 2024. Ohne Frist kein Jahr, kein Vorschlag.
 export const erledigtesSteuerjahr = (behoerden, heute = new Date()) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(behoerden?.taxFilingDeadline || ''));
   if (!m || offeneErklaerungen(behoerden) !== 0) return null;
-  const frist = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
-  return frist >= new Date(heute.getFullYear(), heute.getMonth(), heute.getDate()) ? Number(m[1]) - 2 : Number(m[1]) - 1;
+  const fristJahr = Number(m[1]);
+  return heute.getFullYear() >= fristJahr ? fristJahr - 1 : fristJahr - 2;
 };
 
 // Erledigt: eigener Haken; sonst bei «Steuererklärung eingereicht» der Vorschlag aus «0 offen» — mit Steuerjahr.

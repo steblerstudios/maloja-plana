@@ -19,7 +19,8 @@ import rm from '../../i18n/rm.js';
 // laufende Jahr nicht belegt sind. Vorbild: `jahrVorbei` in config/kantonsModell.js (IPV).
 // Keine Beträge für 2027 erfunden: fehlen amtliche Werte, bleibt es beim Hinweis.
 
-const KANTONE = ['GE', 'NE', 'JU', 'BS', 'TI'];
+// GE und BS haben seit 14.11.2026 amtliche Werte 2027; der Riegel greift für die übrigen.
+const KANTONE = ['NE', 'JU', 'TI'];
 const zeit = (iso) => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date(iso)); };
 
 describe('Mindestlohn-Jahres-Riegel', () => {
@@ -33,13 +34,13 @@ describe('Mindestlohn-Jahres-Riegel', () => {
     expect(r.jahr).toBe(2026);
   });
 
-  it('01.01.2027 00:00:01: kein Urteil mit Werten 2026, sondern «nicht belegt»', () => {
+  it('01.01.2027 00:00:01: kein Urteil mit Werten 2026, sondern «nicht belegt» (NE)', () => {
     zeit('2027-01-01T00:00:01');
-    const r = pruefeStundenlohn(3000, 42, 'GE', 'brutto', 'no');
+    const r = pruefeStundenlohn(3000, 42, 'NE', 'brutto', 'no');
     expect(r.status).toBe('jahrNichtBelegt');
     expect(r.jahr).toBe(2026);
     expect(r.laufendesJahr).toBe(2027);
-    expect(r.kanton).toBe('GE');
+    expect(r.kanton).toBe('NE');
     // Kein Betrag aus 2026 darf mitlaufen — sonst zeigt ihn irgendeine Ansicht doch an.
     expect(r).not.toHaveProperty('mindestStunde');
     expect(r).not.toHaveProperty('mindestMonat');
@@ -75,16 +76,27 @@ describe('Mindestlohn-Jahres-Riegel', () => {
 
   it('pruefeLohn (Referenz-Rechnung) ist ebenfalls verriegelt', () => {
     zeit('2027-01-01T00:00:01');
-    const r = pruefeLohn(3000, 'GE');
+    const r = pruefeLohn(3000, 'NE');
     expect(r.status).toBe('jahrNichtBelegt');
     expect(r).not.toHaveProperty('mindestStunde');
     expect(pruefeLohn(3000, 'ZH').status).toBe('keinGesetz');
   });
 
-  it('die Rohdaten selbst bleiben unverändert und tragen ihr Jahr (2026)', () => {
+  it('die Rohdaten tragen ihr Jahr: 2027 für GE/BS, 2026 für die übrigen', () => {
     zeit('2027-01-01T00:00:01');
-    expect(getMindestlohn('GE')).toMatchObject({ chfStunde: 24.59, jahr: 2026 });
-    expect(alleMindestlohnKantone().every((k) => k.jahr === 2026)).toBe(true);
+    expect(getMindestlohn('GE')).toMatchObject({ chfStunde: 24.73, jahr: 2027 });
+    expect(getMindestlohn('BS')).toMatchObject({ chfStunde: 22.50, jahr: 2027 });
+    expect(getMindestlohn('NE')).toMatchObject({ chfStunde: 21.35, jahr: 2026 });
+    const jahre = Object.fromEntries(alleMindestlohnKantone().map((k) => [k.kanton, k.jahr]));
+    expect(jahre).toEqual({ GE: 2027, NE: 2026, JU: 2026, BS: 2027, TI: 2026 });
+  });
+
+  it('GE 2027: Befund mit dem neuen Satz 24.73', () => {
+    zeit('2027-01-01T00:00:01');
+    const r = pruefeStundenlohn(3000, 42, 'GE', 'brutto', 'no');
+    expect(r.status).toBe('unterMindestlohn');
+    expect(r.mindestStunde).toBe(24.73);
+    expect(r.jahr).toBe(2027);
   });
 
   describe('Lohn-Barometer', () => {
@@ -96,10 +108,10 @@ describe('Mindestlohn-Jahres-Riegel', () => {
       expect(s.mindestlohnNichtBelegt).toBeNull();
     });
 
-    it('2027: keine Marke, kein Betrag, kein Alarm — dafür der Hinweis mit Datenjahr', () => {
+    it('2027: keine Marke, kein Betrag, kein Alarm — dafür der Hinweis mit Datenjahr (NE)', () => {
       zeit('2027-01-01T00:00:01');
-      expect(mindestlohnBoden('GE')).toBeNull();
-      const s = lohnBandState({ income: 3000, canton: 'GE', hoursPerWeek: 42, incomeType: 'brutto', dreizehnter: 'no' });
+      expect(mindestlohnBoden('NE')).toBeNull();
+      const s = lohnBandState({ income: 3000, canton: 'NE', hoursPerWeek: 42, incomeType: 'brutto', dreizehnter: 'no' });
       expect(s.mindestlohn).toBeNull();
       expect(s.mlBreached).toBe(false);
       expect(s.konformMit13).toBe(false);
@@ -116,7 +128,7 @@ describe('Mindestlohn-Jahres-Riegel', () => {
 
   it('Stundenlohn-Rechner: 2027 je Lesart «nicht belegt» statt Befund', () => {
     zeit('2027-01-01T00:00:01');
-    const r = stundenlohnRechnen({ betrag: '20', wochenstunden: '42', kanton: 'GE', ferienForm: 'unklar', dreizehnter: 'nein', feiertag: 'nein' });
+    const r = stundenlohnRechnen({ betrag: '20', wochenstunden: '42', kanton: 'NE', ferienForm: 'unklar', dreizehnter: 'nein', feiertag: 'nein' });
     expect(r.status).toBe('gerechnet');
     const stati = Object.values(r.befunde).map((b) => b.status);
     expect(stati.length).toBeGreaterThan(0);
@@ -126,9 +138,9 @@ describe('Mindestlohn-Jahres-Riegel', () => {
   describe('gerenderter Text im Stundenlohn-Rechner (de)', () => {
     const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
     const t = createT({ de }, 'de', 'sie');
-    const seite = () => renderToStaticMarkup(React.createElement(Stundenlohn, {
+    const seite = (kanton = 'GE') => renderToStaticMarkup(React.createElement(Stundenlohn, {
       palette, t, onUpdateData: () => {},
-      data: { finanzen: { stundenlohnRechner: { betrag: '20', wochenstunden: '42', kanton: 'GE', ferienForm: 'dazu', dreizehnter: 'nein', feiertag: 'nein' } } },
+      data: { finanzen: { stundenlohnRechner: { betrag: '20', wochenstunden: '42', kanton, ferienForm: 'dazu', dreizehnter: 'nein', feiertag: 'nein' } } },
     })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
 
     it('2026: Befund mit Betrag 24.59 wie bisher', () => {
@@ -150,11 +162,11 @@ describe('Mindestlohn-Jahres-Riegel', () => {
       expect(s).not.toContain('21.40');
     });
 
-    it('2027: Hinweis mit beiden Jahren, kein Betrag 24.59, kein «scheint unter»', () => {
+    it('2027 Neuenburg: Hinweis mit beiden Jahren, kein Betrag 21.35, kein «scheint unter»', () => {
       zeit('2027-01-01T00:00:01');
-      const s = seite();
+      const s = seite('NE');
       expect(s).toContain('Die Mindestlöhne in dieser App sind für 2026 amtlich belegt. Für 2027 sind noch keine geprüften Werte erfasst');
-      expect(s).not.toContain('24.59');
+      expect(s).not.toContain('21.35');
       expect(s).not.toContain('scheint unter');
     });
   });

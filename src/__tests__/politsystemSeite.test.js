@@ -101,7 +101,8 @@ describe('/politsystem/', () => {
   });
 
   it('jede Figur ist ein beschriftetes Bild ohne Fremdes, Clip-Pfade mit eigener id', () => {
-    const svgs = [...html.matchAll(/<svg [^>]*>([\s\S]*?)<\/svg>/g)];
+    // Ohne Schmuck (aria-hidden): seit Gruppe E, Gestaltung C (12.11.2026) trägt der Kopf die Bildmarke als SVG.
+    const svgs = [...html.matchAll(/<svg [^>]*>([\s\S]*?)<\/svg>/g)].filter(([g]) => !/^<svg [^>]*aria-hidden="true"/.test(g));
     expect(svgs.length).toBe(4);
     for (const [ganz, innen] of svgs) {
       expect(ganz).toMatch(/role="img"/);

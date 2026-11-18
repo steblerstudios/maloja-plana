@@ -90,7 +90,11 @@ describe('K31 IPV-Rechner, Kanton Schwyz', () => {
   it('«kein Anspruch» sagt, dass das amtliche Reineinkommen tiefer sein kann (Fachprüfung #470 ⚠️ 2)', async () => {
     const de = TEXTE.de;
     expect(de.ipv.szKeinAnspruch).toMatch(/Reineinkommen/);
-    expect(de.ipv.szKeinAnspruch).toMatch(/50 760/);
+    // Der Nullpunkt kommt seit 16.11.2026 aus dem Jahr (2026 50’760, 2027 52’822), nicht mehr fest aus dem Text.
+    for (const [l, d] of Object.entries(TEXTE)) {
+      expect(d.ipv.szKeinAnspruch, l).toContain('{nullpunkt}');
+      expect(d.ipv.szKeinAnspruch, l).not.toMatch(/50[ ,’]?760/);
+    }
     expect(de.ipv.szKeinAnspruch).toMatch(/Antrag/);
     expect(de.ipv.szKeinAnspruch).not.toMatch(/in jeder Gemeinde/);
     // ⚠️ 4: der Vorbehalt nennt Verordnung UND Merkblatt, statt eine Neuberechnung zuzusagen.

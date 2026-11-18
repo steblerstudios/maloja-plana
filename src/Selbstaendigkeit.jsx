@@ -1,12 +1,20 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays, formatDE } from './utils/helpers.js';
+import { selbstAhvWerte } from './data/selbstaendigAhv.js';
+import { SAEULE3A_HOECHSTABZUG } from './data/saeule3a.js';
+import { zahl } from './utils/geld.js';
 
 // Selbständig werden — geführter Ablauf. Macht die unsichtbaren Risiken sichtbar, die
 // vorher der Arbeitgeber getragen hat. Reihenfolge: AHV-Status anerkennen lassen (das
 // Fundament), Neben-/Haupterwerb (Weichenstellung, + leise Brücke zum Lebenszustand
-// „Tiefes Einkommen"), Versicherungslücken (UVG/KTG/BVG), Steuern/MwSt zurücklegen.
+// „Tiefes Einkommen"), Versicherungslücken (UVG/KTG/BVG), AHV-Beiträge, Steuern und MWST zurücklegen.
 // Kein Rat — Orientierung, keine Rechts-/Steuerberatung.
+
+const ahvParameter = () => {
+  const w = selbstAhvWerte();
+  return { satz: w.satzVoll, grenze: zahl(w.grenzeVoll), mindest: zahl(w.mindestbeitrag), zins: w.verzugszins, jahr: w.jahr };
+};
 
 export const Selbstaendigkeit = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
@@ -47,14 +55,17 @@ export const Selbstaendigkeit = ({ palette, t, onNavigate }) => {
 
     // Schritt 3 — Versicherungslücken schließen (UVG, KTG, BVG)
     React.createElement(AblaufStep, { palette, title: t('selbstaendigkeit.step3Title') },
-      React.createElement('p', { style: s.stepText }, t('selbstaendigkeit.step3Text')),
+      // Kapitel 5, K: ohne Pensionskasse die grosse Säule 3a (20 %, Höchstbetrag aus der Jahrestabelle).
+      React.createElement('p', { style: s.stepText }, t('selbstaendigkeit.step3Text', { max3a: zahl(SAEULE3A_HOECHSTABZUG.ohnePensionskasse), jahr3a: SAEULE3A_HOECHSTABZUG.steuerjahr })),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('selbstaendigkeit.step3LinkUk'), onClick: () => onNavigate('unfallkrankheit') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('selbstaendigkeit.step3LinkVorsorge'), onClick: () => onNavigate('vorsorge') })
     ),
 
-    // Schritt 4 — Steuern & MwSt zurücklegen
+    // Schritt 4 — AHV-Beiträge, Steuern & MWST zurücklegen
     React.createElement(AblaufStep, { palette, title: t('selbstaendigkeit.step4Title') },
-      React.createElement('p', { style: s.stepText }, t('selbstaendigkeit.step4Text')),
+      // Kapitel 5, A1 (10.11.2026): die AHV-Akontobeiträge fehlten — wer nur nach Steuern und MWST plant, legt
+      // zu wenig zurück. Werte aus der Jahrestabelle (data/selbstaendigAhv.js), mit Stand.
+      React.createElement('p', { style: s.stepText }, t('selbstaendigkeit.step4Text', ahvParameter())),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('selbstaendigkeit.step4Link'), onClick: () => onNavigate('tax') })
     ),
 

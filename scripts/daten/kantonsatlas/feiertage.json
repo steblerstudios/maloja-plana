@@ -1,0 +1,637 @@
+{
+ "ZH": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Tag der Arbeit (1. Mai)",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": "Rechtsgrundlage § 1 Ruhetags- und Ladenöffnungsgesetz (LS 822.4).",
+  "uneinheitlich": false,
+  "url": "https://zh.ch/de/wirtschaft-arbeit/arbeitsbedingungen/arbeitsssicherheit-gesundheitsschutz/arbeits-ruhezeiten/feiertage.html",
+  "sicher": true
+ },
+ "BE": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Berchtoldstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "LU": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Auffahrt",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "UR": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Auffahrt",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Maria Empfängnis",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "SZ": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Josephstag (St. Josef)",
+   "Karfreitag",
+   "Auffahrt",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": "Gleichgestellte Liste kantonsweit einheitlich; nur zusätzliche örtliche (nicht gleichgestellte) Feiertage variieren.",
+  "uneinheitlich": false,
+  "url": "https://www.sz.ch/public/upload/assets/36983/Wegleitung_zum_Ruhetagsgesetz.pdf?fp=3",
+  "sicher": true
+ },
+ "OW": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Auffahrt",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Maria Empfängnis",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "NW": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Auffahrt",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Maria Empfängnis",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "GL": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Näfelser Fahrt (Fahrtsfest)",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Bundesfeiertag",
+   "Allerheiligen",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": "Pfingstmontag ist in GL laut SECO nicht gleichgestellt.",
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "ZG": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Auffahrt",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Maria Empfängnis",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "FR": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Auffahrt",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Maria Empfängnis",
+   "Weihnachtstag"
+  ],
+  "gebiete": {
+   "vorwiegend katholische Gemeinden": [
+    "Neujahrstag",
+    "Karfreitag",
+    "Auffahrt",
+    "Fronleichnam",
+    "Bundesfeiertag",
+    "Maria Himmelfahrt",
+    "Allerheiligen",
+    "Maria Empfängnis",
+    "Weihnachtstag"
+   ],
+   "vorwiegend reformierte Gemeinden": [
+    "Neujahrstag",
+    "Berchtoldstag",
+    "Karfreitag",
+    "Ostermontag",
+    "Auffahrt",
+    "Pfingstmontag",
+    "Bundesfeiertag",
+    "Weihnachtstag",
+    "Stephanstag"
+   ]
+  },
+  "notiz": "Liste hängt von der konfessionellen Mehrheit der Gemeinde ab; Anzahl in beiden Varianten 9.",
+  "uneinheitlich": true,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "SO": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Tag der Arbeit (nachmittags)",
+   "Auffahrt",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Weihnachtstag"
+  ],
+  "gebiete": {
+   "Kanton ohne Bezirk Bucheggberg": [
+    "Neujahrstag",
+    "Karfreitag",
+    "Tag der Arbeit (nachmittags)",
+    "Auffahrt",
+    "Fronleichnam",
+    "Bundesfeiertag",
+    "Maria Himmelfahrt",
+    "Allerheiligen",
+    "Weihnachtstag"
+   ],
+   "Bezirk Bucheggberg": [
+    "Neujahrstag",
+    "Karfreitag",
+    "Tag der Arbeit (nachmittags)",
+    "Auffahrt",
+    "Bundesfeiertag",
+    "Weihnachtstag"
+   ]
+  },
+  "notiz": "Bezirk Bucheggberg hat laut SECO nur 6 gleichgestellte Tage (inkl. 1. August und 1.-Mai-Nachmittag); anzahl 9 gilt für den übrigen Kanton. Bucheggberg-Liste wirkt knapp, nicht am kantonalen Gesetz gegengeprüft.",
+  "uneinheitlich": true,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "BS": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Tag der Arbeit (1. Mai)",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "BL": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Tag der Arbeit (1. Mai)",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "SH": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Tag der Arbeit (1. Mai)",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "AR": {
+  "n": 8,
+  "n26": 7,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": "SECO: Stephanstag wird nicht gefeiert, wenn der Weihnachtstag auf einen Montag oder Freitag fällt. 25.12.2026 ist ein Freitag, daher 2026 ohne Stephanstag (7).",
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "AI": {
+  "n": 9,
+  "n26": 8,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": "SECO: Stephanstag wird nur gefeiert, wenn dadurch nicht drei Ruhetage aufeinander folgen. 2026: Fr 25.12. Weihnachten, Sa 26.12., So 27.12. → nach dieser Lesart entfällt der Stephanstag (8). Auslegung (ob Samstag-Stephanstag die Regel auslöst) nicht an kantonaler Quelle bestätigt.",
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": false
+ },
+ "SG": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Allerheiligen",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "GR": {
+  "n": 8,
+  "n26": 8,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": "Gleichgestellte Liste kantonsweit; lokale Gemeinde-Feiertage existieren, sind aber nicht gleichgestellt.",
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "AG": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Berchtoldstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": {
+   "Bezirke Aarau Brugg Kulm Lenzburg Zofingen und Gemeinde Bergdietikon": [
+    "Neujahrstag",
+    "Berchtoldstag",
+    "Karfreitag",
+    "Ostermontag",
+    "Auffahrt",
+    "Pfingstmontag",
+    "Bundesfeiertag",
+    "Weihnachtstag",
+    "Stephanstag"
+   ],
+   "uebrige Gemeinden Bezirk Baden": [
+    "Neujahrstag",
+    "Karfreitag",
+    "Ostermontag",
+    "Auffahrt",
+    "Pfingstmontag",
+    "Fronleichnam",
+    "Bundesfeiertag",
+    "Weihnachtstag",
+    "Stephanstag"
+   ],
+   "Bezirk Bremgarten": [
+    "Neujahrstag",
+    "Karfreitag",
+    "Auffahrt",
+    "Fronleichnam",
+    "Bundesfeiertag",
+    "Maria Himmelfahrt",
+    "Allerheiligen",
+    "Weihnachtstag",
+    "Stephanstag"
+   ],
+   "Bezirke Laufenburg Muri": [
+    "Neujahrstag",
+    "Karfreitag",
+    "Auffahrt",
+    "Fronleichnam",
+    "Bundesfeiertag",
+    "Maria Himmelfahrt",
+    "Allerheiligen",
+    "Maria Empfängnis",
+    "Weihnachtstag"
+   ],
+   "Rheinfelden Hellikon Mumpf Obermumpf Schupfart Stein Wegenstetten": [
+    "Neujahrstag",
+    "Karfreitag",
+    "Auffahrt",
+    "Fronleichnam",
+    "Bundesfeiertag",
+    "Maria Himmelfahrt",
+    "Allerheiligen",
+    "Maria Empfängnis",
+    "Weihnachtstag"
+   ],
+   "Rheinfelden Kaiseraugst Magden Moehlin Olsberg Rheinfelden Wallbach Zeiningen Zuzgen": [
+    "Neujahrstag",
+    "Karfreitag",
+    "Ostermontag",
+    "Auffahrt",
+    "Pfingstmontag",
+    "Bundesfeiertag",
+    "Allerheiligen",
+    "Weihnachtstag",
+    "Stephanstag"
+   ],
+   "Bezirk Zurzach": [
+    "Neujahrstag",
+    "Berchtoldstag",
+    "Karfreitag",
+    "Auffahrt",
+    "Fronleichnam",
+    "Bundesfeiertag",
+    "Allerheiligen",
+    "Weihnachtstag",
+    "Stephanstag"
+   ]
+  },
+  "notiz": "Sieben Gebietsvarianten nach Bezirk/Gemeinde; überall 9 inkl. 1. August.",
+  "uneinheitlich": true,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "TG": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Berchtoldstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "TI": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag (Capodanno)",
+   "Dreikönigstag (Epifania)",
+   "Ostermontag",
+   "Auffahrt",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Weihnachtstag",
+   "Stephanstag"
+  ],
+  "gebiete": null,
+  "notiz": "Gleichgestellte Liste aus SECO-Tabelle (sicher).",
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "VD": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Berchtoldstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Bettagsmontag (Lundi du Jeûne fédéral)",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "VS": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Josephstag",
+   "Auffahrt",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Maria Himmelfahrt",
+   "Allerheiligen",
+   "Maria Empfängnis",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": "SECO weist für VS keine Gebietsausnahmen aus (kein ■-Vermerk). Karfreitag, Ostermontag, Pfingstmontag sind in VS nicht gleichgestellt.",
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "NE": {
+  "n": 8,
+  "n26": 7,
+  "liste": [
+   "Neujahrstag",
+   "Instauration de la République (1. März; 2026 ein Sonntag)",
+   "Karfreitag",
+   "Tag der Arbeit (1. Mai)",
+   "Auffahrt",
+   "Bundesfeiertag",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": "SECO: 2. Januar und Stephanstag kantonsweit nur, wenn sie auf einen Montag fallen (2026: Freitag bzw. Samstag → entfallen). Le Landeron hat zusätzlich Fronleichnam → 2026: 8. Ob der auf einen Sonntag fallende 1. März 2026 verschoben wird, nicht geprüft.",
+  "uneinheitlich": true,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "GE": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Bundesfeiertag",
+   "Jeûne genevois (Genfer Bettag)",
+   "Weihnachtstag",
+   "Restauration de la République (31. Dezember)"
+  ],
+  "gebiete": null,
+  "notiz": "Stephanstag ist in GE nicht gleichgestellt.",
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ },
+ "JU": {
+  "n": 9,
+  "n26": 9,
+  "liste": [
+   "Neujahrstag",
+   "Karfreitag",
+   "Ostermontag",
+   "Tag der Arbeit (1. Mai)",
+   "Auffahrt",
+   "Pfingstmontag",
+   "Fronleichnam",
+   "Bundesfeiertag",
+   "Weihnachtstag"
+  ],
+  "gebiete": null,
+  "notiz": null,
+  "uneinheitlich": false,
+  "url": "https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf",
+  "sicher": true
+ }
+}
