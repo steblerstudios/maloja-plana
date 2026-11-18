@@ -7,6 +7,8 @@ import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 import { ExternerLink, ZielHinweis } from './components/ExternerLink.jsx';
+import { Belege } from './components/Belege.jsx';
+import { KantonsAnlaufstelle } from './components/Nichtbezug.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
@@ -599,7 +601,12 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       uebernahmeBlock(),
       ergebnis(),
       betraege(),
-      grundlage()
+      grundlage(),
+      // Nichtbezug (18.11.2026): nur wo ein Anspruch möglich ist. Ohne Quote, die Zahlen gelten nur für Basel-Stadt.
+      anspruchMoeglich && React.createElement('div', { 'data-hinweis': 'nichtbezug', style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginTop: space.sm } },
+        React.createElement('p', { style: { margin: 0, color: palette.mid } }, t('nichtbezug.ipv')),
+        React.createElement(KantonsAnlaufstelle, { palette, t, canton }),
+        React.createElement(Belege, { palette, t, zeile: t('nichtbezug.quelle') }))
     ),
 
     // ── Aufklapp-Zeilen wie die App-Überschriften ─────────────────────────

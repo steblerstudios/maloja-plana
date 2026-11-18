@@ -229,6 +229,7 @@ export const HEARTFELT = [
   { key: 'heartfelt28', name: 'Reclaim City', url: 'https://play.multiversegames.ai/reclaim-city/', group: 'digital' }, // Datenschutz-Spiel (Multiverse), englisch, kein Affiliate; Anstoss für «Digitale Ordnung», angesehen 01.11.2026
   { key: 'heartfelt29', name: 'Proton Mail', url: 'https://proton.me/mail', group: 'digital' }, // Proton AG, Plan-les-Ouates GE, Datenschutzerklärung Stand 12.05.2026; kein Affiliate, Beispiel nach Entscheid 01.11.2026 (Konzept §6)
   { key: 'heartfelt27', name: 'Nexter', url: 'https://crewz.io/de/nexter/', group: 'digital' }, // Habit-Tracker der Crewz GmbH (Freiburg i. Br.) – kein Affiliate, Seite geprüft 25.09.2026 (erfundene Adresse → 404)
+  { key: 'heartfelt30', name: 'noahbytes', url: 'https://noahbytes.com/', group: 'digital' }, // Noah Müller, Basel – Websites, Tools, Informatik-Unterricht; kein Affiliate; Noah weiss Bescheid (Sophie, 18.11.2026); Seite geprüft 18.11.2026
 ];
 
 // Reihenfolge der Gruppen in der Anzeige.
@@ -255,6 +256,9 @@ export const CANTONAL_LINKS = {
     steuererklaerung: 'https://www.steuerverwaltung.bs.ch/',
     sozialdienst: 'https://www.bs.ch/wsu/sozialhilfe',
     ipv: 'https://www.bs.ch/themen/finanzielle-hilfe/leistungen/praemienverbilligung',
+    // Nichtbezug, Brücke 5 (18.11.2026): Leistungsrechner des Kantons für Prämienverbilligung, Mietbeiträge,
+    // Alimentenhilfe und Sozialhilfe, dazu ein Kurztest (curl 200, Seite gelesen 18.11.2026).
+    leistungsrechner: 'https://www.bs.ch/themen/finanzielle-hilfe/leistungsrechner',
   },
   GE: {
     steuererklaerung: 'https://www.ge.ch/remplir-ma-declaration-impot-tant-que-particulier',
@@ -333,6 +337,9 @@ export const CANTONAL_LINKS = {
     steuererklaerung: 'https://www.ne.ch/themes/Pages/impots.aspx',
     sozialdienst: 'https://www.ne.ch/autorites/decs/saso',
     ipv: 'https://www.ne.ch/themes/social/assurance-maladie/subsides-assurance-maladie-lamal',
+    // Nichtbezug, Brücke 5 (18.11.2026): Guichets sociaux régionaux, «point d'entrée unique» mit «formulaire
+    // unique» für Alimentenbevorschussung, Prämienverbilligung, Stipendien und Sozialhilfe (curl 200, gelesen 18.11.2026).
+    anlaufstelle: 'https://www.ne.ch/themes/social/guichets-sociaux-regionaux',
   },
   VS: {
     steuererklaerung: 'https://www.vs.ch/de/web/scc',
@@ -354,6 +361,9 @@ export const CANTONAL_LINKS = {
     // gibt es nicht (404). Die Bereichsseite ohne Jahr leitet auf die aktuelle Seite weiter und führt
     // im Menü alle Seiten zur RPI (gemessen 09.11.2026).
     ipv: 'https://www.ecasjura.ch/fr/Assurances/Assurance-maladie.html',
+    // Nichtbezug, Brücke 5 (18.11.2026): JU-lien, «plateforme d'information sociale jurassienne»; Kontakt
+    // Service de l'action sociale, «L'entretien est gratuit, confidentiel et n'engage à rien» (curl 200, gelesen 18.11.2026).
+    orientierung: 'https://ju-lien.org/',
   },
   UR: {
     steuererklaerung: 'https://www.ur.ch/finanzen/1570', // «Natürliche Personen» mit eTax.UR (geprüft 21.10.2026); vorher 3040 = Organisation von Anlässen
@@ -416,6 +426,21 @@ export const CANTONAL_LINKS_GEPRUEFT = {
   VS: { ipv: G, sozialdienst: G },
   NE: { ipv: G, sozialdienst: G }, GE: { ipv: G, sozialdienst: G }, JU: { ipv: G, sozialdienst: G },
 };
+// Brücke 5 (18.11.2026): die Anlaufstellen-Felder, je mit curl (200) und gelesener Seite.
+CANTONAL_LINKS_GEPRUEFT.BS.leistungsrechner = '2026-11-18';
+CANTONAL_LINKS_GEPRUEFT.NE.anlaufstelle = '2026-11-18';
+CANTONAL_LINKS_GEPRUEFT.JU.orientierung = '2026-11-18';
+
+// Kantonale Angebote gegen den Nichtbezug (Brücke 5, 18.11.2026): ein Feld je Kanton, das über die
+// einzelne Leistung hinausgeht. Reihenfolge = Vorrang. Prüfdatum in CANTONAL_LINKS_GEPRUEFT.
+export const ANLAUFSTELLE_FELDER = ['orientierung', 'anlaufstelle', 'leistungsrechner'];
+
+export function kantonsAnlaufstelle(canton) {
+  const links = CANTONAL_LINKS[canton];
+  if (!links) return null;
+  const key = ANLAUFSTELLE_FELDER.find((f) => links[f]);
+  return key ? { key, url: links[key] } : null;
+}
 
 export function getCantonalLinks(canton) {
   return CANTONAL_LINKS[canton] || null;

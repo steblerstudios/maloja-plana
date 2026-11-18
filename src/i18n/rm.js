@@ -1060,7 +1060,7 @@ export default {
     step1Text: 'EL setzen eine Leistung der AHV oder IV voraus — etwa eine Alters-, Hinterlassenen- oder IV-Rente, eine Hilflosenentschädigung der IV oder ein IV-Taggeld, das seit mindestens sechs Monaten ununterbrochen läuft —, dazu Wohnsitz und gewöhnlichen Aufenthalt in der Schweiz (ELG Art. 4). Wer sich länger als drei Monate am Stück oder im Kalenderjahr insgesamt im Ausland aufhält, unterbricht den Aufenthalt. Ausländerinnen und Ausländer müssen in der Regel zehn Jahre ununterbrochen hier gelebt haben, Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Ohne AHV- oder IV-Leistung ist in der Regel die Sozialhilfe der Wohngemeinde zuständig. Ausnahme: Wer nur wegen fehlender Mindestbeitragsdauer keine AHV- oder IV-Rente hat, kann trotzdem EL bekommen (ELG Art. 4 Abs. 1 Bst. b und d).',
     step1LinkAnspruch: 'Ansprüche in Ruhe prüfen',
     step1LinkSozialhilfe: 'Ohne AHV/IV-Rente: Sozialhilfe verstehen',
-    step1Nichtbezug: 'Nicht alle, denen EL zustehen, melden sich an. Eine Studie im Auftrag des Bundes (2025) nennt aus der Fachliteratur als häufige Gründe: Man versteht nicht, wie die EL funktionieren, es fehlt an Unterstützung, oder die Anmeldung ist aufwendig. Eine Studie zu Sozialleistungen in Basel-Stadt, darunter die EL, fand zusätzlich Scham und Unsicherheit, auch bei Menschen, die von ihrem Anspruch wussten. Beide Studien betreffen die EL zur AHV. Wer unsicher ist, fragt bei der EL-Stelle nach: Dafür ist sie da.',
+    step1Nichtbezug: 'Nicht alle, denen EL zustehen, melden sich an. Eine Studie im Auftrag des Bundes (2025) nennt aus der Fachliteratur als häufige Gründe: Man versteht nicht, wie die EL funktionieren, es fehlt an Unterstützung, oder die Anmeldung ist aufwendig. Eine Studie zu Sozialleistungen in Basel-Stadt, darunter die EL, fand zusätzlich Scham und Unsicherheit, auch bei Menschen, die von ihrem Anspruch wussten. Eine neuere Studie für Basel-Stadt (2026) fand: Ob jemand verzichtet, hängt am stärksten von der Höhe des Fehlbetrags ab; bei vielen, die nichts beziehen, ist dieser Betrag klein. Alle drei Studien betreffen die EL zur AHV. Wer unsicher ist, fragt bei der EL-Stelle nach: Dafür ist sie da.',
     step2Title: '2 · Vermögen: die Schwelle',
     step2Text: { sie: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente; eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit (ELG Art. 9a, Stand 2026). Vermögen, auf das Sie verzichtet haben — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).', du: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente; eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit (ELG Art. 9a, Stand 2026). Vermögen, auf das du verzichtet hast — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).' },
     step3Title: '3 · Anmelden — beim Wohnkanton, so früh wie möglich',
@@ -1088,7 +1088,7 @@ export default {
     step5LinkTodesfall: 'Todesfall im Umfeld',
     // TODO(rm): provisorisch — deutscher Rückfall auf aktuellen de-Stand gezogen (vorher veraltet, 16.11.2026)
     footerNote: { sie: "Quai è orientaziun, betg cussegl giuridic. Die EL-Stelle Ihres Kantons informiert und rechnet Ihren Anspruch aus (ELG Art. 21). Dies ist Orientierung, keine Rechtsberatung; Beträge, vergütete Kosten und Anmeldestellen unterscheiden sich je nach Kanton.", du: "Quai è orientaziun, betg cussegl giuridic. Die EL-Stelle deines Kantons informiert und rechnet deinen Anspruch aus (ELG Art. 21). Dies ist Orientierung, keine Rechtsberatung; Beträge, vergütete Kosten und Anmeldestellen unterscheiden sich je nach Kanton." },
-    quelle: 'Quellen: [[ELG Art. 4|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_4]], [[ELG Art. 5|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_5]], [[ELG Art. 9a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_9_a]], [[ELG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_12]], [[ELG Art. 14|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_14]], [[ELG Art. 16a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_16_a]], [[ELG Art. 21|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_21]], [[ELV Art. 21|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_21]], [[ELV Art. 22|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_22]] (geprüft im September 2026); [[Medienmitteilung BSV zur Studie Ecoplan/Interface, 4.12.2025|https://www.admin.ch/de/newnsb/NVMCO0Uym_s2toZHrVwo6]], [[Studie BFH für Basel-Stadt, 2021|https://www.bs.ch/news/2021-studie-nichtbezug-von-bedarfsabhaengigen-sozialleistungen-im-kanton-basel-stadt-ausmass-und-beweggruende]] (geprüft im November 2026).',
+    quelle: 'Quellen: [[ELG Art. 4|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_4]], [[ELG Art. 5|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_5]], [[ELG Art. 9a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_9_a]], [[ELG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_12]], [[ELG Art. 14|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_14]], [[ELG Art. 16a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_16_a]], [[ELG Art. 21|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_21]], [[ELV Art. 21|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_21]], [[ELV Art. 22|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_22]] (geprüft im September 2026); [[Medienmitteilung BSV zur Studie Ecoplan/Interface, 4.12.2025|https://www.admin.ch/de/newnsb/NVMCO0Uym_s2toZHrVwo6]], [[Studie BFH für Basel-Stadt, 2021|https://www.bs.ch/news/2021-studie-nichtbezug-von-bedarfsabhaengigen-sozialleistungen-im-kanton-basel-stadt-ausmass-und-beweggruende]], [[Medienmitteilung Basel-Stadt zur Studie BFH, 12.2.2026|https://www.bs.ch/medienmitteilungen/wsu/2026-neue-studie-zum-nichtbezug-von-sozialleistungen-zeigt-positive-entwicklungen]] (geprüft im November 2026).',
   },
   // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
   zusammenziehen: {
@@ -3025,6 +3025,7 @@ export default {
       heartfelt27: 'il tracker d’usits (App Store e Google Play, Crewz) — Notar usits senza squitsch da seria e senza mala conscienza. Tenor il purschider utilisabel senza conto, tut las datas exportablas da tut temp sco datoteca.',
       heartfelt28: 'Englisches Gratis-Spiel zum Datenschutz: Konten sichern und Betrug erkennen, Mission für Mission. Die Seite nutzt Analyse- und Fehlerdienste. Für die Schweiz führt Maloja durch «Digitale Ordnung».', // TODO(rm): Übersetzung
       heartfelt29: 'Beispiel für einen E-Mail-Dienst: Proton AG, Plan-les-Ouates GE, laut Anbieter verschlüsselt und Schweizer Recht unterstellt. Standort der Daten vor dem Wechsel beim Anbieter prüfen.', // TODO(rm): Übersetzung
+      heartfelt30: 'Noah Müller da Basilea — informaticher e magister. El sviluppa websites, pitschens instruments e pipelines da datas ed instruescha informatica.', // TODO(rm): Übersetzung prüfen lassen
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',
@@ -4250,6 +4251,12 @@ export default {
       steuererklaerung: 'Decleraziun da taglia online',
       sozialdienst: 'Servetsch social',
       ipv: 'Dumandar la reducziun da premias',
+      // TODO(rm): provisorisch — Gegenlese (Brücke 5, 18.11.2026)
+      leistungsrechner: 'Sozialleistungen abschätzen (Leistungsrechner)',
+      // TODO(rm): provisorisch — Gegenlese (Brücke 5, 18.11.2026)
+      anlaufstelle: 'Regionale Anlaufstelle (GSR): ein Formular für mehrere Leistungen',
+      // TODO(rm): provisorisch — Gegenlese (Brücke 5, 18.11.2026)
+      orientierung: 'Kostenlose, vertrauliche Orientierung zu Sozialleistungen (JU-lien)',
     },
   },
 
@@ -4597,6 +4604,26 @@ export default {
     schrittSub: { sie: 'Controlla guidada — entrada, situaziun da vita, Vossa survista', du: 'Controlla guidada — entrada, situaziun da vita, tia survista' },
   },
 
+  // Nichtbezug von Bedarfsleistungen (Stebler Studios 18.11.2026, «Brücken 1–3»). Keine Quote im Text:
+  // die einzigen belegten Zahlen gelten nur für Basel-Stadt (Wächter: src/__tests__/nichtbezugBruecken.test.js).
+  // TODO(rm): noch deutsch, wie ergaenzungsleistungen.step1Nichtbezug; Gegenlese im Dezember.
+  nichtbezug: {
+    huerdenTitel: 'Was oft im Weg steht, und was hier hilft',
+    huerdenIntro: 'Eine Orientierungshilfe der Nationalen Plattform gegen Armut (2026) nennt vier Hürden, die Menschen davon abhalten, eine Leistung zu holen, die ihnen zusteht:',
+    wissenTitel: 'Nicht wissen, was zusteht',
+    wissenText: { sie: 'Diese Seite zeigt mit Ihren Angaben, welche Wege infrage kommen, und darunter, was zu Ihrer Lebenslage passt.', du: 'Diese Seite zeigt mit deinen Angaben, welche Wege infrage kommen, und darunter, was zu deiner Lebenslage passt.' },
+    aufwandTitel: 'Zeit, Kraft und Sprache',
+    aufwandText: { sie: 'Maloja gibt es in fünf Sprachen. Was ansteht, können Sie auf die Merkliste setzen, Fristen in den Kalender. Eines nach dem anderen.', du: 'Maloja gibt es in fünf Sprachen. Was ansteht, kannst du auf die Merkliste setzen, Fristen in den Kalender. Eines nach dem anderen.' },
+    vertrauenTitel: 'Scham und Misstrauen',
+    vertrauenText: { sie: 'Ihre Angaben bleiben auf diesem Gerät. Eine Fachstelle berät unverbindlich, bevor Sie etwas beantragen.', du: 'Deine Angaben bleiben auf diesem Gerät. Eine Fachstelle berät unverbindlich, bevor du etwas beantragst.' },
+    verfahrenTitel: 'Komplizierte Wege',
+    verfahrenText: { sie: 'Die Seiten zu Prämienverbilligung und Sozialhilfe führen zur zuständigen Stelle Ihres Kantons; bei anderen Leistungen steht dort, wer zuständig ist.', du: 'Die Seiten zu Prämienverbilligung und Sozialhilfe führen zur zuständigen Stelle deines Kantons; bei anderen Leistungen steht dort, wer zuständig ist.' },
+    imKanton: { sie: 'In Ihrem Kanton:', du: 'In deinem Kanton:' },
+    kleineBetraege: 'Auch ein kleiner Betrag zählt. Eine Studie für Basel-Stadt (2026) fand: Ob jemand auf eine Leistung verzichtet, hängt am stärksten von der Höhe des Fehlbetrags ab. Bei vielen, die nichts beziehen, ist dieser Betrag klein.',
+    ipv: { sie: 'Nicht alle, denen eine Prämienverbilligung zusteht, erhalten sie auch. Studien nennen als Gründe fehlendes Wissen, den Aufwand und Scham. In Basel-Stadt ist die Zahl derer, die verzichten, von 2015/2016 bis 2022 bei allen untersuchten Leistungen gesunken, ausser bei der Prämienverbilligung. Ob Sie sich selbst melden müssen, sagt die Stelle Ihres Kantons.', du: 'Nicht alle, denen eine Prämienverbilligung zusteht, erhalten sie auch. Studien nennen als Gründe fehlendes Wissen, den Aufwand und Scham. In Basel-Stadt ist die Zahl derer, die verzichten, von 2015/2016 bis 2022 bei allen untersuchten Leistungen gesunken, ausser bei der Prämienverbilligung. Ob du dich selbst melden musst, sagt die Stelle deines Kantons.' },
+    sozialhilfe: 'Nicht alle, denen Sozialhilfe zusteht, melden sich. Studien nennen als Gründe fehlendes Wissen, den Aufwand und Scham. Ob ein Anspruch besteht, klärt der Sozialdienst. Wer zuerst unverbindlich fragen möchte, kann sich an eine Fachstelle wenden, zum Beispiel eine kirchliche oder private Sozialberatung.',
+    quelle: 'Quellen: [[Medienmitteilung Basel-Stadt zur Studie BFH, 12.2.2026|https://www.bs.ch/medienmitteilungen/wsu/2026-neue-studie-zum-nichtbezug-von-sozialleistungen-zeigt-positive-entwicklungen]], [[Soziale Sicherheit CHSS, 11.9.2026|https://sozialesicherheit.ch/de/bedarfsleistungen-wie-laesst-sich-der-nichtbezug-verringern/]] (geprüft im November 2026).',
+  },
   anspruchCheck: {
     stepWord: 'Pass',
     stepIncome: 'Tenor l’entrada',
