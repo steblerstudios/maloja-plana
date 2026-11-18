@@ -29,13 +29,15 @@ const STORAGE_KEY = 'or5_beta_access';
 // steht (siehe `vollesRegister` unten), damit die Wand nicht auf sie wartet.
 const ERKLAERSEITEN = [
   ['/was-steht-mir-zu/', 'Was steht mir zu?', 'wegweiser'],
-  ['/praemienverbilligung/', 'Prämienverbilligung', 'seite:premium'],
+  // Weiche Trennzeichen hier und bei EL: in der schmalen Spalte (Handy) bricht das Wort an der Fuge.
+  ['/praemienverbilligung/', 'Prämien­verbilligung', 'seite:premium'],
   // Seit 06.11.2026 (Verbesserungen D2): indexiert, stand aber hier nicht.
   ['/krankenkasse/', 'Krankenkasse', 'seite:kkerst'],
   ['/sozialhilfe/', 'Sozialhilfe', 'seite:sozialhilfe'],
   ['/steuern/', 'Steuern', 'seite:tax'],
   // E3 (14.11.2026).
-  ['/ergaenzungsleistungen/', 'Ergänzungsleistungen', 'seite:ergaenzungsleistungen'],
+  // Weiches Trennzeichen: in der schmalen Spalte bricht das Wort an der Fuge, nicht bei «…leistun-gen».
+  ['/ergaenzungsleistungen/', 'Ergänzungs­leistungen', 'seite:ergaenzungsleistungen'],
   ['/arbeitslosigkeit/', 'Arbeitslosigkeit', 'seite:alv'],
   ['/ahv-pensionierung/', 'AHV und Pensionierung', 'seite:vorsorge'],
 ];
@@ -316,36 +318,49 @@ export const BetaGate = ({ children }) => {
         React.createElement(Icon, { name: 'raster', size: 18 }),
         t('common.simpleView')
       ),
-      // Fusszeile zentriert wie bisher; Titel und Formular stehen linksbündig.
-      React.createElement('div', { style: { textAlign: 'center' } },
+      // Der untere Teil in drei geordneten Stücken (18.11.2026): zwei Gruppen mit sichtbarem Titel,
+      // je ein ruhiges Zweierraster linksbündig wie das Formular — statt einer zentrierten
+      // Fliesszeile, die je nach Breite 2/3/2/1 umbrach. Darunter, abgetrennt, die Fusszeile.
       // Die öffentlichen Erklärseiten: echte Links, denn die Code-Wand ist das, was Google
       // nach dem Rendern von der Startseite sieht. Bis 01.11.2026 führte von hier kein Weg
       // dorthin (Search Console: «Gefunden – zurzeit nicht indexiert»). Deutsch in jeder
       // Sprache, weil fr/it/en/rm noch nicht freigegeben sind (ERKLAERSEITEN, Wächter: kernTextOhneJs.test.js).
-      [['Erklärseiten', ERKLAERSEITEN, space.md], ['Die Schweiz verstehen', SCHWEIZ_VERSTEHEN, 0]].map(([titel, liste, oben], i) =>
+      [['Erklärseiten', ERKLAERSEITEN, space.lg], ['Die Schweiz verstehen', SCHWEIZ_VERSTEHEN, space.md]].map(([titel, liste, oben]) =>
         React.createElement('nav', { key: titel, 'aria-label': titel, lang: 'de', style: { marginTop: oben } },
-          // Die zweite Zeile nennt ihren Namen sichtbar, damit sie nicht wie eine Fortsetzung der ersten wirkt.
-          i > 0 && React.createElement('span', { style: { color: palette.mid, fontSize: text.xs, padding: '0 8px' } }, `${titel}:`),
-          liste.map(([pfad, name, zeichen]) => React.createElement('a', {
-            key: pfad, href: pfad,
-            style: {
-              display: 'inline-flex', alignItems: 'center', gap: '5px',
-              minHeight: '44px', padding: '0 8px', verticalAlign: 'middle',
-              color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
-              textDecoration: 'underline', textUnderlineOffset: '2px',
-            }
+          React.createElement('h2', {
+            style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.mid, margin: '0 0 ' + space.xs + 'px', lineHeight: leading.normal }
+          }, titel),
+          React.createElement('div', {
+            style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', columnGap: space.sm + 'px' }
           },
-            // 18 px: die Seiten-Zeichen tragen ein Abzeichen in der Ecke, das kleiner nicht mehr lesbar ist.
-            zeichen && React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', width: '18px', height: '18px', flexShrink: 0 } },
-              React.createElement(Icon, { name: zeichen, size: 18 })),
-            name
-          ))
+            liste.map(([pfad, name, zeichen]) => React.createElement('a', {
+              key: pfad, href: pfad,
+              style: {
+                display: 'flex', alignItems: 'center', gap: '8px', minHeight: '44px',
+                color: palette.text, fontSize: text.sm, fontFamily: 'inherit', lineHeight: 1.3,
+                // Lange Wörter umbrechen statt aus der Spalte laufen (Trennstelle siehe ERKLAERSEITEN).
+                overflowWrap: 'anywhere',
+                textDecoration: 'underline', textDecorationColor: palette.border, textUnderlineOffset: '3px',
+              }
+            },
+              // 18 px: die Seiten-Zeichen tragen ein Abzeichen in der Ecke, das kleiner nicht mehr lesbar ist.
+              zeichen && React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', width: '18px', height: '18px', flexShrink: 0 } },
+                React.createElement(Icon, { name: zeichen, size: 18 })),
+              name
+            ))
+          )
         )
       ),
+      // Fusszeile: Rechtliches und Melde-Weg nebeneinander, darunter der Absender — zentriert,
+      // durch eine Linie vom Inhalt getrennt.
+      React.createElement('div', {
+        style: { marginTop: space.md, paddingTop: space.sm, borderTop: '1px solid ' + palette.border, textAlign: 'center' }
+      },
+      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', columnGap: space.md + 'px' } },
       React.createElement('button', {
         type: 'button',
         onClick: () => setLegalSection('privacy'),
-        style: { ...linkStil(palette), marginTop: space.md, fontSize: text.xs, padding: '4px' }
+        style: { ...linkStil(palette), fontSize: text.xs, padding: '0 4px', minHeight: '44px' }
       }, t('beta.legalLink')),
       // Melde-Weg VOR dem Gate. Bis 23.09.2026 führte von hier aus nur der
       // Rechtliches-Link zur Adresse im Impressum — wer ohne Code kam und einen Fehler
@@ -356,14 +371,14 @@ export const BetaGate = ({ children }) => {
         href: 'mailto:info@malojaplana.ch?subject=' + encodeURIComponent('Maloja Plana: ' + t('error.report'))
           + '&body=' + encodeURIComponent('\n\n\n— — —\nAnsicht: Code-Wand'),
         style: {
-          display: 'inline-block', minHeight: '44px', lineHeight: '44px',
-          marginTop: space.xs, padding: '0 4px',
+          display: 'inline-block', minHeight: '44px', lineHeight: '44px', padding: '0 4px',
           color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
           textDecoration: 'underline', textUnderlineOffset: '2px',
         }
-      }, t('error.report')),
+      }, t('error.report'))
+      ),
       React.createElement('p', {
-        style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm }
+        style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0' }
       }, 'Stebler Studios · Basel')
       )
     )
