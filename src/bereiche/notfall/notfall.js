@@ -3,3 +3,4 @@
 export * from './rechnung.js';
 export * from './bilder.jsx';
 export * from './zuhause.jsx';
+export * from './impfausweis.jsx';

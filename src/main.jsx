@@ -137,6 +137,8 @@ const EOrechner = lazyMitTexten(() => import('./EOrechner.jsx'));
 // FinanzUebersicht: seit 24.10.2026 keine eigene Seite — #/finanzuebersicht führt ins Kapitel Finanzen (UMLEITUNGEN).
 const DirektLinks = lazyMitTexten(() => import('./DirektLinks.jsx'));
 const KVGLeistungen = lazyMitTexten(() => import('./KVGLeistungen.jsx'));
+// Fach Impfausweis (19.11.2026): über den Eingang des Bereichs, eigener Baustein.
+const Impfausweis = lazyMitTexten(() => import('./bereiche/notfall/notfall.js').then((m) => ({ default: m.Impfausweis })));
 const FlyerView = lazyMitTexten(() => import('./FlyerView.jsx'));
 // MerklisteView: seit 27.10.2026 keine eigene Seite — Reiter in «Was ansteht» (UMLEITUNGEN, CalendarReminders.jsx).
 const SearchView = lazyMitTexten(() => import('./SearchView.jsx'));
@@ -1738,6 +1740,7 @@ const AppInner = ({ demo }) => {
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
+        view === 'impfausweis' && React.createElement(Impfausweis, { palette, t, data: activeData, onUpdateData: updateData }),
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
         view === 'drucken' && React.createElement(UnterlagenDrucken, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate, wahl, onWahl: waehle }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),

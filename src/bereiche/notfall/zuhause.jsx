@@ -26,7 +26,7 @@ export const BereitZuhause = ({ palette, t, data }) => {
       h('span', { style: { fontSize: text.sm, color: palette.mid } }, t('notfallKapitel.bereitSatz'))));
 };
 
-const monatJahr = (iso, locale) => {
+export const monatJahr = (iso, locale) => {
   const d = new Date(iso + 'T00:00:00');
   try { return d.toLocaleDateString(locale, { month: 'long', year: 'numeric' }); } catch { return iso.slice(5, 7) + '.' + iso.slice(0, 4); }
 };
@@ -65,12 +65,16 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
             h('div', { 'data-instrument-zahl': 'faellig', style: { ...zahlStil, color: palette.text } }, monatJahr(faellig.iso, lokal)),
             satz(faellig.art === 'vorsorge'
               ? t('kvg.' + faellig.key) + ' · ' + t('gesundheitZuhause.faelligVorsorge')
-              : t('gesundheitZuhause.faelligBeleg'), 'faellig-satz'),
+              : faellig.art === 'impfung'
+                ? t('impfausweis.arten.' + faellig.key) + ' · ' + t('gesundheitZuhause.faelligImpfung')
+                : t('gesundheitZuhause.faelligBeleg'), 'faellig-satz'),
             faellig.vorbei && satz(t('gesundheitZuhause.faelligVorbei'), 'faellig-vorbei'))
         : satz(t('gesundheitZuhause.faelligLeer'), 'faellig-leer'),
       faellig && faellig.art === 'beleg'
         ? weg(t('gesundheitZuhause.zuDenBelegen'), () => onNavigate('kvg', undefined, 'franchise'))
-        : weg(t('gesundheitZuhause.zumKatalog'), () => onNavigate('kvg', undefined, 'katalog'))));
+        : faellig && faellig.art === 'impfung'
+          ? weg(t('gesundheitZuhause.zumImpfausweis'), () => onNavigate('impfausweis'))
+          : weg(t('gesundheitZuhause.zumKatalog'), () => onNavigate('kvg', undefined, 'katalog'))));
 
   return h('div', { 'data-teil': 'gesundheit-zuhause', style: { marginBottom: space.lg + 'px' } }, franchise, naechstes);
 };
@@ -84,10 +88,11 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
 export const KOFFER_FAECHER = [
   { key: 'kvg', view: 'kvg', icon: 'insurance' },
   { key: 'kkbeleg', view: 'kk', icon: 'documents' },
+  // Fach Impfausweis (Sophie 19.11.2026, «A · Liste + fällig»): eigene Seite, Rechnung naechsteImpfung.
+  { key: 'impfausweis', view: 'impfausweis', icon: 'health' },
   { key: 'thermometer', view: null },
   { key: 'blister', view: null },
   { key: 'karteikarten', view: null },
-  { key: 'impfausweis', view: null },
 ];
 export const KOFFER_ANKER = 'mp-gesundheit-koffer';
 
