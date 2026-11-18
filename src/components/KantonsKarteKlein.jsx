@@ -1,5 +1,6 @@
 import React from 'react';
 import { KARTE_GEO, KARTEN, STUFEN_FARBEN } from '../data/kantonskarten.js';
+import { beschriftungsLage } from '../data/punktStreifen.js';
 import { DARK_PALETTE } from '../config/constants.js';
 import { getCantonName } from '../config/kantonPLZ.js';
 import { ExternerLink } from './ExternerLink.jsx';
@@ -74,13 +75,25 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
     const streifenText = eigen
       ? t('erklaerseite.streifenBeschreibungMit', { titel: K.titel, kanton: name })
       : t('erklaerseite.streifenBeschreibungOhne', { titel: K.titel });
+    // Namen an den Punkten, gesetzt wie auf /kantonsatlas/ (beschriftungsLage): am Rand bündig, sonst mittig.
+    const namenZeile = { position: 'relative', height: '1.5em', fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' };
+    const marke = (x, schluessel, kinder, stil = {}) => {
+      const B = beschriftungsLage(x, St.breite);
+      const lage = B.ausrichtung === 'rechts' ? { right: (100 - B.prozent) + '%' } : { left: B.prozent + '%' };
+      return h('span', { key: schluessel, style: { position: 'absolute', top: 0, whiteSpace: 'nowrap', ...lage, ...(B.ausrichtung === 'mitte' ? { transform: 'translateX(-50%)' } : {}), ...stil } }, ...kinder);
+    };
+    const kantonZahl = (k, zahlText) => [getCantonName(k, t), ' ', h('span', { key: 'z', lang: 'de' }, zahlText)];
     return h('div', { 'data-teil': 'punktstreifen', style: { margin: '0 0 ' + space.sm + 'px' } },
+      h('p', { style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text } }, t('erklaerseite.streifenSatz')),
+      // Der eigene Kanton steht über dem Streifen, damit er nie mit den Enden oder der Schweiz zusammenstösst.
+      eigenPunkt && h('p', { 'aria-hidden': 'true', 'data-teil': 'streifen-eigen', style: { ...namenZeile, margin: '0 0 2px' } },
+        marke(eigenPunkt.x, 'eigen', kantonZahl(eigen, eigenPunkt.text), { color: palette.text, fontWeight: weight.semi })),
       h('svg', {
         viewBox: `0 0 ${St.breite} ${St.hoehe}`, role: 'img', 'aria-label': streifenText, focusable: 'false',
         style: { display: 'block', width: '100%', height: 'auto' },
       },
       h('line', { x1: St.xMin, y1: St.achseY, x2: St.xMax, y2: St.achseY, stroke: palette.mid, strokeWidth: 0.75 }),
-      St.ch && h('line', { x1: St.ch.x, y1: 2, x2: St.ch.x, y2: St.achseY, stroke: palette.text, strokeWidth: 1, strokeDasharray: '2 2' }),
+      St.ch && h('line', { x1: St.ch.x, y1: 1, x2: St.ch.x, y2: St.hoehe - 1, stroke: palette.text, strokeWidth: 1, strokeDasharray: '2 2' }),
       Object.entries(St.punkte).map(([k, p]) => h('circle', {
         key: k, cx: p.x, cy: p.y, r: St.radius, fill: farben[p.s], stroke: palette.mid, strokeWidth: 0.6, 'data-kanton': k,
       })),
@@ -88,10 +101,10 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
       eigenPunkt && h('circle', { cx: eigenPunkt.x, cy: eigenPunkt.y, r: St.radius + 1.5, fill: 'none', stroke: palette.surface, strokeWidth: RING_AUSSEN_PX / 2, vectorEffect: 'non-scaling-stroke' }),
       eigenPunkt && h('circle', { cx: eigenPunkt.x, cy: eigenPunkt.y, r: St.radius + 1.5, fill: 'none', stroke: palette.text, strokeWidth: RING_INNEN_PX, vectorEffect: 'non-scaling-stroke', 'data-eigen': 'ja' })),
       // Enden und Schweiz als Text unter dem Bild, wie auf /kantonsatlas/ (im SVG wären sie auf dem Handy unter 13 px).
-      h('p', { 'aria-hidden': 'true', style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', margin: '2px 0 0', fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
-        h('span', { lang: 'de' }, St.min),
-        St.ch && h('span', null, `${t('erklaerseite.streifenStrich')} `, h('span', { lang: 'de' }, St.ch.text)),
-        h('span', { lang: 'de' }, St.max)),
+      h('p', { 'aria-hidden': 'true', 'data-teil': 'streifen-namen', style: { ...namenZeile, margin: '4px 0 0' } },
+        marke(St.xMin, 'min', kantonZahl(St.minK, St.min)),
+        St.ch && marke(St.ch.x, 'ch', [t('erklaerseite.streifenSchweiz'), ' ', h('span', { key: 'z', lang: 'de' }, St.ch.text)]),
+        marke(St.xMax, 'max', kantonZahl(St.maxK, St.max))),
       h('p', { style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid } }, t('erklaerseite.streifenHinweis')));
   })();
 

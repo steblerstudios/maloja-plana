@@ -103,9 +103,9 @@ function streifen(key) {
   const L = streifenFuer(key);
   return {
     breite: L.breite, hoehe: L.hoehe, radius: L.radius, achseY: L.achseY, xMin: L.xMin, xMax: L.xMax,
-    min: E.fmt(L.min), max: E.fmt(L.max),
+    min: E.fmt(L.min), max: E.fmt(L.max), minK: L.minK, maxK: L.maxK,
     ch: L.ch ? { x: L.ch.x, text: E.fmt(L.ch.v) } : null,
-    punkte: Object.fromEntries(L.punkte.map((p) => [p.k, { x: p.x, y: p.y, s: p.s }])),
+    punkte: Object.fromEntries(L.punkte.map((p) => [p.k, { x: p.x, y: p.y, s: p.s, text: E.fmt(p.v) }])),
   };
 }
 

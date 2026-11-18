@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { streifenLage, STREIFEN } from '../data/punktStreifen.js';
+import { streifenLage, beschriftungsLage, STREIFEN } from '../data/punktStreifen.js';
 import { KARTEN } from '../data/kantonskarten.js';
 import { STREIFEN_KARTEN, streifenFuer } from '../../scripts/seiten/kantonsatlas.mjs';
 
@@ -12,13 +12,27 @@ describe('Punktstreifen', () => {
     expect(x.C).toBe(STREIFEN.breite - STREIFEN.rand);
     expect(L.ch.x).toBeGreaterThan(x.A);
     expect(L.ch.x).toBeLessThan(x.C);
-    // A, B, D liegen fast gleich: sie weichen in eigene Zeilen aus.
-    const zeilen = new Set(['A', 'B', 'D'].map((k) => L.punkte.find((p) => p.k === k).zeile));
-    expect(zeilen.size).toBe(3);
-    for (const z of new Set(L.punkte.map((p) => p.zeile))) {
-      const xs = L.punkte.filter((p) => p.zeile === z).map((p) => p.x).sort((a, b) => a - b);
+    // A, B, D liegen fast gleich: sie weichen aus, abwechselnd über und unter die Linie (nicht nur nach unten,
+    // das las sich wie Balken; Stebler Studios 18.11.2026).
+    const ebenen = ['A', 'B', 'D'].map((k) => L.punkte.find((p) => p.k === k).ebene).sort();
+    expect(ebenen).toEqual([-1, 0, 1]);
+    for (const e of new Set(L.punkte.map((p) => p.ebene))) {
+      const xs = L.punkte.filter((p) => p.ebene === e).map((p) => p.x).sort((a, b) => a - b);
       for (let i = 1; i < xs.length; i++) expect(xs[i] - xs[i - 1]).toBeGreaterThanOrEqual(2 * STREIFEN.radius);
     }
+    // Die Enden sind benannt.
+    expect([L.minK, L.maxK]).toEqual(['A', 'C']);
+    // Alles bleibt in der Zeichnung.
+    for (const p of L.punkte) {
+      expect(p.y - STREIFEN.radius).toBeGreaterThanOrEqual(0);
+      expect(p.y + STREIFEN.radius).toBeLessThanOrEqual(L.hoehe);
+    }
+  });
+
+  it('setzt Namen am Rand bündig, sonst mittig unter den Punkt', () => {
+    expect(beschriftungsLage(10).ausrichtung).toBe('links');
+    expect(beschriftungsLage(160).ausrichtung).toBe('mitte');
+    expect(beschriftungsLage(310).ausrichtung).toBe('rechts');
   });
 
   it('gibt bei gleicher Eingabe dasselbe Bild und ohne Werte nichts', () => {
@@ -34,7 +48,8 @@ describe('Punktstreifen', () => {
       const S = KARTEN[key].streifen;
       expect(S, `kantonskarten.js ohne Streifen für ${key}: node scripts/app-verstehen.mjs`).toBeTruthy();
       expect(Object.keys(S.punkte)).toHaveLength(26);
-      for (const p of L.punkte) expect(S.punkte[p.k]).toEqual({ x: p.x, y: p.y, s: p.s });
+      for (const p of L.punkte) expect(S.punkte[p.k]).toMatchObject({ x: p.x, y: p.y, s: p.s });
+      expect([S.minK, S.maxK]).toEqual([L.minK, L.maxK]);
       // Dieselbe Farbe wie die Fläche auf der Karte.
       for (const [k, p] of Object.entries(S.punkte)) expect(p.s).toBe(KARTEN[key].werte[k].s);
     }

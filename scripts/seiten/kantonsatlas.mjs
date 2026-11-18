@@ -39,7 +39,7 @@ import { KANTONE_IM_VERGLEICH } from './kantone-im-vergleich.mjs';
 import { zahlen as zahlenKrankenkasse } from '../seiten-figuren.mjs';
 import { vergleichZahlen } from '../seiten-vergleich.mjs';
 import { appBeispiel } from '../seiten-ziele.mjs';
-import { streifenLage } from '../../src/data/punktStreifen.js';
+import { streifenLage, beschriftungsLage } from '../../src/data/punktStreifen.js';
 
 const GEO = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'daten', 'kantonsatlas', 'paths.json'), 'utf8'));
 for (const k of KANTONE) if (!GEO.cantons[k]) throw new Error(`Kantonsatlas-Karte: ${k} fehlt in paths.json`);
@@ -106,14 +106,25 @@ function streifenSvg(key) {
   const E = EBENEN[key];
   const L = streifenFuer(key);
   const punkte = L.punkte.map((p) => `<g><title>${esc(`${de.cantons[p.k]}: ${E.fmt(p.v)}`)}</title><circle cx="${p.x}" cy="${p.y}" r="${L.radius}" class="k${p.s}"/></g>`).join('');
-  const ch = L.ch ? `<line x1="${L.ch.x}" y1="2" x2="${L.ch.x}" y2="${L.achseY}" class="streifen-ch"/>` : '';
-  const beschreibung = `Jeder Punkt ist ein Kanton, von links ${E.fmt(L.min)} bis rechts ${E.fmt(L.max)} ${E.einheit}${L.ch ? `, der Strich zeigt die ganze Schweiz mit ${E.fmt(L.ch.v)}` : ''}. Die Farbe ist dieselbe Stufe wie auf der Karte. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
-  return `<svg viewBox="0 0 ${L.breite} ${L.hoehe}" role="img" aria-labelledby="${id}-t ${id}-d" focusable="false">` +
+  const ch = L.ch ? `<line x1="${L.ch.x}" y1="1" x2="${L.ch.x}" y2="${L.hoehe - 1}" class="streifen-ch"/>` : '';
+  const beschreibung = `Jeder Punkt ist ein Kanton. Am günstigsten ${de.cantons[L.minK]} mit ${E.fmt(L.min)}, am teuersten ${de.cantons[L.maxK]} mit ${E.fmt(L.max)} ${E.einheit}${L.ch ? `, der Strich zeigt die ganze Schweiz mit ${E.fmt(L.ch.v)}` : ''}. Die Farbe ist dieselbe Stufe wie auf der Karte. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
+  // Namen direkt an den Punkten, als Text unter dem Bild (im SVG wären sie auf dem Handy unter 13 px).
+  // Die Lage rechnet beschriftungsLage, dieselbe Funktion wie in der App.
+  const marke = (x, inhalt) => {
+    const B = beschriftungsLage(x, L.breite);
+    const stil = B.ausrichtung === 'rechts' ? `right:${runde1(100 - B.prozent)}%` : `left:${B.prozent}%`;
+    return `<span class="streifen-marke streifen-${B.ausrichtung}" style="${stil}">${inhalt}</span>`;
+  };
+  return `<p class="streifen-satz">Jeder Punkt ist ein Kanton. Links die günstigste Miete, rechts die teuerste.</p>` +
+    `<svg viewBox="0 0 ${L.breite} ${L.hoehe}" role="img" aria-labelledby="${id}-t ${id}-d" focusable="false">` +
     `<title id="${id}-t">${esc(`Streifen: ${E.titel}`)}</title><desc id="${id}-d">${esc(beschreibung)}</desc>` +
     `<line x1="${L.xMin}" y1="${L.achseY}" x2="${L.xMax}" y2="${L.achseY}" class="streifen-achse"/>${ch}${punkte}</svg>` +
-    // Enden und Schweiz als Text unter dem Bild: im SVG wären sie auf dem Handy unter 13 px.
-    `<p class="streifen-enden" aria-hidden="true"><span>${esc(E.fmt(L.min))}</span>${L.ch ? `<span>Strich: ganze Schweiz ${esc(E.fmt(L.ch.v))}</span>` : ''}<span>${esc(E.fmt(L.max))}</span></p>`;
+    `<p class="streifen-namen" aria-hidden="true">` +
+    marke(L.xMin, `${esc(de.cantons[L.minK])} ${esc(E.fmt(L.min))}`) +
+    (L.ch ? marke(L.ch.x, `Schweiz ${esc(E.fmt(L.ch.v))}`) : '') +
+    marke(L.xMax, `${esc(de.cantons[L.maxK])} ${esc(E.fmt(L.max))}`) + `</p>`;
 }
+const runde1 = (n) => Math.round(n * 10) / 10;
 
 // ─── Eine Karte ──────────────────────────────────────────────────────────────
 // Die Kantonsformen stehen einmal in der ersten Karte (<defs>), alle weiteren
@@ -161,7 +172,7 @@ function karte(ctx, key, { legende, nachher = '' }) {
           <div class="abb-karte f-${frucht}">
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>${esc(E.titel)}</span></p>${STREIFEN_KARTEN.includes(key) ? `
             <div class="atlas-streifen">${streifenSvg(key)}</div>
-            <p class="atlas-einheit">Jeder Punkt ein Kanton, ${esc(E.einheit)}. Darunter dieselben Zahlen als Karte.</p>` : ''}
+            <p class="atlas-einheit">${esc(E.einheit)}. Darunter dieselben Zahlen als Karte.</p>` : ''}
             <div class="abb-bild">${svg}</div>
             <p class="atlas-einheit">${esc(E.einheit)}</p>
             <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', tiefste Zahlen' : i === spannen.length - 1 ? ', höchste Zahlen' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
@@ -645,8 +656,11 @@ ${FRUCHT_CSS_DUNKEL}
     .atlas-streifen circle{ stroke:var(--leise); stroke-width:.6 }
     .atlas-streifen .streifen-achse{ stroke:var(--leise); stroke-width:.75 }
     .atlas-streifen .streifen-ch{ stroke:var(--text); stroke-width:1; stroke-dasharray:2 2 }
-    .atlas-streifen .streifen-enden{ display:flex; justify-content:space-between; gap:8px; margin:2px 0 0; max-width:560px;
+    .atlas-streifen .streifen-satz{ margin:0 0 8px; font-size:15px; color:var(--text) }
+    .atlas-streifen .streifen-namen{ position:relative; height:1.5em; margin:4px 0 0; max-width:560px;
       font-size:13px; color:var(--leise); font-variant-numeric:tabular-nums }
+    .atlas-streifen .streifen-marke{ position:absolute; top:0; white-space:nowrap }
+    .atlas-streifen .streifen-mitte{ transform:translateX(-50%) }
     .atlas-einheit{ margin:6px 0 0; font-size:13px; color:var(--leise) }
     .atlas-legende{ list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:6px 16px; margin:6px 0 4px; font-size:13px; color:var(--leise); font-variant-numeric:tabular-nums }
     .atlas-legende li{ display:inline-flex; align-items:center; gap:6px }
