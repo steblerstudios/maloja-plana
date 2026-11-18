@@ -499,6 +499,14 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
   T1 nehmen und «EL zur AV» nennen. 2024/2025 nur mit dem Hinweis auf die EL-Reform lesen (BSV: «vermutlich» deren Folge).
   https://www.bsv.admin.ch/dam/de/sd-web/pOeXq3eVysUG/el_stat_2025_d.pdf
 
+- ✅ **Nachgelesen 18.11.2026** (`pdftotext`, SHA-256 `196aa033…5023164b`, 8 Seiten): **T1 steht auf S. 3**
+  (2025: Total 16,4 % · AV 12,3 % · IV 49,8 %; 2024: 16,2 · 12,2 · 49,2). **S. 4, Abschnitt «EL-Quoten»:** «Während von den
+  65-jährigen AV-Rentnerinnen und -Rentnern nur 9,5 Prozent EL beziehen, sind es bei den 95-Jährigen 23,5 Prozent.»;
+  IV: «Von den 20- bis 30-jährigen IV-Rentnerinnen und -Rentnern benötigen zwischen 62 und 77 Prozent eine EL», kurz vor
+  dem Rentenalter «etwas mehr als 30 Prozent». **S. 4, «Wohnsituation»:** 65 000 EL-Beziehende im Heim = 18,0 % **der
+  EL-Beziehenden** (anderer Nenner als die Quote, nie daneben als Quote zeigen). Die Atlas-Karte `el` (12,3 % Schweiz)
+  stimmt mit T1 2025 «EL zur AV» überein.
+
 ### Schulden (BFS, Betreibungs- und Konkursstatistik)
 
 - ⚠️ **2025:** rund 3,15 Mio. eingeleitete Betreibungen, rund 3,03 Mio. Zahlungsbefehle; veröffentlicht 21.05.2026. Neue Erhebung
