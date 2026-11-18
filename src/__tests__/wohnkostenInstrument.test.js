@@ -126,7 +126,7 @@ describe('Kapitel Wohnen · Anzeige', () => {
     const p = profil({ monthlyIncome: '' });
     const html = render(p.wohnen, p);
     expect(html).toContain('wohnenInstrument.ohneEinkommen');
-    expect(html).not.toContain('drittel-balken');
+    expect(html).not.toContain('drittel-haus');
     expect(html).not.toContain('wohnenInstrument.freiDanach');
   });
 
@@ -135,7 +135,7 @@ describe('Kapitel Wohnen · Anzeige', () => {
     p.basis.canton = '';
     const html = render(p.wohnen, p);
     expect(html).not.toContain('po.regionalCompare.rent.title');
-    expect(html).toContain('drittel-balken');
+    expect(html).toContain('drittel-haus');
   });
 
   it('Drittel nie als Regel oder Recht ausgegeben (Swiss-Precision): «Faustregel» in jeder Sprache', () => {
