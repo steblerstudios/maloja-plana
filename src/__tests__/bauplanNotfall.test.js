@@ -11,7 +11,7 @@ import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE, getChapters } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
-import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft } from '../bereiche/notfall/notfall.js';
+import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER } from '../bereiche/notfall/notfall.js';
 
 const t = createT({ de }, 'de', 'sie');
 const SRC = path.resolve(__dirname, '..');
@@ -92,8 +92,8 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
   it('der offene Koffer: fertige Fächer als Knöpfe im Deckel, geplante gestrichelt im Boden, keine Notfallkarte doppelt', () => {
     const html = kapitel(DEMO_DATA);
     const deckel = html.slice(html.indexOf('data-teil="koffer-deckel"'), html.indexOf('data-teil="koffer-boden"'));
-    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg']);
-    expect(zaehle(html, /data-bald="ja"/g)).toBe(4);
+    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis']);
+    expect(zaehle(html, /data-bald="ja"/g)).toBe(3);
     expect(zaehle(html, /data-kachel="notfallkarte"/g)).toBe(1);
   });
   it('die frühere Seite gibt es nicht mehr; #/gesundheit führt zum Koffer im Kapitel', () => {
@@ -153,5 +153,71 @@ describe('Bauplan Notfall & Gesundheit · Ordnung im Code', () => {
     const k = lies('components/NotfallImKapitel.jsx');
     expect(k).not.toMatch(/export const (bereitschaft|SCENARIOS|NOTFALL_ANGABEN|VORSORGE|BereitRingKlein)\b/);
     expect(fs.existsSync(path.join(SRC, 'components/FranchiseThermometer.jsx'))).toBe(false);
+  });
+});
+
+// Fach Impfausweis (Sophie 19.11.2026, «A · Liste + fällig», «Ja, mitzählen»). Regel: Schweizerischer Impfplan 2026
+// (BAG/EKIF, Stand Februar 2026), Tabelle 1 Fussnote 13, Kap. 1.4/1.5 a) (dT) und Kap. 3 a) (FSME).
+describe('Fach Impfausweis · Welche Impfung ist fällig?', () => {
+  const mitImpfungen = (impfungen, geburt = '1980-06-15') => {
+    const d = JSON.parse(JSON.stringify(MIT_BELEG));
+    d.basis = { ...d.basis, dateOfBirth: geburt };
+    d.notfall = { ...d.notfall, impfungen };
+    return d;
+  };
+  const fach = (d) => renderToStaticMarkup(React.createElement(Impfausweis, { palette: LIGHT_PALETTE, t, data: d, onUpdateData: () => {}, heute: HEUTE }));
+
+  it('dT: das Alter bei der letzten Dosis bestimmt den Abstand (16–24 → 10, 25–64 → 20, ab 65 → 10 Jahre)', () => {
+    expect(impfAbstandJahre('dt', '2000-06-15', '1980-06-15')).toBe(10); // 20-jährig
+    expect(impfAbstandJahre('dt', '2005-06-14', '1980-06-15')).toBe(10); // 24-jährig, Tag vor dem 25.
+    expect(impfAbstandJahre('dt', '2005-06-15', '1980-06-15')).toBe(20); // 25-jährig
+    expect(impfAbstandJahre('dt', '2045-06-14', '1980-06-15')).toBe(20); // 64-jährig
+    expect(impfAbstandJahre('dt', '2045-06-15', '1980-06-15')).toBe(10); // 65-jährig
+    expect(impfAbstandJahre('dt', '1990-06-15', '1980-06-15')).toBeNull(); // Kind: eigenes Schema
+    expect(impfAbstandJahre('dt', '2005-06-15', '')).toBeNull(); // ohne Geburtsdatum keine Frist
+    expect(impfAbstandJahre('fsme', '2022-05-02', '')).toBe(10);
+    expect(impfAbstandJahre('grippe', '2026-10-01', '1980-06-15')).toBeNull(); // keine erfundene Frist
+    expect(impfAbstandJahre('mmr', '1994-01-01', '1980-06-15')).toBeNull();
+  });
+  it('es zählt die letzte Dosis je Impfung; die früheste Auffrischung gewinnt', () => {
+    const d = mitImpfungen([
+      { id: 'a', art: 'dt', datum: '2001-03-14' }, { id: 'b', art: 'dt', datum: '2011-03-14' },
+      { id: 'c', art: 'fsme', datum: '2017-05-02' }, { id: 'd', art: 'grippe', datum: '2026-10-01' },
+    ]);
+    expect(naechsteImpfung(d, HEUTE)).toMatchObject({ art: 'impfung', key: 'fsme', iso: '2027-05-02', abstand: 10, vorbei: false });
+    const ohneFsme = mitImpfungen([{ id: 'a', art: 'dt', datum: '2001-03-14' }, { id: 'b', art: 'dt', datum: '2011-03-14' }]);
+    expect(naechsteImpfung(ohneFsme, HEUTE)).toMatchObject({ key: 'dt', iso: '2031-03-14', abstand: 20 }); // mit 30 geimpft
+    expect(naechsteImpfung(mitImpfungen([{ id: 'd', art: 'grippe', datum: '2026-10-01' }]), HEUTE)).toBeNull();
+  });
+  it('«Als Nächstes fällig» zählt die Impfung mit, und der Weg führt ins Fach', () => {
+    const d = mitImpfungen([{ id: 'c', art: 'fsme', datum: '2016-11-01' }]); // fällig 01.11.2026, vor dem Beleg 15.12.
+    expect(naechstesFaellig(d, {}, HEUTE)).toMatchObject({ art: 'impfung', key: 'fsme', iso: '2026-11-01', vorbei: true });
+    const html = renderToStaticMarkup(React.createElement(GesundheitZuhause, { palette: LIGHT_PALETTE, t, data: d, onNavigate: () => {}, letzteBesuche: {}, heute: HEUTE }));
+    expect(html).toContain('FSME (Zecken) · nächste empfohlene Auffrischimpfung');
+    expect(html).toContain('Zum Impfausweis');
+    expect(zaehle(html, /data-teil="kalenderblatt"/g)).toBe(1);
+  });
+  it('Fachseite: ein Kalenderblatt, die Zahl darunter, Liste neueste zuerst, Quelle verlinkt', () => {
+    const html = fach(mitImpfungen([{ id: 'a', art: 'dt', datum: '2011-03-14' }, { id: 'c', art: 'fsme', datum: '2022-05-02' }]));
+    expect(zaehle(html, /data-teil="kalenderblatt"/g)).toBe(1);
+    expect(zaehle(html, /data-instrument-zahl="impfung"/g)).toBe(1);
+    expect(html.indexOf('data-instrument-zahl="impfung"')).toBeGreaterThan(html.indexOf('data-teil="kalenderblatt"'));
+    expect(html).toContain('Auffrischung 20 Jahre nach der letzten Impfung');
+    expect(html.indexOf('data-impfung="fsme"')).toBeLessThan(html.indexOf('data-impfung="dt"'));
+    expect(html).toContain('href="https://www.bag.admin.ch/de/schweizerischer-impfplan"');
+  });
+  it('Fachseite ohne Frist: kein Bild, ehrlicher Satz; Starrkrampf ohne Geburtsdatum sagt, was fehlt', () => {
+    const leer = fach(mitImpfungen([]));
+    expect(leer).not.toContain('data-teil="kalenderblatt"');
+    expect(leer).toContain('data-teil="impf-leer"');
+    const ohneAlter = fach(mitImpfungen([{ id: 'a', art: 'dt', datum: '2011-03-14' }], ''));
+    expect(ohneAlter).not.toContain('data-teil="kalenderblatt"');
+    expect(ohneAlter).toContain('data-teil="impf-ohne-alter"');
+  });
+  it('das Fach steht im Koffer, ist eine Seite mit Adresse und wird lazy über den Eingang geladen', () => {
+    expect(KOFFER_FAECHER.find((f) => f.key === 'impfausweis').view).toBe('impfausweis');
+    expect(lies('utils/hashRouter.js')).toMatch(/'impfausweis'/);
+    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Impfausweis \}\)\)\)/);
+    expect(lies('bereiche/notfall/impfausweis.jsx')).not.toMatch(/setFullYear|setMonth/); // rechnet nicht selbst
   });
 });
