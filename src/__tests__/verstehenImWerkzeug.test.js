@@ -348,7 +348,8 @@ describe('Atlas in den Kapiteln: Kind, Trennung, Mietbeiträge, Stundenlohn', ()
     for (const [k, name] of Object.entries(KARTEN_NAME)) {
       expect(name, k).toBe(KARTEN[k].titel);
       const html = renderToStaticMarkup(React.createElement(VerstehenImWerkzeug, { palette: P, t, karte: k, kanton: 'ZH' }));
-      expect(html).toContain(`${t('erklaerseite.karteMitKanton')}: <span lang="de">${name}</span>`);
+      // Apostroph im Markup maskiert («80'000» → 80&#x27;000), seit Steuern dazukam (18.11.2026).
+      expect(html).toContain(`${t('erklaerseite.karteMitKanton')}: <span lang="de">${name.replace(/'/g, '&#x27;')}</span>`);
     }
   });
 
@@ -370,5 +371,36 @@ describe('Atlas in den Kapiteln: Kind, Trennung, Mietbeiträge, Stundenlohn', ()
     const html = karte(P, 'miete', 'ZH');
     expect(html).toContain('data-teil="vor-nach"');
     expect(html).toContain(KARTEN.miete.vergleich.werte.ZH);
+  });
+});
+
+// Stebler Studios 18.11.2026 («Ja, 1 bis 4»): Karten auch in den Abläufen Umzug und «Wohnung gekündigt».
+describe('Atlas in den Abläufen: Umzug und Wohnung gekündigt', () => {
+  it('Umzug in einen anderen Kanton: Steuern und Prämie mit dem Profilkanton, nur bei diesem Typ', () => {
+    const u = quelle('UmzugAblauf.jsx');
+    expect(u).toContain("umzugType === 'extra' && React.createElement(VerstehenImWerkzeug, { key: 'karte-steuer', palette, t, karte: 'steuer', kanton: data?.basis?.canton || '' })");
+    expect(u).toContain("umzugType === 'extra' && React.createElement(VerstehenImWerkzeug, { key: 'karte-praemie', palette, t, karte: 'praemie', kanton: data?.basis?.canton || '' })");
+    // Über dem Link «Mehr dazu: Kantone im Vergleich», der als Weg zur ganzen Seite bleibt.
+    expect(u.indexOf("karte: 'praemie'")).toBeLessThan(u.indexOf("seite: 'kantone'"));
+    expect(quelle('main.jsx')).toContain('React.createElement(UmzugAblauf, { key: datenModus, palette, t, data: activeData');
+  });
+
+  it('Wohnung gekündigt: Leerwohnungsziffer beim Schritt mit dem Weg zu den Mietbeiträgen', () => {
+    const w = quelle('WohnungGekuendigt.jsx');
+    expect(w).toContain("React.createElement(VerstehenImWerkzeug, { palette, t, karte: 'leer', kanton: data?.basis?.canton || '' })");
+    expect(w.indexOf("karte: 'leer'")).toBeGreaterThan(w.indexOf("step5LinkMietzins"));
+    expect(quelle('main.jsx')).toContain('React.createElement(WohnungGekuendigt, { palette, t, data: activeData, onNavigate: handleNavigate })');
+  });
+
+  it('Leerwohnungsziffer allein: eigene Zahl, keine zweite Zahl daneben', () => {
+    const html = karte(P, 'leer', 'ZH');
+    expect(html).toContain(KARTEN.leer.werte.ZH.text);
+    expect(html).not.toContain('data-teil="vor-nach"');
+  });
+
+  it('zwei Karten am selben Schritt sind für Vorlese-Programme unterscheidbar', () => {
+    const titel = ['steuer', 'praemie'].map((k) => renderToStaticMarkup(React.createElement(VerstehenImWerkzeug, { palette: P, t, karte: k, kanton: 'BE' })));
+    expect(titel[0]).not.toBe(titel[1]);
+    expect(titel[1]).toContain(`<span lang="de">${KARTEN.praemie.titel}</span>`);
   });
 });

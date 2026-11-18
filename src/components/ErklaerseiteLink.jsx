@@ -62,7 +62,9 @@ const ATLAS = '/kantonsatlas/#karte-';
 // aufklappt (wie «Ihr Kanton auf der Karte» beim Werkzeug), mit dem eigenen Kanton markiert. Vorher standen hier
 // nur Links in einen neuen Tab; die Links bleiben darunter als Weg zur ganzen Atlas-Seite mit Tabelle.
 export const ZUM_VERSTEHEN = {
-  basis: { seiten: [], karten: [[ATLAS + 'kinderzulage', 'Kinderzulage', 'kinderzulage'], [ATLAS + 'kita', 'Abzug für Kinderbetreuung', 'kita']] },
+  // Alimente seit 18.11.2026 (Stebler Studios «Ja, 1 bis 4»): im Atlas im Abschnitt Familie wie die beiden anderen;
+  // in der App stand die Karte bis dahin nur im Ablauf «Trennung».
+  basis: { seiten: [], karten: [[ATLAS + 'kinderzulage', 'Kinderzulage', 'kinderzulage'], [ATLAS + 'kita', 'Abzug für Kinderbetreuung', 'kita'], [ATLAS + 'alimente', 'Alimentenbevorschussung', 'alimente']] },
   wohnen: { seiten: [], karten: [[ATLAS + 'miete', 'Miete 3 Zimmer', 'miete'], [ATLAS + 'leer', 'Leerwohnungsziffer', 'leer']] },
   finanzen: {
     seiten: [['/sozialhilfe/', 'Sozialhilfe'], ['/steuern/', 'Steuern']],
@@ -72,7 +74,8 @@ export const ZUM_VERSTEHEN = {
     seiten: [['/krankenkasse/', 'Krankenkasse'], ['/praemienverbilligung/', 'Prämienverbilligung'], ['/ergaenzungsleistungen/', 'Ergänzungsleistungen'], ['/ahv-pensionierung/', 'AHV und Pensionierung']],
     karten: [[ATLAS + 'praemie', 'Prämie Erwachsene', 'praemie'], [ATLAS + 'lastnachipv', 'Prämienlast nach Verbilligung', 'lastNachIpv'], [ATLAS + 'el', 'Ergänzungsleistungen zur AHV', 'el']],
   },
-  ausbildung: { seiten: [['/arbeitslosigkeit/', 'Arbeitslosigkeit']], karten: [[ATLAS + 'alq', 'Arbeitslosenquote', 'alq']] },
+  // Mindestlohn seit 18.11.2026: im Atlas im Abschnitt Arbeit neben der Arbeitslosenquote.
+  ausbildung: { seiten: [['/arbeitslosigkeit/', 'Arbeitslosigkeit']], karten: [[ATLAS + 'alq', 'Arbeitslosenquote', 'alq'], [ATLAS + 'mindestlohn', 'Kantonaler Mindestlohn', 'mindestlohn']] },
 };
 
 const kleinerLink = (palette, t, href, name) => React.createElement(ExternerLink, {
@@ -205,7 +208,12 @@ const Aufklapper = ({ palette, t, titel, teil, laden, props }) => {
 // («Kind»: Kinderzulage, Kita-Abzug; «Trennung»: Alimente). Ein Ablauf kann so mehrere Karten zeigen.
 // Kartennamen für den Titel des Aufklappers, wenn ein Ablauf mehrere Karten zeigt (a11y-Prüfung 16.11.2026:
 // zweimal «Ihr Kanton auf der Karte» war für Vorlese-Programme nicht zu unterscheiden). Deutsch wie im Atlas.
-export const KARTEN_NAME = { kinderzulage: 'Kinderzulage', kita: 'Abzug für Kinderbetreuung', alimente: 'Alimentenbevorschussung' };
+// Seit 18.11.2026 auch Steuern und Prämie (Ablauf Umzug, zwei Karten am selben Schritt) und Leerwohnungsziffer
+// (Ablauf «Wohnung gekündigt»). Namen = Titel über der Karte im Atlas (Wächter appZurErklaerseite.test.js).
+export const KARTEN_NAME = {
+  kinderzulage: 'Kinderzulage', kita: 'Abzug für Kinderbetreuung', alimente: 'Alimentenbevorschussung',
+  steuer: "Steuern bei 80'000 Fr. Lohn", praemie: 'Prämie Erwachsene', leer: 'Leerwohnungsziffer',
+};
 
 export const VerstehenImWerkzeug = ({ palette, t, view, karte, kanton, altersklasse }) => {
   const v = karte ? { karte } : VERSTEHEN[view];

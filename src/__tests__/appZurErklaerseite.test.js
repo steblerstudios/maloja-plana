@@ -98,7 +98,7 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
       const alle = Object.values(ZUM_VERSTEHEN);
       for (const [href] of alle.flatMap((z) => z.seiten)) expect(fs.existsSync(path.resolve(process.cwd(), 'public', href.slice(1), 'index.html')), href).toBe(true);
       const karten = alle.flatMap((z) => z.karten);
-      expect(karten.length).toBe(10);
+      expect(karten.length).toBe(12); // 18.11.2026: Mindestlohn (Arbeit) und Alimente (Basis) dazu
       for (const [href, name] of karten) expect(kopf(href.split('#')[1]), href).toBe(name);
     });
 
@@ -132,6 +132,17 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
       expect(html).toContain('<span lang="de">Miete 3 Zimmer</span>');
       expect(html).toContain('<span lang="de">Leerwohnungsziffer</span>');
       expect(html).toContain('href="/kantonsatlas/#karte-leer"');
+    });
+
+    // 18.11.2026 («Ja, 1 bis 4»): je eine Karte mehr in Arbeit und Basis, wie die Abschnitte im Atlas.
+    it.each([
+      ['ausbildung', ['Arbeitslosenquote', 'Kantonaler Mindestlohn'], 'mindestlohn'],
+      ['basis', ['Kinderzulage', 'Abzug für Kinderbetreuung', 'Alimentenbevorschussung'], 'alimente'],
+    ])('%s: die Karten klappen auf, die neue mit ihrem Link darunter', (kapitel, namen, neu) => {
+      const html = renderToStaticMarkup(React.createElement(ZumVerstehen, { palette: LIGHT_PALETTE, t, kapitel, kanton: 'GE' }));
+      expect((html.match(/data-teil="aufklapper-karte"/g) || []).length).toBe(namen.length);
+      for (const n of namen) expect(html).toContain(`<span lang="de">${n}</span>`);
+      expect(html).toContain(`href="/kantonsatlas/#karte-${neu}"`);
     });
 
     it('jede Karte im Kapitel gibt es auch als App-Karte, mit demselben Anker wie im Atlas', async () => {

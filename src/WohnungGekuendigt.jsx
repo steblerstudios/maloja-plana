@@ -1,6 +1,7 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles, AblaufWarnung } from './AblaufSchale.jsx';
 import { plusTage } from './utils/fristen.js';
+import { VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 
 // Wohnung gekündigt (durch die Vermieterschaft) — geführter Ablauf, gebaut 24.09.2026
 // auf Wunsch von Stebler Studios («neue Abläufe: ja unbedingt»). Anti-Panik-Ton wie «Betreibung»:
@@ -12,7 +13,7 @@ import { plusTage } from './utils/fristen.js';
 // 137 III 208): bei einem Einschreiben zählt die Abholungseinladung, nicht der Tag
 // der Abholung — darum fragt das Feld nach genau diesem Tag. Nie später als das Gesetz.
 
-export const WohnungGekuendigt = ({ palette, t, onNavigate }) => {
+export const WohnungGekuendigt = ({ palette, t, onNavigate, data }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
     palette, t, onNavigate, ablauf: 'wohnunggekuendigt', icon: 'ereignisWohnunggekuendigt',
@@ -44,6 +45,9 @@ export const WohnungGekuendigt = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('wohnungGekuendigt.step5Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('wohnungGekuendigt.step5LinkUmzug'), onClick: () => onNavigate('umzug') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('wohnungGekuendigt.step5LinkMietzins'), onClick: () => onNavigate('mietzins') }),
+      // Leerwohnungsziffer aus dem Kantonsatlas (18.11.2026): wie knapp freie Wohnungen im eigenen Kanton sind.
+      // Die Miete zeigt das Werkzeug Mietbeiträge, auf das der Link darüber führt.
+      React.createElement(VerstehenImWerkzeug, { palette, t, karte: 'leer', kanton: data?.basis?.canton || '' }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('wohnungGekuendigt.step5LinkSozialhilfe'), onClick: () => onNavigate('sozialhilfe') }),
       React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('wohnungGekuendigt.abgrenzung'))
     ),
