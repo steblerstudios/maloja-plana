@@ -2573,6 +2573,8 @@ export default {
     mehrAlsDrittel: 'Plus d\'un tiers du revenu va au logement. C\'est une règle empirique, pas une obligation — le calcul avec toutes les dépenses montre si cela tient.',
     ohneEinkommen: 'Dès qu\'un revenu est saisi dans le chapitre Finances, on voit ici la part que prend le logement.',
     ausprobieren: 'Essayer : un autre loyer',
+    // Bauplan Wohnen (18.11.2026): Regler, Kantonskarte und Ausland unter einer Aufklapp-Zeile.
+    mehrDazu: 'En savoir plus',
     wohnungssuche: 'Recherche de logement',
     reglerLabel: 'Loyer net d\'un nouveau logement',
     nebenkostenWieHeute: 'Charges (comme aujourd\'hui)',

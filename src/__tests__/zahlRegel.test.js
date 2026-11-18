@@ -7,8 +7,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { WohnkostenInstrument } from '../components/WohnkostenInstrument.jsx';
-import { MietVergleich } from '../components/MietVergleich.jsx';
+import { WohnenZuhause as WohnkostenInstrument } from '../bereiche/wohnen/wohnen.js';
+import { WohnenWerkzeug as MietVergleich } from '../bereiche/wohnen/wohnen.js';
 
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
@@ -48,17 +48,23 @@ describe('Regel «Zahl» · Werkzeug Mietzins (mittel)', () => {
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: d }));
     expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>30 %</);
   });
-  it('unter den Häusern die Lage der Miete gross, der Anteil erst beim Wohnkosten-Satz', () => {
+  // Überholt 18.11.2026 (Bauplan Wohnen): «der Anteil erst beim Wohnkosten-Satz» — im Werkzeug steht jetzt dieselbe
+  // Strasse wie im Kapitel, also jede Hauptzahl unter ihrem Haus: Anteil unter dem Drittel-Haus, Lage unter dem
+  // Vergleichshaus, die Sätze darunter.
+  it('jede Hauptzahl unter ihrem Haus, die Sätze erst danach', () => {
     const d = { basis: { canton: 'ZH' }, finanzen: { monthlyIncome: '6200' }, wohnen: { rentAmount: '1650', utilities: '180' } };
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: d }));
-    const bild = html.indexOf('data-form="haeuser"');
-    const lage = html.indexOf('data-instrument-zahl="miete"');
+    const drittel = html.indexOf('data-teil="drittel-haus"');
     const anteil = html.indexOf('data-instrument-zahl="wohnkosten"');
-    expect(bild).toBeGreaterThan(-1);
+    const bild = html.indexOf('data-teil="vergleichs-haus"');
+    const lage = html.indexOf('data-instrument-zahl="miete"');
+    expect(drittel).toBeGreaterThan(-1);
+    expect(anteil).toBeGreaterThan(drittel);
+    expect(bild).toBeGreaterThan(anteil);
     expect(lage).toBeGreaterThan(bild);
-    expect(lage).toBeLessThan(html.indexOf('po.regionalCompare.nationalVal'));
+    expect(lage).toBeLessThan(html.indexOf('data-teil="miete-saetze"'));
+    expect(lage).toBeLessThan(html.indexOf('data-teil="wohnkosten-satz"'));
     expect(html).toMatch(/data-instrument-zahl="miete"[^>]*>[−+≈][^<]* %</);
-    expect(anteil).toBeGreaterThan(html.indexOf('po.regionalCompare.rent.source'));
     // derselbe Satz wie Kachel und Kapitel, die Zahl nicht doppelt, Einkommen über betrag()
     expect(html).toContain('instrumente.wohnkostenSatz (CHF 6’200)');
     expect(html).not.toContain('mietzinsView.rentShare(');
@@ -81,9 +87,9 @@ describe('Regel «Zahl» · Quelle', () => {
     expect(karte.indexOf('hatGeld && stapel()')).toBeLessThan(karte.indexOf("'data-instrument-zahl': 'versicherungen'"));
   });
   it('Vergleichshaus: keine Fahne «Sie», eigene Miete über betrag()', () => {
-    const q = quelle('../components/RegionalBarometer.jsx');
-    expect(q).not.toContain('fahne-abstand');
-    expect(q).toMatch(/t\('strasse\.eigen'\)\) \+ ': ' \+ betrag\(userValue\)/);
+    // Seit 18.11.2026 (Bauplan Wohnen) in bereiche/wohnen/ statt im RegionalBarometer.
+    expect(quelle('../bereiche/wohnen/bilder.jsx')).not.toContain('fahne-abstand');
+    expect(quelle('../bereiche/wohnen/zuhause.jsx')).toMatch(/t\('strasse\.eigen'\)\) \+ ': ' \+ betrag\(ml\.netto\)/);
   });
 });
 

@@ -2,10 +2,10 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { calculateMonthlyBudget } from '../budgetSync.js';
-import { wohnkostenRechnung } from '../data/wohnkosten.js';
+import { wohnkostenRechnung } from '../bereiche/wohnen/rechnung.js';
 
 // Budget · Wohnen (Stebler Studios 11.11.2026, «Ja, Budget»): die Gruppe «Wohnen» und der Wohn-Hinweis
-// folgen derselben Regel wie Kapitel Wohnen, Mietzins und Drittel-Haus (data/wohnkosten.js).
+// folgen derselben Regel wie Kapitel Wohnen, Mietzins und Drittel-Haus (bereiche/wohnen/rechnung.js).
 // Bis dahin: Hinweis ab 40 % nur der Miete am Haushaltseinkommen — eine vierte Regel.
 
 const t = (k) => k;
@@ -59,32 +59,39 @@ describe('Budget · Drittel-Haus in der Gruppe «Wohnen»', () => {
   });
   it('Hinweis und «!» aus derselben Rechnung', () => {
     expect(q).toMatch(/calculateMonthlyBudget\(data, t, \{ ueberDrittel: wohn\.ueberDrittel && !wohn\.mitPartner \}\)/);
-    expect(q).toMatch(/thresholdValue: drittelGrenzeMiete\(wohn\)/);
+    // Überholt 18.11.2026 (Bauplan Wohnen): kein «!» mehr auf dem Miet-Bild (thresholdValue: drittelGrenzeMiete) — das
+    // Drittel trägt nur das Drittel-Haus der Gruppe, und dort aus derselben Rechnung `wohn`.
+    expect(q).toMatch(/React\.createElement\(DrittelHaus, \{ palette, anteil: wohn\.anteil, ueberDrittel: wohn\.ueberDrittel,/);
+    expect(q).not.toMatch(/thresholdValue:/);
     expect(fs.readFileSync(path.join(SRC, 'budgetSync.js'), 'utf8')).not.toMatch(/rentPercentage|> 40\b/);
   });
 });
 
-describe('Budget · Richtwert als zwei Häuser', () => {
-  it('Ihr Haus gefüllt, Vergleichshaus mit Dach in der Farbe Ihrer Lage, Höhe = Betrag', async () => {
+// Überholt 18.11.2026 (Bauplan Wohnen, «jedes Bild einmal»): der BFS-Richtwert der Gruppe hat kein eigenes Bild mehr
+// (bis dahin zwei Häuser, HaeuserVergleich). Die Lage der Miete zeigt im Budget das eine Vergleichshaus, mittel, mit
+// der Budget-Miete; der Richtwert-Satz mit Quelle bleibt.
+describe('Budget · Miete als Vergleichshaus, Richtwert als Satz', () => {
+  it('Vergleichshaus in der Lage-Farbe: darüber gold, darunter salbei, ±2 % neutral', async () => {
     const React = (await import('react')).default;
     const { renderToStaticMarkup } = await import('react-dom/server');
-    const { HaeuserVergleich, lageFarbe } = await import('../components/RegionalBarometer.jsx');
-    const P = { text: '#111', mid: '#666', gold: '#B8955A', sage: '#5F7F68', surface: '#FFF' };
-    const bild = (sie, vergleich) => renderToStaticMarkup(React.createElement(HaeuserVergleich, { palette: P, sie, vergleich, fuell: '#6C8343' }));
-    expect(bild(1800, 1277)).toContain('fill="#B8955A"'); // darüber: gold
-    expect(bild(1000, 1277)).toContain('fill="#5F7F68"'); // darunter: salbei
-    expect(lageFarbe(P, 1280, 1277)).toBe('#666'); // ±2 %: neutral
-    expect(bild(1800, 1277)).toContain('aria-hidden="true"');
-    expect(bild(0, 1277)).toBe('');
-    const hoehe = (html) => [...html.matchAll(/<rect [^>]*height="([\d.]+)"/g)].map((m) => Number(m[1]));
-    const [vergleich, sie] = hoehe(bild(1800, 1277));
-    expect(sie / vergleich).toBeCloseTo(1800 / 1277, 6);
+    const { Vergleichshaus, lageFarben, lageZurRegion } = await import('../bereiche/wohnen/wohnen.js');
+    const P = { text: '#111', mid: '#666', gold: '#B8955A', sage: '#5F7F68', goldDeep: '#850', sageDeep: '#363', skyDeep: '#357', surface: '#FFF' };
+    const vergleich = { regional: 1277, national: 1446 };
+    const bild = (sie) => renderToStaticMarkup(React.createElement(Vergleichshaus, { palette: P, lage: { netto: sie, vergleich, lage: lageZurRegion(sie, 1277) }, fuell: '#6C8343', groesse: 'mittel' }));
+    const kanton = (h) => h.match(/<line data-teil="stock-kanton"[^>]*>/)[0];
+    expect(kanton(bild(1800))).toContain('stroke="#B8955A"');
+    expect(kanton(bild(1000))).toContain('stroke="#5F7F68"');
+    expect(lageFarben(P, lageZurRegion(1280, 1277))[0]).toBe('#666');
+    expect(bild(1800)).toContain('aria-hidden="true"');
+    expect(bild(0)).not.toContain('vergleich-fuellung');
   });
 
-  it('steht aufgeklappt in der Gruppe «Wohnen», der Richtwert-Satz mit Quelle bleibt', () => {
+  it('steht im Miet-Feld mit den Sätzen; der Richtwert-Satz mit Quelle bleibt in der Gruppe', () => {
     const q = fs.readFileSync(path.join(SRC, 'BudgetSync.jsx'), 'utf8');
-    expect(q).toMatch(/open && group\.key === 'housing' && groupBm && React\.createElement\('div', \{ 'data-teil': 'budget-richtwert-haeuser'/);
-    expect(q).toMatch(/React\.createElement\(HaeuserVergleich, \{ palette, sie: group\.total, vergleich: groupBm,/);
+    expect(q).toMatch(/'data-teil': 'budget-vergleichshaus'/);
+    expect(q).toMatch(/React\.createElement\(Vergleichshaus, \{ palette, lage: ml, fuell: bereichFillColor\('wohnen', isDarkMode\), groesse: 'mittel' \}\)/);
+    expect(q).toMatch(/React\.createElement\(MieteSaetze, \{ palette, t, ml \}\)/);
+    expect(q).not.toMatch(/HaeuserVergleich|budget-richtwert-haeuser/);
     expect(q).toMatch(/open && groupBm && renderBenchmarkLine\(groupBm, group\.key, true\)/);
   });
 });

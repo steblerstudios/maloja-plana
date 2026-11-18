@@ -4839,6 +4839,8 @@ export default {
     mehrAlsDrittel: "Dapli ch'in terz da l'entrada va per abitar. Quai è ina reglacurta, nagin'obligaziun — il quint cun tut las expensas mussa, sch'i va si.",
     ohneEinkommen: "Uschespert ch'ina entrada è registrada en il chapitel Finanzas, sa mussi qua, tge part che l'abitar dovra.",
     ausprobieren: 'Empruvar: in auter tschains',
+    // Bauplan Wohnen (18.11.2026): Regler, Kantonskarte und Ausland unter einer Aufklapp-Zeile.
+    mehrDazu: 'Dapli davart quai', // TODO(rm): gegenlesen
     wohnungssuche: "Tschertga d'abitaziun",
     reglerLabel: "Tschains net d'ina nova abitaziun",
     nebenkostenWieHeute: 'Custs accessorics (sco oz)',

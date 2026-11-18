@@ -8,7 +8,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { wohnkostenRechnung, drittelGrenzeMiete } from '../data/wohnkosten.js';
+import { wohnkostenRechnung, drittelGrenzeMiete } from '../bereiche/wohnen/rechnung.js';
 import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
 
 const profil = ({ lohn = 5000, partner, ehe = true, weitere = 0, brutto = false } = {}) => ({
@@ -74,10 +74,14 @@ describe('Partner-Haus: ohne Urteil, wo die Summe nicht trägt', () => {
 describe('Partner-Haus: Texte sagen, wessen Einnahmen gemeint sind', () => {
   const quelle = (rel) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8');
   it('Kapitel und Kachel nennen den Haushalt, offenes Feld führt zum Eintragen', () => {
-    const w = quelle('../components/WohnkostenInstrument.jsx');
-    expect(w).toMatch(/r\.haushalt \? 'instrumente\.wohnkostenSatzHaushalt'/);
-    expect(w).toMatch(/r\.partnerOffen \? 'wohnenInstrument\.partnerOffen'/);
-    expect(w).toMatch(/r\.haushalt \? 'instrumente\.wohnkostenSatzHaushalt'/);
+    // Seit 18.11.2026 (Bauplan Wohnen): die Satz-Wahl steht einmal in rechnung.js, Kapitel und Kachel holen sie dort.
+    const rechnung = quelle('../bereiche/wohnen/rechnung.js');
+    expect(rechnung).toMatch(/r\.haushalt \? 'instrumente\.wohnkostenSatzHaushalt'/);
+    expect(rechnung).toMatch(/r\.partnerOffen \? 'wohnenInstrument\.partnerOffen'/);
+    const kapitel = quelle('../bereiche/wohnen/zuhause.jsx');
+    expect(kapitel).toMatch(/t\(wohnkostenSatzKey\(r\)\)/);
+    expect(kapitel).toMatch(/t\(drittelSatzKey\(r\)\)/);
+    expect(quelle('../components/InstrumentePanel.jsx')).toMatch(/t\(wohnkostenSatzKey\(wohnR\)\)/);
   });
   it('alle fünf Sprachen haben die neuen Sätze', async () => {
     for (const lang of ['de', 'fr', 'it', 'en', 'rm']) {

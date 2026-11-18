@@ -3,12 +3,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { DrittelHaus } from '../components/WohnkostenInstrument.jsx';
+import { DrittelHaus } from '../bereiche/wohnen/wohnen.js';
 import { RegionalBarometer } from '../components/RegionalBarometer.jsx';
+import { Vergleichshaus, lageZurRegion } from '../bereiche/wohnen/wohnen.js';
 
 // Wohnen: Drittel-Haus + Häuserzeile (Stebler Studios 11.11.2026, «ja a und b kombiniert»).
 // A: das Haus ist das Einkommen, drei Stockwerke, Erdgeschoss = ein Drittel; die Wohnkosten füllen es.
 // B: die Miete als Häuserzeile — Sie gefüllt, Region mit farbigem Dach, Schweiz gestrichelt, Drittel als Linie.
+// Seit 18.11.2026 (Bauplan Wohnen): B ist das eine Vergleichshaus, das Drittel steht nur im Drittel-Haus.
 // Gleich zu lesen wie das Barometer (Füllung · Punkt · Strich · «!»); Lohn und Prämie bleiben Balken.
 
 const P = { text: '#111111', mid: '#666666', sand: '#C9A86A', surface: '#FFFFFF', roseDeep: '#AA3344', gold: '#B8955A', sage: '#5F7F68', goldDeep: '#8A6A35', sageDeep: '#466050', border: '#DDDDDD', skyDeep: '#335577', sky: '#5577AA' };
@@ -49,44 +51,37 @@ describe('Drittel-Haus', () => {
   });
 });
 
-describe('Häuserzeile (RegionalBarometer form «haeuser»)', () => {
-  const comparison = { regional: 1732, national: 1446, diffPct: 19.8, year: 2024, roomKey: '3' };
-  const zeile = (props) => renderToStaticMarkup(React.createElement(RegionalBarometer, { palette: P, t, comparison, kind: 'rent', fillColor: '#6C8343', form: 'haeuser', ...props }));
-
-  it('drei Häuser, dieselben Texte und dasselbe aria-Label wie der Balken', () => {
-    const html = zeile({ userValue: 1650 });
-    const balken = renderToStaticMarkup(React.createElement(RegionalBarometer, { palette: P, t, comparison, kind: 'rent', fillColor: '#6C8343', userValue: 1650 }));
-    expect(html).toContain('data-form="haeuser"');
-    expect((html.match(/<rect /g) || []).length).toBe(3);
-    const aria = (h) => h.match(/role="img" aria-label="([^"]*)"/)[1];
-    expect(aria(html)).toBe(aria(balken));
-    expect(html).toContain('po.regionalCompare.rent.yourVal');
+// Überholt 18.11.2026 (Bauplan Wohnen): die Häuserzeile im RegionalBarometer (form 'haeuser', drei Häuser, Drittel-Linie
+// quer über die Strasse) gibt es nicht mehr. Die Miete ist überall das eine Vergleichshaus (wohnenStrasse.test.js), das
+// Barometer ist wieder nur der Balken (Prämie, Lohn).
+describe('Vergleichshaus statt Häuserzeile', () => {
+  const comparison = { regional: 1732, national: 1446, diffPct: 19.8, year: 2024, roomKey: 'r3' };
+  it('ein Haus, rein Bild (aria-hidden): die Sätze stehen daneben', () => {
+    const html = renderToStaticMarkup(React.createElement(Vergleichshaus, { palette: P, lage: { netto: 1650, vergleich: comparison, lage: lageZurRegion(1650, 1732) }, fuell: '#6C8343', groesse: 'mittel' }));
+    expect((html.match(/data-teil="vergleichs-haus"/g) || []).length).toBe(1);
+    expect(html).toContain('aria-hidden="true"');
+    expect(html).not.toContain('data-form="haeuser"');
   });
-
-  it('Drittel als Linie quer über die Strasse, rose nur wenn Ihr Haus darüber ragt', () => {
-    const unter = zeile({ userValue: 1650, thresholdValue: 1800 });
-    expect(unter).toContain('data-teil="drittel-linie"');
-    expect(unter).not.toContain('#AA3344');
-    const drueber = zeile({ userValue: 1650, thresholdValue: 1500, showThresholdText: true });
-    expect(drueber).toContain('stroke="#AA3344"');
-    expect(drueber).toContain('thresholdBreachedLine');
-    expect(zeile({ userValue: 1650 })).not.toContain('drittel-linie');
-  });
-
   it('Standard bleibt der Balken (Lohn, Prämie)', () => {
     const html = renderToStaticMarkup(React.createElement(RegionalBarometer, { palette: P, t, comparison, kind: 'premium', userValue: 400 }));
     expect(html).not.toContain('data-form="haeuser"');
+    expect(html).not.toContain('vergleichs-haus');
   });
 });
 
 describe('Wohnen: wo welches Bild steht', () => {
-  it('Kapitel: Drittel-Haus und Häuserzeile gross; Mietzins und Budget: Häuserzeile mittel', () => {
-    const k = lies('components/WohnkostenInstrument.jsx');
-    expect(k).toMatch(/React\.createElement\(DrittelHaus, \{/);
-    expect(k).toMatch(/form: 'haeuser', maxBreite: INSTRUMENT_GROESSE\.gross/);
-    expect(k).not.toContain("'drittel-balken'");
-    for (const f of ['components/MietVergleich.jsx', 'BudgetSync.jsx']) {
-      expect(lies(f)).toMatch(/kind: 'rent', form: 'haeuser',/);
+  it('Kapitel gross, Werkzeug und Budget mittel, Kachel klein — überall Drittel-Haus und Vergleichshaus', () => {
+    const z = lies('bereiche/wohnen/zuhause.jsx');
+    expect(z).toMatch(/h\(DrittelHaus, \{/);
+    expect(z).toMatch(/h\(Vergleichshaus, \{/);
+    expect(z).toMatch(/h\(WohnenStrasse, \{ palette, t, r, ml, hilfe, groesse: 'gross'/);
+    expect(z).toMatch(/h\(WohnenStrasse, \{ palette, t, r, ml, hilfe, groesse: 'mittel'/);
+    expect(z).not.toContain("'drittel-balken'");
+    const budget = lies('BudgetSync.jsx');
+    expect(budget).toMatch(/React\.createElement\(Vergleichshaus, \{[^}]*groesse: 'mittel' \}\)/);
+    expect(budget).toMatch(/React\.createElement\(DrittelHaus, \{[^}]*groesse: 'mittel' \}\)/);
+    for (const f of ['bereiche/wohnen/zuhause.jsx', 'BudgetSync.jsx', 'components/InstrumentePanel.jsx', 'MietzinsOrientierung.jsx']) {
+      expect(lies(f), f).not.toMatch(/form: 'haeuser'|HaeuserzeileKlein|HaeuserVergleich/);
     }
   });
 });

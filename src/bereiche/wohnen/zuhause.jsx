@@ -1,0 +1,221 @@
+import React, { useState } from 'react';
+import { text, weight, space, leading, duration, ease } from '../../config/tokens.js';
+import { bereichFillColor } from '../../data/lebensbereiche.js';
+import { PROGRAMM_KANTONE } from '../../data/mietzinsbeitraege.js';
+import { WOHNEN_INTERNATIONAL } from '../../data/wohnenInternational.js';
+import { renderSource } from '../../utils/renderSource.js';
+import { zahl, betrag } from '../../utils/geld.js';
+import { LegendenMarke } from '../../components/LegendenMarke.jsx';
+import { Belege } from '../../components/Belege.jsx';
+import { knopfStil } from '../../components/PrimaryButton.jsx';
+import { wohnkostenRechnung, anteilText, wohnkostenSatzKey, drittelSatzKey, mieteLage, mietVorbehalte, mietzinsHilfe, beitragAnteil, lageWert } from './rechnung.js';
+import { DrittelHaus, Vergleichshaus, MoeglichKnopf, Kachelkarte } from './bilder.jsx';
+
+// Lebensbereich Wohnen · die Orte (Bauplan Lebensbereich, Stebler Studios 18.11.2026).
+//   WohnenZuhause   Kapitel Wohnen, gross 256
+//   WohnenWerkzeug  Werkzeug «Mietzins», mittel 128
+//   WohnenStrasse   die eine Szene für beide: Drittel-Haus · Vergleichshaus (Tür = Fass) · Wegweiser «möglich ›».
+// Unter jedem Haus seine Hauptzahl (Regel «Zahl», Matrix §10): Anteil unter dem Drittel-Haus, Lage unter dem
+// Vergleichshaus. Jedes Bild steht nur einmal auf der Seite; Zusätze (Regler, Kantonskarte, Ausland) unter «Mehr dazu».
+
+export const REGLER_MIN = 800;
+export const REGLER_MAX = 3500;
+export const REGLER_SCHRITT = 50;
+// Eine erfasste Miete über 3'500 bleibt auf dem Regler erreichbar (kein Sprung beim ersten Schieben).
+export const reglerMax = (heute) => Math.max(REGLER_MAX, Math.ceil(heute / REGLER_SCHRITT) * REGLER_SCHRITT);
+const aufRegler = (v, max) => Math.min(max, Math.max(REGLER_MIN, Math.round(v / REGLER_SCHRITT) * REGLER_SCHRITT));
+
+const zahlStil = { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, fontVariantNumeric: 'tabular-nums' };
+const BILDHOEHE = { gross: 190, mittel: 128 };
+
+// Die Szene. `r` = wohnkostenRechnung, `ml` = mieteLage, `hilfe` = mietzinsHilfe. Der Wegweiser führt im Kapitel
+// ins Werkzeug (`onNavigate`), im Werkzeug zur kantonalen Stelle (`url`).
+export const WohnenStrasse = ({ palette, t, r, ml, hilfe, groesse = 'gross', isDarkMode, onNavigate, ausprobiert = false }) => {
+  const h = React.createElement;
+  const fuell = bereichFillColor('wohnen', isDarkMode) || palette.sage;
+  const behoerden = bereichFillColor('behoerden', isDarkMode) || palette.mid;
+  const mitAnteil = r && r.anteil != null;
+  const bildH = BILDHOEHE[groesse] || BILDHOEHE.gross;
+  const boden = { height: bildH + 'px', display: 'flex', alignItems: 'flex-end', borderBottom: '1px solid ' + palette.mid, paddingBottom: 0 };
+  const spalte = (breite) => ({ flex: '0 1 ' + breite + 'px', minWidth: 0, display: 'flex', flexDirection: 'column' });
+  const tuer = hilfe ? { programm: hilfe.programm, fass: hilfe.fass, farbe: behoerden } : null;
+  const schild = hilfe && hilfe.moeglich ? h(MoeglichKnopf, { palette, t, onNavigate, url: onNavigate ? undefined : hilfe.url, kurz: true }) : null;
+  return h('div', { 'data-teil': 'wohnen-strasse', 'data-groesse': groesse, style: { display: 'flex', alignItems: 'flex-start', gap: '0 ' + space.md + 'px', flexWrap: 'wrap', margin: '0 0 ' + space.sm + 'px' } },
+    // Frage A · Ihr Haus
+    mitAnteil && h('div', { 'data-teil': 'strasse-drittel', style: spalte(bildH) },
+      h('div', { style: boden }, h('div', { style: { width: '100%' } },
+        h(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto,
+          teile: groesse === 'gross' && r.haushalt ? { sie: r.einkommen - r.partnerEinkommen, partner: r.partnerEinkommen } : null,
+          beitrag: r.beitrag ? { ...r.beitrag, farbe: behoerden } : null, fuell, groesse }))),
+      h('div', { 'data-instrument-zahl': 'wohnkosten', 'aria-live': 'polite', style: { ...zahlStil, color: palette.text, marginTop: space.xs + 'px' } }, anteilText(r)),
+      h('div', { 'data-teil': 'wohnkosten-franken', style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+        t(ausprobiert ? 'wohnenInstrument.titelAusprobiert' : 'wohnenInstrument.titel') + ': ' + betrag(r.kosten))),
+    // Frage B · das Vergleichshaus, Tür = Fass (Frage C)
+    ml && h('div', { 'data-teil': 'strasse-vergleich', style: spalte(Math.round(bildH * 0.85)) },
+      h('div', { style: boden }, h('div', { style: { width: '100%' } },
+        h(Vergleichshaus, { palette, lage: ml, fuell, tuer, groesse, kanton: ml.kanton }))),
+      ml.lage && h('div', { 'data-instrument-zahl': 'miete', style: { ...zahlStil, color: palette.text, marginTop: space.xs + 'px' } }, lageWert(ml.lage)),
+      h('div', { 'data-teil': 'strasse-betrag', style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', whiteSpace: 'nowrap' } },
+        (ausprobiert ? t('strasse.ausprobiert') : t('strasse.eigen')) + ': ' + betrag(ml.netto))),
+    // Frage C · der Wegweiser steht auf dem Boden der Strasse, rechts vom Vergleichshaus
+    schild && h('div', { 'data-teil': 'wegweiser-in-strasse', style: { ...spalte(140), flex: '0 0 auto' } },
+      h('div', { style: { ...boden, borderBottom: '1px solid ' + palette.mid } }, schild)),
+  );
+};
+
+// Die Sätze zur Lage (ehemals im Barometer): eigener Wert gegen den Kanton, Kanton gegen die Schweiz, Vorbehalte, Quelle.
+export const MieteSaetze = ({ palette, t, ml, imKapitel }) => {
+  if (!ml) return null;
+  const h = React.createElement;
+  const ns = 'po.regionalCompare.';
+  const k = ns + 'rent.';
+  const { diffPct, year } = ml.vergleich;
+  const rund = Math.round(diffPct);
+  const dir = rund > 0 ? 'Above' : rund < 0 ? 'Below' : 'Equal';
+  const textFarbe = ml.lage?.richtung === 'Above' ? palette.goldDeep : ml.lage?.richtung === 'Below' ? palette.sageDeep : palette.mid;
+  const klein = { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal };
+  return h('div', { 'data-teil': 'miete-saetze' },
+    ml.lage && h('div', { 'data-teil': 'barometer-eigener-wert', style: { fontSize: text.sm, color: textFarbe, fontWeight: weight.medium, marginTop: space.sm + 'px', lineHeight: leading.normal } },
+      t(k + 'user' + ml.lage.richtung, { pct: Math.abs(ml.lage.pct) })),
+    h('div', { 'data-teil': 'barometer-region', style: klein }, t(ns + 'region' + dir, { pct: Math.abs(rund) })),
+    h('div', { 'data-teil': 'miete-vergleich-groesse', style: klein }, mietVorbehalte(t, ml.vergleich, { imKapitel }).join(' ')),
+    h('div', { style: { ...klein, color: palette.soft, fontStyle: 'italic' } }, renderSource(t(k + 'source', { year }), null, t)),
+  );
+};
+
+// Der Satz und die Quelle zum EU-Stock: abgeleitet, keine gemessenen Preise in Franken.
+export const InternationalHinweis = ({ palette, t }) => React.createElement('div', { 'data-teil': 'international-hinweis', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 ' + space.sm + 'px' } },
+  React.createElement('p', { style: { margin: 0 } }, t('wohnenInternational.satz', Object.fromEntries(['DE', 'AT', 'FR', 'IT'].map((c) => {
+    const p = Math.round((WOHNEN_INTERNATIONAL.index[c] / WOHNEN_INTERNATIONAL.index.CH - 1) * 100);
+    return [c, (p >= 0 ? '+' : '−') + Math.abs(p)];
+  })))),
+  React.createElement(Belege, { palette, t, zeile: t('wohnenInternational.quelle'), style: { fontSize: text.xs } }));
+
+const BeitragLegende = ({ palette, t, hoechst, farbe }) => React.createElement('p', {
+  'data-teil': 'beitrag-legende', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 0', display: 'flex', gap: '4px' },
+},
+  React.createElement('svg', { width: 14, height: 10, viewBox: '0 0 14 10', 'aria-hidden': 'true', style: { flexShrink: 0, marginTop: '4px' } },
+    React.createElement('rect', { x: 0.75, y: 0.75, width: 12.5, height: 8.5, fill: 'none', stroke: farbe, strokeWidth: 1.5, strokeDasharray: '3 2' })),
+  t('mietzinsSzene.beitragLegende', { betrag: zahl(hoechst) }));
+
+// Satz zu Frage C: die Einschätzung des Kantons, nie «Anspruch».
+const hilfeSatz = (t, hilfe) => {
+  const e = hilfe.einschaetzung;
+  return e.hasProgram && e.assessment ? t('mietzinsView.result_' + e.assessment.key, e.assessment.params || {}) : t('mietzins.' + e.info.state);
+};
+
+// Alles, was der Ort braucht, aus den drei Rechnungen.
+const szene = (data, wohnen, probe, kanton) => {
+  const r = wohnkostenRechnung(wohnen, data, probe);
+  const profil = { ...(data || {}), wohnen: { ...(data?.wohnen || {}), ...(wohnen || {}) } };
+  const ml = r.netto > 0 ? mieteLage(profil, { kanton, miete: r.netto }) : null;
+  const hilfe = mietzinsHilfe(profil, kanton || profil?.basis?.canton || '');
+  const b = beitragAnteil(profil, r, kanton || profil?.basis?.canton || '');
+  return { r: { ...r, beitrag: b }, ml, hilfe };
+};
+
+// ── Kapitel Wohnen (Zuhause, gross) ─────────────────────────────────────────────────────────────────────────────────
+export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavigate }) => {
+  const h = React.createElement;
+  const [probe, setProbe] = useState(null);
+  const [offen, setOffen] = useState(false);
+  const { r, ml, hilfe } = szene(allData, wohnen, probe);
+  // Ohne erfasste Wohnkosten bleibt das Instrument weg — das Formular darunter ist der Ort zum Eintragen.
+  if (r.kosten <= 0) return null;
+  const max = reglerMax(r.heute);
+  const ausprobiert = probe != null && probe !== r.heute;
+  const fuell = bereichFillColor('wohnen', isDarkMode) || palette.sage;
+  const behoerden = bereichFillColor('behoerden', isDarkMode) || palette.mid;
+  const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
+  const zeile = { display: 'flex', justifyContent: 'space-between', gap: space.md + 'px', padding: '8px 0', fontSize: text.sm, color: palette.text };
+  const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
+  // Ohne Fass in der Tür (kein Programm mit Zahl) steht die Kantonskarte offen da; sonst unter «Mehr dazu».
+  const karteOffen = hilfe && !hilfe.fass;
+
+  return h('section', { 'data-teil': 'wohnkosten', style: { marginBottom: space.lg + 'px' } },
+    // Ohne Einkommen kein Anteil: dann sind die Franken die Hauptzahl.
+    r.anteil == null && h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } },
+      t(ausprobiert ? 'wohnenInstrument.titelAusprobiert' : 'wohnenInstrument.titel')),
+    r.anteil == null && h('div', { 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(r.kosten)),
+
+    h(WohnenStrasse, { palette, t, r, ml, hilfe, groesse: 'gross', isDarkMode, onNavigate, ausprobiert }),
+
+    // Frage A · Sätze
+    r.anteil != null && h(React.Fragment, null,
+      h('p', { 'data-teil': 'wohnkosten-satz', style: { ...klein, margin: space.xs + 'px 0 ' + space.xs + 'px', color: palette.text } },
+        t(wohnkostenSatzKey(r)) + ' (' + betrag(r.einkommen) + ')'),
+      h('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
+        h('span', null, h(LegendenMarke, { form: 'strich', color: r.ueberDrittel && !r.mitPartner ? palette.roseDeep : palette.text, palette }), t('wohnenInstrument.drittel')),
+        !r.mitPartner && !r.brutto && h('span', { 'data-teil': 'viertel-legende' }, h(LegendenMarke, { form: 'punktlinie', color: palette.mid, palette }), t('wohnenInstrument.viertel'))),
+      h('p', { 'data-teil': 'drittel-satz', style: { ...klein, margin: space.xs + 'px 0 0', color: r.ueberDrittel ? palette.text : palette.mid } }, t(drittelSatzKey(r))),
+      r.beitrag && h(BeitragLegende, { palette, t, hoechst: r.beitrag.hoechst, farbe: behoerden })),
+    r.anteil == null && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('wohnenInstrument.ohneEinkommen')),
+
+    // Frage B · Sätze
+    ml && h(MieteSaetze, { palette, t, ml, imKapitel: true }),
+
+    // Frage C · Satz (und ohne Fass die Kantonskarte)
+    hilfe && h('div', { 'data-teil': 'mietzins-szene', style: { marginTop: space.md + 'px' } },
+      h('h3', { style: kapH }, t('mietzinsSzene.titel')),
+      h('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, hilfeSatz(t, hilfe)),
+      karteOffen && h('div', { style: { marginTop: space.sm + 'px' } },
+        h(Kachelkarte, { palette, t, kanton: hilfe.kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode }),
+        h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('mietzinsSzene.karteLegende')))),
+
+    // Mehr dazu: Ausland, Kantonskarte (wenn nicht schon offen), Regler «andere Miete». Nichts wird gespeichert.
+    // Das «›» zeigt, dass die Zeile aufgeht (Abnahme F6, 25.10.2026: ohne Zeichen wirkte sie nicht aufklappbar;
+    // `display: flex` nimmt dem summary das eigene Dreieck).
+    h('details', { 'data-teil': 'wohnen-mehr', onToggle: (e) => setOffen(e.currentTarget.open), style: { marginTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88', paddingTop: space.sm + 'px' } },
+      h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, listStyle: 'none' } },
+        h('span', null, t('wohnenInstrument.mehrDazu')),
+        h('span', { 'aria-hidden': 'true', 'data-teil': 'ausprobieren-zeichen', style: { fontSize: text.lg, lineHeight: 1, color: palette.mid, transform: offen ? 'rotate(90deg)' : 'none', transition: 'transform ' + duration.fast + 'ms ' + ease } }, '›')),
+      ml && h(InternationalHinweis, { palette, t }),
+      hilfe && !karteOffen && h('div', { style: { margin: space.sm + 'px 0' } },
+        h(Kachelkarte, { palette, t, kanton: hilfe.kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode }),
+        h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('mietzinsSzene.karteLegende'))),
+      !r.eigentum && h('div', { 'data-teil': 'miete-ausprobieren', style: { paddingTop: space.sm + 'px' } },
+        h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('wohnenInstrument.ausprobieren')),
+        h('label', { htmlFor: 'wohnen-regler', style: { ...zeile, paddingBottom: 0 } },
+          h('span', null, t('wohnenInstrument.reglerLabel')),
+          h('span', { style: { fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, betrag(r.netto))),
+        h('input', {
+          id: 'wohnen-regler', type: 'range', min: REGLER_MIN, max, step: REGLER_SCHRITT,
+          value: aufRegler(probe ?? (r.heute || REGLER_MIN), max),
+          onChange: (e) => setProbe(Number(e.target.value)),
+          'aria-valuetext': betrag(r.netto),
+          style: { width: '100%', minHeight: '44px', accentColor: fuell, margin: 0 },
+        }),
+        h('div', { style: zeile },
+          h('span', null, t('wohnenInstrument.nebenkostenWieHeute')),
+          h('span', { style: { color: palette.text, whiteSpace: 'nowrap' } }, betrag(r.nk))),
+        r.brutto && r.einkommen > 0
+          ? h('div', { role: 'status', style: { ...zeile, display: 'block', borderTop: '1px solid ' + palette.border + '88' } }, t('budgetSync.availableNeedsNetto'))
+          : r.frei != null && h('div', { role: 'status', 'data-teil': 'frei-danach', style: { ...zeile, fontWeight: weight.semi, borderTop: '1px solid ' + palette.border + '88' } },
+            h('span', null, t(r.frei < 0 ? 'wohnenInstrument.fehltDanach' : 'wohnenInstrument.freiDanach')),
+            h('span', { style: { color: palette.text, whiteSpace: 'nowrap' } }, betrag(Math.abs(r.frei)))),
+        h('p', { style: { ...klein, margin: space.xs + 'px 0 ' + space.sm + 'px' } }, t('wohnenInstrument.durchspielen')),
+        probe != null && h('button', { type: 'button', onClick: () => setProbe(null), style: knopfStil(palette, 'neben') }, t('wohnenInstrument.zurueck')))),
+  );
+};
+
+// ── Werkzeug «Mietzins» (mittel) ────────────────────────────────────────────────────────────────────────────────────
+// Dieselbe Strasse in mittel, der Wegweiser führt zur kantonalen Stelle. Die Kantonskarte steht hier immer offen.
+export const WohnenWerkzeug = ({ palette, t, data, isDarkMode, kanton }) => {
+  const h = React.createElement;
+  const { r, ml, hilfe } = szene(data, data?.wohnen, null, kanton);
+  const behoerden = bereichFillColor('behoerden', isDarkMode) || palette.mid;
+  if (r.kosten <= 0 && !hilfe) return null;
+  const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
+  return h('div', { 'data-teil': 'wohnen-werkzeug', style: { margin: space.md + 'px 0' } },
+    r.kosten > 0 && h(WohnenStrasse, { palette, t, r, ml, hilfe, groesse: 'mittel', isDarkMode }),
+    r.anteil != null && h('p', { 'data-teil': 'wohnkosten-satz', style: { ...klein, margin: space.xs + 'px 0 0', color: palette.text } },
+      t(wohnkostenSatzKey(r)) + ' (' + betrag(r.einkommen) + ')'),
+    r.anteil != null && h('p', { style: { ...klein, margin: '2px 0 0' } }, t(r.mitPartner ? 'wohnenInstrument.mitPartner' : 'mietzinsView.rentShareGuide')),
+    r.beitrag && h(BeitragLegende, { palette, t, hoechst: r.beitrag.hoechst, farbe: behoerden }),
+    ml && h(MieteSaetze, { palette, t, ml }),
+    hilfe && h('div', { style: { marginTop: space.md + 'px' } },
+      h(Kachelkarte, { palette, t, kanton: hilfe.kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode }),
+      h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('mietzinsSzene.karteLegende'))),
+  );
+};
+

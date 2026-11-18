@@ -2574,6 +2574,8 @@ export default {
     mehrAlsDrittel: 'More than a third of income goes to housing. That is a rule of thumb, not a requirement — whether it works out shows in the calculation with all expenses.',
     ohneEinkommen: 'As soon as an income is entered in the Finances chapter, this shows the share housing takes.',
     ausprobieren: 'Try it: a different rent',
+    // Bauplan Wohnen (18.11.2026): Regler, Kantonskarte und Ausland unter einer Aufklapp-Zeile.
+    mehrDazu: 'More about this',
     wohnungssuche: 'Flat search',
     reglerLabel: 'Net rent of a new flat',
     nebenkostenWieHeute: 'Service charges (as today)',

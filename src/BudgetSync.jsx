@@ -8,8 +8,8 @@ import { calculateSozialhilfe } from './config/cantonalData.js';
 import { getRegionalComparison } from './data/praemienRegionen.js';
 import { getRentComparison } from './data/mietpreise.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
-import { RegionalBarometer, HaeuserVergleich } from './components/RegionalBarometer.jsx';
-import { wohnkostenRechnung, drittelGrenzeMiete, DrittelHaus } from './components/WohnkostenInstrument.jsx'; // Quelle: data/wohnkosten.js
+import { RegionalBarometer } from './components/RegionalBarometer.jsx';
+import { wohnkostenRechnung, DrittelHaus, Vergleichshaus, MieteSaetze, lageZurRegion } from './bereiche/wohnen/wohnen.js';
 import { bereichFillColor } from './data/lebensbereiche.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { text, weight, shadow, radius , leading , space, INSTRUMENT_GROESSE } from './config/tokens.js';
@@ -226,20 +226,16 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       // das die beiden anderen Orte zeigen.
       open && rentBaro && React.createElement('div',
         { key: 'rent-baro', style: { paddingLeft: '16px', paddingBottom: '8px' } },
-        React.createElement(RegionalBarometer, {
-          palette, t, comparison: rentComparison,
-          userValue: budget.expenses.rent || null, kind: 'rent', form: 'haeuser',
-          fillColor: bereichFillColor('wohnen', isDarkMode),
-          // Drittel-Faustregel als Betrag — aus der EINEN Rechnung wie Kapitel Wohnen und Mietzins
-          // (data/wohnkosten.js, seit 11.11.2026): alle Wohnkosten ÷ eigene Einnahmen, mit Partner/in
-          // kein Urteil, ohne Einkommen keine Marke. Bis dahin hier Haushaltseinkommen ÷ 3.
-          // Die Miete hier ist dieselbe Zahl (`monatsAusgaben` liest wohnen.rentAmount).
-          thresholdValue: drittelGrenzeMiete(wohn),
-          drittel: wohn,
-          // Das Budget hat keine Nachbarzeile → die Überschreitung braucht hier den
-          // sichtbaren Satz (in MietVergleich trägt ihn `rentShareGuide`).
-          showThresholdText: true,
-        }),
+        // Bauplan Wohnen (18.11.2026): dasselbe Vergleichshaus wie im Kapitel, mittel, mit der Budget-Miete und dem
+        // Kanton der Wohngemeinde. Das Drittel trägt nur das Drittel-Haus der Gruppe «Wohnen» (jedes Bild einmal).
+        (() => {
+          const miete = budget.expenses.rent || 0;
+          const ml = { kanton: userCanton, netto: miete, vergleich: rentComparison, lage: lageZurRegion(miete, rentComparison.regional) };
+          return React.createElement('div', { 'data-teil': 'budget-vergleichshaus' },
+            React.createElement('div', { style: { width: INSTRUMENT_GROESSE.mittel + 'px' } },
+              React.createElement(Vergleichshaus, { palette, lage: ml, fuell: bereichFillColor('wohnen', isDarkMode), groesse: 'mittel' })),
+            React.createElement(MieteSaetze, { palette, t, ml }));
+        })(),
         // Mietzinsbeiträge-Hinweis (analog IPV) — kantonal/kommunal, würdevoll
         React.createElement(MietzinsHinweis, { palette, t, canton: userCanton })
       )
@@ -287,9 +283,8 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
           t(wohn.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel'))
       ),
-      // Wohnen: Ihre Wohnkosten gegen den BFS-Richtwert als zwei Häuser (11.11.2026), darunter der Richtwert-Satz.
-      open && group.key === 'housing' && groupBm && React.createElement('div', { 'data-teil': 'budget-richtwert-haeuser', style: { width: INSTRUMENT_GROESSE.klein + 'px', padding: '4px 0' } },
-        React.createElement(HaeuserVergleich, { palette, sie: group.total, vergleich: groupBm, fuell: bereichFillColor('wohnen', isDarkMode) })),
+      // Bauplan Wohnen (18.11.2026, drei Fragen): der BFS-Richtwert hat kein eigenes Bild mehr (bis dahin zwei Häuser);
+      // der Richtwert-Satz mit Quelle bleibt darunter.
       // BFS group-level benchmark (e.g. Housing, Mobility) — only when expanded
       open && groupBm && renderBenchmarkLine(groupBm, group.key, true),
       // BFS group-level price trend since the index base (e.g. Housing +14%)

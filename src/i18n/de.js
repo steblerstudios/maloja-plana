@@ -2592,6 +2592,8 @@ export default {
     mehrAlsDrittel: 'Mehr als ein Drittel des Einkommens geht ans Wohnen. Das ist eine Faustregel, keine Vorschrift — ob es aufgeht, zeigt die Rechnung mit allen Ausgaben.',
     ohneEinkommen: 'Sobald ein Einkommen im Kapitel Finanzen erfasst ist, zeigt sich hier, welchen Anteil das Wohnen braucht.',
     ausprobieren: 'Ausprobieren: andere Miete',
+    // Bauplan Wohnen (18.11.2026): Regler, Kantonskarte und Ausland unter einer Aufklapp-Zeile.
+    mehrDazu: 'Mehr dazu',
     wohnungssuche: 'Wohnungssuche',
     reglerLabel: 'Nettomiete einer neuen Wohnung',
     nebenkostenWieHeute: 'Nebenkosten (wie heute)',

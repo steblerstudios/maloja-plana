@@ -2574,6 +2574,8 @@ export default {
     mehrAlsDrittel: 'Più di un terzo del reddito va all\'abitazione. È una regola pratica, non un obbligo — il calcolo con tutte le spese mostra se i conti tornano.',
     ohneEinkommen: 'Appena un reddito è registrato nel capitolo Finanze, qui si vede quale quota richiede l\'abitazione.',
     ausprobieren: 'Provare: un altro affitto',
+    // Bauplan Wohnen (18.11.2026): Regler, Kantonskarte und Ausland unter einer Aufklapp-Zeile.
+    mehrDazu: 'Ulteriori dettagli',
     wohnungssuche: 'Ricerca di un alloggio',
     reglerLabel: 'Affitto netto di un nuovo alloggio',
     nebenkostenWieHeute: 'Spese accessorie (come oggi)',

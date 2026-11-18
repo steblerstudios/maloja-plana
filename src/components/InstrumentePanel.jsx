@@ -4,8 +4,7 @@ import { schildOptionen } from '../data/schutzschild.js';
 import { netzSchildTeile } from '../data/netzSchild.js';
 import { NetzSchild } from './NetzSchild.jsx';
 import { ReserveTank } from './ReserveTank.jsx';
-import { wohnkostenRechnung, DrittelHaus, wohnkostenSatzKey } from './WohnkostenInstrument.jsx';
-import { HaeuserzeileKlein, lageZurRegion, mietVorbehalte } from './RegionalBarometer.jsx';
+import { wohnkostenRechnung, DrittelHaus, wohnkostenSatzKey, Vergleichshaus, lageZurRegion, mietVorbehalte } from '../bereiche/wohnen/wohnen.js';
 import { Kalenderblatt } from './Kalenderblatt.jsx';
 import { GaengeKlein } from './BehoerdenInstrument.jsx';
 import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaenge.js';
@@ -507,7 +506,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         mehr: mietHinweise,
       } : {}),
       sub: wohnR.eigentum ? t('instrumente.mieteEigentum') : setup,
-      glyph: mietVergleich ? h(HaeuserzeileKlein, { palette, comparison: mietVergleich, userValue: wohnR.netto, fillColor: wohnFarbe, drittel: wohnR }) : null,
+      glyph: mietVergleich ? h(Vergleichshaus, { palette, lage: { netto: wohnR.netto, vergleich: mietVergleich, lage: mietLage }, fuell: wohnFarbe, groesse: 'klein' }) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')),
     },
     {

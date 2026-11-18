@@ -75,7 +75,7 @@ const JobManager = React.lazy(() => import('./JobManager.jsx'));
 const Monatsring = React.lazy(() => import('./components/Monatsring.jsx').then((m) => ({ default: m.Monatsring })));
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
-const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
+const WohnkostenInstrument = React.lazy(() => import('./bereiche/wohnen/wohnen.js').then((m) => ({ default: m.WohnenZuhause })));
 const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
 const LohnImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.LohnImKapitel })));
 // Arbeit im Kapitel (10.11.2026, Stebler Studios «… und auch wo wir sehen mit dem Lohn-Barometer»): Dienstjahre,
@@ -2360,7 +2360,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Wohnen: der Kasten «Wohnkosten / Einkommen / Anteil» und der MietVergleich standen bis
     // 24.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf Z) ersetzt sie das Wohnkosten-Instrument
-    // oben unter der Zusammenfassung (components/WohnkostenInstrument.jsx).
+    // oben unter der Zusammenfassung (bereiche/wohnen/zuhause.jsx).
 
     // Versicherungs-Schutzschild (Instrument #4): seit 25.10.2026 klein im Versicherungen-Instrument
     // oben (components/VersicherungenInstrument.jsx), nicht mehr gross an dieser Stelle.

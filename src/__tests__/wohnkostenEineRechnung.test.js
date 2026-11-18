@@ -3,9 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { wohnkostenRechnung, drittelGrenzeMiete } from '../data/wohnkosten.js';
-import { wohnkostenRechnung as ausDemBauteil } from '../components/WohnkostenInstrument.jsx';
-import { MietVergleich } from '../components/MietVergleich.jsx';
+import { wohnkostenRechnung, drittelGrenzeMiete } from '../bereiche/wohnen/rechnung.js';
+import { wohnkostenRechnung as ausDemBauteil } from '../bereiche/wohnen/wohnen.js';
+import { WohnenWerkzeug as MietVergleich } from '../bereiche/wohnen/wohnen.js';
 
 // Wohnkosten-Anteil und «Drittel»: EINE Rechnung für Kapitel Wohnen, Mietzins-Werkzeug und Budget
 // (Stebler Studios 11.11.2026, «am liebsten alle drei vereint»; Befund B-R1 in
@@ -94,19 +94,20 @@ describe('Wohnkosten · Wächter: keine zweite Drittel-Rechnung', () => {
   };
   sammle(SRC);
 
-  it('«Einkommen ÷ 3» steht nur in data/wohnkosten.js', () => {
+  it('«Einkommen ÷ 3» steht nur in bereiche/wohnen/rechnung.js', () => {
     const muster = /(income|einkommen)\b[^;\n]{0,12}\/\s*3\b/i;
     const treffer = dateien.filter((f) => muster.test(fs.readFileSync(f, 'utf8'))).map((f) => path.relative(SRC, f));
-    expect(treffer).toEqual(['data/wohnkosten.js']);
+    expect(treffer).toEqual(['bereiche/wohnen/rechnung.js']);
   });
 
-  it('Mietzins-Werkzeug und Budget holen die Grenze aus der einen Rechnung', () => {
-    for (const f of ['components/MietVergleich.jsx', 'BudgetSync.jsx']) {
-      const q = lies(f);
-      // Über das Bauteil des Kapitels (re-export aus data/wohnkosten.js), damit kein eigener Baustein
-      // entsteht, dessen Name im Startbündel stünde.
-      expect(q).toMatch(/import \{ wohnkostenRechnung, drittelGrenzeMiete[^}]*\} from '\.\.?\/(components\/)?WohnkostenInstrument\.jsx'/);
-      expect(q).toMatch(/thresholdValue: drittelGrenzeMiete\(/);
-    }
+  // Bis 18.11.2026 hiess das Werkzeug MietVergleich und setzte das «!» als thresholdValue auf den Miet-Balken.
+  // Überholt 18.11.2026 (Bauplan Wohnen): das Drittel trägt nur das Drittel-Haus; die Absicht «eine Rechnung» bleibt.
+  it('Mietzins-Werkzeug, Kapitel und Budget holen den Anteil aus der einen Rechnung', () => {
+    expect(lies('bereiche/wohnen/zuhause.jsx')).toMatch(/import \{ wohnkostenRechnung,[^}]*\} from '\.\/rechnung\.js'/);
+    const budget = lies('BudgetSync.jsx');
+    // Über den einen Eingang des Bereichs, damit kein eigener Baustein entsteht, dessen Name im Startbündel stünde.
+    expect(budget).toMatch(/import \{ wohnkostenRechnung,[^}]*\} from '\.\/bereiche\/wohnen\/wohnen\.js'/);
+    expect(budget).toMatch(/calculateMonthlyBudget\(data, t, \{ ueberDrittel: wohn\.ueberDrittel && !wohn\.mitPartner \}\)/);
+    expect(lies('MietzinsOrientierung.jsx')).toMatch(/import \{ WohnenWerkzeug \} from '\.\/bereiche\/wohnen\/wohnen\.js'/);
   });
 });

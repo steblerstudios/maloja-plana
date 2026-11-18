@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { WohnkostenInstrument, wohnkostenRechnung, REGLER_MIN, REGLER_MAX, reglerMax } from '../components/WohnkostenInstrument.jsx';
+import { WohnenZuhause as WohnkostenInstrument, wohnkostenRechnung, REGLER_MIN, REGLER_MAX, reglerMax } from '../bereiche/wohnen/wohnen.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import i18nDe from '../i18n/de.js';
 import i18nEn from '../i18n/en.js';
@@ -16,7 +16,8 @@ import i18nRm from '../i18n/rm.js';
 // «Wohnkosten / Einkommen / Anteil» und im Kapitel den MietVergleich (bis 24.10.2026 lag hier der
 // Wächter mietVergleichImKapitelWohnen.test.js — «direkt unter dem Wohnkostenanteil»).
 const QUELLE = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
-const BAUTEIL = fs.readFileSync(path.resolve(__dirname, '../components/WohnkostenInstrument.jsx'), 'utf8');
+// Seit 18.11.2026 (Bauplan Wohnen) liegt das Kapitel-Bauteil in bereiche/wohnen/zuhause.jsx (WohnenZuhause).
+const BAUTEIL = fs.readFileSync(path.resolve(__dirname, '../bereiche/wohnen/zuhause.jsx'), 'utf8');
 
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
@@ -30,7 +31,7 @@ const profil = (finanzen = {}, wohnen = {}) => ({
 
 describe('Kapitel Wohnen · Ort im Kapitel', () => {
   it('erst bei Bedarf geladen und nur im Kapitel Wohnen, mit dem ganzen Profil', () => {
-    expect(QUELLE).toMatch(/const WohnkostenInstrument = React\.lazy\(\(\) => import\('\.\/components\/WohnkostenInstrument\.jsx'\)/);
+    expect(QUELLE).toMatch(/const WohnkostenInstrument = React\.lazy\(\(\) => import\('\.\/bereiche\/wohnen\/wohnen\.js'\)\.then\(\(m\) => \(\{ default: m\.WohnenZuhause \}\)\)\)/);
     expect(QUELLE).toMatch(/chapter\.key === 'wohnen' && allData && React\.createElement\(React\.Suspense, \{ key: 'wohnkosten'/);
     expect(QUELLE).toMatch(/React\.createElement\(WohnkostenInstrument, \{ palette, t: tr, wohnen: data, allData, isDarkMode, onNavigate \}\)/);
   });
@@ -105,9 +106,12 @@ describe('Kapitel Wohnen · Anzeige', () => {
     expect(oben).toContain('wohnenInstrument.mehrAlsDrittel');
   });
 
-  it('Barometer «Miete regional vs. Schweiz» mit dem Kanton, ohne zweites Drittel-«!»', () => {
+  // Seit 18.11.2026 (Bauplan Wohnen): statt des Barometers das Vergleichshaus, Kanton als Fahne.
+  it('Vergleichshaus «Miete im Kanton und in der Schweiz» mit dem Kanton, ohne zweites Drittel-«!»', () => {
     const html = render(profil().wohnen, profil());
-    expect(html).toContain('po.regionalCompare.rent.title');
+    expect(html).toContain('data-teil="vergleichs-haus"');
+    expect(html).toMatch(/data-teil="fahne-kanton"[^>]*>ZH /);
+    expect((html.match(/data-teil="drittel-ausrufe"/g) || []).length).toBe(1);
     expect(BAUTEIL).not.toMatch(/thresholdValue/);
   });
 
@@ -115,7 +119,9 @@ describe('Kapitel Wohnen · Anzeige', () => {
     expect(REGLER_MIN).toBe(800);
     expect(REGLER_MAX).toBe(3500);
     const html = render(profil().wohnen, profil());
-    expect(html).toMatch(/<details[^>]*data-teil="miete-ausprobieren"/);
+    // Seit 18.11.2026 (Bauplan Wohnen) unter «Mehr dazu», zusammen mit Ausland und Kantonskarte.
+    expect(html).toMatch(/<details[^>]*data-teil="wohnen-mehr"[\s\S]*data-teil="miete-ausprobieren"/);
+    expect(html).not.toMatch(/<details[^>]*open/);
     expect(html).toMatch(/type="range"[^>]*min="800"[^>]*max="3500"/);
     expect(html).toContain('wohnenInstrument.durchspielen');
     expect(html).toContain('wohnenInstrument.freiDanach');
@@ -130,11 +136,12 @@ describe('Kapitel Wohnen · Anzeige', () => {
     expect(html).not.toContain('wohnenInstrument.freiDanach');
   });
 
-  it('ohne Kanton kein Barometer, der Rest bleibt', () => {
+  it('ohne Kanton kein Vergleichshaus, der Rest bleibt', () => {
     const p = profil();
     p.basis.canton = '';
     const html = render(p.wohnen, p);
-    expect(html).not.toContain('po.regionalCompare.rent.title');
+    expect(html).not.toContain('vergleichs-haus');
+    expect(html).not.toContain('miete-vergleich-groesse');
     expect(html).toContain('drittel-haus');
   });
 
@@ -261,16 +268,20 @@ describe('Kapitel Wohnen · Barometer nennt die Vergleichsgrösse', () => {
 describe('Kapitel Wohnen · Abnahme F6', () => {
   it('ohne strukturelle Erklärung, mit dem Zimmer-Hinweis fürs Kapitel', () => {
     const html = render(profil().wohnen, profil());
-    expect(html).toContain('po.regionalCompare.rent.title');
+    expect(html).toContain('data-teil="miete-saetze"');
     expect(html).not.toContain('po.regionalCompare.rent.structural');
     expect(html).toContain('po.regionalCompare.rent.zimmerAngenommenHier');
     expect(html).not.toContain('po.regionalCompare.rent.zimmerAngenommen ');
   });
-  it('Werte im Barometer mit Tausender-Zeichen', () => {
-    expect(render(profil().wohnen, profil())).toContain('po.regionalCompare.rent.yourVal(1’650)');
+  it('Werte am Vergleichshaus mit Tausender-Zeichen', () => {
+    const html = render(profil().wohnen, profil());
+    expect(html).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.eigen: CHF 1’650</);
+    expect(html).toMatch(/data-teil="fahne-kanton"[^>]*>ZH \d’\d{3}</);
+    expect(html).toMatch(/data-teil="fahne-schweiz"[^>]*>CH Ø \d’\d{3}</);
   });
-  it('die Ausprobieren-Zeile zeigt ein «›»', () => {
-    expect(render(profil().wohnen, profil())).toMatch(/data-teil="ausprobieren-zeichen"[^>]*>›</);
+  // Seit 18.11.2026 trägt die Zeile «Mehr dazu» (mit dem Regler darin) das Zeichen.
+  it('die aufklappbare Zeile «Mehr dazu» zeigt ein «›»', () => {
+    expect(render(profil().wohnen, profil())).toMatch(/<summary[^>]*list-style:none[^>]*>[\s\S]*data-teil="ausprobieren-zeichen"[^>]*>›</);
   });
   it('der neue Hinweis steht in allen fünf Sprachen', () => {
     for (const s of [i18nDe, i18nEn, i18nFr, i18nIt, i18nRm]) {
