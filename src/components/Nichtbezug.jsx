@@ -1,6 +1,7 @@
 import React from 'react';
 import { text, weight, space, leading } from '../config/tokens.js';
 import { kantonsAnlaufstelle } from '../data/direktLinks.js';
+import { hatAusweisFNS } from '../data/ausweis.js';
 import { ExternerLink } from './ExternerLink.jsx';
 import { Belege } from './Belege.jsx';
 import { linkStil } from './PrimaryButton.jsx';
@@ -17,6 +18,16 @@ export const KantonsAnlaufstelle = ({ palette, t, canton, style }) => {
   return React.createElement('p', { 'data-teil': 'kantons-anlaufstelle', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.xs + 'px 0 0', ...style } },
     t('nichtbezug.imKanton') + ' ',
     React.createElement(ExternerLink, { t, href: a.url, style: { ...linkStil(palette), fontSize: text.xs } }, t('dl.cantonal.' + a.key)));
+};
+
+// Restprämienübernahme Kanton Zürich (18.11.2026): nur die Krankenkassenprämie übernehmen lassen, ohne Sozialhilfe
+// (§ 15 Abs. 1 EG KVG). Laut Merkblatt des Kantonalen Sozialamts (28.4.2023) keine Meldung ans Migrationsamt. Nur ZH.
+// Nicht bei Ausweis F, N oder S: Asylbereich, keine der Quellen behandelt ihn (Fachprüfung 18.11.2026).
+export const ZhRestpraemie = ({ palette, t, canton, data, style }) => {
+  if (canton !== 'ZH' || hatAusweisFNS(data)) return null;
+  return React.createElement('div', { 'data-hinweis': 'zh-restpraemie', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0', ...style } },
+    React.createElement('p', { style: { margin: 0, color: palette.mid } }, t('nichtbezug.zhRestpraemie')),
+    React.createElement(Belege, { palette, t, zeile: t('nichtbezug.zhRestpraemieQuelle') }));
 };
 
 // Brücke 4: die vier Hürden und was in Maloja dagegen hilft, aufklappbar, ruhig.

@@ -1,0 +1,85 @@
+import { describe, it, expect, beforeAll } from 'vitest';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import de from '../i18n/de.js';
+import fr from '../i18n/fr.js';
+import it_ from '../i18n/it.js';
+import en from '../i18n/en.js';
+import rm from '../i18n/rm.js';
+import { createT } from '../i18n/index.js';
+import { LIGHT_PALETTE } from '../config/constants.js';
+import { DEMO_DATA } from '../config/demoData.js';
+import { ladeIPVModelle } from '../config/cantonalData.js';
+import { zerlegeBelege } from '../components/Belege.jsx';
+import { ZhRestpraemie } from '../components/Nichtbezug.jsx';
+import Lebenssituationen from '../Lebenssituationen.jsx';
+import { SozialhilfeView } from '../SozialhilfeView.jsx';
+
+// Restprämienübernahme Kanton Zürich (Stebler Studios 18.11.2026): nur die Krankenkassenprämie übernehmen lassen,
+// ohne Sozialhilfe (§ 15 Abs. 1 EG KVG). Merkblatt Kantonales Sozialamt, 28.4.2023: «Restprämienübernahme ist keine
+// Sozialhilfe», keine Meldung ans Migrationsamt, kein Einfluss auf den ausländerrechtlichen Status. Gilt nur in ZH.
+const SPRACHEN = { de, fr, it: it_, en, rm };
+const MERKBLATT = 'kapitel-11-1-11/merkblatt_restpraemienuebernahme_fuer_klienten.pdf';
+const HANDBUCH = '11-1-11-krankenversicherung-auswirkungen-auf-die-sozialbehoerden';
+const blaetter = (w) => (typeof w === 'string' ? [w] : [w.sie, w.du]);
+
+describe('Restprämienübernahme ZH: Texte belegt', () => {
+  for (const [lang, d] of Object.entries(SPRACHEN)) {
+    it(`${lang}: Text in allen Formen, Quellenzeile mit Merkblatt und Handbuch`, () => {
+      for (const s of blaetter(d.nichtbezug.zhRestpraemie)) {
+        expect(typeof s).toBe('string');
+        expect(s).toMatch(/Zürich|Zurich|Zurigo/);
+      }
+      const b = zerlegeBelege(d.nichtbezug.zhRestpraemieQuelle);
+      expect(b, 'Quellenzeile in Belege-Form').not.toBeNull();
+      const ziele = b.links.map((l) => l.href).join(' ');
+      expect(ziele).toContain(MERKBLATT);
+      expect(ziele).toContain(HANDBUCH);
+    });
+  }
+});
+
+describe('Restprämienübernahme ZH: nur im Kanton Zürich', () => {
+  const t = createT({ de }, 'de', 'sie');
+  beforeAll(async () => { await ladeIPVModelle(); });
+  const knapp = (canton) => ({
+    ...DEMO_DATA,
+    basis: { ...DEMO_DATA.basis, canton },
+    finanzen: { ...DEMO_DATA.finanzen, monthlyIncome: 1200, incomeType: 'netto', savingsAccount: '0' },
+    wohnen: { ...DEMO_DATA.wohnen, rentAmount: 1400 },
+  });
+
+  it('der Baustein zeigt sich nur bei ZH', () => {
+    expect(renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: 'ZH' }))).toContain(de.nichtbezug.zhRestpraemie.sie.slice(0, 40));
+    for (const k of ['BE', 'BS', '', undefined]) expect(renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: k }))).toBe('');
+  });
+
+  it('«Was steht mir zu?»: mit Sozialhilfe-Weg in ZH der Hinweis, in BE nicht', () => {
+    const zh = renderToStaticMarkup(React.createElement(Lebenssituationen, { palette: LIGHT_PALETTE, t, data: knapp('ZH'), onNavigate: () => {} }));
+    expect(zh).toContain('data-hinweis="zh-restpraemie"');
+    const be = renderToStaticMarkup(React.createElement(Lebenssituationen, { palette: LIGHT_PALETTE, t, data: knapp('BE'), onNavigate: () => {} }));
+    expect(be).not.toContain('data-hinweis="zh-restpraemie"');
+  });
+
+  it('«Was steht mir zu?»: ohne Sozialhilfe-Weg kein Hinweis, auch in ZH', () => {
+    const html = renderToStaticMarkup(React.createElement(Lebenssituationen, { palette: LIGHT_PALETTE, t, data: DEMO_DATA, onNavigate: () => {} }));
+    expect(html).not.toContain('data-hinweis="zh-restpraemie"');
+  });
+
+  it('Sozialhilfe-Seite: in ZH der Hinweis', () => {
+    const html = renderToStaticMarkup(React.createElement(SozialhilfeView, { palette: LIGHT_PALETTE, t, data: knapp('ZH'), onNavigate: () => {} }));
+    expect(html).toContain('data-hinweis="zh-restpraemie"');
+  });
+});
+
+describe('Restprämienübernahme ZH: nicht bei Ausweis F, N oder S (Asylbereich, nicht belegt)', () => {
+  const t = createT({ de }, 'de', 'sie');
+  for (const p of ['f', 'n', 's']) {
+    it(`Ausweis ${p.toUpperCase()}: kein Hinweis`, () => {
+      expect(renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: 'ZH', data: { ausbildung: { workPermit: p } } }))).toBe('');
+    });
+  }
+  it('Ausweis B: Hinweis', () => {
+    expect(renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: 'ZH', data: { ausbildung: { workPermit: 'b' } } }))).toContain('data-hinweis="zh-restpraemie"');
+  });
+});
