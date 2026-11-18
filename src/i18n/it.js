@@ -2901,6 +2901,7 @@ export default {
       heartfelt27: 'il tracker di abitudini (App Store e Google Play, Crewz) — Tenere traccia delle abitudini senza la pressione delle serie e senza sensi di colpa. Secondo il produttore utilizzabile senza account, tutti i dati esportabili in qualsiasi momento come file.',
       heartfelt28: 'Gioco gratuito in inglese sulla protezione dei dati: proteggere gli account e riconoscere le truffe, missione dopo missione. Il sito usa servizi di analisi e di errori. Per la Svizzera, Maloja accompagna con «Ordine digitale».',
       heartfelt29: 'Esempio di servizio e-mail: Proton AG, Plan-les-Ouates GE, secondo il fornitore cifrato e soggetto al diritto svizzero. Verificare la sede dei dati presso il fornitore prima di cambiare.',
+      heartfelt30: 'Noah Müller, di Basilea — informatico e insegnante. Sviluppa siti web, piccoli strumenti e pipeline di dati e insegna informatica.',
     },
     faq: {
       q1: 'Dove sono salvati i miei dati?',

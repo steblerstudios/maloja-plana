@@ -2920,6 +2920,7 @@ export default {
       heartfelt27: 'der Habit-Tracker (App Store und Google Play, Crewz) — Gewohnheiten festhalten ohne Streak-Druck und ohne schlechtes Gewissen. Laut Anbieter ohne Konto nutzbar, alle Daten jederzeit als Datei exportierbar.',
       heartfelt28: 'Englisches Gratis-Spiel zum Datenschutz: Konten sichern und Betrug erkennen, Mission für Mission. Die Seite nutzt Analyse- und Fehlerdienste. Für die Schweiz führt Maloja durch «Digitale Ordnung».',
       heartfelt29: 'Beispiel für einen E-Mail-Dienst: Proton AG, Plan-les-Ouates GE, laut Anbieter verschlüsselt und Schweizer Recht unterstellt. Standort der Daten vor dem Wechsel beim Anbieter prüfen.',
+      heartfelt30: 'Noah Müller aus Basel — Informatiker und Lehrer. Entwickelt Websites, kleine Tools und Datenpipelines und unterrichtet Informatik.',
     },
     faq: {
       q1: 'Wo werden meine Daten gespeichert?',
