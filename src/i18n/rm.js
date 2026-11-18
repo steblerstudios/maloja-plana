@@ -2218,6 +2218,11 @@ export default {
     ladeFehler: 'Il maletg n’ha betg pudì vegnir chargià. La pagina cumpletta è cuntanschibla sur la colliaziun sutvart.',
     karteBeschreibungMit: 'Charta dals 26 chantuns: {titel}. Il chantun {kanton} è marcà cun in ur marcant.',
     karteBeschreibungOhne: 'Charta dals 26 chantuns: {titel}.',
+    // TODO(rm): Gegenlese (Brücke Miete, 18.11.2026)
+    streifenBeschreibungMit: 'Strivla dals 26 chantuns: {titel}. Mintga punct è in chantun, a sanestra il dumber il pli bass, a dretga il pli aut. Il chantun {kanton} è marcà cun in anè, la lingia mussa l’entira Svizra.',
+    streifenBeschreibungOhne: 'Strivla dals 26 chantuns: {titel}. Mintga punct è in chantun, a sanestra il dumber il pli bass, a dretga il pli aut. La lingia mussa l’entira Svizra.',
+    streifenStrich: 'Lingia: entira Svizra',
+    streifenHinweis: 'Mintga punct è in chantun, en las medemas colurs sco la charta sutvart. Il medem maletg è en l’atlas dals chantuns.',
     ohneKanton: { sie: 'Sche Vus inditgais Voss chantun en «{bereich}», è el marcà qua.', du: 'Sche ti inditgas tes chantun en «{bereich}», è el marcà qua.' },
     ganzeSchweiz: 'Tut la Svizra',
     stufenHinweis: 'Pli stgir munta in dumber pli aut, betg meglier u mender.',

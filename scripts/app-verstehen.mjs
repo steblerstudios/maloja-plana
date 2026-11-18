@@ -25,7 +25,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EBENEN, KANTONE, ATLAS_DATEN } from './seiten-vergleich.mjs';
-import { stufen, LEGENDE, STUFEN_FARBEN, KARTEN_FRUCHT, KANTONSATLAS, MINDESTLOHN, MINDESTLOHN_STUFE } from './seiten/kantonsatlas.mjs';
+import { stufen, LEGENDE, STUFEN_FARBEN, KARTEN_FRUCHT, KANTONSATLAS, MINDESTLOHN, MINDESTLOHN_STUFE, STREIFEN_KARTEN, streifenFuer } from './seiten/kantonsatlas.mjs';
 import { KANTONE_IM_VERGLEICH } from './seiten/kantone-im-vergleich.mjs';
 import { standbildSvg, kostenteilAngaben } from './seiten-figuren.mjs';
 import { KRANKENKASSE } from './seiten/krankenkasse.mjs';
@@ -96,6 +96,19 @@ function mindestlohnKarte() {
   };
 }
 
+// Punktstreifen (Brücke, 18.11.2026): genau die Lage, die /kantonsatlas/ zeichnet. Die App zeichnet sie nur nach
+// und markiert den eigenen Kanton; die Beschriftung der Enden und der Schweiz steht formatiert dabei.
+function streifen(key) {
+  const E = EBENEN[key];
+  const L = streifenFuer(key);
+  return {
+    breite: L.breite, hoehe: L.hoehe, radius: L.radius, achseY: L.achseY, xMin: L.xMin, xMax: L.xMax,
+    min: E.fmt(L.min), max: E.fmt(L.max),
+    ch: L.ch ? { x: L.ch.x, text: E.fmt(L.ch.v) } : null,
+    punkte: Object.fromEntries(L.punkte.map((p) => [p.k, { x: p.x, y: p.y, s: p.s }])),
+  };
+}
+
 function vergleich(key) {
   const V = EBENEN[key];
   return { titel: V.titel, ch: V.ch != null ? V.fmt(V.ch) : null, werte: Object.fromEntries(KANTONE.map((k) => [k, V.fmt(V.wert(k))])) };
@@ -120,6 +133,7 @@ export function erzeugeKarten() {
       spannen: spannen.map((s) => ({ s: s.s, text: s.min === s.max ? E.fmt(s.min) : `${E.fmt(s.min)} bis ${E.fmt(s.max)}` })),
       werte: Object.fromEntries(KANTONE.map((k) => [k, { s: stufe[k], text: E.fmt(E.wert(k)), ...jeKanton(key, k) }])),
       ...(APP_VERGLEICH[key] ? { vergleich: vergleich(APP_VERGLEICH[key]) } : {}),
+      ...(STREIFEN_KARTEN.includes(key) ? { streifen: streifen(key) } : {}),
       ...(APP_ALTERSKLASSEN[key] ? { altersklassen: altersklassen(APP_ALTERSKLASSEN[key], E.fmt) } : {}),
     };
   }

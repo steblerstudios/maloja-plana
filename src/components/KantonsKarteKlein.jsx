@@ -64,6 +64,37 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
   eigen && ring(RING_AUSSEN_PX, palette.surface, 'aussen'),
   eigen && ring(RING_INNEN_PX, palette.text, 'innen'));
 
+  // ─── Punktstreifen (Brücke, Probe Miete, Stebler Studios 18.11.2026) ───────────────────────────────
+  // Dieselbe Form wie auf /kantonsatlas/ über der Karte: jeder Kanton ein Punkt, Lage = Wert, Farbe = Stufe.
+  // Die Lagen rechnet scripts/app-verstehen.mjs mit src/data/punktStreifen.js, hier wird nur gezeichnet. Der
+  // eigene Kanton trägt dieselben zwei Ringe wie auf der Karte, damit beide Bilder gleich gelesen werden.
+  const St = K.streifen;
+  const streifen = St && (() => {
+    const eigenPunkt = eigen && St.punkte[eigen];
+    const streifenText = eigen
+      ? t('erklaerseite.streifenBeschreibungMit', { titel: K.titel, kanton: name })
+      : t('erklaerseite.streifenBeschreibungOhne', { titel: K.titel });
+    return h('div', { 'data-teil': 'punktstreifen', style: { margin: '0 0 ' + space.sm + 'px' } },
+      h('svg', {
+        viewBox: `0 0 ${St.breite} ${St.hoehe}`, role: 'img', 'aria-label': streifenText, focusable: 'false',
+        style: { display: 'block', width: '100%', height: 'auto' },
+      },
+      h('line', { x1: St.xMin, y1: St.achseY, x2: St.xMax, y2: St.achseY, stroke: palette.mid, strokeWidth: 0.75 }),
+      St.ch && h('line', { x1: St.ch.x, y1: 2, x2: St.ch.x, y2: St.achseY, stroke: palette.text, strokeWidth: 1, strokeDasharray: '2 2' }),
+      Object.entries(St.punkte).map(([k, p]) => h('circle', {
+        key: k, cx: p.x, cy: p.y, r: St.radius, fill: farben[p.s], stroke: palette.mid, strokeWidth: 0.6, 'data-kanton': k,
+      })),
+      // Der eigene Punkt zuletzt, mit Ringen wie die Karte (aussen Grundfarbe, innen Textfarbe).
+      eigenPunkt && h('circle', { cx: eigenPunkt.x, cy: eigenPunkt.y, r: St.radius + 1.5, fill: 'none', stroke: palette.surface, strokeWidth: RING_AUSSEN_PX / 2, vectorEffect: 'non-scaling-stroke' }),
+      eigenPunkt && h('circle', { cx: eigenPunkt.x, cy: eigenPunkt.y, r: St.radius + 1.5, fill: 'none', stroke: palette.text, strokeWidth: RING_INNEN_PX, vectorEffect: 'non-scaling-stroke', 'data-eigen': 'ja' })),
+      // Enden und Schweiz als Text unter dem Bild, wie auf /kantonsatlas/ (im SVG wären sie auf dem Handy unter 13 px).
+      h('p', { 'aria-hidden': 'true', style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', margin: '2px 0 0', fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
+        h('span', { lang: 'de' }, St.min),
+        St.ch && h('span', null, `${t('erklaerseite.streifenStrich')} `, h('span', { lang: 'de' }, St.ch.text)),
+        h('span', { lang: 'de' }, St.max)),
+      h('p', { style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid } }, t('erklaerseite.streifenHinweis')));
+  })();
+
   // Ohne Kanton: der Weg zur Tabelle im Atlas, wo jede Quelle steht (keine Karte ohne Beleg).
   const quellen = K.quellen.length > 0 ? K.quellen
     : eigen && K.werte[eigen].quelle ? [K.werte[eigen].quelle]
@@ -105,6 +136,7 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
 
   return h('figure', { 'data-teil': 'kantonskarte-klein', style: { margin: space.sm + 'px 0 0' } },
     h('p', { lang: 'de', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, color: palette.mid } }, `${K.titel} · ${K.einheit}`),
+    streifen,
     svg,
     h('figcaption', { style: { marginTop: space.sm + 'px' } },
       K.vergleich
