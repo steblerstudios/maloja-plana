@@ -17,6 +17,12 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 18.11.2026 — `e74348eb` ist LIVE** (0.1.49-beta, gebaut 18.11. 14:56:44, Deploy Stebler Studios). Überholt alle Stände darunter.
+> - Neu live: Erklärseiten Ergänzungsleistungen, Arbeitslosigkeit, AHV/Pensionierung (#882–#884) · Kantonsatlas Werte 2027, drei Ebenen, Atlas in den Kapiteln (#877 #879 #886) · Quellenzeilen und OR-100-Vorbehalt in allen Sprachen (#881) · Sichtschutz-Nacharbeit (#885) · fachliche Warnpunkte (#887) · 3a je Person bei Verheirateten (#888) · Werte 2027: BVG-Mindestzins 2 %, Selbständige AHV, IPV Schwyz (#889) · Barrierefreiheit-Reste inkl. «/» im Tooltip (#880) · Vortor-Korrekturen (#890).
+> - Vortor auf `2ec77963`: 597 Testdateien, Lint 0, SEO 0/0, 64,69 / 65 kB, PII, ESTV 156/156, SL 06.10.; fünf Prüfer 0 Blocker. Sollte-Textstellen vor dem Deploy korrigiert (#890: Hilflosenentschädigung «ganze Altersrente», AHVG Art. 21 Abs. 2, AVIV Art. 45, Quelle Selbständige). BVG 2 % 2027 auf Entscheid Stebler Studios mit Medienmitteilung 4.11.2026; AS-Fundstelle im Dezember.
+> - Live gegengeprüft 18.11.: `version.json`, 7 Seiten 200, 404, 143 Assets, Bündel-Hash = Build (`index-tBvCv7Um.js`, `de-rest-DCT_UYgb.js`), Server-CSP/HSTS/nosniff, korrigierte Texte. Browser, Konsole, Handy nicht geprüft.
+> - Offen: Alimente 2027 (1 024) · «Betrag verborgen» an Text-Stellen · `palette.soft` dunkel 4,07:1 · Tests #885/#880 auf Verhalten · rm-Gegenlese. Liste: `stebler-studios/_handoffs/2026-11-10-maloja-deploy-tag.md`.
+>
 > 🧾 **Nachtrag 16.11.2026 — `ffe82b6d` ist LIVE** (0.1.49-beta, gebaut 14.11. 11:06:30, Deploy Stebler Studios, zweiter Anlauf). Überholt alle Stände darunter.
 > - Neu live: Startseiten-Stapel (#825 #833 #837 #843) · Beträge verbergen (#826) mit Fix «Dokumente immer mit echten Beträgen» (#875, `mitEchtenBetraegen()` in `utils/geld.js`) · Altlasten rm-Stipendien und Rechtsseite «Skripte vom selben Server» (#874) · OpenStreetMap-Namensnennung nach ODbL (#876) · Doku (#873).
 > - Vortor 13.11. auf `6590334e` fand einen Blocker (Sichtschutz verbarg Beträge auch in Briefen und Dossiers) → #875; Nachprüfung auf `ffe82b6d`: 593 Testdateien, Lint 0, SEO 0/0, 64 593 / 65 000 B, PII sauber.
