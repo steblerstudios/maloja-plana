@@ -20,7 +20,7 @@ const LegalView = React.lazy(() => import('./LegalView.jsx'));
 const BETA_CODE_HASH = 'bc0d786f0beb06f7442b099a677ee08642acec8050aa56abd7a19711095f15b9';
 const STORAGE_KEY = 'or5_beta_access';
 // Dritte Spalte: dasselbe Zeichen, das die App für dieses Thema zeigt (werkzeugRegister.js,
-// ansichtenRegister.js). Vier stehen im Kern, die übrigen in IconSystem.jsx — die kommen nach,
+// ansichtenRegister.js). Drei stehen im Kern, die übrigen in IconSystem.jsx — die kommen nach,
 // sobald die Wand steht (siehe `vollesRegister` unten), damit die Wand nicht auf sie wartet.
 const ERKLAERSEITEN = [
   ['/was-steht-mir-zu/', 'Was steht mir zu?', 'wegweiser'],
@@ -28,7 +28,9 @@ const ERKLAERSEITEN = [
   // Seit 06.11.2026 (Verbesserungen D2): indexiert, stand aber hier nicht.
   ['/krankenkasse/', 'Krankenkasse', 'ereignisKkerst'],
   ['/sozialhilfe/', 'Sozialhilfe', 'sozialhilfe'],
-  ['/steuern/', 'Steuern', 'money'],
+  // Nicht 'money' wie im Menü: die Münze steht dort auch für Kreditkarte, Stundenlohn und
+  // Mindestlohn. 'steuern' ist das eigene Zeichen (iconInventar.js: «Steuererklärung mit Prozent»).
+  ['/steuern/', 'Steuern', 'steuern'],
   // E3 (14.11.2026).
   ['/ergaenzungsleistungen/', 'Ergänzungsleistungen', 'ereignisErgaenzungsleistungen'],
   ['/arbeitslosigkeit/', 'Arbeitslosigkeit', 'work'],
