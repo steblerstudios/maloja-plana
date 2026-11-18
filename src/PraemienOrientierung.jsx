@@ -10,7 +10,7 @@ import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSy
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { UvgHinweis } from './components/UvgHinweis.jsx';
-import { ageClassFromBirth, parseFranchise, franchiseOptimierer, gesundheitskostenBisher, kvgFristVorbei } from './data/franchiseTacho.js';
+import { ageClassFromBirth, parseFranchise, franchiseOptimierer, gesundheitskostenBisher, kvgFristVorbei, belegeImJahr } from './data/franchiseTacho.js';
 import { FranchiseKreuz } from './components/FranchiseKreuz.jsx';
 import { zahl, betrag } from './utils/geld.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
@@ -228,9 +228,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   })();
   // Gesundheitskosten: dieselbe Zahl wie das Franchise-Kreuz (bezahlt und offen, an die Franchise anrechenbar),
   // darunter, was davon bezahlt und was offen ist (Fachprüfung 25.10.2026).
+  // Seit 11.11.2026 aus belegeImJahr (eine Rechnung für alle Orte, Instrumente-Matrix B-R3).
   const belege = (Array.isArray(v.kkBelege) ? v.kkBelege : []).filter((b) => !b.datum || Number(String(b.datum).slice(0, 4)) === heute.getFullYear());
-  const bezahlt = belege.filter((b) => b.status !== 'offen').reduce((x, b) => x + (Number(b.betrag) || 0), 0);
-  const offen = belege.filter((b) => b.status === 'offen').reduce((x, b) => x + (Number(b.betrag) || 0), 0);
+  const { bezahlt, offen } = belegeImJahr(data, heute.getFullYear(), heute).anDieFranchise;
   const pk = Number(v.bvgBalance) > 0 ? Number(v.bvgBalance) : 0;
   // Nach dem Sprung steht der Fokus auf dem geöffneten Teil (A11y-Prüfung).
   const zuTeil = (id) => { setOffenTeile((o) => ({ ...o, [id]: true })); setTimeout(() => { const el = document.getElementById(id); if (el) { el.scrollIntoView({ block: 'start' }); const sm = el.querySelector('summary'); if (sm) sm.focus({ preventScroll: true }); } }, 0); };

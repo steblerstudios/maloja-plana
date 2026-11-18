@@ -143,12 +143,35 @@ export function franchiseOptimierer(allFranchises, ageClass) {
     alle: fras.map((f) => ({ franchise: f.franchise, premium: f.premium })) };
 }
 
-// Laufende, KVG-anrechenbare Gesundheitskosten dieses Jahres (aus den KK-Belegen).
-export function gesundheitskostenBisher(data, heute = new Date()) {
-  const jahr = heute.getFullYear();
+// Die KK-Belege eines Jahres, EINE Rechnung für alle Orte (Instrumente-Matrix B-R3, Stebler Studios 11.11.2026).
+// Zwei Grössen mit verschiedenem Namen, weil sie Verschiedenes zählen:
+//   anDieFranchise — der Betrag aller Belege (bezahlt und offen): das zählt an Franchise und Selbstbehalt.
+//                    Kachel Franchise-Stand, Kreuz, KVG-Reiter, Prämien-Übersicht.
+//   ausgaben       — Betrag + nicht gedeckter Anteil (z. B. selbst bezahlt): was für die Gesundheit ausgegeben ist.
+//                    Offene, die als Forderung im Schuldenmanager stehen (forderungId), nicht ein zweites Mal.
+//                    Finanzen-Karte.
+// Ein Beleg ohne Datum gilt als gerade bezahlt, zählt also im laufenden Jahr (`heute`), nie in einem früheren.
+export function belegeImJahr(data, jahr, heute = new Date()) {
   const belege = Array.isArray(data?.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
-  const belegJahr = (b) => (b.datum ? Number(String(b.datum).slice(0, 4)) : jahr);
-  return belege.filter((b) => belegJahr(b) === jahr).reduce((s, b) => s + (Number(b.betrag) || 0), 0);
+  const laufend = heute.getFullYear();
+  const imJahr = belege.filter((b) => (b.datum ? Number(String(b.datum).slice(0, 4)) : laufend) === jahr);
+  const anDieFranchise = { gesamt: 0, bezahlt: 0, offen: 0 };
+  const ausgaben = { bezahlt: 0, offen: 0 };
+  for (const b of imJahr) {
+    const betrag = Number(b.betrag) || 0;
+    const ganz = betrag + (Number(b.nichtGedeckt) || 0);
+    const offen = b.status === 'offen';
+    anDieFranchise.gesamt += betrag;
+    if (offen) anDieFranchise.offen += betrag; else anDieFranchise.bezahlt += betrag;
+    if (!offen) ausgaben.bezahlt += ganz;
+    else if (!b.forderungId) ausgaben.offen += ganz;
+  }
+  return { anDieFranchise, ausgaben };
+}
+
+// Laufende, an die Franchise anrechenbare Gesundheitskosten dieses Jahres (= belegeImJahr … anDieFranchise.gesamt).
+export function gesundheitskostenBisher(data, heute = new Date()) {
+  return belegeImJahr(data, heute.getFullYear(), heute).anDieFranchise.gesamt;
 }
 
 // Erster Vorschlag fürs Dashboard-Instrument (Wunsch 25.09.2026: statt «lohnt sich hoch oder
