@@ -1,17 +1,17 @@
 import React from 'react';
-import { kompassBearing } from '../data/leistungsKompass.js';
 import { text, weight, space, leading } from '../config/tokens.js';
 
 // Leistungs-Kompass: das zweite „Instrument". Liest den bestehenden Schnellcheck
-// als Peilung (kompassBearing) — misst nichts, zeigt eine Richtung. Die farbige
+// als Peilung — misst nichts, zeigt eine Richtung. Die Peilung kommt fertig aus
+// data/anspruchWege.js (leistungsKompass), derselben Funktion wie in der Übersicht (11.11.2026, B-R2). Die farbige
 // Nadelspitze zeigt bei gefundenen Leistungen auf „Leistungen" (Norden), sonst
 // auf „weitere Wege" (Süden); ohne Einkommen ruht sie. Ruhig, kein Alarm.
 // Die detaillierten Leistungs-Zeilen bleiben darunter erhalten.
 const CX = 100, CY = 100, R = 78;
 
-export const LeistungsKompass = ({ palette, t, benefitCount = 0, topLabel, hasIncome }) => {
+export const LeistungsKompass = ({ palette, t, kompass, topLabel }) => {
   const h = React.createElement;
-  const { state, bearing } = kompassBearing({ hasIncome, benefitCount });
+  const { state = 'idle', bearing = 0, anzahl: benefitCount = 0 } = kompass || {};
 
   // Farbe der Spitze je Zustand (sage = Leistungen da, sky = weitere Wege, mid = Ruhe).
   const northColor = state === 'found' ? palette.sage : state === 'none' ? palette.sky : palette.mid;
