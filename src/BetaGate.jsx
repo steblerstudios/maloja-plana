@@ -5,6 +5,9 @@ import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { PrimaryButton, knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
+// Dieselben Zeichen wie in der App (Kopfzeile, Navigation) — aus dem Kern, der ohnehin im
+// Startbündel liegt: kostet die Wand keine Bytes und zeigt Neuen schon die Bildsprache.
+import { Icon } from './IconKern.jsx';
 // Dieselbe Landschaft wie auf der Übersicht (BergLandschaft) — kein zweites Bild.
 import landschaft from './assets/berge/landschaft.webp?url';
 
@@ -272,8 +275,11 @@ export const BetaGate = ({ children }) => {
       React.createElement('button', {
         type: 'button', onClick: startDemo, disabled: !!demo,
         // Der zweite Weg: Nebenknopf (Fassung 9).
-        style: { ...knopfStil(palette, 'neben'), ...ruhigerKnopf },
-      }, t('beta.demoEnter')),
+        style: {
+          ...knopfStil(palette, 'neben'), ...ruhigerKnopf,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+        },
+      }, React.createElement(Icon, { name: 'auge', size: 18 }), t('beta.demoEnter')),
       // „Einfache Ansicht"-Umschalter (Icon-Modus + Vorlesen) — direkt am Einstieg.
       React.createElement('button', {
         type: 'button',
@@ -288,12 +294,8 @@ export const BetaGate = ({ children }) => {
           border: '1px solid ' + (simpleView ? palette.sand : palette.border),
         }
       },
-        React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-          React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
-          React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
-          React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
-          React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
-        ),
+        // Dasselbe Raster-Zeichen wie der Knopf in der Kopfzeile der App (main.jsx).
+        React.createElement(Icon, { name: 'raster', size: 18 }),
         t('common.simpleView')
       ),
       // Fusszeile zentriert wie bisher; Titel und Formular stehen linksbündig.
