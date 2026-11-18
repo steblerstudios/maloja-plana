@@ -161,7 +161,7 @@ export const CANTONAL_IPV = {
   // «minimale Höchsteinkommen» (Mietzinsregion 3) — keine Grenze für die Person, darum maxIncome null.
   // Durchführungsstelle seit 01.01.2026 die Sozialversicherungsanstalt Schwyz (§ 16 EGzKVG).
   SZ: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'Schwyz' },
-    beleg: { quelle: 'EGzKVG SZ (SRSZ 361.100) · KRBzEGzKVG (SRSZ 361.110) · VVzEGzKVG (SRSZ 361.111) · SVA Schwyz — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
+    beleg: { quelle: 'EGzKVG SZ (SRSZ 361.100) · KRBzEGzKVG (SRSZ 361.110) · VVzEGzKVG (SRSZ 361.111) · SVA Schwyz — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahre 2026 und 2027, geprüft 2026-09-28 und 2026-11-16' } },
   // OW (K31): eigenes Modell in config/ipvObwalden.js (Richtprämien minus linear-progressiver
   // Selbstbehalt, harte Grenze 50 000 / mit Kindern 75 000 anrechenbares Einkommen, eine Region).
   // Die Grenze hängt am Haushalt, darum steht sie im Ergebnis, nicht hier. Antrag bei der

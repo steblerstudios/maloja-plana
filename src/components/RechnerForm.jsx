@@ -10,6 +10,7 @@ import { chapterColor } from '../data/lebensbereiche.js';
 import { kontrast, kachelZeichenFarbe } from '../utils/lebensbereichFruechte.js';
 import { linkStil, auswahlStil } from './PrimaryButton.jsx';
 import { Belege } from './Belege.jsx';
+import { angabeZiele } from '../data/angabeZiele.js';
 
 // Rechner-Form X — die EINE Hülle für alle Rechner (Entscheid Stebler Studios 24.10.2026, «Entwurf X passt
 // für alle Rechner»; gebaut F7-A2, 27.10.2026). Wortlaut: docs/design/mockups-stardust-2026-10-23/VERGLEICH.md,
@@ -60,7 +61,7 @@ export const RechnerForm = ({
         etikett && React.createElement('div', { id: id('ergebnis'), style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs + 'px' } }, etikett),
         ergebnis || (ohneErgebnis && React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, ohneErgebnis)),
         vorbehalt,
-        React.createElement(ErgebnisArt, { palette, t, ergebnis: art })
+        React.createElement(ErgebnisArt, { palette, t, ergebnis: art, ziele: angabeZiele(view) })
       ),
       // Ein Instrument (Grafik mit Regler) steht unter der Live-Region: sonst würde jede Bewegung angesagt.
       instrument || null
@@ -151,7 +152,8 @@ export const Einzelwahl = ({ palette, id, label, hinweis, optionen, wert, onWahl
     const knoepfe = e.currentTarget.parentNode && e.currentTarget.parentNode.children;
     if (knoepfe && knoepfe[n]) knoepfe[n].focus();
   };
-  return React.createElement('div', { style: { marginBottom: space.sm + 'px' } },
+  // Die id am Rahmen ist das Sprungziel für «Noch nötig: …» (Kapitel 5, C; data/angabeZiele.js).
+  return React.createElement('div', { id, style: { marginBottom: space.sm + 'px' } },
     React.createElement('div', { id: id + '-label', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: '2px' } }, label),
     hinweis && React.createElement('div', { id: id + '-hinweis', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '4px' } }, hinweis),
     React.createElement('div', { role: 'radiogroup', 'aria-labelledby': id + '-label', 'aria-describedby': hinweis ? id + '-hinweis' : undefined, style: { display: 'flex', flexWrap: 'wrap', gap: '8px' } },

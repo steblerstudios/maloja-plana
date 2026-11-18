@@ -70,7 +70,7 @@ export const FAMILIEN_EL_KINDER_UNTER = { TI: 15, VD: 16, SO: 6, GE: 25 };
 // Alter eines Kindes, nur wenn es bekannt ist: aus dem Geburtsdatum, sonst aus einer
 // eingetragenen Zahl über 0. «0» ohne Geburtsdatum ist der Vorgabewert eines neu angelegten
 // Kindes (ChapterView) und heisst darum «unbekannt», nicht «Säugling».
-function bekanntesAlter(kind, heute) {
+export function bekanntesAlter(kind, heute) {
   // Datum selbst zerlegen: new Date('JJJJ-MM-TT') liest UTC, die Vergleiche unten rechnen lokal.
   const m = typeof kind?.birthDate === 'string' ? /^(\d{4})-(\d{2})-(\d{2})/.exec(kind.birthDate) : null;
   if (m) {

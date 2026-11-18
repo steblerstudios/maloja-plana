@@ -12,4 +12,7 @@
   var dark = true;
   try { dark = JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch (e) { dark = true; }
   try { document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light'); } catch (e) { /* ohne Markierung rendert die App wie bisher */ }
+  // Sichtschutz «Beträge verbergen» (src/utils/geld.js): vor dem ersten Rendern setzen,
+  // sonst stünden die Zahlen beim Laden kurz offen da. Schlüssel 'or5_betraege', '1' = verborgen.
+  try { if (localStorage.getItem('or5_betraege') === '1') document.documentElement.dataset.betraege = 'aus'; } catch (e) { /* Default: sichtbar */ }
 })();

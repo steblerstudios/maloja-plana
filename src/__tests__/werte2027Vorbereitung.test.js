@@ -85,11 +85,22 @@ describe('Mindestlöhne: Tabelle je Jahr', () => {
     expect(mindestlohnAusTabelle(ohneJu27, 'JU', new Date(2027, 0, 2))).toMatchObject({ jahr: 2026 });
   });
 
-  it('die App selbst: im Dezember 2026 belegt, im Januar 2027 Riegel', async () => {
+  it('die App selbst: im Dezember 2026 belegt, im Januar 2027 Riegel (NE, noch ohne Wert 2027)', async () => {
     const dez = await mitUhr('2026-12-20T10:00:00', '../data/lohnCheck.js');
-    expect(dez.pruefeStundenlohn(5000, 42, 'GE').status).toBe('ok');
+    expect(dez.pruefeStundenlohn(5000, 42, 'NE').status).toBe('ok');
     const jan = await mitUhr('2027-01-05T10:00:00', '../data/lohnCheck.js');
-    expect(jan.pruefeStundenlohn(5000, 42, 'GE').status).toBe('jahrNichtBelegt');
+    expect(jan.pruefeStundenlohn(5000, 42, 'NE').status).toBe('jahrNichtBelegt');
+  });
+
+  it('die App selbst: GE und BS haben amtliche Werte 2027 (24.73, 22.50), erst ab 1.1.', async () => {
+    const dez = await mitUhr('2026-12-20T10:00:00', '../data/lohnCheck.js');
+    expect(dez.getMindestlohn('GE')).toMatchObject({ chfStunde: 24.59, jahr: 2026 });
+    expect(dez.getMindestlohn('BS')).toMatchObject({ chfStunde: 22.20, jahr: 2026 });
+    const jan = await mitUhr('2027-01-05T10:00:00', '../data/lohnCheck.js');
+    expect(jan.getMindestlohn('GE')).toMatchObject({ chfStunde: 24.73, jahr: 2027 });
+    expect(jan.getMindestlohn('BS')).toMatchObject({ chfStunde: 22.50, jahr: 2027 });
+    expect(jan.pruefeStundenlohn(5000, 42, 'GE').status).toBe('ok');
+    expect(jan.pruefeStundenlohn(3000, 42, 'BS', 'brutto', 'no').status).toBe('unterMindestlohn');
   });
 });
 

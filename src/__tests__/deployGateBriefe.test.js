@@ -102,6 +102,7 @@ describe('a11y: Fokus folgt dem Sprung, die Frist wird vorgelesen', () => {
     const html = render({ initialTemplate: 'debtObjection' });
     expect(html).toMatch(/id="brief-hinweis" tabindex="-1"|tabindex="-1"[^>]*id="brief-hinweis"/);
     const src = fs.readFileSync(path.join(__dirname, '..', 'BriefGenerator.jsx'), 'utf8');
-    expect(src).toMatch(/getElementById\('brief-hinweis'\)[\s\S]{0,60}focus\(\{ preventScroll: true \}\)/);
+    // Gruppe B Gestaltung A (11.11.2026): ohne Hinweis geht der Fokus auf «Brief: …» über dem Formular.
+    expect(src).toMatch(/getElementById\('brief-hinweis'\) \|\| document\.getElementById\('brief-form-titel'\)[\s\S]{0,60}focus\(\{ preventScroll: true \}\)/);
   });
 });

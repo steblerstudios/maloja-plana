@@ -91,7 +91,9 @@ describe('MarkenLogo', () => {
 
   it('jeder Einstieg reicht die Palette seiner Fläche durch', () => {
     for (const datei of ['../../main.jsx', '../../LockScreen.jsx', '../../BetaGate.jsx', '../../Onboarding.jsx']) {
-      expect(lies(datei), datei).toMatch(/React\.createElement\(MarkenLogo, \{ palette,/);
+      // Beta-Tor (Gruppe C, D, 11.11.2026): das Tor folgt dem Dunkelmodus, das Logo steht aber auf dem
+      // hellen Himmel des Bildes — seine Fläche ist hell, darum dort ausdrücklich LIGHT_PALETTE.
+      expect(lies(datei), datei).toMatch(/React\.createElement\(MarkenLogo, \{ palette(: LIGHT_PALETTE)?,/);
     }
   });
 

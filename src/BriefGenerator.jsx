@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b } from './briefGenerator.js';
-import { istVorbei } from './utils/fristen.js';
+import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b, brauchtZustimmungFamilienwohnung } from './briefGenerator.js';
+import { istVorbei, heuteIso } from './utils/fristen.js';
+import { kvgKuendigungsTermin, zeigeSemesterHinweis } from './utils/festeFristen.js';
 import { formatDE } from './utils/helpers.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
@@ -13,7 +14,7 @@ import { openPrintWindow } from './utils/helpers.js';
 import { erinnerungSichern } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { zahl } from './utils/geld.js';
+import { zahl, betrag, betraegeVerborgen } from './utils/geld.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
 import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { I18nContext, deutschT } from './i18n/index.js';
@@ -55,7 +56,7 @@ const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElemen
     zeilen.filter((z) => z && z.stark).map((z) => z.text).join(' ')),
 );
 
-function lebensereignisHinweis(selected, a, palette, t) {
+function lebensereignisHinweis(selected, a, palette, t, data) {
   if (selected === 'debtObjection') {
     const k = 'briefe.debtObjection.frist.';
     const frist = rechtsvorschlagFrist(a.zustelldatum);
@@ -98,6 +99,24 @@ function lebensereignisHinweis(selected, a, palette, t) {
   if (selected === 'paymentReminder') {
     const k = 'briefe.paymentReminder.hinweis.';
     return hinweisBox(palette, t(k + 'title'), [t(k + 'text')]);
+  }
+  // Gruppe B L1 (11.11.2026): Zustimmung zur Kündigung der Familienwohnung, eigenhändig und eingeschrieben.
+  if (selected === 'leaseTermination') {
+    const k = 'briefe.leaseTermination.hinweis.';
+    return hinweisBox(palette, t(k + 'title'), [brauchtZustimmungFamilienwohnung(data) && { text: t(k + 'zustimmung'), stark: true }, t(k + 'form')]);
+  }
+  // Gruppe B L2/L3 (11.11.2026): Frist mit Jahr, nach dem Stichtag das nächste Jahr; Anmeldung und Ausstände zuerst.
+  if (selected === 'insuranceSwitch') {
+    const k = 'briefe.insuranceSwitch.hinweis.';
+    const tm = kvgKuendigungsTermin(heuteIso());
+    const p = { jahr: tm.jahr, frist: formatDE(tm.frist), verpasstJahr: tm.verpasstJahr, verpasstFrist: formatDE(tm.verpasstFrist) };
+    return hinweisBox(palette, t(k + 'title'), [
+      { text: t(tm.nachFrist ? k + 'nachFrist' : k + 'frist', p), stark: true },
+      zeigeSemesterHinweis(heuteIso()) && t(k + 'semester'), t(k + 'anmelden'), t(k + 'ausstaende'),
+    ], 'calendar');
+  }
+  if (selected === 'taxExtension') {
+    return hinweisBox(palette, t('briefe.taxExtension.hinweis.title'), [t('briefe.taxExtension.hinweis.text')]);
   }
   if (selected === 'workReference') {
     return hinweisBox(palette, t('briefe.workReference.title'), [t('briefe.workReference.hinweis')]);
@@ -183,15 +202,22 @@ const fmtDate = (iso) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso));
   return m ? `${m[3]}.${m[2]}.${m[1]}` : String(iso);
 };
-const fmtAmount = (n) => {
-  const num = Number(n);
-  return isFinite(num) ? zahl(num, { hoechstens: 2 }) : String(n);
-};
 
 const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initialAngaben }) => {
   const isMobile = useIsMobile();
   const [selected, setSelected] = useState(initialTemplate || null);
   const [preview, setPreview] = useState(false);
+  // Sichtschutz «Beträge verbergen»: die Vorschau ist das Dokument und zeigt darum echte Beträge
+  // (mitEchtenBetraegen). Am Bildschirm liegt sie unscharf, bis man sie antippt — wie die
+  // Betragsfelder (tokens.css). Entscheid Stebler Studios 16.11.2026, Auswahl «Unscharf, antippen».
+  const [offenFuer, setOffenFuer] = useState(null);
+  const vorschauRef = useRef(null);
+  // Aufgedeckt gilt nur für diese Vorlage und diesen Sichtschutz: Vorlagenwechsel oder Sichtschutz
+  // aus → wieder zu, beim nächsten Einschalten liegt die Vorschau wieder unscharf (a11y-Prüfung 16.11.).
+  // Im Rendern abgeleitet, nicht per Effekt zurückgesetzt — sonst stünde sie einen Frame lang offen.
+  const sichtschutzAn = betraegeVerborgen();
+  const vorschauOffen = offenFuer === selected;
+  useEffect(() => { if (!sichtschutzAn) setOffenFuer(null); }, [sichtschutzAn]);
   const [printed, setPrinted] = useState(false);
   // Frist in den Kalender gelegt (ruhige Bestätigung statt Doppel-Anlage).
   // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts im echten Kalender).
@@ -215,8 +241,11 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
   // `handleNavigate` im nächsten Frame noch ganz nach oben scrollt. Eigene Wahl per Karte
   // springt NICHT — dort hat die Person selbst geklickt und sieht, was aufgeht.
   const formAnfangRef = useRef(null);
+  // Gruppe B Gestaltung A (11.11.2026): auch die eigene Wahl per Karte springt — auf dem Handy stand das Formular
+  // rund 3700 px unter der Liste, und nach dem Antippen geschah sichtbar nichts. Bis dahin sprang nur die Vorwahl.
+  const [sprung, setSprung] = useState(0);
   useEffect(() => {
-    if (!initialTemplate) return undefined;
+    if (!initialTemplate && !sprung) return undefined;
     let id2;
     const id1 = requestAnimationFrame(() => {
       id2 = requestAnimationFrame(() => {
@@ -228,12 +257,12 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
         // Deploy-Gate 27.09.2026 (a11y): der Fokus folgt dem Sprung — sonst begann ein
         // Screenreader weiter oben bei der Vorlagen-Liste.
-        const hinweis = document.getElementById('brief-hinweis');
+        const hinweis = document.getElementById('brief-hinweis') || document.getElementById('brief-form-titel');
         if (hinweis) hinweis.focus({ preventScroll: true });
       });
     });
     return () => { cancelAnimationFrame(id1); if (id2) cancelAnimationFrame(id2); };
-  }, [initialTemplate]);
+  }, [initialTemplate, sprung]);
 
   // Vorlagenwechsel setzt die Anstellungs-Wahl zurück — sonst trüge ein neuer Brief
   // stillschweigend die Wahl des vorherigen.
@@ -311,7 +340,8 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     },
       templates.map(tmpl => React.createElement('button', {
         key: tmpl.key,
-        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); setExportVorschau(false); },
+        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); setExportVorschau(false); setSprung((n) => n + 1); },
+        'aria-pressed': selected === tmpl.key,
         style: {
           padding: '16px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           // Fassung 9: gewählt in Sand (Auswahl), nicht mehr Salbei; Rundung KNOPF_RADIUS.
@@ -342,6 +372,11 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // Sprungziel für die Vorwahl aus einem Ablauf (siehe `formAnfangRef`). Der Abstand zur
     // klebenden Kopfzeile kommt aus tokens.css (wie in Lebenssituationen).
     React.createElement('div', { ref: formAnfangRef, 'aria-hidden': 'true', style: { scrollMarginTop: 'var(--mp-sprungabstand)' } }),
+    // Gestaltung A: über dem Formular steht, zu welchem Brief es gehört — Sprungziel für den Fokus.
+    selected && React.createElement('h3', {
+      id: 'brief-form-titel', tabIndex: -1,
+      style: { fontSize: textTokens.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.sm + 'px', outline: 'none' },
+    }, t('briefe.formTitel', { name: (templates.find((x) => x.key === selected) || {}).title || '' })),
 
     // Anstellungs-Auswahl — erscheint NUR, wenn wirklich ein Nebenerwerb erfasst ist.
     // Wer einen Job hat, sieht hier nichts: kein Klick für die Mehrheit. Die Wahl steuert
@@ -379,7 +414,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     ),
 
     // Lebensereignis-Briefe: erst der Hinweis (Frist / Erbschaft), dann die Angaben.
-    selected && lebensereignisHinweis(selected, leseAngaben(selected, angaben), palette, t),
+    selected && lebensereignisHinweis(selected, leseAngaben(selected, angaben), palette, t, data),
     briefDeutsch && React.createElement('p', {
       style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, margin: '0 0 ' + space.md + 'px' },
     }, t('briefe.angaben.rmDeutsch')),
@@ -448,7 +483,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
                 onChange: () => setBelegIds(ids => ids.includes(b.id) ? ids.filter(x => x !== b.id) : [...ids, b.id]),
               }),
               React.createElement('span', null,
-                (fmtDate(b.datum) || t('briefe.kkBelegPicker.undated')) + ' · CHF ' + fmtAmount(b.betrag))
+                (fmtDate(b.datum) || t('briefe.kkBelegPicker.undated')) + ' · ' + (isFinite(Number(b.betrag)) ? betrag(Number(b.betrag), { hoechstens: 2 }) : String(b.betrag)))
             ))
           )
     ),
@@ -553,18 +588,36 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     ),
 
     // Preview
-    preview && previewHtml && React.createElement('div', {
-      style: {
-        border: '1px solid ' + palette.border, borderRadius: radius.sm,
-        overflow: 'hidden', background: '#fff',
-      }
-    },
-      React.createElement('iframe', {
-        srcDoc: previewHtml,
-        style: { width: '100%', height: '700px', border: 'none' },
-        title: t('backup.letterPreview'),
-      })
-    ),
+    preview && previewHtml && (() => {
+      const verdeckt = sichtschutzAn && !vorschauOffen;
+      return React.createElement('div', {
+        style: {
+          position: 'relative',
+          border: '1px solid ' + palette.border, borderRadius: radius.sm,
+          overflow: 'hidden', background: '#fff',
+        }
+      },
+        React.createElement('iframe', {
+          srcDoc: previewHtml,
+          style: { width: '100%', height: '700px', border: 'none', filter: verdeckt ? 'blur(6px)' : 'none' },
+          title: t('backup.letterPreview'),
+          'aria-hidden': verdeckt || undefined, tabIndex: verdeckt ? -1 : undefined, ref: vorschauRef,
+        }),
+        // Die Fläche nimmt jedes Antippen an; fokussierbar ist nur der Knopf in der Mitte — so bleibt
+        // sein Fokusring (tokens.css, outline-offset 2px) innerhalb des Rahmens sichtbar (WCAG 2.4.7).
+        // Danach geht der Fokus in die Vorschau, statt auf <body> zu fallen.
+        verdeckt && (() => {
+          const aufdecken = () => { setOffenFuer(selected); requestAnimationFrame(() => vorschauRef.current?.focus()); };
+          return React.createElement('div', {
+            onClick: aufdecken,
+            style: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
+          }, React.createElement('button', {
+            type: 'button', onClick: (e) => { e.stopPropagation(); aufdecken(); },
+            style: { minHeight: '44px', padding: '10px 16px', background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontSize: textTokens.body, fontWeight: weight.semi },
+          }, t('backup.letterPreviewZeigen')));
+        })()
+      );
+    })(),
   );
 };
 

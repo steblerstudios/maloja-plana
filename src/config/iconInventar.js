@@ -119,6 +119,8 @@ export const ICON_INVENTAR = {
   // ── Z · Barrierefreiheit ──
   ...g('Z', {
     lautsprecher: "vorlesen",
+    auge: "Beträge verbergen — Sichtschutz, wenn jemand mitliest",
+    augeZu: "Beträge sind verborgen — der eingeschaltete Sichtschutz, Form statt nur Tönung",
     raster: "grosse Symbole",
     kontrast: "Kontrast, Schwarzweiss",
     farbsicher: "farbenblind-sicher — Farbe UND Form",

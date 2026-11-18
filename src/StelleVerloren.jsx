@@ -51,6 +51,8 @@ export const StelleVerloren = ({ palette, t, onNavigate }) => {
         onNavigate,
         reminder: { title: t('stelleVerloren.reminderRavTitle'), dueDate: rav, category: 'insurance', recurrence: 'once' },
       }),
+      // Kapitel 5, K (10.11.2026): Sperrfrist verschiebt das Ende — und damit das Datum oben (OR Art. 336c Abs. 2, 3).
+      React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } }, t('stelleVerloren.step1Sperrfrist')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('stelleVerloren.step1Link'), onClick: () => onNavigate('alv') })
     ),
 

@@ -19,19 +19,19 @@
   <meta name="author" content="Stebler Studios">
   <meta name="theme-color" content="#F2F2F0">
   <title>Kantonsatlas: die 26 Kantone auf der Karte — Maloja Plana</title>
-  <meta name="description" content="Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: zehn Karten der Schweizer Kantone, mit Quelle und Stand, ohne Rangliste.">
+  <meta name="description" content="Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: zwölf Karten der Schweizer Kantone, mit Quelle und Stand, ohne Rangliste.">
   <link rel="canonical" href="https://malojaplana.ch/kantonsatlas/">
 
   <meta property="og:type" content="article">
   <meta property="og:title" content="Kantonsatlas: die 26 Kantone auf der Karte">
-  <meta property="og:description" content="Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: zehn Karten der Schweizer Kantone, mit Quelle und Stand, ohne Rangliste.">
+  <meta property="og:description" content="Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: zwölf Karten der Schweizer Kantone, mit Quelle und Stand, ohne Rangliste.">
   <meta property="og:url" content="https://malojaplana.ch/kantonsatlas/">
   <meta property="og:image" content="https://malojaplana.ch/og-image.png">
   <meta property="og:locale" content="de_CH">
   <meta property="og:site_name" content="Maloja Plana">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Kantonsatlas: die 26 Kantone auf der Karte">
-  <meta name="twitter:description" content="Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: zehn Karten der Schweizer Kantone, mit Quelle und Stand, ohne Rangliste.">
+  <meta name="twitter:description" content="Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: zwölf Karten der Schweizer Kantone, mit Quelle und Stand, ohne Rangliste.">
   <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -46,7 +46,7 @@
         "@id": "https://malojaplana.ch/kantonsatlas/#webpage",
         "url": "https://malojaplana.ch/kantonsatlas/",
         "name": "Kantonsatlas: die 26 Kantone auf der Karte",
-        "description": "Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: zehn Karten der Schweizer Kantone, mit Quelle und Stand, ohne Rangliste.",
+        "description": "Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: zwölf Karten der Schweizer Kantone, mit Quelle und Stand, ohne Rangliste.",
         "inLanguage": "de-CH",
         "isPartOf": {
           "@id": "https://malojaplana.ch/#website"
@@ -85,63 +85,82 @@
       font-weight:400; font-display:swap }
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
-    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870 }
+    /* Gruppe E, Gestaltung B (12.11.2026): Titel in Hanken Grotesk wie die Startseite (Brand Book §3),
+       die Datei liegt schon unter /fonts/. Alles andere bleibt Lexend. */
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gestaltung C: ein Gold, ein Leise-Ton — dieselben Werte wie website/index.html.
+       --sand ist die Fläche (Knopf), --sand-tief die Schrift (Links), hell 7A5F30, dunkel C4A06A. */
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;
+           --rand:#E0DDD8; --sand:#C4A06A; --sand-tief:#7A5F30; --auf-sand:#2A2620 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870 }
+             --rand:#3A3936; --sand:#C4A06A; --sand-tief:#C4A06A; --auf-sand:#2A2620 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
       font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
-    a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
+    a{ color:var(--sand-tief); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
     /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
-       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+       Die Rückmeldung kommt über die dickere Unterstreichung. */
     a:hover{ text-decoration-thickness:2px }
-    header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
-    nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
+    header{ padding:24px 0 0 }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px. Gruppe E, C: Bildmarke 28 px wie auf der Startseite. */
+    .marke{ display:inline-flex; align-items:center; gap:10px; min-height:44px; font-weight:600; text-decoration:none;
+      font-size:16px; color:var(--text) }
+    .marke svg{ height:28px; width:auto; flex:none }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:16px }
     main{ padding:8px 0 16px }
-    h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
-    .vorspann{ font-size:18px; color:var(--text); margin-bottom:8px }
-    h2{ font-size:20px; font-weight:600; margin:40px 0 12px; letter-spacing:-0.005em }
-    h3{ font-size:16px; font-weight:600; margin:24px 0 6px }
-    p{ margin-bottom:14px }
-    ul{ margin:0 0 14px 22px } li{ margin-bottom:8px }
-    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:10px;
-      padding:20px 22px; margin:28px 0 }
+    /* Gestaltung B: Grössen nur von der Skala 13 · 15 · 16 · 19 · 23 · 28 · 36 (Brand Book §7a). */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-weight:600 }
+    h1{ font-size:36px; line-height:1.2; margin:16px 0 12px; letter-spacing:-0.015em }
+    .vorspann{ font-size:19px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:23px; line-height:1.3; margin:48px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:19px; line-height:1.35; margin:24px 0 8px }
+    p{ margin-bottom:16px }
+    ul{ margin:0 0 16px 24px } li{ margin-bottom:8px }
+    /* Gestaltung D: Karte 12 px Ecke, innen 32 (am Handy 24), Abstand 32. */
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:12px;
+      padding:32px; margin:32px 0 }
     .karte p:last-child{ margin-bottom:0 }
     .weiter{ list-style:none; margin:16px 0 0; padding:0 }
-    .weiter li{ margin-bottom:10px }
+    .weiter li{ margin-bottom:12px }
     .weiter a{ font-weight:600; text-decoration:none }
     .weiter a:hover{ text-decoration:underline }
-    .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
-    .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
-      padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
-    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
-    .leise{ font-size:14px; color:var(--leise) }
-    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
-      padding-left:14px; margin:32px 0 }
-    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
+    .weiter span{ display:block; font-size:15px; color:var(--leise); font-weight:400 }
+    /* Knopf 10 px Ecke, 44 px hoch (Brand Book §7a, «6 px» überholt am 06.11.). */
+    .knopf{ display:inline-flex; align-items:center; min-height:44px; background:var(--sand); color:var(--auf-sand);
+      text-decoration:none; padding:12px 24px; border-radius:10px; font-weight:600; font-size:15px; margin-top:4px }
+    .knopf:hover{ filter:brightness(1.05) }
+    .hinweis{ font-size:13px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:13px; color:var(--leise) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:16px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:24px 0 64px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
-    footer p{ margin-bottom:6px }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
+    footer p{ margin-bottom:8px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
-    footer .sprachen{ margin-top:14px }
+    footer .sprachen{ margin-top:16px }
     footer .sprachen a{ text-decoration:underline }
     footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
     /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
-       nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
-    .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
-      margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. Hinweisstreifen: 6 px (kleinste Rolle). */
+    .entwurf{ border:1px solid var(--sand); border-radius:6px; padding:12px 16px;
+      margin-bottom:24px; font-size:15px; color:var(--leise); background:var(--flaeche) }
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
-    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
+    .verbindlich{ margin-bottom:24px; font-size:13px; color:var(--leise) }
     /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
     ul.kantone{ columns:2; column-gap:32px }
     ul.kantone li{ break-inside:avoid }
-    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }
+    @media (max-width:600px){ h1{ font-size:28px } .vorspann{ font-size:16px } h2{ font-size:19px; margin-top:32px }
+      .karte{ padding:24px } ul.kantone{ columns:1 } }
     /* ─── Hintergrundseite · Maloja-Stil ───────────────────────────────────
        Überschriften in Hanken Grotesk (Markenhandbuch §3), Lesetext Lexend.
        Bereichsfarbe Heidelbeere (Versicherungen, data/lebensbereiche.js):
@@ -171,9 +190,10 @@
     nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
     nav.inhalt p{ margin:0 0 8px; font-size:13px; font-weight:600; color:var(--leise) }
     nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
-    nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
+    nav.inhalt li{ counter-increment:frage; margin:0; break-inside:avoid; display:flex; align-items:center; gap:10px; font-size:15px }
     nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
-    nav.inhalt a{ text-decoration:none } nav.inhalt a:hover{ text-decoration:underline }
+    /* Gruppe D: Einträge ≥ 44 px Trefferfläche (vorher 25 px). */
+    nav.inhalt a{ text-decoration:none; display:inline-flex; align-items:center; min-height:44px } nav.inhalt a:hover{ text-decoration:underline }
 
     .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
 
@@ -394,7 +414,7 @@
 <body>
   <div class="rahmen">
     <header>
-      <a class="marke" href="/">Maloja&nbsp;Plana</a>
+      <a class="marke" href="/"><svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg>Maloja&nbsp;Plana</a>
       <nav class="krume" aria-label="Sie sind hier">
         <a href="/">Start</a> › Kantonsatlas
       </nav>
@@ -404,7 +424,7 @@
       <p class="kicker">Kantonsatlas</p>
       <h1>Kantonsatlas: die 26 Kantone auf der Karte</h1>
       <p class="vorspann">Wie hoch ist die Prämie, wie viel kostet eine Wohnung, wie viele Menschen beziehen Unterstützung? Das hängt in der Schweiz oft vom Kanton ab. Dieser Atlas zeigt die Zahlen als Karten, damit sichtbar wird, wo sich etwas ähnelt und wo nicht. Die genauen Werte stehen zu jeder Karte in einer aufklappbaren Tabelle.</p>
-      <p class="stand"><strong>Stand der Zahlen:</strong> Prämien 2027 (BAG, September 2026); Prämienlast mit Prämie 2026, Einkommen 2022 (ESTV) und Verbilligung 2025 (BAG); Steuern 2026; Mieten und Löhne 2024; Sozialhilfe 2024; EL Dezember 2025; Leerwohnungen Juni 2026; Arbeitslosigkeit September 2026; Familienzulagen 2026; Kita-Abzug Steuerjahr 2026.</p>
+      <p class="stand"><strong>Stand der Zahlen:</strong> Prämien 2027 (BAG, September 2026); Prämienlast mit Prämie 2026, Einkommen 2022 (ESTV) und Verbilligung 2025 (BAG); Steuern 2026; Mieten und Löhne 2024; Sozialhilfe 2025; EL Dezember 2025; Leerwohnungen Juni 2026; Arbeitslosigkeit September 2026; Familienzulagen 2026; Kita-Abzug Steuerjahr 2026.</p>
       <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung. Eine Karte zeigt einen Wert je Kanton; für einen einzelnen Haushalt kann es ganz anders aussehen.</p>
       <nav class="inhalt" aria-label="Inhalt dieser Seite">
         <p>Inhalt</p>
@@ -429,10 +449,10 @@
 
       <h2 id="brillen" tabindex="-1"><span class="nr">2</span> Vier Brillen: wer welche Karten braucht</h2>
         <p>Je nachdem, wer fragt, zählen andere Karten. Eine Person fragt, was der Wohnort für sie bedeutet. Eine Firma schaut auf den Standort ihrer Mitarbeitenden. Die Karten selbst sind für alle dieselben und frei zugänglich. Wir ordnen sie hier aus vier Blickwinkeln, als «Brillen».<span class="nur-mit-filter"> Wählen Sie eine: Deren Karten bleiben offen, die übrigen klappen zu. Keine Karte verschwindet.</span></p>
-        <p class="brillen-status" id="fuer-person" tabindex="-1">Gewählt: Brille «Person». 5 von 10 Karten sind offen, die übrigen zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>
-        <p class="brillen-status" id="fuer-firma" tabindex="-1">Gewählt: Brille «Firma». 5 von 10 Karten sind offen, die übrigen zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>
-        <p class="brillen-status" id="fuer-kanton" tabindex="-1">Gewählt: Brille «Kanton oder Gemeinde». 5 von 10 Karten sind offen, die übrigen zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>
-        <p class="brillen-status" id="fuer-stiftung" tabindex="-1">Gewählt: Brille «Stiftung oder Verein». 4 von 10 Karten sind offen, die übrigen zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>
+        <p class="brillen-status" id="fuer-person" tabindex="-1">Gewählt: Brille «Person». 6 von 12 Karten sind offen, die übrigen zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>
+        <p class="brillen-status" id="fuer-firma" tabindex="-1">Gewählt: Brille «Firma». 6 von 12 Karten sind offen, die übrigen zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>
+        <p class="brillen-status" id="fuer-kanton" tabindex="-1">Gewählt: Brille «Kanton oder Gemeinde». 5 von 12 Karten sind offen, die übrigen zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>
+        <p class="brillen-status" id="fuer-stiftung" tabindex="-1">Gewählt: Brille «Stiftung oder Verein». 4 von 12 Karten sind offen, die übrigen zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>
         <nav class="brillen-wahl" aria-label="Karten nach Brille zeigen">
           <ul role="list">
             <li><a href="#brillen" class="wahl-alle">Alle Karten<span class="gewaehlt sr-only"> (gewählt)</span></a></li>
@@ -446,12 +466,12 @@
           <section class="brille" data-brille="person" aria-labelledby="brille-person">
             <h3 id="brille-person">Person: Was bedeutet der Wohnkanton für mich?</h3>
             <p>Prämie, Steuern und was Familien erhalten oder abziehen können. Die Karten zeigen Durchschnitte je Kanton, nicht Ihre eigene Lage; die rechnet Maloja mit Ihren Angaben.</p>
-            <ul role="list"><li><a href="#karte-praemie">Prämie Erwachsene</a></li><li><a href="#karte-lastnachipv">Prämienlast nach Verbilligung</a></li><li><a href="#karte-steuer">Steuern bei 80'000 Fr. Lohn</a></li><li><a href="#karte-kinderzulage">Kinderzulage</a></li><li><a href="#karte-kita">Abzug für Kinderbetreuung</a></li></ul>
+            <ul role="list"><li><a href="#karte-praemie">Prämie Erwachsene</a></li><li><a href="#karte-lastnachipv">Prämienlast nach Verbilligung</a></li><li><a href="#karte-steuer">Steuern bei 80'000 Fr. Lohn</a></li><li><a href="#karte-kinderzulage">Kinderzulage</a></li><li><a href="#karte-kita">Abzug für Kinderbetreuung</a></li><li><a href="#karte-alimente">Alimentenbevorschussung</a></li></ul>
           </section>
           <section class="brille" data-brille="firma" aria-labelledby="brille-firma">
             <h3 id="brille-firma">Firma: Wie sieht es für die Mitarbeitenden am Standort aus?</h3>
-            <p>Miete, Wohnungsmarkt, Arbeitslosenquote sowie Kinderzulage und Kita-Abzug. Es sind Durchschnitte je Kanton; einen Standortentscheid ersetzen sie nicht.</p>
-            <ul role="list"><li><a href="#karte-miete">Miete 3 Zimmer</a></li><li><a href="#karte-leer">Leerwohnungsziffer</a></li><li><a href="#karte-alq">Arbeitslosenquote</a></li><li><a href="#karte-kinderzulage">Kinderzulage</a></li><li><a href="#karte-kita">Abzug für Kinderbetreuung</a></li></ul>
+            <p>Miete, Wohnungsmarkt, Arbeitslosenquote, Mindestlohn sowie Kinderzulage und Kita-Abzug. Es sind Werte je Kanton; einen Standortentscheid ersetzen sie nicht.</p>
+            <ul role="list"><li><a href="#karte-miete">Miete 3 Zimmer</a></li><li><a href="#karte-leer">Leerwohnungsziffer</a></li><li><a href="#karte-alq">Arbeitslosenquote</a></li><li><a href="#karte-mindestlohn">Kantonaler Mindestlohn</a></li><li><a href="#karte-kinderzulage">Kinderzulage</a></li><li><a href="#karte-kita">Abzug für Kinderbetreuung</a></li></ul>
           </section>
           <section class="brille" data-brille="kanton" aria-labelledby="brille-kanton">
             <h3 id="brille-kanton">Kanton oder Gemeinde: Wie schwer wiegt die Prämie, wie häufig ist Unterstützung?</h3>
@@ -801,6 +821,52 @@
         </details>
         </figure>
         <p class="leise">Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen.</p>
+        <p>Werden Kinderalimente nicht bezahlt, kann der Kanton sie vorschiessen und das Geld danach beim Elternteil einfordern, der sie schuldet. Wie viel er höchstens vorschiesst, legt jeder Kanton selbst fest.</p>
+
+        <figure class="abb atlas" id="karte-alimente" data-brillen="person">
+          <p class="atlas-zu">Alimentenbevorschussung: zugeklappt, gehört nicht zur gewählten Brille. <a href="#karte-alimente">Karte zeigen<span class="sr-only">: Alimentenbevorschussung</span></a></p>
+          <div class="abb-karte f-zwetschge">
+            <p class="abb-kopf" aria-hidden="true"><span>Abb. 8</span><span>Alimentenbevorschussung</span></p>
+            <div class="abb-bild"><svg viewBox="0 0 800 520" role="img" aria-labelledby="karte-alimente-t karte-alimente-d" focusable="false"><title id="karte-alimente-t">Karte: Alimentenbevorschussung</title><desc id="karte-alimente-d">Die 26 Kantone, eingefärbt in 3 Stufen nach Alimentenbevorschussung (Fr. im Monat je Kind, höchstens), von den tieferen zu den höheren Zahlen. Am tiefsten im Kanton Genf mit 673, am höchsten im Kanton Neuenburg mit 2'000. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.</desc><g><title>Aargau: 1'008</title><use href="#ka-AG" class="k2"/></g><g><title>Appenzell Ausserrhoden: 1'008</title><use href="#ka-AR" class="k2"/></g><g><title>Appenzell Innerrhoden: 1'008</title><use href="#ka-AI" class="k2"/></g><g><title>Basel-Landschaft: 1'008</title><use href="#ka-BL" class="k2"/></g><g><title>Basel-Stadt: 1'008</title><use href="#ka-BS" class="k2"/></g><g><title>Bern: 1'008</title><use href="#ka-BE" class="k2"/></g><g><title>Freiburg: 1'008</title><use href="#ka-FR" class="k2"/></g><g><title>Genf: 673</title><use href="#ka-GE" class="k1"/></g><g><title>Glarus: 1'008</title><use href="#ka-GL" class="k2"/></g><g><title>Graubünden: 780</title><use href="#ka-GR" class="k1"/></g><g><title>Jura: 901</title><use href="#ka-JU" class="k1"/></g><g><title>Luzern: 1'008</title><use href="#ka-LU" class="k2"/></g><g><title>Neuenburg: 2'000</title><use href="#ka-NE" class="k4"/></g><g><title>Nidwalden: 1'008</title><use href="#ka-NW" class="k2"/></g><g><title>Obwalden: 1'008</title><use href="#ka-OW" class="k2"/></g><g><title>Schaffhausen: 1'008</title><use href="#ka-SH" class="k2"/></g><g><title>Schwyz: 1'008</title><use href="#ka-SZ" class="k2"/></g><g><title>Solothurn: 756</title><use href="#ka-SO" class="k1"/></g><g><title>St. Gallen: 1'008</title><use href="#ka-SG" class="k2"/></g><g><title>Tessin: 700</title><use href="#ka-TI" class="k1"/></g><g><title>Thurgau: 1'008</title><use href="#ka-TG" class="k2"/></g><g><title>Uri: 1'008</title><use href="#ka-UR" class="k2"/></g><g><title>Waadt: 980</title><use href="#ka-VD" class="k1"/></g><g><title>Wallis: 950</title><use href="#ka-VS" class="k1"/></g><g><title>Zug: 1'362</title><use href="#ka-ZG" class="k4"/></g><g><title>Zürich: 1'008</title><use href="#ka-ZH" class="k2"/></g><use href="#ka-see-0" class="see"/><use href="#ka-see-1" class="see"/><use href="#ka-see-2" class="see"/><use href="#ka-see-3" class="see"/><use href="#ka-see-4" class="see"/><use href="#ka-see-5" class="see"/><use href="#ka-see-6" class="see"/><use href="#ka-see-7" class="see"/><use href="#ka-see-8" class="see"/><use href="#ka-see-9" class="see"/><use href="#ka-see-10" class="see"/><use href="#ka-see-11" class="see"/><use href="#ka-see-12" class="see"/><use href="#ka-see-13" class="see"/><use href="#ka-see-14" class="see"/><use href="#ka-see-15" class="see"/><use href="#ka-see-16" class="see"/><use href="#ka-see-17" class="see"/><use href="#ka-see-18" class="see"/><use href="#ka-see-19" class="see"/><use href="#ka-see-20" class="see"/><use href="#ka-see-21" class="see"/></svg></div>
+            <p class="atlas-einheit">Fr. im Monat je Kind, höchstens</p>
+            <ul class="atlas-legende" role="list"><li><i class="k1" aria-hidden="true"></i><span class="sr-only">Stufe 1 von 3, tiefste Zahlen: </span>673 bis 980</li><li><i class="k2" aria-hidden="true"></i><span class="sr-only">Stufe 2 von 3: </span>1'008</li><li><i class="k4" aria-hidden="true"></i><span class="sr-only">Stufe 3 von 3, höchste Zahlen: </span>1'362 bis 2'000</li></ul>
+            
+          </div>
+          <figcaption><strong>Abb. 8.</strong> Höchster Betrag, den der Kanton je Kind und Monat vorschiesst, wenn Kinderalimente nicht bezahlt werden. 17 Kantone koppeln den Betrag an die höchste AHV-Waisenrente und stehen darum gleich hoch (1'008 Franken, Stand 2026); bei mehreren steht der Betrag nicht im Gesetz, sondern folgt aus dieser Kopplung. Ob und wie viel jemand erhält, hängt in den meisten Kantonen von Einkommen und Vermögen ab; die Regeln sind je Kanton verschieden. Neuenburg rechnet je Unterhaltsbeitrag, nicht je Kind. Nicht gesichert ist der Betrag für den Kanton Freiburg und den Kanton Waadt.</figcaption>
+        <details class="atlas-werte">
+          <summary>Vorschuss je Kanton als Tabelle, mit Stand und Quelle</summary>
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Höchster Vorschuss für Kinderalimente je Kind und Monat, in Franken"><table>
+          <caption>Höchster Vorschuss für Kinderalimente je Kind und Monat, in Franken, sortiert nach Alimentenbevorschussung</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Höchster Vorschuss<br><span class="leise">Fr. im Monat je Kind, höchstens</span></th><th scope="col" class="n">Stand und Hinweis</th></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:33.7%"></span></td><td class="n">673</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteGE" id="beleg-alimenteGE-1" aria-label="Quelle 12">12</a></sup></td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:35.0%"></span></td><td class="n">700</td><td class="n leise">2023<sup class="beleg"><a href="#quelle-alimenteTI" id="beleg-alimenteTI-1" aria-label="Quelle 13">13</a></sup></td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:37.8%"></span></td><td class="n">756</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteSO" id="beleg-alimenteSO-1" aria-label="Quelle 14">14</a></sup></td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:39.0%"></span></td><td class="n">780</td><td class="n leise">2025<sup class="beleg"><a href="#quelle-alimenteGR" id="beleg-alimenteGR-1" aria-label="Quelle 15">15</a></sup></td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:45.1%"></span></td><td class="n">901</td><td class="n leise">2025<sup class="beleg"><a href="#quelle-alimenteJU" id="beleg-alimenteJU-1" aria-label="Quelle 16">16</a></sup></td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:47.5%"></span></td><td class="n">950</td><td class="n leise">2022<sup class="beleg"><a href="#quelle-alimenteVS" id="beleg-alimenteVS-1" aria-label="Quelle 17">17</a></sup></td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:49.0%"></span></td><td class="n">980</td><td class="n leise">2024 · <strong>nicht gesichert</strong><sup class="beleg"><a href="#quelle-alimenteVD" id="beleg-alimenteVD-1" aria-label="Quelle 18">18</a></sup></td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteAG" id="beleg-alimenteAG-1" aria-label="Quelle 19">19</a></sup></td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteAR" id="beleg-alimenteAR-1" aria-label="Quelle 20">20</a></sup></td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteAI" id="beleg-alimenteAI-1" aria-label="Quelle 21">21</a></sup></td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteBL" id="beleg-alimenteBL-1" aria-label="Quelle 22">22</a></sup></td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteBS" id="beleg-alimenteBS-1" aria-label="Quelle 23">23</a></sup></td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteBE" id="beleg-alimenteBE-1" aria-label="Quelle 24">24</a></sup></td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026 · <strong>nicht gesichert</strong><sup class="beleg"><a href="#quelle-alimenteFR" id="beleg-alimenteFR-1" aria-label="Quelle 25">25</a></sup></td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteGL" id="beleg-alimenteGL-1" aria-label="Quelle 26">26</a></sup></td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteLU" id="beleg-alimenteLU-1" aria-label="Quelle 27">27</a></sup></td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteNW" id="beleg-alimenteNW-1" aria-label="Quelle 28">28</a></sup></td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteOW" id="beleg-alimenteOW-1" aria-label="Quelle 29">29</a></sup></td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2025<sup class="beleg"><a href="#quelle-alimenteSH" id="beleg-alimenteSH-1" aria-label="Quelle 30">30</a></sup></td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteSZ" id="beleg-alimenteSZ-1" aria-label="Quelle 31">31</a></sup></td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteSG" id="beleg-alimenteSG-1" aria-label="Quelle 32">32</a></sup></td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteTG" id="beleg-alimenteTG-1" aria-label="Quelle 33">33</a></sup></td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteUR" id="beleg-alimenteUR-1" aria-label="Quelle 34">34</a></sup></td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">1'008</td><td class="n leise">2026<sup class="beleg"><a href="#quelle-alimenteZH" id="beleg-alimenteZH-1" aria-label="Quelle 35">35</a></sup></td></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:68.1%"></span></td><td class="n">1'362</td><td class="n leise">2025<sup class="beleg"><a href="#quelle-alimenteZG" id="beleg-alimenteZG-1" aria-label="Quelle 36">36</a></sup></td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">2'000</td><td class="n leise">2025 · pro Unterhaltsbeitrag und Monat<sup class="beleg"><a href="#quelle-alimenteNE" id="beleg-alimenteNE-1" aria-label="Quelle 37">37</a></sup></td></tr>
+        </table></div>
+        </details>
+        </figure>
 
       <h2 id="arbeit" tabindex="-1"><span class="nr">7</span> Arbeit</h2>
         <p>Im September 2026 waren zwischen 0,8 % der Erwerbspersonen im Kanton Appenzell Innerrhoden und 5,3 % im Kanton Genf als arbeitslos gemeldet.</p>
@@ -808,13 +874,13 @@
         <figure class="abb atlas" id="karte-alq" data-brillen="firma kanton stiftung">
           <p class="atlas-zu">Arbeitslosenquote: zugeklappt, gehört nicht zur gewählten Brille. <a href="#karte-alq">Karte zeigen<span class="sr-only">: Arbeitslosenquote</span></a></p>
           <div class="abb-karte f-haselnuss">
-            <p class="abb-kopf" aria-hidden="true"><span>Abb. 8</span><span>Arbeitslosenquote</span></p>
+            <p class="abb-kopf" aria-hidden="true"><span>Abb. 9</span><span>Arbeitslosenquote</span></p>
             <div class="abb-bild"><svg viewBox="0 0 800 520" role="img" aria-labelledby="karte-alq-t karte-alq-d" focusable="false"><title id="karte-alq-t">Karte: Arbeitslosenquote</title><desc id="karte-alq-d">Die 26 Kantone, eingefärbt in 4 Stufen nach Arbeitslosenquote (% der Erwerbspersonen), von den tieferen zu den höheren Zahlen. Am tiefsten im Kanton Appenzell Innerrhoden mit 0,8 %, am höchsten im Kanton Genf mit 5,3 %. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.</desc><g><title>Aargau: 3,2 %</title><use href="#ka-AG" class="k4"/></g><g><title>Appenzell Ausserrhoden: 1,5 %</title><use href="#ka-AR" class="k1"/></g><g><title>Appenzell Innerrhoden: 0,8 %</title><use href="#ka-AI" class="k1"/></g><g><title>Basel-Landschaft: 3,1 %</title><use href="#ka-BL" class="k3"/></g><g><title>Basel-Stadt: 4,4 %</title><use href="#ka-BS" class="k4"/></g><g><title>Bern: 2,2 %</title><use href="#ka-BE" class="k2"/></g><g><title>Freiburg: 2,5 %</title><use href="#ka-FR" class="k2"/></g><g><title>Genf: 5,3 %</title><use href="#ka-GE" class="k4"/></g><g><title>Glarus: 1,7 %</title><use href="#ka-GL" class="k2"/></g><g><title>Graubünden: 1,1 %</title><use href="#ka-GR" class="k1"/></g><g><title>Jura: 4,2 %</title><use href="#ka-JU" class="k4"/></g><g><title>Luzern: 2,0 %</title><use href="#ka-LU" class="k2"/></g><g><title>Neuenburg: 4,4 %</title><use href="#ka-NE" class="k4"/></g><g><title>Nidwalden: 1,2 %</title><use href="#ka-NW" class="k1"/></g><g><title>Obwalden: 1,0 %</title><use href="#ka-OW" class="k1"/></g><g><title>Schaffhausen: 3,1 %</title><use href="#ka-SH" class="k3"/></g><g><title>Schwyz: 1,1 %</title><use href="#ka-SZ" class="k1"/></g><g><title>Solothurn: 3,0 %</title><use href="#ka-SO" class="k3"/></g><g><title>St. Gallen: 2,0 %</title><use href="#ka-SG" class="k2"/></g><g><title>Tessin: 2,9 %</title><use href="#ka-TI" class="k3"/></g><g><title>Thurgau: 2,2 %</title><use href="#ka-TG" class="k2"/></g><g><title>Uri: 1,0 %</title><use href="#ka-UR" class="k1"/></g><g><title>Waadt: 4,9 %</title><use href="#ka-VD" class="k4"/></g><g><title>Wallis: 3,1 %</title><use href="#ka-VS" class="k3"/></g><g><title>Zug: 2,8 %</title><use href="#ka-ZG" class="k3"/></g><g><title>Zürich: 2,9 %</title><use href="#ka-ZH" class="k3"/></g><use href="#ka-see-0" class="see"/><use href="#ka-see-1" class="see"/><use href="#ka-see-2" class="see"/><use href="#ka-see-3" class="see"/><use href="#ka-see-4" class="see"/><use href="#ka-see-5" class="see"/><use href="#ka-see-6" class="see"/><use href="#ka-see-7" class="see"/><use href="#ka-see-8" class="see"/><use href="#ka-see-9" class="see"/><use href="#ka-see-10" class="see"/><use href="#ka-see-11" class="see"/><use href="#ka-see-12" class="see"/><use href="#ka-see-13" class="see"/><use href="#ka-see-14" class="see"/><use href="#ka-see-15" class="see"/><use href="#ka-see-16" class="see"/><use href="#ka-see-17" class="see"/><use href="#ka-see-18" class="see"/><use href="#ka-see-19" class="see"/><use href="#ka-see-20" class="see"/><use href="#ka-see-21" class="see"/></svg></div>
             <p class="atlas-einheit">% der Erwerbspersonen</p>
             <ul class="atlas-legende" role="list"><li><i class="k1" aria-hidden="true"></i><span class="sr-only">Stufe 1 von 4, tiefste Zahlen: </span>0,8 % bis 1,5 %</li><li><i class="k2" aria-hidden="true"></i><span class="sr-only">Stufe 2 von 4: </span>1,7 % bis 2,5 %</li><li><i class="k3" aria-hidden="true"></i><span class="sr-only">Stufe 3 von 4: </span>2,8 % bis 3,1 %</li><li><i class="k4" aria-hidden="true"></i><span class="sr-only">Stufe 4 von 4, höchste Zahlen: </span>3,2 % bis 5,3 %</li></ul>
             <p class="abb-fuss"><span class="abb-wert">Ganze Schweiz: 3,0 %</span></p>
           </div>
-          <figcaption><strong>Abb. 8.</strong> Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren.<sup class="beleg"><a href="#quelle-seco" id="beleg-seco-1" aria-label="Quelle 12">12</a></sup></figcaption>
+          <figcaption><strong>Abb. 9.</strong> Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren.<sup class="beleg"><a href="#quelle-seco" id="beleg-seco-1" aria-label="Quelle 38">38</a></sup></figcaption>
           <p class="atlas-weiter"><a href="/app/?beispiel#/alv">Mit Ihren Angaben rechnen: Arbeitslosentaggeld</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>
         <details class="atlas-werte">
           <summary>Arbeitslosenquote je Kanton als Tabelle</summary>
@@ -852,6 +918,66 @@
         </details>
         </figure>
         <p class="leise">Wer keine Stelle hat, aber nicht beim RAV gemeldet ist, fehlt in dieser Zahl. Es ist ein Monatswert, der saisonal schwankt.</p>
+        <p>Einen Mindestlohn für die ganze Schweiz gibt es nicht. 5 Kantone haben einen eigenen festgelegt.</p>
+
+        <figure class="abb atlas" id="karte-mindestlohn" data-brillen="firma">
+          <p class="atlas-zu">Kantonaler Mindestlohn: zugeklappt, gehört nicht zur gewählten Brille. <a href="#karte-mindestlohn">Karte zeigen<span class="sr-only">: Kantonaler Mindestlohn</span></a></p>
+          <div class="abb-karte f-haselnuss">
+            <p class="abb-kopf" aria-hidden="true"><span>Abb. 10</span><span>Kantonaler Mindestlohn</span></p>
+            <div class="abb-bild"><svg viewBox="0 0 800 520" role="img" aria-labelledby="karte-mindestlohn-t karte-mindestlohn-d" focusable="false"><title id="karte-mindestlohn-t">Karte: Kantonaler Mindestlohn</title><desc id="karte-mindestlohn-d">Die 26 Kantone in zwei Gruppen: 5 Kantone mit kantonalem Mindestlohn (Basel-Stadt, Genf, Jura, Neuenburg, Tessin), die übrigen ohne. Die Beträge stehen in der Tabelle bei der Karte.</desc><g><title>Aargau: kein kantonaler Mindestlohn</title><use href="#ka-AG" class="k1"/></g><g><title>Appenzell Ausserrhoden: kein kantonaler Mindestlohn</title><use href="#ka-AR" class="k1"/></g><g><title>Appenzell Innerrhoden: kein kantonaler Mindestlohn</title><use href="#ka-AI" class="k1"/></g><g><title>Basel-Landschaft: kein kantonaler Mindestlohn</title><use href="#ka-BL" class="k1"/></g><g><title>Basel-Stadt: 22.20 Fr. pro Stunde</title><use href="#ka-BS" class="k4"/></g><g><title>Bern: kein kantonaler Mindestlohn</title><use href="#ka-BE" class="k1"/></g><g><title>Freiburg: kein kantonaler Mindestlohn</title><use href="#ka-FR" class="k1"/></g><g><title>Genf: 24.59 Fr. pro Stunde</title><use href="#ka-GE" class="k4"/></g><g><title>Glarus: kein kantonaler Mindestlohn</title><use href="#ka-GL" class="k1"/></g><g><title>Graubünden: kein kantonaler Mindestlohn</title><use href="#ka-GR" class="k1"/></g><g><title>Jura: 21.40 Fr. pro Stunde</title><use href="#ka-JU" class="k4"/></g><g><title>Luzern: kein kantonaler Mindestlohn</title><use href="#ka-LU" class="k1"/></g><g><title>Neuenburg: 21.35 Fr. pro Stunde</title><use href="#ka-NE" class="k4"/></g><g><title>Nidwalden: kein kantonaler Mindestlohn</title><use href="#ka-NW" class="k1"/></g><g><title>Obwalden: kein kantonaler Mindestlohn</title><use href="#ka-OW" class="k1"/></g><g><title>Schaffhausen: kein kantonaler Mindestlohn</title><use href="#ka-SH" class="k1"/></g><g><title>Schwyz: kein kantonaler Mindestlohn</title><use href="#ka-SZ" class="k1"/></g><g><title>Solothurn: kein kantonaler Mindestlohn</title><use href="#ka-SO" class="k1"/></g><g><title>St. Gallen: kein kantonaler Mindestlohn</title><use href="#ka-SG" class="k1"/></g><g><title>Tessin: 20.00 Fr. pro Stunde</title><use href="#ka-TI" class="k4"/></g><g><title>Thurgau: kein kantonaler Mindestlohn</title><use href="#ka-TG" class="k1"/></g><g><title>Uri: kein kantonaler Mindestlohn</title><use href="#ka-UR" class="k1"/></g><g><title>Waadt: kein kantonaler Mindestlohn</title><use href="#ka-VD" class="k1"/></g><g><title>Wallis: kein kantonaler Mindestlohn</title><use href="#ka-VS" class="k1"/></g><g><title>Zug: kein kantonaler Mindestlohn</title><use href="#ka-ZG" class="k1"/></g><g><title>Zürich: kein kantonaler Mindestlohn</title><use href="#ka-ZH" class="k1"/></g><use href="#ka-see-0" class="see"/><use href="#ka-see-1" class="see"/><use href="#ka-see-2" class="see"/><use href="#ka-see-3" class="see"/><use href="#ka-see-4" class="see"/><use href="#ka-see-5" class="see"/><use href="#ka-see-6" class="see"/><use href="#ka-see-7" class="see"/><use href="#ka-see-8" class="see"/><use href="#ka-see-9" class="see"/><use href="#ka-see-10" class="see"/><use href="#ka-see-11" class="see"/><use href="#ka-see-12" class="see"/><use href="#ka-see-13" class="see"/><use href="#ka-see-14" class="see"/><use href="#ka-see-15" class="see"/><use href="#ka-see-16" class="see"/><use href="#ka-see-17" class="see"/><use href="#ka-see-18" class="see"/><use href="#ka-see-19" class="see"/><use href="#ka-see-20" class="see"/><use href="#ka-see-21" class="see"/></svg></div>
+            <p class="atlas-einheit">Kanton mit oder ohne eigenen Mindestlohn</p>
+            <ul class="atlas-legende" role="list"><li><i class="k4" aria-hidden="true"></i>mit kantonalem Mindestlohn (5)</li><li><i class="k1" aria-hidden="true"></i>ohne (21)</li></ul>
+          </div>
+          <figcaption><strong>Abb. 10.</strong> Kantone mit einem gesetzlichen Mindestlohn, Stand 2026. Die Farbe zeigt nur, ob es einen gibt, nicht, wie hoch er ist. Ausnahmen, etwa für Lernende, regelt jeder Kanton selbst.</figcaption>
+          <p class="atlas-weiter"><a href="/app/?beispiel#/stundenlohn">Mit Ihren Angaben rechnen: Stundenlohn</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>
+          <details class="atlas-werte">
+            <summary>Mindestlohn je Kanton als Tabelle</summary>
+            <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Kantonaler Mindestlohn 2026"><table>
+              <caption>Kantonaler Mindestlohn 2026, in Franken pro Stunde, brutto, alphabetisch</caption>
+              <tr><th scope="col">Kanton</th><th scope="col" class="n">Fr. pro Stunde</th><th scope="col">Hinweis</th></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="n">22.20</td><td>jährlich an Teuerung und Löhne angepasst<sup class="beleg"><a href="#quelle-mlBs" id="beleg-mlBs-1" aria-label="Quelle 39">39</a></sup></td></tr>
+              <tr><th scope="row">Genf</th><td class="n">24.59</td><td>jährlich an die Teuerung angepasst<sup class="beleg"><a href="#quelle-mlGe" id="beleg-mlGe-1" aria-label="Quelle 40">40</a></sup></td></tr>
+              <tr><th scope="row">Jura</th><td class="n">21.40</td><td>Anpassung entscheidet die Regierung<sup class="beleg"><a href="#quelle-mlJu" id="beleg-mlJu-1" aria-label="Quelle 41">41</a></sup></td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="n">21.35</td><td>jährlich an die Teuerung angepasst<sup class="beleg"><a href="#quelle-mlNe" id="beleg-mlNe-1" aria-label="Quelle 42">42</a></sup></td></tr>
+              <tr><th scope="row">Tessin</th><td class="n">20.00</td><td>je nach Branche 20.00 bis 20.50 Fr.<sup class="beleg"><a href="#quelle-mlTi" id="beleg-mlTi-1" aria-label="Quelle 43">43</a></sup></td></tr>
+            </table></div>
+          </details>
+        </figure>
+
+        <p>Im Geltungsbereich des Arbeitsgesetzes ist der 1. August dem Sonntag gleichgestellt; dazu dürfen die Kantone höchstens acht weitere Feiertage den Sonntagen gleichstellen.<sup class="beleg"><a href="#quelle-arg" id="beleg-arg-1" aria-label="Quelle 44">44</a></sup> Gezählt mit dem 1. August haben 23 Kantone neun solche Feiertage; Appenzell Ausserrhoden, Graubünden und Neuenburg haben acht. An diesen Tagen gelten für die Arbeit die Regeln für den Sonntag. Welche Tage es sind, unterscheidet sich stärker als ihre Zahl.<sup class="beleg"><a href="#quelle-secoFeiertage" id="beleg-secoFeiertage-1" aria-label="Quelle 45">45</a></sup></p>
+        <details class="atlas-werte">
+          <summary>Feiertage je Kanton als Tabelle</summary>
+          <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Dem Sonntag gleichgestellte Feiertage je Kanton"><table>
+            <caption>Dem Sonntag gleichgestellte Feiertage je Kanton, mit dem 1. August, ohne Sonderregeln einzelner Gebiete, alphabetisch</caption>
+            <tr><th scope="col">Kanton</th><th scope="col" class="n">Anzahl</th><th scope="col">Hinweis</th></tr>
+              <tr><th scope="row">Aargau</th><td class="n">9</td><td>nicht im ganzen Kanton gleich</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="n">8</td><td>2026: 7, weil einzelne Feiertage nur an bestimmten Wochentagen gelten</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="n">9</td><td>2026: 8, weil einzelne Feiertage nur an bestimmten Wochentagen gelten · <strong>nicht gesichert</strong></td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Bern</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Freiburg</th><td class="n">9</td><td>nicht im ganzen Kanton gleich</td></tr>
+              <tr><th scope="row">Genf</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Glarus</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Graubünden</th><td class="n">8</td><td></td></tr>
+              <tr><th scope="row">Jura</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Luzern</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="n">8</td><td>nicht im ganzen Kanton gleich · 2026: 7, weil einzelne Feiertage nur an bestimmten Wochentagen gelten</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Obwalden</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Schwyz</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Solothurn</th><td class="n">9</td><td>nicht im ganzen Kanton gleich</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Tessin</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Thurgau</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Uri</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Waadt</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Wallis</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Zug</th><td class="n">9</td><td></td></tr>
+              <tr><th scope="row">Zürich</th><td class="n">9</td><td></td></tr>
+          </table></div>
+        </details>
 
       <h2 id="unterstuetzung" tabindex="-1"><span class="nr">8</span> Unterstützung</h2>
         <p>Sozialhilfe und Ergänzungsleistungen helfen, wenn das eigene Geld nicht reicht. Die Karten zeigen, wie viele Menschen sie beziehen.</p>
@@ -859,26 +985,26 @@
         <figure class="abb atlas" id="karte-sozialhilfe" data-brillen="kanton stiftung">
           <p class="atlas-zu">Sozialhilfequote: zugeklappt, gehört nicht zur gewählten Brille. <a href="#karte-sozialhilfe">Karte zeigen<span class="sr-only">: Sozialhilfequote</span></a></p>
           <div class="abb-karte f-zwetschge">
-            <p class="abb-kopf" aria-hidden="true"><span>Abb. 9</span><span>Sozialhilfequote</span></p>
+            <p class="abb-kopf" aria-hidden="true"><span>Abb. 11</span><span>Sozialhilfequote</span></p>
             <div class="abb-bild"><svg viewBox="0 0 800 520" role="img" aria-labelledby="karte-sozialhilfe-t karte-sozialhilfe-d" focusable="false"><title id="karte-sozialhilfe-t">Karte: Sozialhilfequote</title><desc id="karte-sozialhilfe-d">Die 26 Kantone, eingefärbt in 4 Stufen nach Sozialhilfequote (% der Bevölkerung), von den tieferen zu den höheren Zahlen. Am tiefsten im Kanton Obwalden mit 0,8 %, am höchsten im Kanton Genf mit 7,6 %. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.</desc><g><title>Aargau: 1,5 %</title><use href="#ka-AG" class="k2"/></g><g><title>Appenzell Ausserrhoden: 2,0 %</title><use href="#ka-AR" class="k2"/></g><g><title>Appenzell Innerrhoden: 1,2 %</title><use href="#ka-AI" class="k1"/></g><g><title>Basel-Landschaft: 2,5 %</title><use href="#ka-BL" class="k3"/></g><g><title>Basel-Stadt: 4,8 %</title><use href="#ka-BS" class="k4"/></g><g><title>Bern: 3,4 %</title><use href="#ka-BE" class="k4"/></g><g><title>Freiburg: 2,0 %</title><use href="#ka-FR" class="k2"/></g><g><title>Genf: 7,6 %</title><use href="#ka-GE" class="k4"/></g><g><title>Glarus: 1,5 %</title><use href="#ka-GL" class="k2"/></g><g><title>Graubünden: 1,2 %</title><use href="#ka-GR" class="k1"/></g><g><title>Jura: 4,2 %</title><use href="#ka-JU" class="k4"/></g><g><title>Luzern: 2,1 %</title><use href="#ka-LU" class="k3"/></g><g><title>Neuenburg: 5,9 %</title><use href="#ka-NE" class="k4"/></g><g><title>Nidwalden: 1,0 %</title><use href="#ka-NW" class="k1"/></g><g><title>Obwalden: 0,8 %</title><use href="#ka-OW" class="k1"/></g><g><title>Schaffhausen: 2,7 %</title><use href="#ka-SH" class="k3"/></g><g><title>Schwyz: 1,3 %</title><use href="#ka-SZ" class="k1"/></g><g><title>Solothurn: 3,3 %</title><use href="#ka-SO" class="k3"/></g><g><title>St. Gallen: 2,0 %</title><use href="#ka-SG" class="k2"/></g><g><title>Tessin: 2,7 %</title><use href="#ka-TI" class="k3"/></g><g><title>Thurgau: 1,2 %</title><use href="#ka-TG" class="k1"/></g><g><title>Uri: 1,1 %</title><use href="#ka-UR" class="k1"/></g><g><title>Waadt: 4,3 %</title><use href="#ka-VD" class="k4"/></g><g><title>Wallis: 1,7 %</title><use href="#ka-VS" class="k2"/></g><g><title>Zug: 1,3 %</title><use href="#ka-ZG" class="k1"/></g><g><title>Zürich: 2,5 %</title><use href="#ka-ZH" class="k3"/></g><use href="#ka-see-0" class="see"/><use href="#ka-see-1" class="see"/><use href="#ka-see-2" class="see"/><use href="#ka-see-3" class="see"/><use href="#ka-see-4" class="see"/><use href="#ka-see-5" class="see"/><use href="#ka-see-6" class="see"/><use href="#ka-see-7" class="see"/><use href="#ka-see-8" class="see"/><use href="#ka-see-9" class="see"/><use href="#ka-see-10" class="see"/><use href="#ka-see-11" class="see"/><use href="#ka-see-12" class="see"/><use href="#ka-see-13" class="see"/><use href="#ka-see-14" class="see"/><use href="#ka-see-15" class="see"/><use href="#ka-see-16" class="see"/><use href="#ka-see-17" class="see"/><use href="#ka-see-18" class="see"/><use href="#ka-see-19" class="see"/><use href="#ka-see-20" class="see"/><use href="#ka-see-21" class="see"/></svg></div>
             <p class="atlas-einheit">% der Bevölkerung</p>
             <ul class="atlas-legende" role="list"><li><i class="k1" aria-hidden="true"></i><span class="sr-only">Stufe 1 von 4, tiefste Zahlen: </span>0,8 % bis 1,3 %</li><li><i class="k2" aria-hidden="true"></i><span class="sr-only">Stufe 2 von 4: </span>1,5 % bis 2,0 %</li><li><i class="k3" aria-hidden="true"></i><span class="sr-only">Stufe 3 von 4: </span>2,1 % bis 3,3 %</li><li><i class="k4" aria-hidden="true"></i><span class="sr-only">Stufe 4 von 4, höchste Zahlen: </span>3,4 % bis 7,6 %</li></ul>
             <p class="abb-fuss"><span class="abb-wert">Ganze Schweiz: 2,9 %</span></p>
           </div>
-          <figcaption><strong>Abb. 9.</strong> Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe bezog.<sup class="beleg"><a href="#quelle-bfsSozialhilfe" id="beleg-bfsSozialhilfe-1" aria-label="Quelle 13">13</a></sup></figcaption>
+          <figcaption><strong>Abb. 11.</strong> Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe, also Geld vom Sozialdienst, bezog.<sup class="beleg"><a href="#quelle-bfsSozialhilfe" id="beleg-bfsSozialhilfe-1" aria-label="Quelle 46">46</a></sup></figcaption>
           <p class="atlas-weiter"><a href="/app/?beispiel#/sozialhilfe">Mit Ihren Angaben rechnen: Sozialhilfe</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>
         </figure>
 
         <figure class="abb atlas" id="karte-el" data-brillen="kanton stiftung">
           <p class="atlas-zu">Ergänzungsleistungen zur AHV: zugeklappt, gehört nicht zur gewählten Brille. <a href="#karte-el">Karte zeigen<span class="sr-only">: Ergänzungsleistungen zur AHV</span></a></p>
           <div class="abb-karte f-traube">
-            <p class="abb-kopf" aria-hidden="true"><span>Abb. 10</span><span>Ergänzungsleistungen zur AHV</span></p>
+            <p class="abb-kopf" aria-hidden="true"><span>Abb. 12</span><span>Ergänzungsleistungen zur AHV</span></p>
             <div class="abb-bild"><svg viewBox="0 0 800 520" role="img" aria-labelledby="karte-el-t karte-el-d" focusable="false"><title id="karte-el-t">Karte: Ergänzungsleistungen zur AHV</title><desc id="karte-el-d">Die 26 Kantone, eingefärbt in 4 Stufen nach Ergänzungsleistungen zur AHV (% der Menschen mit Altersrente), von den tieferen zu den höheren Zahlen. Am tiefsten im Kanton Appenzell Innerrhoden mit 5,5 %, am höchsten im Kanton Basel-Stadt mit 21,3 %. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.</desc><g><title>Aargau: 9,1 %</title><use href="#ka-AG" class="k2"/></g><g><title>Appenzell Ausserrhoden: 9,4 %</title><use href="#ka-AR" class="k2"/></g><g><title>Appenzell Innerrhoden: 5,5 %</title><use href="#ka-AI" class="k1"/></g><g><title>Basel-Landschaft: 9,5 %</title><use href="#ka-BL" class="k2"/></g><g><title>Basel-Stadt: 21,3 %</title><use href="#ka-BS" class="k4"/></g><g><title>Bern: 13,2 %</title><use href="#ka-BE" class="k3"/></g><g><title>Freiburg: 14,1 %</title><use href="#ka-FR" class="k3"/></g><g><title>Genf: 16,4 %</title><use href="#ka-GE" class="k4"/></g><g><title>Glarus: 11,6 %</title><use href="#ka-GL" class="k3"/></g><g><title>Graubünden: 7,9 %</title><use href="#ka-GR" class="k1"/></g><g><title>Jura: 18,3 %</title><use href="#ka-JU" class="k4"/></g><g><title>Luzern: 13,5 %</title><use href="#ka-LU" class="k3"/></g><g><title>Neuenburg: 18,3 %</title><use href="#ka-NE" class="k4"/></g><g><title>Nidwalden: 7,0 %</title><use href="#ka-NW" class="k1"/></g><g><title>Obwalden: 8,3 %</title><use href="#ka-OW" class="k1"/></g><g><title>Schaffhausen: 10,4 %</title><use href="#ka-SH" class="k2"/></g><g><title>Schwyz: 8,1 %</title><use href="#ka-SZ" class="k1"/></g><g><title>Solothurn: 12,1 %</title><use href="#ka-SO" class="k3"/></g><g><title>St. Gallen: 12,5 %</title><use href="#ka-SG" class="k3"/></g><g><title>Tessin: 16,4 %</title><use href="#ka-TI" class="k4"/></g><g><title>Thurgau: 9,6 %</title><use href="#ka-TG" class="k2"/></g><g><title>Uri: 9,0 %</title><use href="#ka-UR" class="k2"/></g><g><title>Waadt: 15,2 %</title><use href="#ka-VD" class="k4"/></g><g><title>Wallis: 8,0 %</title><use href="#ka-VS" class="k1"/></g><g><title>Zug: 6,9 %</title><use href="#ka-ZG" class="k1"/></g><g><title>Zürich: 10,9 %</title><use href="#ka-ZH" class="k3"/></g><use href="#ka-see-0" class="see"/><use href="#ka-see-1" class="see"/><use href="#ka-see-2" class="see"/><use href="#ka-see-3" class="see"/><use href="#ka-see-4" class="see"/><use href="#ka-see-5" class="see"/><use href="#ka-see-6" class="see"/><use href="#ka-see-7" class="see"/><use href="#ka-see-8" class="see"/><use href="#ka-see-9" class="see"/><use href="#ka-see-10" class="see"/><use href="#ka-see-11" class="see"/><use href="#ka-see-12" class="see"/><use href="#ka-see-13" class="see"/><use href="#ka-see-14" class="see"/><use href="#ka-see-15" class="see"/><use href="#ka-see-16" class="see"/><use href="#ka-see-17" class="see"/><use href="#ka-see-18" class="see"/><use href="#ka-see-19" class="see"/><use href="#ka-see-20" class="see"/><use href="#ka-see-21" class="see"/></svg></div>
             <p class="atlas-einheit">% der Menschen mit Altersrente</p>
             <ul class="atlas-legende" role="list"><li><i class="k1" aria-hidden="true"></i><span class="sr-only">Stufe 1 von 4, tiefste Zahlen: </span>5,5 % bis 8,3 %</li><li><i class="k2" aria-hidden="true"></i><span class="sr-only">Stufe 2 von 4: </span>9,0 % bis 10,4 %</li><li><i class="k3" aria-hidden="true"></i><span class="sr-only">Stufe 3 von 4: </span>10,9 % bis 14,1 %</li><li><i class="k4" aria-hidden="true"></i><span class="sr-only">Stufe 4 von 4, höchste Zahlen: </span>15,2 % bis 21,3 %</li></ul>
             <p class="abb-fuss"><span class="abb-wert">Ganze Schweiz: 12,3 %</span></p>
           </div>
-          <figcaption><strong>Abb. 10.</strong> Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen.<sup class="beleg"><a href="#quelle-bsvEl" id="beleg-bsvEl-1" aria-label="Quelle 14">14</a></sup></figcaption>
+          <figcaption><strong>Abb. 12.</strong> Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen.<sup class="beleg"><a href="#quelle-bsvEl" id="beleg-bsvEl-1" aria-label="Quelle 47">47</a></sup></figcaption>
           <p class="atlas-weiter"><a href="/app/?beispiel#/ergaenzungsleistungen">Mit Ihren Angaben rechnen: Ergänzungsleistungen</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>
         <details class="atlas-werte">
           <summary>Sozialhilfe und Ergänzungsleistungen je Kanton als Tabelle</summary><p class="leise legende" aria-hidden="true"><span class="b0"></span> Sozialhilfequote · <span class="b1"></span> Ergänzungsleistungen zur AHV</p>
@@ -924,8 +1050,8 @@
           <dl>
             <dt>Art</dt><dd>grosse Spanne</dd>
             <dt>Belegt</dt><dd>ja</dd>
-            <dt>Was die Zahlen zeigen</dt><dd>Bei der direkten Bundessteuer lassen sich im Steuerjahr 2026 bis zu 25'800 Franken je Kind abziehen.<sup class="beleg"><a href="#quelle-dbg" id="beleg-dbg-1" aria-label="Quelle 15">15</a></sup> Bei den Kantons- und Gemeindesteuern reichen die Grenzen von 8'000 Franken im Kanton Schwyz bis 27'300 Franken im Kanton Graubünden. 17 Kantone liegen unter dem Betrag des Bundes, 8 auf oder darüber.<sup class="beleg"><a href="#quelle-estvKantonsblaetter" id="beleg-estvKantonsblaetter-2" aria-label="Quelle 10">10</a></sup> Alle Werte stehen in der Tabelle zur Karte im Abschnitt Familie.</dd>
-            <dt>Wer die Regel festlegt</dt><dd>Den Abzug und seine Bedingungen schreibt das Bundesrecht vor, die Höhe bei den Kantons- und Gemeindesteuern legt jeder Kanton in seinem Steuergesetz fest.<sup class="beleg"><a href="#quelle-sthg" id="beleg-sthg-1" aria-label="Quelle 16">16</a></sup></dd>
+            <dt>Was die Zahlen zeigen</dt><dd>Bei der direkten Bundessteuer lassen sich im Steuerjahr 2026 bis zu 25'800 Franken je Kind abziehen.<sup class="beleg"><a href="#quelle-dbg" id="beleg-dbg-1" aria-label="Quelle 48">48</a></sup> Bei den Kantons- und Gemeindesteuern reichen die Grenzen von 8'000 Franken im Kanton Schwyz bis 27'300 Franken im Kanton Graubünden. 17 Kantone liegen unter dem Betrag des Bundes, 8 auf oder darüber.<sup class="beleg"><a href="#quelle-estvKantonsblaetter" id="beleg-estvKantonsblaetter-2" aria-label="Quelle 10">10</a></sup> Alle Werte stehen in der Tabelle zur Karte im Abschnitt Familie.</dd>
+            <dt>Wer die Regel festlegt</dt><dd>Den Abzug und seine Bedingungen schreibt das Bundesrecht vor, die Höhe bei den Kantons- und Gemeindesteuern legt jeder Kanton in seinem Steuergesetz fest.<sup class="beleg"><a href="#quelle-sthg" id="beleg-sthg-1" aria-label="Quelle 49">49</a></sup></dd>
             <dt>Vorbehalt</dt><dd>Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen, und vom Steuertarif. Neuenburg ist nicht mitgezählt, weil für den Kanton nur der Wert für 2025 vorliegt.</dd>
           </dl>
         </article>
@@ -934,14 +1060,14 @@
           <dl>
             <dt>Art</dt><dd>Stand der Umsetzung</dd>
             <dt>Belegt</dt><dd>ja</dd>
-            <dt>Was belegt ist</dt><dd>Die Genfer Stimmberechtigten haben am 18. Juni 2023 einen Elternurlaub in die Kantonsverfassung geschrieben: zu den 16 Wochen Mutterschaftsurlaub 8 Wochen für den anderen Elternteil, die heutigen 2 Wochen nach Bundesrecht eingerechnet. Das Bundesparlament hat die Verfassungsänderung am 22. September 2026 bestätigt (gewährleistet); ausgenommen ist die Bestimmung zu Pflegefamilien.<sup class="beleg"><a href="#quelle-parlamentGe" id="beleg-parlamentGe-1" aria-label="Quelle 17">17</a></sup> Möglich wird das durch eine Änderung des Erwerbsersatzgesetzes (EOG) vom 19. Dezember 2025: Sie erlaubt den Kantonen, den Urlaub des anderen Elternteils zu verlängern, und tritt am 1. Juli 2027 in Kraft.<sup class="beleg"><a href="#quelle-as2026433" id="beleg-as2026433-1" aria-label="Quelle 18">18</a></sup> Das kantonale Ausführungsgesetz ist laut Kanton noch in Arbeit, ein Datum für den Start nennt er nicht.<sup class="beleg"><a href="#quelle-geElternurlaub" id="beleg-geElternurlaub-1" aria-label="Quelle 19">19</a></sup></dd>
+            <dt>Was belegt ist</dt><dd>Die Genfer Stimmberechtigten haben am 18. Juni 2023 einen Elternurlaub in die Kantonsverfassung geschrieben: zu den 16 Wochen Mutterschaftsurlaub 8 Wochen für den anderen Elternteil, die heutigen 2 Wochen nach Bundesrecht eingerechnet. Das Bundesparlament hat die Verfassungsänderung am 22. September 2026 bestätigt (gewährleistet); ausgenommen ist die Bestimmung zu Pflegefamilien.<sup class="beleg"><a href="#quelle-parlamentGe" id="beleg-parlamentGe-1" aria-label="Quelle 50">50</a></sup> Möglich wird das durch eine Änderung des Erwerbsersatzgesetzes (EOG) vom 19. Dezember 2025: Sie erlaubt den Kantonen, den Urlaub des anderen Elternteils zu verlängern, und tritt am 1. Juli 2027 in Kraft.<sup class="beleg"><a href="#quelle-as2026433" id="beleg-as2026433-1" aria-label="Quelle 51">51</a></sup> Das kantonale Ausführungsgesetz ist laut Kanton noch in Arbeit, ein Datum für den Start nennt er nicht.<sup class="beleg"><a href="#quelle-geElternurlaub" id="beleg-geElternurlaub-1" aria-label="Quelle 52">52</a></sup></dd>
             <dt>Wer die Regel festlegt</dt><dd>Staatsrat und Grosser Rat des Kantons Genf. Laut Kanton wirken vorher auch das Bundesamt für Sozialversicherungen und allenfalls der Bundesrat mit.</dd>
             <dt>Vorbehalt</dt><dd>Bis das Genfer Ausführungsgesetz in Kraft ist, gibt es den längeren Urlaub für den anderen Elternteil nicht; es gelten die bisherigen Regeln. Ob und wie viel Sie erhalten, hängt von Ihrer Situation ab. Massgebend ist die Auskunft der Ausgleichskasse.</dd>
           </dl>
         </article>
 
       <div class="karte">
-        <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
+        <p><strong>Mit Ihren Angaben lässt sich das in der App durchrechnen.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
         <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
         <p><a class="knopf" href="/app/?beispiel#/praemien">Beispiel ansehen — ohne Zugangscode</a></p>
@@ -1049,8 +1175,242 @@
             <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvDrittbetreuung-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
           </div>
         </li>
-        <li id="quelle-seco">
+        <li id="quelle-alimenteGE">
           <span class="q-nr">12</span>
+          <div>
+            <p class="q-titel"><a href="https://www.ge.ch/pensions-alimentaires-impayees" rel="noopener">Alimentenbevorschussung: Loi sur l'avance et le recouvrement des pensions alimentaires (LARPA) RSG E 1 25</a></p>
+            <p class="q-her">Kanton Genf · Stand 2026</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 673 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteGE-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteTI">
+          <span class="q-nr">13</span>
+          <div>
+            <p class="q-titel"><a href="https://m3.ti.ch/CAN/RLeggi/public/index.php/raccolta-leggi/pdfatto/atto/12521" rel="noopener">Alimentenbevorschussung: Regolamento concernente l'anticipo e l'incasso degli alimenti per i figli minorenni, RL 874.350, art. 4</a></p>
+            <p class="q-her">Kanton Tessin · Stand 2023</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 700 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteTI-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteSO">
+          <span class="q-nr">14</span>
+          <div>
+            <p class="q-titel"><a href="https://bgs.so.ch/app/de/texts_of_law/831.1" rel="noopener">Alimentenbevorschussung: Sozialgesetz (SG) BGS 831.1, §§ 96-97</a></p>
+            <p class="q-her">Kanton Solothurn · Stand 2026</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 756 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteSO-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteGR">
+          <span class="q-nr">15</span>
+          <div>
+            <p class="q-titel"><a href="https://www.gr-lex.gr.ch/app/de/texts_of_law/215.050" rel="noopener">Alimentenbevorschussung: Verordnung ueber die Bevorschussung von Unterhaltsbeitraegen fuer unterhaltsberechtigte Kinder, BR 215.050, Art. 3-4</a></p>
+            <p class="q-her">Kanton Graubünden · Stand 2025</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 780 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteGR-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteJU">
+          <span class="q-nr">16</span>
+          <div>
+            <p class="q-titel"><a href="https://rsju.jura.ch/Htdocs/Files/v/4cf9bc69fa36574e2dcc54aea4a2d940b27262e7977c685dacc24edaf34ca01f.pdf/JO_05_06.02.25_web.pdf?download=1" rel="noopener">Alimentenbevorschussung: Arrêté fixant les limites de revenu et de fortune ainsi que le montant maximal des avances (RSJU 851.111), Modification du 28.1.2025</a></p>
+            <p class="q-her">Kanton Jura · Stand 2025</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 901 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteJU-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteVS">
+          <span class="q-nr">17</span>
+          <div>
+            <p class="q-titel"><a href="https://lex.vs.ch/app/fr/texts_of_law/850.301" rel="noopener">Alimentenbevorschussung: Loi sur le recouvrement et les avances de contributions d'entretien (LRACE) 850.3</a></p>
+            <p class="q-her">Kanton Wallis · Stand 2022</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 950 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteVS-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteVD">
+          <span class="q-nr">18</span>
+          <div>
+            <p class="q-titel"><a href="https://www.lexfind.ch/tolv/241701/fr" rel="noopener">Alimentenbevorschussung: Loi sur le recouvrement et les avances sur pensions alimentaires (LRAPA) BLV 850.36</a></p>
+            <p class="q-her">LexFind (Sammlung der Erlasse), Kanton Waadt · Stand 2024<span class="q-art">keine Behörde</span></p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 980 Fr. je Kind und Monat; ob seither angepasst, nicht gesichert</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteVD-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteAG">
+          <span class="q-nr">19</span>
+          <div>
+            <p class="q-titel"><a href="https://www.ag.ch/alimentenbevorschussung/anspruchsvoraussetzungen" rel="noopener">Alimentenbevorschussung: Gesetz ueber die oeffentliche Sozialhilfe und die soziale Praevention (SPG) SAR 851.200, § 35</a></p>
+            <p class="q-her">Kanton Aargau · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteAG-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteAR">
+          <span class="q-nr">20</span>
+          <div>
+            <p class="q-titel"><a href="https://ar.clex.ch/app/de/texts_of_law/212.33" rel="noopener">Alimentenbevorschussung: Gesetz ueber Inkassohilfe und Bevorschussung von Unterhaltsbeitraegen fuer Kinder, bGS 212.33, Art. 5</a></p>
+            <p class="q-her">Kanton Appenzell Ausserrhoden · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteAR-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteAI">
+          <span class="q-nr">21</span>
+          <div>
+            <p class="q-titel"><a href="https://ai.clex.ch/app/de/texts_of_law/850.350" rel="noopener">Alimentenbevorschussung: Verordnung ueber die Inkassohilfe und Bevorschussung von Unterhaltsbeitraegen (IBV), GS 850.350, Art. 4, 7, 8</a></p>
+            <p class="q-her">Kanton Appenzell Innerrhoden · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteAI-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteBL">
+          <span class="q-nr">22</span>
+          <div>
+            <p class="q-titel"><a href="https://bl.clex.ch/app/de/texts_of_law/850.12" rel="noopener">Alimentenbevorschussung: Gesetz ueber die Sozial- und die Jugendhilfe (SHG) SGS 850, § 23</a></p>
+            <p class="q-her">Kanton Basel-Landschaft · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteBL-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteBS">
+          <span class="q-nr">23</span>
+          <div>
+            <p class="q-titel"><a href="https://www.bs.ch/themen/finanzielle-hilfe/leistungen/alimentenhilfe" rel="noopener">Alimentenbevorschussung: Verordnung ueber das Inkasso und die Bevorschussung von Unterhaltsbeitraegen (ABVV), SG 212.200, §§ 9-11</a></p>
+            <p class="q-her">Kanton Basel-Stadt · Stand 2026</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 1008 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteBS-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteBE">
+          <span class="q-nr">24</span>
+          <div>
+            <p class="q-titel"><a href="https://www.belex.sites.be.ch/app/de/texts_of_law/213.221" rel="noopener">Alimentenbevorschussung: Verordnung ueber Inkassohilfe und Bevorschussung von Unterhaltsbeitraegen (IBV), BSG 213.221, Art. 12 und 19</a></p>
+            <p class="q-her">Kanton Bern · Stand 2026</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 1008 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteBE-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteFR">
+          <span class="q-nr">25</span>
+          <div>
+            <p class="q-titel"><a href="https://bdlf.fr.ch/app/fr/texts_of_law/212.4.11" rel="noopener">Alimentenbevorschussung: Loi sur l'aide au recouvrement et l'avance de contributions d'entretien (LARACE), RSF 212.4.1, art. 9</a></p>
+            <p class="q-her">Kanton Freiburg · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteFR-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteGL">
+          <span class="q-nr">26</span>
+          <div>
+            <p class="q-titel"><a href="https://gesetze.gl.ch/app/de/texts_of_law/VIII%20E%2F21%2F10" rel="noopener">Alimentenbevorschussung: Verordnung ueber die Alimentenhilfe (ALVO), GS VIII E/21/10, Art. 7, 8, 10</a></p>
+            <p class="q-her">Kanton Glarus · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteGL-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteLU">
+          <span class="q-nr">27</span>
+          <div>
+            <p class="q-titel"><a href="https://srl.lu.ch/app/de/texts_of_law/892a" rel="noopener">Alimentenbevorschussung: Sozialhilfegesetz (SHG) SRL Nr. 892, § 46</a></p>
+            <p class="q-her">Kanton Luzern · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteLU-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteNW">
+          <span class="q-nr">28</span>
+          <div>
+            <p class="q-titel"><a href="https://gesetze.nw.ch/app/de/texts_of_law/761.11" rel="noopener">Alimentenbevorschussung: Verordnung zum Gesetz ueber die Sozialhilfe, NG 761.11, §§ 15-17</a></p>
+            <p class="q-her">Kanton Nidwalden · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteNW-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteOW">
+          <span class="q-nr">29</span>
+          <div>
+            <p class="q-titel"><a href="https://gdb.ow.ch/app/de/texts_of_law/870.12" rel="noopener">Alimentenbevorschussung: Verordnung ueber das Inkasso und die Bevorschussung von Unterhaltsbeitraegen, GDB 870.12, Art. 4</a></p>
+            <p class="q-her">Kanton Obwalden · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteOW-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteSH">
+          <span class="q-nr">30</span>
+          <div>
+            <p class="q-titel"><a href="https://sh.ch/CMS/get/file/4484ccee-9215-41fc-ab01-65c4418b197c" rel="noopener">Alimentenbevorschussung: Alimentenbevorschussungsverordnung SHR 211.222, §§ 9, 12</a></p>
+            <p class="q-her">Kanton Schaffhausen · Stand 2025</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 1008 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteSH-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteSZ">
+          <span class="q-nr">31</span>
+          <div>
+            <p class="q-titel"><a href="https://www.sz.ch/public/upload/assets/3747/380_200.pdf?fp=7" rel="noopener">Alimentenbevorschussung: Gesetz ueber Inkassohilfe und Bevorschussung von Unterhaltsbeitraegen, SRSZ 380.200, §§ 14-15</a></p>
+            <p class="q-her">Kanton Schwyz · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteSZ-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteSG">
+          <span class="q-nr">32</span>
+          <div>
+            <p class="q-titel"><a href="https://www.gesetzessammlung.sg.ch/app/de/texts_of_law/911.51" rel="noopener">Alimentenbevorschussung: Gesetz ueber Inkassohilfe und Vorschuesse fuer Unterhaltsbeitraege (GIVU), sGS 911.51, Art. 4-4quinquies</a></p>
+            <p class="q-her">Kanton St. Gallen · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteSG-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteTG">
+          <span class="q-nr">33</span>
+          <div>
+            <p class="q-titel"><a href="https://www.rechtsbuch.tg.ch/app/de/texts_of_law/836.4" rel="noopener">Alimentenbevorschussung: Gesetz ueber die Inkassohilfe ... und die Bevorschussung von Kinderalimenten (AliG), RB 836.4, §§ 6-7</a></p>
+            <p class="q-her">Kanton Thurgau · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteTG-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteUR">
+          <span class="q-nr">34</span>
+          <div>
+            <p class="q-titel"><a href="https://rechtsbuch.ur.ch/app/de/texts_of_law/20.3461" rel="noopener">Alimentenbevorschussung: Gesetz ueber die Bevorschussung von Unterhaltsbeitraegen, RB 20.3461, Art. 4-5</a></p>
+            <p class="q-her">Kanton Uri · Stand 2026</p>
+            <p class="q-belegt">Belegt: Kopplung an die höchste AHV-Waisenrente; der Betrag 1008 Fr. ist daraus abgeleitet, nicht im Erlass genannt</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteUR-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteZH">
+          <span class="q-nr">35</span>
+          <div>
+            <p class="q-titel"><a href="https://www.zh.ch/content/dam/zhweb/bilder-dokumente/themen/familie/sorgerecht-unterhalt/alimentenhilfe/mb_berechnung_anspruch_alimentenbevorschussung.pdf" rel="noopener">Alimentenbevorschussung: § 23 Abs. 2 Kinder- und Jugendhilfegesetz (KJHG, ZH)</a></p>
+            <p class="q-her">Kanton Zürich · Stand 2026</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 1008 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteZH-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteZG">
+          <span class="q-nr">36</span>
+          <div>
+            <p class="q-titel"><a href="https://bgs.zg.ch/app/de/texts_of_law/213.713" rel="noopener">Alimentenbevorschussung: Inkassohilfe- und Bevorschussungsgesetz BGS 213.711, §§ 4, 6, 7bis</a></p>
+            <p class="q-her">Kanton Zug · Stand 2025</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 1362 Fr. je Kind und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteZG-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-alimenteNE">
+          <span class="q-nr">37</span>
+          <div>
+            <p class="q-titel"><a href="https://rsn.ne.ch/DATA/program/books/rsne/pdf/2132211.pdf" rel="noopener">Alimentenbevorschussung: Loi (LRACE) RSN 213.221</a></p>
+            <p class="q-her">Kanton Neuenburg · Stand 2025</p>
+            <p class="q-belegt">Belegt: höchster Vorschuss 2000 Fr. pro Unterhaltsbeitrag und Monat</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-alimenteNE-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-seco">
+          <span class="q-nr">38</span>
           <div>
             <p class="q-titel"><a href="https://www.seco.admin.ch/de/newnsb/Cdju9-o8WGML" rel="noopener">Die Lage auf dem Arbeitsmarkt, September 2026</a></p>
             <p class="q-her">Staatssekretariat für Wirtschaft · publiziert 6.10.2026</p>
@@ -1058,8 +1418,71 @@
             <p class="q-zurueck">Zurück zum Text: <a href="#beleg-seco-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
           </div>
         </li>
+        <li id="quelle-mlBs">
+          <span class="q-nr">39</span>
+          <div>
+            <p class="q-titel"><a href="https://media.bs.ch/original_file_download/e7ce0ad1ebb1a946f5c6aab2ce99db95762ecfa2/2026-01-01-merkblatt-faq-homepage-deutsch.docx" rel="noopener">Merkblatt und FAQ zum kantonalen Mindestlohn</a></p>
+            <p class="q-her">Kanton Basel-Stadt, Amt für Wirtschaft und Arbeit · Stand 1.1.2026</p>
+            <p class="q-belegt">Belegt: 22.20 Fr. pro Stunde 2026, jährliche Anpassung an einen Mischindex aus Teuerung und Löhnen</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-mlBs-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-mlGe">
+          <span class="q-nr">40</span>
+          <div>
+            <p class="q-titel"><a href="https://www.ge.ch/appliquer-salaire-minimum-genevois/montant-calcul-du-salaire-minimum" rel="noopener">Montant et calcul du salaire minimum</a></p>
+            <p class="q-her">République et canton de Genève · gelesen 14.11.2026</p>
+            <p class="q-belegt">Belegt: 24.59 Fr. pro Stunde seit 1.1.2026, jährliche Anpassung an die Teuerung</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-mlGe-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-mlJu">
+          <span class="q-nr">41</span>
+          <div>
+            <p class="q-titel"><a href="https://www.jura.ch/fr/Autorites/Administration/DES/Economie-et-Emploi-SEE/Conditions-de-travail/Conditions-de-travail/Salaires-minimaux.html" rel="noopener">Salaires minimaux</a></p>
+            <p class="q-her">République et Canton du Jura · Stand 2026</p>
+            <p class="q-belegt">Belegt: 21.40 Fr. pro Stunde seit 1.7.2024; Anpassung liegt im Ermessen der Regierung</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-mlJu-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-mlNe">
+          <span class="q-nr">42</span>
+          <div>
+            <p class="q-titel"><a href="https://www.ne.ch/autorites/DECS/SEMP/Pages/accueil.aspx" rel="noopener">Service de l'emploi: salaire minimum</a></p>
+            <p class="q-her">République et canton de Neuchâtel, Service de l'emploi · Stand 2026</p>
+            <p class="q-belegt">Belegt: 21.35 Fr. pro Stunde 2026, jährliche Anpassung an die Teuerung</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-mlNe-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-mlTi">
+          <span class="q-nr">43</span>
+          <div>
+            <p class="q-titel"><a href="https://m3.ti.ch/CAN/RLeggi/public/index.php/raccolta-leggi/pdfatto/atto/11921" rel="noopener">Decreto esecutivo sui salari minimi, 11 dicembre 2025</a></p>
+            <p class="q-her">Repubblica e Cantone Ticino · in Kraft 1.1.2026</p>
+            <p class="q-belegt">Belegt: 20.00 bis 20.50 Fr. pro Stunde je nach Branche</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-mlTi-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-arg">
+          <span class="q-nr">44</span>
+          <div>
+            <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1966/57_57_57/de" rel="noopener">Bundesgesetz über die Arbeit in Industrie, Gewerbe und Handel (Arbeitsgesetz, ArG), Art. 20a Abs. 1</a></p>
+            <p class="q-her">Bundeskanzlei (Fedlex), SR 822.11 · geltende Fassung</p>
+            <p class="q-belegt">Belegt: Bundesfeiertag dem Sonntag gleichgestellt, Kantone höchstens acht weitere Feiertage</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-arg-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-secoFeiertage">
+          <span class="q-nr">45</span>
+          <div>
+            <p class="q-titel"><a href="https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf" rel="noopener">Feiertage in der Schweiz: Anhang zur Wegleitung zum Arbeitsgesetz</a></p>
+            <p class="q-her">Staatssekretariat für Wirtschaft (SECO) · Stand 12.12.2024</p>
+            <p class="q-belegt">Belegt: dem Sonntag gleichgestellte Feiertage je Kanton und Gebiet</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-secoFeiertage-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
         <li id="quelle-bfsSozialhilfe">
-          <span class="q-nr">13</span>
+          <span class="q-nr">46</span>
           <div>
             <p class="q-titel"><a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/soziale-sicherheit/sozialhilfe/sozialhilfebeziehende/wirtschaftliche-sozialhilfe.html" rel="noopener">Sozialhilfestatistik: wirtschaftliche Sozialhilfe</a></p>
             <p class="q-her">Bundesamt für Statistik · 2025, publiziert 27.10.2026</p>
@@ -1068,7 +1491,7 @@
           </div>
         </li>
         <li id="quelle-bsvEl">
-          <span class="q-nr">14</span>
+          <span class="q-nr">47</span>
           <div>
             <p class="q-titel"><a href="https://www.bsv.admin.ch/de/statistik-el" rel="noopener">Statistik der Ergänzungsleistungen 2025</a></p>
             <p class="q-her">Bundesamt für Sozialversicherungen · Dezember 2025, publiziert 26.05.2026</p>
@@ -1077,7 +1500,7 @@
           </div>
         </li>
         <li id="quelle-dbg">
-          <span class="q-nr">15</span>
+          <span class="q-nr">48</span>
           <div>
             <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/20260101/de" rel="noopener">Bundesgesetz über die direkte Bundessteuer (DBG), Art. 33 Abs. 3</a></p>
             <p class="q-her">Bundeskanzlei (Fedlex), SR 642.11 · Fassung vom 1.1.2026; Betrag von 25'800 Fr. seit 1.1.2025 (AS 2024 479)</p>
@@ -1086,7 +1509,7 @@
           </div>
         </li>
         <li id="quelle-sthg">
-          <span class="q-nr">16</span>
+          <span class="q-nr">49</span>
           <div>
             <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de" rel="noopener">Bundesgesetz über die Harmonisierung der direkten Steuern der Kantone und Gemeinden (StHG), Art. 9 Abs. 2 Bst. m</a></p>
             <p class="q-her">Bundeskanzlei (Fedlex), SR 642.14 · Fassung vom 1.1.2025</p>
@@ -1095,7 +1518,7 @@
           </div>
         </li>
         <li id="quelle-parlamentGe">
-          <span class="q-nr">17</span>
+          <span class="q-nr">50</span>
           <div>
             <p class="q-titel"><a href="https://www.parlament.ch/fr/services/news/Pages/2026/20260922084151244194158159026_bsf021.aspx" rel="noopener">Le Parlement donne son feu vert au congé parental genevois</a></p>
             <p class="q-her">Keystone-ATS, veröffentlicht auf parlament.ch · 22.09.2026<span class="q-art">keine Behörde</span></p>
@@ -1104,7 +1527,7 @@
           </div>
         </li>
         <li id="quelle-as2026433">
-          <span class="q-nr">18</span>
+          <span class="q-nr">51</span>
           <div>
             <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/oc/2026/433/de" rel="noopener">Bundesgesetz über den Erwerbsersatz (Erwerbsersatzgesetz, EOG) (Angleichung der EO-Leistungen), Änderung vom 19. Dezember 2025</a></p>
             <p class="q-her">Bundeskanzlei (Fedlex), AS 2026 433 · in Kraft ab 1.7.2027</p>
@@ -1113,7 +1536,7 @@
           </div>
         </li>
         <li id="quelle-geElternurlaub">
-          <span class="q-nr">19</span>
+          <span class="q-nr">52</span>
           <div>
             <p class="q-titel"><a href="https://www.ge.ch/dossier/cohesion-sociale-geneve/domaines-developpement/conge-parental-etapes-mise-oeuvre" rel="noopener">Congé parental : les étapes de la mise en œuvre</a></p>
             <p class="q-her">République et canton de Genève · ohne Datum, gelesen 06.11.2026</p>
@@ -1130,7 +1553,7 @@
         <p>Prämienlast: Jahresprämie 2026 der Erwachsenen geteilt durch das Median-Reineinkommen 2022 der Unverheirateten (ESTV). Nach Verbilligung: Prämienlast mal (1 − Bezugsquote × durchschnittlicher Beitrag in Prozent der mittleren Prämie), aus der BAG-Statistik 2025; die Entlastung ist ein Anteil an der mittleren Prämie aller Versicherten, hier auf die Erwachsenenprämie angewendet.</p>
       </div>
 
-      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Statistiken und Geodaten — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Die Karten zeigen Durchschnitte, die verschieden erhoben werden und verschieden alt sind. Sie bewerten die Kantone nicht: Eine dunkle Fläche heisst nur, dass die Zahl höher ist. Massgebend sind die zuständigen Stellen.</p>
+      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Statistiken, kantonaler Erlasse und Geodaten — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Die Karten zeigen Durchschnitte oder gesetzliche Beträge, die verschieden erhoben werden und verschieden alt sind. Sie bewerten die Kantone nicht: Eine dunkle Fläche heisst nur, dass die Zahl höher ist. Massgebend sind der Erlass und die zuständigen Stellen.</p>
 
       <h2>Weiterlesen</h2>
       <ul>
@@ -1138,6 +1561,9 @@
           <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
           <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
           <li><a href="/steuern/">Steuern</a></li>
+          <li><a href="/ergaenzungsleistungen/">Ergänzungsleistungen</a></li>
+          <li><a href="/arbeitslosigkeit/">Arbeitslosigkeit</a></li>
+          <li><a href="/ahv-pensionierung/">AHV und Pensionierung</a></li>
           <li><a href="/krankenkasse/">Krankenkasse erklärt</a></li>
           <li><a href="/kantone-im-vergleich/">Kantone im Vergleich</a></li>
           <li><a href="/politsystem/">Politik erklärt</a></li>

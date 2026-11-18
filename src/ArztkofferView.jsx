@@ -3,8 +3,8 @@ import FruchtSilhouette from './FruchtSilhouette.jsx';
 import { getBereich } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { PageTitle } from './components/Heading.jsx';
-import { zurueckZeichen } from './IconSystem.jsx';
-import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
+import { linkStil } from './components/PrimaryButton.jsx';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 // ─── Arztkoffer — das Zuhause für Gesundheit ────────────────────────────────
 //
@@ -91,6 +91,9 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
   };
 
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
+    // Kapitel 7, Gestaltung A (10.11.2026): «Übersicht › Gesundheit › Arztkoffer» statt eines Knopfs «Zurück zur
+    // Übersicht» am Schluss — der Koffer gehört zum Kapitel Gesundheit.
+    onNavigate && React.createElement(Brotkrume, { palette, t, view: 'gesundheit', onNavigate }),
 
     // Kopf — Hagebutte-Identität
     React.createElement('div', {
@@ -145,10 +148,6 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
       ),
     ),
 
-    React.createElement('button', {
-      onClick: () => onNavigate('dashboard'),
-      style: { ...knopfStil(palette, 'neben'), marginTop: space.md + 'px', minHeight: '44px' },
-    }, zurueckZeichen(), t('arztkoffer.back')),
   );
 };
 

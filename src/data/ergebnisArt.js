@@ -24,8 +24,8 @@
 //
 // «NOCH n ANGABEN NÖTIG»
 // `fehlend` ist die Liste der Angaben, ohne die das Ergebnis unvollständig ist — als stabile
-// Namen (z. B. 'bruttolohn'), nicht als Anzeige-Text. Die Anzeige nennt nur die Zahl; die Namen
-// bleiben für den späteren «Nächsten Schritt» (O7) im Feld.
+// Namen (z. B. 'bruttolohn'), nicht als Anzeige-Text. Seit Kapitel 5 (C, 10.11.2026) nennt die Anzeige
+// die Namen («Noch nötig: Beitragsmonate») und springt zum Feld, wenn data/angabeZiele.js es kennt.
 
 export const ERGEBNIS_ART = Object.freeze({
   BERECHNUNG: 'berechnung',
@@ -66,10 +66,14 @@ export function fehlendeAngaben(angaben) {
 //   ergebnisArt.vollstaendig  '{satz}.'
 //   ergebnisArt.fehltEine     '{satz}. Noch eine Angabe nötig.'
 //   ergebnisArt.fehltMehrere  '{satz}. Noch {n} Angaben nötig.'
+//   ergebnisArt.fehltNamen    '{satz}. Noch nötig: {liste}.' (Kapitel 5, C: die Angabe beim Namen nennen)
+//   ergebnisArt.angabe.<name> Bezeichnung je Name; fehlt eine, bleibt es bei der Zahl.
 export function ergebnisSatz(e, t) {
   const satz = t('ergebnisArt.satz.' + e.art);
   const n = e.fehlend.length;
   if (n === 0) return t('ergebnisArt.vollstaendig', { satz });
+  const namen = e.fehlend.map((name) => { const k = 'ergebnisArt.angabe.' + name; const v = t(k); return v && v !== k ? v : null; });
+  if (namen.every(Boolean)) return t('ergebnisArt.fehltNamen', { satz, liste: namen.join(', ') });
   if (n === 1) return t('ergebnisArt.fehltEine', { satz });
   return t('ergebnisArt.fehltMehrere', { satz, n });
 }

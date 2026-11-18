@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { KANTONSATLAS, stufen, BRILLEN } from '../../scripts/seiten/kantonsatlas.mjs';
+import { KANTONSATLAS, stufen, BRILLEN, MINDESTLOHN } from '../../scripts/seiten/kantonsatlas.mjs';
 import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
 import { KANTONE, EBENEN, KITA_NICHT_VERGLICHEN } from '../../scripts/seiten-vergleich.mjs';
 import de from '../i18n/de.js';
@@ -19,7 +19,8 @@ import de from '../i18n/de.js';
 const lies = (pfad) => fs.readFileSync(path.resolve(process.cwd(), 'public', pfad, 'index.html'), 'utf8');
 const html = lies('kantonsatlas');
 const text = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-const KARTEN = ['praemie', 'lastNachIpv', 'steuer', 'miete', 'leer', 'kinderzulage', 'kita', 'alq', 'sozialhilfe', 'el'];
+// Karten mit vier Stufen. Dazu kommt die Mindestlohn-Karte mit zwei Arten (eigener Test unten, 14.11.2026).
+const KARTEN = ['praemie', 'lastNachIpv', 'steuer', 'miete', 'leer', 'kinderzulage', 'kita', 'alimente', 'alq', 'sozialhilfe', 'el'];
 const karte = (key) => html.match(new RegExp(`<figure class="abb atlas" id="karte-${key.toLowerCase()}"[^>]*>[\\s\\S]*?</figure>`))[0];
 
 describe('/kantonsatlas/', () => {
@@ -27,8 +28,8 @@ describe('/kantonsatlas/', () => {
     expect(HINTERGRUND).toContain(KANTONSATLAS);
   });
 
-  it('zeigt zehn Karten, jede mit allen 26 Kantonen', () => {
-    expect((html.match(/<figure class="abb atlas"/g) || []).length).toBe(KARTEN.length);
+  it('zeigt zwölf Karten, jede mit allen 26 Kantonen', () => {
+    expect((html.match(/<figure class="abb atlas"/g) || []).length).toBe(KARTEN.length + 1);
     for (const key of KARTEN) {
       const uses = [...karte(key).matchAll(/<use href="#ka-([A-Z]{2})" class="k(\d)"\/>/g)];
       expect(uses.map((u) => u[1]).sort(), key).toEqual([...KANTONE].sort());
@@ -91,6 +92,42 @@ describe('/kantonsatlas/', () => {
 
   it('verspricht keine Datenspenden — die gibt es in Maloja nicht', () => {
     expect(text).not.toMatch(/spende|Spenden|Datenspende|Nichtbezug/i);
+  });
+
+  describe('Mindestlohn, Alimente, Feiertage (14.11.2026, «Eigene Form je Ebene»)', () => {
+    it('Mindestlohn: zwei Arten, die Kantone mit Mindestlohn aus der App, Beträge in der Tabelle', () => {
+      const f = karte('mindestlohn');
+      expect(Object.keys(MINDESTLOHN).sort()).toEqual(['BS', 'GE', 'JU', 'NE', 'TI']);
+      for (const k of KANTONE) {
+        expect(f, k).toContain(`<use href="#ka-${k}" class="k${MINDESTLOHN[k] ? 4 : 1}"/>`);
+        if (MINDESTLOHN[k]) expect(f, k).toContain(`<tr><th scope="row">${de.cantons[k]}</th><td class="n">${MINDESTLOHN[k].chfStunde.toFixed(2)}</td>`);
+      }
+      expect(f).toContain('mit kantonalem Mindestlohn (5)');
+      expect(f).toContain('ohne (21)');
+      expect(f).toContain('je nach Branche 20.00 bis 20.50 Fr.');
+    });
+
+    it('Alimente: VD ist als «nicht gesichert» markiert, jeder Kanton hat seine Quelle', () => {
+      const f = karte('alimente');
+      expect(f).toMatch(/Waadt<\/th>[\s\S]*?nicht gesichert/);
+      expect(f).toContain('Nicht gesichert ist der Betrag für den Kanton Freiburg und den Kanton Waadt.');
+      // Rechtsprüfung 16.11.2026: Neuenburg rechnet je Unterhaltsbeitrag, die Tabelle nennt das.
+      expect(f).toContain('Neuenburg rechnet je Unterhaltsbeitrag, nicht je Kind.');
+      expect(f).toMatch(/Neuenburg<\/th>[\s\S]*?pro Unterhaltsbeitrag und Monat/);
+      // Abgeleitete Beträge: die Quelle belegt die Regel, nicht die Zahl; LexFind ist nicht amtlich.
+      const q = (k) => KANTONSATLAS.quellen.find((x) => x.key === `alimente${k}`);
+      expect(q('LU').belegt).toContain('daraus abgeleitet');
+      expect(q('ZH').belegt).toContain('höchster Vorschuss 1008 Fr.');
+      expect(q('VD').amtlich).toBe(false);
+      for (const k of KANTONE) expect(KANTONSATLAS.quellen.some((q) => q.key === `alimente${k}`), k).toBe(true);
+    });
+
+    it('Feiertage: keine Karte, Satz und Tabelle aus den Daten', () => {
+      expect(html).not.toContain('id="karte-feiertage"');
+      expect(text).toContain('Im Geltungsbereich des Arbeitsgesetzes ist der 1. August dem Sonntag gleichgestellt; dazu dürfen die Kantone höchstens acht weitere Feiertage den Sonntagen gleichstellen.');
+      expect(text).toMatch(/Gezählt mit dem 1\. August haben 23 Kantone neun solche Feiertage; Appenzell Ausserrhoden, Graubünden und Neuenburg haben acht\./);
+      expect(html).toContain('<caption>Dem Sonntag gleichgestellte Feiertage je Kanton');
+    });
   });
 
   it('ist von «Kantone im Vergleich» aus verlinkt', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
-import { plusTage, plusMonate } from './utils/fristen.js';
+import { plusTage, plusMonate, leseDatum } from './utils/fristen.js';
 import { lohnWerte } from './data/lohnAbzuege.js';
 import { zahl } from './utils/geld.js';
 
@@ -12,6 +12,18 @@ import { zahl } from './utils/geld.js';
 // Vertrag bis drei Monate. Gerechnet ab dem eingegebenen ersten Arbeitstag, der selbst
 // mitzählt: Antritt 01.08. → letzter Probetag 31.08. (25.09.2026) — vorher
 // stand hier «3 Monate ab heute», also das Maximum statt des Normalfalls (24.09.2026).
+
+// Kapitel 5, K (10.11.2026): Antritt am 31.01. ergab den 27.02. — der Monat ab dem 31.01. hat keinen «31.02.»,
+// also endet er mit dem letzten Tag des Folgemonats (28.02.). Allgemein: gibt es den Starttag im Zielmonat nicht,
+// endet die Frist am letzten Tag des Zielmonats, sonst am Tag davor. Krankheit und Unfall verlängern die Probezeit
+// (OR Art. 335b Abs. 3) — das steht im Text, gerechnet wird es nicht.
+export const probezeitEnde = (iso, monate = 1) => {
+  const d = leseDatum(iso);
+  if (!d) return null;
+  const letzter = new Date(d.getFullYear(), d.getMonth() + monate + 1, 0).getDate();
+  if (d.getDate() > letzter) return plusMonate(iso, monate);
+  return plusTage(plusMonate(iso, monate), -1);
+};
 
 export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
   const s = ablaufStyles(palette);
@@ -54,7 +66,7 @@ export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('neuerJob.step5Title') },
       React.createElement('p', { style: s.stepText }, t('neuerJob.step5Text')),
       React.createElement(EreignisFrist, {
-        palette, t, onNavigate, id: 'neuerJob-frist', frist: (d) => plusTage(plusMonate(d, 1), -1),
+        palette, t, onNavigate, id: 'neuerJob-frist', frist: (d) => probezeitEnde(d),
         labelKey: 'neuerJob.fristLabel', hinweisKey: 'neuerJob.fristHinweis', vorbeiKey: 'neuerJob.fristVorbei',
         buttonKey: 'neuerJob.step5Button', doneKey: 'neuerJob.step5Done', calendarKey: 'neuerJob.step5CalendarLink',
         reminderTitle: t('neuerJob.reminderTitle'), category: 'admin',

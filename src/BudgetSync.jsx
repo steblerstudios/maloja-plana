@@ -9,6 +9,7 @@ import { getRegionalComparison } from './data/praemienRegionen.js';
 import { getRentComparison } from './data/mietpreise.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { RegionalBarometer } from './components/RegionalBarometer.jsx';
+import { wohnkostenRechnung, drittelGrenzeMiete } from './components/WohnkostenInstrument.jsx'; // Quelle: data/wohnkosten.js
 import { bereichFillColor } from './data/lebensbereiche.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
@@ -23,9 +24,7 @@ import { knopfStil, auswahlStil } from './components/PrimaryButton.jsx';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
-  if (amount === 0) return 'CHF 0';
-  const rounded = Math.round(amount);
-  return betrag(rounded); // utils/geld.js — eine Quelle
+  return betrag(Math.round(amount)); // utils/geld.js — eine Quelle
 };
 
 // `onImport`: der Teil «CSV importieren» unter der Karte (F7-L7, 27.10.2026) — früher die eigene Seite
@@ -228,8 +227,11 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
           palette, t, comparison: rentComparison,
           userValue: budget.expenses.rent || null, kind: 'rent',
           fillColor: bereichFillColor('wohnen', isDarkMode),
-          // Drittel-Faustregel als Betrag — nur mit Einkommen bestimmbar, nie geraten.
-          thresholdValue: budget.income > 0 ? Math.round(budget.income / 3) : 0,
+          // Drittel-Faustregel als Betrag — aus der EINEN Rechnung wie Kapitel Wohnen und Mietzins
+          // (data/wohnkosten.js, seit 11.11.2026): alle Wohnkosten ÷ eigene Einnahmen, mit Partner/in
+          // kein Urteil, ohne Einkommen keine Marke. Bis dahin hier Haushaltseinkommen ÷ 3.
+          // Die Miete hier ist dieselbe Zahl (`monatsAusgaben` liest wohnen.rentAmount).
+          thresholdValue: drittelGrenzeMiete(wohnkostenRechnung(data?.wohnen, data)),
           // Das Budget hat keine Nachbarzeile → die Überschreitung braucht hier den
           // sichtbaren Satz (in MietVergleich trägt ihn `rentShareGuide`).
           showThresholdText: true,
