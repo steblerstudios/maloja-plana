@@ -358,6 +358,20 @@ OR 329h gibt einen Anspruch auf **bezahlten Urlaub** gegenüber dem Arbeitgeber,
 Aussage «über die EO» für den Kurzurlaub ist damit nicht belegt. Die Voraussetzung
 «Hilflosenentschädigung» für die Gutschrift nennt `de.js:88` nicht.
 
+> **Nachtrag 19.11.2026** (`swiss-precision-pruefer`, Primärquellen online gelesen):
+> - **Jeder Grad der HE genügt**, auch leicht; HE von AHV, IV, UV und MV gleich. AHVG Art. 29septies
+>   Abs. 1 (Fassung 1.1.2026) nennt keinen Grad; «für mindestens mittlere Hilflosigkeit» ist seit 1.1.2021
+>   gestrichen (BG vom 20.12.2019, AS 2020 4525). Es genügt der **Anspruch**, nicht der Bezug
+>   (KSBGS 318.104.01 Rz 1001.1, Stand 1.1.2026; RWL Rz 5265; BGer 9C_264/2015).
+> - **Heim schliesst aus:** «Lebt die pflegebedürftige Person in einem Heim, besteht kein Anspruch auf
+>   Betreuungsgutschriften (BGE 144 V 159).» (KSBGS Rz 3010.2)
+> - **Mindestumfang:** «in einem zeitlich überwiegenden Umfang während mindestens 180 Tagen im
+>   Kalenderjahr» (KSBGS Rz 3015).
+> - **Mehrere Betreuende** teilen zu gleichen Teilen (AHVV Art. 52i; RWL Rz 5262).
+> - **Lohn für dieselbe Betreuung:** keine geschriebene Regel in AHVG 29septies, AHVV 52g–52l, KSBGS,
+>   RWL 5.11 oder Merkblatt 1.03. **Nicht belegt**, weder als Ausschluss noch als Erlaubnis.
+> Verwendet in `docs/superpowers/plans/2026-11-19-pflege-uebersicht.md`.
+
 ### 15 · Wenn jemand nicht mehr selbst entscheiden kann: wer darf was?
 
 **Lage.** Nach einem Unfall oder bei Demenz dürfen nahe Menschen nicht automatisch alles
