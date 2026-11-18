@@ -17,6 +17,7 @@ import { getMutterschaftsbeihilfe } from './data/mutterschaftsbeihilfe.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { Belege } from './components/Belege.jsx';
 import { linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { hatAusweisFNS, sozHinweisSchluessel } from './data/ausweis.js';
 
@@ -378,6 +379,10 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
         key: x.key, type: 'button', className: 'mp-link', style: s.link,
         onClick: () => onNavigate && (x.key === 'ipv' ? onNavigate(wegView.ipv, undefined, uebergabe) : onNavigate(wegView[x.key])),
       }, wegLabel[x.key] + ' ›'))),
+    // Nichtbezug (18.11.2026): der wichtigste Grund ist ein kleiner fehlender Betrag. Ausserhalb der Live-Region.
+    w.wege.length > 0 && erfasst && canton && h('div', { 'data-hinweis': 'nichtbezug' },
+      h('p', { style: s.fuss }, t('nichtbezug.kleineBetraege')),
+      h(Belege, { palette, t, zeile: t('nichtbezug.quelle') })),
 
     // (2) Nach Ihrer Lebenslage
     h('h2', { style: s.h2 }, t('wasStehtMirZu.lebenslage')),
