@@ -202,6 +202,53 @@ ${zeilen}
 export const ALIMENTE_GEKOPPELT = KANTONE.filter((k) => /waise|orphelin/i.test(ATLAS_DATEN.alimente[k].bezug) && ATLAS_DATEN.alimente[k].chf === 1008);
 const und = (xs) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} und ${xs[xs.length - 1]}` : xs[0]);
 
+// ─── Arbeitslosenquote nach Merkmalen: nur ganze Schweiz ────────────────────
+// Stebler Studios 18.11.2026 («Ja, A1 und A2»). Dieselbe SECO-Ausgabe wie die Karte alq (September 2026):
+// Tabelle 5 «Arbeitslosenquote nach verschiedenen Merkmalen», PDF-Seite 9; Einteilung der Ausbildungsstufen
+// und Definition der Quote auf PDF-Seite 26. Je Kanton gibt es diese Aufteilung im Bericht nicht, darum
+// keine Karte, sondern Balken für die ganze Schweiz. Die App liest dieselben Werte (scripts/app-verstehen.mjs).
+// Belege und Prüfsumme: docs/STATISTIK-SYSTEMBLICK.md, Abschnitt «Arbeitslosenquote nach Merkmalen».
+export const ALQ_MERKMALE = {
+  monat: 'September 2026',
+  total: 3.0,
+  ausbildung: [
+    { key: 'sek1', name: 'Obligatorische Schule', stufe: 'Sekundarstufe I', wert: 5.0 },
+    { key: 'sek2', name: 'Berufslehre oder Maturität', stufe: 'Sekundarstufe II', wert: 2.8 },
+    { key: 'tertiaer', name: 'Höhere Berufsbildung oder Hochschule', stufe: 'Tertiärstufe', wert: 2.5 },
+  ],
+  alter: [['15 bis 24 Jahre', 3.3], ['25 bis 49 Jahre', 3.2], ['50 bis 64 Jahre', 2.6]],
+  region: [['Deutschschweiz', 2.5], ['Westschweiz und Tessin', 4.1]],
+};
+// Gleiche Ausgabe wie die Karte: Das Total muss der Schweizer Wert der Karte sein.
+if (EBENEN.alq.ch !== ALQ_MERKMALE.total) throw new Error(`Kantonsatlas: ALQ_MERKMALE.total ${ALQ_MERKMALE.total} ≠ Karte alq ${EBENEN.alq.ch}`);
+
+export function alqMerkmaleBlock() {
+  const fmt = EBENEN.alq.fmt;
+  const max = Math.max(...ALQ_MERKMALE.ausbildung.map((a) => a.wert));
+  const zeile = (name, wert, balken = true) => `              <tr><th scope="row">${esc(name)}</th><td class="balken" aria-hidden="true">${balken ? `<span class="b0" style="width:${(wert / max * 100).toFixed(1)}%"></span>` : ''}</td><td class="n">${fmt(wert)}</td></tr>`;
+  const reihen = (liste) => liste.map(([n, w]) => `              <tr><th scope="row">${esc(n)}</th><td class="n">${fmt(w)}</td></tr>`).join('\n');
+  return `
+          <div class="atlas-merkmale">
+            <p class="atlas-merkmale-titel">Ganze Schweiz nach Ausbildung</p>
+            <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Arbeitslosenquote nach Ausbildung, ganze Schweiz"><table>
+              <caption>Arbeitslosenquote ${ALQ_MERKMALE.monat} nach der höchsten abgeschlossenen Ausbildung, ganze Schweiz, in Prozent</caption>
+              <tr><th scope="col">Ausbildung</th><td aria-hidden="true"></td><th scope="col" class="n">Quote</th></tr>
+${ALQ_MERKMALE.ausbildung.map((a) => zeile(`${a.name} (${a.stufe})`, a.wert)).join('\n')}
+              <tr class="ch"><th scope="row">Alle zusammen</th><td class="balken" aria-hidden="true"></td><td class="n">${fmt(ALQ_MERKMALE.total)}</td></tr>
+            </table></div>
+            <p class="leise">${LEGENDE.alqAusbildung}</p>
+            <details class="atlas-werte">
+              <summary>Nach Alter und Sprachregion als Tabelle</summary>
+              <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Arbeitslosenquote nach Alter und Sprachregion"><table>
+              <caption>Arbeitslosenquote ${ALQ_MERKMALE.monat} nach Alter und Sprachregion, ganze Schweiz, in Prozent</caption>
+              <tr><th scope="col">Gruppe</th><th scope="col" class="n">Quote</th></tr>
+${reihen(ALQ_MERKMALE.alter)}
+${reihen(ALQ_MERKMALE.region)}
+              </table></div>
+            </details>
+          </div>`;
+}
+
 // ─── Feiertage: Tabelle statt Karte ─────────────────────────────────────────
 // 23 Kantone haben neun dem Sonntag gleichgestellte Feiertage, drei haben acht (Atlas, SECO-Stand
 // 12.12.2024): Eine Karte zeigte fast nur eine Farbe. Darum ein Satz und eine aufklappbare Tabelle.
@@ -286,6 +333,8 @@ export const LEGENDE = {
   // Seit 18.11.2026 auch in der App (Kapitel Wohnen, «Auf der Karte»).
   leer: 'Leerwohnungsziffer am 1. Juni 2026: Anteil der Wohnungen und Einfamilienhäuser, die leer stehen und zur Miete oder zum Kauf angeboten sind. [[q:bfsLeer]]',
   alq: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
+  // Seit 18.11.2026: dieselbe Zahl nach Ausbildung, nur für die ganze Schweiz (ALQ_MERKMALE). Auch in der App.
+  alqAusbildung: 'Anteil der Erwerbspersonen mit dieser höchsten abgeschlossenen Ausbildung, die im September 2026 beim RAV als arbeitslos gemeldet waren. Die Aufteilung gibt es nur für die ganze Schweiz, nicht je Kanton. Sie zeigt, wie häufig, nicht warum. [[q:secoAusbildung]]',
   sozialhilfe: 'Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe, also Geld vom Sozialdienst, bezog. [[q:bfsSozialhilfe]]',
   el: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
   // Seit 14.11.2026 auch in der App (Abläufe «Kind», «Trennung», Werkzeug Stundenlohn).
@@ -333,7 +382,7 @@ const BLOECKE_ATLAS = {
   'FIG:feiertage': () => feiertageBlock(),
   'FIG:alq': (ctx) => karte(ctx, 'alq', {
     legende: LEGENDE.alq,
-    nachher: werteTabelle('valq', 'Arbeitslosenquote je Kanton als Tabelle') }),
+    nachher: werteTabelle('valq', 'Arbeitslosenquote je Kanton als Tabelle') + alqMerkmaleBlock() }),
   'FIG:sozialhilfe': (ctx) => karte(ctx, 'sozialhilfe', {
     legende: LEGENDE.sozialhilfe }),
   'FIG:el': (ctx) => karte(ctx, 'el', {
@@ -582,6 +631,7 @@ export const KANTONSATLAS = {
       return { key: `alimente${k}`, herausgeber: lexfind ? `LexFind (Sammlung der Erlasse), Kanton ${de.cantons[k]}` : `Kanton ${de.cantons[k]}`, titel: `Alimentenbevorschussung: ${a.recht.split(';')[0]}`, datum: `Stand ${a.jahr}`, url: a.url,
         belegt: abgeleitet ? `Kopplung an die höchste AHV-Waisenrente; der Betrag ${a.chf} Fr. ist daraus abgeleitet, nicht im Erlass genannt` : `höchster Vorschuss ${a.chf} Fr. ${a.einheit ? a.einheit.replace(/^pro /, 'pro ') : 'je Kind und Monat'}${a.sicher === false ? '; ob seither angepasst, nicht gesichert' : ''}`, amtlich: !lexfind };
     }),
+    { key: 'secoAusbildung', herausgeber: 'Staatssekretariat für Wirtschaft (SECO)', titel: 'Die Lage auf dem Arbeitsmarkt, September 2026, Tabelle 5 (S. 9) und Definitionen (S. 26)', datum: 'publiziert 6.10.2026', url: 'https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/10/05/4ca16d08-004c-4678-84c6-93fac35c7463.pdf', belegt: 'Arbeitslosenquote nach Ausbildungsstufe, Alter und Sprachregion, ganze Schweiz; Einteilung nach der höchsten abgeschlossenen Ausbildung', amtlich: true },
     { key: 'swissmaps', herausgeber: 'Interactive Things, swiss-maps 4.5.0', titel: 'swiss-maps: Geodaten der Schweiz als TopoJSON', datum: 'Version 4.5.0, BSD-3-Clause', url: 'https://github.com/interactivethings/swiss-maps', belegt: 'Aufbereitung der BFS-Grenzen, für diese Karten zusätzlich vereinfacht', amtlich: false },
   ],
   quellenHinweis:
@@ -620,6 +670,8 @@ ${FRUCHT_CSS_DUNKEL}
     /* Karte und Legende behalten zusammen ihre Stufen, sonst zeigte die Legende vier Farben und die Karte eine. */
     @media (forced-colors:active){ .atlas-legende i, .atlas svg{ forced-color-adjust:none } }
     .atlas-werte{ margin:10px 0 0 }
+    .atlas-merkmale{ margin:16px 0 0; padding-top:12px; border-top:1px solid var(--rand) }
+    .atlas-merkmale-titel{ margin:0 0 4px; font-weight:600 }
     .atlas-werte summary{ cursor:pointer; color:var(--heidel-text); font-size:15px; padding:10px 0 }
     .befund{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px; margin:18px 0 }
     .befund h3{ margin:0 0 10px }

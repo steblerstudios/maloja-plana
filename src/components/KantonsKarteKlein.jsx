@@ -3,6 +3,7 @@ import { KARTE_GEO, KARTEN, STUFEN_FARBEN } from '../data/kantonskarten.js';
 import { DARK_PALETTE } from '../config/constants.js';
 import { getCantonName } from '../config/kantonPLZ.js';
 import { ExternerLink } from './ExternerLink.jsx';
+import { ABSCHLUSS_STUFE } from './ErklaerseiteLink.jsx';
 import { text, space, weight, radius } from '../config/tokens.js';
 
 // ─── C · Mini-Karte im Werkzeug (Entscheid Stebler Studios 09.11.2026) ───────
@@ -26,7 +27,7 @@ const FELD_PX = space.ms; // Legendenfeld
 
 const h = React.createElement;
 
-export default function KantonsKarteKlein({ palette, t, karte, kanton, altersklasse, ohneVergleich }) {
+export default function KantonsKarteKlein({ palette, t, karte, kanton, altersklasse, ohneVergleich, abschluss }) {
   const K = KARTEN[karte];
   if (!K) return null;
   // ohneVergleich (18.11.2026): Im Kapitel Wohnen steht die Leerwohnungsziffer als eigene Karte daneben; die
@@ -106,6 +107,34 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
       !eigen && h('div', { style: { marginTop: space.xs + 'px' } }, ohneKanton));
   };
 
+  // Arbeitslosenquote nach Ausbildung (18.11.2026): nur ganze Schweiz, darum Balken statt Karte. Die eigene Stufe
+  // steht fett mit Zusatz, nicht nur in Farbe; ohne erfassten Abschluss ist keine markiert.
+  const M = K.merkmale;
+  const eigeneStufe = M && ABSCHLUSS_STUFE[abschluss];
+  const nachAusbildung = M && h('div', { 'data-teil': 'nach-ausbildung', style: { marginTop: space.md + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border } },
+    h('p', { lang: 'de', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, M.titel),
+    h('table', { style: { borderCollapse: 'collapse', fontSize: text.sm, width: '100%' } },
+      h('tbody', null,
+        M.zeilen.map((z) => {
+          const meine = z.key === eigeneStufe;
+          const fett = meine ? weight.semi : weight.normal;
+          return h('tr', { key: z.key, 'data-stufe': z.key, 'data-eigen': meine ? 'ja' : undefined },
+            h('th', { scope: 'row', style: { textAlign: 'left', fontWeight: fett, color: palette.text, padding: space.xs + 'px ' + space.sm + 'px ' + space.xs + 'px 0' } },
+              h('span', { lang: 'de' }, z.name), meine && ` · ${t('erklaerseite.ihreAusbildung')}`),
+            h('td', { 'aria-hidden': 'true', style: { width: '30%', padding: space.xs + 'px ' + space.sm + 'px', verticalAlign: 'middle' } },
+              h('span', { style: { display: 'block', height: '10px', borderRadius: radius.hair, width: `${z.anteil * 100}%`, background: farben[meine ? 4 : 3], boxShadow: `inset 0 0 0 1px ${palette.mid}` } })),
+            h('td', { lang: 'de', style: { textAlign: 'right', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums', fontWeight: fett, color: palette.text, padding: space.xs + 'px 0' } }, z.text));
+        }),
+        h('tr', null,
+          h('th', { scope: 'row', lang: 'de', style: { textAlign: 'left', fontWeight: weight.normal, color: palette.mid, padding: space.xs + 'px 0' } }, M.total.name),
+          h('td', { 'aria-hidden': 'true' }),
+          h('td', { lang: 'de', style: { textAlign: 'right', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums', color: palette.mid, padding: space.xs + 'px 0' } }, M.total.text)))),
+    h('p', { lang: 'de', style: { margin: space.xs + 'px 0 0', fontSize: text.sm, color: palette.text } }, M.legende),
+    M.quellen.length > 0 && h('p', { style: leise },
+      `${t('erklaerseite.belegWort')}: `,
+      M.quellen.map((q, i) => h(React.Fragment, { key: q.url }, i > 0 && ' · ',
+        h(ExternerLink, { t, href: q.url, hrefLang: 'de', lang: 'de', style: link }, q.text)))));
+
   return h('figure', { 'data-teil': 'kantonskarte-klein', style: { margin: space.sm + 'px 0 0' } },
     h('p', { lang: 'de', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, color: palette.mid } }, `${K.titel} · ${K.einheit}`),
     svg,
@@ -134,5 +163,6 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
       quellen.length > 0 && h('p', { style: leise },
         `${t('erklaerseite.belegWort')}: `,
         quellen.map((q, i) => h(React.Fragment, { key: q.url }, i > 0 && ' · ',
-          h(ExternerLink, { t, href: q.url, hrefLang: 'de', lang: 'de', style: link }, q.text))))));
+          h(ExternerLink, { t, href: q.url, hrefLang: 'de', lang: 'de', style: link }, q.text)))),
+      nachAusbildung));
 }

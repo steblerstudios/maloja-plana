@@ -25,7 +25,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EBENEN, KANTONE, ATLAS_DATEN } from './seiten-vergleich.mjs';
-import { stufen, LEGENDE, STUFEN_FARBEN, KARTEN_FRUCHT, KANTONSATLAS, MINDESTLOHN, MINDESTLOHN_STUFE } from './seiten/kantonsatlas.mjs';
+import { stufen, LEGENDE, STUFEN_FARBEN, KARTEN_FRUCHT, KANTONSATLAS, MINDESTLOHN, MINDESTLOHN_STUFE, ALQ_MERKMALE } from './seiten/kantonsatlas.mjs';
 import { KANTONE_IM_VERGLEICH } from './seiten/kantone-im-vergleich.mjs';
 import { standbildSvg, kostenteilAngaben } from './seiten-figuren.mjs';
 import { KRANKENKASSE } from './seiten/krankenkasse.mjs';
@@ -98,6 +98,21 @@ function mindestlohnKarte() {
   };
 }
 
+// Arbeitslosenquote nach Ausbildung (Stebler Studios 18.11.2026, «Ja, A1 und A2»): nur ganze Schweiz, dieselben Werte,
+// dieselbe Legende und Quelle wie unter der Karte auf /kantonsatlas/. Die App markiert die eigene Stufe, wenn im Kapitel
+// Ausbildung der höchste Abschluss erfasst ist (Zuordnung: ABSCHLUSS_STUFE in src/components/ErklaerseiteLink.jsx).
+function merkmale() {
+  const fmt = EBENEN.alq.fmt;
+  const max = Math.max(...ALQ_MERKMALE.ausbildung.map((a) => a.wert));
+  return {
+    titel: 'Ganze Schweiz nach Ausbildung',
+    monat: ALQ_MERKMALE.monat,
+    zeilen: ALQ_MERKMALE.ausbildung.map((a) => ({ key: a.key, name: `${a.name} (${a.stufe})`, text: fmt(a.wert), anteil: Math.round((a.wert / max) * 1000) / 1000 })),
+    total: { name: 'Alle zusammen', text: fmt(ALQ_MERKMALE.total) },
+    ...belege(LEGENDE.alqAusbildung, ALLE_QUELLEN),
+  };
+}
+
 function vergleich(key) {
   const V = EBENEN[key];
   return { titel: V.titel, ch: V.ch != null ? V.fmt(V.ch) : null, werte: Object.fromEntries(KANTONE.map((k) => [k, V.fmt(V.wert(k))])) };
@@ -123,6 +138,7 @@ export function erzeugeKarten() {
       werte: Object.fromEntries(KANTONE.map((k) => [k, { s: stufe[k], text: E.fmt(E.wert(k)), ...jeKanton(key, k) }])),
       ...(APP_VERGLEICH[key] ? { vergleich: vergleich(APP_VERGLEICH[key]) } : {}),
       ...(APP_ALTERSKLASSEN[key] ? { altersklassen: altersklassen(APP_ALTERSKLASSEN[key], E.fmt) } : {}),
+      ...(key === 'alq' ? { merkmale: merkmale() } : {}),
     };
   }
   // Nur die Früchte, die eine App-Karte trägt, damit das nachgeladene Stück klein bleibt.

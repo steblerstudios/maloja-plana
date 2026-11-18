@@ -823,6 +823,41 @@ export const KARTEN = {
     "s": 3,
     "text": "2,9 %"
    }
+  },
+  "merkmale": {
+   "titel": "Ganze Schweiz nach Ausbildung",
+   "monat": "September 2026",
+   "zeilen": [
+    {
+     "key": "sek1",
+     "name": "Obligatorische Schule (Sekundarstufe I)",
+     "text": "5,0 %",
+     "anteil": 1
+    },
+    {
+     "key": "sek2",
+     "name": "Berufslehre oder Maturität (Sekundarstufe II)",
+     "text": "2,8 %",
+     "anteil": 0.56
+    },
+    {
+     "key": "tertiaer",
+     "name": "Höhere Berufsbildung oder Hochschule (Tertiärstufe)",
+     "text": "2,5 %",
+     "anteil": 0.5
+    }
+   ],
+   "total": {
+    "name": "Alle zusammen",
+    "text": "3,0 %"
+   },
+   "legende": "Anteil der Erwerbspersonen mit dieser höchsten abgeschlossenen Ausbildung, die im September 2026 beim RAV als arbeitslos gemeldet waren. Die Aufteilung gibt es nur für die ganze Schweiz, nicht je Kanton. Sie zeigt, wie häufig, nicht warum.",
+   "quellen": [
+    {
+     "text": "Staatssekretariat für Wirtschaft (SECO), Die Lage auf dem Arbeitsmarkt, September 2026, Tabelle 5 (S. 9) und Definitionen (S. 26), publiziert 6.10.2026",
+     "url": "https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/10/05/4ca16d08-004c-4678-84c6-93fac35c7463.pdf"
+    }
+   ]
   }
  },
  "sozialhilfe": {

@@ -3,13 +3,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { VerstehenImWerkzeug, VERSTEHEN, KANTONSKARTE, NachladeGrenze, KARTEN_NAME } from '../components/ErklaerseiteLink.jsx';
+import { VerstehenImWerkzeug, VERSTEHEN, KANTONSKARTE, NachladeGrenze, KARTEN_NAME, ABSCHLUSS_STUFE } from '../components/ErklaerseiteLink.jsx';
 import KantonsKarteKlein from '../components/KantonsKarteKlein.jsx';
 import ErklaerFigurKlein from '../components/ErklaerFigurKlein.jsx';
 import { KARTEN, KARTE_GEO, STUFEN_FARBEN } from '../data/kantonskarten.js';
 import { ERKLAERFIGUREN } from '../data/erklaerfiguren.js';
 import { erzeugeKarten, erzeugeFiguren, svgVerstoesse } from '../../scripts/app-verstehen.mjs';
-import { STUFEN_FARBEN as ATLAS_FARBEN, LEGENDE, KARTEN_FRUCHT } from '../../scripts/seiten/kantonsatlas.mjs';
+import { STUFEN_FARBEN as ATLAS_FARBEN, LEGENDE, KARTEN_FRUCHT, ALQ_MERKMALE } from '../../scripts/seiten/kantonsatlas.mjs';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import { LIGHT_PALETTE, DARK_PALETTE } from '../config/constants.js';
@@ -404,3 +404,60 @@ describe('Atlas in den Abläufen: Umzug und Wohnung gekündigt', () => {
     expect(titel[1]).toContain(`<span lang="de">${KARTEN.praemie.titel}</span>`);
   });
 });
+
+// Stebler Studios 18.11.2026 («Ja, A1 und A2»): Arbeitslosenquote nach Ausbildung, ganze Schweiz (SECO, Sept. 2026, Tab. 5).
+describe('Arbeitslosenquote nach Ausbildung', () => {
+  const mit = (abschluss, kanton = 'ZH') => renderToStaticMarkup(React.createElement(KantonsKarteKlein, { palette: P, t, karte: 'alq', kanton, abschluss }));
+
+  it('Werte, Legende und Quelle sind die des Atlas, das Total ist der Schweizer Wert der Karte', () => {
+    const M = KARTEN.alq.merkmale;
+    expect(M.zeilen.map((z) => z.text)).toEqual(['5,0 %', '2,8 %', '2,5 %']);
+    expect(M.zeilen.map((z) => z.key)).toEqual(ALQ_MERKMALE.ausbildung.map((a) => a.key));
+    expect(M.total.text).toBe(KARTEN.alq.ch);
+    expect(LEGENDE.alqAusbildung).toContain(M.legende.slice(0, 40));
+    expect(M.quellen[0].url).toMatch(/^https:\/\/cms\.news\.admin\.ch\/.+\.pdf$/);
+    expect(M.quellen[0].text).toContain('Tabelle 5');
+  });
+
+  it('Atlas-Seite: Balken unter der Karte, in der Figur der Karte (klappt mit ihr zu), mit Beleg', () => {
+    const html = fs.readFileSync(path.resolve(process.cwd(), 'public', 'kantonsatlas', 'index.html'), 'utf8');
+    const figur = html.slice(html.indexOf('<figure class="abb atlas" id="karte-alq"'), html.indexOf('<figure class="abb atlas" id="karte-mindestlohn"'));
+    expect(figur).toContain('<div class="atlas-merkmale">');
+    for (const a of ALQ_MERKMALE.ausbildung) expect(figur).toContain(`${a.name} (${a.stufe})`);
+    expect(figur).toContain('<td class="n">5,0 %</td>');
+    expect(figur).toContain('href="#quelle-secoAusbildung"');
+    expect(figur).toContain('Nach Alter und Sprachregion als Tabelle');
+    expect(html).toContain('<li id="quelle-secoAusbildung">');
+  });
+
+  it('nur bei der Karte Arbeitslosenquote', () => {
+    for (const k of Object.keys(KARTEN)) if (k !== 'alq') expect(KARTEN[k].merkmale, k).toBeUndefined();
+    expect(karte(P, 'steuer', 'ZH')).not.toContain('data-teil="nach-ausbildung"');
+  });
+
+  it('ohne erfassten Abschluss: drei Zeilen, keine markiert', () => {
+    const html = mit(undefined);
+    expect(html).toContain('data-teil="nach-ausbildung"');
+    expect((html.match(/data-stufe=/g) || []).length).toBe(3);
+    expect(html).not.toContain('data-eigen="ja"><th');
+    expect(html).not.toContain(t('erklaerseite.ihreAusbildung'));
+  });
+
+  it.each([['mandatory', 'sek1'], ['apprenticeship', 'sek2'], ['matura', 'sek2'], ['master', 'tertiaer']])('%s: die Stufe %s ist markiert, mit Wort, nicht nur Farbe', (abschluss, stufe) => {
+    const html = mit(abschluss);
+    expect(html).toContain(`data-stufe="${stufe}" data-eigen="ja"`);
+    expect((html.match(/data-eigen="ja"><th/g) || []).length).toBe(1);
+    expect(html).toContain(` · ${t('erklaerseite.ihreAusbildung')}`);
+  });
+
+  it('frei getippte alte Werte werden nicht geraten', () => {
+    for (const alt of ['EFZ', 'Fachhochschule', '']) expect(mit(alt)).not.toContain(t('erklaerseite.ihreAusbildung'));
+    expect(Object.keys(ABSCHLUSS_STUFE).sort()).toEqual(Object.keys(de.chapters.ausbildung.fields.educationLevel.options).sort());
+  });
+
+  it('Werkzeug und Kapitel reichen den Abschluss aus dem Kapitel Ausbildung weiter', () => {
+    expect(quelle('AlvRechner.jsx')).toContain("VerstehenImWerkzeug, { palette, t, view: 'alv', kanton: canton, abschluss: data.ausbildung?.educationLevel })");
+    expect(quelle('components/ErklaerseiteLink.jsx')).toContain('props: { karte, kanton, ohneVergleich: true, abschluss }');
+  });
+});
+

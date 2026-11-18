@@ -83,7 +83,15 @@ const kleinerLink = (palette, t, href, name) => React.createElement(ExternerLink
   style: { ...linkStil(palette), display: 'inline-block', minHeight: '44px', lineHeight: '44px', marginRight: space.md + 'px' },
 }, name);
 
-export const ZumVerstehen = ({ palette, t, kapitel, kanton }) => {
+// Höchster Abschluss (Kapitel Ausbildung, educationLevel) → Ausbildungsstufe des SECO (Stebler Studios 18.11.2026).
+// Einteilung nach SECO, «Die Lage auf dem Arbeitsmarkt», Definitionen: Sek I = obligatorische Schule; Sek II = Berufslehre,
+// Berufs- und gymnasiale Maturität; Tertiär = Hochschule (dazu höhere Berufsbildung, die die Auswahl nicht kennt).
+// Ältere, frei getippte Werte («EFZ», «Fachhochschule») bleiben ohne Markierung: lieber keine als eine geratene.
+export const ABSCHLUSS_STUFE = {
+  mandatory: 'sek1', apprenticeship: 'sek2', vocMatura: 'sek2', matura: 'sek2', bachelor: 'tertiaer', master: 'tertiaer', doctorate: 'tertiaer',
+};
+
+export const ZumVerstehen = ({ palette, t, kapitel, kanton, abschluss }) => {
   const z = ZUM_VERSTEHEN[kapitel];
   if (!z) return null;
   const titel = (schluessel) => React.createElement('h4', { style: { margin: space.sm + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t(schluessel));
@@ -96,7 +104,7 @@ export const ZumVerstehen = ({ palette, t, kapitel, kanton }) => {
     // mehrere Aufklapper für Vorlese-Programme unterscheidbar sind (a11y-Prüfung 16.11.2026).
     z.karten.length > 0 && React.createElement('div', { 'data-teil': 'karten-im-kapitel' },
       z.karten.map(([href, name, karte]) => React.createElement(Aufklapper, {
-        key: href, palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte, kanton, ohneVergleich: true },
+        key: href, palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte, kanton, ohneVergleich: true, abschluss },
         titel: React.createElement('span', { lang: 'de' }, name),
       }))),
     z.karten.length > 0 && zeile(z.karten));
@@ -215,7 +223,7 @@ export const KARTEN_NAME = {
   steuer: "Steuern bei 80'000 Fr. Lohn", praemie: 'Prämie Erwachsene', leer: 'Leerwohnungsziffer',
 };
 
-export const VerstehenImWerkzeug = ({ palette, t, view, karte, kanton, altersklasse }) => {
+export const VerstehenImWerkzeug = ({ palette, t, view, karte, kanton, altersklasse, abschluss }) => {
   const v = karte ? { karte } : VERSTEHEN[view];
   const grund = t(kanton ? 'erklaerseite.karteMitKanton' : 'erklaerseite.karteOhneKanton');
   const kartenTitel = karte && KARTEN_NAME[karte]
@@ -224,7 +232,7 @@ export const VerstehenImWerkzeug = ({ palette, t, view, karte, kanton, alterskla
   if (!v) return null;
   return React.createElement('div', { 'data-teil': 'verstehen-im-werkzeug', style: { marginTop: space.md + 'px' } },
     v.karte && React.createElement(Aufklapper, {
-      palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte: v.karte, kanton, altersklasse },
+      palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte: v.karte, kanton, altersklasse, abschluss },
       titel: kartenTitel,
     }),
     v.figur && altersklasse !== 'kind' && React.createElement(Aufklapper, {

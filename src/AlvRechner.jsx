@@ -177,7 +177,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     quelle: t('rechnerForm.quelle', { q: ALV_DATA_SOURCE }),
   },
     // Ergänzung A (07.11.2026): zur Karte Arbeitslosenquote im Kantonsatlas.
-    React.createElement(VerstehenImWerkzeug, { palette, t, view: 'alv', kanton: canton }),
+    React.createElement(VerstehenImWerkzeug, { palette, t, view: 'alv', kanton: canton, abschluss: data.ausbildung?.educationLevel }),
     React.createElement(ErklaerseiteLink, { palette, t, view: 'alv' }));
 };
 

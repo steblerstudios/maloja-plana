@@ -353,6 +353,8 @@
     /* Karte und Legende behalten zusammen ihre Stufen, sonst zeigte die Legende vier Farben und die Karte eine. */
     @media (forced-colors:active){ .atlas-legende i, .atlas svg{ forced-color-adjust:none } }
     .atlas-werte{ margin:10px 0 0 }
+    .atlas-merkmale{ margin:16px 0 0; padding-top:12px; border-top:1px solid var(--rand) }
+    .atlas-merkmale-titel{ margin:0 0 4px; font-weight:600 }
     .atlas-werte summary{ cursor:pointer; color:var(--heidel-text); font-size:15px; padding:10px 0 }
     .befund{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px; margin:18px 0 }
     .befund h3{ margin:0 0 10px }
@@ -916,6 +918,30 @@
               <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">3,0 %</td></tr>
         </table></div>
         </details>
+          <div class="atlas-merkmale">
+            <p class="atlas-merkmale-titel">Ganze Schweiz nach Ausbildung</p>
+            <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Arbeitslosenquote nach Ausbildung, ganze Schweiz"><table>
+              <caption>Arbeitslosenquote September 2026 nach der höchsten abgeschlossenen Ausbildung, ganze Schweiz, in Prozent</caption>
+              <tr><th scope="col">Ausbildung</th><td aria-hidden="true"></td><th scope="col" class="n">Quote</th></tr>
+              <tr><th scope="row">Obligatorische Schule (Sekundarstufe I)</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">5,0 %</td></tr>
+              <tr><th scope="row">Berufslehre oder Maturität (Sekundarstufe II)</th><td class="balken" aria-hidden="true"><span class="b0" style="width:56.0%"></span></td><td class="n">2,8 %</td></tr>
+              <tr><th scope="row">Höhere Berufsbildung oder Hochschule (Tertiärstufe)</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.0%"></span></td><td class="n">2,5 %</td></tr>
+              <tr class="ch"><th scope="row">Alle zusammen</th><td class="balken" aria-hidden="true"></td><td class="n">3,0 %</td></tr>
+            </table></div>
+            <p class="leise">Anteil der Erwerbspersonen mit dieser höchsten abgeschlossenen Ausbildung, die im September 2026 beim RAV als arbeitslos gemeldet waren. Die Aufteilung gibt es nur für die ganze Schweiz, nicht je Kanton. Sie zeigt, wie häufig, nicht warum.<sup class="beleg"><a href="#quelle-secoAusbildung" id="beleg-secoAusbildung-1" aria-label="Quelle 39">39</a></sup></p>
+            <details class="atlas-werte">
+              <summary>Nach Alter und Sprachregion als Tabelle</summary>
+              <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Arbeitslosenquote nach Alter und Sprachregion"><table>
+              <caption>Arbeitslosenquote September 2026 nach Alter und Sprachregion, ganze Schweiz, in Prozent</caption>
+              <tr><th scope="col">Gruppe</th><th scope="col" class="n">Quote</th></tr>
+              <tr><th scope="row">15 bis 24 Jahre</th><td class="n">3,3 %</td></tr>
+              <tr><th scope="row">25 bis 49 Jahre</th><td class="n">3,2 %</td></tr>
+              <tr><th scope="row">50 bis 64 Jahre</th><td class="n">2,6 %</td></tr>
+              <tr><th scope="row">Deutschschweiz</th><td class="n">2,5 %</td></tr>
+              <tr><th scope="row">Westschweiz und Tessin</th><td class="n">4,1 %</td></tr>
+              </table></div>
+            </details>
+          </div>
         </figure>
         <p class="leise">Wer keine Stelle hat, aber nicht beim RAV gemeldet ist, fehlt in dieser Zahl. Es ist ein Monatswert, der saisonal schwankt.</p>
         <p>Einen Mindestlohn für die ganze Schweiz gibt es nicht. 5 Kantone haben einen eigenen festgelegt.</p>
@@ -935,16 +961,16 @@
             <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Kantonaler Mindestlohn 2026"><table>
               <caption>Kantonaler Mindestlohn 2026, in Franken pro Stunde, brutto, alphabetisch</caption>
               <tr><th scope="col">Kanton</th><th scope="col" class="n">Fr. pro Stunde</th><th scope="col">Hinweis</th></tr>
-              <tr><th scope="row">Basel-Stadt</th><td class="n">22.20</td><td>jährlich an Teuerung und Löhne angepasst<sup class="beleg"><a href="#quelle-mlBs" id="beleg-mlBs-1" aria-label="Quelle 39">39</a></sup></td></tr>
-              <tr><th scope="row">Genf</th><td class="n">24.59</td><td>jährlich an die Teuerung angepasst<sup class="beleg"><a href="#quelle-mlGe" id="beleg-mlGe-1" aria-label="Quelle 40">40</a></sup></td></tr>
-              <tr><th scope="row">Jura</th><td class="n">21.40</td><td>Anpassung entscheidet die Regierung<sup class="beleg"><a href="#quelle-mlJu" id="beleg-mlJu-1" aria-label="Quelle 41">41</a></sup></td></tr>
-              <tr><th scope="row">Neuenburg</th><td class="n">21.35</td><td>jährlich an die Teuerung angepasst<sup class="beleg"><a href="#quelle-mlNe" id="beleg-mlNe-1" aria-label="Quelle 42">42</a></sup></td></tr>
-              <tr><th scope="row">Tessin</th><td class="n">20.00</td><td>je nach Branche 20.00 bis 20.50 Fr.<sup class="beleg"><a href="#quelle-mlTi" id="beleg-mlTi-1" aria-label="Quelle 43">43</a></sup></td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="n">22.20</td><td>jährlich an Teuerung und Löhne angepasst<sup class="beleg"><a href="#quelle-mlBs" id="beleg-mlBs-1" aria-label="Quelle 40">40</a></sup></td></tr>
+              <tr><th scope="row">Genf</th><td class="n">24.59</td><td>jährlich an die Teuerung angepasst<sup class="beleg"><a href="#quelle-mlGe" id="beleg-mlGe-1" aria-label="Quelle 41">41</a></sup></td></tr>
+              <tr><th scope="row">Jura</th><td class="n">21.40</td><td>Anpassung entscheidet die Regierung<sup class="beleg"><a href="#quelle-mlJu" id="beleg-mlJu-1" aria-label="Quelle 42">42</a></sup></td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="n">21.35</td><td>jährlich an die Teuerung angepasst<sup class="beleg"><a href="#quelle-mlNe" id="beleg-mlNe-1" aria-label="Quelle 43">43</a></sup></td></tr>
+              <tr><th scope="row">Tessin</th><td class="n">20.00</td><td>je nach Branche 20.00 bis 20.50 Fr.<sup class="beleg"><a href="#quelle-mlTi" id="beleg-mlTi-1" aria-label="Quelle 44">44</a></sup></td></tr>
             </table></div>
           </details>
         </figure>
 
-        <p>Im Geltungsbereich des Arbeitsgesetzes ist der 1. August dem Sonntag gleichgestellt; dazu dürfen die Kantone höchstens acht weitere Feiertage den Sonntagen gleichstellen.<sup class="beleg"><a href="#quelle-arg" id="beleg-arg-1" aria-label="Quelle 44">44</a></sup> Gezählt mit dem 1. August haben 23 Kantone neun solche Feiertage; Appenzell Ausserrhoden, Graubünden und Neuenburg haben acht. An diesen Tagen gelten für die Arbeit die Regeln für den Sonntag. Welche Tage es sind, unterscheidet sich stärker als ihre Zahl.<sup class="beleg"><a href="#quelle-secoFeiertage" id="beleg-secoFeiertage-1" aria-label="Quelle 45">45</a></sup></p>
+        <p>Im Geltungsbereich des Arbeitsgesetzes ist der 1. August dem Sonntag gleichgestellt; dazu dürfen die Kantone höchstens acht weitere Feiertage den Sonntagen gleichstellen.<sup class="beleg"><a href="#quelle-arg" id="beleg-arg-1" aria-label="Quelle 45">45</a></sup> Gezählt mit dem 1. August haben 23 Kantone neun solche Feiertage; Appenzell Ausserrhoden, Graubünden und Neuenburg haben acht. An diesen Tagen gelten für die Arbeit die Regeln für den Sonntag. Welche Tage es sind, unterscheidet sich stärker als ihre Zahl.<sup class="beleg"><a href="#quelle-secoFeiertage" id="beleg-secoFeiertage-1" aria-label="Quelle 46">46</a></sup></p>
         <details class="atlas-werte">
           <summary>Feiertage je Kanton als Tabelle</summary>
           <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Dem Sonntag gleichgestellte Feiertage je Kanton"><table>
@@ -991,7 +1017,7 @@
             <ul class="atlas-legende" role="list"><li><i class="k1" aria-hidden="true"></i><span class="sr-only">Stufe 1 von 4, tiefste Zahlen: </span>0,8 % bis 1,3 %</li><li><i class="k2" aria-hidden="true"></i><span class="sr-only">Stufe 2 von 4: </span>1,5 % bis 2,0 %</li><li><i class="k3" aria-hidden="true"></i><span class="sr-only">Stufe 3 von 4: </span>2,1 % bis 3,3 %</li><li><i class="k4" aria-hidden="true"></i><span class="sr-only">Stufe 4 von 4, höchste Zahlen: </span>3,4 % bis 7,6 %</li></ul>
             <p class="abb-fuss"><span class="abb-wert">Ganze Schweiz: 2,9 %</span></p>
           </div>
-          <figcaption><strong>Abb. 11.</strong> Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe, also Geld vom Sozialdienst, bezog.<sup class="beleg"><a href="#quelle-bfsSozialhilfe" id="beleg-bfsSozialhilfe-1" aria-label="Quelle 46">46</a></sup></figcaption>
+          <figcaption><strong>Abb. 11.</strong> Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe, also Geld vom Sozialdienst, bezog.<sup class="beleg"><a href="#quelle-bfsSozialhilfe" id="beleg-bfsSozialhilfe-1" aria-label="Quelle 47">47</a></sup></figcaption>
           <p class="atlas-weiter"><a href="/app/?beispiel#/sozialhilfe">Mit Ihren Angaben rechnen: Sozialhilfe</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>
         </figure>
 
@@ -1004,7 +1030,7 @@
             <ul class="atlas-legende" role="list"><li><i class="k1" aria-hidden="true"></i><span class="sr-only">Stufe 1 von 4, tiefste Zahlen: </span>5,5 % bis 8,3 %</li><li><i class="k2" aria-hidden="true"></i><span class="sr-only">Stufe 2 von 4: </span>9,0 % bis 10,4 %</li><li><i class="k3" aria-hidden="true"></i><span class="sr-only">Stufe 3 von 4: </span>10,9 % bis 14,1 %</li><li><i class="k4" aria-hidden="true"></i><span class="sr-only">Stufe 4 von 4, höchste Zahlen: </span>15,2 % bis 21,3 %</li></ul>
             <p class="abb-fuss"><span class="abb-wert">Ganze Schweiz: 12,3 %</span></p>
           </div>
-          <figcaption><strong>Abb. 12.</strong> Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen.<sup class="beleg"><a href="#quelle-bsvEl" id="beleg-bsvEl-1" aria-label="Quelle 47">47</a></sup></figcaption>
+          <figcaption><strong>Abb. 12.</strong> Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen.<sup class="beleg"><a href="#quelle-bsvEl" id="beleg-bsvEl-1" aria-label="Quelle 48">48</a></sup></figcaption>
           <p class="atlas-weiter"><a href="/app/?beispiel#/ergaenzungsleistungen">Mit Ihren Angaben rechnen: Ergänzungsleistungen</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>
         <details class="atlas-werte">
           <summary>Sozialhilfe und Ergänzungsleistungen je Kanton als Tabelle</summary><p class="leise legende" aria-hidden="true"><span class="b0"></span> Sozialhilfequote · <span class="b1"></span> Ergänzungsleistungen zur AHV</p>
@@ -1050,8 +1076,8 @@
           <dl>
             <dt>Art</dt><dd>grosse Spanne</dd>
             <dt>Belegt</dt><dd>ja</dd>
-            <dt>Was die Zahlen zeigen</dt><dd>Bei der direkten Bundessteuer lassen sich im Steuerjahr 2026 bis zu 25'800 Franken je Kind abziehen.<sup class="beleg"><a href="#quelle-dbg" id="beleg-dbg-1" aria-label="Quelle 48">48</a></sup> Bei den Kantons- und Gemeindesteuern reichen die Grenzen von 8'000 Franken im Kanton Schwyz bis 27'300 Franken im Kanton Graubünden. 17 Kantone liegen unter dem Betrag des Bundes, 8 auf oder darüber.<sup class="beleg"><a href="#quelle-estvKantonsblaetter" id="beleg-estvKantonsblaetter-2" aria-label="Quelle 10">10</a></sup> Alle Werte stehen in der Tabelle zur Karte im Abschnitt Familie.</dd>
-            <dt>Wer die Regel festlegt</dt><dd>Den Abzug und seine Bedingungen schreibt das Bundesrecht vor, die Höhe bei den Kantons- und Gemeindesteuern legt jeder Kanton in seinem Steuergesetz fest.<sup class="beleg"><a href="#quelle-sthg" id="beleg-sthg-1" aria-label="Quelle 49">49</a></sup></dd>
+            <dt>Was die Zahlen zeigen</dt><dd>Bei der direkten Bundessteuer lassen sich im Steuerjahr 2026 bis zu 25'800 Franken je Kind abziehen.<sup class="beleg"><a href="#quelle-dbg" id="beleg-dbg-1" aria-label="Quelle 49">49</a></sup> Bei den Kantons- und Gemeindesteuern reichen die Grenzen von 8'000 Franken im Kanton Schwyz bis 27'300 Franken im Kanton Graubünden. 17 Kantone liegen unter dem Betrag des Bundes, 8 auf oder darüber.<sup class="beleg"><a href="#quelle-estvKantonsblaetter" id="beleg-estvKantonsblaetter-2" aria-label="Quelle 10">10</a></sup> Alle Werte stehen in der Tabelle zur Karte im Abschnitt Familie.</dd>
+            <dt>Wer die Regel festlegt</dt><dd>Den Abzug und seine Bedingungen schreibt das Bundesrecht vor, die Höhe bei den Kantons- und Gemeindesteuern legt jeder Kanton in seinem Steuergesetz fest.<sup class="beleg"><a href="#quelle-sthg" id="beleg-sthg-1" aria-label="Quelle 50">50</a></sup></dd>
             <dt>Vorbehalt</dt><dd>Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen, und vom Steuertarif. Neuenburg ist nicht mitgezählt, weil für den Kanton nur der Wert für 2025 vorliegt.</dd>
           </dl>
         </article>
@@ -1060,7 +1086,7 @@
           <dl>
             <dt>Art</dt><dd>Stand der Umsetzung</dd>
             <dt>Belegt</dt><dd>ja</dd>
-            <dt>Was belegt ist</dt><dd>Die Genfer Stimmberechtigten haben am 18. Juni 2023 einen Elternurlaub in die Kantonsverfassung geschrieben: zu den 16 Wochen Mutterschaftsurlaub 8 Wochen für den anderen Elternteil, die heutigen 2 Wochen nach Bundesrecht eingerechnet. Das Bundesparlament hat die Verfassungsänderung am 22. September 2026 bestätigt (gewährleistet); ausgenommen ist die Bestimmung zu Pflegefamilien.<sup class="beleg"><a href="#quelle-parlamentGe" id="beleg-parlamentGe-1" aria-label="Quelle 50">50</a></sup> Möglich wird das durch eine Änderung des Erwerbsersatzgesetzes (EOG) vom 19. Dezember 2025: Sie erlaubt den Kantonen, den Urlaub des anderen Elternteils zu verlängern, und tritt am 1. Juli 2027 in Kraft.<sup class="beleg"><a href="#quelle-as2026433" id="beleg-as2026433-1" aria-label="Quelle 51">51</a></sup> Das kantonale Ausführungsgesetz ist laut Kanton noch in Arbeit, ein Datum für den Start nennt er nicht.<sup class="beleg"><a href="#quelle-geElternurlaub" id="beleg-geElternurlaub-1" aria-label="Quelle 52">52</a></sup></dd>
+            <dt>Was belegt ist</dt><dd>Die Genfer Stimmberechtigten haben am 18. Juni 2023 einen Elternurlaub in die Kantonsverfassung geschrieben: zu den 16 Wochen Mutterschaftsurlaub 8 Wochen für den anderen Elternteil, die heutigen 2 Wochen nach Bundesrecht eingerechnet. Das Bundesparlament hat die Verfassungsänderung am 22. September 2026 bestätigt (gewährleistet); ausgenommen ist die Bestimmung zu Pflegefamilien.<sup class="beleg"><a href="#quelle-parlamentGe" id="beleg-parlamentGe-1" aria-label="Quelle 51">51</a></sup> Möglich wird das durch eine Änderung des Erwerbsersatzgesetzes (EOG) vom 19. Dezember 2025: Sie erlaubt den Kantonen, den Urlaub des anderen Elternteils zu verlängern, und tritt am 1. Juli 2027 in Kraft.<sup class="beleg"><a href="#quelle-as2026433" id="beleg-as2026433-1" aria-label="Quelle 52">52</a></sup> Das kantonale Ausführungsgesetz ist laut Kanton noch in Arbeit, ein Datum für den Start nennt er nicht.<sup class="beleg"><a href="#quelle-geElternurlaub" id="beleg-geElternurlaub-1" aria-label="Quelle 53">53</a></sup></dd>
             <dt>Wer die Regel festlegt</dt><dd>Staatsrat und Grosser Rat des Kantons Genf. Laut Kanton wirken vorher auch das Bundesamt für Sozialversicherungen und allenfalls der Bundesrat mit.</dd>
             <dt>Vorbehalt</dt><dd>Bis das Genfer Ausführungsgesetz in Kraft ist, gibt es den längeren Urlaub für den anderen Elternteil nicht; es gelten die bisherigen Regeln. Ob und wie viel Sie erhalten, hängt von Ihrer Situation ab. Massgebend ist die Auskunft der Ausgleichskasse.</dd>
           </dl>
@@ -1418,8 +1444,17 @@
             <p class="q-zurueck">Zurück zum Text: <a href="#beleg-seco-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
           </div>
         </li>
-        <li id="quelle-mlBs">
+        <li id="quelle-secoAusbildung">
           <span class="q-nr">39</span>
+          <div>
+            <p class="q-titel"><a href="https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/10/05/4ca16d08-004c-4678-84c6-93fac35c7463.pdf" rel="noopener">Die Lage auf dem Arbeitsmarkt, September 2026, Tabelle 5 (S. 9) und Definitionen (S. 26)</a></p>
+            <p class="q-her">Staatssekretariat für Wirtschaft (SECO) · publiziert 6.10.2026</p>
+            <p class="q-belegt">Belegt: Arbeitslosenquote nach Ausbildungsstufe, Alter und Sprachregion, ganze Schweiz; Einteilung nach der höchsten abgeschlossenen Ausbildung</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-secoAusbildung-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-mlBs">
+          <span class="q-nr">40</span>
           <div>
             <p class="q-titel"><a href="https://media.bs.ch/original_file_download/e7ce0ad1ebb1a946f5c6aab2ce99db95762ecfa2/2026-01-01-merkblatt-faq-homepage-deutsch.docx" rel="noopener">Merkblatt und FAQ zum kantonalen Mindestlohn</a></p>
             <p class="q-her">Kanton Basel-Stadt, Amt für Wirtschaft und Arbeit · Stand 1.1.2026</p>
@@ -1428,7 +1463,7 @@
           </div>
         </li>
         <li id="quelle-mlGe">
-          <span class="q-nr">40</span>
+          <span class="q-nr">41</span>
           <div>
             <p class="q-titel"><a href="https://www.ge.ch/appliquer-salaire-minimum-genevois/montant-calcul-du-salaire-minimum" rel="noopener">Montant et calcul du salaire minimum</a></p>
             <p class="q-her">République et canton de Genève · gelesen 14.11.2026</p>
@@ -1437,7 +1472,7 @@
           </div>
         </li>
         <li id="quelle-mlJu">
-          <span class="q-nr">41</span>
+          <span class="q-nr">42</span>
           <div>
             <p class="q-titel"><a href="https://www.jura.ch/fr/Autorites/Administration/DES/Economie-et-Emploi-SEE/Conditions-de-travail/Conditions-de-travail/Salaires-minimaux.html" rel="noopener">Salaires minimaux</a></p>
             <p class="q-her">République et Canton du Jura · Stand 2026</p>
@@ -1446,7 +1481,7 @@
           </div>
         </li>
         <li id="quelle-mlNe">
-          <span class="q-nr">42</span>
+          <span class="q-nr">43</span>
           <div>
             <p class="q-titel"><a href="https://www.ne.ch/autorites/DECS/SEMP/Pages/accueil.aspx" rel="noopener">Service de l'emploi: salaire minimum</a></p>
             <p class="q-her">République et canton de Neuchâtel, Service de l'emploi · Stand 2026</p>
@@ -1455,7 +1490,7 @@
           </div>
         </li>
         <li id="quelle-mlTi">
-          <span class="q-nr">43</span>
+          <span class="q-nr">44</span>
           <div>
             <p class="q-titel"><a href="https://m3.ti.ch/CAN/RLeggi/public/index.php/raccolta-leggi/pdfatto/atto/11921" rel="noopener">Decreto esecutivo sui salari minimi, 11 dicembre 2025</a></p>
             <p class="q-her">Repubblica e Cantone Ticino · in Kraft 1.1.2026</p>
@@ -1464,7 +1499,7 @@
           </div>
         </li>
         <li id="quelle-arg">
-          <span class="q-nr">44</span>
+          <span class="q-nr">45</span>
           <div>
             <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1966/57_57_57/de" rel="noopener">Bundesgesetz über die Arbeit in Industrie, Gewerbe und Handel (Arbeitsgesetz, ArG), Art. 20a Abs. 1</a></p>
             <p class="q-her">Bundeskanzlei (Fedlex), SR 822.11 · geltende Fassung</p>
@@ -1473,7 +1508,7 @@
           </div>
         </li>
         <li id="quelle-secoFeiertage">
-          <span class="q-nr">45</span>
+          <span class="q-nr">46</span>
           <div>
             <p class="q-titel"><a href="https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf" rel="noopener">Feiertage in der Schweiz: Anhang zur Wegleitung zum Arbeitsgesetz</a></p>
             <p class="q-her">Staatssekretariat für Wirtschaft (SECO) · Stand 12.12.2024</p>
@@ -1482,7 +1517,7 @@
           </div>
         </li>
         <li id="quelle-bfsSozialhilfe">
-          <span class="q-nr">46</span>
+          <span class="q-nr">47</span>
           <div>
             <p class="q-titel"><a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/soziale-sicherheit/sozialhilfe/sozialhilfebeziehende/wirtschaftliche-sozialhilfe.html" rel="noopener">Sozialhilfestatistik: wirtschaftliche Sozialhilfe</a></p>
             <p class="q-her">Bundesamt für Statistik · 2025, publiziert 27.10.2026</p>
@@ -1491,7 +1526,7 @@
           </div>
         </li>
         <li id="quelle-bsvEl">
-          <span class="q-nr">47</span>
+          <span class="q-nr">48</span>
           <div>
             <p class="q-titel"><a href="https://www.bsv.admin.ch/de/statistik-el" rel="noopener">Statistik der Ergänzungsleistungen 2025</a></p>
             <p class="q-her">Bundesamt für Sozialversicherungen · Dezember 2025, publiziert 26.05.2026</p>
@@ -1500,7 +1535,7 @@
           </div>
         </li>
         <li id="quelle-dbg">
-          <span class="q-nr">48</span>
+          <span class="q-nr">49</span>
           <div>
             <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/20260101/de" rel="noopener">Bundesgesetz über die direkte Bundessteuer (DBG), Art. 33 Abs. 3</a></p>
             <p class="q-her">Bundeskanzlei (Fedlex), SR 642.11 · Fassung vom 1.1.2026; Betrag von 25'800 Fr. seit 1.1.2025 (AS 2024 479)</p>
@@ -1509,7 +1544,7 @@
           </div>
         </li>
         <li id="quelle-sthg">
-          <span class="q-nr">49</span>
+          <span class="q-nr">50</span>
           <div>
             <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de" rel="noopener">Bundesgesetz über die Harmonisierung der direkten Steuern der Kantone und Gemeinden (StHG), Art. 9 Abs. 2 Bst. m</a></p>
             <p class="q-her">Bundeskanzlei (Fedlex), SR 642.14 · Fassung vom 1.1.2025</p>
@@ -1518,7 +1553,7 @@
           </div>
         </li>
         <li id="quelle-parlamentGe">
-          <span class="q-nr">50</span>
+          <span class="q-nr">51</span>
           <div>
             <p class="q-titel"><a href="https://www.parlament.ch/fr/services/news/Pages/2026/20260922084151244194158159026_bsf021.aspx" rel="noopener">Le Parlement donne son feu vert au congé parental genevois</a></p>
             <p class="q-her">Keystone-ATS, veröffentlicht auf parlament.ch · 22.09.2026<span class="q-art">keine Behörde</span></p>
@@ -1527,7 +1562,7 @@
           </div>
         </li>
         <li id="quelle-as2026433">
-          <span class="q-nr">51</span>
+          <span class="q-nr">52</span>
           <div>
             <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/oc/2026/433/de" rel="noopener">Bundesgesetz über den Erwerbsersatz (Erwerbsersatzgesetz, EOG) (Angleichung der EO-Leistungen), Änderung vom 19. Dezember 2025</a></p>
             <p class="q-her">Bundeskanzlei (Fedlex), AS 2026 433 · in Kraft ab 1.7.2027</p>
@@ -1536,7 +1571,7 @@
           </div>
         </li>
         <li id="quelle-geElternurlaub">
-          <span class="q-nr">52</span>
+          <span class="q-nr">53</span>
           <div>
             <p class="q-titel"><a href="https://www.ge.ch/dossier/cohesion-sociale-geneve/domaines-developpement/conge-parental-etapes-mise-oeuvre" rel="noopener">Congé parental : les étapes de la mise en œuvre</a></p>
             <p class="q-her">République et canton de Genève · ohne Datum, gelesen 06.11.2026</p>

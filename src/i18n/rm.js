@@ -2211,6 +2211,7 @@ export default {
     aufDerKarte: 'Sin la charta (en tudestg)',
     mehrDazu: 'Dapli davart quai (en tudestg):',
     // TODO(rm): provisorisch — Gegenlese (C + D, 09.11.2026)
+    ihreAusbildung: { sie: 'Vossa furmaziun', du: 'tia furmaziun' },
     karteMitKanton: { sie: 'Voss chantun sin la charta (en tudestg)', du: 'Tes chantun sin la charta (en tudestg)' },
     karteOhneKanton: 'Ils chantuns sin la charta (en tudestg)',
     imBild: 'Explitgà en in maletg (en tudestg)',

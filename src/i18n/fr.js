@@ -1962,6 +1962,7 @@ export default {
     zumVerstehen: 'Pour comprendre (pages en allemand)',
     aufDerKarte: 'Sur la carte (en allemand)',
     mehrDazu: 'En savoir plus (en allemand) :',
+    ihreAusbildung: { sie: 'votre formation', du: 'ta formation' },
     karteMitKanton: { sie: 'Votre canton sur la carte (en allemand)', du: 'Ton canton sur la carte (en allemand)' },
     karteOhneKanton: 'Les cantons sur la carte (en allemand)',
     imBild: 'Expliqué en image (en allemand)',

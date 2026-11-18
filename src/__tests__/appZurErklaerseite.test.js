@@ -104,7 +104,7 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
 
     it('die Kapitelseite zeigt den Baustein unter «Passend»', () => {
       const cv = quelle('ChapterView.jsx');
-      expect(cv).toContain("React.createElement(ZumVerstehen, { palette, t: tr, kapitel: chapter.key, kanton: allData?.basis?.canton })");
+      expect(cv).toContain("React.createElement(ZumVerstehen, { palette, t: tr, kapitel: chapter.key, kanton: allData?.basis?.canton, abschluss: allData?.ausbildung?.educationLevel })");
       expect(cv.indexOf('React.createElement(ZumVerstehen')).toBeGreaterThan(cv.indexOf('    renderPassend(),'));
     });
 

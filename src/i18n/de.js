@@ -1980,6 +1980,8 @@ export default {
     aufDerKarte: 'Auf der Karte',
     mehrDazu: 'Mehr dazu:',
     // C + D (09.11.2026): Karte und Erklärfigur im Werkzeug (VerstehenImWerkzeug).
+    // 18.11.2026: Markierung der eigenen Ausbildungsstufe unter der Karte Arbeitslosenquote.
+    ihreAusbildung: { sie: 'Ihre Ausbildung', du: 'deine Ausbildung' },
     karteMitKanton: { sie: 'Ihr Kanton auf der Karte', du: 'Dein Kanton auf der Karte' },
     karteOhneKanton: 'Die Kantone auf der Karte',
     imBild: 'Im Bild erklärt',
