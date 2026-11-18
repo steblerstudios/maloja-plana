@@ -415,7 +415,7 @@ export const SEITEN = [
       {
         frage: 'Ricevo l’indennità se ho dato io la disdetta?',
         antwort:
-          'Sì, ma per lo più dopo una sospensione: chi dà la disdetta senza avere la garanzia di un nuovo posto di regola per un certo periodo non riceve indennità, spesso per la durata più lunga prevista dalla legge. Fa eccezione chi non poteva ragionevolmente restare al posto (art. 30 LADI, art. 44 e 45 OADI). Si faccia consigliare prima.',
+          'Sì, ma per lo più dopo una sospensione: chi dà la disdetta senza avere la garanzia di un nuovo posto per un certo periodo non riceve indennità. Di regola conta come colpa grave, il grado più alto, con 31-60 giorni di sospensione. Fa eccezione chi non poteva ragionevolmente restare al posto (art. 30 LADI, art. 44 e 45 OADI). Si faccia consigliare prima.',
       },
       {
         frage: 'Posso iscrivermi già prima della fine dell’impiego?',
@@ -473,7 +473,7 @@ export const SEITEN = [
         titel: 'La rendita non arriva da sola',
         absaetze: [
           'La rendita AVS deve richiederla personalmente, preferibilmente alcuni mesi prima dell’età di riferimento. È competente la cassa di compensazione che ha riscosso gli ultimi contributi; se non ha versato contributi, la cassa cantonale di compensazione del suo Cantone di domicilio (promemoria 3.01).',
-          'Il diritto nasce il primo giorno del mese successivo al raggiungimento dell’età di riferimento e si estingue alla fine del mese del decesso (art. 21 LAVS). L’età di riferimento è la stessa per donne e uomini; per le donne della generazione di transizione valgono regole transitorie.',
+          'Il diritto nasce il primo giorno del mese successivo al raggiungimento dell’età di riferimento e si estingue con il decesso (art. 21 cpv. 2 LAVS). L’età di riferimento è la stessa per donne e uomini; per le donne della generazione di transizione valgono regole transitorie.',
           'Chi in dicembre riceve una rendita di vecchiaia riceve in più una tredicesima rendita di vecchiaia pari a un dodicesimo della rendita di vecchiaia annua. Le rendite per superstiti, d’invalidità e per figli continuano a essere versate solo dodici volte (promemoria 3.01).',
         ],
       },
@@ -489,7 +489,7 @@ export const SEITEN = [
         titel: 'Che cos’altro spetta in età avanzata',
         absaetze: [
           'Se rendite e sostanza non bastano per il minimo vitale, entrano in considerazione le <strong>prestazioni complementari</strong>. Sono un diritto legale e non aiuto sociale.',
-          'Chi riceve una rendita di vecchiaia o prestazioni complementari, vive in Svizzera e nella vita quotidiana dipende in modo permanente dall’aiuto di altri, ad esempio per vestirsi, per l’igiene personale o per mangiare, può ricevere un <strong>assegno per grandi invalidi</strong> dell’AVS se la grande invalidità dura ininterrottamente da almeno sei mesi e non esiste un diritto a un assegno per grandi invalidi dell’assicurazione contro gli infortuni o dell’assicurazione militare. Non dipende né dal reddito né dalla sostanza (art. 43bis LAVS, promemoria 3.01).',
+          'Chi riceve l’intera rendita di vecchiaia o prestazioni complementari, vive in Svizzera e nella vita quotidiana dipende in modo permanente dall’aiuto di altri, ad esempio per vestirsi, per l’igiene personale o per mangiare, può ricevere un <strong>assegno per grandi invalidi</strong> dell’AVS se la grande invalidità dura ininterrottamente da almeno sei mesi e non esiste un diritto a un assegno per grandi invalidi dell’assicurazione contro gli infortuni o dell’assicurazione militare. Non dipende né dal reddito né dalla sostanza (art. 43bis LAVS, promemoria 3.01).',
           'Per la <strong>cassa pensioni</strong> sceglie tra rendita e capitale. Per legge può chiedere un quarto sotto forma di capitale, di più solo se il regolamento lo prevede; per le persone coniugate serve il consenso scritto (art. 37 e 37a LPP). Entro quando scegliere lo stabilisce il regolamento; una volta versato il capitale non si torna indietro. Si faccia consigliare per tempo.',
         ],
       },

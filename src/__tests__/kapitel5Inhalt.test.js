@@ -83,7 +83,8 @@ describe('A1 · Selbständig: AHV-Akontobeiträge (AHV-Merkblatt 2.02, Stand 1.1
     expect(s).toMatch(/jedes Quartal/);
     expect(s).toMatch(/mindestens aber 530 Franken/);
     expect(s).toMatch(/5 % Verzugszins/);
-    expect(s).toMatch(/Stand 2026/);
+    // Die Quelle steht wieder im Text (Vortor 17.11.2026, swiss-precision): Beträge nie ohne Beleg.
+    expect(s).toMatch(/\(AHVG Art\. 8, AHVV Art\. 21 und 42, AHV-Merkblatt 2\.02; Stand 2026\)/);
     expect(s).not.toMatch(/an der Quelle/);
     expect(s).toMatch(/steuerbarem Umsatz im Jahr, im In- und Ausland zusammengezählt, ohne von der Steuer ausgenommene Leistungen \(MWSTG Art\. 10\)/);
     expect(s).toMatch(/Nebenerwerb bis 2 500 Franken im Jahr gibt es Beiträge nur auf Wunsch/);

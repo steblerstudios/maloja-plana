@@ -919,7 +919,7 @@ export const SEITEN = [
       {
         frage: 'Bekomme ich Taggeld, wenn ich selbst gekündigt habe?',
         antwort:
-          'Ja, aber meist erst nach einer Einstellung: Wer ohne Zusicherung einer neuen Stelle selbst kündigt, erhält in der Regel eine Zeit lang kein Taggeld, oft für die längste Dauer, die das Gesetz vorsieht. Ausgenommen ist, wem das Bleiben an der Stelle nicht zuzumuten war (AVIG Art. 30, AVIV Art. 44, 45). Lassen Sie sich vorher beraten.',
+          'Ja, aber meist erst nach einer Einstellung: Wer ohne Zusicherung einer neuen Stelle selbst kündigt, erhält eine Zeit lang kein Taggeld. Das gilt in der Regel als schweres Verschulden, die schwerste Stufe mit 31 bis 60 Einstelltagen. Ausgenommen ist, wem das Bleiben an der Stelle nicht zuzumuten war (AVIG Art. 30, AVIV Art. 44, 45). Lassen Sie sich vorher beraten.',
       },
       {
         frage: 'Kann ich mich schon vor dem Ende der Stelle anmelden?',
@@ -1013,7 +1013,7 @@ export const SEITEN = [
         titel: 'Die Rente kommt nicht von selbst',
         absaetze: [
           'Die AHV-Rente müssen Sie selbst anmelden, am besten einige Monate vor dem Referenzalter. Zuständig ist die Ausgleichskasse, die zuletzt Ihre Beiträge erhalten hat; haben Sie keine Beiträge bezahlt, die kantonale Ausgleichskasse Ihres Wohnkantons (Merkblatt 3.01).',
-          'Der Anspruch entsteht am ersten Tag des Monats nach dem Erreichen des Referenzalters und erlischt am Ende des Monats, in dem die Person stirbt (AHVG Art. 21). Das Referenzalter ist für Frauen und Männer gleich; für Frauen der Übergangsgeneration gelten Übergangsregeln.',
+          'Der Anspruch entsteht am ersten Tag des Monats nach dem Erreichen des Referenzalters und erlischt mit dem Tod (AHVG Art. 21 Abs. 2). Das Referenzalter ist für Frauen und Männer gleich; für Frauen der Übergangsgeneration gelten Übergangsregeln.',
           'Wer im Dezember eine Altersrente bezieht, erhält zusätzlich eine dreizehnte Altersrente in der Höhe eines Zwölftels der jährlichen Altersrente. Hinterlassenen-, Invaliden- und Kinderrenten werden weiterhin nur zwölfmal ausbezahlt (Merkblatt 3.01).',
         ],
       },
@@ -1046,7 +1046,7 @@ export const SEITEN = [
         titel: 'Was im Alter sonst noch zusteht',
         absaetze: [
           'Reichen Renten und Vermögen nicht für das Nötigste, kommen <strong>Ergänzungsleistungen</strong> in Frage. Sie sind ein gesetzlicher Anspruch und keine Sozialhilfe.',
-          'Wer eine Altersrente oder Ergänzungsleistungen bezieht, in der Schweiz wohnt und im Alltag dauernd auf die Hilfe anderer angewiesen ist, etwa beim Ankleiden, bei der Körperpflege oder beim Essen, kann eine <strong>Hilflosenentschädigung</strong> der AHV erhalten, wenn die Hilflosigkeit seit mindestens sechs Monaten ununterbrochen besteht und kein Anspruch auf eine Hilflosenentschädigung der Unfall- oder Militärversicherung besteht. Sie hängt nicht von Einkommen und Vermögen ab (AHVG Art. 43bis, Merkblatt 3.01).',
+          'Wer die ganze Altersrente oder Ergänzungsleistungen bezieht, in der Schweiz wohnt und im Alltag dauernd auf die Hilfe anderer angewiesen ist, etwa beim Ankleiden, bei der Körperpflege oder beim Essen, kann eine <strong>Hilflosenentschädigung</strong> der AHV erhalten, wenn die Hilflosigkeit seit mindestens sechs Monaten ununterbrochen besteht und kein Anspruch auf eine Hilflosenentschädigung der Unfall- oder Militärversicherung besteht. Sie hängt nicht von Einkommen und Vermögen ab (AHVG Art. 43bis, Merkblatt 3.01).',
           'Bei der <strong>Pensionskasse</strong> entscheiden Sie zwischen Rente und Kapital. Einen Viertel können Sie gesetzlich als Kapital verlangen, mehr nur, wenn das Reglement es vorsieht; bei Verheirateten braucht es die schriftliche Zustimmung (BVG Art. 37, 37a). Bis wann Sie wählen müssen, steht im Reglement; ist das Kapital einmal ausbezahlt, lässt sich das nicht rückgängig machen. Lassen Sie sich früh beraten.',
         ],
       },

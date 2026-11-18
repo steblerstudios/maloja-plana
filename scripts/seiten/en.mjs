@@ -417,7 +417,7 @@ export const SEITEN = [
       {
         frage: 'Do I get benefits if I quit my job myself?',
         antwort:
-          'Yes, but usually only after a suspension: anyone who quits without being assured of a new job generally receives no benefits for a period of time, often the longest the law provides. The exception is if staying in the job could not reasonably be expected (Art. 30 AVIG, Art. 44 and 45 AVIV). Seek advice beforehand.',
+          'Yes, but usually only after a suspension: anyone who quits without being assured of a new job receives no benefits for a period of time. This usually counts as serious fault, the most serious level, with 31 to 60 days of suspension. The exception is if staying in the job could not reasonably be expected (Art. 30 AVIG, Art. 44 and 45 AVIV). Seek advice beforehand.',
       },
       {
         frage: 'Can I register before my job ends?',
@@ -475,7 +475,7 @@ export const SEITEN = [
         titel: 'The pension does not come by itself',
         absaetze: [
           'You must apply for the AHV pension yourself, ideally a few months before reference age. The responsible office is the compensation fund that last received your contributions; if you paid none, the cantonal compensation fund of your canton of residence (leaflet 3.01).',
-          'Entitlement begins on the first day of the month after you reach reference age and ends at the end of the month in which the person dies (Art. 21 AHVG). The reference age is the same for women and men; transitional rules apply to women of the transitional generation.',
+          'Entitlement begins on the first day of the month after you reach reference age and ends on the person’s death (Art. 21 para. 2 AHVG). The reference age is the same for women and men; transitional rules apply to women of the transitional generation.',
           'Anyone receiving an old-age pension in December also receives a thirteenth old-age pension equal to one twelfth of the annual old-age pension. Survivors’, disability and children’s pensions are still paid only twelve times (leaflet 3.01).',
         ],
       },
@@ -491,7 +491,7 @@ export const SEITEN = [
         titel: 'What else you may be entitled to in old age',
         absaetze: [
           'If pensions and assets are not enough for the bare necessities, <strong>supplementary benefits</strong> come into question. They are a legal entitlement, not social assistance.',
-          'Anyone who receives an old-age pension or supplementary benefits, lives in Switzerland and permanently depends on other people’s help in daily life, for example to dress, wash or eat, can receive a <strong>helplessness allowance</strong> from the AHV if the helplessness has lasted without interruption for at least six months and there is no entitlement to a helplessness allowance from accident or military insurance. It does not depend on income or assets (Art. 43bis AHVG, leaflet 3.01).',
+          'Anyone who draws the full old-age pension or receives supplementary benefits, lives in Switzerland and permanently depends on other people’s help in daily life, for example to dress, wash or eat, can receive a <strong>helplessness allowance</strong> from the AHV if the helplessness has lasted without interruption for at least six months and there is no entitlement to a helplessness allowance from accident or military insurance. It does not depend on income or assets (Art. 43bis AHVG, leaflet 3.01).',
           'With the <strong>pension fund</strong>, you choose between a pension and a lump sum. By law you can take a quarter as a lump sum, more only if the fund’s regulations allow it; married people need written consent (Art. 37 and 37a BVG). The deadline for choosing is in the regulations; once the lump sum has been paid out, it cannot be undone. Seek advice early.',
         ],
       },
