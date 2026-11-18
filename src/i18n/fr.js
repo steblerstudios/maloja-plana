@@ -1732,6 +1732,17 @@ export default {
   // Nichtbezug von Bedarfsleistungen (Stebler Studios 18.11.2026, «Brücken 1–3»). Keine Quote im Text:
   // die einzigen belegten Zahlen gelten nur für Basel-Stadt (Wächter: src/__tests__/nichtbezugBruecken.test.js).
   nichtbezug: {
+    huerdenTitel: 'Ce qui fait souvent obstacle, et ce qui aide ici',
+    huerdenIntro: 'Un guide de la Plateforme nationale contre la pauvreté (2026) cite quatre obstacles qui empêchent des personnes d’obtenir une prestation à laquelle elles ont droit :',
+    wissenTitel: 'Ne pas savoir à quoi on a droit',
+    wissenText: { sie: 'Cette page montre, avec vos données, les pistes possibles, puis ce qui correspond à votre situation de vie.', du: 'Cette page montre, avec tes données, les pistes possibles, puis ce qui correspond à ta situation de vie.' },
+    aufwandTitel: 'Temps, énergie et langue',
+    aufwandText: { sie: 'Maloja existe en cinq langues. Vous pouvez mettre ce qui est à faire dans l’aide-mémoire et les délais dans le calendrier. Une chose après l’autre.', du: 'Maloja existe en cinq langues. Tu peux mettre ce qui est à faire dans l’aide-mémoire et les délais dans le calendrier. Une chose après l’autre.' },
+    vertrauenTitel: 'Honte et méfiance',
+    vertrauenText: { sie: 'Vos données restent sur cet appareil. Un service spécialisé conseille sans engagement avant toute demande.', du: 'Tes données restent sur cet appareil. Un service spécialisé conseille sans engagement avant toute demande.' },
+    verfahrenTitel: 'Démarches compliquées',
+    verfahrenText: { sie: 'Les pages sur la réduction de primes et l’aide sociale mènent à l’office compétent de votre canton ; pour les autres prestations, elles indiquent qui est compétent.', du: 'Les pages sur la réduction de primes et l’aide sociale mènent à l’office compétent de ton canton ; pour les autres prestations, elles indiquent qui est compétent.' },
+    imKanton: { sie: 'Dans votre canton :', du: 'Dans ton canton :' },
     kleineBetraege: 'Même un petit montant compte. Une étude pour Bâle-Ville (2026) a constaté que le renoncement à une prestation dépend surtout du montant manquant. Chez beaucoup de personnes qui ne touchent rien, ce montant est faible.',
     ipv: { sie: 'Les personnes qui ont droit à une réduction de primes ne la reçoivent pas toutes. Des études citent comme raisons le manque d’information, les démarches et la honte. À Bâle-Ville, le nombre de personnes qui y renoncent a diminué de 2015/2016 à 2022 pour toutes les prestations étudiées, sauf pour la réduction de primes. L’office de votre canton vous indique si vous devez vous annoncer vous-même.', du: 'Les personnes qui ont droit à une réduction de primes ne la reçoivent pas toutes. Des études citent comme raisons le manque d’information, les démarches et la honte. À Bâle-Ville, le nombre de personnes qui y renoncent a diminué de 2015/2016 à 2022 pour toutes les prestations étudiées, sauf pour la réduction de primes. L’office de ton canton t’indique si tu dois t’annoncer toi-même.' },
     sozialhilfe: 'Les personnes qui ont droit à l’aide sociale ne s’annoncent pas toutes. Des études citent comme raisons le manque d’information, les démarches et la honte. C’est le service social qui examine s’il existe un droit. Pour se renseigner d’abord sans engagement, on peut s’adresser à un service spécialisé, par exemple un service social d’Église ou privé.',
@@ -7018,6 +7029,9 @@ export default {
       steuererklaerung: 'Déclaration d\'impôts en ligne',
       sozialdienst: 'Service social',
       ipv: 'Demander une réduction de primes',
+      leistungsrechner: 'Estimer les prestations sociales (calculateur)',
+      anlaufstelle: 'Guichet social régional (GSR) : un formulaire pour plusieurs prestations',
+      orientierung: 'Orientation gratuite et confidentielle sur les prestations sociales (JU-lien)',
     },
   },
   medications: {

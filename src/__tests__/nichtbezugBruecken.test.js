@@ -83,3 +83,53 @@ describe('Nichtbezug: die Hinweise stehen auf den Seiten', () => {
     expect(ohne).not.toContain('data-hinweis="nichtbezug"');
   });
 });
+
+// ── Brücken 4 und 5 (18.11.2026) ─────────────────────────────────────────────
+import { CANTONAL_LINKS, CANTONAL_LINKS_GEPRUEFT, ANLAUFSTELLE_FELDER, kantonsAnlaufstelle } from '../data/direktLinks.js';
+import { NichtbezugHuerden, KantonsAnlaufstelle } from '../components/Nichtbezug.jsx';
+
+describe('Brücke 5: kantonale Anlaufstellen', () => {
+  it('genau BS, NE und JU haben ein Angebot, je mit Prüfdatum und https', () => {
+    const mit = Object.keys(CANTONAL_LINKS).filter((k) => kantonsAnlaufstelle(k)).sort();
+    expect(mit).toEqual(['BS', 'JU', 'NE']);
+    for (const k of mit) {
+      const a = kantonsAnlaufstelle(k);
+      expect(a.url).toMatch(/^https:\/\//);
+      expect(CANTONAL_LINKS_GEPRUEFT[k][a.key]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
+    expect(kantonsAnlaufstelle('ZH')).toBeNull();
+    expect(kantonsAnlaufstelle('')).toBeNull();
+  });
+  for (const [lang, d] of Object.entries(SPRACHEN)) {
+    it(`${lang}: jedes Anlaufstellen-Feld hat eine Beschriftung (DirektLinks zeigt jedes Feld)`, () => {
+      for (const f of ANLAUFSTELLE_FELDER) expect(typeof d.dl.cantonal[f]).toBe('string');
+    });
+  }
+  it('der Link steht nur mit Angebot', () => {
+    const t = createT({ de }, 'de', 'sie');
+    const bs = renderToStaticMarkup(React.createElement(KantonsAnlaufstelle, { palette: LIGHT_PALETTE, t, canton: 'BS' }));
+    expect(bs).toContain(CANTONAL_LINKS.BS.leistungsrechner);
+    expect(bs).toContain(de.dl.cantonal.leistungsrechner);
+    expect(renderToStaticMarkup(React.createElement(KantonsAnlaufstelle, { palette: LIGHT_PALETTE, t, canton: 'ZH' }))).toBe('');
+  });
+});
+
+describe('Brücke 4: die vier Hürden', () => {
+  for (const [lang, d] of Object.entries(SPRACHEN)) {
+    it(`${lang}: Titel, Einleitung und vier Hürden mit Text, ohne Quote`, () => {
+      const n = d.nichtbezug;
+      for (const k of ['huerdenTitel', 'huerdenIntro', 'imKanton', ...['wissen', 'aufwand', 'vertrauen', 'verfahren'].flatMap((h) => [h + 'Titel', h + 'Text'])]) {
+        for (const s of blaetter(n[k])) { expect(typeof s, `${lang}.${k}`).toBe('string'); expect(s).not.toMatch(QUOTE); }
+      }
+    });
+  }
+  it('auf «Was steht mir zu?» steht der Block auch ohne Angaben, mit Kantons-Link nur bei Angebot', () => {
+    const t = createT({ de }, 'de', 'sie');
+    const html = renderToStaticMarkup(React.createElement(NichtbezugHuerden, { palette: LIGHT_PALETTE, t, canton: 'JU' }));
+    expect(html).toContain(de.nichtbezug.huerdenTitel);
+    expect(html).toContain('ju-lien.org');
+    const leer = renderToStaticMarkup(React.createElement(Lebenssituationen, { palette: LIGHT_PALETTE, t, data: {}, onNavigate: () => {} }));
+    expect(leer).toContain('data-teil="nichtbezug-huerden"');
+    expect(leer).not.toContain('data-teil="kantons-anlaufstelle"');
+  });
+});

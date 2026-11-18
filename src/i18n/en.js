@@ -1732,6 +1732,17 @@ export default {
   // Nichtbezug von Bedarfsleistungen (Stebler Studios 18.11.2026, «Brücken 1–3»). Keine Quote im Text:
   // die einzigen belegten Zahlen gelten nur für Basel-Stadt (Wächter: src/__tests__/nichtbezugBruecken.test.js).
   nichtbezug: {
+    huerdenTitel: 'What often gets in the way, and what helps here',
+    huerdenIntro: 'A guide by the National Platform against Poverty (2026) names four barriers that keep people from claiming a benefit they are entitled to:',
+    wissenTitel: 'Not knowing what you are entitled to',
+    wissenText: 'With your details, this page shows which routes may apply, and below that what fits your life situation.',
+    aufwandTitel: 'Time, energy and language',
+    aufwandText: 'Maloja is available in five languages. You can put what needs doing on your checklist and deadlines in the calendar. One thing at a time.',
+    vertrauenTitel: 'Shame and mistrust',
+    vertrauenText: 'Your details stay on this device. An advice service can help without obligation before you apply for anything.',
+    verfahrenTitel: 'Complicated procedures',
+    verfahrenText: 'The pages on premium reduction and social assistance lead to the responsible office in your canton; for other benefits, they say who is responsible.',
+    imKanton: 'In your canton:',
     kleineBetraege: 'A small amount counts too. A study for Basel-Stadt (2026) found that whether people go without a benefit depends most on the size of the shortfall. For many who receive nothing, the shortfall is small.',
     ipv: 'Not everyone entitled to a premium reduction receives one. Studies name a lack of information, the effort involved and shame as reasons. In Basel-Stadt, the number of people going without fell between 2015/2016 and 2022 for every benefit studied except the premium reduction. The office in your canton can tell you whether you need to apply yourself.',
     sozialhilfe: 'Not everyone entitled to social assistance comes forward. Studies name a lack of information, the effort involved and shame as reasons. The social services office checks whether there is an entitlement. If you would like to ask without obligation first, you can turn to an advice service, for example a church or private social counselling service.',
@@ -7019,6 +7030,9 @@ export default {
       steuererklaerung: 'Tax return online',
       sozialdienst: 'Social services',
       ipv: 'Apply for premium subsidy',
+      leistungsrechner: 'Estimate social benefits (benefits calculator)',
+      anlaufstelle: 'Regional social services desk (GSR): one form for several benefits',
+      orientierung: 'Free, confidential guidance on social benefits (JU-lien)',
     },
   },
   medications: {

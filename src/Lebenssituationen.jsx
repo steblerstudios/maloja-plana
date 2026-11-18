@@ -18,6 +18,7 @@ import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { Belege } from './components/Belege.jsx';
+import { NichtbezugHuerden } from './components/Nichtbezug.jsx';
 import { linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { hatAusweisFNS, sozHinweisSchluessel } from './data/ausweis.js';
 
@@ -383,6 +384,8 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     w.wege.length > 0 && erfasst && canton && h('div', { 'data-hinweis': 'nichtbezug' },
       h('p', { style: s.fuss }, t('nichtbezug.kleineBetraege')),
       h(Belege, { palette, t, zeile: t('nichtbezug.quelle') })),
+    // Brücken 4 und 5: die vier Hürden, was hier hilft, und das Angebot des Kantons, wo es eines gibt.
+    h(NichtbezugHuerden, { palette, t, canton }),
 
     // (2) Nach Ihrer Lebenslage
     h('h2', { style: s.h2 }, t('wasStehtMirZu.lebenslage')),

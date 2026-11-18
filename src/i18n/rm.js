@@ -4251,6 +4251,12 @@ export default {
       steuererklaerung: 'Decleraziun da taglia online',
       sozialdienst: 'Servetsch social',
       ipv: 'Dumandar la reducziun da premias',
+      // TODO(rm): provisorisch — Gegenlese (Brücke 5, 18.11.2026)
+      leistungsrechner: 'Sozialleistungen abschätzen (Leistungsrechner)',
+      // TODO(rm): provisorisch — Gegenlese (Brücke 5, 18.11.2026)
+      anlaufstelle: 'Regionale Anlaufstelle (GSR): ein Formular für mehrere Leistungen',
+      // TODO(rm): provisorisch — Gegenlese (Brücke 5, 18.11.2026)
+      orientierung: 'Kostenlose, vertrauliche Orientierung zu Sozialleistungen (JU-lien)',
     },
   },
 
@@ -4602,6 +4608,17 @@ export default {
   // die einzigen belegten Zahlen gelten nur für Basel-Stadt (Wächter: src/__tests__/nichtbezugBruecken.test.js).
   // TODO(rm): noch deutsch, wie ergaenzungsleistungen.step1Nichtbezug; Gegenlese im Dezember.
   nichtbezug: {
+    huerdenTitel: 'Was oft im Weg steht, und was hier hilft',
+    huerdenIntro: 'Eine Orientierungshilfe der Nationalen Plattform gegen Armut (2026) nennt vier Hürden, die Menschen davon abhalten, eine Leistung zu holen, die ihnen zusteht:',
+    wissenTitel: 'Nicht wissen, was zusteht',
+    wissenText: { sie: 'Diese Seite zeigt mit Ihren Angaben, welche Wege infrage kommen, und darunter, was zu Ihrer Lebenslage passt.', du: 'Diese Seite zeigt mit deinen Angaben, welche Wege infrage kommen, und darunter, was zu deiner Lebenslage passt.' },
+    aufwandTitel: 'Zeit, Kraft und Sprache',
+    aufwandText: { sie: 'Maloja gibt es in fünf Sprachen. Was ansteht, können Sie auf die Merkliste setzen, Fristen in den Kalender. Eines nach dem anderen.', du: 'Maloja gibt es in fünf Sprachen. Was ansteht, kannst du auf die Merkliste setzen, Fristen in den Kalender. Eines nach dem anderen.' },
+    vertrauenTitel: 'Scham und Misstrauen',
+    vertrauenText: { sie: 'Ihre Angaben bleiben auf diesem Gerät. Eine Fachstelle berät unverbindlich, bevor Sie etwas beantragen.', du: 'Deine Angaben bleiben auf diesem Gerät. Eine Fachstelle berät unverbindlich, bevor du etwas beantragst.' },
+    verfahrenTitel: 'Komplizierte Wege',
+    verfahrenText: { sie: 'Die Seiten zu Prämienverbilligung und Sozialhilfe führen zur zuständigen Stelle Ihres Kantons; bei anderen Leistungen steht dort, wer zuständig ist.', du: 'Die Seiten zu Prämienverbilligung und Sozialhilfe führen zur zuständigen Stelle deines Kantons; bei anderen Leistungen steht dort, wer zuständig ist.' },
+    imKanton: { sie: 'In Ihrem Kanton:', du: 'In deinem Kanton:' },
     kleineBetraege: 'Auch ein kleiner Betrag zählt. Eine Studie für Basel-Stadt (2026) fand: Ob jemand auf eine Leistung verzichtet, hängt am stärksten von der Höhe des Fehlbetrags ab. Bei vielen, die nichts beziehen, ist dieser Betrag klein.',
     ipv: { sie: 'Nicht alle, denen eine Prämienverbilligung zusteht, erhalten sie auch. Studien nennen als Gründe fehlendes Wissen, den Aufwand und Scham. In Basel-Stadt ist die Zahl derer, die verzichten, von 2015/2016 bis 2022 bei allen untersuchten Leistungen gesunken, ausser bei der Prämienverbilligung. Ob Sie sich selbst melden müssen, sagt die Stelle Ihres Kantons.', du: 'Nicht alle, denen eine Prämienverbilligung zusteht, erhalten sie auch. Studien nennen als Gründe fehlendes Wissen, den Aufwand und Scham. In Basel-Stadt ist die Zahl derer, die verzichten, von 2015/2016 bis 2022 bei allen untersuchten Leistungen gesunken, ausser bei der Prämienverbilligung. Ob du dich selbst melden musst, sagt die Stelle deines Kantons.' },
     sozialhilfe: 'Nicht alle, denen Sozialhilfe zusteht, melden sich. Studien nennen als Gründe fehlendes Wissen, den Aufwand und Scham. Ob ein Anspruch besteht, klärt der Sozialdienst. Wer zuerst unverbindlich fragen möchte, kann sich an eine Fachstelle wenden, zum Beispiel eine kirchliche oder private Sozialberatung.',

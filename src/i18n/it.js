@@ -1732,6 +1732,17 @@ export default {
   // Nichtbezug von Bedarfsleistungen (Stebler Studios 18.11.2026, «Brücken 1–3»). Keine Quote im Text:
   // die einzigen belegten Zahlen gelten nur für Basel-Stadt (Wächter: src/__tests__/nichtbezugBruecken.test.js).
   nichtbezug: {
+    huerdenTitel: 'Che cosa ostacola spesso, e che cosa aiuta qui',
+    huerdenIntro: 'Una guida della Piattaforma nazionale contro la povertà (2026) indica quattro ostacoli che impediscono alle persone di ottenere una prestazione che spetta loro:',
+    wissenTitel: 'Non sapere che cosa spetta',
+    wissenText: { sie: 'Questa pagina mostra, con i Suoi dati, quali vie entrano in considerazione e, più sotto, che cosa corrisponde alla Sua situazione di vita.', du: 'Questa pagina mostra, con i tuoi dati, quali vie entrano in considerazione e, più sotto, che cosa corrisponde alla tua situazione di vita.' },
+    aufwandTitel: 'Tempo, energie e lingua',
+    aufwandText: { sie: 'Maloja è disponibile in cinque lingue. Ciò che c’è da fare può essere messo nel promemoria, le scadenze nel calendario. Una cosa dopo l’altra.', du: 'Maloja è disponibile in cinque lingue. Ciò che c’è da fare può essere messo nel promemoria, le scadenze nel calendario. Una cosa dopo l’altra.' },
+    vertrauenTitel: 'Vergogna e diffidenza',
+    vertrauenText: { sie: 'I Suoi dati restano su questo dispositivo. Un servizio specializzato offre consulenza senza impegno prima di qualsiasi richiesta.', du: 'I tuoi dati restano su questo dispositivo. Un servizio specializzato offre consulenza senza impegno prima di qualsiasi richiesta.' },
+    verfahrenTitel: 'Procedure complicate',
+    verfahrenText: { sie: 'Le pagine sulla riduzione dei premi e sull’aiuto sociale portano all’ufficio competente del Suo Cantone; per le altre prestazioni indicano chi è competente.', du: 'Le pagine sulla riduzione dei premi e sull’aiuto sociale portano all’ufficio competente del tuo Cantone; per le altre prestazioni indicano chi è competente.' },
+    imKanton: { sie: 'Nel Suo Cantone:', du: 'Nel tuo Cantone:' },
     kleineBetraege: 'Anche un importo modesto conta. Uno studio per Basilea Città (2026) ha rilevato che la rinuncia a una prestazione dipende soprattutto dall’importo mancante. Per molte persone che non percepiscono nulla, questo importo è modesto.',
     ipv: { sie: 'Non tutte le persone che hanno diritto a una riduzione dei premi la ricevono. Alcuni studi indicano come motivi la mancanza di informazioni, l’onere amministrativo e la vergogna. A Basilea Città, dal 2015/2016 al 2022 il numero di chi rinuncia è diminuito per tutte le prestazioni esaminate, tranne che per la riduzione dei premi. L’ufficio del Suo Cantone Le indica se occorre annunciarsi personalmente.', du: 'Non tutte le persone che hanno diritto a una riduzione dei premi la ricevono. Alcuni studi indicano come motivi la mancanza di informazioni, l’onere amministrativo e la vergogna. A Basilea Città, dal 2015/2016 al 2022 il numero di chi rinuncia è diminuito per tutte le prestazioni esaminate, tranne che per la riduzione dei premi. L’ufficio del tuo Cantone ti indica se occorre annunciarsi personalmente.' },
     sozialhilfe: 'Non tutte le persone che hanno diritto all’aiuto sociale si annunciano. Alcuni studi indicano come motivi la mancanza di informazioni, l’onere amministrativo e la vergogna. È il servizio sociale a verificare se sussiste un diritto. Chi desidera prima informarsi senza impegno può rivolgersi a un servizio specializzato, per esempio un servizio sociale ecclesiastico o privato.',
@@ -6994,6 +7005,9 @@ export default {
       steuererklaerung: 'Dichiarazione fiscale online',
       sozialdienst: 'Servizio sociale',
       ipv: 'Richiedere la riduzione dei premi',
+      leistungsrechner: 'Stimare le prestazioni sociali (calcolatore)',
+      anlaufstelle: 'Sportello sociale regionale (GSR): un modulo per più prestazioni',
+      orientierung: 'Orientamento gratuito e confidenziale sulle prestazioni sociali (JU-lien)',
     },
   },
   medications: {
