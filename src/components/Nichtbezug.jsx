@@ -27,6 +27,8 @@ export const ZhRestpraemie = ({ palette, t, canton, data, style }) => {
   if (canton !== 'ZH' || hatAusweisFNS(data)) return null;
   return React.createElement('div', { 'data-hinweis': 'zh-restpraemie', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0', ...style } },
     React.createElement('p', { style: { margin: 0, color: palette.mid } }, t('nichtbezug.zhRestpraemie')),
+    // Rückwirkung (19.11.2026): § 50 VEG KVG am Wortlaut, als eigener Absatz, damit der Block nicht noch länger wird.
+    React.createElement('p', { 'data-teil': 'zh-rueckwirkend', style: { margin: space.xs + 'px 0 0', color: palette.mid } }, t('nichtbezug.zhRestpraemieRueckwirkend')),
     React.createElement(Belege, { palette, t, zeile: t('nichtbezug.zhRestpraemieQuelle') }));
 };
 

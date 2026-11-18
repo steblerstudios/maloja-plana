@@ -35,6 +35,12 @@ describe('Restprämienübernahme ZH: Texte belegt', () => {
       const ziele = b.links.map((l) => l.href).join(' ');
       expect(ziele).toContain(MERKBLATT);
       expect(ziele).toContain(HANDBUCH);
+      // Rückwirkung (19.11.2026): § 50 VEG KVG, «bis zu zwei Jahren», mit Beleg.
+      expect(ziele).toContain('Ordnr=832.1');
+      for (const s of blaetter(d.nichtbezug.zhRestpraemieRueckwirkend)) {
+        expect(typeof s).toBe('string');
+        expect(s).toMatch(/2|zwei|two|deux|due/);
+      }
     });
   }
 });
@@ -50,7 +56,9 @@ describe('Restprämienübernahme ZH: nur im Kanton Zürich', () => {
   });
 
   it('der Baustein zeigt sich nur bei ZH', () => {
-    expect(renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: 'ZH' }))).toContain(de.nichtbezug.zhRestpraemie.sie.slice(0, 40));
+    const zh = renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: 'ZH' }));
+    expect(zh).toContain(de.nichtbezug.zhRestpraemie.sie.slice(0, 40));
+    expect(zh).toContain('data-teil="zh-rueckwirkend"');
     for (const k of ['BE', 'BS', '', undefined]) expect(renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: k }))).toBe('');
   });
 
