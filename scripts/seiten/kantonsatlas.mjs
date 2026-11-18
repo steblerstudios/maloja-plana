@@ -283,6 +283,8 @@ export const LEGENDE = {
   lastNachIpv: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
   steuer: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
   miete: 'Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, über alle vermieteten Wohnungen, auch langjährige Verträge. [[q:bfsMiete]]',
+  // Seit 18.11.2026 auch in der App (Kapitel Wohnen, «Auf der Karte»).
+  leer: 'Leerwohnungsziffer am 1. Juni 2026: Anteil der Wohnungen und Einfamilienhäuser, die leer stehen und zur Miete oder zum Kauf angeboten sind. [[q:bfsLeer]]',
   alq: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
   sozialhilfe: 'Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe, also Geld vom Sozialdienst, bezog. [[q:bfsSozialhilfe]]',
   el: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
@@ -316,7 +318,7 @@ const BLOECKE_ATLAS = {
     legende: LEGENDE.miete,
     nachher: werteTabelle('vmiete', 'Miete je Kanton als Tabelle') }),
   'FIG:leer': (ctx) => karte(ctx, 'leer', {
-    legende: 'Leerwohnungsziffer am 1. Juni 2026: Anteil der Wohnungen und Einfamilienhäuser, die leer stehen und zur Miete oder zum Kauf angeboten sind. [[q:bfsLeer]]',
+    legende: LEGENDE.leer,
     nachher: werteTabelle('vleer', 'Leerwohnungsziffer je Kanton als Tabelle') }),
   'FIG:kinderzulage': (ctx) => karte(ctx, 'kinderzulage', {
     legende: LEGENDE.kinderzulage,

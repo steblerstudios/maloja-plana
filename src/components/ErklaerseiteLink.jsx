@@ -58,18 +58,21 @@ export const ErklaerseiteLink = ({ palette, t, view }) => {
 // Steht UNTER «Passend zu diesem Bereich», weil dort laut Regel nur Ziele in der App stehen, und nicht oben,
 // weil der Vorspann vor dem Inhalt am 27.09.2026 bewusst entfiel.
 const ATLAS = '/kantonsatlas/#karte-';
+// Dritter Eintrag je Karte (18.11.2026): der Schlüssel in src/data/kantonskarten.js, damit die Karte hier selbst
+// aufklappt (wie «Ihr Kanton auf der Karte» beim Werkzeug), mit dem eigenen Kanton markiert. Vorher standen hier
+// nur Links in einen neuen Tab; die Links bleiben darunter als Weg zur ganzen Atlas-Seite mit Tabelle.
 export const ZUM_VERSTEHEN = {
-  basis: { seiten: [], karten: [[ATLAS + 'kinderzulage', 'Kinderzulage'], [ATLAS + 'kita', 'Abzug für Kinderbetreuung']] },
-  wohnen: { seiten: [], karten: [[ATLAS + 'miete', 'Miete 3 Zimmer'], [ATLAS + 'leer', 'Leerwohnungsziffer']] },
+  basis: { seiten: [], karten: [[ATLAS + 'kinderzulage', 'Kinderzulage', 'kinderzulage'], [ATLAS + 'kita', 'Abzug für Kinderbetreuung', 'kita']] },
+  wohnen: { seiten: [], karten: [[ATLAS + 'miete', 'Miete 3 Zimmer', 'miete'], [ATLAS + 'leer', 'Leerwohnungsziffer', 'leer']] },
   finanzen: {
     seiten: [['/sozialhilfe/', 'Sozialhilfe'], ['/steuern/', 'Steuern']],
-    karten: [[ATLAS + 'steuer', "Steuern bei 80'000 Fr. Lohn"], [ATLAS + 'sozialhilfe', 'Sozialhilfequote']],
+    karten: [[ATLAS + 'steuer', "Steuern bei 80'000 Fr. Lohn", 'steuer'], [ATLAS + 'sozialhilfe', 'Sozialhilfequote', 'sozialhilfe']],
   },
   versicherungen: {
     seiten: [['/krankenkasse/', 'Krankenkasse'], ['/praemienverbilligung/', 'Prämienverbilligung'], ['/ergaenzungsleistungen/', 'Ergänzungsleistungen'], ['/ahv-pensionierung/', 'AHV und Pensionierung']],
-    karten: [[ATLAS + 'praemie', 'Prämie Erwachsene'], [ATLAS + 'lastnachipv', 'Prämienlast nach Verbilligung'], [ATLAS + 'el', 'Ergänzungsleistungen zur AHV']],
+    karten: [[ATLAS + 'praemie', 'Prämie Erwachsene', 'praemie'], [ATLAS + 'lastnachipv', 'Prämienlast nach Verbilligung', 'lastNachIpv'], [ATLAS + 'el', 'Ergänzungsleistungen zur AHV', 'el']],
   },
-  ausbildung: { seiten: [['/arbeitslosigkeit/', 'Arbeitslosigkeit']], karten: [[ATLAS + 'alq', 'Arbeitslosenquote']] },
+  ausbildung: { seiten: [['/arbeitslosigkeit/', 'Arbeitslosigkeit']], karten: [[ATLAS + 'alq', 'Arbeitslosenquote', 'alq']] },
 };
 
 const kleinerLink = (palette, t, href, name) => React.createElement(ExternerLink, {
@@ -77,7 +80,7 @@ const kleinerLink = (palette, t, href, name) => React.createElement(ExternerLink
   style: { ...linkStil(palette), display: 'inline-block', minHeight: '44px', lineHeight: '44px', marginRight: space.md + 'px' },
 }, name);
 
-export const ZumVerstehen = ({ palette, t, kapitel }) => {
+export const ZumVerstehen = ({ palette, t, kapitel, kanton }) => {
   const z = ZUM_VERSTEHEN[kapitel];
   if (!z) return null;
   const titel = (schluessel) => React.createElement('h4', { style: { margin: space.sm + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t(schluessel));
@@ -86,6 +89,13 @@ export const ZumVerstehen = ({ palette, t, kapitel }) => {
     z.seiten.length > 0 && titel('erklaerseite.zumVerstehen'),
     z.seiten.length > 0 && zeile(z.seiten),
     z.karten.length > 0 && titel('erklaerseite.aufDerKarte'),
+    // Jede Karte zum Aufklappen, erst dann nachgeladen (Startbündel bleibt gleich). Titel = Kartenname, damit
+    // mehrere Aufklapper für Vorlese-Programme unterscheidbar sind (a11y-Prüfung 16.11.2026).
+    z.karten.length > 0 && React.createElement('div', { 'data-teil': 'karten-im-kapitel' },
+      z.karten.map(([href, name, karte]) => React.createElement(Aufklapper, {
+        key: href, palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte, kanton, ohneVergleich: true },
+        titel: React.createElement('span', { lang: 'de' }, name),
+      }))),
     z.karten.length > 0 && zeile(z.karten));
 };
 

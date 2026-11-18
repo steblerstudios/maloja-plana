@@ -40,7 +40,9 @@ const KOPF = '// Erzeugt von scripts/app-verstehen.mjs — nicht von Hand änder
 // fünf Werkzeuge, die schon auf ihre Atlas-Karte verlinkten.
 export const APP_KARTEN = ['praemie', 'lastNachIpv', 'steuer', 'miete', 'alq', 'sozialhilfe', 'el',
   // 14.11.2026 (Stebler Studios «Ja, Kapitel», alle vier): Abläufe «Kind» und «Trennung», Werkzeug Stundenlohn.
-  'kinderzulage', 'kita', 'alimente', 'mindestlohn'];
+  'kinderzulage', 'kita', 'alimente', 'mindestlohn',
+  // 18.11.2026: Kapitel Wohnen zeigt unter «Auf der Karte» beide Karten selbst, nicht nur Links in den Atlas.
+  'leer'];
 // Zu welcher Karte die App eine zweite Zahl daneben stellt (Stebler Studios 09.11.2026, «beides?»): bei der Last nach
 // Verbilligung auch die Last davor. Nur als Zahl, nicht als zweite Karte: Der Atlas teilt jede Karte in eigene
 // Viertel; zwei Karten hätten zwei Farbskalen, und ein Kanton könnte vorher und nachher gleich aussehen.

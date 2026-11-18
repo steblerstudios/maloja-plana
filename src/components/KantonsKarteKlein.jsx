@@ -26,9 +26,12 @@ const FELD_PX = space.ms; // Legendenfeld
 
 const h = React.createElement;
 
-export default function KantonsKarteKlein({ palette, t, karte, kanton, altersklasse }) {
+export default function KantonsKarteKlein({ palette, t, karte, kanton, altersklasse, ohneVergleich }) {
   const K = KARTEN[karte];
   if (!K) return null;
+  // ohneVergleich (18.11.2026): Im Kapitel Wohnen steht die Leerwohnungsziffer als eigene Karte daneben; die
+  // zweite Spalte bei der Miete wäre dort doppelt. Im Werkzeug Mietbeiträge bleibt sie, dort gibt es keine zweite Karte.
+  const vergleich = ohneVergleich ? null : K.vergleich;
   // Im dunklen Modus dreht der Atlas die Helligkeit: die höchste Stufe ist die hellste. Der Satz unter
   // der Karte muss das mitsagen (Durchsicht im Browser 09.11.2026: er sagte «dunkler» auch im dunklen Modus).
   const dunkel = palette.bg === DARK_PALETTE.bg;
@@ -84,7 +87,7 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
   // «Beides» (Stebler Studios 09.11.2026): neben der Karte die Zahl davor und danach, als kleine Tabelle. Die Farben
   // zeigen nur die Karte (nach Verbilligung); die Wirkung der Verbilligung steht in den Zahlen.
   const vergleichsTabelle = () => {
-    const V = K.vergleich;
+    const V = vergleich;
     const zelle = { padding: space.xs + 'px ' + space.sm + 'px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: palette.text };
     const kopf = { ...zelle, fontSize: text.xs, fontWeight: weight.medium, color: palette.mid, verticalAlign: 'bottom' };
     const reihe = (titel, vor, nach, fett) => h('tr', { key: titel },
@@ -107,7 +110,7 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
     h('p', { lang: 'de', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, color: palette.mid } }, `${K.titel} · ${K.einheit}`),
     svg,
     h('figcaption', { style: { marginTop: space.sm + 'px' } },
-      K.vergleich
+      vergleich
         ? vergleichsTabelle()
         : h(React.Fragment, null,
           eigen

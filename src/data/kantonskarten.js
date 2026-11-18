@@ -1789,5 +1789,143 @@ export const KARTEN = {
     "text": "kein kantonaler Mindestlohn"
    }
   }
+ },
+ "leer": {
+  "titel": "Leerwohnungsziffer",
+  "einheit": "% der Wohnungen",
+  "anker": "karte-leer",
+  "frucht": "birne",
+  "legende": "Leerwohnungsziffer am 1. Juni 2026: Anteil der Wohnungen und Einfamilienhäuser, die leer stehen und zur Miete oder zum Kauf angeboten sind.",
+  "quellen": [
+   {
+    "text": "Bundesamt für Statistik, Leerwohnungszählung 2026, Stichtag 1.6.2026, publiziert 10.9.2026",
+    "url": "https://dam-api.bfs.admin.ch/hub/api/dam/assets/36836216/master"
+   }
+  ],
+  "ch": "0,93 %",
+  "spannen": [
+   {
+    "s": 1,
+    "text": "0,20 % bis 0,51 %"
+   },
+   {
+    "s": 2,
+    "text": "0,52 % bis 0,84 %"
+   },
+   {
+    "s": 3,
+    "text": "0,87 % bis 1,12 %"
+   },
+   {
+    "s": 4,
+    "text": "1,16 % bis 3,35 %"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 3,
+    "text": "1,05 %"
+   },
+   "AR": {
+    "s": 3,
+    "text": "1,12 %"
+   },
+   "AI": {
+    "s": 3,
+    "text": "0,96 %"
+   },
+   "BL": {
+    "s": 2,
+    "text": "0,64 %"
+   },
+   "BS": {
+    "s": 2,
+    "text": "0,78 %"
+   },
+   "BE": {
+    "s": 3,
+    "text": "1,04 %"
+   },
+   "FR": {
+    "s": 4,
+    "text": "1,26 %"
+   },
+   "GE": {
+    "s": 1,
+    "text": "0,31 %"
+   },
+   "GL": {
+    "s": 1,
+    "text": "0,51 %"
+   },
+   "GR": {
+    "s": 1,
+    "text": "0,51 %"
+   },
+   "JU": {
+    "s": 4,
+    "text": "3,35 %"
+   },
+   "LU": {
+    "s": 2,
+    "text": "0,70 %"
+   },
+   "NE": {
+    "s": 4,
+    "text": "1,64 %"
+   },
+   "NW": {
+    "s": 2,
+    "text": "0,62 %"
+   },
+   "OW": {
+    "s": 1,
+    "text": "0,38 %"
+   },
+   "SH": {
+    "s": 2,
+    "text": "0,84 %"
+   },
+   "SZ": {
+    "s": 1,
+    "text": "0,50 %"
+   },
+   "SO": {
+    "s": 4,
+    "text": "1,91 %"
+   },
+   "SG": {
+    "s": 4,
+    "text": "1,16 %"
+   },
+   "TI": {
+    "s": 4,
+    "text": "1,78 %"
+   },
+   "TG": {
+    "s": 3,
+    "text": "1,10 %"
+   },
+   "UR": {
+    "s": 1,
+    "text": "0,42 %"
+   },
+   "VD": {
+    "s": 3,
+    "text": "0,87 %"
+   },
+   "VS": {
+    "s": 3,
+    "text": "1,04 %"
+   },
+   "ZG": {
+    "s": 1,
+    "text": "0,20 %"
+   },
+   "ZH": {
+    "s": 2,
+    "text": "0,52 %"
+   }
+  }
  }
 };

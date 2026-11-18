@@ -2558,7 +2558,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Kapitel durchgegangen».
     renderPassend(),
     // C-A (Wege durch Maloja, 07.11.2026): Erklärseiten und Karten des Kapitels, unter «Passend» (dort nur App-Ziele).
-    React.createElement(ZumVerstehen, { palette, t: tr, kapitel: chapter.key }),
+    React.createElement(ZumVerstehen, { palette, t: tr, kapitel: chapter.key, kanton: allData?.basis?.canton }),
     istFinanzen && renderAuswertung('unten'),
     nextChapter && onNext ? renderAlsNaechstes() : (!nextChapter && onNavigate ? renderAlleDurch() : null),
 

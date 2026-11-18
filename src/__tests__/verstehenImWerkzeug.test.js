@@ -99,6 +99,16 @@ describe('Die Karte (C)', () => {
     expect(karte(P, 'praemie', 'ZH')).not.toContain('data-teil="vor-nach"');
   });
 
+  // 18.11.2026: Im Kapitel Wohnen steht die Leerwohnungsziffer als eigene Karte; bei der Miete dort keine zweite Spalte.
+  it('ohneVergleich: Miete nur mit eigener Zahl, im Werkzeug weiter mit Leerwohnungsziffer', () => {
+    const imWerkzeug = karte(P, 'miete', 'ZH');
+    expect(imWerkzeug).toContain('data-teil="vor-nach"');
+    const imKapitel = renderToStaticMarkup(React.createElement(KantonsKarteKlein, { palette: P, t, karte: 'miete', kanton: 'ZH', ohneVergleich: true }));
+    expect(imKapitel).not.toContain('data-teil="vor-nach"');
+    expect(imKapitel).not.toContain('Leerwohnungsziffer');
+    expect(imKapitel).toContain(KARTEN.miete.werte.ZH.text.replace(/'/g, '&#x27;'));
+  });
+
   // Altersklasse (Stebler Studios 09.11.2026): Die Karte zeigt Erwachsene; für Kinder und junge Erwachsene steht
   // deren mittlere Prämie darunter, aus derselben BAG-Datei. Grenzen wie ageClassFromBirth.
   it('Kind und junge Erwachsene: eigene Prämie aus der Atlas-Datei, Erwachsene ohne Zusatz', () => {

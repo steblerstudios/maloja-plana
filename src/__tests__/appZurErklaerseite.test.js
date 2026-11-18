@@ -104,7 +104,7 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
 
     it('die Kapitelseite zeigt den Baustein unter «Passend»', () => {
       const cv = quelle('ChapterView.jsx');
-      expect(cv).toContain("React.createElement(ZumVerstehen, { palette, t: tr, kapitel: chapter.key })");
+      expect(cv).toContain("React.createElement(ZumVerstehen, { palette, t: tr, kapitel: chapter.key, kanton: allData?.basis?.canton })");
       expect(cv.indexOf('React.createElement(ZumVerstehen')).toBeGreaterThan(cv.indexOf('    renderPassend(),'));
     });
 
@@ -123,6 +123,23 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
       const html = renderToStaticMarkup(React.createElement(ZumVerstehen, { palette: LIGHT_PALETTE, t, kapitel: 'wohnen' }));
       expect(html).not.toContain(t('erklaerseite.zumVerstehen'));
       expect(html).toContain(t('erklaerseite.aufDerKarte'));
+    });
+
+    // 18.11.2026: Die Karten klappen im Kapitel selbst auf, nicht nur als Link in einen neuen Tab.
+    it('Wohnen: Miete und Leerwohnungsziffer klappen als Karten auf, die Links bleiben darunter', () => {
+      const html = renderToStaticMarkup(React.createElement(ZumVerstehen, { palette: LIGHT_PALETTE, t, kapitel: 'wohnen', kanton: 'ZH' }));
+      expect((html.match(/data-teil="aufklapper-karte"/g) || []).length).toBe(2);
+      expect(html).toContain('<span lang="de">Miete 3 Zimmer</span>');
+      expect(html).toContain('<span lang="de">Leerwohnungsziffer</span>');
+      expect(html).toContain('href="/kantonsatlas/#karte-leer"');
+    });
+
+    it('jede Karte im Kapitel gibt es auch als App-Karte, mit demselben Anker wie im Atlas', async () => {
+      const { KARTEN } = await import('../data/kantonskarten.js');
+      for (const [href, , karte] of Object.values(ZUM_VERSTEHEN).flatMap((z) => z.karten)) {
+        expect(KARTEN[karte], karte).toBeTruthy();
+        expect('/kantonsatlas/#' + KARTEN[karte].anker, karte).toBe(href);
+      }
     });
   });
 
