@@ -5,13 +5,13 @@ import {
   SAEULE3A_HOECHSTABZUG, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR, saeule3aMaximum,
   einzahlungenImJahr, jahreMitEinzahlungen,
 } from './data/saeule3a.js';
-import { zahl } from './utils/geld.js';
+import { betrag } from './utils/geld.js';
+import { betragText } from './components/BetragText.jsx';
 import { knopfStil } from './components/PrimaryButton.jsx';
 import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
 import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
-const fmt = (v) => zahl(v);
-const chf = (v) => 'CHF ' + fmt(v);
+const chf = (v) => betrag(v); // utils/geld.js: verbirgt mit dem Sichtschutz
 
 // Einzahlungs-Tracker der Säule 3a.
 //
@@ -77,7 +77,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
       style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border }
     },
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.sm } },
-        React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text } }, chf(total)),
+        React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text } }, betragText(t, total)),
         // Das Jahr steht am Betrag, nicht im Kleingedruckten: ohne es liest sich die Zahl wie
         // «alles, was ich je eingezahlt habe», und genau diese Lesart war der Fehler.
         React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } },

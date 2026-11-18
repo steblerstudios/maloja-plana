@@ -307,3 +307,21 @@ leer). Eine Quelle: [`src/config/seitenZeichen.js`](../../src/config/seitenZeich
 **Aufgelöst, nicht mehr im Register:** `success`, `dokumentTresor`, `exportTool`, `kalenderUhr`, `qr` (B5a).
 **Nicht mehr nötig** (Bild «Fehlendes», 07.11.): Couvert, Setzling, Sparschwein; Tell nur noch, falls
 «Leitformen reicher» gewünscht wird.
+
+### ⟨Nachtrag 11.11.2026⟩ Website: Zeichen der fünf Versprechen («Was Sie eingeben, bleibt bei Ihnen»)
+
+Nur auf der Startseite (`scripts/seiten/vorstellung.mjs`, `VERSPRECHEN_ZEICHEN`), nicht im App-Register.
+**Bewusst die vertrauten Zeichen statt Schweizer Metaphern** (Stebler Studios 11.11.2026, nach Skizze «Gatter, Truhe,
+Spuren, Uhrwerk» gegen «typisch»: «Typisch, ohne Strich»): Vertrauen muss man sofort erkennen, auch ohne Deutsch;
+das Wort steht immer daneben. **Kein roter Verbots-Strich** — ruhig statt Warnung.
+
+| Versprechen | Zeichen |
+|---|---|
+| Kein Konto | Person mit Häkchen |
+| Nur auf diesem Gerät | Telefon mit Schloss |
+| Kein Tracking | Auge geschlossen (Lidstrich mit Wimpern) |
+| Quelloffen | spitze Klammern `</>` |
+| Grün gehostet | Blatt — dasselbe wie in der App (`IconKern` `_leaf`) |
+
+Linienstil 1.8 auf 24, Farbe aus dem Knopf. Verworfen (nicht gebaut): offenes Weidegatter, Truhe, verwehte Spuren,
+Uhrwerk mit Glasboden; Tropfen am Berg für «Grün gehostet».

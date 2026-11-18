@@ -40,7 +40,10 @@ describe('A2 · Probezeit: sieben Tage Frist, Verlängerung bei Krankheit und Un
   it('K · «ab 8 Stunden» meint die Freizeit (UVV Art. 13), Berufsunfall immer', () => {
     const s = tDe('neuerJob.step3Text');
     expect(s).toMatch(/gegen Berufsunfälle versichert/);
-    expect(s).toMatch(/mindestens 8 Stunden pro Woche, auch gegen Unfälle in der Freizeit \(UVV Art\. 13\)/);
+    // Die Sache, nicht die Schreibweise: 8 Std. bei derselben Stelle → auch Freizeit (UVV Art. 13).
+    expect(s).toMatch(/mindestens 8 Stunden pro Woche/);
+    expect(s).toMatch(/Unfälle in der Freizeit/);
+    expect(s).toMatch(/UVV Art\. 13/);
   });
 });
 
@@ -68,9 +71,11 @@ describe('A1 · Selbständig: AHV-Akontobeiträge (AHV-Merkblatt 2.02, Stand 1.1
   it('Werte 2026 wie im Merkblatt', () => {
     expect(SELBST_AHV_JE_JAHR[2026]).toMatchObject({ satzVoll: 10, grenzeVoll: 60500, mindestbeitrag: 530, verzugszins: 5 });
   });
-  it('2027 ist nicht eingetragen: die Seite zeigt die Werte 2026 und sagt «Stand 2026»', () => {
-    const w = selbstAhvWerte(2027);
-    expect(w.jahr).toBe(2026);
+  it('2027: 61 500 / 541 (AHVV Art. 21, Bundesrat 2.10.2026); ab 2028 «Stand 2027»', () => {
+    expect(selbstAhvWerte(2027)).toMatchObject({ satzVoll: 10, grenzeVoll: 61500, mindestbeitrag: 541, verzugszins: 5, jahr: 2027, belegt: true });
+    expect(selbstAhvWerte(2026)).toMatchObject({ grenzeVoll: 60500, mindestbeitrag: 530, jahr: 2026, belegt: true });
+    const w = selbstAhvWerte(2028);
+    expect(w.jahr).toBe(2027);
     expect(w.belegt).toBe(false);
   });
   it('der Satz nennt vierteljährlich, Mindestbeitrag, Verzugszins und den Stand', () => {
@@ -78,7 +83,8 @@ describe('A1 · Selbständig: AHV-Akontobeiträge (AHV-Merkblatt 2.02, Stand 1.1
     expect(s).toMatch(/jedes Quartal/);
     expect(s).toMatch(/mindestens aber 530 Franken/);
     expect(s).toMatch(/5 % Verzugszins/);
-    expect(s).toMatch(/Stand 2026/);
+    // Die Quelle steht wieder im Text (Vortor 17.11.2026, swiss-precision): Beträge nie ohne Beleg.
+    expect(s).toMatch(/\(AHVG Art\. 8, AHVV Art\. 21 und 42, AHV-Merkblatt 2\.02; Stand 2026\)/);
     expect(s).not.toMatch(/an der Quelle/);
     expect(s).toMatch(/steuerbarem Umsatz im Jahr, im In- und Ausland zusammengezählt, ohne von der Steuer ausgenommene Leistungen \(MWSTG Art\. 10\)/);
     expect(s).toMatch(/Nebenerwerb bis 2 500 Franken im Jahr gibt es Beiträge nur auf Wunsch/);

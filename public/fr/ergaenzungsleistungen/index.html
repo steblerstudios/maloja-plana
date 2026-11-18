@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten.
+       Quelle: scripts/seiten/fr.mjs
+       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
+       Generator: scripts/build-seiten.mjs
+       Neu bauen:  node scripts/build-seiten.mjs
+       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- NICHT freigegeben: Übersetzung ohne menschliche Gegenlesung. noindex, bis ein Mensch sie gelesen und scripts/seiten-sprachen.mjs umgestellt hat. -->
+  <meta name="robots" content="noindex, follow">
+  <meta name="author" content="Stebler Studios">
+  <meta name="theme-color" content="#F2F2F0">
+  <title>Les prestations complémentaires à l’AVS et à l’AI — Maloja Plana</title>
+  <meta name="description" content="Quand les prestations complémentaires (PC) entrent en ligne de compte, comment elles sont calculées et pourquoi elles ne sont pas de l’aide sociale. Un cadrage sans chiffres.">
+  <link rel="canonical" href="https://malojaplana.ch/fr/ergaenzungsleistungen/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Les prestations complémentaires à l’AVS et à l’AI">
+  <meta property="og:description" content="Quand les prestations complémentaires (PC) entrent en ligne de compte, comment elles sont calculées et pourquoi elles ne sont pas de l’aide sociale. Un cadrage sans chiffres.">
+  <meta property="og:url" content="https://malojaplana.ch/fr/ergaenzungsleistungen/">
+  <meta property="og:image" content="https://malojaplana.ch/og-image.png">
+  <meta property="og:locale" content="fr_CH">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Les prestations complémentaires à l’AVS et à l’AI">
+  <meta name="twitter:description" content="Quand les prestations complémentaires (PC) entrent en ligne de compte, comment elles sont calculées et pourquoi elles ne sont pas de l’aide sociale. Un cadrage sans chiffres.">
+  <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://malojaplana.ch/fr/ergaenzungsleistungen/#webpage",
+        "url": "https://malojaplana.ch/fr/ergaenzungsleistungen/",
+        "name": "Les prestations complémentaires à l’AVS et à l’AI",
+        "description": "Quand les prestations complémentaires (PC) entrent en ligne de compte, comment elles sont calculées et pourquoi elles ne sont pas de l’aide sociale. Un cadrage sans chiffres.",
+        "inLanguage": "fr-CH",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/#website"
+        },
+        "publisher": {
+          "@id": "https://malojaplana.ch/#org"
+        },
+        "about": {
+          "@id": "https://malojaplana.ch/#app"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://malojaplana.ch/fr/ergaenzungsleistungen/#krume",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Maloja Plana",
+            "item": "https://malojaplana.ch/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Prestations complémentaires",
+            "item": "https://malojaplana.ch/fr/ergaenzungsleistungen/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://malojaplana.ch/fr/ergaenzungsleistungen/#faq",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/fr/ergaenzungsleistungen/#webpage"
+        },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Ai-je droit aux prestations complémentaires ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cela dépend de si vous touchez une prestation de l’AVS ou de l’AI, de votre lieu de domicile, de vos revenus, de vos dépenses et de votre fortune. Il n’existe pas de limite valable pour tous, car le loyer, la prime et le ménage comptent aussi. Le calculateur PC de l’AVS/AI donne une première orientation ; seule la décision de l’organe PC de votre canton fait foi."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Y a-t-il des PC avant l’âge de la retraite ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui. Qui touche une rente de l’AI, une rente de veuve, de veuf ou d’orphelin peut aussi obtenir des PC avant l’âge de la retraite. Qui anticipe sa rente AVS remplit également la condition d’une rente (art. 4 LPC) ; la rente réduite compte alors comme revenu (art. 11 LPC). Qui arrive en fin de droit dans l’assurance-chômage à partir de soixante ans peut, selon les cas, toucher des prestations transitoires ; elles aussi se demandent auprès de l’organe PC."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Ma maison ou mon appartement compte-t-il ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pour le seuil de fortune, un logement habité par son propriétaire n’est pas pris en compte (art. 9a LPC). Dans le calcul lui-même, sa valeur est prise en compte, mais avec une franchise (art. 11 LPC). Ce que cela donne dans votre cas, l’organe PC le calcule."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Qu’en est-il si je dois entrer en home ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "La PC est alors calculée selon ses propres règles : au lieu des besoins vitaux et du loyer, on compte la taxe journalière du home, que le canton peut plafonner, et un montant pour les dépenses personnelles fixé par le canton (art. 10, al. 2, LPC). Annoncez-vous dans les six mois suivant l’entrée ; le droit peut alors naître dès le mois de l’entrée, si les autres conditions sont remplies (art. 12, al. 2, LPC)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Dois-je annoncer les changements ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui. Toute modification de la situation personnelle et toute modification importante de la situation économique doit être annoncée sans délai à l’organe PC, par exemple un déménagement, un nouveau loyer, un héritage ou une entrée en home (art. 24 OPC). Les prestations perçues indûment doivent être restituées."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Que m’apporte encore une PC ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Les bénéficiaires de PC annuelles à l’AVS ou à l’AI sont exonérés de la redevance de radio-télévision ; l’exonération se demande auprès de l’organe de perception avec l’attestation de l’organe PC. Le montant pour la prime d’assurance-maladie qui entre dans le calcul est versé directement à la caisse-maladie. En cas de doute, renseignez-vous auprès de l’organe PC."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2');
+      font-weight:400; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gruppe E, Gestaltung B (12.11.2026): Titel in Hanken Grotesk wie die Startseite (Brand Book §3),
+       die Datei liegt schon unter /fonts/. Alles andere bleibt Lexend. */
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gestaltung C: ein Gold, ein Leise-Ton — dieselben Werte wie website/index.html.
+       --sand ist die Fläche (Knopf), --sand-tief die Schrift (Links), hell 7A5F30, dunkel C4A06A. */
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;
+           --rand:#E0DDD8; --sand:#C4A06A; --sand-tief:#7A5F30; --auf-sand:#2A2620 }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
+             --rand:#3A3936; --sand:#C4A06A; --sand-tief:#C4A06A; --auf-sand:#2A2620 }
+      html{ color-scheme:dark }
+    }
+    body{ background:var(--bg); color:var(--text); line-height:1.65;
+      font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
+    .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
+    a{ color:var(--sand-tief); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt über die dickere Unterstreichung. */
+    a:hover{ text-decoration-thickness:2px }
+    header{ padding:24px 0 0 }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px. Gruppe E, C: Bildmarke 28 px wie auf der Startseite. */
+    .marke{ display:inline-flex; align-items:center; gap:10px; min-height:44px; font-weight:600; text-decoration:none;
+      font-size:16px; color:var(--text) }
+    .marke svg{ height:28px; width:auto; flex:none }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:16px }
+    main{ padding:8px 0 16px }
+    /* Gestaltung B: Grössen nur von der Skala 13 · 15 · 16 · 19 · 23 · 28 · 36 (Brand Book §7a). */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-weight:600 }
+    h1{ font-size:36px; line-height:1.2; margin:16px 0 12px; letter-spacing:-0.015em }
+    .vorspann{ font-size:19px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:23px; line-height:1.3; margin:48px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:19px; line-height:1.35; margin:24px 0 8px }
+    p{ margin-bottom:16px }
+    ul{ margin:0 0 16px 24px } li{ margin-bottom:8px }
+    /* Gestaltung D: Karte 12 px Ecke, innen 32 (am Handy 24), Abstand 32. */
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:12px;
+      padding:32px; margin:32px 0 }
+    .karte p:last-child{ margin-bottom:0 }
+    .weiter{ list-style:none; margin:16px 0 0; padding:0 }
+    .weiter li{ margin-bottom:12px }
+    .weiter a{ font-weight:600; text-decoration:none }
+    .weiter a:hover{ text-decoration:underline }
+    .weiter span{ display:block; font-size:15px; color:var(--leise); font-weight:400 }
+    /* Knopf 10 px Ecke, 44 px hoch (Brand Book §7a, «6 px» überholt am 06.11.). */
+    .knopf{ display:inline-flex; align-items:center; min-height:44px; background:var(--sand); color:var(--auf-sand);
+      text-decoration:none; padding:12px 24px; border-radius:10px; font-weight:600; font-size:15px; margin-top:4px }
+    .knopf:hover{ filter:brightness(1.05) }
+    .hinweis{ font-size:13px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:13px; color:var(--leise) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:16px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:24px 0 64px;
+      font-size:13px; color:var(--leise) }
+    footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
+    footer p{ margin-bottom:8px }
+    /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
+    footer .sprachen{ margin-top:16px }
+    footer .sprachen a{ text-decoration:underline }
+    footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
+    /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. Hinweisstreifen: 6 px (kleinste Rolle). */
+    .entwurf{ border:1px solid var(--sand); border-radius:6px; padding:12px 16px;
+      margin-bottom:24px; font-size:15px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:24px; font-size:13px; color:var(--leise) }
+    /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
+    ul.kantone{ columns:2; column-gap:32px }
+    ul.kantone li{ break-inside:avoid }
+    @media (max-width:600px){ h1{ font-size:28px } .vorspann{ font-size:16px } h2{ font-size:19px; margin-top:32px }
+      .karte{ padding:24px } ul.kantone{ columns:1 } }
+  </style>
+</head>
+<body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/"><svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg>Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="Vous êtes ici">
+        <a href="/">Accueil</a> › Prestations complémentaires
+      </nav>
+    </header>
+
+    <main>
+      <p class="entwurf" role="note">Cette traduction n’a pas encore été relue par une personne. Le texte allemand fait foi.</p>
+      <h1>Les prestations complémentaires à l’AVS et à l’AI</h1>
+      <p class="vorspann">Les prestations complémentaires, ou PC, interviennent là où une rente de l’AVS ou de l’AI et les autres revenus ne suffisent pas à couvrir le minimum vital. Elles sont réglées dans la loi fédérale sur les prestations complémentaires (LPC) et constituent un droit légal, pas une faveur. Elles sont versées par les cantons.</p>
+      <p class="hinweis">Une orientation, et non un conseil juridique ou financier — seul l’organe compétent fait foi. Cette page ne mentionne volontairement aucun montant ; des délais seulement là où le droit fédéral les fixe de la même manière pour tous.</p>
+
+        <h2>Sans prestation de l’AVS ou de l’AI, pas de PC</h2>
+        <p>Les PC supposent une prestation de l’AVS ou de l’AI : une rente de vieillesse ou de survivant de l’AVS, y compris une rente anticipée, une rente de l’AI, une allocation pour impotent de l’AI ou des indemnités journalières de l’AI versées sans interruption depuis au moins six mois. S’y ajoutent le domicile et la résidence habituelle en Suisse (art. 4 LPC).</p>
+        <p>Pour les étrangères et les étrangers s’applique en outre une durée minimale de séjour : en règle générale dix ans sans interruption en Suisse, cinq ans pour les réfugiés et les apatrides (art. 5 LPC). Elle ne s’applique pas aux ressortissants d’un État de l’UE ou de l’AELE.</p>
+        <p>Qui n’a pas de rente uniquement parce que les années de cotisation sont insuffisantes peut, à certaines conditions, tout de même toucher des PC (art. 4 LPC). Qui se trouve dans le besoin sans aucune prestation de l’AVS ou de l’AI s’adresse à l’aide sociale de sa commune de domicile.</p>
+
+        <h2>L’écart entre dépenses et revenus</h2>
+        <p>La PC annuelle correspond à la part des <strong>dépenses reconnues</strong> qui excède les <strong>revenus déterminants</strong> (art. 9 LPC). Les dépenses comprennent par exemple un montant pour les besoins vitaux, le loyer jusqu’à un plafond et un montant pour la prime d’assurance-maladie (art. 10 LPC). Les revenus comprennent les rentes, une partie du revenu de l’activité lucrative et une partie de la fortune (art. 11 LPC).</p>
+        <p>N’a droit aux PC que la personne dont la fortune est inférieure à un seuil légal ; un logement habité par son propriétaire n’est pas pris en compte pour ce seuil (art. 9a LPC). La fortune à laquelle une personne a renoncé sans contrepartie, par exemple par une donation, est prise en compte (art. 11a LPC).</p>
+        <p>La Confédération fixe les montants pour les besoins vitaux, et les plafonds de loyer échelonnés selon trois régions (art. 10 LPC). Nous ne les citons volontairement pas ici : ils sont adaptés régulièrement, et un chiffre sur une page comme celle-ci serait bientôt faux. Pour les personnes vivant en home, le calcul suit ses propres règles ; les cantons peuvent limiter les frais de home reconnus.</p>
+
+        <h2>Les frais de maladie et d’invalidité s’y ajoutent</h2>
+        <p>En plus de la PC annuelle, le canton rembourse les frais de maladie et d’invalidité dûment établis, par exemple pour le dentiste, l’aide, les soins et l’assistance à domicile, le transport vers le lieu de traitement, les moyens auxiliaires ainsi que la franchise et la quote-part de l’assurance-maladie (art. 14 LPC). Le canton détermine quels frais exactement et jusqu’à quel montant.</p>
+        <p>Même qui ne touche pas de PC annuelle parce que ses revenus sont un peu trop élevés peut obtenir le remboursement de tels frais, dans la mesure où ils dépassent l’excédent de revenus.</p>
+        <p>Conservez factures et justificatifs : seul ce qui est établi est remboursé, et seulement si vous le faites valoir dans un délai légal après la facturation (art. 15 LPC).</p>
+
+        <h2>S’annoncer : auprès du canton de domicile, et tôt</h2>
+        <p>Le canton de votre domicile est compétent. Il désigne l’organe qui reçoit la demande ; c’est le plus souvent la caisse cantonale de compensation ou l’office des assurances sociales, souvent par l’intermédiaire de l’agence AVS de la commune de domicile (art. 21 LPC).</p>
+        <p>Le droit naît en règle générale le mois au cours duquel la demande est déposée (art. 12 LPC). Il ne peut commencer plus tôt que dans certains cas, par exemple si la demande est déposée dans les six mois suivant une décision de rente ou une entrée en home ou à l’hôpital (art. 12, al. 2, LPC, art. 22 OPC). Qui attend peut donc perdre des mois.</p>
+        <p>Si vous ne savez pas si une demande en vaut la peine, renseignez-vous auprès de l’organe PC. Il examine le droit et motive sa décision par écrit.</p>
+
+        <h2>Les PC ne sont pas de l’aide sociale</h2>
+        <p>Les PC sont souvent confondues avec l’aide sociale. Elles sont autre chose : un droit fondé sur le droit fédéral, calculé selon des règles valables dans toute la Suisse. Un droit aux PC prime l’aide sociale.</p>
+        <p>De votre vivant, vous ne devez pas rembourser des PC perçues légalement. Après le décès, elles sont remboursées sur la succession, mais seulement sur la part qui dépasse une franchise légale ; pour les couples mariés, seulement sur la succession de la personne décédée en second (art. 16a LPC).</p>
+        <p>Sans passeport suisse et sans nationalité d’un État de l’UE ou de l’AELE, le regroupement familial n’est en règle générale pas autorisé si vous percevez des PC annuelles ou si vous en percevriez en raison du regroupement (art. 43, al. 1, let. e, et art. 44, al. 1, let. e, LEI). Faites-vous conseiller au préalable dans ce cas.</p>
+
+      <h2>Questions fréquentes</h2>
+        <h3>Ai-je droit aux prestations complémentaires ?</h3>
+        <p>Cela dépend de si vous touchez une prestation de l’AVS ou de l’AI, de votre lieu de domicile, de vos revenus, de vos dépenses et de votre fortune. Il n’existe pas de limite valable pour tous, car le loyer, la prime et le ménage comptent aussi. Le calculateur PC de l’AVS/AI donne une première orientation ; seule la décision de l’organe PC de votre canton fait foi.</p>
+
+        <h3>Y a-t-il des PC avant l’âge de la retraite ?</h3>
+        <p>Oui. Qui touche une rente de l’AI, une rente de veuve, de veuf ou d’orphelin peut aussi obtenir des PC avant l’âge de la retraite. Qui anticipe sa rente AVS remplit également la condition d’une rente (art. 4 LPC) ; la rente réduite compte alors comme revenu (art. 11 LPC). Qui arrive en fin de droit dans l’assurance-chômage à partir de soixante ans peut, selon les cas, toucher des prestations transitoires ; elles aussi se demandent auprès de l’organe PC.</p>
+
+        <h3>Ma maison ou mon appartement compte-t-il ?</h3>
+        <p>Pour le seuil de fortune, un logement habité par son propriétaire n’est pas pris en compte (art. 9a LPC). Dans le calcul lui-même, sa valeur est prise en compte, mais avec une franchise (art. 11 LPC). Ce que cela donne dans votre cas, l’organe PC le calcule.</p>
+
+        <h3>Qu’en est-il si je dois entrer en home ?</h3>
+        <p>La PC est alors calculée selon ses propres règles : au lieu des besoins vitaux et du loyer, on compte la taxe journalière du home, que le canton peut plafonner, et un montant pour les dépenses personnelles fixé par le canton (art. 10, al. 2, LPC). Annoncez-vous dans les six mois suivant l’entrée ; le droit peut alors naître dès le mois de l’entrée, si les autres conditions sont remplies (art. 12, al. 2, LPC).</p>
+
+        <h3>Dois-je annoncer les changements ?</h3>
+        <p>Oui. Toute modification de la situation personnelle et toute modification importante de la situation économique doit être annoncée sans délai à l’organe PC, par exemple un déménagement, un nouveau loyer, un héritage ou une entrée en home (art. 24 OPC). Les prestations perçues indûment doivent être restituées.</p>
+
+        <h3>Que m’apporte encore une PC ?</h3>
+        <p>Les bénéficiaires de PC annuelles à l’AVS ou à l’AI sont exonérés de la redevance de radio-télévision ; l’exonération se demande auprès de l’organe de perception avec l’attestation de l’organe PC. Le montant pour la prime d’assurance-maladie qui entre dans le calcul est versé directement à la caisse-maladie. En cas de doute, renseignez-vous auprès de l’organe PC.</p>
+
+
+      <div class="karte">
+        <p><strong>Maloja Plana fait le calcul pour votre situation.</strong></p>
+        <p>Un classeur de vie suisse — impôts, réduction des primes, aide sociale, salaire minimum, prévoyance et carte d’urgence au même endroit. Toutes les données restent sur votre appareil : pas de compte, aucune transmission à un serveur, aucun traçage. Gratuit et à code source ouvert.</p>
+        <p>L’application est actuellement en <strong>bêta fermée</strong> et nécessite un code d’accès. <strong>Un exemple est consultable sans code</strong> — avec des données fictives, rien n’est enregistré.</p>
+        <p><a class="knopf" href="/app/?beispiel#/ergaenzungsleistungen">Voir l’exemple — sans code d’accès</a></p>
+      </div>
+
+      <h2>Sources et calculateurs</h2>
+      <ul>
+          <li><a href="https://www.ahv-iv.ch/p/5.01.f" rel="noopener">Mémento 5.01 « Prestations complémentaires à l’AVS et à l’AI »</a></li>
+          <li><a href="https://www.bsv.admin.ch/de/el" rel="noopener">Prestations complémentaires, Office fédéral des assurances sociales</a> <span class="leise">(disponible uniquement en allemand)</span></li>
+      </ul>
+      <p class="leise">Maloja Plana n’a aucun lien avec ces organismes. Le lien hypertexte n’implique ni collaboration ni approbation. Tous ne sont pas des autorités — la CSIAS, par exemple, est une association professionnelle ; ses normes sont des recommandations.</p>
+
+      <p class="vorbehalt">Cette page est une <strong>aide à l’orientation fondée sur des informations publiques — ni conseil juridique ni conseil financier</strong>. Elle ne mentionne volontairement ni montants, ni taux, ni limites de revenu : ceux-ci changent régulièrement. Elle ne cite des délais et des limites d’âge que là où le droit fédéral les fixe de la même manière pour toute la Suisse. Seuls le renseignement ou la décision de l’organe compétent font foi.</p>
+
+      <h2>À lire également</h2>
+      <ul>
+          <li><a href="/fr/was-steht-mir-zu/">À quoi ai-je droit ?</a></li>
+          <li><a href="/fr/praemienverbilligung/">Réduction des primes</a></li>
+          <li><a href="/fr/sozialhilfe/">Aide sociale</a></li>
+          <li><a href="/fr/steuern/">Impôts</a></li>
+          <li><a href="/fr/arbeitslosigkeit/">Chômage</a></li>
+          <li><a href="/fr/ahv-pensionierung/">AVS et retraite</a></li>
+          <li><a href="/fr/rechtliches/">Mentions légales, protection des données et clause de non-responsabilité</a></li>
+      </ul>
+    </main>
+
+    <footer>
+      <p>Maloja Plana est un projet de Stebler Studios, Bâle ·
+      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+      <p>Code source ouvert sous
+      <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
+      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Code source sur GitHub</a></p>
+      <p><a href="/fr/rechtliches/">Mentions légales, protection des données et clause de non-responsabilité</a> —
+      consultable sans code d’accès.</p>
+      <!-- Melde-Weg VOR dem Beta-Gate. Die Adresse steht schon oben als Kontakt; hier
+           mit Betreff, damit eine Meldung im Postfach als solche erkennbar ist und nicht
+           zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
+           Datenabfluss und widerspricht local-first / CSP self-only. -->
+      <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Signaler%20un%20probl%C3%A8me">Signaler un problème</a></p>
+      <p class="sprachen">Langue: <a href="/ergaenzungsleistungen/" hreflang="de" lang="de">Deutsch</a> · <span aria-current="true">Français</span> · <a href="/it/ergaenzungsleistungen/" hreflang="it" lang="it">Italiano</a> · <a href="/en/ergaenzungsleistungen/" hreflang="en" lang="en">English</a> · <a href="/rm/ergaenzungsleistungen/" hreflang="rm" lang="rm">Rumantsch</a></p>
+    </footer>
+  </div>
+</body>
+</html>

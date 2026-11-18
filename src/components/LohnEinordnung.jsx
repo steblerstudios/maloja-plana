@@ -7,7 +7,7 @@ import { ErgebnisArt } from './ErgebnisArt.jsx';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { renderSource } from '../utils/renderSource.js';
 import { LegendenMarke } from './LegendenMarke.jsx';
-import { zahl } from '../utils/geld.js';
+import { zahl, betrag } from '../utils/geld.js';
 import { arbeitsKanton } from '../data/lohnCheck.js';
 
 // „Wo steht Ihr Lohn?" — spiegelgleich zum Miet-Barometer (components/MietVergleich).
@@ -277,8 +277,8 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     React.createElement('div', {
       style: { position: 'relative', height: '15px', marginBottom: '4px', fontSize: '11px', color: palette.soft },
     },
-      React.createElement('span', { style: { position: 'absolute', left: '25%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, 'CHF ' + fmt(LOHN_REFERENZ.p10)),
-      React.createElement('span', { style: { position: 'absolute', left: '75%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, 'CHF ' + fmt(LOHN_REFERENZ.p90))
+      React.createElement('span', { style: { position: 'absolute', left: '25%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, betrag(LOHN_REFERENZ.p10)),
+      React.createElement('span', { style: { position: 'absolute', left: '75%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, betrag(LOHN_REFERENZ.p90))
     ),
 
     React.createElement(Barometer, {
@@ -289,7 +289,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
         t('lohnEinordnung.readout' + rel.charAt(0).toUpperCase() + rel.slice(1)),
         t('lohnEinordnung.' + activeZone.key),
         mlBreached ? t('lohnEinordnung.mindestlohnBreachedLine') : null,
-        branchMark ? t('branche.' + branchMark.key) + ' CHF ' + fmt(branchMark.lohn) : null,
+        branchMark ? t('branche.' + branchMark.key) + ' ' + betrag(branchMark.lohn) : null,
       ].filter(Boolean).join(' '),
     }),
 
@@ -337,7 +337,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
         t((partTime || overFullTime) ? 'lohnEinordnung.yourWage40' : 'lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
       React.createElement('span', { style: { color: readoutColor, whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'punkt', color: valenceColor, palette }),
-        t('lohnEinordnung.median') + ': CHF ' + fmt(median))
+        t('lohnEinordnung.median') + ': ' + betrag(median))
     ),
 
     React.createElement('div', {

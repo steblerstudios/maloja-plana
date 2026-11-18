@@ -88,7 +88,7 @@
 - Demo-Person (Maria Muster) prominent zugänglich
 - Trust-Kommunikation an allen Berührungspunkten
 - Feedback-Formular integriert
-- BetaGate (Code: maloja2026)
+- BetaGate (Zugangscode nur als Fingerabdruck im Code; Klartext entfernt 11.11.2026, Gruppe C T2)
 - 4 Sprachen vollständig
 - Mobile-safe (375px+)
 - Offline-fähig

@@ -52,7 +52,7 @@ import { Icon, Icons, zurueckZeichen, aufklappZeichen } from './IconKern.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
-// Nachgeladen (10.11.2026): das Banner zeigt fast immer nichts, gehört also nicht ins volle Startbündel.
+// Nachgeladen wie OverdueBanner (13.11.2026, Bundle-Budget): zeigt sich nur bei knappem Speicher.
 const StorageWarning = lazyMitTexten(() => import('./StorageWarning.jsx'));
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 const DocumentTresor = lazyMitTexten(() => import('./DocumentTresor.jsx'));
@@ -808,8 +808,8 @@ const AppInner = ({ demo }) => {
   }, [isDarkMode]);
   // Rollenfarben für die Kalender-Abzeichen (Icon-Plan B5c): Blau = Fristen, Rot = warnen (Fassung 9).
   useEffect(() => {
-    try { document.documentElement.style.setProperty('--mp-frist', palette.sky); document.documentElement.style.setProperty('--mp-warnen', palette.rose); } catch {}
-  }, [palette.sky, palette.rose]);
+    try { document.documentElement.style.setProperty('--mp-frist', palette.sky); document.documentElement.style.setProperty('--mp-warnen', palette.rose); document.documentElement.style.setProperty('--mp-up', palette.up); } catch {}
+  }, [palette.sky, palette.rose, palette.up]);
   useEffect(() => { try { localStorage.setItem('or5_readable', String(readable)); } catch {} document.documentElement.classList.toggle('mp-readable', readable); }, [readable]);
   useEffect(() => {
     const on = () => setIsOffline(false);
@@ -1144,7 +1144,7 @@ const AppInner = ({ demo }) => {
       onClick: umschaltenBetraege,
       style: ctrlBtn(betraegeAus)
     },
-      zeichen('auge', 17)
+      zeichen(betraegeAus ? 'augeZu' : 'auge', 17)
     ),
     React.createElement('button', {
       key: 'simpleview',
@@ -1550,7 +1550,8 @@ const AppInner = ({ demo }) => {
         style: { ...knopfStil(palette, 'neben'), marginBottom: space.md + 'px' },
       }, t('sandbox.footerLink')),
       view === 'dashboard' && React.createElement(React.Fragment, null,
-        React.createElement(React.Suspense, { fallback: null }, React.createElement(StorageWarning, { palette, t })),
+        React.createElement(React.Suspense, { fallback: null },
+          React.createElement(StorageWarning, { palette, t })),
         // handleNavigate, nicht setView: nur so springt die Seite nach oben und der Fokus
         // auf <main> — seit das Dokument scrollt (#296), landete man sonst mitten im Kalender.
         React.createElement(React.Suspense, { fallback: null },
@@ -1562,11 +1563,12 @@ const AppInner = ({ demo }) => {
           // Als Funktion: die Landschaft sagt, ob sie im schmalen (Handy-)Ausschnitt steht.
           hatDokumente: (docs || []).length > 0,
           dokumente: docs,
-          installKarte: (klein) => React.createElement(React.Suspense, { fallback: null },
+          // Gruppe A D (11.11.2026): erst der Rundgang, dann die Karte — nie beide zugleich auf dem Bild.
+          installKarte: !tourOpen && ((klein) => React.createElement(React.Suspense, { fallback: null },
             React.createElement(InstallHinweis, {
               palette, t, onNavigate: handleNavigate, installPrompt, klein,
               onPromptWeg: () => setInstallPrompt(null),
-            })),
+            }))),
           palette, t, chapters, data: activeData,
           onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
           completion: calculateCompletion(),
@@ -1709,8 +1711,8 @@ const AppInner = ({ demo }) => {
         view === 'wohnunggekuendigt' && React.createElement(WohnungGekuendigt, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'selbstaendigkeit' && React.createElement(Selbstaendigkeit, { palette, t, onNavigate: handleNavigate }),
         view === 'heirat' && React.createElement(Heirat, { palette, t, onNavigate: handleNavigate }),
-        view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate }),
-        view === 'trennung' && React.createElement(Trennung, { palette, t, onNavigate: handleNavigate }),
+        view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate, kanton: activeData?.basis?.canton }),
+        view === 'trennung' && React.createElement(Trennung, { palette, t, onNavigate: handleNavigate, kanton: activeData?.basis?.canton }),
         view === 'bewilligung' && React.createElement(BewilligungFristen, { palette, t, onNavigate: handleNavigate }),
         view === 'fuehrerausweis' && React.createElement(Fuehrerausweis, { palette, t, onNavigate: handleNavigate }),
         view === 'todesfall' && React.createElement(Todesfall, { palette, t, onNavigate: handleNavigate }),

@@ -100,7 +100,7 @@ describe('Regel «Zahl» · Lohn und Bereit', () => {
     const zahl = q.indexOf("'data-instrument-zahl': 'lohn'");
     expect(bild).toBeGreaterThan(-1);
     expect(zahl).toBeGreaterThan(bild);
-    expect(zahl).toBeLessThan(q.indexOf("t('lohnEinordnung.median') + ': CHF '"));
+    expect(zahl).toBeLessThan(q.indexOf("t('lohnEinordnung.median') + ': ' + betrag(median)"));
   });
   it('Bereit im Kapitel Notfall: erst der Balken, darunter «x von y»', () => {
     const q = quelle('../components/NotfallImKapitel.jsx');

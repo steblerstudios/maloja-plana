@@ -38,6 +38,7 @@ import { organListe } from './utils/organspende.js';
 import { rentenMonat } from './utils/unterstuetzungseinheit.js';
 import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 import { htmlSprache } from './utils/htmlSprache.js';
+import { mitEchtenBetraegen } from './utils/geld.js';
 
 
 // ─── Druckfarben (K53) ────────────────────────────────────
@@ -255,7 +256,7 @@ export function getLebensMappePreview(data, chapters, t, documents) {
 
 // ─── Standalone HTML Generator (for print) ────────────────
 
-export function generateLebensmappe(data, chapters, t, documents) {
+function generateLebensmappeRoh(data, chapters, t, documents) {
   const sections = getSections(data, chapters, t);
   const name = getFullName(data.basis) || t('lebensmappe.untitled');
   const now = new Date();
@@ -650,7 +651,7 @@ export function getNotfallDossierPreview(data, chapters, t) {
 
 // ─── Notfall Standalone HTML Generator (for print) ──────
 
-export function generateNotfallDossier(data, chapters, t) {
+function generateNotfallDossierRoh(data, chapters, t) {
   const sections = getNotfallSections(data, chapters, t);
   const name = getFullName(data.basis) || t('notfallDossier.untitled');
   const now = new Date();
@@ -1081,7 +1082,7 @@ export const STEUER_KENNUNG = Object.freeze({
 });
 
 // t ist die Übersetzungsfunktion der App; ohne t (ältere Aufrufer) steht nur die Kennung in der Datei.
-export function generateBehoerdenJSON(data, calculations, t) {
+function generateBehoerdenJSONRoh(data, calculations, t) {
   const jt = (k, p) => (t ? t('behoerdenDossier.jsonTexte.' + k, p) : undefined);
   const erl = (k, p, extra) => {
     const text = jt(k, p);
@@ -1233,7 +1234,7 @@ export function getBehoerdenDossierPreview(data, chapters, t, calculations) {
 // Textblock neben dem Feldnamen. Ab dieser Länge stehen sie linksbündig unter dem Feldnamen.
 export const BD_LANGER_WERT = 60;
 
-export function generateBehoerdenDossier(data, chapters, t, calculations) {
+function generateBehoerdenDossierRoh(data, chapters, t, calculations) {
   const sections = getBehoerdenSections(data, chapters, t, calculations);
   const name = getFullName(data.basis) || t('lebensmappe.untitled');
   const now = new Date();
@@ -1414,4 +1415,18 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
   </div>
 </body>
 </html>`;
+}
+
+// Dokument verlässt die App: immer mit echten Beträgen (utils/geld.js, Sichtschutz).
+export function generateLebensmappe(...args) {
+  return mitEchtenBetraegen(() => generateLebensmappeRoh(...args));
+}
+export function generateNotfallDossier(...args) {
+  return mitEchtenBetraegen(() => generateNotfallDossierRoh(...args));
+}
+export function generateBehoerdenDossier(...args) {
+  return mitEchtenBetraegen(() => generateBehoerdenDossierRoh(...args));
+}
+export function generateBehoerdenJSON(...args) {
+  return mitEchtenBetraegen(() => generateBehoerdenJSONRoh(...args));
 }

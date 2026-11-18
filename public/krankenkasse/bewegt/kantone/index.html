@@ -18,63 +18,82 @@
       font-weight:400; font-display:swap }
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
-    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870 }
+    /* Gruppe E, Gestaltung B (12.11.2026): Titel in Hanken Grotesk wie die Startseite (Brand Book §3),
+       die Datei liegt schon unter /fonts/. Alles andere bleibt Lexend. */
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    /* Gestaltung C: ein Gold, ein Leise-Ton — dieselben Werte wie website/index.html.
+       --sand ist die Fläche (Knopf), --sand-tief die Schrift (Links), hell 7A5F30, dunkel C4A06A. */
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;
+           --rand:#E0DDD8; --sand:#C4A06A; --sand-tief:#7A5F30; --auf-sand:#2A2620 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870 }
+             --rand:#3A3936; --sand:#C4A06A; --sand-tief:#C4A06A; --auf-sand:#2A2620 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
       font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
-    a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
+    a{ color:var(--sand-tief); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
     /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
-       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+       Die Rückmeldung kommt über die dickere Unterstreichung. */
     a:hover{ text-decoration-thickness:2px }
-    header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
-    nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
+    header{ padding:24px 0 0 }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px. Gruppe E, C: Bildmarke 28 px wie auf der Startseite. */
+    .marke{ display:inline-flex; align-items:center; gap:10px; min-height:44px; font-weight:600; text-decoration:none;
+      font-size:16px; color:var(--text) }
+    .marke svg{ height:28px; width:auto; flex:none }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:16px }
     main{ padding:8px 0 16px }
-    h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
-    .vorspann{ font-size:18px; color:var(--text); margin-bottom:8px }
-    h2{ font-size:20px; font-weight:600; margin:40px 0 12px; letter-spacing:-0.005em }
-    h3{ font-size:16px; font-weight:600; margin:24px 0 6px }
-    p{ margin-bottom:14px }
-    ul{ margin:0 0 14px 22px } li{ margin-bottom:8px }
-    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:10px;
-      padding:20px 22px; margin:28px 0 }
+    /* Gestaltung B: Grössen nur von der Skala 13 · 15 · 16 · 19 · 23 · 28 · 36 (Brand Book §7a). */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-weight:600 }
+    h1{ font-size:36px; line-height:1.2; margin:16px 0 12px; letter-spacing:-0.015em }
+    .vorspann{ font-size:19px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:23px; line-height:1.3; margin:48px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:19px; line-height:1.35; margin:24px 0 8px }
+    p{ margin-bottom:16px }
+    ul{ margin:0 0 16px 24px } li{ margin-bottom:8px }
+    /* Gestaltung D: Karte 12 px Ecke, innen 32 (am Handy 24), Abstand 32. */
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:12px;
+      padding:32px; margin:32px 0 }
     .karte p:last-child{ margin-bottom:0 }
     .weiter{ list-style:none; margin:16px 0 0; padding:0 }
-    .weiter li{ margin-bottom:10px }
+    .weiter li{ margin-bottom:12px }
     .weiter a{ font-weight:600; text-decoration:none }
     .weiter a:hover{ text-decoration:underline }
-    .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
-    .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
-      padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
-    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
-    .leise{ font-size:14px; color:var(--leise) }
-    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
-      padding-left:14px; margin:32px 0 }
-    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
+    .weiter span{ display:block; font-size:15px; color:var(--leise); font-weight:400 }
+    /* Knopf 10 px Ecke, 44 px hoch (Brand Book §7a, «6 px» überholt am 06.11.). */
+    .knopf{ display:inline-flex; align-items:center; min-height:44px; background:var(--sand); color:var(--auf-sand);
+      text-decoration:none; padding:12px 24px; border-radius:10px; font-weight:600; font-size:15px; margin-top:4px }
+    .knopf:hover{ filter:brightness(1.05) }
+    .hinweis{ font-size:13px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:13px; color:var(--leise) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:16px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:24px 0 64px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
-    footer p{ margin-bottom:6px }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
+    footer p{ margin-bottom:8px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
-    footer .sprachen{ margin-top:14px }
+    footer .sprachen{ margin-top:16px }
     footer .sprachen a{ text-decoration:underline }
     footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
     /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
-       nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
-    .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
-      margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. Hinweisstreifen: 6 px (kleinste Rolle). */
+    .entwurf{ border:1px solid var(--sand); border-radius:6px; padding:12px 16px;
+      margin-bottom:24px; font-size:15px; color:var(--leise); background:var(--flaeche) }
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
-    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
+    .verbindlich{ margin-bottom:24px; font-size:13px; color:var(--leise) }
     /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
     ul.kantone{ columns:2; column-gap:32px }
     ul.kantone li{ break-inside:avoid }
-    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }
+    @media (max-width:600px){ h1{ font-size:28px } .vorspann{ font-size:16px } h2{ font-size:19px; margin-top:32px }
+      .karte{ padding:24px } ul.kantone{ columns:1 } }
     /* ─── Hintergrundseite · Maloja-Stil ───────────────────────────────────
        Überschriften in Hanken Grotesk (Markenhandbuch §3), Lesetext Lexend.
        Bereichsfarbe Heidelbeere (Versicherungen, data/lebensbereiche.js):
@@ -104,9 +123,10 @@
     nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
     nav.inhalt p{ margin:0 0 8px; font-size:13px; font-weight:600; color:var(--leise) }
     nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
-    nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
+    nav.inhalt li{ counter-increment:frage; margin:0; break-inside:avoid; display:flex; align-items:center; gap:10px; font-size:15px }
     nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
-    nav.inhalt a{ text-decoration:none } nav.inhalt a:hover{ text-decoration:underline }
+    /* Gruppe D: Einträge ≥ 44 px Trefferfläche (vorher 25 px). */
+    nav.inhalt a{ text-decoration:none; display:inline-flex; align-items:center; min-height:44px } nav.inhalt a:hover{ text-decoration:underline }
 
     .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
 
@@ -250,9 +270,20 @@
     .iso-stage svg{ display:block; width:100%; height:auto }
     /* Im Rahmen der Hauptseite (rahmen.js): Hinweise stehen dort, hier nur Bild und Regler. */
     .im-rahmen main{ padding:0 } .im-rahmen .nur-allein{ display:none }
+    /* Gruppe D, Gestaltung B (11.11.2026): allein geöffnet im selben Rahmen wie die Hauptseite
+       (Kopf, Brotkrume, Fusszeile mit Impressum); in der Hauptseite eingebettet ohne. */
+    .im-rahmen .rahmen{ max-width:none; padding:0 } .im-rahmen header, .im-rahmen footer{ display:none }
+    .hinweis-b a{ display:inline-block; padding:12px 0; margin:-12px 0 }
   </style>
 </head>
 <body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/"><svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg>Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="Sie sind hier">
+        <a href="/">Start</a> › <a href="/krankenkasse/">Krankenkasse erklärt</a> › Prämien 2027 je Region
+      </nav>
+    </header>
   <main>
     <p class="zurueck-b nur-allein"><a href="/krankenkasse/#abb-kantone">Zurück zu «Warum die Krankenkasse so viel kostet»</a></p>
     <h1 class="titel-b nur-allein">Prämien 2027 je Region</h1>
@@ -268,5 +299,22 @@
   <script src="/krankenkasse/bewegt/hairline-kernel.js"></script>
   <script src="/krankenkasse/bewegt/buehne.js"></script>
   <script src="/krankenkasse/bewegt/kantone/figur.js"></script>
+    <footer>
+      <p>Maloja Plana ist ein Projekt von Stebler Studios, Basel ·
+      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+      <p>Quelloffen unter
+      <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
+      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
+      <!-- Melde-Weg VOR dem Beta-Gate. Die Adresse steht schon oben als Kontakt; hier
+           mit Betreff, damit eine Meldung im Postfach als solche erkennbar ist und nicht
+           zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
+           Datenabfluss und widerspricht local-first / CSP self-only. -->
+      <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
+      <p class="sprachen">nur auf Deutsch verfügbar</p>
+    </footer>
+  </div>
 </body>
 </html>
+

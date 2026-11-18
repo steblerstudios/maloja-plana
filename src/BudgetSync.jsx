@@ -24,9 +24,7 @@ import { knopfStil, auswahlStil } from './components/PrimaryButton.jsx';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
-  if (amount === 0) return 'CHF 0';
-  const rounded = Math.round(amount);
-  return betrag(rounded); // utils/geld.js — eine Quelle
+  return betrag(Math.round(amount)); // utils/geld.js — eine Quelle
 };
 
 // `onImport`: der Teil «CSV importieren» unter der Karte (F7-L7, 27.10.2026) — früher die eigene Seite

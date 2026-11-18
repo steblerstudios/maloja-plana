@@ -3,7 +3,7 @@
 // Lazy-loads only the active language to reduce initial bundle size
 
 import React, { createContext, useContext, useState, useCallback, useMemo, useEffect, useRef } from 'react';
-import { zahl, betraegeVerborgen } from '../utils/geld.js';
+import { zahl, betraegeVerborgen, VERBORGEN } from '../utils/geld.js';
 
 const STORAGE_KEY = 'or5_lang';
 const SUPPORTED = ['en', 'de', 'fr', 'it', 'rm'];
@@ -110,7 +110,7 @@ export function createT(translations, lang, anrede, unvollstaendig = false) {
         const v = params[k];
         if (v === undefined) return (chf || '') + '{' + k + '}';
         // Sichtschutz «Beträge verbergen» (utils/geld.js): ein Platzhalter hinter «CHF» ist ein Betrag.
-        if (chf && v !== '' && v !== null && betraegeVerborgen()) return chf + '···';
+        if (chf && v !== '' && v !== null && betraegeVerborgen()) return VERBORGEN;
         if (chf && typeof v === 'number' && Number.isFinite(v)) {
           return chf + zahl(v, Number.isInteger(v) ? {} : { stellen: 2 });
         }

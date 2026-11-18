@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
 import { ansichtIkon } from './config/ansichtenRegister.js';
-import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { SecondaryButton, knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { getCantonName } from './config/kantonPLZ.js';
@@ -120,9 +120,8 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
     'data-alpha-banner': true,
     style: {
-      padding: '12px 16px', marginBottom: '24px', borderRadius: radius.lg,
-      background: palette.up, border: '1px solid ' + palette.border + '88',
-      boxShadow: shadow.sm,
+      // Gruppe A D (11.11.2026): eine ruhige Zeile, keine Karte über dem Bild.
+      padding: '4px 0', marginBottom: '24px',
     }
   },
     React.createElement('div', {
@@ -450,8 +449,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               border: 'none', borderRadius: radius.md, color: palette.text,
               transition: 'background ' + duration.fast + 'ms ' + ease,
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
+            className: 'mp-hover-flaeche', // Hover in tokens.css (13.11.2026, Bundle-Budget)
           },
             React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minWidth: 0 } },
               // Das Icon des Kapitels statt des Punkts (25.09.2026) — dasselbe wie in der
@@ -707,8 +705,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               color: palette.text,
               transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
+            className: 'mp-hover-flaeche',
           },
             // Akzentfarbe (Sand) nur auf der EINEN Primär-Aktion; Sekundär-Werkzeuge
             // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (Stebler Studios).
@@ -767,8 +764,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               key: item.label,
               onClick: item.action,
               style: { ...linkStil(palette), padding: '2px 0', fontSize: text.sm, textAlign: 'left', display: 'flex', alignItems: 'center', gap: space.xs + 'px' },
-              onMouseEnter: (e) => { e.currentTarget.style.opacity = '0.7'; },
-              onMouseLeave: (e) => { e.currentTarget.style.opacity = '1'; },
+              className: 'mp-hover-blass',
             },
               item.label
             )

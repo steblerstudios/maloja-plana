@@ -40,6 +40,9 @@ Die Anbieterin übernimmt keine Gewähr für:
 - Eignung der Ergebnisse für individuelle Entscheidungen
 - Schäden, die aus der Nutzung der Berechnungen entstehen
 
+Die Haftung für vorsätzlich oder grobfahrlässig verursachte Schäden bleibt vorbehalten.
+<!-- Satz wie Nutzungsbedingungen Ziff. 6; ergänzt Gruppe E, 11.11.2026 (OR Art. 100 Abs. 1). -->
+
 Massgebend sind ausschliesslich die jeweils geltenden Gesetze und die zuständigen Behörden.
 
 ---

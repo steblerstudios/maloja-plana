@@ -53,7 +53,8 @@ describe('Ablage · leer', () => {
 
   it('ruhiges Bild mit Titel und Satz der App, ohne Zähler, Suche und Sortierung', () => {
     expect(html).toContain('Hier ist Platz für Ihre Unterlagen');
-    expect(html).toContain('Sobald Sie ein Dokument in einem Kapitel hochladen');
+    // Gruppe B D (11.11.2026): ein Satz für beide Wege, ohne «sicher» (L7).
+    expect(html).toContain('Fügen Sie oben oder im passenden Kapitel ein Dokument hinzu.');
     expect(html).not.toContain('role="tablist"');
     expect(html).not.toContain('type="search"');
     expect(html).not.toContain(t('tresor.sortBy'));
