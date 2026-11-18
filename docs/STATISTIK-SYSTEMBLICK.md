@@ -410,6 +410,23 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
   je Kanton enthält: im ZIP nachsehen (nicht geprüft).
 - ⚠️ **BAG Dashboard Krankenversicherung** (u. a. ausbezahlter Betrag pro beziehende Person nach Kanton) — https://kvd.bag.admin.ch/de/premium/statistic
 
+### Arbeitslosenquote nach Merkmalen (SECO, ganze Schweiz)
+
+- ✅ **SECO, «Die Lage auf dem Arbeitsmarkt, September 2026»**, publiziert 6.10.2026 — dieselbe Ausgabe wie die Atlas-Karte
+  `alq` (Quelle `seco` in `scripts/seiten/kantone-im-vergleich.mjs`). PDF: https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/10/05/4ca16d08-004c-4678-84c6-93fac35c7463.pdf
+  (gelesen 18.11.2026 mit `pdftotext`, SHA-256 `934cc6e7…5306078`).
+  - **Tabelle 5 «Arbeitslosenquote nach verschiedenen Merkmalen», PDF-Seite 9**, September 2026 (Vorjahresmonat in Klammern):
+    Total **3,0 %** (2,8) · Ausbildungsstufe: Sekundarstufe I **5,0 %** (5,0), Sekundarstufe II **2,8 %** (2,7),
+    Tertiärstufe **2,5 %** (2,2) · Alter: 15–24 **3,3 %**, 25–49 **3,2 %**, 50–64 **2,6 %** · Sprachregion:
+    Deutschschweiz **2,5 %**, Westschweiz und Tessin **4,1 %** · Geschlecht: Frauen 2,9 %, Männer 3,0 % ·
+    Nationalität: Schweiz 2,1 %, Ausland 5,1 %. «Die Arbeitslosenquote wird auf eine Nachkommastelle gerundet.»
+  - **Definitionen, PDF-Seite 26:** Sek I = obligatorische Schule (abgeschlossen oder nicht), Übergangsausbildungen;
+    Sek II = Anlehre, Berufslehre, Berufs- und gymnasiale Maturität, Fachmittelschule; Tertiär = eidg. Diplom/Fachausweis,
+    Techniker-/Fachschule, HF, Universität, FH, PH, ETH. «Zuordnung gemäss der höchsten abgeschlossenen Ausbildung.»
+  - **Gilt nur für die ganze Schweiz**, nicht je Kanton. Registrierte Arbeitslose beim RAV, nicht Erwerbslose nach ILO
+    (BFS SAKE, andere Zahl). Absolute Zahlen nach Ausbildung: Tabelle 4 (Sek I 29'750, Sek II 54'436, Tertiär 52'314,
+    keine Angaben 3'980; Total 140'480).
+
 ### Nichtbezug (wer Anspruch hätte und nicht bezieht)
 
 - ✅ **Basel-Stadt, WSU, Medienmitteilung 12.02.2026** — Studie der BFH (Prof. Oliver Hümbelin) im Auftrag des Amtes
