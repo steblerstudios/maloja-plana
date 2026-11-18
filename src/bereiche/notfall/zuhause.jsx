@@ -3,9 +3,10 @@ import { text, weight, space, radius } from '../../config/tokens.js';
 import { zahl, betrag as chfBetrag } from '../../utils/geld.js';
 import { linkStil } from '../../components/PrimaryButton.jsx';
 import { Kalenderblatt } from '../../components/Kalenderblatt.jsx';
+import { Icon } from '../../IconSystem.jsx';
 import { loadVorsorgeDates } from '../../utils/vorsorge.js';
 import { bereitschaft, lagenStand, franchiseStand, naechstesFaellig } from './rechnung.js';
-import { FranchiseAblesung, HerzPuls } from './bilder.jsx';
+import { FranchiseAblesung, HerzPuls, gesundheitFarbe } from './bilder.jsx';
 
 // Lebensbereich Notfall & Gesundheit · die Zuhause (Bauplan Lebensbereich, Stebler Studios 18.11.2026).
 //   BereitZuhause      Kapitel Notfall: Herz mit Puls gross → «17 von 20» → Satz.
@@ -72,4 +73,46 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
         : weg(t('gesundheitZuhause.zumKatalog'), () => onNavigate('kvg', undefined, 'katalog'))));
 
   return h('div', { 'data-teil': 'gesundheit-zuhause', style: { marginBottom: space.lg + 'px' } }, franchise, naechstes);
+};
+
+// ─── Der offene Arztkoffer (Sophie 18.11.2026: «einen kompletten arzt koffer gezeichnet», «wollen wir die seiten
+// vereinen?» → Kapitel Gesundheit und Arztkoffer sind eine Seite). Zeichen der Gesundheit (Brand Book §5), in der
+// Farbe Gesundheit. Im Deckel die fertigen Fächer als Knöpfe (antippen = Werkzeug), unten die geplanten gestrichelt,
+// «bald». Gezeichnet aus HTML statt SVG: echte Knöpfe (Tastatur, Vorlesen, 44 px), Schrift wächst nicht klein.
+// Die Notfallkarte steht nicht im Koffer: sie ist auf derselben Seite unter «Ihre Notfall-Unterlagen» (jedes Bild,
+// jeder Weg einmal je Seite).
+export const KOFFER_FAECHER = [
+  { key: 'kvg', view: 'kvg', icon: 'insurance' },
+  { key: 'kkbeleg', view: 'kk', icon: 'documents' },
+  { key: 'thermometer', view: null },
+  { key: 'blister', view: null },
+  { key: 'karteikarten', view: null },
+  { key: 'impfausweis', view: null },
+];
+export const KOFFER_ANKER = 'mp-gesundheit-koffer';
+
+export const GesundheitKoffer = ({ palette, t, onNavigate }) => {
+  const h = React.createElement;
+  const farbe = gesundheitFarbe(palette);
+  const fertig = KOFFER_FAECHER.filter((f) => f.view);
+  const bald = KOFFER_FAECHER.filter((f) => !f.view);
+  const titel = (f) => t('arztkoffer.faecher.' + f.key + '.title');
+  const raster = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: space.sm + 'px' };
+  return h('section', { id: KOFFER_ANKER, 'data-teil': 'gesundheit-koffer', 'aria-labelledby': KOFFER_ANKER + '-titel', style: { margin: space.md + 'px 0' } },
+    h('h3', { id: KOFFER_ANKER + '-titel', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('arztkoffer.title')),
+    // Griff
+    h('div', { 'aria-hidden': 'true', style: { width: '72px', height: '16px', margin: '0 auto', border: '4px solid ' + farbe, borderBottom: 'none', borderRadius: radius.lg + 'px ' + radius.lg + 'px 0 0' } }),
+    // Deckel: fertige Fächer
+    h('div', { 'data-teil': 'koffer-deckel', style: { border: '3px solid ' + farbe, borderRadius: radius.lg + 'px ' + radius.lg + 'px ' + radius.xs + 'px ' + radius.xs + 'px', padding: space.sm + 'px', ...raster } },
+      fertig.map((f) => h('button', { key: f.key, type: 'button', 'data-fach': f.key, onClick: () => onNavigate && onNavigate(f.view),
+        style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minHeight: '56px', padding: space.sm + 'px', textAlign: 'left',
+          background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit' } },
+        h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: farbe, flexShrink: 0 } }, h(Icon, { name: f.icon, size: 22 })),
+        h('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, titel(f))))),
+    // Boden: geplante Fächer
+    h('div', { 'data-teil': 'koffer-boden', style: { border: '3px solid ' + farbe, borderTop: '1px solid ' + farbe, borderRadius: radius.xs + 'px ' + radius.xs + 'px ' + radius.lg + 'px ' + radius.lg + 'px', padding: space.sm + 'px', marginTop: '3px', ...raster } },
+      bald.map((f) => h('div', { key: f.key, 'data-fach': f.key, 'data-bald': 'ja',
+        style: { minHeight: '56px', padding: space.sm + 'px', border: '1px dashed ' + palette.border, borderRadius: radius.md, color: palette.mid } },
+        h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel(f)),
+        h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, t('arztkoffer.inVorbereitung'))))));
 };

@@ -75,7 +75,7 @@ const SozialhilfeView = lazyMitTexten(() => import('./SozialhilfeView.jsx'));
 const CalendarReminders = lazyMitTexten(() => import('./CalendarReminders.jsx'));
 // NotificationSettings: seit 05.11.2026 keine eigene Seite — Abschnitt in SettingsView (UMLEITUNGEN, Seitenlandkarte Z2).
 // NotfallEinstieg: seit 24.10.2026 keine eigene Seite — im Kapitel Notfall (UMLEITUNGEN, components/NotfallImKapitel.jsx).
-const ArztkofferView = lazyMitTexten(() => import('./ArztkofferView.jsx'));
+// ArztkofferView entfiel am 18.11.2026: der Koffer steht im Kapitel Gesundheit (UMLEITUNGEN.gesundheit).
 const NotfallVorlesekarte = lazyMitTexten(() => import('./NotfallVorlesekarte.jsx'));
 const NotfallpassBlatt = lazyMitTexten(() => import('./NotfallpassBlatt.jsx'));
 const PraemienOrientierung = lazyMitTexten(() => import('./PraemienOrientierung.jsx'));
@@ -1741,7 +1741,6 @@ const AppInner = ({ demo }) => {
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
         view === 'drucken' && React.createElement(UnterlagenDrucken, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate, wahl, onWahl: waehle }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),
-        view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'notfallpass' && React.createElement(NotfallpassBlatt, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),

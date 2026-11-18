@@ -10,7 +10,6 @@ import de from '../i18n/de.js';
 import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE, getChapters } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
-import { ArztkofferView } from '../ArztkofferView.jsx';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
 import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft } from '../bereiche/notfall/notfall.js';
 
@@ -25,9 +24,10 @@ const MIT_BELEG = (() => {
     kkBelege: [{ id: 'b1', datum: '2026-10-02', betrag: 820, status: 'offen', frist: '2026-12-15' }] };
   return d;
 })();
-const arztkoffer = (d) => renderToStaticMarkup(React.createElement(ArztkofferView, { palette: LIGHT_PALETTE, t, data: d, onNavigate: () => {}, isDarkMode: false }));
+// Seit 18.11.2026 ist der Arztkoffer Teil des Kapitels: «arztkoffer» = das Kapitel Gesundheit.
 const kapitel = (d) => renderToStaticMarkup(React.createElement(NotfallImKapitel, { palette: LIGHT_PALETTE, t, data: d, chapters: getChapters(t),
   onNavigate: () => {}, onUpdate: () => {}, zumFeld: () => {}, karteMoeglich: true }));
+const arztkoffer = kapitel;
 
 describe('Bauplan Notfall & Gesundheit · jedes Bild einmal je Seite', () => {
   it('Arztkoffer: ein Thermometer (gross), ein Kalenderblatt, je eine Hauptzahl darunter', () => {
@@ -40,9 +40,10 @@ describe('Bauplan Notfall & Gesundheit · jedes Bild einmal je Seite', () => {
     expect(html.indexOf('data-instrument-zahl="franchise"')).toBeGreaterThan(html.indexOf('data-franchise="gross"'));
     expect(html.indexOf('data-instrument-zahl="faellig"')).toBeGreaterThan(html.indexOf('data-teil="kalenderblatt"'));
     // die Fragen stehen vor den Fächern
-    const erstesFach = html.indexOf(t('arztkoffer.faecher.kvg.title').replace('&', '&amp;'));
-    expect(erstesFach).toBeGreaterThan(-1);
-    expect(html.indexOf('data-teil="gesundheit-zuhause"')).toBeLessThan(erstesFach);
+    // Reihenfolge der vereinten Seite: Koffer, dann die Fragen (Franchise, fällig), dann Bereit.
+    const reihe = ['data-teil="gesundheit-koffer"', 'data-teil="gesundheit-franchise"', 'data-teil="gesundheit-faellig"', 'data-teil="notfall-bereit"'].map((x) => html.indexOf(x));
+    expect(reihe.every((p) => p > -1)).toBe(true);
+    expect([...reihe].sort((x, y) => x - y)).toEqual(reihe);
   });
   it('Arztkoffer ohne Franchise und ohne Termine: kein Bild, ruhige Sätze statt Zahlen', () => {
     const d = JSON.parse(JSON.stringify(DEMO_DATA));
@@ -84,6 +85,20 @@ describe('Ablesung am Thermometer (Sophie 18.11.2026, «A · Skala am Thermomete
     const q = lies('KVGLeistungen.jsx');
     expect(q).toMatch(/FranchiseAblesung, \{ palette, t, stand: result, groesse: 'mittel' \}/);
     expect(q).not.toMatch(/'data-teil': 'franchise-franken'|'data-teil': 'selbstbehalt-franken'/);
+  });
+});
+
+describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)', () => {
+  it('der offene Koffer: fertige Fächer als Knöpfe im Deckel, geplante gestrichelt im Boden, keine Notfallkarte doppelt', () => {
+    const html = kapitel(DEMO_DATA);
+    const deckel = html.slice(html.indexOf('data-teil="koffer-deckel"'), html.indexOf('data-teil="koffer-boden"'));
+    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg']);
+    expect(zaehle(html, /data-bald="ja"/g)).toBe(4);
+    expect(zaehle(html, /data-kachel="notfallkarte"/g)).toBe(1);
+  });
+  it('die frühere Seite gibt es nicht mehr; #/gesundheit führt zum Koffer im Kapitel', () => {
+    expect(fs.existsSync(path.join(SRC, 'ArztkofferView.jsx'))).toBe(false);
+    expect(lies('utils/hashRouter.js')).toMatch(/gesundheit: \{ view: 'chapter', chapterIndex: CHAPTER_KEYS\.indexOf\('notfall'\), anker: 'mp-gesundheit-koffer' \}/);
   });
 });
 

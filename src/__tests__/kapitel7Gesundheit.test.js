@@ -11,14 +11,15 @@ import React from 'react';
 import fs from 'node:fs';
 import path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { LIGHT_PALETTE } from '../config/constants.js';
+import { LIGHT_PALETTE, CHAPTER_KEYS } from '../config/constants.js';
+import { UMLEITUNGEN } from '../utils/hashRouter.js';
 import { vorlageHtml } from '../data/vorsorgeauftrag.js';
 import { KVGLeistungen } from '../KVGLeistungen.jsx';
 import { IvVerfahren } from '../IvVerfahren.jsx';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
 import { PflegeAblauf } from '../PflegeAblauf.jsx';
 import { UnfallKrankheit } from '../UnfallKrankheit.jsx';
-import { stufen, ELTERN_TITEL } from '../config/brotkrumePfade.js';
+import { ELTERN_TITEL } from '../config/brotkrumePfade.js';
 
 beforeEach(() => { globalThis.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} }; });
 const t = createT({ de }, 'de', 'sie');
@@ -173,13 +174,14 @@ describe('Organspende · Mindestalter 16 (TxG Art. 8 Abs. 7)', () => {
 describe('Gestaltung A · Gesundheits-Seiten auf der Kapitelseite', () => {
   const quelle = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
   const fall = quelle.slice(quelle.indexOf("case 'notfall': return ["), quelle.indexOf('default: return [', quelle.indexOf("case 'notfall': return [")));
-  it('«Passend» nennt KVG-Leistungen, Scanner, Arztkoffer, Unfall, IV und Pflege in zwei Gruppen', () => {
-    for (const v of ['kvg', 'kk', 'gesundheit', 'unfallkrankheit', 'iv', 'pflege']) expect(fall, v).toContain("weg('" + v + "')");
+  it('«Passend» nennt KVG-Leistungen, Scanner, Unfall, IV und Pflege in zwei Gruppen (der Arztkoffer steht seit 18.11.2026 oben im Kapitel)', () => {
+    for (const v of ['kvg', 'kk', 'unfallkrankheit', 'iv', 'pflege']) expect(fall, v).toContain("weg('" + v + "')");
+    expect(fall).not.toMatch(/^\s+weg\('kvg'\), weg\('kk'\), weg\('gesundheit'\)/m);
     expect(fall).toContain("P('gruppeKrankenkasse')");
     expect(fall).toContain("P('gruppePassiert')");
   });
-  it('der Arztkoffer hängt in der Brotkrume unter «Gesundheit»', () => {
-    expect(stufen('gesundheit').map((x) => x.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
+  it('der Arztkoffer ist Teil des Kapitels «Gesundheit» (18.11.2026): alte Links führen zum Koffer im Kapitel', () => {
+    expect(UMLEITUNGEN.gesundheit).toEqual({ view: 'chapter', chapterIndex: CHAPTER_KEYS.indexOf('notfall'), anker: 'mp-gesundheit-koffer' });
     expect(t(ELTERN_TITEL.notfalleinstieg)).toBe('Gesundheit');
   });
 });

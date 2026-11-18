@@ -6,7 +6,7 @@ import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
 import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
 import { NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
-import { SCENARIOS, bereitschaft, angabeBereit, VORSORGE, vorsorgeEintragGeregelt, BereitZuhause } from '../bereiche/notfall/notfall.js';
+import { SCENARIOS, bereitschaft, angabeBereit, VORSORGE, vorsorgeEintragGeregelt, BereitZuhause, GesundheitKoffer, GesundheitZuhause } from '../bereiche/notfall/notfall.js';
 
 // Kapitel Notfall · «ein Ort» (Fassung 6, Runde 9, Entwurf AE, Entscheid Stebler Studios 24.10.2026; gebaut Abnahme
 // 25.10.2026). Das Kapitel ist der eine Notfall-Ort; der frühere Einstieg (#/notfalleinstieg) leitet hierher.
@@ -304,7 +304,11 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
       nf.patientenverfuegung === 'yes' && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...wegLink, marginTop: space.xs + 'px' } }, t('nav.crosslink.pvHint') + ' ›'))
   );
 
-  return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } }, ernstfall, bereit, unterlagen, vorsorge);
+  // Kapitel Gesundheit und Arztkoffer sind seit 18.11.2026 eine Seite (Sophie: «wollen wir die seiten vereinen?»):
+  // Ernstfall zuoberst, dann der offene Koffer, dann die drei Fragen (Franchise, Als Nächstes fällig, Bereit).
+  const koffer = h(GesundheitKoffer, { palette, t, onNavigate });
+  const gesundheit = h(GesundheitZuhause, { palette, t, data: alle, onNavigate });
+  return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } }, ernstfall, koffer, gesundheit, bereit, unterlagen, vorsorge);
 };
 
 export default NotfallImKapitel;
