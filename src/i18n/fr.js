@@ -6538,6 +6538,9 @@ export default {
   },
   // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
   thermometer: {
+    // Ablesung am Thermometer (18.11.2026)
+    offen: 'reste',
+    erreicht: 'atteint',
     franchise: 'Franchise',
     selbstbehalt: 'Quote-part',
   },

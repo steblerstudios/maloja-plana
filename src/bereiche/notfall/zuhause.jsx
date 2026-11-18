@@ -5,7 +5,7 @@ import { linkStil } from '../../components/PrimaryButton.jsx';
 import { Kalenderblatt } from '../../components/Kalenderblatt.jsx';
 import { loadVorsorgeDates } from '../../utils/vorsorge.js';
 import { bereitschaft, lagenStand, franchiseStand, naechstesFaellig } from './rechnung.js';
-import { FranchiseThermometer, HerzPuls } from './bilder.jsx';
+import { FranchiseAblesung, HerzPuls } from './bilder.jsx';
 
 // Lebensbereich Notfall & Gesundheit · die Zuhause (Bauplan Lebensbereich, Stebler Studios 18.11.2026).
 //   BereitZuhause      Kapitel Notfall: Herz mit Puls gross → «17 von 20» → Satz.
@@ -42,7 +42,7 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
   const weg = (label, onClick) => onNavigate && h('button', { type: 'button', onClick, style: { ...linkStil(palette), color: palette.skyDeep || palette.text, minHeight: '44px', fontSize: text.sm, padding: 0 } }, label + ' ›');
 
   const franchise = h('section', { 'data-teil': 'gesundheit-franchise', style: karte },
-    fr && h('div', { style: { flex: '0 0 160px', maxWidth: '160px' } }, h(FranchiseThermometer, { palette, t, stand: fr, groesse: 'gross' })),
+    fr && h('div', { style: { flex: '0 1 auto' } }, h(FranchiseAblesung, { palette, t, stand: fr, groesse: 'gross' })),
     h('div', { style: { minWidth: 0 } },
       frage('instrumente.franchise'),
       fr

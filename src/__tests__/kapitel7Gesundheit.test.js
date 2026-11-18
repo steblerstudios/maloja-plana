@@ -93,13 +93,15 @@ describe('L10 · Franchise-Rechner kennt Kinder (KVG Art. 64 Abs. 4, KVV Art. 10
     const h = rechne('600');
     expect(h).toMatch(/<option value="kind" selected="">/);
     expect(h).toMatch(/<option value="600" selected="">/);
-    expect(h).toContain('Selbstbehalt-Maximum: CHF 350');
+    // seit 18.11.2026 an der Skala des Thermometers: «Selbstbehalt CHF … von CHF 350»
+    expect(h).toMatch(/data-teil="ablese-selbstbehalt"[^<]*>[^<]*<span[^>]*>[^<]*<\/span> von CHF 350</);
     expect(h).toContain('CHF 950'); // 600 Franchise + 350 Selbstbehalt bei 5000 Franken Kosten
   });
   it('Erwachsene rechnen weiter mit 700', () => {
     const h = rechne('2500');
     expect(h).toMatch(/<option value="erwachsen" selected="">/);
-    expect(h).toContain('Selbstbehalt-Maximum: CHF 700');
+    // seit 18.11.2026 an der Skala des Thermometers: «Selbstbehalt CHF … von CHF 700»
+    expect(h).toMatch(/data-teil="ablese-selbstbehalt"[^<]*>[^<]*<span[^>]*>[^<]*<\/span> von CHF 700</);
     expect(h).toContain('CHF 2’750'); // 2500 + 250
   });
   it('ein unbekannter Wert wird genannt, nicht still zu 300', () => {

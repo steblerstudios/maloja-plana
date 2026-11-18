@@ -2,6 +2,7 @@ import React from 'react';
 import { INSTRUMENT_GROESSE } from '../../config/tokens.js';
 import { DARK_PALETTE } from '../../config/constants.js';
 import { bereichFillColor } from '../../data/lebensbereiche.js';
+import { betrag, zahl } from '../../utils/geld.js';
 
 // Franchise-Stand als Fieberthermometer (Stebler Studios 11.11.2026). Koffer-Logik Gesundheit: ein Gegenstand aus dem
 // Arztkoffer. Das Thermometer trägt nur diese Bedeutung; das geplante Fach für Fieber heisst darum «Fiebertagebuch».
@@ -40,7 +41,7 @@ export const FranchiseThermometer = ({ palette, stand, groesse = 'klein', t, fue
     mitSb && h('rect', { key: 'sb', 'data-teil': 'selbstbehalt', x: x + 3, y: oben + 2, width: w - 6, height: sHoehe - 2, fill: 'none', stroke: bahn, strokeDasharray: '3 2' }),
     h('line', { key: 'l', 'data-teil': 'franchise-strich', x1: x - 6, y1: fStrich, x2: x + w + 6, y2: fStrich, stroke: strich, strokeWidth: groesse === 'klein' ? 3 : 2 }),
   ];
-  if (groesse === 'gross') {
+  if (groesse === 'gross' && t) {
     // viewBox in echten Pixeln (160 × 256): die Zeichnung mit 1.6 skaliert, die Ablesewörter ausserhalb, 13 px (Regel H).
     const k = 1.6;
     return h('svg', { viewBox: '0 0 160 256', width: '100%', ...daten, style: { maxWidth: '160px', height: 'auto', display: 'block', overflow: 'visible' } },
@@ -49,6 +50,32 @@ export const FranchiseThermometer = ({ palette, stand, groesse = 'klein', t, fue
       t && h('text', { 'data-teil': 'ablese-selbstbehalt', x: (x + w + 12) * k, y: (oben + 10) * k, fontSize: 13, fill: palette.mid }, t('thermometer.selbstbehalt')));
   }
   return h('svg', { viewBox: '0 0 40 160', height: px, ...daten, style: { height: px + 'px', width: 'auto', display: 'block', overflow: 'visible' } }, ...zeichnung);
+};
+
+// Ablesung am Thermometer (Sophie 18.11.2026, Auswahl «A · Skala am Thermometer»): die Werte stehen auf der Höhe, die
+// sie im Thermometer meinen — Selbstbehalt oben, Franchise am Strich, darunter was noch offen ist, unten was erreicht
+// ist. Ersetzt die Textzeile «Franchise verbraucht · Franchise offen … Selbstbehalt … Maximum» unter dem Bild.
+// Nur mittel 128 (KVG-Reiter) und gross 256 (Arztkoffer); die Kachel bleibt ohne Wörter. Beträge über betrag(),
+// HTML statt SVG-Text: so greift der Sichtschutz.
+export const FranchiseAblesung = ({ palette, t, stand, groesse = 'mittel', fuell }) => {
+  const h = React.createElement;
+  const px = INSTRUMENT_GROESSE[groesse] || INSTRUMENT_GROESSE.mittel;
+  const k = px / 160;
+  const a = anteil(stand.franchiseVerbraucht, stand.franchise);
+  const zeile = 17;
+  const yStrich = Math.round(52 * k - zeile / 2);
+  const yOffen = yStrich + zeile;
+  const yFuell = Math.round((128 - 76 * a) * k - zeile / 2);
+  const yErreicht = Math.min(Math.round(128 * k), Math.max(yOffen + zeile + 2, yFuell));
+  const marke = (teil, top, inhalt, stark) => h('div', { key: teil, 'data-teil': teil, style: { position: 'absolute', left: 0, top: top + 'px', whiteSpace: 'nowrap', fontSize: '13px', lineHeight: zeile + 'px', color: stark ? palette.text : palette.mid, fontWeight: stark ? 600 : 400 } }, inhalt);
+  const wert = (n) => h('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } }, betrag(n, { hoechstens: 2 }));
+  return h('div', { 'data-teil': 'franchise-ablesung', 'data-groesse': groesse, style: { display: 'flex', gap: '10px', alignItems: 'flex-start' } },
+    h(FranchiseThermometer, { palette, stand, groesse, fuell }),
+    h('div', { style: { position: 'relative', height: px + 'px', minWidth: '150px' } },
+      marke('ablese-selbstbehalt', Math.max(0, Math.round(14 * k - zeile / 2)), [t('thermometer.selbstbehalt') + ' ', wert(stand.selbstbehalt), ' ' + t('instrumente.franchiseVon', { franchise: zahl(stand.selbstbehaltMax) })]),
+      marke('ablese-franchise', yStrich, [t('thermometer.franchise') + ' ', wert(stand.franchise)], true),
+      a < 1 && marke('ablese-offen', yOffen, [t('thermometer.offen') + ' ', wert(stand.franchiseOffen)]),
+      a > 0 && a < 1 && marke('ablese-erreicht', yErreicht, [t('thermometer.erreicht') + ' ', wert(stand.franchiseVerbraucht)])));
 };
 
 // Bereit für den Ernstfall als Herz mit Puls (Stebler Studios 18.11.2026, Auswahl «B · Herz mit Puls»). Das Zeichen

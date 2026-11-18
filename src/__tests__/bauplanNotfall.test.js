@@ -70,6 +70,23 @@ describe('Bauplan Notfall & Gesundheit · jedes Bild einmal je Seite', () => {
   });
 });
 
+describe('Ablesung am Thermometer (Sophie 18.11.2026, «A · Skala am Thermometer»)', () => {
+  it('Arztkoffer: Selbstbehalt, Franchise, noch offen, erreicht stehen am Thermometer, in dieser Reihenfolge von oben', () => {
+    const html = arztkoffer(MIT_BELEG);
+    const pos = ['ablese-selbstbehalt', 'ablese-franchise', 'ablese-offen', 'ablese-erreicht'].map((teil) => html.indexOf('data-teil="' + teil + '"'));
+    expect(pos.every((p) => p > -1)).toBe(true);
+    const top = (teil) => Number((html.match(new RegExp('data-teil="' + teil + '" style="position:absolute;left:0;top:(\\d+)px')) || [])[1]);
+    expect(top('ablese-selbstbehalt')).toBeLessThan(top('ablese-franchise'));
+    expect(top('ablese-franchise')).toBeLessThan(top('ablese-offen'));
+    expect(top('ablese-offen')).toBeLessThan(top('ablese-erreicht'));
+  });
+  it('KVG-Reiter: die alte Textzeile unter dem Bild ist weg, die Ablesung steht am Thermometer', () => {
+    const q = lies('KVGLeistungen.jsx');
+    expect(q).toMatch(/FranchiseAblesung, \{ palette, t, stand: result, groesse: 'mittel' \}/);
+    expect(q).not.toMatch(/'data-teil': 'franchise-franken'|'data-teil': 'selbstbehalt-franken'/);
+  });
+});
+
 describe('Bauplan Notfall & Gesundheit · Rechnungen', () => {
   it('Herz: ein Schlag je Lage, voll nur, wenn alle Angaben der Lage bereit sind', () => {
     const l = lagenStand(DEMO_DATA);

@@ -17,7 +17,7 @@ import { AblaufLink } from './AblaufSchale.jsx';
 import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
 import { belegeImJahr } from './data/franchiseTacho.js';
-import { FranchiseThermometer, naechsteVorsorge } from './bereiche/notfall/notfall.js';
+import { FranchiseAblesung, naechsteVorsorge } from './bereiche/notfall/notfall.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
@@ -420,13 +420,10 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       // Regel «Zahl» (§10): das Bild, darunter EINE Hauptzahl gross (verbrauchte Franchise), Franken klein darunter.
       // Ersetzt die zwei 8-px-Balken (Franchise sand, Selbstbehalt sage).
       React.createElement('div', { 'data-teil': 'franchise-thermometer', style: { marginBottom: '16px' } },
-        React.createElement(FranchiseThermometer, { palette, stand: result, groesse: 'mittel' }),
+        // Ablesung am Thermometer (Sophie 18.11.2026, «A»): Werte auf der Höhe, die sie meinen; ersetzt die Textzeilen.
+        React.createElement(FranchiseAblesung, { palette, t, stand: result, groesse: 'mittel' }),
         React.createElement('div', { 'data-instrument-zahl': 'franchise', 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums', marginTop: space.xs } },
-          betrag(result.franchiseVerbraucht, { hoechstens: 2 })),
-        React.createElement('div', { 'data-teil': 'franchise-franken', style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } },
-          t('kvg.franchiseUsed') + ' · ' + t('kvg.franchiseOpen') + ': ' + betrag(result.franchiseOffen, { hoechstens: 2 })),
-        React.createElement('div', { 'data-teil': 'selbstbehalt-franken', style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } },
-          t('kvg.selbstbehalt') + ': ' + betrag(result.selbstbehalt) + ' · ' + t('kvg.selbstbehaltMax') + ': ' + betrag(result.selbstbehaltMax, { hoechstens: 2 }))
+          betrag(result.franchiseVerbraucht, { hoechstens: 2 }))
       ),
 
       React.createElement('div', {
