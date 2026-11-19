@@ -115,7 +115,7 @@ export const HerzPuls = ({ palette, lagen = [], groesse = 'klein', t }) => {
 
 // Wer behandelt mich? als Karteikasten (Sophie 19.11.2026, Auswahl «B · Karteikasten»). Ein Gegenstand aus dem
 // Arztkoffer, in der Farbe Gesundheit. Je Fachrichtung ein Reiter (`reiter` aus karteikarten(data), höchstens fünf
-// gezeichnet), dahinter die Karten als Kanten (höchstens zwölf). Ohne Karten: der leere Kasten. Keine Wörter im Bild:
+// gezeichnet, je als stehende Karte). Ohne Karten: der leere Kasten. Keine Wörter im Bild:
 // die Zahl und die Fachrichtungen stehen darunter (Regel «Zahl»). Ruhig: eine Farbe, die Hausärztin (erster Reiter,
 // Notfall-Angabe) gefüllt, die anderen Reiter nur umrandet.
 export const KARTEI_REITER_MAX = 5;
@@ -126,19 +126,18 @@ export const Karteikasten = ({ palette, reiter = [], anzahl = 0, groesse = 'mitt
   const px = INSTRUMENT_GROESSE[groesse] || INSTRUMENT_GROESSE.mittel;
   const gezeigt = reiter.slice(0, KARTEI_REITER_MAX);
   const kanten = Math.min(anzahl, KARTEI_KANTEN_MAX);
-  // Zeichnung 160 × 110: Kasten x 10–150, Vorderwand y 56–104; Karten stehen von y 30 an, Reiter darüber.
-  const breite = 24, abstand = (128 - breite) / Math.max(1, KARTEI_REITER_MAX - 1);
-  return h('svg', { viewBox: '0 0 160 110', width: '100%', 'aria-hidden': true, 'data-teil': 'karteikasten', 'data-groesse': groesse,
+  // Zeichnung 160 × 112: je Reiter eine stehende Karte (hinten zuerst), gestaffelt nach vorn und unten; der Reiter
+  // sitzt oben auf der Karte, nach rechts versetzt. Davor die niedrige Vorderwand mit Griff. Ohne Karten: leerer Kasten.
+  const kartenZeichnung = gezeigt.map((fach, i) => {
+    const y = 34 + i * 7, rx = 22 + i * 22;
+    return h('g', { key: fach, 'data-teil': 'reiter', 'data-fach': fach },
+      h('path', { d: 'M' + rx + ' ' + y + ' v-10 q0 -4 4 -4 h18 q4 0 4 4 v10', fill: i === 0 && fach === 'hausarzt' ? farbe : palette.surface || '#fff', stroke: farbe, strokeWidth: 2, strokeLinejoin: 'round' }),
+      h('rect', { x: 18, y, width: 124, height: 96 - y, rx: 3, fill: palette.surface || '#fff', stroke: palette.mid || farbe, strokeWidth: 1.5 }));
+  });
+  return h('svg', { viewBox: '0 0 160 112', width: '100%', 'aria-hidden': true, 'data-teil': 'karteikasten', 'data-groesse': groesse,
     'data-reiter': gezeigt.length, 'data-karten': kanten, style: { maxWidth: px + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    // Karten als Kanten, von hinten nach vorne
-    Array.from({ length: kanten }, (_, i) => h('line', { key: 'k' + i, 'data-teil': 'karte', x1: 18, x2: 142,
-      y1: 34 + i * (20 / Math.max(1, KARTEI_KANTEN_MAX - 1)), y2: 34 + i * (20 / Math.max(1, KARTEI_KANTEN_MAX - 1)), stroke: palette.border, strokeWidth: 1.5 })),
-    // Reiter
-    gezeigt.map((fach, i) => h('path', { key: fach, 'data-teil': 'reiter', 'data-fach': fach,
-      d: 'M' + (16 + i * abstand) + ' ' + (34 + i * 3) + ' v-12 q0 -4 4 -4 h' + (breite - 8) + ' q4 0 4 4 v12',
-      fill: i === 0 && fach === 'hausarzt' ? farbe : palette.surface || 'none', stroke: farbe, strokeWidth: 2, strokeLinejoin: 'round' })),
-    // Kasten: Rückwand angedeutet, Vorderwand voll
-    h('path', { 'data-teil': 'kasten', d: 'M10 30 L10 100 Q10 104 14 104 L146 104 Q150 104 150 100 L150 30', fill: 'none', stroke: farbe, strokeWidth: 3, strokeLinejoin: 'round' }),
-    h('rect', { 'data-teil': 'vorderwand', x: 10, y: 56, width: 140, height: 48, rx: 4, fill: palette.surface || 'none', stroke: farbe, strokeWidth: 3 }),
-    h('rect', { 'data-teil': 'griff', x: 66, y: 72, width: 28, height: 8, rx: 4, fill: 'none', stroke: farbe, strokeWidth: 2 }));
+    h('path', { 'data-teil': 'kasten', d: 'M10 46 L10 104 Q10 108 14 108 L146 108 Q150 108 150 104 L150 46', fill: 'none', stroke: farbe, strokeWidth: 3, strokeLinejoin: 'round' }),
+    ...kartenZeichnung,
+    h('rect', { 'data-teil': 'vorderwand', x: 10, y: 74, width: 140, height: 34, rx: 4, fill: palette.surface || '#fff', stroke: farbe, strokeWidth: 3 }),
+    h('rect', { 'data-teil': 'griff', x: 66, y: 86, width: 28, height: 8, rx: 4, fill: 'none', stroke: farbe, strokeWidth: 2 }));
 };
