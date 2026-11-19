@@ -68,7 +68,8 @@ export const suchTasteAnmelden = (oeffnen, fenster = window) => {
   // Den Knopf merken, solange er hängt — der Beobachter läuft bei jeder DOM-Änderung, die Suche nur bei Bedarf.
   let lupe = null;
   const nennen = () => {
-    if (!lupe || lupe.isConnected === false) lupe = doc.querySelector(LUPE);
+    // Neu suchen auch, wenn der Knopf noch hängt, aber nicht mehr passt (Handy: React nimmt aria-keyshortcuts weg).
+    if (!lupe || lupe.isConnected === false || lupe.matches?.(LUPE) === false) lupe = doc.querySelector(LUPE);
     kuerzelNennen(doc, slashAn(fenster.localStorage), lupe);
   };
   const beobachter = fenster.MutationObserver && doc.body ? new fenster.MutationObserver(nennen) : null;
