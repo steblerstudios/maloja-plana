@@ -64,9 +64,11 @@ export const DEMO_DATA = {
     creditCardLimit: '5000',
     creditCardBalance: '420',
     loans: '',
-    pension3a: '250',
-    // Beispielwert, nicht belegt: passt zu 250 / Jahr seit Stellenantritt 2019 (rund sieben Einzahlungen).
-    pension3aBalance: '1850',
+    // Das Feld zählt pro Jahr («CHF/Jahr»). Bis 19.11.2026 stand hier 250, gemeint war 250 im Monat
+    // (Sophie, 19.11.2026: «Ja, auf 250/Mt.») → 3’000 im Jahr, unter dem 3a-Höchstbetrag mit Pensionskasse.
+    pension3a: '3000',
+    // Beispielwert, nicht belegt: passt zu 3’000 / Jahr seit Stellenantritt 2019 (rund sieben Einzahlungen, etwas Zins).
+    pension3aBalance: '21800',
     pension3b: '',
     investmentFunds: '',
   },
