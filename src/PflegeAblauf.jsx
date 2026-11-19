@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { PflegeEntloehnung } from './PflegeEntloehnung.jsx';
 import { HilflosenRechner } from './HilflosenRechner.jsx';
+import { PflegeUebersicht } from './PflegeUebersicht.jsx';
 
 // Pflegende Angehörige — geführter Ablauf, der die oft übersehenen Ansprüche bündelt:
 // Betreuungsgutschrift (AHV, hebt die eigene Rente), Betreuungsentschädigung (EO,
@@ -11,6 +12,9 @@ import { HilflosenRechner } from './HilflosenRechner.jsx';
 
 export const PflegeAblauf = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
+  // Ergebnisse der beiden Rechner für die Übersicht (Setter sind stabil → keine Render-Schleife).
+  const [lohn, setLohn] = useState(null);
+  const [he, setHe] = useState(null);
 
   return React.createElement(AblaufContainer, {
     palette, t, onNavigate, ablauf: 'pflege', icon: 'ereignisPflege',
@@ -25,7 +29,7 @@ export const PflegeAblauf = ({ palette, t, onNavigate }) => {
     // Schritt 2 — Entlöhnung: pflegende Angehörige können angestellt und bezahlt werden (Orientierungs-Rechner)
     React.createElement(AblaufStep, { palette, title: t('pflege.stepLohnTitle'), icon: 'money' },
       React.createElement('p', { style: s.stepText }, t('pflege.stepLohnText')),
-      React.createElement(PflegeEntloehnung, { palette, t })
+      React.createElement(PflegeEntloehnung, { palette, t, onErgebnis: setLohn })
     ),
     // Schritt 3 — Betreuungsentschädigung (EO): bezahlter Urlaub für die Pflege
     React.createElement(AblaufStep, { palette, title: t('pflege.step2Title') },
@@ -35,9 +39,15 @@ export const PflegeAblauf = ({ palette, t, onNavigate }) => {
     // Schritt 4 — Hilflosenentschädigung der gepflegten Person (finanziert Betreuung), mit Rechner
     React.createElement(AblaufStep, { palette, title: t('pflege.step3Title'), icon: 'ergaenzungsleistungen' },
       React.createElement('p', { style: s.stepText }, t('pflege.step3Text')),
-      React.createElement(HilflosenRechner, { palette, t })
+      React.createElement(HilflosenRechner, { palette, t, onErgebnis: setHe })
     ),
-    // Schritt 4 — Entlastung & Beratung: du musst es nicht allein tragen
+    // Schritt 5 — Was zusammenkommt: drei getrennte Zeilen, kein Gesamttotal (data/pflegeUebersicht.js)
+    React.createElement(AblaufStep, { palette, title: t('pflege.uebersicht.title') },
+      React.createElement('p', { style: s.stepText }, t('pflege.uebersicht.text')),
+      React.createElement(PflegeUebersicht, { palette, t, lohn, he }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('pflege.uebersicht.linkVorsorge'), onClick: () => onNavigate('vorsorge') })
+    ),
+    // Schritt 6 — Entlastung & Beratung: du musst es nicht allein tragen
     React.createElement(AblaufStep, { palette, title: t('pflege.step4Title') },
       React.createElement('p', { style: s.stepText }, t('pflege.step4Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pflege.step4Link'), onClick: () => onNavigate('situationen') })
