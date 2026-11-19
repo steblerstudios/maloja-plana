@@ -192,7 +192,8 @@ describe('Nebenerwerb — die fünf Felder erst mit Nebenerwerb', () => {
 
 describe('Weitere Bereiche anzeigen', () => {
   it('ohne Daten in den Zusatzfeldern: eingeklappt, steuerbares Einkommen und Vorsorge verborgen', () => {
-    const ohne = { ...DEMO_DATA.finanzen, pension3a: '' };
+    // pension3aBalance: seit 19.11.2026 im Beispiel gefüllt, hier für den leeren Fall wieder leer.
+    const ohne = { ...DEMO_DATA.finanzen, pension3a: '', pension3aBalance: '' };
     const html = render('finanzen', ohne, { anfangsOffen: 'alle' });
     expect(html).toContain('Weitere Bereiche anzeigen');
     expect(html).not.toContain(kapitel('finanzen').fields.find((f) => f.k === 'taxableIncome').label);

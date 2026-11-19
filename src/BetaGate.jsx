@@ -142,7 +142,7 @@ export const BetaGate = ({ children }) => {
   const startDemo = () => {
     setDemo('laedt');
     import('./demo/demoSpeicher.js')
-      .then((s) => { s.speicherAbschirmen(); setDemo({ data: s.DEMO_DATA, onLeave: s.demoVerlassen }); })
+      .then((s) => { s.speicherAbschirmen(); setDemo({ data: s.DEMO_DATA, docs: s.DEMO_DOCS, onLeave: s.demoVerlassen }); })
       .catch(() => setDemo(null)); // Ladefehler (z. B. offline): Knopf wieder frei
   };
   // Plan «App nach /app/», PR 1: `?beispiel` öffnet das Beispiel direkt, ohne Klick — für
