@@ -4659,6 +4659,40 @@ export default {
     backup: 'Backup & export',
   },
   // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  // Fach Impfausweis (Sophie 19.11.2026, «A · Liste + fällig»). Fachregel: Schweizerischer Impfplan 2026 (BAG/EKIF).
+  impfausweis: {
+    frage: "Tge vaccinaziun è scadenta?",
+    faelligSatz: "Renovaziun {jahre} onns suenter l’ultima vaccinaziun",
+    vorbei: "La data è passada. Dumandar en la pratica medicala u en l’apoteca.",
+    leer: "Anc nagina vaccinaziun registrada. Cun tetanus u FSME stat qua, cura che la proxima renovaziun è recumandada.",
+    keineRegel: "Per las vaccinaziuns registradas na stat qua nagin termin. Dumandar en la pratica medicala u en l’apoteca.",
+    ohneGeburtsdatum: "Per tetanus e difterie dovra il quint la data da naschientscha (chapitel Basa persunala).",
+    hinweis: "Calculà tenor il Plan da vaccinaziun svizzer 2026: tetanus e difterie mintga 20 onns, sche l’ultima vaccinaziun è stada tranter 25 e 64 onns, uschiglio mintga 10 onns; FSME mintga 10 onns. Cun defensiun immunitara debla, avant viadis u durant la gravidanza valan autras reglas: verifitgar en la pratica medicala.",
+    quelle: "Funtauna: [[Plan da vaccinaziun svizzer 2026, UFSP e CFV, stadi favrer 2026|https://www.bag.admin.ch/de/schweizerischer-impfplan]] (verifitgà en november 2026).",
+    eingetragen: "Vaccinaziuns registradas",
+    listeLeer: "Anc nagut registrà.",
+    entfernen: "Allontanar",
+    neu: "Registrar ina vaccinaziun",
+    welche: "Tge vaccinaziun",
+    name: "Num da la vaccinaziun",
+    datum: "Data da la vaccinaziun",
+    speichern: "Registrar",
+    arten: {
+      dt: "Tetanus e difterie",
+      fsme: "FSME (zetgas)",
+      mmr: "Rugalia, glandas, rubella",
+      grippe: "Grippa",
+      covid: "COVID-19",
+      // TODO(rm): provisorisch — Fachausdruck wie im Deutschen, Lia Rumantscha prüfen lassen.
+      hepb: "Hepatitis B",
+      // TODO(rm): provisorisch — Fachausdruck wie im Deutschen, Lia Rumantscha prüfen lassen.
+      hepa: "Hepatitis A",
+      hpv: "HPV",
+      pneumo: "Pneumococs",
+      zoster: "Zona (herpes zoster)",
+      andere: "Autra vaccinaziun",
+    },
+  },
   gesundheitZuhause: {
     franchiseLeer: "Franchisa anc betg registrada. Cun la franchisa stat qua, quant ch’è cuntanschì.",
     zurFranchise: "Al calculader da la franchisa",
@@ -4669,6 +4703,8 @@ export default {
     faelligLeer: "Nagut registrà. En il catalog sa la davosa controlla da prevenziun vegnir registrada.",
     zumKatalog: "Al catalog",
     zuDenBelegen: "Als mussaments",
+    faelligImpfung: "proxima vaccinaziun da renovaziun recumandada",
+    zumImpfausweis: "Tar l’attest da vaccinaziun",
   },
   arztkoffer: {
     title: 'Vossa valisch da sanadad',

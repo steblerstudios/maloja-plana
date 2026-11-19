@@ -1,8 +1,9 @@
 // Lebensbereich Notfall & Gesundheit · die Rechnungen (Bauplan Lebensbereich, Stebler Studios 18.11.2026).
-// Nur Zahlen: kein React, kein Bauteil. Drei Fragen (Analyse stebler-studios/analysen/2026-11-18-notfall-gesundheit-bauplan.md):
+// Nur Zahlen: kein React, kein Bauteil. Vier Fragen (Analyse stebler-studios/analysen/2026-11-18-notfall-gesundheit-bauplan.md):
 //   1. Franchise          franchiseStand        → Thermometer       (Zuhause Arztkoffer · Werkzeug KVG-Reiter · Kachel)
 //   2. Als Nächstes fällig naechstesFaellig      → Kalenderblatt     (Zuhause Arztkoffer · Werkzeug Katalog, Beleg-Ordner)
 //   3. Bereit             bereitschaft, lagenStand → Herz mit Puls   (Zuhause Kapitel Notfall · Kachel)
+//   4. Impfung fällig     naechsteImpfung       → Kalenderblatt     (Fach Impfausweis; zählt bei 2 mit)
 // Die Verfügungen (VORSORGE) sind eine Liste ohne Bild; ihre Rechnung steht hier, weil «Bereit» die
 // Patientenverfügung mitzählt.
 import { feldErledigt } from '../../utils/vollstaendigkeit.js';
@@ -122,20 +123,79 @@ export const naechsteVorsorge = (letzteIso, monate) => {
   return iso(d);
 };
 
-// Das Früheste aus offenen Belegfristen und fälligen Vorsorge-Untersuchungen.
+// Das Früheste aus offenen Belegfristen, fälligen Vorsorge-Untersuchungen und fälligen Auffrischimpfungen (4).
 // `letzteBesuche` = { screeningKey: 'YYYY-MM-DD' } (utils/vorsorge.js, lokal gespeichert, nicht in `data`).
-// Ergebnis: { art: 'beleg' | 'vorsorge', key, iso, vorbei } oder null, wenn nichts ansteht.
+// Ergebnis: { art: 'beleg' | 'vorsorge' | 'impfung', key, iso, vorbei } oder null, wenn nichts ansteht.
+const frueheste = (kandidaten, heute) => {
+  if (!kandidaten.length) return null;
+  const erstes = [...kandidaten].sort((a, b) => (a.iso < b.iso ? -1 : a.iso > b.iso ? 1 : 0))[0];
+  return { ...erstes, vorbei: erstes.iso < iso(heute) };
+};
 export const naechstesFaellig = (data, letzteBesuche = {}, heute = new Date()) => {
-  const heuteIso = iso(heute);
   const belege = Array.isArray(data?.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
-  const kandidaten = [
+  return frueheste([
     ...belege.filter((b) => b && b.status === 'offen' && b.frist)
       .map((b) => ({ art: 'beleg', key: b.id || null, iso: String(b.frist).slice(0, 10) })),
     ...Object.entries(letzteBesuche || {})
       .map(([key, letzte]) => ({ art: 'vorsorge', key, iso: naechsteVorsorge(letzte, VORSORGE_INTERVAL_MONATE[key]) }))
       .filter((k) => k.iso),
-  ];
-  if (!kandidaten.length) return null;
-  const erstes = kandidaten.sort((a, b) => (a.iso < b.iso ? -1 : a.iso > b.iso ? 1 : 0))[0];
-  return { ...erstes, vorbei: erstes.iso < heuteIso };
+    ...naechsteImpfungen(data),
+  ], heute);
 };
+
+// ─── 4 · Welche Impfung ist fällig? (Fach Impfausweis, Sophie 19.11.2026: «A · Liste + fällig») ────────────
+// Die Impfungen stehen in data.notfall.impfungen = [{ id, art, name?, datum: 'YYYY-MM-DD' }] (lokal, wie alles).
+// Gerechnet wird NUR, wo der Impfplan eine klare Regel hat; sonst keine Frist, Satz «bei der Ärztin prüfen».
+// Quelle: Schweizerischer Impfplan 2026, BAG und EKIF, Stand Februar 2026 (am Original-PDF geprüft 19.11.2026):
+//   dT  Tabelle 1, Fussnote 13, und Kap. 1.4 / 1.5 a): «Dabei bestimmt das Alter bei Verabreichung einer
+//       Auffrischimpfung das Intervall zur nächsten Auffrischimpfung»: Dosis mit 16–24 Jahren → 10 Jahre,
+//       mit 25–64 → 20 Jahre, ab 65 → 10 Jahre. Bei Immundefizienz weiterhin 10 Jahre (weiss die App nicht:
+//       Hinweis im Fach). Unter 16 gilt das Kinder-Schema: keine Rechnung.
+//   FSME Kap. 3 a): «Eine Auffrischimpfung wird alle 10 Jahre empfohlen.»
+export const IMPF_ARTEN = ['dt', 'fsme', 'mmr', 'grippe', 'covid', 'hepb', 'hepa', 'hpv', 'pneumo', 'zoster', 'andere'];
+
+const datumVon = (wert) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(wert || ''));
+  if (!m) return null;
+  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  return d.getDate() === Number(m[3]) ? d : null;
+};
+// Ganze Lebensjahre am Tag `amIso`.
+export const alterAm = (geburtIso, amIso) => {
+  const g = datumVon(geburtIso), a = datumVon(amIso);
+  if (!g || !a || a < g) return null;
+  const jahre = a.getFullYear() - g.getFullYear();
+  return (a.getMonth() < g.getMonth() || (a.getMonth() === g.getMonth() && a.getDate() < g.getDate())) ? jahre - 1 : jahre;
+};
+
+// Abstand bis zur nächsten Auffrischung in Jahren, oder null (keine belegte Regel / Alter unbekannt).
+export const impfAbstandJahre = (art, datumIso, geburtIso) => {
+  if (art === 'fsme') return 10;
+  if (art !== 'dt') return null;
+  const alter = alterAm(geburtIso, datumIso);
+  if (alter == null || alter < 16) return null;
+  return alter >= 25 && alter < 65 ? 20 : 10;
+};
+
+export const impfungenListe = (data) => (Array.isArray(data?.notfall?.impfungen) ? data.notfall.impfungen : [])
+  .filter((e) => e && IMPF_ARTEN.includes(e.art) && datumVon(e.datum));
+
+// Je Impfung mit Regel: die letzte Dosis + Abstand. { art: 'impfung', key, iso, abstand, letzte }.
+export const naechsteImpfungen = (data) => {
+  const geburt = data?.basis?.dateOfBirth;
+  const letzte = {};
+  impfungenListe(data).forEach((e) => { if (!letzte[e.art] || e.datum > letzte[e.art]) letzte[e.art] = e.datum; });
+  return Object.entries(letzte).flatMap(([art, datum]) => {
+    const abstand = impfAbstandJahre(art, datum, geburt);
+    if (!abstand) return [];
+    const d = datumVon(datum);
+    d.setFullYear(d.getFullYear() + abstand);
+    return [{ art: 'impfung', key: art, iso: iso(d), abstand, letzte: String(datum).slice(0, 10) }];
+  });
+};
+
+// Die früheste fällige Auffrischung (mit `vorbei`), oder null.
+export const naechsteImpfung = (data, heute = new Date()) => frueheste(naechsteImpfungen(data), heute);
+
+// Für den Satz im Fach: Starrkrampf eingetragen, aber ohne Geburtsdatum nicht rechenbar.
+export const impfungOhneAlter = (data) => !datumVon(data?.basis?.dateOfBirth) &&impfungenListe(data).some((e) => e.art === 'dt');
