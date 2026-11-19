@@ -1929,6 +1929,9 @@ export default {
   },
   // Capitolo Emergenza · «un solo luogo» (round 9, AE; costruito collaudo F6, 25.10.2026)
   notfallKapitel: {
+    // Seite Gesundheit in drei Teilen (19.11.2026).
+    teilNotfall: "In caso d’emergenza",
+    teilVorsorge: "Previdenza e dati",
     krisenTitel: 'In caso di crisi o di violenza',
     vollstaendig: 'completo',
     fehlt: 'mancante',
@@ -7506,6 +7509,7 @@ export default {
     migrated: 'Inserimento precedente:',
   },
   doctors: {
+    zurKartei: "Modifica nelle schede",
     add: 'Aggiungi medico',
     label: 'Medico {nr}',
     specialty: 'Specialità',

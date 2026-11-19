@@ -1929,6 +1929,9 @@ export default {
   },
   // Chapitre Urgence · « un seul endroit » (round 9, AE ; construit réception F6, 25.10.2026)
   notfallKapitel: {
+    // Seite Gesundheit in drei Teilen (19.11.2026).
+    teilNotfall: "En cas d’urgence",
+    teilVorsorge: "Prévoyance et indications",
     krisenTitel: 'En cas de crise ou de violence',
     vollstaendig: 'complet',
     fehlt: 'manquant',
@@ -7557,6 +7560,7 @@ export default {
     migrated: 'Ancienne saisie :',
   },
   doctors: {
+    zurKartei: "Modifier dans les fiches",
     add: 'Ajouter un médecin',
     label: 'Médecin {nr}',
     specialty: 'Spécialité',

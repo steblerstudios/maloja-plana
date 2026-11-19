@@ -41,9 +41,10 @@ describe('Bauplan Notfall & Gesundheit · jedes Bild einmal je Seite', () => {
     expect(zaehle(html, /data-instrument-zahl="faellig"/g)).toBe(1);
     expect(html.indexOf('data-instrument-zahl="franchise"')).toBeGreaterThan(html.indexOf('data-franchise="gross"'));
     expect(html.indexOf('data-instrument-zahl="faellig"')).toBeGreaterThan(html.indexOf('data-teil="kalenderblatt"'));
-    // die Fragen stehen vor den Fächern
-    // Reihenfolge der vereinten Seite: Koffer, dann die Fragen (Franchise, fällig), dann Bereit.
-    const reihe = ['data-teil="gesundheit-koffer"', 'data-teil="gesundheit-franchise"', 'data-teil="gesundheit-faellig"', 'data-teil="notfall-bereit"'].map((x) => html.indexOf(x));
+    // Seite in drei Teilen (Sophie 19.11.2026, «A · Drei Teile»): ① Im Notfall mit Bereit und Unterlagen, dann
+    // ② Arztkoffer mit Fächern, Franchise, fällig, dann ③ Vorsorge und Angaben.
+    const reihe = ['data-teil="teil-notfall"', 'data-teil="notfall-bereit"', 'data-teil="notfall-unterlagen"', 'data-teil="teil-koffer"', 'data-teil="gesundheit-koffer"',
+      'data-teil="gesundheit-franchise"', 'data-teil="gesundheit-faellig"', 'data-teil="notfall-vorsorge"'].map((x) => html.indexOf(x));
     expect(reihe.every((p) => p > -1)).toBe(true);
     expect([...reihe].sort((x, y) => x - y)).toEqual(reihe);
   });
@@ -91,6 +92,22 @@ describe('Ablesung am Thermometer (Sophie 18.11.2026, «A · Skala am Thermomete
 });
 
 describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)', () => {
+  it('drei Teile mit nummerierten Titeln: Im Notfall, Arztkoffer, Vorsorge und Angaben (Sophie 19.11.2026)', () => {
+    const html = kapitel(DEMO_DATA);
+    expect(html).toContain('data-teil="teil-koffer" aria-labelledby="mp-gesundheit-koffer-titel"');
+    expect(html).toMatch(/<h3 id="mp-gesundheit-koffer-titel" data-teil-nr="2"[^>]*>.*Arztkoffer/);
+    expect(html).toMatch(/<h3 id="mp-notfall-vorsorge" tabindex="-1" data-teil-nr="3"[^>]*>.*Vorsorge und Angaben/);
+    expect(zaehle(html, /data-teil-nr="/g)).toBe(2); // ① steht im Kapitel vor dem Ernstfall-Knopf
+    const cv = lies('ChapterView.jsx');
+    expect(cv.indexOf('React.createElement(NotfallTeilTitel')).toBeGreaterThan(-1);
+    expect(cv.indexOf('React.createElement(NotfallTeilTitel')).toBeLessThan(cv.indexOf('React.createElement(NotfallErnstfallKnopf'));
+    expect(t('notfallKapitel.teilNotfall')).toBe('Im Notfall');
+  });
+  it('Ärzte nicht doppelt: im Formular nur Namen und der Weg zu den Karteikarten', () => {
+    const cv = lies('ChapterView.jsx');
+    expect(cv).toMatch(/'data-teil': 'aerzte-in-kartei'/);
+    expect(cv).toMatch(/onNavigate\('karteikarten'\)/);
+  });
   it('der offene Koffer: fertige Fächer als Knöpfe im Deckel, geplante gestrichelt im Boden, keine Notfallkarte doppelt', () => {
     const html = kapitel(DEMO_DATA);
     const deckel = html.slice(html.indexOf('data-teil="koffer-deckel"'), html.indexOf('data-teil="koffer-boden"'));

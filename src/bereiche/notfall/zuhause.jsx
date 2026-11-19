@@ -79,6 +79,21 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
   return h('div', { 'data-teil': 'gesundheit-zuhause', style: { marginBottom: space.lg + 'px' } }, franchise, naechstes);
 };
 
+// ─── Die drei Teile der Seite Gesundheit (Sophie 19.11.2026, «A · Drei Teile»): ① Im Notfall · ② Arztkoffer ·
+// ③ Vorsorge und Angaben. Ein Titel je Teil, mit Nummer, über einer Linie (ausser dem ersten). Die Nummer ist eine
+// Ziffer in einem gezeichneten Kreis (CSS), kein Schriftzeichen ①. Ebene h3 wie die Abschnitte darin (Wächter halten
+// die Abschnitte als h3); der Teil unterscheidet sich durch Grösse und Linie.
+export const TeilTitel = ({ palette, nr, id, children, tabIndex }) => {
+  const h = React.createElement;
+  const farbe = gesundheitFarbe(palette);
+  return h('h3', { id, tabIndex, 'data-teil-nr': nr, style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px',
+    margin: (nr === 1 ? 0 : space.xl + 'px') + ' 0 ' + space.sm + 'px', paddingTop: nr === 1 ? 0 : space.lg + 'px',
+    borderTop: nr === 1 ? 'none' : '1px solid ' + palette.border, fontSize: text.lg, fontWeight: weight.semi, color: palette.text, scrollMarginTop: 'var(--mp-sprungabstand)' } },
+    h('span', { 'aria-hidden': 'true', style: { display: 'inline-grid', placeItems: 'center', width: '26px', height: '26px', flexShrink: 0, borderRadius: '50%',
+      border: '2px solid ' + farbe, color: palette.text, fontSize: text.xs, fontWeight: weight.semi, fontVariantNumeric: 'tabular-nums' } }, String(nr)),
+    h('span', { style: { color: palette.text } }, children));
+};
+
 // ─── Der offene Arztkoffer (Sophie 18.11.2026: «einen kompletten arzt koffer gezeichnet», «wollen wir die seiten
 // vereinen?» → Kapitel Gesundheit und Arztkoffer sind eine Seite). Zeichen der Gesundheit (Brand Book §5), in der
 // Farbe Gesundheit. Im Deckel die fertigen Fächer als Knöpfe (antippen = Werkzeug), unten die geplanten gestrichelt,
@@ -104,8 +119,9 @@ export const GesundheitKoffer = ({ palette, t, onNavigate }) => {
   const bald = KOFFER_FAECHER.filter((f) => !f.view);
   const titel = (f) => t('arztkoffer.faecher.' + f.key + '.title');
   const raster = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: space.sm + 'px' };
-  return h('section', { id: KOFFER_ANKER, 'data-teil': 'gesundheit-koffer', 'aria-labelledby': KOFFER_ANKER + '-titel', style: { margin: space.md + 'px 0' } },
-    h('h3', { id: KOFFER_ANKER + '-titel', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('arztkoffer.title')),
+  return h('section', { id: KOFFER_ANKER, 'data-teil': 'gesundheit-koffer', 'aria-labelledby': KOFFER_ANKER + '-titel', style: { margin: '0 0 ' + space.md + 'px' } },
+    // Teil ② der Seite: der Titel des Koffers ist der Titel des Teils.
+    h(TeilTitel, { palette, nr: 2, id: KOFFER_ANKER + '-titel' }, t('arztkoffer.title')),
     // Griff
     h('div', { 'aria-hidden': 'true', style: { width: '72px', height: '16px', margin: '0 auto', border: '4px solid ' + farbe, borderBottom: 'none', borderRadius: radius.lg + 'px ' + radius.lg + 'px 0 0' } }),
     // Deckel: fertige Fächer

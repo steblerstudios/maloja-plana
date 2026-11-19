@@ -1929,6 +1929,9 @@ export default {
   },
   // Emergency chapter · "one place" (round 9, AE; built in acceptance F6, 25.10.2026)
   notfallKapitel: {
+    // Seite Gesundheit in drei Teilen (19.11.2026).
+    teilNotfall: "In an emergency",
+    teilVorsorge: "Advance planning and details",
     krisenTitel: 'In a crisis or in case of violence',
     vollstaendig: 'complete',
     fehlt: 'missing',
@@ -7558,6 +7561,7 @@ export default {
     migrated: 'Previous entry:',
   },
   doctors: {
+    zurKartei: "Edit in the index cards",
     add: 'Add doctor',
     label: 'Doctor {nr}',
     specialty: 'Specialty',

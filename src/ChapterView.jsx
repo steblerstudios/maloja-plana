@@ -25,7 +25,7 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 // Nicht lazy: «oben» ist der Knopf für den Ernstfall — er soll ohne Nachladen dastehen.
-import { NotfallImKapitel, NotfallErnstfallKnopf } from './components/NotfallImKapitel.jsx';
+import { NotfallImKapitel, NotfallErnstfallKnopf, NotfallTeilTitel } from './components/NotfallImKapitel.jsx';
 import { NOTFALL_ANGABEN } from './bereiche/notfall/notfall.js';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -719,10 +719,18 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('doctors.hint')),
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
           React.createElement(React.Suspense, { fallback: null },
-          React.createElement(DoctorManager, {
-            palette, t: tr, doctors: docList,
-            onChange: (list) => onUpdate('doctorsList', list),
-          })
+          // Seite in drei Teilen (Sophie 19.11.2026, «Doppeltes fällt weg»): die Ärzteliste wird im Fach Karteikarten
+          // bearbeitet; hier stehen nur die Namen und der Weg dorthin. Ohne onNavigate (Tests, Einbettung) bleibt die Eingabe.
+          onNavigate
+            ? React.createElement('div', { 'data-teil': 'aerzte-in-kartei' },
+                docList.filter((d) => d && d.name && String(d.name).trim()).map((d, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.text } },
+                  String(d.name).trim(), React.createElement('span', { style: { color: palette.mid } }, ' · ' + tr('doctors.specialties.' + (d.specialty || 'hausarzt'))))),
+                React.createElement('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('karteikarten'),
+                  style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, color: palette.skyDeep || palette.text } }, tr('doctors.zurKartei') + ' ›'))
+            : React.createElement(DoctorManager, {
+                palette, t: tr, doctors: docList,
+                onChange: (list) => onUpdate('doctorsList', list),
+              })
         )
         ),
         oldDoctor && !docList.length && React.createElement('div', {
@@ -2158,12 +2166,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // und Pflege hingen nur am Arztkoffer, der seinerseits nicht zum Kapitel führte. Jetzt stehen sie hier, in
       // zwei Gruppen wie die Familie im Kapitel Basis. Die Erklärseite Krankenkasse bleibt bei Versicherungen
       // (Organigramm 07.11.2026, ZUM_VERSTEHEN); hier stehen nur Ziele in der App.
+      // Seite in drei Teilen (Sophie 19.11.2026): was oben schon einen Weg hat, steht hier nicht noch einmal —
+      // KVG-Leistungen und Beleg-Ordner (Fächer im Arztkoffer ②). Der Ablauf Vorsorgeauftrag bleibt: die Kachel in ③
+      // führt nur hin, solange er nicht geregelt ist.
       case 'notfall': return [
         weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('organ'),
         ablage('chapterView.passend.ablageDokumente'),
-        { key: 'gruppe-krankenkasse', ueberschrift: P('gruppeKrankenkasse') },
-        // weg('gesundheit') entfiel 18.11.2026: der Arztkoffer steht jetzt oben in diesem Kapitel.
-        weg('kvg'), weg('kk'),
         { key: 'gruppe-passiert', ueberschrift: P('gruppePassiert') },
         weg('unfallkrankheit'), weg('iv'), weg('pflege'),
       ];
@@ -2339,6 +2347,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Ernstfall, «Bereit für den Ernstfall», die vier Unterlagen und Vorsorge. Die Portemonnaie-Karte
     // (früher «Notfallkarte drucken») ist eine der vier Kacheln; ihre Vorschau (K20, Feldnamen, nie
     // Werte) steht zugeklappt darunter, bis die Kachel sie öffnet.
+    // Seite in drei Teilen (19.11.2026): der Titel von Teil ① steht vor dem stehenden Ernstfall-Knopf.
+    isNotfall && onNavigate && React.createElement(NotfallTeilTitel, { palette, t: tr }),
     isNotfall && React.createElement(NotfallErnstfallKnopf, { palette, t: tr, onNavigate }),
     isNotfall && React.createElement(NotfallImKapitel, {
       palette, t: tr, data: allData || { notfall: data }, chapters: chapters || [], onNavigate,

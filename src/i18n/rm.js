@@ -4816,6 +4816,10 @@ export default {
   },
   // Chapitel Urgenza · «in lieu» (runda 9, AE; construì acceptanza F6, 25.10.2026) — texts betg anc examinads
   notfallKapitel: {
+    // Seite Gesundheit in drei Teilen (19.11.2026).
+    // TODO(rm): provisorisch — Gegenlese Teil-Titel.
+    teilNotfall: "En cas d’urgenza",
+    teilVorsorge: "Prevenziun ed indicaziuns",
     // TODO(rm): provisorisch — Gegenlese (Lebenslagen C1+C2, 07.11.2026)
     krisenTitel: 'En ina crisa u en cas da violenza',
     vollstaendig: 'cumplet',
@@ -8743,6 +8747,7 @@ export default {
     migrated: 'Endataziun precedenta:',
   },
   doctors: {
+    zurKartei: "Elavurar en las cartotecas",
     add: 'Agiuntar medi / media',
     label: 'Medi / Media {nr}',
     specialty: 'Spezialisaziun',
