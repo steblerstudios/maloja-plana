@@ -18,7 +18,7 @@ import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { Belege } from './components/Belege.jsx';
-import { NichtbezugHuerden } from './components/Nichtbezug.jsx';
+import { NichtbezugHuerden, ZhRestpraemie } from './components/Nichtbezug.jsx';
 import { linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { hatAusweisFNS, sozHinweisSchluessel } from './data/ausweis.js';
 
@@ -373,6 +373,8 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
       h('p', { style: s.satz }, satz),
       // Gruppe A L1: Sozialhilfe als Weg — ohne Schweizer Pass mit dem Hinweis auf die Bewilligung.
       w.wege.some((x) => x.key === 'soz') && sozHinweisSchluessel(data) && h('p', { style: s.fuss, 'data-hinweis': 'soz-bewilligung' }, t(sozHinweisSchluessel(data))),
+      // Restprämienübernahme ZH (18.11.2026): der Weg ohne Sozialhilfe und ohne Meldung ans Migrationsamt.
+      w.wege.some((x) => x.key === 'soz') && h(ZhRestpraemie, { palette, t, canton, data }),
       w.ipvSubsumed && w.ipvAmount > 0 && h('p', { style: s.fuss }, t('schnellcheck.ipvSubsumed', { amount: fmt(w.ipvAmount) }))),
     // Wege zu den Rechnern — ausserhalb der Live-Region, damit sie nicht bei jeder Eingabe vorgelesen werden.
     w.wege.length > 0 && erfasst && canton && h('div', { style: { marginTop: space.xs + 'px' } },

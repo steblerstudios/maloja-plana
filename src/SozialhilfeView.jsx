@@ -10,7 +10,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { Belege } from './components/Belege.jsx';
-import { KantonsAnlaufstelle } from './components/Nichtbezug.jsx';
+import { KantonsAnlaufstelle, ZhRestpraemie } from './components/Nichtbezug.jsx';
 import { betrag } from './utils/geld.js';
 import { linkStil } from './components/PrimaryButton.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
@@ -161,6 +161,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     React.createElement('div', { 'data-hinweis': 'nichtbezug', style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.md } },
       React.createElement('p', { style: { margin: 0, color: palette.mid } }, t('nichtbezug.sozialhilfe')),
       React.createElement(KantonsAnlaufstelle, { palette, t, canton }),
+      React.createElement(ZhRestpraemie, { palette, t, canton, data }),
       React.createElement(Belege, { palette, t, zeile: t('nichtbezug.quelle') })
     ),
 
