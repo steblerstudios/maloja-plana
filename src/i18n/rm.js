@@ -309,6 +309,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
     changesLinkPraemien: 'Controllar la premia da la cassa da malsauns',
     // TODO(rm): provisorisch — Gegenlese (Kapitel Umzug aus de übertragen, 16.11.2026)
+    kartenHinweis: { sie: 'Marcà è il chantun da Voss profil. La charta da las taglias quinta per la chapitala dal chantun, persuna nunmaridada, cun ina paja da 80\'000 francs; en autras vischnancas e per auters manaschis po la taglia esser different.', du: 'Marcà è il chantun da tes profil. La charta da las taglias quinta per la chapitala dal chantun, persuna nunmaridada, cun ina paja da 80\'000 francs; en autras vischnancas e per auters manaschis po la taglia esser different.' },
     changesLinkTax: 'Guardar las taglias',
     linkMietzins: 'Verifitgar ils contributs da fittanza',
     linkAddressChange: 'Crear ina brev da midada d’adressa',
@@ -2211,6 +2212,7 @@ export default {
     aufDerKarte: 'Sin la charta (en tudestg)',
     mehrDazu: 'Dapli davart quai (en tudestg):',
     // TODO(rm): provisorisch — Gegenlese (C + D, 09.11.2026)
+    hoehereBerufsbildung: 'Ina scola spezialisada superiura, in attestat professiunal u in diplom federal tutgan tar il stgalim terziar, er suenter in emprendissadi.',
     ihreAusbildung: { sie: 'Vossa furmaziun', du: 'tia furmaziun' },
     karteMitKanton: { sie: 'Voss chantun sin la charta (en tudestg)', du: 'Tes chantun sin la charta (en tudestg)' },
     karteOhneKanton: 'Ils chantuns sin la charta (en tudestg)',

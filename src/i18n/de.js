@@ -228,6 +228,7 @@ export default {
     changes_kanton: { sie: 'Der Kanton bleibt, aber die neue Gemeinde kann einen anderen Steuerfuss haben, und Ihre Krankenkassen-Prämienregion kann sich ändern. Beides lohnt sich zu prüfen.', du: 'Der Kanton bleibt, aber die neue Gemeinde kann einen anderen Steuerfuss haben, und deine Krankenkassen-Prämienregion kann sich ändern. Beides lohnt sich zu prüfen.' },
     changes_extra: { sie: 'Ein anderer Kanton bedeutet neue kantonale Steuern, oft eine andere Krankenkassen-Prämie (neue Region) und das Ummelden von Fahrzeugen und Kontrollschildern. Prüfen Sie Prämie und Steuern für den neuen Kanton.', du: 'Ein anderer Kanton bedeutet neue kantonale Steuern, oft eine andere Krankenkassen-Prämie (neue Region) und das Ummelden von Fahrzeugen und Kontrollschildern. Prüf Prämie und Steuern für den neuen Kanton.' },
     changesLinkPraemien: 'Krankenkassen-Prämie prüfen',
+    kartenHinweis: { sie: 'Markiert ist der Kanton aus Ihrem Profil. Die Steuerkarte rechnet für den Kantonshauptort, ledig, mit 80\'000 Franken Lohn; in anderen Gemeinden und für andere Haushalte kann die Steuer anders ausfallen.', du: 'Markiert ist der Kanton aus deinem Profil. Die Steuerkarte rechnet für den Kantonshauptort, ledig, mit 80\'000 Franken Lohn; in anderen Gemeinden und für andere Haushalte kann die Steuer anders ausfallen.' },
     changesLinkTax: 'Steuern ansehen',
     linkMietzins: 'Mietbeiträge prüfen',
     linkAddressChange: 'Adressänderungs-Brief erstellen',
@@ -1981,6 +1982,7 @@ export default {
     mehrDazu: 'Mehr dazu:',
     // C + D (09.11.2026): Karte und Erklärfigur im Werkzeug (VerstehenImWerkzeug).
     // 18.11.2026: Markierung der eigenen Ausbildungsstufe unter der Karte Arbeitslosenquote.
+    hoehereBerufsbildung: 'Höhere Fachschule, eidgenössischer Fachausweis oder Diplom zählen zur Tertiärstufe, auch wenn sie auf eine Lehre folgen.',
     ihreAusbildung: { sie: 'Ihre Ausbildung', du: 'deine Ausbildung' },
     karteMitKanton: { sie: 'Ihr Kanton auf der Karte', du: 'Dein Kanton auf der Karte' },
     karteOhneKanton: 'Die Kantone auf der Karte',

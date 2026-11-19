@@ -461,7 +461,7 @@ describe('Arbeitslosenquote nach Ausbildung', () => {
   });
 });
 
-// Stebler Studios 19.11.2026 («Ja, C1 und C2»): EL-Quote nach Rentenart und Alter (BSV, EL-Statistik 2025, T1 S. 3, Text S. 4).
+// Stebler Studios 19.11.2026 («Ja, C1 und C2»): EL-Quote nach Rentenart und Alter (BSV, EL-Statistik 2025, T1 S. 2, Text S. 4).
 describe('EL-Quote nach Rentenart und Alter', () => {
   it('Werte aus der BSV-Statistik, die Quote zur Altersrente ist der Schweizer Wert der Karte', () => {
     const M = KARTEN.el.merkmale;
@@ -469,7 +469,7 @@ describe('EL-Quote nach Rentenart und Alter', () => {
     expect(M.zeilen[0].text).toBe(KARTEN.el.ch);
     expect(M.total.text).toBe('16,4 %');
     expect(M.quellen[0].url).toBe('https://www.bsv.admin.ch/dam/de/sd-web/pOeXq3eVysUG/el_stat_2025_d.pdf');
-    expect(M.quellen[0].text).toContain('T1 (S. 3)');
+    expect(M.quellen[0].text).toContain('T1 (S. 2)');
     expect(LEGENDE.elMerkmale).toContain(M.legende.slice(0, 40));
   });
 
@@ -495,6 +495,38 @@ describe('EL-Quote nach Rentenart und Alter', () => {
     expect(figur).toContain('<td class="n">49,8 %</td>');
     expect(figur).toContain('href="#quelle-bsvElQuoten"');
     expect(html).toContain('<li id="quelle-bsvElQuoten">');
+  });
+});
+
+// Fachprüfung 19.11.2026 (swiss-precision): T1 auf S. 2, Legende EL nur Altersrente, Satz zur höheren Berufsbildung, Hinweis im Umzug.
+describe('Nach der Fachprüfung', () => {
+  const sprachen = ['de', 'fr', 'it', 'en', 'rm'];
+  const datei = (l) => fs.readFileSync(path.resolve(SRC, 'i18n', `${l}.js`), 'utf8');
+
+  it('EL: T1 auf S. 2, «steigt mit dem Alter» nur für die Altersrente, «Zusammenhang» statt Ursache', () => {
+    expect(KARTEN.el.merkmale.quellen[0].text).toContain('T1 (S. 2)');
+    expect(KARTEN.el.merkmale.legende).toContain('Bei der Altersrente steigt der Anteil mit dem Alter');
+    expect(KARTEN.el.merkmale.legende).toContain('in Zusammenhang');
+    expect(KARTEN.el.merkmale.legende).not.toMatch(/führt das auf/);
+  });
+
+  it('Sek II markiert: der Satz zur höheren Berufsbildung; sonst nicht', () => {
+    const mit = (abschluss) => renderToStaticMarkup(React.createElement(KantonsKarteKlein, { palette: P, t, karte: 'alq', kanton: 'ZH', abschluss }));
+    expect(mit('apprenticeship')).toContain(t('erklaerseite.hoehereBerufsbildung'));
+    for (const a of ['mandatory', 'bachelor', undefined]) expect(mit(a)).not.toContain('data-teil="hoehere-berufsbildung"');
+    expect(renderToStaticMarkup(React.createElement(KantonsKarteKlein, { palette: P, t, karte: 'el', kanton: 'ZH', abschluss: 'matura' }))).not.toContain('data-teil="hoehere-berufsbildung"');
+  });
+
+  it('Umzug: der Hinweis steht nur beim Typ «anderer Kanton», nach den Karten', () => {
+    const u = quelle('UmzugAblauf.jsx');
+    expect(u).toContain("umzugType === 'extra' && React.createElement('p', { key: 'karten-hinweis'");
+    expect(u.indexOf("key: 'karten-hinweis'")).toBeGreaterThan(u.indexOf("karte: 'praemie'"));
+  });
+
+  it.each(sprachen)('%s: beide neuen Texte vorhanden, Umzug-Hinweis mit Sie und Du', (l) => {
+    const s = datei(l);
+    expect(s).toMatch(/\n    hoehereBerufsbildung: '/);
+    expect(s).toMatch(/kartenHinweis: \{ sie: .*, du: '/);
   });
 });
 

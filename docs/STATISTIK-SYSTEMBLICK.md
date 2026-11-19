@@ -499,7 +499,7 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
   T1 nehmen und «EL zur AV» nennen. 2024/2025 nur mit dem Hinweis auf die EL-Reform lesen (BSV: «vermutlich» deren Folge).
   https://www.bsv.admin.ch/dam/de/sd-web/pOeXq3eVysUG/el_stat_2025_d.pdf
 
-- ✅ **Nachgelesen 18.11.2026** (`pdftotext`, SHA-256 `196aa033…5023164b`, 8 Seiten): **T1 steht auf S. 3**
+- ✅ **Nachgelesen 18.11.2026** (`pdftotext`, SHA-256 `196aa033…5023164b`, 8 Seiten): **T1 steht auf S. 2** (Fusszeile «2/8»; Fachprüfung 19.11.2026 korrigiert, hier stand «S. 3»: dort steht T2 mit demselben Total)
   (2025: Total 16,4 % · AV 12,3 % · IV 49,8 %; 2024: 16,2 · 12,2 · 49,2). **S. 4, Abschnitt «EL-Quoten»:** «Während von den
   65-jährigen AV-Rentnerinnen und -Rentnern nur 9,5 Prozent EL beziehen, sind es bei den 95-Jährigen 23,5 Prozent.»;
   IV: «Von den 20- bis 30-jährigen IV-Rentnerinnen und -Rentnern benötigen zwischen 62 und 77 Prozent eine EL», kurz vor

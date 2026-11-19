@@ -1168,10 +1168,10 @@ export const KARTEN = {
     "name": "Alle mit Rente (Alter, Hinterlassene, IV)",
     "text": "16,4 %"
    },
-   "legende": "Anteil der Menschen mit dieser Rente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. Die Aufteilung gibt es nur für die ganze Schweiz, nicht je Kanton. Mit dem Alter steigt der Anteil; das BSV führt das auf die Kosten eines Heimaufenthalts zurück, die viele nicht lange selbst tragen können.",
+   "legende": "Anteil der Menschen mit dieser Rente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. Die Aufteilung gibt es nur für die ganze Schweiz, nicht je Kanton. Bei der Altersrente steigt der Anteil mit dem Alter; das BSV bringt das mit der Wahrscheinlichkeit eines Heimeintritts und dessen Kosten in Zusammenhang, die viele nicht oder nicht lange selbst tragen können.",
    "quellen": [
     {
-     "text": "Bundesamt für Sozialversicherungen (BSV), Statistik der Ergänzungsleistungen zur AHV und IV 2025, Tabelle T1 (S. 3) und Abschnitt EL-Quoten (S. 4), Dezember 2025, publiziert 26.05.2026",
+     "text": "Bundesamt für Sozialversicherungen (BSV), Statistik der Ergänzungsleistungen zur AHV und IV 2025, Tabelle T1 (S. 2) und Abschnitt EL-Quoten (S. 4), Dezember 2025, publiziert 26.05.2026",
      "url": "https://www.bsv.admin.ch/dam/de/sd-web/pOeXq3eVysUG/el_stat_2025_d.pdf"
     }
    ]

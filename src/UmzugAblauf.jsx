@@ -132,6 +132,9 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
       // Verweise darüber, mit dem bisherigen Kanton markiert. Erst beim Aufklappen nachgeladen.
       umzugType === 'extra' && React.createElement(VerstehenImWerkzeug, { key: 'karte-steuer', palette, t, karte: 'steuer', kanton: data?.basis?.canton || '' }),
       umzugType === 'extra' && React.createElement(VerstehenImWerkzeug, { key: 'karte-praemie', palette, t, karte: 'praemie', kanton: data?.basis?.canton || '' }),
+      // Fachprüfung 19.11.2026: im Umzug liest man die Karten als «alt gegen neu»; welcher Kanton markiert ist und was die
+      // Steuerkarte rechnet, steht darum hier noch einmal.
+      umzugType === 'extra' && React.createElement('p', { key: 'karten-hinweis', 'data-teil': 'umzug-karten-hinweis', style: { margin: space.sm + 'px 0 0', fontSize: text.xs, color: palette.mid } }, t('umzug.kartenHinweis')),
       umzugType === 'extra' && React.createElement(MehrDazu, { key: 'kantone', palette, t, seite: 'kantone' }),
       // Neue Gemeinde/Kanton kann einen Mietzinsbeitrags-Anspruch bedeuten — Hinweis genau hier,
       // wo das Lebensereignis ihn auslöst (bestehende Komponente, kanton-bewusst).

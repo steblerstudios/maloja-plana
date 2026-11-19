@@ -111,7 +111,8 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
   // nur ganze Schweiz, darum Balken statt Karte. Bei der Arbeitslosenquote steht die eigene Stufe fett mit Zusatz, nicht nur
   // in Farbe; ohne erfassten Abschluss ist keine markiert. Bei der EL markiert die App nichts.
   const M = K.merkmale;
-  const eigeneStufe = M && ABSCHLUSS_STUFE[abschluss];
+  // Nur eine Stufe, die es in dieser Aufteilung gibt (die EL-Zeilen kennen keine Ausbildungsstufe).
+  const eigeneStufe = M && M.zeilen.some((z) => z.key === ABSCHLUSS_STUFE[abschluss]) ? ABSCHLUSS_STUFE[abschluss] : null;
   const nachAusbildung = M && h('div', { 'data-teil': 'nach-merkmal', style: { marginTop: space.md + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border } },
     h('p', { lang: 'de', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, M.titel),
     h('table', { style: { borderCollapse: 'collapse', fontSize: text.sm, width: '100%' } },
@@ -130,6 +131,9 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
           h('th', { scope: 'row', lang: 'de', style: { textAlign: 'left', fontWeight: weight.normal, color: palette.mid, padding: space.xs + 'px 0' } }, M.total.name),
           h('td', { 'aria-hidden': 'true' }),
           h('td', { lang: 'de', style: { textAlign: 'right', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums', color: palette.mid, padding: space.xs + 'px 0' } }, M.total.text)))),
+    // Fachprüfung 19.11.2026: Die Auswahl im Kapitel kennt keine höhere Berufsbildung; wer HF oder Fachausweis hat,
+    // wählt oft «Lehre EFZ» und stünde bei Sek II. Darum bei Sek II der Satz aus der SECO-Einteilung (S. 26).
+    eigeneStufe === 'sek2' && h('p', { 'data-teil': 'hoehere-berufsbildung', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid } }, t('erklaerseite.hoehereBerufsbildung')),
     h('p', { lang: 'de', style: { margin: space.xs + 'px 0 0', fontSize: text.sm, color: palette.text } }, M.legende),
     M.quellen.length > 0 && h('p', { style: leise },
       `${t('erklaerseite.belegWort')}: `,
