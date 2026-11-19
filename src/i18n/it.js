@@ -407,7 +407,7 @@ export default {
     // «Was zusammenkommt» (19.11.2026) — Logik und Quellen: data/pflegeUebersicht.js
     uebersicht: {
       title: "5 · Che cosa si somma",
-      text: "Gli importi sopra spettano a persone diverse. Qui figurano uno accanto all’altro, con l’accredito per compiti assistenziali per la futura rendita.",
+      text: "Gli importi dei passi 2 e 4 spettano a persone diverse. Qui figurano uno accanto all’altro, con l’accredito per compiti assistenziali per la futura rendita.",
       monat: "mese",
       jahr: "anno",
       anDich: { sie: "Per Lei: salario per l’assistenza", du: "Per te: salario per l’assistenza" },
@@ -424,7 +424,7 @@ export default {
         keine_he: "Senza diritto a un assegno per grandi invalidi non c’è accredito per compiti assistenziali (art. 29septies cpv. 1 LAVS).",
         zu_weit: "La persona assistita deve essere facilmente raggiungibile: al massimo 30 km o entro un’ora (art. 52g OAVS).",
         zu_wenig: "L’assistenza deve essere prestata in misura preponderante durante almeno 180 giorni per anno civile (CAAS N. 3015).",
-        erziehung_vorrang: "Per il proprio figlio: finché esiste un diritto all’accredito per compiti educativi, non c’è accredito per compiti assistenziali (art. 29septies cpv. 2 LAVS). Quale si applica lo dice la cassa di compensazione.",
+        erziehung_vorrang: "Per l’assistenza al proprio figlio: finché esiste un diritto all’accredito per compiti educativi, non c’è accredito per compiti assistenziali (art. 29septies cpv. 2 LAVS). Quale si applica lo dice la cassa di compensazione.",
         fragen_offen: "Possibile se alle domande sopra si risponde sì. Non viene versato, ma iscritto nel conto AVS.",
         he_offen: "Possibile appena esiste un diritto a un assegno per grandi invalidi; basta qualsiasi grado, la riscossione effettiva non è necessaria (CAAS N. 1001.1).",
       },
@@ -433,7 +433,7 @@ export default {
       frage180: { sie: "Presta assistenza in misura preponderante durante almeno 180 giorni all’anno?", du: "Presti assistenza in misura preponderante durante almeno 180 giorni all’anno?" },
       frageVerheiratet: { sie: "È sposato/a?", du: "Sei sposato/a?" },
       frageAnzahl: "Quante persone si dividono l’assistenza?",
-      keinTotal: "Volutamente senza totale: salario, assegno per grandi invalidi e accredito vanno a destinatari diversi e sono tipi di denaro diversi.",
+      keinTotal: "Volutamente senza totale: salario, assegno per grandi invalidi e accredito vanno a destinatari diversi e sono prestazioni diverse.",
       lohnUndGutschrift: "Né la legge né le direttive regolano espressamente se un salario per la stessa assistenza influisce sull’accredito. Da chiarire con la cassa di compensazione.",
       eoHinweis: "Per un figlio gravemente malato o infortunato può aggiungersi l’indennità di assistenza IPG (passo 3, art. 16n LIPG).",
       stand: "Importi stato {jahr}. Stima non vincolante; decidono la cassa di compensazione e l’ufficio AI.",

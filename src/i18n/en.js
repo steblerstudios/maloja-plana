@@ -407,7 +407,7 @@ export default {
     // «Was zusammenkommt» (19.11.2026) — Logik und Quellen: data/pflegeUebersicht.js
     uebersicht: {
       title: "5 · What it adds up to",
-      text: "The amounts above go to different people. Here they are side by side, together with the caregiving credit for the later pension.",
+      text: "The amounts from steps 2 and 4 go to different people. Here they are side by side, together with the caregiving credit for the later pension.",
       monat: "month",
       jahr: "year",
       anDich: "For you: pay for the care",
@@ -424,7 +424,7 @@ export default {
         keine_he: "Without an entitlement to a helplessness allowance there is no caregiving credit (AHVG Art. 29septies para. 1).",
         zu_weit: "The person cared for must be easy to reach: no more than 30 km away or within one hour (AHVV Art. 52g).",
         zu_wenig: "Care must take up most of the time on at least 180 days in the calendar year (KSBGS margin no. 3015).",
-        erziehung_vorrang: "For your own child: as long as there is an entitlement to a childcare credit, there is no caregiving credit (AHVG Art. 29septies para. 2). The compensation office says which one applies.",
+        erziehung_vorrang: "When caring for your own child: as long as there is an entitlement to a childcare credit, there is no caregiving credit (AHVG Art. 29septies para. 2). The compensation office says which one applies.",
         fragen_offen: "Possible if the questions above are answered yes. Not paid out, but recorded on the AHV account.",
         he_offen: "Possible once there is an entitlement to a helplessness allowance; any degree is enough, actually receiving it is not required (KSBGS margin no. 1001.1).",
       },
@@ -433,8 +433,8 @@ export default {
       frage180: "Do you provide care for most of the time on at least 180 days a year?",
       frageVerheiratet: "Are you married?",
       frageAnzahl: "How many people share the care?",
-      keinTotal: "Deliberately without a total: pay, helplessness allowance and credit go to different places and are different kinds of money.",
-      lohnUndGutschrift: "Neither the law nor the FSIO circulars say explicitly whether pay for the same care affects the caregiving credit. Please check with the compensation office.",
+      keinTotal: "Deliberately without a total: pay, helplessness allowance and credit go to different places and are different benefits.",
+      lohnUndGutschrift: "Neither the law nor the official federal guidance says explicitly whether pay for the same care affects the caregiving credit. Please check with the compensation office.",
       eoHinweis: "For a seriously ill or injured child, the EO caregiver allowance may come on top (step 3, EOG Art. 16n).",
       stand: "Amounts as of {jahr}. Non-binding estimate; the compensation office and the IV office decide.",
       linkVorsorge: "What the credit means for the pension: in the pension calculator",
@@ -7398,7 +7398,7 @@ export default {
     fehltEine: '{satz}. One more entry needed.',
     fehltMehrere: '{satz}. {n} more entries needed.',
     fehltNamen: "{satz}. Still needed: {liste}.",
-    angabe: { erreichbar: "distance", mind180Tage: "days of care", bruttolohn: "gross salary", beitragsmonate: "contribution months", geburtsdatum: "age", einkommen: "income", einkommensart: "gross or net", wochenstunden: "hours per week", miete: "rent", kvgPraemie: "health insurance premium", erwerbseinkommen: "earned income", vermoegen: "assets", kanton: "canton", stundenlohn: "hourly wage", ferienform: "holiday arrangement", erwerbsunkosten: "work-related expenses", grad: "degree of helplessness", status: "residence status", scope: "type of education" },
+    angabe: { erreichbar: "distance or travel time", mind180Tage: "days of care", bruttolohn: "gross salary", beitragsmonate: "contribution months", geburtsdatum: "age", einkommen: "income", einkommensart: "gross or net", wochenstunden: "hours per week", miete: "rent", kvgPraemie: "health insurance premium", erwerbseinkommen: "earned income", vermoegen: "assets", kanton: "canton", stundenlohn: "hourly wage", ferienform: "holiday arrangement", erwerbsunkosten: "work-related expenses", grad: "degree of helplessness", status: "residence status", scope: "type of education" },
   },
   // Calculator form X (F7-A2, 27.10.2026): parts of the one shell components/RechnerForm.jsx.
   rechnerForm: {

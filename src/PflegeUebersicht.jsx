@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { betrag, betragSpanne } from './utils/geld.js';
@@ -17,6 +17,7 @@ export const PflegeUebersicht = ({ palette, t, lohn, he }) => {
   const [mind180Tage, setMind180Tage] = useState(null);
   const [verheiratet, setVerheiratet] = useState(false);
   const [anzahl, setAnzahl] = useState(1);
+  const idBasis = useId();
 
   const r = berechnePflegeUebersicht({ lohn, he, erreichbar, mind180Tage, anzahlBetreuende: anzahl, verheiratet });
   const g = r.gutschrift;
@@ -25,7 +26,7 @@ export const PflegeUebersicht = ({ palette, t, lohn, he }) => {
     wrap: { marginTop: space.sm + 'px' },
     frage: { fontSize: text.sm, color: palette.text, fontWeight: weight.medium, margin: space.sm + 'px 0 ' + space.xs + 'px' },
     row: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px' },
-    toggle: (active) => ({ ...auswahlStil(palette, active), padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, minHeight: '44px' }),
+    toggle: (active) => ({ ...auswahlStil(palette, active), padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, minHeight: '44px', minWidth: '44px' }),
     result: { marginTop: space.md + 'px', padding: space.md + 'px', background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.lg + 'px' },
     zeile: { padding: space.xs + 'px 0' },
     trenner: { borderTop: '1px solid ' + palette.sage, margin: space.xs + 'px 0' },
@@ -35,9 +36,10 @@ export const PflegeUebersicht = ({ palette, t, lohn, he }) => {
     note: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, marginTop: space.sm + 'px' },
   };
 
-  const auswahl = (frage, optionen, wert, setzen) =>
-    React.createElement('div', { role: 'group', 'aria-label': frage },
-      React.createElement('div', { style: s.frage }, frage),
+  // Die sichtbare Frage benennt die Gruppe (aria-labelledby) — so wird sie nur einmal vorgelesen.
+  const auswahl = (name, frage, optionen, wert, setzen) =>
+    React.createElement('div', { role: 'group', 'aria-labelledby': idBasis + name },
+      React.createElement('div', { id: idBasis + name, style: s.frage }, frage),
       React.createElement('div', { style: s.row },
         optionen.map((o) => React.createElement('button', {
           key: String(o.v), type: 'button', 'aria-pressed': wert === o.v,
@@ -78,11 +80,11 @@ export const PflegeUebersicht = ({ palette, t, lohn, he }) => {
   const zeileRente = zeile('rente', t('pflege.uebersicht.rente'), gWert, gSub);
 
   return React.createElement('div', { style: s.wrap },
-    auswahl(t('pflege.uebersicht.frageErreichbar'), jaNein, erreichbar, setErreichbar),
-    auswahl(t('pflege.uebersicht.frage180'), jaNein, mind180Tage, setMind180Tage),
-    auswahl(t('pflege.uebersicht.frageVerheiratet'), jaNein, verheiratet, setVerheiratet),
-    auswahl(t('pflege.uebersicht.frageAnzahl'), [1, 2, 3, 4].map((n) => ({ v: n, l: String(n) })), anzahl, setAnzahl),
-    React.createElement('div', { style: s.result, 'aria-live': 'polite' },
+    auswahl('erreichbar', t('pflege.uebersicht.frageErreichbar'), jaNein, erreichbar, setErreichbar),
+    auswahl('tage', t('pflege.uebersicht.frage180'), jaNein, mind180Tage, setMind180Tage),
+    auswahl('ehe', t('pflege.uebersicht.frageVerheiratet'), jaNein, verheiratet, setVerheiratet),
+    auswahl('anzahl', t('pflege.uebersicht.frageAnzahl'), [1, 2, 3, 4].map((n) => ({ v: n, l: String(n) })), anzahl, setAnzahl),
+    React.createElement('div', { style: s.result, 'aria-live': 'polite', 'aria-atomic': 'true' },
       zeileDich,
       React.createElement('div', { style: s.trenner }),
       zeileGepflegt,

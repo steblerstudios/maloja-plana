@@ -560,9 +560,10 @@ export default {
     step3Title: '4 · Indemnisaziun d’impotenza da la persuna tgirada',
     step3Text: 'Sche la persuna tgirada dovra regularmain agid en il mintgadi, po ella avair dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ella gida a finanziar la tgira necessaria.',
     // «Was zusammenkommt» (19.11.2026) — Logik und Quellen: data/pflegeUebersicht.js
+    // TODO(rm): Gegenlese durch Fachperson — Titel («Was zusammenkommt»), bunificaziun/bonificaziun angleichen.
     uebersicht: {
       title: "5 · Tge che sa suonda",
-      text: "Ils imports survart appartegnan a persunas differentas. Qua stattan els in sper l’auter, ensemen cun la bunificaziun per incumbensas d’assistenza per la renta pli tard.",
+      text: "Ils imports dals pass 2 e 4 appartegnan a persunas differentas. Qua stattan els in sper l’auter, ensemen cun la bunificaziun per incumbensas d’assistenza per la renta pli tard.",
       monat: "mais",
       jahr: "onn",
       anDich: { sie: "Per Vus: salari per la tgira", du: "Per tai: salari per la tgira" },
@@ -579,7 +580,7 @@ export default {
         keine_he: "Senza dretg ad ina indemnisaziun d’impotenza na datti nagina bunificaziun per incumbensas d’assistenza (art. 29septies al. 1 LAVS).",
         zu_weit: "La persuna tgirada sto esser facilmain cuntanschibla: maximalmain 30 km davent u entaifer in’ura (art. 52g OAVS).",
         zu_wenig: "L’assistenza sto vegnir prestada en ina dimensiun predominanta durant almain 180 dis per onn chalender (KSBGS cifra 3015).",
-        erziehung_vorrang: "Per l’agen uffant: uschè ditg ch’i exista in dretg ad ina bunificaziun per incumbensas d’educaziun, na datti nagina bunificaziun per incumbensas d’assistenza (art. 29septies al. 2 LAVS). Tge che vala di la cassa da cumpensaziun.",
+        erziehung_vorrang: "Per l’assistenza da l’agen uffant: uschè ditg ch’i exista in dretg ad ina bunificaziun per incumbensas d’educaziun, na datti nagina bunificaziun per incumbensas d’assistenza (art. 29septies al. 2 LAVS). Tge che vala di la cassa da cumpensaziun.",
         fragen_offen: "Pussaivel, sche las dumondas survart vegnan respundidas cun gea. Na vegn betg pajada ora, mabain messa a quint sin il conto AVS.",
         he_offen: "Pussaivel uschespert ch’i exista in dretg ad ina indemnisaziun d’impotenza; mintga grad basta, ina retratga effectiva n’è betg necessaria (KSBGS cifra 1001.1).",
       },
@@ -588,9 +589,9 @@ export default {
       frage180: { sie: "Assistais Vus en ina dimensiun predominanta durant almain 180 dis per onn?", du: "Assistas ti en ina dimensiun predominanta durant almain 180 dis per onn?" },
       frageVerheiratet: { sie: "Essas Vus maridà·da?", du: "Es ti maridà·da?" },
       frageAnzahl: "Quantas persunas partan l’assistenza?",
-      keinTotal: "Intenziunadamain senza summa totala: salari, indemnisaziun d’impotenza e bunificaziun van a differents posts e èn differentas sorts da daners.",
+      keinTotal: "Intenziunadamain senza summa totala: salari, indemnisaziun d’impotenza e bunificaziun van a differents posts e èn differentas prestaziuns.",
       lohnUndGutschrift: "Ni la lescha ni las directivas na reglan expressivamain, sch’in salari per la medema tgira influenzescha la bunificaziun. Per plaschair sclerir cun la cassa da cumpensaziun.",
-      eoHinweis: "Per in uffant grevamain malsaun u accidentà po vegnir vitiers l’indemnisaziun d’assistenza da la UCG (pass 3, art. 16n LUCG).",
+      eoHinweis: "Per in uffant grevamain malsaun u accidentà po vegnir vitiers l’indemnisaziun d’assistenza (IPG) (pass 3, art. 16n LIPG).",
       stand: "Imports stadi {jahr}. Stimaziun betg liianta; decider fan la cassa da cumpensaziun e l’uffizi AI.",
       linkVorsorge: "Tge che la bunificaziun munta per la renta: en il quintader da prevenziun",
     },

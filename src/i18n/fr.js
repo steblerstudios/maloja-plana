@@ -407,7 +407,7 @@ export default {
     // «Was zusammenkommt» (19.11.2026) — Logik und Quellen: data/pflegeUebersicht.js
     uebersicht: {
       title: "5 · Ce qui s’additionne",
-      text: "Les montants ci-dessus reviennent à des personnes différentes. Ils figurent ici côte à côte, avec la bonification pour tâches d’assistance pour la future rente.",
+      text: "Les montants des étapes 2 et 4 reviennent à des personnes différentes. Ils figurent ici côte à côte, avec la bonification pour tâches d’assistance pour la future rente.",
       monat: "mois",
       jahr: "an",
       anDich: { sie: "Pour vous : salaire pour les soins", du: "Pour toi : salaire pour les soins" },
@@ -424,7 +424,7 @@ export default {
         keine_he: "Sans droit à une allocation pour impotent, pas de bonification pour tâches d’assistance (art. 29septies, al. 1, LAVS).",
         zu_weit: "La personne aidée doit être facilement accessible : 30 km au plus ou en une heure au plus (art. 52g RAVS).",
         zu_wenig: "L’assistance doit être fournie de manière prépondérante pendant au moins 180 jours par année civile (CIBTA ch. 3015).",
-        erziehung_vorrang: "Pour son propre enfant : tant qu’un droit à une bonification pour tâches éducatives existe, il n’y a pas de bonification pour tâches d’assistance (art. 29septies, al. 2, LAVS). La caisse de compensation indique laquelle s’applique.",
+        erziehung_vorrang: "Pour la prise en charge de son propre enfant : tant qu’un droit à une bonification pour tâches éducatives existe, il n’y a pas de bonification pour tâches d’assistance (art. 29septies, al. 2, LAVS). La caisse de compensation indique laquelle s’applique.",
         fragen_offen: "Possible si les questions ci-dessus reçoivent un oui. Pas versée, mais inscrite au compte AVS.",
         he_offen: "Possible dès qu’un droit à une allocation pour impotent existe ; tout degré suffit, la perception effective n’est pas nécessaire (CIBTA ch. 1001.1).",
       },
@@ -433,7 +433,7 @@ export default {
       frage180: { sie: "Assistez-vous la personne de manière prépondérante pendant au moins 180 jours par an ?", du: "Assistes-tu la personne de manière prépondérante pendant au moins 180 jours par an ?" },
       frageVerheiratet: { sie: "Êtes-vous marié·e ?", du: "Es-tu marié·e ?" },
       frageAnzahl: "Combien de personnes se partagent l’assistance ?",
-      keinTotal: "Volontairement sans total : salaire, allocation pour impotent et bonification vont à des endroits différents et sont des types d’argent différents.",
+      keinTotal: "Volontairement sans total : salaire, allocation pour impotent et bonification vont à des endroits différents et sont des prestations différentes.",
       lohnUndGutschrift: "Ni la loi ni les directives ne règlent expressément si un salaire pour les mêmes soins influence la bonification. À clarifier avec la caisse de compensation.",
       eoHinweis: "Pour un enfant gravement malade ou accidenté, l’allocation de prise en charge des APG peut s’y ajouter (étape 3, art. 16n LAPG).",
       stand: "Montants état {jahr}. Estimation sans engagement ; la décision appartient à la caisse de compensation et à l’office AI.",
