@@ -150,8 +150,13 @@ export const naechstesFaellig = (data, letzteBesuche = {}, heute = new Date()) =
 //   dT  Tabelle 1, Fussnote 13, und Kap. 1.4 / 1.5 a): «Dabei bestimmt das Alter bei Verabreichung einer
 //       Auffrischimpfung das Intervall zur nächsten Auffrischimpfung»: Dosis mit 16–24 Jahren → 10 Jahre,
 //       mit 25–64 → 20 Jahre, ab 65 → 10 Jahre. Bei Immundefizienz weiterhin 10 Jahre (weiss die App nicht:
-//       Hinweis im Fach). Unter 16 gilt das Kinder-Schema: keine Rechnung.
-//   FSME Kap. 3 a): «Eine Auffrischimpfung wird alle 10 Jahre empfohlen.»
+//       Hinweis im Fach, check.nichtDabei). Unter 16 gilt das Kinder-Schema: keine Rechnung.
+//       Dosis mit 16–24: spätestens zum 25. Geburtstag, denn «Mit 25 Jahren eine einmalige Impfdosis dTpa»
+//       (Impfplan, Tabelle 1, Fussnote 13; Referenzdokument KLV 12a, 4.1/4.2 «Alter 25 Jahre: Auffrischimpfung»).
+//   FSME Kap. 3 a): «Eine Auffrischimpfung wird alle 10 Jahre empfohlen.» Erst nach der Grundimmunisierung:
+//       Referenzdokument 4.11 «3 Dosen zur Grundimmunisierung … danach Auffrischimpfung alle 10 Jahre».
+//       (Fachprüfung 19.11.2026.) Mit weniger als 3 eingetragenen Dosen keine Frist, Impfcheck «1 von 3».
+export const FSME_GRUNDIMMUNISIERUNG = 3;
 export const IMPF_ARTEN = ['dt', 'fsme', 'mmr', 'varizellen', 'grippe', 'covid', 'hepb', 'hepa', 'hpv', 'pneumo', 'zoster', 'andere'];
 
 const datumVon = (wert) => {
@@ -180,17 +185,28 @@ export const impfAbstandJahre = (art, datumIso, geburtIso) => {
 export const impfungenListe = (data) => (Array.isArray(data?.notfall?.impfungen) ? data.notfall.impfungen : [])
   .filter((e) => e && IMPF_ARTEN.includes(e.art) && datumVon(e.datum));
 
-// Je Impfung mit Regel: die letzte Dosis + Abstand. { art: 'impfung', key, iso, abstand, letzte }.
+// Je Impfung mit Regel: die letzte Dosis + Abstand. { art: 'impfung', key, iso, abstand, letzte, mit25? }.
 export const naechsteImpfungen = (data) => {
   const geburt = data?.basis?.dateOfBirth;
-  const letzte = {};
-  impfungenListe(data).forEach((e) => { if (!letzte[e.art] || e.datum > letzte[e.art]) letzte[e.art] = e.datum; });
+  const letzte = {}, anzahl = {};
+  impfungenListe(data).forEach((e) => {
+    anzahl[e.art] = (anzahl[e.art] || 0) + 1;
+    if (!letzte[e.art] || e.datum > letzte[e.art]) letzte[e.art] = e.datum;
+  });
   return Object.entries(letzte).flatMap(([art, datum]) => {
+    if (art === 'fsme' && anzahl.fsme < FSME_GRUNDIMMUNISIERUNG) return [];
     const abstand = impfAbstandJahre(art, datum, geburt);
     if (!abstand) return [];
     const d = datumVon(datum);
     d.setFullYear(d.getFullYear() + abstand);
-    return [{ art: 'impfung', key: art, iso: iso(d), abstand, letzte: String(datum).slice(0, 10) }];
+    const eintrag = { art: 'impfung', key: art, iso: iso(d), abstand, letzte: String(datum).slice(0, 10) };
+    const alter = art === 'dt' ? alterAm(geburt, datum) : null;
+    if (alter != null && alter < 25) {
+      const g25 = datumVon(geburt);
+      g25.setFullYear(g25.getFullYear() + 25);
+      if (iso(g25) < eintrag.iso) return [{ ...eintrag, iso: iso(g25), mit25: true }];
+    }
+    return [eintrag];
   });
 };
 
@@ -238,8 +254,11 @@ export const impfcheck = (data, heute = new Date()) => {
     if (r.jaehrlich) return { ...basis, status: 'jaehrlich' };
     if (r.auffrischung) {
       const n = naechste.find((x) => x.key === r.key);
+      if (r.key === 'fsme' && eigene.length && eigene.length < FSME_GRUNDIMMUNISIERUNG) {
+        return { ...basis, noetig: FSME_GRUNDIMMUNISIERUNG, status: 'teilweise' };
+      }
       if (!n) return { ...basis, status: 'offen' }; // nichts eingetragen, oder nur Dosen vor 16 (Kinder-Schema)
-      return { ...basis, status: n.iso < datumHeute(heute) ? 'faellig' : 'ok', iso: n.iso, abstand: n.abstand };
+      return { ...basis, status: n.iso < datumHeute(heute) ? 'faellig' : 'ok', iso: n.iso, abstand: n.abstand, mit25: !!n.mit25 };
     }
     // HPV: 2 Dosen bei Impfbeginn 11–14, sonst 3 (Referenzdokument 4.13).
     const noetig = r.dosen === 'hpv' ? (eigene.length && alterAm(geburt, eigene[0].datum) < 15 ? 2 : 3) : r.dosen;
@@ -279,26 +298,38 @@ const rappen = (n) => Math.round(n * 20) / 20;
 const betragVon = (v) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? n : 0; };
 
 // Vorschlag, wer zahlt: Grundversicherung, wenn die Impfung zum Zeitpunkt für alle in diesem Alter empfohlen war;
-// sonst selbst. Nur ein Vorschlag im Formular — wer es besser weiss (Risikogruppe, Reise), wählt um.
+// sonst selbst. Kein Vorschlag (null, «bitte wählen») unter 16 (Kinder-Impfplan, meist leistungspflichtig), bei HPV
+// (nur im kantonalen Programm, Referenzdokument 4.13) und ohne Geburtsdatum (Fachprüfung 19.11.2026).
 export const impfZahlerVorschlag = (data, art, datumIso) => {
+  const geburt = data?.basis?.dateOfBirth;
+  const alter = alterAm(geburt, datumIso);
+  if (alter == null || alter < 16 || art === 'hpv') return null;
   const r = IMPFCHECK.find((x) => x.key === art);
-  const alter = alterAm(data?.basis?.dateOfBirth, datumIso);
-  if (!r || alter == null || alter < r.ab || (r.bis && alter > r.bis)) return 'selbst';
+  if (!r || alter < r.ab || (r.bis && alter > r.bis)) return 'selbst';
+  if (r.geborenNach && !(Number(String(geburt).slice(0, 4)) > r.geborenNach)) return 'selbst';
   return 'kasse';
 };
 
-// { gesamt, eigen, kasse } in Franken; eigen/kasse null, wenn es von der Police abhängt. Ohne Preis: null.
+// { gesamt, eigen, kasse, zahler, grund } in Franken. `eigen` ist bei der Grundversicherung ein Höchstwert: wer den
+// jährlichen Selbstbehalt (SELBSTBEHALT_MAX) schon erreicht hat, zahlt nichts mehr. eigen/kasse null, wenn keine Zahl
+// belegt ist; `grund` sagt warum: zusatz (Police) · offen (Zahler nicht gewählt) · vor2026 (damals mit Franchise) ·
+// hpv (nur im kantonalen Programm). Ohne Preis: null.
+export const FRANCHISE_FREI_AB = '2026-01-01';
 export const impfKosten = (e, satz = SELBSTBEHALT_RATE) => {
   const gesamt = betragVon(e?.preis) + betragVon(e?.gebuehr);
   if (!gesamt) return null;
-  const zahler = IMPF_ZAHLER.includes(e?.zahler) ? e.zahler : 'selbst';
-  if (zahler === 'zusatz') return { gesamt, eigen: null, kasse: null, zahler };
-  if (zahler === 'selbst') return { gesamt, eigen: gesamt, kasse: 0, zahler };
+  const zahler = IMPF_ZAHLER.includes(e?.zahler) ? e.zahler : null;
+  const ohneZahl = (grund) => ({ gesamt, eigen: null, kasse: null, zahler, grund });
+  if (!zahler) return ohneZahl('offen');
+  if (zahler === 'zusatz') return ohneZahl('zusatz');
+  if (zahler === 'selbst') return { gesamt, eigen: gesamt, kasse: 0, zahler, grund: null };
+  if (String(e.datum || '') < FRANCHISE_FREI_AB) return ohneZahl('vor2026');
+  if (e.art === 'hpv') return ohneZahl('hpv');
   const eigen = rappen(gesamt * satz);
-  return { gesamt, eigen, kasse: rappen(gesamt - eigen), zahler };
+  return { gesamt, eigen, kasse: rappen(gesamt - eigen), zahler, grund: null, hoechstens: true };
 };
 
-// Eigenanteil der eingetragenen Impfungen eines Jahres. `offen`: Anzahl mit Zusatzversicherung (Betrag je nach Police).
+// Selbst zu zahlen im Jahr (höchstens). `offen`: Anzahl Impfungen ohne belegte Zahl (Police, Zahler offen, HPV).
 export const impfKostenJahr = (data, jahr) => impfungenListe(data)
   .filter((e) => Number(String(e.datum).slice(0, 4)) === jahr)
   .reduce((s, e) => {

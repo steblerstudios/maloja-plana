@@ -8,6 +8,7 @@ import { RueckgaengigMeldung } from '../../components/RueckgaengigMeldung.jsx';
 import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from '../../hooks/useRueckgaengig.js';
 import { Icon } from '../../IconSystem.jsx';
 import { betrag } from '../../utils/geld.js';
+import { SELBSTBEHALT_MAX } from '../../data/kvgLeistungen.js';
 import { IMPF_ARTEN, IMPF_ZAHLER, IMPF_RICHTPREISE, impfungenListe, naechsteImpfung, impfungOhneAlter, impfcheck,
   impfKosten, impfKostenJahr, impfZahlerVorschlag } from './rechnung.js';
 import { monatJahr } from './zuhause.jsx';
@@ -47,13 +48,13 @@ export const Impfausweis = ({ palette, t, data, onUpdateData, heute = new Date()
   const titel = (e) => (e.art === 'andere' && e.name ? e.name : t('impfausweis.arten.' + e.art));
   const datumOk = /^\d{4}-\d{2}-\d{2}$/.test(datum);
   const bereit = !!onUpdateData && datumOk && (art !== 'andere' || name.trim());
-  const vorschlag = datumOk ? impfZahlerVorschlag(data, art, datum) : 'kasse';
-  const zahlerWahl = zahler || vorschlag;
+  const vorschlag = datumOk ? impfZahlerVorschlag(data, art, datum) : null;
+  const zahlerWahl = zahler || vorschlag || '';
   const schreibe = (k, v) => onUpdateData && onUpdateData('notfall', k, v);
 
   const eintragen = () => {
     if (!bereit) return;
-    const kosten = kostenZeigen ? { zahler: zahlerWahl, ...(franken(preis) ? { preis: franken(preis) } : {}), ...(franken(gebuehr) ? { gebuehr: franken(gebuehr) } : {}) } : {};
+    const kosten = kostenZeigen ? { ...(zahlerWahl ? { zahler: zahlerWahl } : {}), ...(franken(preis) ? { preis: franken(preis) } : {}), ...(franken(gebuehr) ? { gebuehr: franken(gebuehr) } : {}) } : {};
     schreibe('impfungen', [...roh, { id: neueId(), art, datum, ...(art === 'andere' ? { name: name.trim() } : {}), ...kosten }]);
     setDatum(''); setName(''); setPreis(''); setGebuehr(''); setZahler('');
   };
@@ -87,7 +88,7 @@ export const Impfausweis = ({ palette, t, data, onUpdateData, heute = new Date()
       faellig
         ? h(React.Fragment, null,
             hauptzahl('impfung', monatJahr(faellig.iso, lokal)),
-            satz(t('impfausweis.arten.' + faellig.key) + ' · ' + t('impfausweis.faelligSatz', { jahre: faellig.abstand }), 'impf-satz'),
+            satz(t('impfausweis.arten.' + faellig.key) + ' · ' + (faellig.mit25 ? t('impfausweis.faelligSatz25') : t('impfausweis.faelligSatz', { jahre: faellig.abstand })), 'impf-satz'),
             faellig.vorbei && satz(t('impfausweis.vorbei'), 'impf-vorbei'))
         : satz(t(liste.length ? 'impfausweis.keineRegel' : 'impfausweis.leer'), 'impf-leer'),
       impfungOhneAlter(data) && satz(t('impfausweis.ohneGeburtsdatum'), 'impf-ohne-alter')));
@@ -132,7 +133,7 @@ export const Impfausweis = ({ palette, t, data, onUpdateData, heute = new Date()
             satz(t('impfausweis.check.satz', { alter: check.alter }), 'check-satz'),
             h('ul', { style: { listStyle: 'none', margin: space.sm + 'px 0 0', padding: 0 } }, aktiv.map(zeile), ruhig.map(zeile)),
             check.tessin && leise(t('impfausweis.check.tessin'), 'check-tessin')),
-    leise(t('impfausweis.check.nichtDabei'), 'check-nicht-dabei'));
+    leise(t('impfausweis.check.nichtDabei') + ' ' + t('impfausweis.check.hinweis'), 'check-nicht-dabei'));
 
   // ── 3 · Was kosten mich die Impfungen? ──
   const frage3 = kostenZeigen
@@ -143,7 +144,7 @@ export const Impfausweis = ({ palette, t, data, onUpdateData, heute = new Date()
               hauptzahl('impfkosten', chf(kostenJahr.eigen)),
               satz(t('impfausweis.kosten.satz', { gesamt: chf(kostenJahr.gesamt) }) + (kostenJahr.offen ? ' ' + t('impfausweis.kosten.zusatzOffen') : ''), 'kosten-satz'))
           : satz(t('impfausweis.kosten.leer'), 'kosten-leer'),
-        leise(t('impfausweis.kosten.wer'), 'kosten-wer'),
+        leise(t('impfausweis.kosten.wer') + ' ' + t('impfausweis.kosten.max', { max: chf(SELBSTBEHALT_MAX) }) + ' ' + t('impfausweis.kosten.schaetzung'), 'kosten-wer'),
         h('div', { style: { display: 'flex', justifyContent: 'flex-end' } }, kleinKnopf(t('impfausweis.kosten.ausblenden'), () => schreibe('impfKostenAus', true))))
     : h('div', { 'data-teil': 'impf-kosten-aus', style: { margin: '0 0 ' + space.md + 'px' } }, kleinKnopf(t('impfausweis.kosten.zeigen'), () => schreibe('impfKostenAus', false)));
 
@@ -154,8 +155,11 @@ export const Impfausweis = ({ palette, t, data, onUpdateData, heute = new Date()
   const kostenText = (e) => {
     const k = impfKosten(e);
     if (!k) return null;
-    const wer = t('impfausweis.zahler.' + k.zahler);
-    return k.eigen == null ? wer + ' · ' + chf(k.gesamt) : wer + ' · ' + t('impfausweis.kosten.eigen', { betrag: chf(k.eigen) });
+    const wer = k.zahler ? t('impfausweis.zahler.' + k.zahler) : t('impfausweis.kosten.offenZahler');
+    if (k.grund === 'vor2026') return wer + ' · ' + t('impfausweis.kosten.vor2026', { betrag: chf(k.gesamt) });
+    if (k.grund === 'hpv') return wer + ' · ' + t('impfausweis.kosten.hpv');
+    if (k.eigen == null) return wer + ' · ' + chf(k.gesamt);
+    return wer + ' · ' + t(k.hoechstens ? 'impfausweis.kosten.eigen' : 'impfausweis.kosten.selbstGanz', { betrag: chf(k.eigen) });
   };
   const eintraege = h('section', { 'data-teil': 'impf-liste', 'aria-labelledby': 'mp-impf-liste', style: karte },
     h('h3', { id: 'mp-impf-liste', style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('impfausweis.eingetragen')),
@@ -190,6 +194,7 @@ export const Impfausweis = ({ palette, t, data, onUpdateData, heute = new Date()
     kostenZeigen && h(React.Fragment, null,
       beschriftung('mp-impf-zahler', 'impfausweis.kosten.werZahlt'),
       h('select', { id: 'mp-impf-zahler', value: zahlerWahl, onChange: (e) => setZahler(e.target.value), style: feld },
+        !zahlerWahl && h('option', { value: '' }, t('impfausweis.zahler.waehlen')),
         IMPF_ZAHLER.map((z) => h('option', { key: z, value: z }, t('impfausweis.zahler.' + z)))),
       betragFeld('mp-impf-preis', 'impfausweis.kosten.impfstoff', preis, setPreis,
         richtpreis ? t('impfausweis.kosten.richtpreis', { betrag: chf(richtpreis.chf), praeparat: richtpreis.praeparat }) : t('impfausweis.kosten.richtpreisFehlt')),

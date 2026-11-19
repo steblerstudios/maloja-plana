@@ -182,7 +182,7 @@ describe('Fach Impfausweis · Welche Impfung ist fällig?', () => {
   it('es zählt die letzte Dosis je Impfung; die früheste Auffrischung gewinnt', () => {
     const d = mitImpfungen([
       { id: 'a', art: 'dt', datum: '2001-03-14' }, { id: 'b', art: 'dt', datum: '2011-03-14' },
-      { id: 'c', art: 'fsme', datum: '2017-05-02' }, { id: 'd', art: 'grippe', datum: '2026-10-01' },
+      { id: 'f1', art: 'fsme', datum: '2016-03-01' }, { id: 'f2', art: 'fsme', datum: '2016-04-01' }, { id: 'f3', art: 'fsme', datum: '2017-05-02' }, { id: 'd', art: 'grippe', datum: '2026-10-01' },
     ]);
     expect(naechsteImpfung(d, HEUTE)).toMatchObject({ art: 'impfung', key: 'fsme', iso: '2027-05-02', abstand: 10, vorbei: false });
     const ohneFsme = mitImpfungen([{ id: 'a', art: 'dt', datum: '2001-03-14' }, { id: 'b', art: 'dt', datum: '2011-03-14' }]);
@@ -190,7 +190,7 @@ describe('Fach Impfausweis · Welche Impfung ist fällig?', () => {
     expect(naechsteImpfung(mitImpfungen([{ id: 'd', art: 'grippe', datum: '2026-10-01' }]), HEUTE)).toBeNull();
   });
   it('«Als Nächstes fällig» zählt die Impfung mit, und der Weg führt ins Fach', () => {
-    const d = mitImpfungen([{ id: 'c', art: 'fsme', datum: '2016-11-01' }]); // fällig 01.11.2026, vor dem Beleg 15.12.
+    const d = mitImpfungen([{ id: 'f1', art: 'fsme', datum: '2015-09-01' }, { id: 'f2', art: 'fsme', datum: '2015-10-01' }, { id: 'f3', art: 'fsme', datum: '2016-11-01' }]); // fällig 01.11.2026, vor dem Beleg 15.12.
     expect(naechstesFaellig(d, {}, HEUTE)).toMatchObject({ art: 'impfung', key: 'fsme', iso: '2026-11-01', vorbei: true });
     const html = renderToStaticMarkup(React.createElement(GesundheitZuhause, { palette: LIGHT_PALETTE, t, data: d, onNavigate: () => {}, letzteBesuche: {}, heute: HEUTE }));
     expect(html).toContain('FSME (Zecken) · nächste empfohlene Auffrischimpfung');
@@ -198,7 +198,7 @@ describe('Fach Impfausweis · Welche Impfung ist fällig?', () => {
     expect(zaehle(html, /data-teil="kalenderblatt"/g)).toBe(1);
   });
   it('Fachseite: ein Kalenderblatt, die Zahl darunter, Liste neueste zuerst, Quelle verlinkt', () => {
-    const html = fach(mitImpfungen([{ id: 'a', art: 'dt', datum: '2011-03-14' }, { id: 'c', art: 'fsme', datum: '2022-05-02' }]));
+    const html = fach(mitImpfungen([{ id: 'a', art: 'dt', datum: '2011-03-14' }, { id: 'f1', art: 'fsme', datum: '2021-03-01' }, { id: 'f2', art: 'fsme', datum: '2021-04-01' }, { id: 'f3', art: 'fsme', datum: '2022-05-02' }]));
     expect(zaehle(html, /data-teil="kalenderblatt"/g)).toBe(1);
     expect(zaehle(html, /data-instrument-zahl="impfung"/g)).toBe(1);
     expect(html.indexOf('data-instrument-zahl="impfung"')).toBeGreaterThan(html.indexOf('data-teil="kalenderblatt"'));
@@ -257,10 +257,14 @@ describe('Impfausweis · Impfcheck nach Alter und Kosten', () => {
     expect(impfcheck(mit([], '2015-01-01'), HEUTE)).toMatchObject({ kind: true, zeilen: [] });
   });
   it('Kosten: Grundversicherung ohne Franchise, 10 % Selbstbehalt; selbst = alles; Zusatz = je nach Police', () => {
-    expect(impfKosten({ zahler: 'kasse', preis: 62, gebuehr: 15 })).toEqual({ gesamt: 77, eigen: 7.7, kasse: 69.3, zahler: 'kasse' });
-    expect(impfKosten({ zahler: 'selbst', preis: 100 })).toMatchObject({ eigen: 100, kasse: 0 });
-    expect(impfKosten({ zahler: 'zusatz', preis: 100 })).toMatchObject({ eigen: null, kasse: null });
-    expect(impfKosten({ zahler: 'kasse' })).toBeNull();
+    expect(impfKosten({ art: 'fsme', datum: '2026-05-02', zahler: 'kasse', preis: 62, gebuehr: 15 })).toMatchObject({ gesamt: 77, eigen: 7.7, kasse: 69.3, hoechstens: true });
+    expect(impfKosten({ datum: '2026-05-02', zahler: 'selbst', preis: 100 })).toMatchObject({ eigen: 100, kasse: 0 });
+    expect(impfKosten({ datum: '2026-05-02', zahler: 'zusatz', preis: 100 })).toMatchObject({ eigen: null, grund: 'zusatz' });
+    expect(impfKosten({ datum: '2026-05-02', zahler: 'kasse' })).toBeNull();
+    // Fachprüfung 19.11.2026: vor 2026 galt die Franchise; HPV nur im kantonalen Programm; ohne Zahler keine Zahl.
+    expect(impfKosten({ art: 'fsme', datum: '2025-12-31', zahler: 'kasse', preis: 62 })).toMatchObject({ eigen: null, grund: 'vor2026' });
+    expect(impfKosten({ art: 'hpv', datum: '2026-05-02', zahler: 'kasse', preis: 180 })).toMatchObject({ eigen: null, grund: 'hpv' });
+    expect(impfKosten({ art: 'fsme', datum: '2026-05-02', preis: 62 })).toMatchObject({ eigen: null, grund: 'offen' });
     const d = mit([{ id: 'a', art: 'fsme', datum: '2026-05-02', zahler: 'kasse', preis: 62, gebuehr: 15 },
       { id: 'b', art: 'hepa', datum: '2026-06-01', zahler: 'zusatz', preis: 90 }, { id: 'c', art: 'dt', datum: '2025-01-01', zahler: 'selbst', preis: 40 }], '1979-06-15');
     expect(impfKostenJahr(d, 2026)).toEqual({ gesamt: 167, eigen: 7.7, offen: 1, mitPreis: 2 });
@@ -270,9 +274,12 @@ describe('Impfausweis · Impfcheck nach Alter und Kosten', () => {
     expect(impfZahlerVorschlag(d, 'fsme', '2026-05-02')).toBe('kasse');
     expect(impfZahlerVorschlag(d, 'grippe', '2026-10-01')).toBe('selbst'); // 47-jährig, nicht für alle empfohlen
     expect(impfZahlerVorschlag(d, 'hepa', '2026-10-01')).toBe('selbst');
+    expect(impfZahlerVorschlag(d, 'dt', '1990-01-01')).toBeNull(); // mit 10: Kinder-Impfplan, kein Vorschlag
+    expect(impfZahlerVorschlag(mit([], '2003-01-01'), 'hpv', '2026-01-01')).toBeNull(); // nur kantonales Programm
+    expect(impfZahlerVorschlag(mit([], '1960-01-01'), 'mmr', '2026-01-01')).toBe('selbst'); // vor 1964 geboren
   });
   it('Fachseite: drei Fragen, eine Hauptzahl je Frage, ein Kalenderblatt; Kosten lassen sich ausblenden', () => {
-    const d = mit([{ id: 'a', art: 'fsme', datum: '2026-05-02', zahler: 'kasse', preis: 62, gebuehr: 15 }], '1979-06-15');
+    const d = mit([{ id: 'a', art: 'fsme', datum: '2026-05-02', zahler: 'kasse', preis: 62, gebuehr: 15 }, { id: 'b', art: 'dt', datum: '2011-03-14' }], '1979-06-15');
     const html = renderToStaticMarkup(React.createElement(Impfausweis, { palette: LIGHT_PALETTE, t, data: d, onUpdateData: () => {}, heute: HEUTE }));
     for (const z of ['impfung', 'impfcheck', 'impfkosten']) expect(zaehle(html, new RegExp('data-instrument-zahl="' + z + '"', 'g'))).toBe(1);
     expect(zaehle(html, /data-teil="kalenderblatt"/g)).toBe(1);
@@ -290,6 +297,25 @@ describe('Impfausweis · Impfcheck nach Alter und Kosten', () => {
     expect(html).toContain('In der Apotheke zahlt sie das Impfen nicht');
     expect(IMPF_RICHTPREISE.hpv).toBeUndefined();
     expect(Object.values(IMPF_RICHTPREISE).every((r) => r.chf > 0 && r.praeparat)).toBe(true);
+  });
+  it('FSME: Auffrischung erst nach 3 Dosen Grundimmunisierung (Referenzdokument 4.11)', () => {
+    const zwei = mit([{ id: 'a', art: 'fsme', datum: '2026-03-01' }, { id: 'b', art: 'fsme', datum: '2026-04-01' }], '1979-06-15');
+    expect(naechsteImpfung(zwei, HEUTE)).toBeNull();
+    expect(impfcheck(zwei, HEUTE).zeilen.find((z) => z.key === 'fsme')).toMatchObject({ status: 'teilweise', anzahl: 2, noetig: 3 });
+  });
+  it('dT mit 16–24: spätestens zum 25. Geburtstag (dTpa mit 25)', () => {
+    const d = mit([{ id: 'a', art: 'dt', datum: '2001-01-01' }], '1984-06-15'); // mit 16 geimpft
+    expect(naechsteImpfung(d, HEUTE)).toMatchObject({ key: 'dt', iso: '2009-06-15', mit25: true });
+    const spaet = mit([{ id: 'a', art: 'dt', datum: '1999-06-01' }], '1975-06-15'); // mit 23: +10 = 2009, 25. Geburtstag 2000
+    expect(naechsteImpfung(spaet, HEUTE).iso).toBe('2000-06-15');
+  });
+  it('Fachseite nennt Immunsystem, «ersetzt keine Beratung», Höchstwert und Jahresmaximum', () => {
+    const html = renderToStaticMarkup(React.createElement(Impfausweis, { palette: LIGHT_PALETTE, t, heute: HEUTE, onUpdateData: () => {},
+      data: mit([{ id: 'a', art: 'fsme', datum: '2026-05-02', zahler: 'kasse', preis: 62 }], '1979-06-15') }));
+    expect(html).toContain('geschwächtes Immunsystem');
+    expect(html).toContain('Ob und wann impfen, klärt die Arztpraxis');
+    expect(html).toContain('selbst zu zahlen: höchstens');
+    expect(html).toContain('jährlichen Selbstbehalt von');
   });
   it('der Katalog sagt nicht mehr «Franchise» für empfohlene Impfungen', () => {
     expect(t('kvg.impfungenDetail3')).toMatch(/ohne Franchise/);
