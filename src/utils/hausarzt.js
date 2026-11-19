@@ -9,7 +9,7 @@
 // Die Ausgänge beschriften die Zeile mit «Hausarzt». Darum zählen nur Einträge mit Fachrichtung Hausarzt
 // (fehlende Fachrichtung = Hausarzt, wie im DoctorManager); eine Zahnärztin erscheint dort nicht als Hausarzt.
 
-const istHausarzt = (x) => x && typeof x.name === 'string' && x.name.trim() !== '' && String(x.specialty || 'hausarzt').toLowerCase() === 'hausarzt';
+export const istHausarzt = (x) => x && typeof x.name === 'string' && x.name.trim() !== '' && String(x.specialty || 'hausarzt').toLowerCase() === 'hausarzt';
 
 export const hausaerzteAusListe = (notfall) =>
   (Array.isArray(notfall?.doctorsList) ? notfall.doctorsList : []).filter(istHausarzt);
@@ -34,13 +34,5 @@ export const hausarztTelefon = (notfall) => {
   return text(notfall?.doctorPhone);
 };
 
-// Alle anderen Einträge der Liste (Zahnärztin, Psychiater, Gynäkologin …) — für die Zeile «weitere Ärzte»
-// in Notfall-Dossier und Notfall-QR (Entscheid Stebler Studios 26.10.2026). Nur mit Namen.
-// Seit dem Fach Karteikarten (19.11.2026) trägt die Liste auch Therapien und Kontakte (Physio, Apotheke, Spital …):
-// sie sind keine Ärzte und stehen darum nicht in dieser Zeile (SPECIALTY_GRUPPEN, DoctorManager.jsx; Wächter
-// bauplanNotfall.test.js hält die Liste gleich).
-export const KEINE_AERZTE = ['physio', 'psychotherapie', 'ergo', 'apotheke', 'spital', 'spitex'];
-export const weitereAerzteAusListe = (notfall) =>
-  (Array.isArray(notfall?.doctorsList) ? notfall.doctorsList : [])
-    .filter((x) => x && typeof x.name === 'string' && x.name.trim() !== '' && !istHausarzt(x)
-      && !KEINE_AERZTE.includes(String(x.specialty || '').toLowerCase()));
+// «Weitere Ärztinnen und Ärzte» (Dossier, Notfall-QR): utils/weitereAerzte.js — eigene Datei, damit die Zeile nicht
+// im Startbündel liegt (nur das Dossier braucht sie; 65-kB-Deckel, 19.11.2026).

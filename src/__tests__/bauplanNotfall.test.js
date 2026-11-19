@@ -13,7 +13,7 @@ import { DEMO_DATA } from '../config/demoData.js';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
 import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE, Karteikarten, karteikarten, diagnosenListe, KARTEI_GRUPPEN } from '../bereiche/notfall/notfall.js';
 import { SPECIALTY_GRUPPEN } from '../DoctorManager.jsx';
-import { weitereAerzteAusListe, KEINE_AERZTE } from '../utils/hausarzt.js';
+import { weitereAerzteAusListe, KEINE_AERZTE } from '../utils/weitereAerzte.js';
 
 const t = createT({ de }, 'de', 'sie');
 const SRC = path.resolve(__dirname, '..');
