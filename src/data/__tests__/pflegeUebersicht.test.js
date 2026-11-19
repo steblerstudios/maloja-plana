@@ -3,7 +3,7 @@ import { berechnePflegeUebersicht as uebersicht, GUTSCHRIFT_STATUS as S } from '
 import { berechneHilflosenentschaedigung } from '../hilflosenentschaedigung.js';
 
 const he = (p, person = p.traeger || 'iv') => ({ ...berechneHilflosenentschaedigung({ stichtag: 2026, ...p }), person });
-const alleJa = { erreichbar: true, mind180Tage: true, stichtag: 2026 };
+const alleJa = { erreichbar: true, mind180Tage: true, erziehung: false, referenzalter: false, stichtag: 2026 };
 
 describe('Pflege-Übersicht · Betreuungsgutschrift (AHVG 29septies)', () => {
   it('alle Bedingungen erfüllt → ja, 3× minimale jährliche Altersrente', () => {
@@ -15,7 +15,7 @@ describe('Pflege-Übersicht · Betreuungsgutschrift (AHVG 29septies)', () => {
     expect(uebersicht({ he: he({ traeger: 'ahv', grad: 'leicht' }), ...alleJa }).gutschrift.status).toBe(S.JA);
   });
   it('2027 aus der Jahrestabelle: 46 080', () => {
-    const r = uebersicht({ he: he({ traeger: 'iv', grad: 'schwer' }), erreichbar: true, mind180Tage: true, stichtag: 2027 });
+    const r = uebersicht({ he: he({ traeger: 'iv', grad: 'schwer' }), ...alleJa, stichtag: 2027 });
     expect(r.gutschrift.betragJahr).toBe(46080);
     expect(r.jahr).toBe(2027);
   });
@@ -34,16 +34,25 @@ describe('Pflege-Übersicht · Betreuungsgutschrift (AHVG 29septies)', () => {
     const r = uebersicht({ he: he({ traeger: 'iv', grad: 'schwer', wohnen: 'heim' }), ...alleJa });
     expect(r.gutschrift).toMatchObject({ status: S.NEIN, grund: 'heim', betragJahr: 0 });
   });
-  it('zu weit weg schliesst aus (AHVV 52g)', () => {
-    expect(uebersicht({ he: he({ traeger: 'iv', grad: 'mittel' }), erreichbar: false, mind180Tage: true }).gutschrift.grund).toBe('zu_weit');
+  it('weiter als 30 km / 1 h schliesst NICHT aus — Einzelfall (AHVV 52g «insbesondere»)', () => {
+    const r = uebersicht({ he: he({ traeger: 'iv', grad: 'mittel' }), ...alleJa, erreichbar: false });
+    expect(r.gutschrift).toMatchObject({ status: S.OFFEN, grund: 'zu_weit_einzelfall', betragJahr: 45360 });
+  });
+  it('eigene Erziehungsgutschrift schliesst aus, auch wenn ein Elternteil gepflegt wird (Abs. 2, RWL Rz 5261)', () => {
+    const r = uebersicht({ he: he({ traeger: 'ahv', grad: 'mittel' }), ...alleJa, erziehung: true });
+    expect(r.gutschrift).toMatchObject({ status: S.NEIN, grund: 'erziehung', betragJahr: 0 });
+  });
+  it('Referenzalter erreicht schliesst aus (KSBGS Rz 1003)', () => {
+    const r = uebersicht({ he: he({ traeger: 'ahv', grad: 'schwer' }), ...alleJa, referenzalter: true });
+    expect(r.gutschrift).toMatchObject({ status: S.NEIN, grund: 'referenzalter' });
   });
   it('weniger als 180 Tage schliesst aus (KSBGS Rz 3015)', () => {
-    expect(uebersicht({ he: he({ traeger: 'iv', grad: 'mittel' }), erreichbar: true, mind180Tage: false }).gutschrift.grund).toBe('zu_wenig');
+    expect(uebersicht({ he: he({ traeger: 'iv', grad: 'mittel' }), ...alleJa, mind180Tage: false }).gutschrift.grund).toBe('zu_wenig');
   });
   it('Fragen offen → offen, Betrag trotzdem sichtbar, fehlende Angaben genannt', () => {
     const r = uebersicht({ he: he({ traeger: 'iv', grad: 'mittel' }), stichtag: 2026 });
     expect(r.gutschrift).toMatchObject({ status: S.OFFEN, grund: 'fragen_offen', betragJahr: 45360 });
-    expect(r.ergebnis.fehlend).toEqual(['erreichbar', 'mind180Tage']);
+    expect(r.ergebnis.fehlend).toEqual(['erreichbar', 'mind180Tage', 'erziehung', 'referenzalter']);
   });
   it('Grad offen → Gutschrift offen (he_offen), HE als Spanne', () => {
     const r = uebersicht({ he: he({ traeger: 'iv', grad: null }), ...alleJa });
@@ -51,10 +60,13 @@ describe('Pflege-Übersicht · Betreuungsgutschrift (AHVG 29septies)', () => {
     expect(r.anGepflegte.spanne).toEqual({ min: 504, max: 2016 });
     expect(r.ergebnis.fehlend).toContain('grad');
   });
-  it('Kind → Hinweis auf Vorrang der Erziehungsgutschrift (Abs. 2) und EO', () => {
-    const r = uebersicht({ he: he({ traeger: 'iv', grad: 'mittel', minderjaehrig: true }, 'kind'), ...alleJa });
+  it('Kind, Frage nach Erziehungsgutschrift offen → Hinweis auf Abs. 2 und EO', () => {
+    const r = uebersicht({ he: he({ traeger: 'iv', grad: 'mittel', minderjaehrig: true }, 'kind'), ...alleJa, erziehung: null });
     expect(r.gutschrift.grund).toBe('erziehung_vorrang');
     expect(r.eoHinweis).toBe(true);
+  });
+  it('Kind über 16 ohne eigene Erziehungsgutschrift → ja', () => {
+    expect(uebersicht({ he: he({ traeger: 'iv', grad: 'mittel', minderjaehrig: true }, 'kind'), ...alleJa }).gutschrift.status).toBe(S.JA);
   });
 });
 

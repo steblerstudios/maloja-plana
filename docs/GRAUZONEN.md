@@ -371,6 +371,26 @@ Aussage «über die EO» für den Kurzurlaub ist damit nicht belegt. Die Vorauss
 > - **Lohn für dieselbe Betreuung:** keine geschriebene Regel in AHVG 29septies, AHVV 52g–52l, KSBGS,
 >   RWL 5.11 oder Merkblatt 1.03. **Nicht belegt**, weder als Ausschluss noch als Erlaubnis.
 > Verwendet in `docs/superpowers/plans/2026-11-19-pflege-uebersicht.md`.
+>
+> **Zweite Fachprüfung 19.11.2026** (am gebauten Stand, gleiche Quellen):
+> - **Abs. 2 gilt für die betreuende Person**, nicht nur beim eigenen Kind: wer selbst Anspruch auf
+>   Erziehungsgutschriften hat, erhält keine Betreuungsgutschrift (KSBGS Nachtrag 6 und Rz 3003; RWL Rz 5261:
+>   «stets nur die Erziehungsgutschrift»; Merkblatt 1.03 Ziff. 2). In der Regel bis zum 16. Altersjahr des
+>   Kindes; Grosseltern und andere Verwandte können sie vorher erhalten (KSBGS Rz 1002).
+> - **30 km / 1 h ist ein Beispiel, keine Grenze:** AHVV 52g «insbesondere», KSBGS Rz 3010 «etwa». Darüber
+>   entscheidet die Ausgleichskasse im Einzelfall. Die frühere Zusammenfassung oben («höchstens 30 km») ist
+>   damit zu eng; in `pflege.step1Text` jetzt «in der Regel».
+> - **Alter der betreuenden Person:** frühestens ab dem Jahr nach dem 17. Geburtstag, längstens bis 31.12.
+>   vor dem Referenzalter (KSBGS Rz 1003; Merkblatt 1.03).
+> - **Betrag:** dreifache Minimalrente «im Zeitpunkt der Entstehung des Rentenanspruchs» (Abs. 4); «Der genaue
+>   Betrag wird erst zum Zeitpunkt der Rentenberechnung festgesetzt» (Merkblatt 1.03 Ziff. 5).
+> - **Ganze Kalenderjahre;** das Jahr, in dem der Anspruch entsteht, zählt in der Regel nicht (KSBGS Rz 5001).
+>   Anmeldung jeweils für das Vorjahr (Rz 2003).
+> - **Teilung unter mehreren** nur unter Personen, die alle die Voraussetzungen erfüllen (KSBGS Rz 2002).
+>   Keine hälftige Teilung bei Verheirateten, wenn der andere Ehegatte nicht versichert ist, einer das
+>   Referenzalter erreicht hat, im Jahr der Heirat, Auflösung oder des Todes (KSBGS Rz 6003–6005).
+> - **Nicht belegt:** amtliche FR/IT-Abkürzung des Kreisschreibens 318.104.01 (nur die deutsche Fassung
+>   gelesen). In fr/it darum «circulaire OFAS / circolare UFAS 318.104.01» mit nackter Randziffer.
 
 ### 15 · Wenn jemand nicht mehr selbst entscheiden kann: wer darf was?
 

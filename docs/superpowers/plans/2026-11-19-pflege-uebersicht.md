@@ -91,6 +91,17 @@ nichts gespeichert, keine neue Ansicht und kein Eintrag in `werkzeugRegister.js`
 - **Kantonale Pflegebeiträge / Betreuungszulagen** (BE, BS, GR in `konkurrenzanalyse.md:78`): **nicht** Teil
   dieses Schritts. Eigene Recherche, erst mit belegten Quellen je Kanton.
 
+## Gebaut 19.11.2026 — Abweichungen vom Plan
+
+- **Kein Haushaltstotal** (auch nicht «Lohn + HE bei gemeinsamem Haushalt»): eine Frage weniger, und die
+  Zeilen bleiben ehrlich getrennt.
+- **Sechs Fragen statt zwei:** nach der zweiten Fachprüfung kamen dazu: eigene Erziehungsgutschrift
+  (Abs. 2 gilt für die betreuende Person), Referenzalter (Rz 1003), Ehe, Anzahl Berechtigte.
+- **30 km / 1 h** führt bei Nein zu «offen, Einzelfall», nicht zu «nein» (AHVV 52g «insbesondere»).
+- Befunde und Quellen: `docs/GRAUZONEN.md` Abschnitt 14, Nachträge 19.11.
+- **Offen:** Gegenlese rm (Titel, bunificaziun/bonificaziun), amtliche FR/IT-Abkürzung des KSBGS,
+  Kontrast der Ergebnisbox auf `up` im Dunkelmodus (gilt auch für den Hilflosen-Rechner, a11y-Prüfung).
+
 ## Nicht im Umfang
 
 - Renteneffekt der Gutschrift in Franken (braucht das ganze Einkommensprofil → bleibt im Vorsorge-Rechner).

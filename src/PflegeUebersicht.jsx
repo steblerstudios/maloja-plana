@@ -17,9 +17,11 @@ export const PflegeUebersicht = ({ palette, t, lohn, he }) => {
   const [mind180Tage, setMind180Tage] = useState(null);
   const [verheiratet, setVerheiratet] = useState(false);
   const [anzahl, setAnzahl] = useState(1);
+  const [erziehung, setErziehung] = useState(null);
+  const [referenzalter, setReferenzalter] = useState(null);
   const idBasis = useId();
 
-  const r = berechnePflegeUebersicht({ lohn, he, erreichbar, mind180Tage, anzahlBetreuende: anzahl, verheiratet });
+  const r = berechnePflegeUebersicht({ lohn, he, erreichbar, mind180Tage, erziehung, referenzalter, anzahlBetreuende: anzahl, verheiratet });
   const g = r.gutschrift;
 
   const s = {
@@ -71,8 +73,9 @@ export const PflegeUebersicht = ({ palette, t, lohn, he }) => {
   // Zeile 3 — später in der Rente (Betreuungsgutschrift)
   const gWert = g.status === GUTSCHRIFT_STATUS.NEIN
     ? t('pflege.uebersicht.gutschriftNein')
-    : betrag(g.betragJahr) + ' / ' + t('pflege.uebersicht.jahr');
+    : t('pflege.uebersicht.heute') + ' ' + betrag(g.betragJahr) + ' / ' + t('pflege.uebersicht.jahr');
   const gSub = [
+    g.status !== GUTSCHRIFT_STATUS.NEIN && t('pflege.uebersicht.betragHinweis'),
     t('pflege.uebersicht.grund.' + (g.grund || 'ja')),
     g.status !== GUTSCHRIFT_STATUS.NEIN && (g.geteilt || g.anzahl > 1)
       && t('pflege.uebersicht.geteiltSub', { voll: betrag(g.vollerBetragJahr) }),
@@ -82,6 +85,8 @@ export const PflegeUebersicht = ({ palette, t, lohn, he }) => {
   return React.createElement('div', { style: s.wrap },
     auswahl('erreichbar', t('pflege.uebersicht.frageErreichbar'), jaNein, erreichbar, setErreichbar),
     auswahl('tage', t('pflege.uebersicht.frage180'), jaNein, mind180Tage, setMind180Tage),
+    auswahl('erziehung', t('pflege.uebersicht.frageErziehung'), jaNein, erziehung, setErziehung),
+    auswahl('referenzalter', t('pflege.uebersicht.frageReferenzalter'), jaNein, referenzalter, setReferenzalter),
     auswahl('ehe', t('pflege.uebersicht.frageVerheiratet'), jaNein, verheiratet, setVerheiratet),
     auswahl('anzahl', t('pflege.uebersicht.frageAnzahl'), [1, 2, 3, 4].map((n) => ({ v: n, l: String(n) })), anzahl, setAnzahl),
     React.createElement('div', { style: s.result, 'aria-live': 'polite', 'aria-atomic': 'true' },
@@ -92,6 +97,7 @@ export const PflegeUebersicht = ({ palette, t, lohn, he }) => {
       zeileRente
     ),
     React.createElement(ErgebnisArt, { palette, t, ergebnis: r.ergebnis }),
+    g.status !== GUTSCHRIFT_STATUS.NEIN && React.createElement('div', { style: s.note }, t('pflege.uebersicht.hinweisJahre')),
     React.createElement('div', { style: s.note }, t('pflege.uebersicht.keinTotal')),
     React.createElement('div', { style: s.note }, t('pflege.uebersicht.lohnUndGutschrift')),
     r.eoHinweis && React.createElement('div', { style: s.note }, t('pflege.uebersicht.eoHinweis')),
