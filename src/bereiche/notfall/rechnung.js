@@ -258,9 +258,23 @@ export const impfcheck = (data, heute = new Date()) => {
 // steht in der Police: keine Zahl.
 export const IMPF_ZAHLER = ['kasse', 'zusatz', 'selbst'];
 
-// Richtpreise Impfstoff je Dosis, nur mit Quelle (Publikumspreis Spezialitätenliste). Fehlt eine Impfung hier, sagt
-// das Formular «Richtpreis nicht belegt». Form: { chf, praeparat, quelle, stand }.
-export const IMPF_RICHTPREISE = {};
+// Richtpreise Impfstoff je Dosis: Publikumspreis (Höchstpreis) der Spezialitätenliste des BAG, gelesen über die
+// öffentliche Schnittstelle https://epl.bag.admin.ch/api/sl/public/medicinal-products am 19.11.2026 (Abruf und
+// Stichprobe von zehn Präparaten). Je Impfung ein repräsentativer Einzeldosis-Impfstoff; das Präparat steht im Satz.
+// Nicht belegt (kein Eintrag, Formular sagt es): HPV (kantonale Programme, nicht in der SL), Windpocken, «Andere».
+// dT: reiner dT-Impfstoff ist nicht in der SL (Impfplan 2026: «Ein dT-Impfstoff ist derzeit nicht verfügbar»).
+export const IMPF_RICHTPREISE_STAND = '2026-11-19';
+export const IMPF_RICHTPREISE = {
+  dt: { chf: 35.25, praeparat: 'Boostrix (dTpa)' },
+  fsme: { chf: 45.8, praeparat: 'FSME-Immun CC' },
+  mmr: { chf: 33.3, praeparat: 'Priorix' },
+  grippe: { chf: 26.85, praeparat: 'Vaxigrip 2026/2027' },
+  covid: { chf: 89.9, praeparat: 'Comirnaty XFG' },
+  hepb: { chf: 41.55, praeparat: 'Engerix-B 20' },
+  hepa: { chf: 51.05, praeparat: 'Havrix 1440' },
+  pneumo: { chf: 80.8, praeparat: 'Prevenar 20' },
+  zoster: { chf: 166.2, praeparat: 'Shingrix' },
+};
 const rappen = (n) => Math.round(n * 20) / 20;
 const betragVon = (v) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? n : 0; };
 

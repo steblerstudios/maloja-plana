@@ -11,7 +11,7 @@ import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE, getChapters } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
-import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag } from '../bereiche/notfall/notfall.js';
+import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE } from '../bereiche/notfall/notfall.js';
 
 const t = createT({ de }, 'de', 'sie');
 const SRC = path.resolve(__dirname, '..');
@@ -283,6 +283,13 @@ describe('Impfausweis · Impfcheck nach Alter und Kosten', () => {
     expect(ohne).not.toContain('data-instrument-zahl="impfkosten"');
     expect(ohne).not.toContain('mp-impf-preis');
     expect(ohne).toContain('Kosten zeigen');
+  });
+  it('Formular: Richtpreis aus der Spezialitätenliste mit Präparat; Apotheke ehrlich benannt; HPV ohne Richtpreis', () => {
+    const html = renderToStaticMarkup(React.createElement(Impfausweis, { palette: LIGHT_PALETTE, t, data: mit([], '1979-06-15'), onUpdateData: () => {}, heute: HEUTE }));
+    expect(html).toContain('Richtpreis je Dosis, Boostrix (dTpa)');
+    expect(html).toContain('In der Apotheke zahlt sie das Impfen nicht');
+    expect(IMPF_RICHTPREISE.hpv).toBeUndefined();
+    expect(Object.values(IMPF_RICHTPREISE).every((r) => r.chf > 0 && r.praeparat)).toBe(true);
   });
   it('der Katalog sagt nicht mehr «Franchise» für empfohlene Impfungen', () => {
     expect(t('kvg.impfungenDetail3')).toMatch(/ohne Franchise/);
