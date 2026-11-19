@@ -7042,6 +7042,8 @@ export default {
       leistungsrechner: 'Estimer les prestations sociales (calculateur)',
       anlaufstelle: 'Guichet social régional (GSR) : un formulaire pour plusieurs prestations',
       orientierung: 'Orientation gratuite et confidentielle sur les prestations sociales (JU-lien)',
+      // Brücke 6 (19.11.2026): «Hallo»-Plattform des Kantons.
+      mehrsprachig: 'Premières informations en de nombreuses langues, aussi sur l’aide sociale et les assurances (site «Hallo» du canton)',
     },
   },
   medications: {

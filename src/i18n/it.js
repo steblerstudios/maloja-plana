@@ -7018,6 +7018,8 @@ export default {
       leistungsrechner: 'Stimare le prestazioni sociali (calcolatore)',
       anlaufstelle: 'Sportello sociale regionale (GSR): un modulo per più prestazioni',
       orientierung: 'Orientamento gratuito e confidenziale sulle prestazioni sociali (JU-lien)',
+      // Brücke 6 (19.11.2026): «Hallo»-Plattform des Kantons.
+      mehrsprachig: 'Prime informazioni in molte lingue, anche su assistenza sociale e assicurazioni (sito «Hallo» del Cantone)',
     },
   },
   medications: {
