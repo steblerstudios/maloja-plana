@@ -4258,7 +4258,7 @@ export default {
       // TODO(rm): provisorisch — Gegenlese (Brücke 5, 18.11.2026)
       orientierung: 'Kostenlose, vertrauliche Orientierung zu Sozialleistungen (JU-lien)',
       // TODO(rm): provisorisch — Gegenlese (Brücke 6, 19.11.2026)
-      mehrsprachig: 'Erstinformation in vielen Sprachen, auch zu Sozialhilfe und Versicherungen («Hallo»-Seite des Kantons)',
+      mehrsprachig: 'Erste Informationen in vielen Sprachen, auch zu Sozialhilfe und Versicherungen («Hallo»-Seite des Kantons)',
     },
   },
 

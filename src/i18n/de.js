@@ -7141,7 +7141,7 @@ export default {
       anlaufstelle: 'Regionale Anlaufstelle (GSR): ein Formular für mehrere Leistungen',
       orientierung: 'Kostenlose, vertrauliche Orientierung zu Sozialleistungen (JU-lien)',
       // Brücke 6 (19.11.2026): «Hallo»-Plattform des Kantons.
-      mehrsprachig: 'Erstinformation in vielen Sprachen, auch zu Sozialhilfe und Versicherungen («Hallo»-Seite des Kantons)',
+      mehrsprachig: 'Erste Informationen in vielen Sprachen, auch zu Sozialhilfe und Versicherungen («Hallo»-Seite des Kantons)',
     },
   },
   medications: {

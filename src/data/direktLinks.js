@@ -433,7 +433,7 @@ CANTONAL_LINKS_GEPRUEFT.JU.orientierung = '2026-11-18';
 
 // Brücke 6 (19.11.2026): «Hallo»-Plattformen der Kantone, Erstinformation in vielen Sprachen, darunter ein Teil
 // «Soziale Sicherheit» mit Sozialhilfe, Krankheit, Familie, Alter. Gegen die Hürde «Zeit, Kraft und Sprache»
-// (Maloja hat fünf Sprachen, die Plattformen 15 bis 20). Herausgeber laut Impressum je der Kanton; Basel-Stadt
+// (Maloja hat fünf Sprachen, die Plattformen 15 bis 19, gemessen an hreflang 19.11.2026). Herausgeber laut Impressum je der Kanton; Basel-Stadt
 // nach dem Vorbild «Hallo Aargau» (Medienmitteilung BS 06.11.2023). Je curl 200, Titel «Hallo …», Seite
 // /de/soziale-sicherheit vorhanden, Impressum gelesen (19.11.2026). St. Gallen (hallo.sg.ch) ist anders
 // gebaut und ohne Teil «Soziale Sicherheit»: bewusst nicht dabei.
