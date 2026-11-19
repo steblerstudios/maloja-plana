@@ -41,6 +41,11 @@ describe('Restprämienübernahme ZH: Texte belegt', () => {
         expect(typeof s).toBe('string');
         expect(s).toMatch(/2|zwei|two|deux|due/);
       }
+      // Fachprüfung 19.11.2026: Rückforderung nach SHG §§ 26–30 belegt, alle Teile in jeder Sprache.
+      expect(ziele).toContain('Ordnr=851.1');
+      for (const k of ['zhRestpraemieMehr', 'zhRestpraemieVoraussetzungen', 'zhRestpraemieAntrag', 'zhRestpraemieRueckforderung', 'zhRestpraemieF']) {
+        for (const s of blaetter(d.nichtbezug[k])) expect(typeof s, `${lang} ${k}`).toBe('string');
+      }
     });
   }
 });
@@ -59,6 +64,9 @@ describe('Restprämienübernahme ZH: nur im Kanton Zürich', () => {
     const zh = renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: 'ZH' }));
     expect(zh).toContain(de.nichtbezug.zhRestpraemie.sie.slice(0, 40));
     expect(zh).toContain('data-teil="zh-rueckwirkend"');
+    expect(zh).toContain('data-teil="zh-mehr"');
+    // Kassenwechsel ist keine Pflicht (Merkblatt: «keine Auflagen»; GD 2021: Teilübernahme bei Verzicht).
+    expect(Object.values(de.nichtbezug.zhRestpraemieAntrag).join(' ')).not.toMatch(/kann verlangen/);
     for (const k of ['BE', 'BS', '', undefined]) expect(renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: k }))).toBe('');
   });
 
@@ -80,13 +88,19 @@ describe('Restprämienübernahme ZH: nur im Kanton Zürich', () => {
   });
 });
 
-describe('Restprämienübernahme ZH: nicht bei Ausweis F, N oder S (Asylbereich, nicht belegt)', () => {
+describe('Restprämienübernahme ZH: Asylbereich nach § 52 VEG KVG', () => {
   const t = createT({ de }, 'de', 'sie');
-  for (const p of ['f', 'n', 's']) {
-    it(`Ausweis ${p.toUpperCase()}: kein Hinweis`, () => {
+  for (const p of ['n', 's']) {
+    it(`Ausweis ${p.toUpperCase()}: kein Hinweis (Asylfürsorge, kein Weg nach § 15 EG KVG)`, () => {
       expect(renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: 'ZH', data: { ausbildung: { workPermit: p } } }))).toBe('');
     });
   }
+  it('Ausweis F: eigener Satz zu § 52 Abs. 3 und 4, nicht der allgemeine Hinweis', () => {
+    const html = renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: 'ZH', data: { ausbildung: { workPermit: 'f' } } }));
+    expect(html).toContain('data-hinweis="zh-restpraemie-f"');
+    expect(html).toContain('§ 52 VEG KVG');
+    expect(html).not.toContain('data-hinweis="zh-restpraemie"');
+  });
   it('Ausweis B: Hinweis', () => {
     expect(renderToStaticMarkup(React.createElement(ZhRestpraemie, { palette: LIGHT_PALETTE, t, canton: 'ZH', data: { ausbildung: { workPermit: 'b' } } }))).toContain('data-hinweis="zh-restpraemie"');
   });
