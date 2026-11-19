@@ -106,6 +106,8 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
   it('Ärzte nicht doppelt: im Formular nur Namen und der Weg zu den Karteikarten', () => {
     const cv = lies('ChapterView.jsx');
     expect(cv).toMatch(/'data-teil': 'aerzte-in-kartei'/);
+    expect(cv).toMatch(/'data-teil': 'diagnosen-in-kartei'/); // Sophie 19.11.2026: Diagnosen ebenso nur Verweis
+    expect(cv.match(/onNavigate\('karteikarten'\)/g)).toHaveLength(2);
     expect(cv).toMatch(/onNavigate\('karteikarten'\)/);
   });
   it('der offene Koffer: fertige Fächer als Knöpfe im Deckel, geplante gestrichelt im Boden, keine Notfallkarte doppelt', () => {

@@ -1107,12 +1107,20 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         renderLabel(chapter.key + '-' + field.k, field.label, field.hint, true),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('diseases.hint')),
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
-          React.createElement(React.Suspense, { fallback: null },
-          React.createElement(DiseaseManager, {
-            palette, t: tr, diseases: dList,
-            onChange: (list) => onUpdate('chronicDiseasesList', list),
-          })
-        )
+          // Sophie 19.11.2026 («Ja, nur Verweis»): wie die Ärzte werden die Diagnosen im Fach Karteikarten bearbeitet;
+          // hier stehen nur die Namen und der Weg dorthin. Ohne onNavigate (Tests, Einbettung) bleibt die Eingabe.
+          onNavigate
+            ? React.createElement('div', { 'data-teil': 'diagnosen-in-kartei' },
+                dList.filter((d) => d && d.name && String(d.name).trim()).map((d, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.text } },
+                  String(d.name).trim() + (d.code ? ' (' + String(d.code).trim() + ')' : ''))),
+                React.createElement('button', { type: 'button', className: 'mp-link',
+                  onClick: () => onNavigate('karteikarten'),
+                  style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, color: palette.skyDeep || palette.text } }, tr('doctors.zurKartei') + ' ›'))
+            : React.createElement(React.Suspense, { fallback: null },
+                React.createElement(DiseaseManager, {
+                  palette, t: tr, diseases: dList,
+                  onChange: (list) => onUpdate('chronicDiseasesList', list),
+                }))
         ),
         oldText && !dList.length && React.createElement('div', {
           style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.sky + '18', borderRadius: radius.md, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
