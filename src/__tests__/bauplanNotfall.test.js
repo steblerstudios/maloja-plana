@@ -11,7 +11,7 @@ import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE, getChapters } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
-import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER } from '../bereiche/notfall/notfall.js';
+import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag } from '../bereiche/notfall/notfall.js';
 
 const t = createT({ de }, 'de', 'sie');
 const SRC = path.resolve(__dirname, '..');
@@ -219,5 +219,70 @@ describe('Fach Impfausweis · Welche Impfung ist fällig?', () => {
     expect(lies('utils/hashRouter.js')).toMatch(/'impfausweis'/);
     expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Impfausweis \}\)\)\)/);
     expect(lies('bereiche/notfall/impfausweis.jsx')).not.toMatch(/setFullYear|setMonth/); // rechnet nicht selbst
+  });
+});
+
+// Impfcheck und Kosten (Sophie 19.11.2026: «Ja, nach Alter», Preise «alle drei», abwählbar). Quelle: Referenzdokument
+// zu Art. 12a KLV vom 1. Juli 2026, Kap. 2 (seit 1.1.2026 ohne Franchise, Selbstbehalt bleibt) und Kap. 4.
+describe('Impfausweis · Impfcheck nach Alter und Kosten', () => {
+  const mit = (impfungen, geburt, extra = {}) => ({ basis: { dateOfBirth: geburt, canton: extra.canton || 'ZH' },
+    versicherungen: { kkBelege: [] }, notfall: { impfungen, ...extra.notfall } });
+  const status = (c) => Object.fromEntries(c.zeilen.map((z) => [z.key, z.status]));
+
+  it('47-jährig: dT, FSME, MMR zählen; Windpocken bis 39 und HPV bis 26 sind vorbei; ab 65 kommt später', () => {
+    const c = impfcheck(mit([{ id: 'a', art: 'dt', datum: '2011-03-14' }, { id: 'b', art: 'mmr', datum: '1990-05-01' }], '1979-06-15'), HEUTE);
+    expect(c.alter).toBe(47);
+    expect(status(c)).toMatchObject({ dt: 'ok', fsme: 'offen', mmr: 'teilweise', varizellen: 'vorbei', hpv: 'vorbei', grippe: 'spaeter', pneumo: 'spaeter', zoster: 'spaeter' });
+    expect([c.erledigt, c.gesamt]).toEqual([1, 3]);
+  });
+  it('70-jährig, vor 1964 geboren: kein MMR; Grippe jährlich; Gürtelrose braucht 2 Dosen', () => {
+    const c = impfcheck(mit([{ id: 'z', art: 'zoster', datum: '2026-01-10' }, { id: 'g', art: 'grippe', datum: '2026-10-20' }], '1956-01-01'), HEUTE);
+    expect(c.zeilen.some((z) => z.key === 'mmr')).toBe(false);
+    expect(status(c)).toMatchObject({ grippe: 'jaehrlich', covid: 'jaehrlich', pneumo: 'offen', zoster: 'teilweise' });
+    expect(c.zeilen.find((z) => z.key === 'grippe').letzte).toBe('2026-10-20');
+  });
+  it('HPV: 2 Dosen bei Beginn vor 15, sonst 3; abgewählt zählt nicht mit', () => {
+    const jung = impfcheck(mit([{ id: 'h1', art: 'hpv', datum: '2017-01-01' }, { id: 'h2', art: 'hpv', datum: '2017-07-01' }], '2003-01-01'), HEUTE);
+    expect(status(jung).hpv).toBe('ok');
+    const spaet = impfcheck(mit([{ id: 'h1', art: 'hpv', datum: '2020-01-01' }, { id: 'h2', art: 'hpv', datum: '2020-07-01' }], '2003-01-01'), HEUTE);
+    expect(status(spaet).hpv).toBe('teilweise');
+    const ab = impfcheck(mit([], '1979-06-15', { notfall: { impfcheckAus: ['fsme'] } }), HEUTE);
+    expect(status(ab).fsme).toBe('aus');
+    expect(ab.gesamt).toBe(2);
+  });
+  it('ohne Geburtsdatum kein Check; unter 16 nur der Satz zum Kinder-Impfplan', () => {
+    expect(impfcheck(mit([], ''), HEUTE)).toMatchObject({ alter: null, zeilen: [] });
+    expect(impfcheck(mit([], '2015-01-01'), HEUTE)).toMatchObject({ kind: true, zeilen: [] });
+  });
+  it('Kosten: Grundversicherung ohne Franchise, 10 % Selbstbehalt; selbst = alles; Zusatz = je nach Police', () => {
+    expect(impfKosten({ zahler: 'kasse', preis: 62, gebuehr: 15 })).toEqual({ gesamt: 77, eigen: 7.7, kasse: 69.3, zahler: 'kasse' });
+    expect(impfKosten({ zahler: 'selbst', preis: 100 })).toMatchObject({ eigen: 100, kasse: 0 });
+    expect(impfKosten({ zahler: 'zusatz', preis: 100 })).toMatchObject({ eigen: null, kasse: null });
+    expect(impfKosten({ zahler: 'kasse' })).toBeNull();
+    const d = mit([{ id: 'a', art: 'fsme', datum: '2026-05-02', zahler: 'kasse', preis: 62, gebuehr: 15 },
+      { id: 'b', art: 'hepa', datum: '2026-06-01', zahler: 'zusatz', preis: 90 }, { id: 'c', art: 'dt', datum: '2025-01-01', zahler: 'selbst', preis: 40 }], '1979-06-15');
+    expect(impfKostenJahr(d, 2026)).toEqual({ gesamt: 167, eigen: 7.7, offen: 1, mitPreis: 2 });
+  });
+  it('Vorschlag «wer zahlt»: Grundversicherung nur, wenn für das Alter empfohlen', () => {
+    const d = mit([], '1979-06-15');
+    expect(impfZahlerVorschlag(d, 'fsme', '2026-05-02')).toBe('kasse');
+    expect(impfZahlerVorschlag(d, 'grippe', '2026-10-01')).toBe('selbst'); // 47-jährig, nicht für alle empfohlen
+    expect(impfZahlerVorschlag(d, 'hepa', '2026-10-01')).toBe('selbst');
+  });
+  it('Fachseite: drei Fragen, eine Hauptzahl je Frage, ein Kalenderblatt; Kosten lassen sich ausblenden', () => {
+    const d = mit([{ id: 'a', art: 'fsme', datum: '2026-05-02', zahler: 'kasse', preis: 62, gebuehr: 15 }], '1979-06-15');
+    const html = renderToStaticMarkup(React.createElement(Impfausweis, { palette: LIGHT_PALETTE, t, data: d, onUpdateData: () => {}, heute: HEUTE }));
+    for (const z of ['impfung', 'impfcheck', 'impfkosten']) expect(zaehle(html, new RegExp('data-instrument-zahl="' + z + '"', 'g'))).toBe(1);
+    expect(zaehle(html, /data-teil="kalenderblatt"/g)).toBe(1);
+    expect(html).toContain('Trifft nicht zu');
+    expect(html).toContain('ohne Franchise');
+    const aus = { ...d, notfall: { ...d.notfall, impfKostenAus: true } };
+    const ohne = renderToStaticMarkup(React.createElement(Impfausweis, { palette: LIGHT_PALETTE, t, data: aus, onUpdateData: () => {}, heute: HEUTE }));
+    expect(ohne).not.toContain('data-instrument-zahl="impfkosten"');
+    expect(ohne).not.toContain('mp-impf-preis');
+    expect(ohne).toContain('Kosten zeigen');
+  });
+  it('der Katalog sagt nicht mehr «Franchise» für empfohlene Impfungen', () => {
+    expect(t('kvg.impfungenDetail3')).toMatch(/ohne Franchise/);
   });
 });
