@@ -11,7 +11,9 @@ import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE, getChapters } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
-import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE } from '../bereiche/notfall/notfall.js';
+import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE, Karteikarten, karteikarten, diagnosenListe, KARTEI_GRUPPEN } from '../bereiche/notfall/notfall.js';
+import { SPECIALTY_GRUPPEN } from '../DoctorManager.jsx';
+import { weitereAerzteAusListe, KEINE_AERZTE } from '../utils/hausarzt.js';
 
 const t = createT({ de }, 'de', 'sie');
 const SRC = path.resolve(__dirname, '..');
@@ -92,8 +94,8 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
   it('der offene Koffer: fertige Fächer als Knöpfe im Deckel, geplante gestrichelt im Boden, keine Notfallkarte doppelt', () => {
     const html = kapitel(DEMO_DATA);
     const deckel = html.slice(html.indexOf('data-teil="koffer-deckel"'), html.indexOf('data-teil="koffer-boden"'));
-    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis']);
-    expect(zaehle(html, /data-bald="ja"/g)).toBe(3);
+    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis', 'karteikarten']);
+    expect(zaehle(html, /data-bald="ja"/g)).toBe(2);
     expect(zaehle(html, /data-kachel="notfallkarte"/g)).toBe(1);
   });
   it('die frühere Seite gibt es nicht mehr; #/gesundheit führt zum Koffer im Kapitel', () => {
@@ -319,5 +321,85 @@ describe('Impfausweis · Impfcheck nach Alter und Kosten', () => {
   });
   it('der Katalog sagt nicht mehr «Franchise» für empfohlene Impfungen', () => {
     expect(t('kvg.impfungenDetail3')).toMatch(/ohne Franchise/);
+  });
+});
+
+// Fach Karteikarten (Sophie 19.11.2026: «B · Karteikasten», alle vier Inhalte, «Eine Liste, zwei Orte»).
+// Analyse §9 in stebler-studios/analysen/2026-11-18-notfall-gesundheit-bauplan.md.
+describe('Fach Karteikarten · Wer behandelt mich?', () => {
+  const kartei = (notfall, extra = {}) => renderToStaticMarkup(React.createElement(Karteikarten, { palette: LIGHT_PALETTE, t, onUpdateData: () => {},
+    data: { ...DEMO_DATA, notfall: { ...notfall } }, ...extra }));
+  const LISTE = [
+    { name: 'Dr. Meier', specialty: 'zahnarzt', phone: '061 111 22 33' },
+    { name: 'Physio am Rhein', specialty: 'physio' },
+    { name: 'Dr. med. Lisa Brunner', specialty: 'hausarzt', phone: '+41 44 242 80 00', adresse: 'Bahnhofstrasse 1, 8001 Zürich' },
+    { name: '', specialty: 'apotheke' },
+    { name: 'Apotheke Post', specialty: 'apotheke', phone: '031 000 00 00' },
+  ];
+  it('Rechnung: Karten = die Ärzteliste des Kapitels, sortiert nach Fachrichtung, nur mit Namen', () => {
+    const s = karteikarten({ notfall: { doctorsList: LISTE } });
+    expect(s.anzahl).toBe(4);
+    expect(s.karten.map((k) => k.fach)).toEqual(['hausarzt', 'zahnarzt', 'physio', 'apotheke']);
+    expect(s.karten.map((k) => k.gruppe)).toEqual(['aerzte', 'aerzte', 'therapien', 'kontakte']);
+    expect(s.karten[0].index).toBe(2); // Stelle in doctorsList, zum Bearbeiten
+    expect(s.reiter).toEqual(['hausarzt', 'zahnarzt', 'physio', 'apotheke']);
+    expect(s.hausarzt).toBe(true);
+  });
+  it('Rechnung: altes Feld «doctor» ohne Liste wird die Karte Hausärztin; unbekannte Fachrichtung = andere', () => {
+    expect(karteikarten({ notfall: { doctor: 'Dr. Alt', doctorPhone: '044 1' } }).karten).toEqual([expect.objectContaining({ name: 'Dr. Alt', fach: 'hausarzt', alt: true, index: -1 })]);
+    expect(karteikarten({ notfall: { doctorsList: [{ name: 'X', specialty: 'Chiropraktik' }] } }).karten[0].fach).toBe('other');
+    expect(karteikarten({}).anzahl).toBe(0);
+  });
+  it('eine Liste, zwei Orte: die Fachrichtungen der Eingabe sind dieselben wie die der Rechnung', () => {
+    expect(SPECIALTY_GRUPPEN).toEqual(KARTEI_GRUPPEN);
+    expect(KEINE_AERZTE).toEqual([...KARTEI_GRUPPEN.therapien, ...KARTEI_GRUPPEN.kontakte]);
+    expect(lies('bereiche/notfall/karteikarten.jsx')).toMatch(/schreibe\('doctorsList'/);
+    expect(lies('bereiche/notfall/karteikarten.jsx')).toMatch(/schreibe\('chronicDiseasesList'/);
+  });
+  it('Dossier «Weitere Ärztinnen und Ärzte»: ohne Therapien und Kontakte; die Hausärztin der Liste zählt bei «Bereit»', () => {
+    expect(weitereAerzteAusListe({ doctorsList: LISTE }).map((x) => x.name)).toEqual(['Dr. Meier']);
+    const ohne = bereitschaft({ notfall: {} }).erledigt;
+    expect(bereitschaft({ notfall: { doctorsList: LISTE } }).erledigt).toBe(ohne + 2); // Name und Telefon
+  });
+  it('Fachseite: ein Karteikasten, die Zahl darunter, Fachrichtungen im Satz, Anrufen als Telefon-Link', () => {
+    const html = kartei({ doctorsList: LISTE });
+    expect(zaehle(html, /data-teil="karteikasten"/g)).toBe(1);
+    expect(zaehle(html, /data-instrument-zahl="karteikarten"/g)).toBe(1);
+    expect(html.indexOf('data-instrument-zahl="karteikarten"')).toBeGreaterThan(html.indexOf('data-teil="karteikasten"'));
+    expect(html).toContain('4 Karten');
+    expect(html).toContain('Hausärztin / Hausarzt, Zahnärztin / Zahnarzt, Physiotherapie, Apotheke');
+    expect(html).toContain('href="tel:+41442428000"');
+    expect(html).toContain('Bahnhofstrasse 1, 8001 Zürich');
+    expect(html).toContain('Gilt als Notfall-Angabe');
+    expect(zaehle(html, /data-teil="reiter"/g)).toBe(4);
+    expect(zaehle(html, /data-teil="kalenderblatt"|data-franchise=|data-teil="herz-puls"/g)).toBe(0);
+  });
+  it('Fachseite leer: leerer Kasten, keine Zahl, ruhiger Satz; ohne Hausärztin ein Hinweis', () => {
+    const leer = kartei({});
+    expect(leer).toContain('data-teil="karteikasten"');
+    expect(leer).toContain('data-karten="0"');
+    expect(leer).not.toContain('data-instrument-zahl="karteikarten"');
+    expect(leer).toContain('data-teil="kartei-leer"');
+    expect(leer).toContain('Erste Karte anlegen');
+    expect(kartei({ doctorsList: [LISTE[0]] })).toContain('data-teil="kartei-ohne-hausarzt"');
+    expect(kartei({ doctorsList: [LISTE[0]] })).toContain('1 Karte');
+  });
+  it('Was ist festgestellt? Liste ohne Bild, dieselbe Liste wie im Kapitel', () => {
+    const html = kartei({ chronicDiseasesList: [{ name: 'Asthma', code: 'J45' }, { name: '' }] });
+    expect(html).toContain('Was ist festgestellt?');
+    expect(html).toContain('Asthma (J45)');
+    expect(zaehle(html, /data-diagnose=/g)).toBe(1);
+    expect(diagnosenListe({ notfall: { chronicDiseasesList: [{ name: ' Asthma ' }, null] } })).toEqual([{ name: 'Asthma', code: '', notes: '' }]);
+    expect(kartei({})).toContain('data-teil="diagnosen-leer"');
+  });
+  it('Gesundheitsangabe: Karten und Diagnosen stehen in der Export-Vorschau als heikel', () => {
+    expect(lies('exportVorschau.js')).toMatch(/'chronicDiseasesList', 'doctorsList'/);
+  });
+  it('das Fach steht im Koffer, ist eine Seite mit Adresse und wird lazy über den Eingang geladen', () => {
+    expect(KOFFER_FAECHER.find((f) => f.key === 'karteikarten')).toMatchObject({ view: 'karteikarten', icon: 'contacts' });
+    expect(lies('utils/hashRouter.js')).toMatch(/'karteikarten'/);
+    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Karteikarten \}\)\)\)/);
+    expect(lies('main.jsx')).toMatch(/view === 'karteikarten' && React\.createElement\(Karteikarten/);
+    expect(lies('bereiche/notfall/karteikarten.jsx')).not.toMatch(/\.sort\(|doctorsList\)\.filter/); // rechnet nicht selbst
   });
 });

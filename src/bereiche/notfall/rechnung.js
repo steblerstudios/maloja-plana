@@ -4,6 +4,7 @@
 //   2. Als Nächstes fällig naechstesFaellig      → Kalenderblatt     (Zuhause Arztkoffer · Werkzeug Katalog, Beleg-Ordner)
 //   3. Bereit             bereitschaft, lagenStand → Herz mit Puls   (Zuhause Kapitel Notfall · Kachel)
 //   4. Impfung fällig     naechsteImpfung       → Kalenderblatt     (Fach Impfausweis; zählt bei 2 mit)
+//   7. Wer behandelt mich? karteikarten         → Karteikasten      (Fach Karteikarten; Diagnosen: Liste ohne Bild)
 // Die Verfügungen (VORSORGE) sind eine Liste ohne Bild; ihre Rechnung steht hier, weil «Bereit» die
 // Patientenverfügung mitzählt.
 import { feldErledigt } from '../../utils/vollstaendigkeit.js';
