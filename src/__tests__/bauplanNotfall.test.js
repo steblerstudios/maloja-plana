@@ -246,6 +246,8 @@ describe('Impfausweis · Impfcheck nach Alter und Kosten', () => {
     expect(status(jung).hpv).toBe('ok');
     const spaet = impfcheck(mit([{ id: 'h1', art: 'hpv', datum: '2020-01-01' }, { id: 'h2', art: 'hpv', datum: '2020-07-01' }], '2003-01-01'), HEUTE);
     expect(status(spaet).hpv).toBe('teilweise');
+    const mit15 = impfcheck(mit([{ id: 'h1', art: 'hpv', datum: '2018-06-01' }, { id: 'h2', art: 'hpv', datum: '2018-12-01' }], '2003-01-01'), HEUTE);
+    expect(status(mit15).hpv).toBe('teilweise'); // Beginn mit 15: 3 Dosen nötig
     const ab = impfcheck(mit([], '1979-06-15', { notfall: { impfcheckAus: ['fsme'] } }), HEUTE);
     expect(status(ab).fsme).toBe('aus');
     expect(ab.gesamt).toBe(2);
