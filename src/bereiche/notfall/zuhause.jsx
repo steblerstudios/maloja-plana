@@ -90,9 +90,10 @@ export const KOFFER_FAECHER = [
   { key: 'kkbeleg', view: 'kk', icon: 'documents' },
   // Fach Impfausweis (Sophie 19.11.2026, «A · Liste + fällig»): eigene Seite, Rechnung naechsteImpfung.
   { key: 'impfausweis', view: 'impfausweis', icon: 'health' },
+  // Fach Karteikarten (Sophie 19.11.2026, «B · Karteikasten»): eigene Seite, Rechnung karteikarten.
+  { key: 'karteikarten', view: 'karteikarten', icon: 'contacts' },
   { key: 'thermometer', view: null },
   { key: 'blister', view: null },
-  { key: 'karteikarten', view: null },
 ];
 export const KOFFER_ANKER = 'mp-gesundheit-koffer';
 

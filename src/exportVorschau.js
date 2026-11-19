@@ -24,7 +24,8 @@ export const KAPITEL = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbil
 // Felder mit Gesundheitsangaben — in der Vorschau eigens genannt, weil sie besonders
 // heikel sind. Nur Namen von Feldern, keine Werte.
 const GESUNDHEIT = {
-  notfall: ['bloodType', 'allergies', 'medications', 'chronicDiseases', 'impfungen'],
+  // Listen der Karteikarten (19.11.2026): Diagnosen und Behandelnde verraten Gesundheit wie die Felder daneben.
+  notfall: ['bloodType', 'allergies', 'medications', 'chronicDiseases', 'impfungen', 'chronicDiseasesList', 'doctorsList'],
   // Ein IV-Rentenbetrag verrät den IV-Bezug wie das Feld daneben.
   finanzen: ['ivBezug', 'ivRente'],
   versicherungen: ['kkBelege'],
