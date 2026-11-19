@@ -1869,6 +1869,29 @@ export default {
       andere: "Other vaccination",
     },
   },
+  // Fach Karteikarten im Arztkoffer (19.11.2026).
+  karteikarten: {
+    frage: "Who treats me?",
+    anzahl: "{n} cards",
+    eineKarte: "1 card",
+    ohneHausarzt: "No family doctor entered yet. That card counts as emergency information.",
+    leer: "No cards yet. Doctors, therapies and contacts such as the pharmacy or Spitex go here, each with a phone number.",
+    karten: "Index cards",
+    anrufen: "Call",
+    aufNotfallkarte: "Counts as the emergency information «family doctor».",
+    frueher: "Earlier entry from the Health chapter.",
+    eineListe: "The same list as in the Health chapter: what is here is also there.",
+    bearbeiten: "Edit cards",
+    erste: "Add the first card",
+    fertig: "Done",
+    laden: "Loading …",
+    diagnosen: {
+      frage: "What has been diagnosed?",
+      leer: "No diagnosis entered yet.",
+      bearbeiten: "Edit diagnoses",
+      hinweis: "The same list as in the Health chapter. Stays on this device; the export preview names it as health information.",
+    },
+  },
   gesundheitZuhause: {
     franchiseLeer: "Deductible not entered yet. Once it is, this shows how much of it has been reached.",
     zurFranchise: "To the deductible calculator",
@@ -1906,6 +1929,9 @@ export default {
   },
   // Emergency chapter · "one place" (round 9, AE; built in acceptance F6, 25.10.2026)
   notfallKapitel: {
+    // Seite Gesundheit in drei Teilen (19.11.2026).
+    teilNotfall: "In an emergency",
+    teilVorsorge: "Advance planning and details",
     krisenTitel: 'In a crisis or in case of violence',
     vollstaendig: 'complete',
     fehlt: 'missing',
@@ -7535,6 +7561,7 @@ export default {
     migrated: 'Previous entry:',
   },
   doctors: {
+    zurKartei: "Edit in the index cards",
     add: 'Add doctor',
     label: 'Doctor {nr}',
     specialty: 'Specialty',
@@ -7545,6 +7572,13 @@ export default {
     notesPlaceholder: 'e.g. by appointment only',
     hint: 'Your GP, dentist and others — so this info is available when needed.',
     migrated: 'Previous entry:',
+    gruppen: {
+      aerzte: "Doctors",
+      therapien: "Therapies",
+      kontakte: "Other contacts",
+    },
+    adresse: "Address",
+    adressePlaceholder: "e.g. Bahnhofstrasse 1, 8001 Zürich",
     specialties: {
       hausarzt: 'General practitioner',
       zahnarzt: 'Dentist',
@@ -7552,6 +7586,12 @@ export default {
       kinderarzt: 'Paediatrician',
       psychiater: 'Psychiatrist',
       other: 'Other specialty',
+      physio: "Physiotherapy",
+      psychotherapie: "Psychotherapy",
+      ergo: "Occupational therapy",
+      apotheke: "Pharmacy",
+      spital: "Hospital",
+      spitex: "Spitex (home care)",
     },
   },
   // O3 — result type (src/data/ergebnisArt.js). Own block at the end of the file.

@@ -112,3 +112,32 @@ export const HerzPuls = ({ palette, lagen = [], groesse = 'klein', t }) => {
     h('div', { 'aria-hidden': true, style: { display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', fontSize: '13px', color: palette.mid, textAlign: 'center', marginTop: '2px', gap: '4px' } },
       lagen.map((l) => h('span', { key: l.key, 'data-teil': 'lage-name', style: { color: l.voll ? palette.text : palette.mid, overflowWrap: 'anywhere', hyphens: 'auto', WebkitHyphens: 'auto', lineHeight: 1.3 } }, t('notfallEinstieg.' + l.key + '.title')))));
 };
+
+// Wer behandelt mich? als Karteikasten (Sophie 19.11.2026, Auswahl «B · Karteikasten»). Ein Gegenstand aus dem
+// Arztkoffer, in der Farbe Gesundheit. Je Fachrichtung ein Reiter (`reiter` aus karteikarten(data), höchstens fünf
+// gezeichnet, je als stehende Karte). Ohne Karten: der leere Kasten. Keine Wörter im Bild:
+// die Zahl und die Fachrichtungen stehen darunter (Regel «Zahl»). Ruhig: eine Farbe, die Hausärztin (erster Reiter,
+// Notfall-Angabe) gefüllt, die anderen Reiter nur umrandet.
+export const KARTEI_REITER_MAX = 5;
+export const KARTEI_KANTEN_MAX = 12;
+export const Karteikasten = ({ palette, reiter = [], anzahl = 0, groesse = 'mittel' }) => {
+  const h = React.createElement;
+  const farbe = gesundheitFarbe(palette);
+  const px = INSTRUMENT_GROESSE[groesse] || INSTRUMENT_GROESSE.mittel;
+  const gezeigt = reiter.slice(0, KARTEI_REITER_MAX);
+  const kanten = Math.min(anzahl, KARTEI_KANTEN_MAX);
+  // Zeichnung 160 × 112: je Reiter eine stehende Karte (hinten zuerst), gestaffelt nach vorn und unten; der Reiter
+  // sitzt oben auf der Karte, nach rechts versetzt. Davor die niedrige Vorderwand mit Griff. Ohne Karten: leerer Kasten.
+  const kartenZeichnung = gezeigt.map((fach, i) => {
+    const y = 34 + i * 7, rx = 22 + i * 22;
+    return h('g', { key: fach, 'data-teil': 'reiter', 'data-fach': fach },
+      h('path', { d: 'M' + rx + ' ' + y + ' v-10 q0 -4 4 -4 h18 q4 0 4 4 v10', fill: i === 0 && fach === 'hausarzt' ? farbe : palette.surface || '#fff', stroke: farbe, strokeWidth: 2, strokeLinejoin: 'round' }),
+      h('rect', { x: 18, y, width: 124, height: 96 - y, rx: 3, fill: palette.surface || '#fff', stroke: palette.mid || farbe, strokeWidth: 1.5 }));
+  });
+  return h('svg', { viewBox: '0 0 160 112', width: '100%', 'aria-hidden': true, 'data-teil': 'karteikasten', 'data-groesse': groesse,
+    'data-reiter': gezeigt.length, 'data-karten': kanten, style: { maxWidth: px + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('path', { 'data-teil': 'kasten', d: 'M10 46 L10 104 Q10 108 14 108 L146 108 Q150 108 150 104 L150 46', fill: 'none', stroke: farbe, strokeWidth: 3, strokeLinejoin: 'round' }),
+    ...kartenZeichnung,
+    h('rect', { 'data-teil': 'vorderwand', x: 10, y: 74, width: 140, height: 34, rx: 4, fill: palette.surface || '#fff', stroke: farbe, strokeWidth: 3 }),
+    h('rect', { 'data-teil': 'griff', x: 66, y: 86, width: 28, height: 8, rx: 4, fill: 'none', stroke: farbe, strokeWidth: 2 }));
+};

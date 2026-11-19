@@ -1883,6 +1883,29 @@ export default {
       andere: "Andere Impfung",
     },
   },
+  // Fach Karteikarten im Arztkoffer (19.11.2026).
+  karteikarten: {
+    frage: "Wer behandelt mich?",
+    anzahl: "{n} Karten",
+    eineKarte: "1 Karte",
+    ohneHausarzt: "Noch keine Hausärztin oder kein Hausarzt eingetragen. Diese Karte gilt als Notfall-Angabe.",
+    leer: "Noch keine Karte. Hier stehen Ärztinnen und Ärzte, Therapien und Kontakte wie Apotheke oder Spitex, je mit Telefon.",
+    karten: "Karteikarten",
+    anrufen: "Anrufen",
+    aufNotfallkarte: "Gilt als Notfall-Angabe «Hausärztin oder Hausarzt».",
+    frueher: "Früherer Eintrag aus dem Kapitel Gesundheit.",
+    eineListe: "Dieselbe Liste wie im Kapitel Gesundheit: was hier steht, steht auch dort.",
+    bearbeiten: "Karten bearbeiten",
+    erste: "Erste Karte anlegen",
+    fertig: "Fertig",
+    laden: "Wird geladen …",
+    diagnosen: {
+      frage: "Was ist festgestellt?",
+      leer: "Noch keine Diagnose eingetragen.",
+      bearbeiten: "Diagnosen bearbeiten",
+      hinweis: "Dieselbe Liste wie im Kapitel Gesundheit. Bleibt auf diesem Gerät; die Export-Vorschau nennt sie als Gesundheitsangabe.",
+    },
+  },
   gesundheitZuhause: {
     franchiseLeer: "Franchise noch nicht erfasst. Mit der Franchise steht hier, wie viel davon erreicht ist.",
     zurFranchise: "Zum Franchise-Rechner",
@@ -1920,6 +1943,9 @@ export default {
   },
   // Kapitel Notfall · «ein Ort» (Runde 9, AE; gebaut Abnahme F6, 25.10.2026)
   notfallKapitel: {
+    // Seite Gesundheit in drei Teilen (19.11.2026).
+    teilNotfall: "Im Notfall",
+    teilVorsorge: "Vorsorge und Angaben",
     // Lebenslagen C1+C2 (07.11.2026), Wortlaut vom copy-pruefer abgenommen.
     krisenTitel: 'In einer Krise oder bei Gewalt',
     vollstaendig: 'vollständig',
@@ -7532,6 +7558,7 @@ export default {
     migrated: 'Früherer Eintrag:',
   },
   doctors: {
+    zurKartei: "In den Karteikarten bearbeiten",
     add: 'Ärztin / Arzt hinzufügen',
     label: 'Ärztin / Arzt {nr}',
     specialty: 'Fachrichtung',
@@ -7542,6 +7569,13 @@ export default {
     notesPlaceholder: 'z.B. nur mit Termin',
     hint: 'Hausarzt, Zahnarzt und weitere — damit die Info auffindbar ist, wenn sie gebraucht wird.',
     migrated: 'Früherer Eintrag:',
+    gruppen: {
+      aerzte: "Ärztinnen und Ärzte",
+      therapien: "Therapien",
+      kontakte: "Weitere Kontakte",
+    },
+    adresse: "Adresse",
+    adressePlaceholder: "z.B. Bahnhofstrasse 1, 8001 Zürich",
     specialties: {
       hausarzt: 'Hausärztin / Hausarzt',
       zahnarzt: 'Zahnärztin / Zahnarzt',
@@ -7549,6 +7583,12 @@ export default {
       kinderarzt: 'Kinderärztin / Kinderarzt',
       psychiater: 'Psychiaterin / Psychiater',
       other: 'Andere Fachrichtung',
+      physio: "Physiotherapie",
+      psychotherapie: "Psychotherapie",
+      ergo: "Ergotherapie",
+      apotheke: "Apotheke",
+      spital: "Spital",
+      spitex: "Spitex",
     },
   },
 

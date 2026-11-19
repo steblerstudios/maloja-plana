@@ -3,9 +3,14 @@ import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { knopfStil } from './components/PrimaryButton.jsx';
 
-const SPECIALTIES = [
-  'hausarzt', 'zahnarzt', 'gynaekologe', 'kinderarzt', 'psychiater', 'other'
-];
+// Fachrichtungen in drei Gruppen (Fach Karteikarten, Sophie 19.11.2026: Therapien und Kontakte sind Karten derselben
+// Liste). Muss mit KARTEI_GRUPPEN in bereiche/notfall/rechnung.js übereinstimmen (Wächter bauplanNotfall.test.js);
+// hier eigens, damit die Eingabe die Rechnungen des Bereichs nicht mitlädt.
+export const SPECIALTY_GRUPPEN = {
+  aerzte: ['hausarzt', 'zahnarzt', 'gynaekologe', 'kinderarzt', 'psychiater', 'other'],
+  therapien: ['physio', 'psychotherapie', 'ergo'],
+  kontakte: ['apotheke', 'spital', 'spitex'],
+};
 
 export const DoctorManager = ({ palette, t, doctors, onChange }) => {
   const docs = Array.isArray(doctors) ? doctors : [];
@@ -88,8 +93,9 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
         onChange: (e) => onUpdate({ specialty: e.target.value }),
         style: { ...inputStyle, cursor: 'pointer' },
       },
-        SPECIALTIES.map(s =>
-          React.createElement('option', { key: s, value: s }, t('doctors.specialties.' + s))
+        Object.entries(SPECIALTY_GRUPPEN).map(([g, liste]) =>
+          React.createElement('optgroup', { key: g, label: t('doctors.gruppen.' + g) },
+            liste.map(s => React.createElement('option', { key: s, value: s }, t('doctors.specialties.' + s))))
         )
       )
     ),
@@ -114,6 +120,18 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
         type: 'tel', value: doc.phone || '',
         onChange: (e) => onUpdate({ phone: e.target.value }),
         placeholder: '+41 44 123 45 67',
+        style: inputStyle,
+      })
+    ),
+
+    // Adresse (Fach Karteikarten, 19.11.2026), eine Zeile
+    React.createElement('div', { style: { marginBottom: space.sm } },
+      React.createElement('label', { htmlFor: 'arzt-adresse-' + idx, style: labelStyle }, t('doctors.adresse')),
+      React.createElement('input', {
+        id: 'arzt-adresse-' + idx,
+        type: 'text', value: doc.adresse || '', autoComplete: 'off',
+        onChange: (e) => onUpdate({ adresse: e.target.value }),
+        placeholder: t('doctors.adressePlaceholder'),
         style: inputStyle,
       })
     ),

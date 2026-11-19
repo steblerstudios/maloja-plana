@@ -4,6 +4,7 @@
 //   2. Als Nächstes fällig naechstesFaellig      → Kalenderblatt     (Zuhause Arztkoffer · Werkzeug Katalog, Beleg-Ordner)
 //   3. Bereit             bereitschaft, lagenStand → Herz mit Puls   (Zuhause Kapitel Notfall · Kachel)
 //   4. Impfung fällig     naechsteImpfung       → Kalenderblatt     (Fach Impfausweis; zählt bei 2 mit)
+//   7. Wer behandelt mich? karteikarten         → Karteikasten      (Fach Karteikarten; Diagnosen: Liste ohne Bild)
 // Die Verfügungen (VORSORGE) sind eine Liste ohne Bild; ihre Rechnung steht hier, weil «Bereit» die
 // Patientenverfügung mitzählt.
 import { feldErledigt } from '../../utils/vollstaendigkeit.js';
@@ -340,3 +341,46 @@ export const impfKostenJahr = (data, jahr) => impfungenListe(data)
 
 // Für den Satz im Fach: Starrkrampf eingetragen, aber ohne Geburtsdatum nicht rechenbar.
 export const impfungOhneAlter = (data) => !datumVon(data?.basis?.dateOfBirth) &&impfungenListe(data).some((e) => e.art === 'dt');
+
+// ─── 7 · Wer behandelt mich? (Fach Karteikarten, Sophie 19.11.2026: «B · Karteikasten», «Eine Liste, zwei Orte») ───
+// Keine eigene Datenhaltung: die Karten SIND die Ärzteliste des Kapitels Notfall (data.notfall.doctorsList,
+// DoctorManager: { name, specialty, phone, adresse?, notes? }). Therapien und Kontakte sind Karten derselben Liste mit
+// eigener Fachrichtung. Die Karte Hausärztin ist die Notfall-Angabe (utils/hausarzt.js, zählt bei «Bereit» mit).
+// Ohne Liste, aber mit altem Feld `doctor`: eine Karte Hausärztin aus dem alten Feld (wie hausarztName).
+export const KARTEI_GRUPPEN = {
+  aerzte: ['hausarzt', 'zahnarzt', 'gynaekologe', 'kinderarzt', 'psychiater', 'other'],
+  therapien: ['physio', 'psychotherapie', 'ergo'],
+  kontakte: ['apotheke', 'spital', 'spitex'],
+};
+export const KARTEI_FACHRICHTUNGEN = Object.values(KARTEI_GRUPPEN).flat();
+export const karteiFach = (x) => {
+  const s = String(x?.specialty || 'hausarzt').toLowerCase();
+  return KARTEI_FACHRICHTUNGEN.includes(s) ? s : 'other';
+};
+const textVon = (v) => (typeof v === 'string' ? v.trim() : '');
+
+// { karten: [{ name, phone, adresse, notes, fach, gruppe, index, alt? }], anzahl, reiter: [fach…], hausarzt }.
+// Sortiert nach Fachrichtung (Reihenfolge oben), innerhalb in der Reihenfolge der Liste. `index` = Stelle in
+// doctorsList (zum Bearbeiten). Nur Karten mit Namen zählen.
+export const karteikarten = (data) => {
+  const nf = data?.notfall || {};
+  const liste = Array.isArray(nf.doctorsList) ? nf.doctorsList : [];
+  const karten = liste
+    .map((x, index) => ({ name: textVon(x?.name), phone: textVon(x?.phone), adresse: textVon(x?.adresse), notes: textVon(x?.notes), fach: karteiFach(x), index }))
+    .filter((k) => k.name);
+  if (!karten.some((k) => k.fach === 'hausarzt') && textVon(nf.doctor)) {
+    karten.push({ name: textVon(nf.doctor), phone: textVon(nf.doctorPhone), adresse: '', notes: '', fach: 'hausarzt', index: -1, alt: true });
+  }
+  const rang = (k) => KARTEI_FACHRICHTUNGEN.indexOf(k.fach);
+  karten.sort((a, b) => rang(a) - rang(b) || a.index - b.index);
+  const gruppeVon = (fach) => Object.keys(KARTEI_GRUPPEN).find((g) => KARTEI_GRUPPEN[g].includes(fach));
+  const mitGruppe = karten.map((k) => ({ ...k, gruppe: gruppeVon(k.fach) }));
+  return { karten: mitGruppe, anzahl: mitGruppe.length, reiter: [...new Set(mitGruppe.map((k) => k.fach))],
+    hausarzt: mitGruppe.some((k) => k.fach === 'hausarzt') };
+};
+
+// Was ist festgestellt? Liste ohne Bild (Präzedenz Verfügungen): die Diagnosen des Kapitels Notfall
+// (data.notfall.chronicDiseasesList, DiseaseManager: { name, code, notes }). Nur Einträge mit Namen.
+export const diagnosenListe = (data) => (Array.isArray(data?.notfall?.chronicDiseasesList) ? data.notfall.chronicDiseasesList : [])
+  .map((x) => ({ name: textVon(x?.name), code: textVon(x?.code), notes: textVon(x?.notes) }))
+  .filter((x) => x.name);

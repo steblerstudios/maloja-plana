@@ -4753,6 +4753,30 @@ export default {
       andere: "Autra vaccinaziun",
     },
   },
+  // Fach Karteikarten im Arztkoffer (19.11.2026).
+  // TODO(rm): provisorisch — Gegenlese Karteikarten (Fachrichtungen, «constatà»).
+  karteikarten: {
+    frage: "Tgi ma tracta?",
+    anzahl: "{n} cartas",
+    eineKarte: "1 carta",
+    ohneHausarzt: "Anc nagin medi da famiglia endatà. Questa carta vala sco indicaziun d’urgenza.",
+    leer: "Anc nagina carta. Qua stattan medis, terapias e contacts sco l’apoteca u la Spitex, mintgamai cun numer da telefon.",
+    karten: "Cartotecas",
+    anrufen: "Telefonar",
+    aufNotfallkarte: "Vala sco indicaziun d’urgenza «medi da famiglia».",
+    frueher: "Endataziun precedenta dal chapitel Sanadad.",
+    eineListe: "La medema glista sco en il chapitel Sanadad: quai che stat qua, stat er là.",
+    bearbeiten: "Elavurar las cartas",
+    erste: "Crear l’emprima carta",
+    fertig: "Fatg",
+    laden: "Chargiar …",
+    diagnosen: {
+      frage: "Tge è vegnì constatà?",
+      leer: "Anc nagina diagnosa endatada.",
+      bearbeiten: "Elavurar las diagnosas",
+      hinweis: "La medema glista sco en il chapitel Sanadad. Resta sin quest apparat; la prevista da l’export la numna sco indicaziun da sanadad.",
+    },
+  },
   gesundheitZuhause: {
     franchiseLeer: "Franchisa anc betg registrada. Cun la franchisa stat qua, quant ch’è cuntanschì.",
     zurFranchise: "Al calculader da la franchisa",
@@ -4792,6 +4816,10 @@ export default {
   },
   // Chapitel Urgenza · «in lieu» (runda 9, AE; construì acceptanza F6, 25.10.2026) — texts betg anc examinads
   notfallKapitel: {
+    // Seite Gesundheit in drei Teilen (19.11.2026).
+    // TODO(rm): provisorisch — Gegenlese Teil-Titel.
+    teilNotfall: "En cas d’urgenza",
+    teilVorsorge: "Prevenziun ed indicaziuns",
     // TODO(rm): provisorisch — Gegenlese (Lebenslagen C1+C2, 07.11.2026)
     krisenTitel: 'En ina crisa u en cas da violenza',
     vollstaendig: 'cumplet',
@@ -8719,6 +8747,7 @@ export default {
     migrated: 'Endataziun precedenta:',
   },
   doctors: {
+    zurKartei: "Elavurar en las cartotecas",
     add: 'Agiuntar medi / media',
     label: 'Medi / Media {nr}',
     specialty: 'Spezialisaziun',
@@ -8730,6 +8759,13 @@ export default {
     notesPlaceholder: 'p.ex. mo cun termin',
     hint: 'Medi da famiglia, dentist ed auters — per che questas infos sajan disponiblas en cas da basegn.',
     migrated: 'Endataziun precedenta:',
+    gruppen: {
+      aerzte: "Medis",
+      therapien: "Terapias",
+      kontakte: "Ulteriurs contacts",
+    },
+    adresse: "Adressa",
+    adressePlaceholder: "p.ex. Via da la Staziun 1, 7000 Cuira",
     specialties: {
       hausarzt: 'Medi / Media da famiglia',
       zahnarzt: 'Dentist / Dentista',
@@ -8737,6 +8773,13 @@ export default {
       kinderarzt: 'Pediater / Pediatra',
       psychiater: 'Psichlater / Psichlatra',
       other: 'Autra spezialisaziun',
+      physio: "Fisioterapia",
+      psychotherapie: "Psicoterapia",
+      ergo: "Ergoterapia",
+      apotheke: "Apoteca",
+      spital: "Ospital",
+      // TODO(rm): provisorisch — «Spitex» ist der Eigenname der Organisation, gleich wie im Deutschen.
+      spitex: "Spitex",
     },
   },
   // O3 — Ergebnis-Art (src/data/ergebnisArt.js). Eigener Block am Dateiende.

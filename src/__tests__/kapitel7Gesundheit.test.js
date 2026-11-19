@@ -174,10 +174,12 @@ describe('Organspende · Mindestalter 16 (TxG Art. 8 Abs. 7)', () => {
 describe('Gestaltung A · Gesundheits-Seiten auf der Kapitelseite', () => {
   const quelle = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
   const fall = quelle.slice(quelle.indexOf("case 'notfall': return ["), quelle.indexOf('default: return [', quelle.indexOf("case 'notfall': return [")));
-  it('«Passend» nennt KVG-Leistungen, Scanner, Unfall, IV und Pflege in zwei Gruppen (der Arztkoffer steht seit 18.11.2026 oben im Kapitel)', () => {
-    for (const v of ['kvg', 'kk', 'unfallkrankheit', 'iv', 'pflege']) expect(fall, v).toContain("weg('" + v + "')");
-    expect(fall).not.toMatch(/^\s+weg\('kvg'\), weg\('kk'\), weg\('gesundheit'\)/m);
-    expect(fall).toContain("P('gruppeKrankenkasse')");
+  // Seite in drei Teilen (Sophie 19.11.2026, «Doppeltes fällt weg»): KVG-Leistungen und Beleg-Ordner sind Fächer im
+  // Arztkoffer oben; «Passend» nennt sie nicht noch einmal.
+  it('«Passend» nennt Unfall, IV und Pflege; KVG-Leistungen und Belege stehen nur im Arztkoffer', () => {
+    for (const v of ['unfallkrankheit', 'iv', 'pflege', 'vorsorgeauftrag', 'organ']) expect(fall, v).toContain("weg('" + v + "'");
+    for (const v of ['kvg', 'kk', 'gesundheit']) expect(fall, v).not.toContain("weg('" + v + "')");
+    expect(fall).not.toContain("P('gruppeKrankenkasse')");
     expect(fall).toContain("P('gruppePassiert')");
   });
   it('der Arztkoffer ist Teil des Kapitels «Gesundheit» (18.11.2026): alte Links führen zum Koffer im Kapitel', () => {

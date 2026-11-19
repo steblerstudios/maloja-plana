@@ -1869,6 +1869,29 @@ export default {
       andere: "Autre vaccin",
     },
   },
+  // Fach Karteikarten im Arztkoffer (19.11.2026).
+  karteikarten: {
+    frage: "Qui me soigne ?",
+    anzahl: "{n} fiches",
+    eineKarte: "1 fiche",
+    ohneHausarzt: "Pas encore de médecin de famille. Cette fiche compte comme indication d’urgence.",
+    leer: "Pas encore de fiche. Ici figurent médecins, thérapies et contacts comme la pharmacie ou l’aide et les soins à domicile, chacun avec un numéro de téléphone.",
+    karten: "Fiches",
+    anrufen: "Appeler",
+    aufNotfallkarte: "Compte comme indication d’urgence «médecin de famille».",
+    frueher: "Ancienne saisie du chapitre Santé.",
+    eineListe: "La même liste que dans le chapitre Santé : ce qui figure ici figure aussi là-bas.",
+    bearbeiten: "Modifier les fiches",
+    erste: "Créer la première fiche",
+    fertig: "Terminé",
+    laden: "Chargement …",
+    diagnosen: {
+      frage: "Qu’est-ce qui a été diagnostiqué ?",
+      leer: "Aucun diagnostic saisi.",
+      bearbeiten: "Modifier les diagnostics",
+      hinweis: "La même liste que dans le chapitre Santé. Reste sur cet appareil ; l’aperçu de l’export la signale comme donnée de santé.",
+    },
+  },
   gesundheitZuhause: {
     franchiseLeer: "Franchise pas encore saisie. Une fois saisie, on voit ici quelle part est atteinte.",
     zurFranchise: "Vers le calcul de la franchise",
@@ -1906,6 +1929,9 @@ export default {
   },
   // Chapitre Urgence · « un seul endroit » (round 9, AE ; construit réception F6, 25.10.2026)
   notfallKapitel: {
+    // Seite Gesundheit in drei Teilen (19.11.2026).
+    teilNotfall: "En cas d’urgence",
+    teilVorsorge: "Prévoyance et indications",
     krisenTitel: 'En cas de crise ou de violence',
     vollstaendig: 'complet',
     fehlt: 'manquant',
@@ -7534,6 +7560,7 @@ export default {
     migrated: 'Ancienne saisie :',
   },
   doctors: {
+    zurKartei: "Modifier dans les fiches",
     add: 'Ajouter un médecin',
     label: 'Médecin {nr}',
     specialty: 'Spécialité',
@@ -7544,6 +7571,13 @@ export default {
     notesPlaceholder: 'p.ex. sur rendez-vous',
     hint: 'Médecin traitant, dentiste et autres — pour que ces infos soient disponibles en cas de besoin.',
     migrated: 'Ancienne saisie :',
+    gruppen: {
+      aerzte: "Médecins",
+      therapien: "Thérapies",
+      kontakte: "Autres contacts",
+    },
+    adresse: "Adresse",
+    adressePlaceholder: "p. ex. Rue du Marché 1, 1204 Genève",
     specialties: {
       hausarzt: 'Médecin traitant',
       zahnarzt: 'Dentiste',
@@ -7551,6 +7585,12 @@ export default {
       kinderarzt: 'Pédiatre',
       psychiater: 'Psychiatre',
       other: 'Autre spécialité',
+      physio: "Physiothérapie",
+      psychotherapie: "Psychothérapie",
+      ergo: "Ergothérapie",
+      apotheke: "Pharmacie",
+      spital: "Hôpital",
+      spitex: "Aide et soins à domicile",
     },
   },
   // O3 — type de résultat (src/data/ergebnisArt.js). Bloc propre en fin de fichier.

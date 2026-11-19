@@ -1869,6 +1869,29 @@ export default {
       andere: "Altra vaccinazione",
     },
   },
+  // Fach Karteikarten im Arztkoffer (19.11.2026).
+  karteikarten: {
+    frage: "Chi mi cura?",
+    anzahl: "{n} schede",
+    eineKarte: "1 scheda",
+    ohneHausarzt: "Nessun medico di famiglia ancora inserito. Questa scheda vale come indicazione d’emergenza.",
+    leer: "Ancora nessuna scheda. Qui figurano medici, terapie e contatti come la farmacia o lo Spitex, ognuno con il numero di telefono.",
+    karten: "Schede",
+    anrufen: "Chiama",
+    aufNotfallkarte: "Vale come indicazione d’emergenza «medico di famiglia».",
+    frueher: "Voce precedente del capitolo Salute.",
+    eineListe: "La stessa lista del capitolo Salute: ciò che è qui è anche là.",
+    bearbeiten: "Modifica le schede",
+    erste: "Crea la prima scheda",
+    fertig: "Fatto",
+    laden: "Caricamento …",
+    diagnosen: {
+      frage: "Che cosa è stato diagnosticato?",
+      leer: "Nessuna diagnosi inserita.",
+      bearbeiten: "Modifica le diagnosi",
+      hinweis: "La stessa lista del capitolo Salute. Rimane su questo dispositivo; l’anteprima dell’esportazione la indica come dato sanitario.",
+    },
+  },
   gesundheitZuhause: {
     franchiseLeer: "Franchigia non ancora inserita. Una volta inserita, qui si vede quanta parte è raggiunta.",
     zurFranchise: "Al calcolo della franchigia",
@@ -1906,6 +1929,9 @@ export default {
   },
   // Capitolo Emergenza · «un solo luogo» (round 9, AE; costruito collaudo F6, 25.10.2026)
   notfallKapitel: {
+    // Seite Gesundheit in drei Teilen (19.11.2026).
+    teilNotfall: "In caso d’emergenza",
+    teilVorsorge: "Previdenza e dati",
     krisenTitel: 'In caso di crisi o di violenza',
     vollstaendig: 'completo',
     fehlt: 'mancante',
@@ -7483,6 +7509,7 @@ export default {
     migrated: 'Inserimento precedente:',
   },
   doctors: {
+    zurKartei: "Modifica nelle schede",
     add: 'Aggiungi medico',
     label: 'Medico {nr}',
     specialty: 'Specialità',
@@ -7493,6 +7520,13 @@ export default {
     notesPlaceholder: 'p.es. solo su appuntamento',
     hint: 'Medico di base, dentista e altri — affinché queste info siano disponibili in caso di emergenza.',
     migrated: 'Inserimento precedente:',
+    gruppen: {
+      aerzte: "Medici",
+      therapien: "Terapie",
+      kontakte: "Altri contatti",
+    },
+    adresse: "Indirizzo",
+    adressePlaceholder: "p. es. Via Nassa 1, 6900 Lugano",
     specialties: {
       hausarzt: 'Medico di base',
       zahnarzt: 'Dentista',
@@ -7500,6 +7534,12 @@ export default {
       kinderarzt: 'Pediatra',
       psychiater: 'Psichiatra',
       other: 'Altra specialità',
+      physio: "Fisioterapia",
+      psychotherapie: "Psicoterapia",
+      ergo: "Ergoterapia",
+      apotheke: "Farmacia",
+      spital: "Ospedale",
+      spitex: "Spitex (cure a domicilio)",
     },
   },
 
