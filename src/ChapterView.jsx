@@ -725,7 +725,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             ? React.createElement('div', { 'data-teil': 'aerzte-in-kartei' },
                 docList.filter((d) => d && d.name && String(d.name).trim()).map((d, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.text } },
                   String(d.name).trim(), React.createElement('span', { style: { color: palette.mid } }, ' · ' + tr('doctors.specialties.' + (d.specialty || 'hausarzt'))))),
-                React.createElement('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('karteikarten'),
+                React.createElement('button', { type: 'button', className: 'mp-link',
+                  onClick: () => onNavigate('karteikarten'),
                   style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, color: palette.skyDeep || palette.text } }, tr('doctors.zurKartei') + ' ›'))
             : React.createElement(DoctorManager, {
                 palette, t: tr, doctors: docList,
