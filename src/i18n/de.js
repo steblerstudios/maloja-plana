@@ -1800,7 +1800,7 @@ export default {
     keineRegel: "Für die eingetragenen Impfungen steht hier keine Frist. In der Arztpraxis oder Apotheke nachfragen.",
     ohneGeburtsdatum: "Für Starrkrampf und Diphtherie braucht die Rechnung das Geburtsdatum (Kapitel Persönliche Basis).",
     hinweis: "Gerechnet nach dem Schweizerischen Impfplan 2026: Starrkrampf und Diphtherie alle 20 Jahre, wenn die letzte Impfung zwischen 25 und 64 war, sonst alle 10 Jahre; FSME alle 10 Jahre. Bei geschwächter Abwehr, vor Reisen oder in der Schwangerschaft gilt anderes: in der Arztpraxis prüfen.",
-    quelle: "Impfplan beim BAG",
+    quelle: "Quelle: [[Schweizerischer Impfplan 2026, BAG und EKIF, Stand Februar 2026|https://www.bag.admin.ch/de/schweizerischer-impfplan]] (geprüft im November 2026).",
     eingetragen: "Eingetragene Impfungen",
     listeLeer: "Noch nichts eingetragen.",
     entfernen: "Entfernen",

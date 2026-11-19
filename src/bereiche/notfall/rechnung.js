@@ -153,7 +153,6 @@ export const naechstesFaellig = (data, letzteBesuche = {}, heute = new Date()) =
 //       Hinweis im Fach). Unter 16 gilt das Kinder-Schema: keine Rechnung.
 //   FSME Kap. 3 a): «Eine Auffrischimpfung wird alle 10 Jahre empfohlen.»
 export const IMPF_ARTEN = ['dt', 'fsme', 'mmr', 'grippe', 'covid', 'hepb', 'hepa', 'hpv', 'pneumo', 'zoster', 'andere'];
-export const IMPF_QUELLE_URL = 'https://www.bag.admin.ch/de/schweizerischer-impfplan';
 
 const datumVon = (wert) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(wert || ''));

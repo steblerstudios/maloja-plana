@@ -1786,7 +1786,7 @@ export default {
     keineRegel: "Per le vaccinazioni registrate qui non è indicata nessuna scadenza. Informarsi presso lo studio medico o in farmacia.",
     ohneGeburtsdatum: "Per tetano e difterite il calcolo ha bisogno della data di nascita (capitolo Base personale).",
     hinweis: "Calcolato secondo il Calendario vaccinale svizzero 2026: tetano e difterite ogni 20 anni se l’ultima dose è stata tra i 25 e i 64 anni, altrimenti ogni 10 anni; FSME ogni 10 anni. Con difese immunitarie indebolite, prima di un viaggio o in gravidanza valgono altre regole: verificare presso lo studio medico.",
-    quelle: "Calendario vaccinale dell’UFSP",
+    quelle: "Fonte: [[Calendario vaccinale svizzero 2026, UFSP e CFV, stato febbraio 2026|https://www.bag.admin.ch/de/schweizerischer-impfplan]] (verificato a novembre 2026).",
     eingetragen: "Vaccinazioni registrate",
     listeLeer: "Ancora nulla di registrato.",
     entfernen: "Rimuovere",

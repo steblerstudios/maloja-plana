@@ -1786,7 +1786,7 @@ export default {
     keineRegel: "No due date is shown for the recorded vaccinations. Ask at a medical practice or pharmacy.",
     ohneGeburtsdatum: "For tetanus and diphtheria, the calculation needs the date of birth (chapter Personal basics).",
     hinweis: "Calculated according to the Swiss vaccination schedule 2026: tetanus and diphtheria every 20 years if the last dose was between ages 25 and 64, otherwise every 10 years; TBE every 10 years. With a weakened immune system, before travel or during pregnancy, other rules apply: check at a medical practice.",
-    quelle: "Vaccination schedule at the FOPH",
+    quelle: "Source: [[Swiss vaccination schedule 2026, FOPH and FCV, as of February 2026|https://www.bag.admin.ch/de/schweizerischer-impfplan]] (checked in November 2026).",
     eingetragen: "Recorded vaccinations",
     listeLeer: "Nothing recorded yet.",
     entfernen: "Remove",

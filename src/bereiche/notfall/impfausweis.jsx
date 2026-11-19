@@ -3,11 +3,11 @@ import { text, weight, space, radius, leading } from '../../config/tokens.js';
 import { knopfStil } from '../../components/PrimaryButton.jsx';
 import { Kalenderblatt } from '../../components/Kalenderblatt.jsx';
 import { PageTitle } from '../../components/Heading.jsx';
-import { ExternerLink } from '../../components/ExternerLink.jsx';
+import { Belege } from '../../components/Belege.jsx';
 import { RueckgaengigMeldung } from '../../components/RueckgaengigMeldung.jsx';
 import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from '../../hooks/useRueckgaengig.js';
 import { Icon } from '../../IconSystem.jsx';
-import { IMPF_ARTEN, IMPF_QUELLE_URL, impfungenListe, naechsteImpfung, impfungOhneAlter } from './rechnung.js';
+import { IMPF_ARTEN, impfungenListe, naechsteImpfung, impfungOhneAlter } from './rechnung.js';
 import { monatJahr } from './zuhause.jsx';
 import { gesundheitFarbe } from './bilder.jsx';
 
@@ -68,9 +68,9 @@ export const Impfausweis = ({ palette, t, data, onUpdateData, heute = new Date()
         : satz(t(liste.length ? 'impfausweis.keineRegel' : 'impfausweis.leer'), 'impf-leer'),
       impfungOhneAlter(data) && satz(t('impfausweis.ohneGeburtsdatum'), 'impf-ohne-alter')));
 
-  const hinweis = h('p', { 'data-teil': 'impf-quelle', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '0 0 ' + space.md + 'px' } },
-    t('impfausweis.hinweis') + ' ',
-    h(ExternerLink, { t, href: IMPF_QUELLE_URL, style: { color: palette.skyDeep || palette.text } }, t('impfausweis.quelle')));
+  const hinweis = h('div', { 'data-teil': 'impf-quelle', style: { margin: '0 0 ' + space.md + 'px' } },
+    h('p', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: 0 } }, t('impfausweis.hinweis')),
+    h(Belege, { palette, t, zeile: t('impfausweis.quelle') }));
 
   const eintraege = h('section', { 'data-teil': 'impf-liste', 'aria-labelledby': 'mp-impf-liste', style: karte },
     h('h3', { id: 'mp-impf-liste', style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('impfausweis.eingetragen')),

@@ -4668,7 +4668,7 @@ export default {
     keineRegel: "Per las vaccinaziuns registradas na stat qua nagin termin. Dumandar en la pratica medicala u en l’apoteca.",
     ohneGeburtsdatum: "Per tetanus e difterie dovra il quint la data da naschientscha (chapitel Basa persunala).",
     hinweis: "Calculà tenor il Plan da vaccinaziun svizzer 2026: tetanus e difterie mintga 20 onns, sche l’ultima vaccinaziun è stada tranter 25 e 64 onns, uschiglio mintga 10 onns; FSME mintga 10 onns. Cun defensiun immunitara debla, avant viadis u durant la gravidanza valan autras reglas: verifitgar en la pratica medicala.",
-    quelle: "Plan da vaccinaziun dal UFSP",
+    quelle: "Funtauna: [[Plan da vaccinaziun svizzer 2026, UFSP e CFV, stadi favrer 2026|https://www.bag.admin.ch/de/schweizerischer-impfplan]] (verifitgà en november 2026).",
     eingetragen: "Vaccinaziuns registradas",
     listeLeer: "Anc nagut registrà.",
     entfernen: "Allontanar",

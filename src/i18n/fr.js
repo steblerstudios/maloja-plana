@@ -1786,7 +1786,7 @@ export default {
     keineRegel: "Aucune échéance n’est indiquée pour les vaccins enregistrés. Se renseigner au cabinet médical ou en pharmacie.",
     ohneGeburtsdatum: "Pour le tétanos et la diphtérie, le calcul a besoin de la date de naissance (chapitre Base personnelle).",
     hinweis: "Calculé selon le Plan de vaccination suisse 2026 : tétanos et diphtérie tous les 20 ans si le dernier vaccin a eu lieu entre 25 et 64 ans, sinon tous les 10 ans ; encéphalite à tiques (FSME) tous les 10 ans. En cas de défenses immunitaires affaiblies, avant un voyage ou pendant la grossesse, d’autres règles s’appliquent : vérifier au cabinet médical.",
-    quelle: "Plan de vaccination de l’OFSP",
+    quelle: "Source : [[Plan de vaccination suisse 2026, OFSP et CFV, état février 2026|https://www.bag.admin.ch/de/schweizerischer-impfplan]] (vérifié en novembre 2026).",
     eingetragen: "Vaccins enregistrés",
     listeLeer: "Rien d’enregistré pour l’instant.",
     entfernen: "Supprimer",
