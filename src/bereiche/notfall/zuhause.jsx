@@ -107,8 +107,9 @@ export const KOFFER_FAECHER = [
   { key: 'impfausweis', view: 'impfausweis', icon: 'health' },
   // Fach Karteikarten (Sophie 19.11.2026, «B · Karteikasten»): eigene Seite, Rechnung karteikarten.
   { key: 'karteikarten', view: 'karteikarten', icon: 'contacts' },
+  // Fach Wochenblister (Sophie 20.11.2026, «A · Wochenblister»): eigene Seite, Rechnung wochenblister.
+  { key: 'blister', view: 'blister', icon: 'blister' },
   { key: 'thermometer', view: null },
-  { key: 'blister', view: null },
 ];
 export const KOFFER_ANKER = 'mp-gesundheit-koffer';
 

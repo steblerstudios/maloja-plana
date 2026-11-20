@@ -229,6 +229,13 @@ const _contacts = () => React.createElement('svg', { viewBox: '0 0 24 24', fill:
   React.createElement('path', { d: 'M 15 19 Q 15 15.5 17 14.5 Q 22 14 22 18', opacity: '0.6' })
 );
 
+// Blister (Fach Wochenblister, 20.11.2026): Streifen mit sechs Tablettenmulden, eine leer (schon genommen).
+const _blister = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinejoin: 'round' },
+  React.createElement('rect', { x: '3', y: '4', width: '18', height: '16', rx: '3' }),
+  ...[[8, 9], [12, 9], [16, 9], [8, 15], [12, 15]].map(([cx, cy]) => React.createElement('circle', { key: cx + '-' + cy, cx, cy, r: '1.8', fill: 'currentColor', stroke: 'none' })),
+  React.createElement('circle', { cx: '16', cy: '15', r: '1.8', strokeWidth: '1.2' })
+);
+
 const _legal = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Scale / balance
   React.createElement('line', { x1: '12', y1: '2', x2: '12', y2: '20', stroke: 'currentColor', strokeWidth: '2' }),
@@ -326,6 +333,7 @@ zeichenErgaenzen({
   work: _work,
   selfEmployment: _selfEmployment,
   contacts: _contacts,
+  blister: _blister,
   legal: _legal,
   edit: _edit,
   phone: _phone,

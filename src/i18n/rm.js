@@ -4777,6 +4777,31 @@ export default {
       hinweis: "La medema glista sco en il chapitel Sanadad. Resta sin quest apparat; la prevista da l’export la numna sco indicaziun da sanadad.",
     },
   },
+  // TODO(rm): provisorisch — Gegenlese Wochenblister (Tage, «ingula», Hinweis Packungsbeilage).
+  // Fach Wochenblister im Arztkoffer (20.11.2026).
+  blister: {
+    frage: "Tge prend jau cura?",
+    einnahmen: "{n} ingulas al di",
+    eineEinnahme: "1 ingula al di",
+    einnahmenSpanne: "{von} fin {bis} ingulas al di",
+    medikamente: "{n} medicaments",
+    einMedikament: "1 medicament",
+    beiBedarfAnzahl: "{n} tenor basegn",
+    nurBeiBedarf: "Mo medicaments tenor basegn endatads. Cun in temp d’ingula s’emplena il blister.",
+    leer: { sie: "Anc nagin medicament. Qua stat tge che Vus prendais cura: la damaun, a mezdi, la saira, la notg, sche giavischà mo tschertins dis.", du: "Anc nagin medicament. Qua stat tge che ti prendas cura: la damaun, a mezdi, la saira, la notg, sche giavischà mo tschertins dis." },
+    ohneZeit: "Senza temp d’ingula",
+    ohneZeitHinweis: "Per quests medicaments n’è nagin temp tschernì; perquai na stattan els betg en il blister.",
+    nurAn: "mo {tage}",
+    tageKurz: { 1: "gli", 2: "ma", 3: "me", 4: "gie", 5: "ve", 6: "so", 7: "du" },
+    tageLang: { 1: "glindesdi", 2: "mardi", 3: "mesemna", 4: "gievgia", 5: "venderdi", 6: "sonda", 7: "dumengia" },
+    zeitenKurz: { morgens: "Damaun", mittags: "Mezdi", abends: "Saira", nachts: "Notg" },
+    eineListe: "La medema glista sco en il chapitel Sanadad: quai che stat qua, stat er là. Resta sin quest apparat; la prevista d’export la numna sco indicaziun da sanadad.",
+    keineEmpfehlung: "Qua stat mo quai ch’è endatà. Co e cura prender in medicament din la media u il medi, l’apoteca e il fegl d’infurmaziun.",
+    bearbeiten: "Elavurar medicaments",
+    erstes: "Endatar l’emprim medicament",
+    fertig: "Fatg",
+    laden: "Vegn chargià …",
+  },
   gesundheitZuhause: {
     franchiseLeer: "Franchisa anc betg registrada. Cun la franchisa stat qua, quant ch’è cuntanschì.",
     zurFranchise: "Al calculader da la franchisa",
@@ -8440,6 +8465,11 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     hint: { sie: 'Cumenzai a tippar — medicaments frequents vegnan proponids.', du: 'Cumenza a tippar — medicaments frequents vegnan proponids.' },
     migrated: 'Anteriura endataziun en text liber:',
+    // TODO(rm): provisorisch — Gegenlese Wochentage im Medikament.
+    tage: "Mo quests dis",
+    tageJeden: "Nagina tscherna: mintga di.",
+    tageGewaehlt: "Mo ils dis tschernids.",
+    zumBlister: "Elavurar en il blister da mesemna",
   },
   jobs: {
     sectionTitle: 'Auters & lavurs precedentas',
