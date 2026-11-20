@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { schildOptionen } from '../data/schutzschild.js';
 import { netzSchildTeile } from '../data/netzSchild.js';
 import { NetzSchild } from './NetzSchild.jsx';
+import { ReserveTank } from './ReserveTank.jsx';
 import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
@@ -23,27 +24,8 @@ import { text, weight, space, radius, leading, duration, ease, INSTRUMENT_GROESS
 // Instrument eine eigene Form: Kreuz · Säule · Tacho (Reserve) · Schild.
 
 // ── Mini-Glyphen (ohne Text, damit sie klein lesbar bleiben) ──
-const gp = (f, r, cx, cy) => { const a = Math.PI * (1 - Math.max(0, Math.min(1, f))); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
-const garc = (f1, f2, r, cx, cy) => { const [x1, y1] = gp(f1, r, cx, cy); const [x2, y2] = gp(f2, r, cx, cy); return 'M ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r + ' ' + r + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1); };
 
-const miniGauge = (palette, { split = 0.5, left, right, needle }) => {
-  const h = React.createElement;
-  const cx = 30, cy = 30, r = 24;
-  const els = [
-    h('path', { key: 't', d: garc(0, 1, r, cx, cy), fill: 'none', stroke: palette.border, strokeWidth: 6, strokeLinecap: 'round' }),
-    h('path', { key: 'l', d: garc(0, split, r, cx, cy), fill: 'none', stroke: left, strokeWidth: 6 }),
-    h('path', { key: 'rr', d: garc(split, 1, r, cx, cy), fill: 'none', stroke: right, strokeWidth: 6 }),
-  ];
-  if (needle != null) {
-    const [nx, ny] = gp(needle, r - 5, cx, cy);
-    els.push(h('line', { key: 'n', x1: cx, y1: cy, x2: nx, y2: ny, stroke: palette.text, strokeWidth: 2.5, strokeLinecap: 'round' }));
-  } else {
-    const [mx1, my1] = gp(split, r - 4, cx, cy); const [mx2, my2] = gp(split, r + 3, cx, cy);
-    els.push(h('line', { key: 'm', x1: mx1, y1: my1, x2: mx2, y2: my2, stroke: palette.mid, strokeWidth: 2 }));
-  }
-  els.push(h('circle', { key: 'h', cx, cy, r: 4, fill: palette.surface, stroke: palette.text, strokeWidth: 2 }));
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', style: { overflow: 'visible', height: 'auto', display: 'block' }, 'aria-hidden': true }, els);
-};
+// Der kleine Tank stand bis 10.11.2026 hier als eigene Zeichnung (miniGauge) — jetzt ReserveTank groesse 'klein'.
 
 // Steuer-Säule im Kleinen — Spiegel der EINEN Säule aus SteuerSaeulen.jsx, die die Person
 // betrifft (Wunsch 25.09.2026): ihr Zivilstand, in Sand wie «aktuell gewählt» im Rechner,
@@ -158,12 +140,23 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
+      // Gemeinsames System (10.11.2026): Bild · grosse Zahl · ein Satz. Betrag über betrag() → Sichtschutz greift.
+      ...(vorschlag.art === 'passt' || vorschlag.art === 'wechsel' ? {
+        zahl: { wert: chfBetrag(vorschlag.franchise), einheit: '' },
+        satz: vorschlag.art === 'passt' ? kreuzSub
+          : t(vorschlag.polster ? 'instrumente.kreuzWechselPolsterKurz' : 'instrumente.kreuzWechselKurz', { jahr: franchiseOpt?.praemienJahr || '' }),
+      } : {}),
       glyph: miniKreuz(palette),
       onClick: () => onNavigate('praemien'),
     },
     {
       // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.
       key: 'steuer', name: t('instrumente.steuer'),
+      ...(steuerGanz && !quellensteuer ? {
+        zahl: { wert: '≈ ' + chfBetrag(steuerGanz.total), einheit: '' },
+        satz: t('instrumente.steuerSatz'),
+        mehr: steuerSaetze.slice(1),
+      } : {}),
       sub: quellensteuer ? t('instrumente.steuerQuelle')
         : steuerGanz ? steuerSaetze.map((z, i) => h('span', { key: i, style: { display: 'block', marginTop: i ? '2px' : 0, color: i ? palette.soft : palette.mid } }, z))
           : bundessteuer != null ? t('instrumente.steuerBetrag', { value: zahl(bundessteuer) }) : setup,
@@ -175,12 +168,20 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     },
     {
       key: 'tank', name: t('instrumente.tank'),
+      // Seit 10.11.2026 die Monate gross (wie zuoberst auf der Übersicht), statt «4.7 Monate Reserve» klein.
+      zahl: tank.mode === 'months' && tank.level !== 'empty'
+        ? { wert: zahl(tank.months, { hoechstens: 1 }), einheit: t(tank.months === 1 ? 'instrumente.tankMonat' : 'instrumente.tankMonate') } : null,
+      satz: t('instrumente.tankSatz'),
       sub: tank.mode === 'months' ? t('instrumente.tankMonths', { months: tank.months }) : setup,
-      glyph: miniGauge(palette, { split: 0.5, left: palette.sandDeep, right: palette.sage, needle: tank.mode === 'months' ? tank.needle / tank.fullMonths : null }),
+      glyph: h(ReserveTank, { palette, t, savings: tank.savings, monthlyExpenses: tank.monthlyExpenses || 0, groesse: 'klein' }),
       onClick: () => onNavigate('finanzuebersicht'),
     },
     {
       key: 'schild', name: t('instrumente.schild'),
+      ...(netz.st.touched && netzZahl.total > 0 ? {
+        zahl: { wert: netzZahl.covered + '/' + netzZahl.total, einheit: '' },
+        satz: t('instrumente.schildSatz'),
+      } : {}),
       sub: netz.st.touched ? t('instrumente.schildCount', { covered: netzZahl.covered, total: netzZahl.total }) : setup,
       glyph: netz.st.touched ? h(NetzSchild, { palette, t, versicherungen: v, ...netzOpts, groesse: 'klein' }) : null,
       onClick: () => onNavigate('chapter', 3),
@@ -206,6 +207,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       kacheln.map(tile => h('button', {
         key: tile.key,
         onClick: tile.onClick,
+        ...(tile.zahl ? { 'aria-label': tile.name + ': ' + tile.zahl.wert + (tile.zahl.einheit ? ' ' + tile.zahl.einheit : '') + '. ' + tile.satz + (tile.mehr && tile.mehr.length ? '. ' + tile.mehr.join(' ') : ''), title: tile.name } : {}),
         style: {
           // Die Säule trägt mehrere Sätze: In der Finanzen-Zeile hat jede Kachel die ganze Breite, sonst brechen sie auf dem Handy in viele kurze Zeilen.
           ...(nur?.includes('steuer') ? { gridColumn: '1 / -1' } : {}),
@@ -220,8 +222,19 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       },
         // Spiegel Startseite: ein Behälter, eine Breite für alle Instrumente (INSTRUMENT_GROESSE.klein, Brand Book «Instrumente»).
         h('div', { 'data-instrument-glyph': tile.key, style: { width: INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
-        h('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, tile.name),
-        h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub)
+        // Grosse Zahl (10.11.2026, zuerst beim Tank): eine Stufe unter der Karte zuoberst (2xl statt 3xl),
+        // damit dort die lauteste Stelle bleibt. Mit Zahl entfällt der kleine Satz — er sagte dasselbe.
+        tile.zahl && h('div', { 'data-instrument-zahl': tile.key, style: { display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: space.xs + 'px', flexWrap: 'wrap' } },
+          h('span', { style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, tile.zahl.wert),
+          tile.zahl.einheit && h('span', { style: { fontSize: text.sm, color: palette.mid } }, tile.zahl.einheit)),
+        // Mit Zahl: ein Satz, was sie bedeutet, statt des Namens (Skizze 10.11.2026, «ja super genau so»).
+        // Der Name bleibt im aria-label/title, damit das Instrument benannt ist.
+        tile.zahl
+          ? h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, tile.satz)
+          : h('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, tile.name),
+        tile.zahl && tile.mehr && tile.mehr.length > 0 && h('div', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal } },
+          tile.mehr.map((z, i) => h('span', { key: i, style: { display: 'block', marginTop: i ? '2px' : 0 } }, z))),
+        !tile.zahl && h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub)
       ))
     )
   );

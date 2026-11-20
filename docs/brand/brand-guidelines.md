@@ -276,6 +276,8 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   (mit nicht gedecktem Anteil, offene Forderungen nicht doppelt): Finanzen-Karte, ohne «(KVG)» im Titel, weil sie
   auch Nicht-Gedecktes zählt. Wächter: `src/__tests__/gesundheitsbelegeEineRechnung.test.js`. Bild für den
   Franchise-Stand: **Fieberthermometer** (entschieden, Bau folgt).
+- **Reserve-Tank seit 10.11.2026 wie das Schild:** ein Bauteil mit `groesse` (`klein` 64 ohne Wörter,
+  `gross` 256 mit Ablesesatz); die eigene Kleinzeichnung `miniGauge` ist aufgelöst.
 - Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Reserve-Tank 280 → 256, Netz-Schild auf
   KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
 
@@ -467,6 +469,21 @@ Dieselben Werte wie die Startseite, damit niemand zwei Produkte sieht.
   Computer steht das Auge in der Kopfzeile, am Handy in «Ansicht & Sprache». Quelle:
   `src/utils/geld.js`, `src/i18n/index.js` (Platzhalter hinter «CHF»), `public/theme-init.js`.
   Wächter: `src/utils/__tests__/betraegeVerbergen.test.js`.
+- **Die Monate gross beim Reserve-Tank** *(10.11.2026, Idee aus dem Abgleich mit Nessie; Stebler Studios:
+  «gleiches System wie das Netz-Schild» und «soll lieber runter zur Tankanzeige»)*. In der Kapitelzeile
+  Finanzen steht unter dem kleinen Tank die Zahl gross (`2xl`): so viele Monate deckt der liquide
+  Notgroschen die Ausgaben. **Keine eigene Karte zuoberst** — ein Zwischenstand mit Karte über «Was ist
+  jetzt dran?» ist wieder entfernt; die Zahl gehört zu ihrem Instrument. Keine Ampelfarbe; bei leerem
+  Notgroschen keine grosse «0». Dieselbe Rechnung wie die Tankanzeige (`data/reserveTank.js`).
+- **Alle Instrumente: Bild · grosse Zahl · ein Satz** *(10.11.2026, Skizze; Stebler Studios «ja super genau so»)*.
+  In der Kapitelzeile zeigt jedes Instrument unter dem Bild seine Zahl gross (`2xl`) und darunter einen Satz,
+  was sie bedeutet. Der Name tritt dann zurück (bleibt im `title` und im `aria-label`). Steuer-Säule
+  «≈ CHF 8’431» · «So viel Einkommenssteuer im Jahr, grob geschätzt», ihre Hinweise (Bund, Annahmen, Frist)
+  bleiben klein darunter; Reserve-Tank «4.7 Monate» · «So lange reicht Ihr Notgroschen»; Netz-Schild
+  «8/8» · «So viel Ihrer Absicherung ist eingetragen»; Franchise-Kreuz «CHF 2’500» · «Eher diese Franchise».
+  Beträge laufen über `betrag()`, damit der Sichtschutz greift. Ohne Zahl (nicht eingerichtet, Quellensteuer,
+  leerer Notgroschen) bleibt die Kachel wie bisher: Name und kleiner Satz.
+  Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)
 
