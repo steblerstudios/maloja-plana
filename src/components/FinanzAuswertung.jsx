@@ -31,6 +31,11 @@ import { GeldflussImKapitel } from './Geldfluss.jsx';
 import { knopfStil, linkStil, KNOPF_RADIUS } from './PrimaryButton.jsx';
 import { belegeImJahr } from '../data/franchiseTacho.js';
 import { mitEchtenBetraegen } from '../utils/geld.js';
+import { InstrumentePanel } from './InstrumentePanel.jsx';
+import { ansichtIkon } from '../config/ansichtenRegister.js';
+import { chapterColor } from '../data/lebensbereiche.js';
+import { kachelZeichenFarbe } from '../utils/lebensbereichFruechte.js';
+import { zahl as zahlFmt } from '../utils/geld.js';
 
 // Die Auswertung der Finanzen — bis 24.10.2026 nur in FinanzUebersicht.jsx, seit der
 // Zusammenlegung mit dem Kapitel Finanzen (docs/entscheide/finanzen-fusion.md, Bauschritt 2)
@@ -463,19 +468,23 @@ export const steuerOrientierung = ({ palette, t, w }) =>
     palette, t, canton: w.steuerkanton, schaetzung: w.kantonsSchaetzung, jahr: KANTONAL_DATA_VERSION, style: { marginTop: '-4px' },
   });
 
+// Der IPV-Stand als kurzer Text — Karte und Spiegel-Weg im Kapitel sagen dasselbe (20.11.2026).
+export const ipvStatusKurz = (t, w) => {
+  const { ipv, ipvVerfuegung, ipvOhneJahr } = w;
+  if (ipvVerfuegung != null || ipvOhneJahr != null) return formatCHF(ipvVerfuegung != null ? ipvVerfuegung : ipvOhneJahr) + ' ' + t('common.perMonth');
+  if (ipv.eligible) return formatCHF(ipv.amount) + ' ' + t('common.perMonth');
+  if (ipv.belegt === false) return t('ipv.statusOffen');
+  return t(ipvUnterMindestbetrag(ipv) ? 'premium.keineAuszahlung' : 'finanzUebersicht.notEligible');
+};
+
 export const ipvKarte = ({ palette, t, onNavigate, w }) => {
   const { ipv, ipvVerfuegung, ipvOhneJahr, ipvFristVorbei } = w;
+  const hatBetrag = ipvVerfuegung != null || ipvOhneJahr != null || ipv.eligible;
   return React.createElement(StatusCard, {
     palette, icon: 'insurance',
     title: t('finanzUebersicht.ipv'),
     // E9: ohne amtlich belegten Kanton weder Betrag noch Grenze, nur die Orientierung.
-    status: ipvVerfuegung != null || ipvOhneJahr != null
-      ? erledigtZeichen(true, formatCHF(ipvVerfuegung != null ? ipvVerfuegung : ipvOhneJahr) + ' ' + t('common.perMonth'))
-      : ipv.eligible
-      ? erledigtZeichen(true, formatCHF(ipv.amount) + ' ' + t('common.perMonth'))
-      : ipv.belegt === false
-        ? t('ipv.statusOffen')
-        : t(ipvUnterMindestbetrag(ipv) ? 'premium.keineAuszahlung' : 'finanzUebersicht.notEligible'),
+    status: hatBetrag ? erledigtZeichen(true, ipvStatusKurz(t, w)) : ipvStatusKurz(t, w),
     statusColor: ipvVerfuegung != null || ipvOhneJahr != null || ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
     // Kein Jahresbetrag aus der Verfügung: sie kann unterjährig beginnen, «× 12» wäre geraten.
     detail: ipvVerfuegung != null
@@ -597,6 +606,46 @@ export const auswertungsHinweis = ({ palette, t }) =>
     style: { marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4' }
   }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('finanzUebersicht.disclaimer')));
 
+// «Spielt mit» (Entwurf R3, 20.11.2026): Zahlen, die in einem anderen Bereich zu Hause sind, stehen hier nur als Weg
+// dorthin — Zeichen und Farbe des Bereichs, eine kurze Zahl, ein Pfeil. Die Erklärung steht im Zuhause.
+const bereichFarbe = (palette, kapitel, isDarkMode) => {
+  try {
+    const farbe = chapterColor(kapitel, !!isDarkMode);
+    return farbe ? { flaeche: farbe, zeichen: kachelZeichenFarbe(farbe, palette) } : null;
+  } catch { return null; }
+};
+export const SpieltMit = ({ palette, t, data, onNavigate, w, isDarkMode }) => {
+  const praemie = Number(data?.versicherungen?.kkPremium) || 0;
+  const wege = [
+    { key: 'ipv', kapitel: 'versicherungen', ikon: ansichtIkon('premium'), name: t('finanzUebersicht.ipv'), wert: ipvStatusKurz(t, w), gehe: () => onNavigate('premium') },
+    praemie > 0 && { key: 'kk', kapitel: 'versicherungen', ikon: ansichtIkon('praemien'), name: t('kkLast.spiegelTitel'),
+      wert: (Number.isInteger(praemie) ? zahlFmt(praemie) : zahlFmt(praemie, { stellen: 2 })) + ' ' + t('common.perMonth'), gehe: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')) },
+    w.hasGesundheitsausgaben && { key: 'gesundheit', kapitel: 'gesundheit', ikon: 'health', name: t('finanzUebersicht.healthCosts'),
+      wert: formatCHF(w.gesundheitsausgaben), gehe: () => onNavigate('kvg', undefined, 'franchise') },
+  ].filter(Boolean);
+  if (!wege.length) return null;
+  return React.createElement('div', { 'data-teil': 'spielt-mit', style: { marginTop: space.md + 'px' } },
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px' } }, t('chapters.finanzen.folgt.spieltMit')),
+    wege.map((x) => {
+      const f = bereichFarbe(palette, x.kapitel, isDarkMode);
+      return React.createElement('button', {
+        key: x.key, type: 'button', 'data-weg': x.key, onClick: x.gehe,
+        style: {
+          display: 'grid', gridTemplateColumns: '32px 1fr auto 12px', alignItems: 'center', gap: space.sm + 'px', width: '100%',
+          minHeight: '48px', padding: '6px 0', background: 'none', border: 'none', borderTop: '1px solid ' + palette.border + '66',
+          cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left',
+        },
+      },
+        React.createElement('span', { 'aria-hidden': 'true', style: { width: '32px', height: '32px', borderRadius: radius.md + 'px', display: 'grid', placeItems: 'center', background: (f ? f.flaeche : palette.sage) + '2E', color: f ? f.zeichen : palette.text } },
+          React.createElement(Icon, { name: x.ikon, size: 18 })),
+        React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, x.name),
+        React.createElement('span', { style: { color: palette.mid, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, x.wert),
+        React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›')
+      );
+    })
+  );
+};
+
 // ─── Im Kapitel Finanzen (Bauschritt 3, docs/entscheide/finanzen-fusion.md §3) ──────────────
 // ChapterView lädt diesen Teil erst bei Bedarf (React.lazy), damit die anderen Kapitel ihn nicht
 // mittragen. Zwei Teile, weil «Passend zu diesem Bereich» (ChapterView) dazwischen steht:
@@ -647,13 +696,30 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
       React.createElement(GeldflussImKapitel, { data, t, palette })
     ),
     w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true }),
+    // ENTWURF R2+R3 (Stebler Studios 20.11.2026, _werkbank/FINANZEN-RUHE-2026-11-20.md): statt sechs Karten
+    // (1) die zwei Instrumente, die hier zu Hause sind (Formenlehre: Steuer = Säule, Notgroschen = Tank), als dieselben
+    // Kacheln wie in der Kapitelzeile — Bild · Zahl · Satz; (2) «Spielt mit»: was in anderen Bereichen zu Hause ist, als
+    // Weg dorthin in dessen Farbe und Zeichen; (3) die ganze Rechnung zugeklappt unter «So gerechnet». Nichts fällt weg.
     w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
-      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), React.createElement(KKLastSpiegel, { palette, t, data, onNavigate }), gesundheitKarte(p), vermoegenKarte(p),
-      // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? Nur wenn etwas erfasst ist.
-      (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, {
-        palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses,
-      })
+      React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: ['steuer', 'tank'] }),
+      React.createElement(SpieltMit, { palette, t, data, onNavigate, w, isDarkMode }),
+      React.createElement('details', {
+        'data-teil': 'so-gerechnet',
+        style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', marginTop: space.md + 'px' },
+      },
+        React.createElement('summary', {
+          style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
+        }, t('chapters.finanzen.folgt.soGerechnet')),
+        React.createElement('div', { style: { paddingTop: space.sm + 'px' } },
+          steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), vermoegenKarte(p),
+          // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? Nur wenn etwas erfasst ist.
+          (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, {
+            palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses,
+          }),
+          ipvKarte(p), React.createElement(KKLastSpiegel, { palette, t, data, onNavigate }), gesundheitKarte(p)
+        )
+      )
     ),
     w.hasData && React.createElement('details', {
       'data-ansprueche': anspruch ? 'moeglich' : 'keiner', open: anspruch || undefined,

@@ -2232,7 +2232,7 @@ export default {
         lohnausweisSub: "Documents · Document folder",
         budgetSub: "Income and expenses in detail",
       },
-      folgt: { titel: "What this leads to" },
+      folgt: { titel: "What this leads to", spieltMit: "Also in play", soGerechnet: "How it is calculated" },
       weitereAnsprueche: { titel: "Other entitlements", sub: "Social assistance and supplementary benefits" },
       nebenerwerb: {
         titel: "Side income",

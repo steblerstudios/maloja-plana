@@ -2482,7 +2482,7 @@ export default {
         budgetSub: "Entradas ed expensas en detagl",
       },
       // rm ungeprüft Finanzen-Fusion
-      folgt: { titel: "Tge che sa resulta da quai" },
+      folgt: { titel: "Tge che sa resulta da quai", spieltMit: "Gioga era ina rolla", soGerechnet: "Uschia calculà" },
       // rm ungeprüft Finanzen-Fusion
       weitereAnsprueche: { titel: "Ulteriurs dretgs", sub: "Agid social e prestaziuns cumplementaras" },
       nebenerwerb: {

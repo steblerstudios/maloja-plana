@@ -2232,7 +2232,7 @@ export default {
         lohnausweisSub: "Documenti · Raccoglitore documenti",
         budgetSub: "Entrate e uscite nel dettaglio",
       },
-      folgt: { titel: "Che cosa ne risulta" },
+      folgt: { titel: "Che cosa ne risulta", spieltMit: "Ne fa parte anche", soGerechnet: "Come è calcolato" },
       weitereAnsprueche: { titel: "Altri diritti", sub: "Aiuto sociale e prestazioni complementari" },
       nebenerwerb: {
         titel: "Attività accessoria",

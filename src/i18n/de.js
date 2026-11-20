@@ -2249,7 +2249,7 @@ export default {
         lohnausweisSub: "Unterlagen · Dokumentenablage",
         budgetSub: "Einnahmen und Ausgaben im Detail",
       },
-      folgt: { titel: "Was sich daraus ergibt" },
+      folgt: { titel: "Was sich daraus ergibt", spieltMit: "Spielt mit", soGerechnet: "So gerechnet" },
       weitereAnsprueche: { titel: "Weitere Ansprüche", sub: "Sozialhilfe und Ergänzungsleistungen" },
       nebenerwerb: {
         titel: "Nebenerwerb",
