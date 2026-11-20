@@ -63,6 +63,9 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //                      «Notfall» der Brotkrume und der Rückweg nach Patientenverfügung, Bestattungswünschen und
 //                      Organspende. Kapitel-Index aus CHAPTER_KEYS, Sprungmarke = Titel des Blocks in
 //                      components/NotfallImKapitel.jsx (Wächter: vorsorgeRueckweg.test.js).
+//   kreditkarte      → Kapitel Finanzen, aufklappbarer Teil «Lohnt sich die Karte?» unter den Angaben (20.11.2026,
+//                      Seitenrunde Finanzen; Wächter: kreditkarteUmleitung.test.js). Der Werkzeug-Eintrag bleibt für
+//                      Suche und Menü und führt über diese Umleitung hin.
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
   // F7-L8 (31.10.2026): der Steuer-Import ist ein Teil des Steuer-Rechners (TaxCalculator.jsx, <details>).
@@ -91,6 +94,9 @@ export const UMLEITUNGEN = {
   // Lebenslagen C3 (07.11.2026): das Testament ist Schritt 6 im Ablauf «Vorsorgeauftrag und Patientenverfügung»,
   // keine eigene Seite. Die Kachel «Testament» im Block Vorsorge springt dorthin (Sprungmarke in Vorsorgeauftrag.jsx).
   testament: { view: 'vorsorgeauftrag', chapterIndex: null, anker: 'mp-testament' },
+  // Seitenrunde Finanzen (20.11.2026): «Lohnt sich die Karte?» ist ein aufklappbarer Teil im Kapitel Finanzen
+  // (ChapterView.jsx, `mp-kreditkarte`); springeZuAnker öffnet das <details>.
+  kreditkarte: { view: 'chapter', chapterIndex: CHAPTER_KEYS.indexOf('finanzen'), anker: 'mp-kreditkarte' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):

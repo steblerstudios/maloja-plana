@@ -80,7 +80,7 @@ const NotfallVorlesekarte = lazyMitTexten(() => import('./NotfallVorlesekarte.js
 const NotfallpassBlatt = lazyMitTexten(() => import('./NotfallpassBlatt.jsx'));
 const PraemienOrientierung = lazyMitTexten(() => import('./PraemienOrientierung.jsx'));
 const MietzinsOrientierung = lazyMitTexten(() => import('./MietzinsOrientierung.jsx'));
-const Kreditkarte = lazyMitTexten(() => import('./Kreditkarte.jsx'));
+// Kreditkarte: seit 20.11.2026 keine eigene Seite — Teil im Kapitel Finanzen (UMLEITUNGEN, ChapterView.jsx).
 const Stundenlohn = lazyMitTexten(() => import('./Stundenlohn.jsx'));
 const KVGWechsel = lazyMitTexten(() => import('./KVGWechsel.jsx'));
 // Nur Design-Vorschau (Phase 2b-UI, noch NICHT verdrahtet). Vollständig DEV-gated
@@ -1673,7 +1673,6 @@ const AppInner = ({ demo }) => {
         view === 'premium' && React.createElement(PremiumSubsidy, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, isDarkMode }),
-        view === 'kreditkarte' && React.createElement(Kreditkarte, { palette, t, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
         view === 'stundenlohn' && React.createElement(Stundenlohn, { palette, t, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
         view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // Design-Vorschau des Tresor-LockScreens (nur DEV; onUnlock ist ein Stub —
