@@ -11,7 +11,7 @@ import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE, getChapters } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
-import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE, Karteikarten, karteikarten, diagnosenListe, KARTEI_GRUPPEN, Wochenblister, wochenblister, blisterTage, Blisterpackung, Fiebertagebuch, fiebertagebuch, fieberBehalten, fieberTemp, Fieberkurve, FIEBER_AUFBEWAHREN_TAGE } from '../bereiche/notfall/notfall.js';
+import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE, Karteikarten, karteikarten, diagnosenListe, KARTEI_GRUPPEN, Wochenblister, wochenblister, blisterTage, Blisterpackung, Fiebertagebuch, fiebertagebuch, fieberBehalten, fieberTemp, Fieberkurve, FIEBER_AUFBEWAHREN_TAGE, FranchiseAblesung, GesundheitKoffer } from '../bereiche/notfall/notfall.js';
 import { SPECIALTY_GRUPPEN } from '../DoctorManager.jsx';
 import { weitereAerzteAusListe, KEINE_AERZTE } from '../utils/weitereAerzte.js';
 
@@ -32,19 +32,19 @@ const kapitel = (d) => renderToStaticMarkup(React.createElement(NotfallImKapitel
 const arztkoffer = kapitel;
 
 describe('Bauplan Notfall & Gesundheit · jedes Bild einmal je Seite', () => {
-  it('Arztkoffer: ein Thermometer (gross), ein Kalenderblatt, je eine Hauptzahl darunter', () => {
+  it('Arztkoffer: ein Thermometer (mittel, im Koffer), ein Kalenderblatt, je eine Hauptzahl daneben', () => {
     const html = arztkoffer(MIT_BELEG);
-    expect(zaehle(html, /data-franchise="gross"/g)).toBe(1);
+    expect(zaehle(html, /data-franchise="mittel"/g)).toBe(1);
     expect(zaehle(html, /data-franchise="/g)).toBe(1);
     expect(zaehle(html, /data-teil="kalenderblatt"/g)).toBe(1);
     expect(zaehle(html, /data-instrument-zahl="franchise"/g)).toBe(1);
     expect(zaehle(html, /data-instrument-zahl="faellig"/g)).toBe(1);
-    expect(html.indexOf('data-instrument-zahl="franchise"')).toBeGreaterThan(html.indexOf('data-franchise="gross"'));
+    expect(html.indexOf('data-instrument-zahl="franchise"')).toBeGreaterThan(html.indexOf('data-franchise="mittel"'));
     expect(html.indexOf('data-instrument-zahl="faellig"')).toBeGreaterThan(html.indexOf('data-teil="kalenderblatt"'));
     // Seite in drei Teilen (Sophie 19.11.2026, «A · Drei Teile»): ① Im Notfall mit Bereit und Unterlagen, dann
-    // ② Arztkoffer mit Fächern, Franchise, fällig, dann ③ Vorsorge und Angaben.
+    // ② Arztkoffer — seit 20.11.2026 («B») Franchise und fällig im Deckel, die Fächer im Boden —, dann ③ Vorsorge.
     const reihe = ['data-teil="teil-notfall"', 'data-teil="notfall-bereit"', 'data-teil="notfall-unterlagen"', 'data-teil="teil-koffer"', 'data-teil="gesundheit-koffer"',
-      'data-teil="gesundheit-franchise"', 'data-teil="gesundheit-faellig"', 'data-teil="notfall-vorsorge"'].map((x) => html.indexOf(x));
+      'data-teil="gesundheit-franchise"', 'data-teil="gesundheit-faellig"', 'data-teil="koffer-faecher"', 'data-teil="notfall-vorsorge"'].map((x) => html.indexOf(x));
     expect(reihe.every((p) => p > -1)).toBe(true);
     expect([...reihe].sort((x, y) => x - y)).toEqual(reihe);
   });
@@ -75,8 +75,12 @@ describe('Bauplan Notfall & Gesundheit · jedes Bild einmal je Seite', () => {
 });
 
 describe('Ablesung am Thermometer (Sophie 18.11.2026, «A · Skala am Thermometer»)', () => {
-  it('Arztkoffer: Selbstbehalt, Franchise, noch offen, erreicht stehen am Thermometer, in dieser Reihenfolge von oben', () => {
-    const html = arztkoffer(MIT_BELEG);
+  // Seit 20.11.2026 («B · Zahlen oben, Fächer unten», Thermometer klein, Text daneben) steht im Koffer das Thermometer
+  // mittel ohne Ablesewörter; die Ablesung bleibt im KVG-Reiter. Ihre Reihenfolge prüft der Wächter am Bauteil.
+  it('Ablesung: Selbstbehalt, Franchise, noch offen, erreicht stehen am Thermometer, in dieser Reihenfolge von oben', () => {
+    const html = renderToStaticMarkup(React.createElement(FranchiseAblesung, { palette: LIGHT_PALETTE, t, groesse: 'mittel',
+      stand: { franchise: 1500, franchiseVerbraucht: 420, franchiseOffen: 1080, selbstbehalt: 0, selbstbehaltMax: 700 } }));
+    expect(arztkoffer(MIT_BELEG)).not.toContain('data-teil="franchise-ablesung"');
     const pos = ['ablese-selbstbehalt', 'ablese-franchise', 'ablese-offen', 'ablese-erreicht'].map((teil) => html.indexOf('data-teil="' + teil + '"'));
     expect(pos.every((p) => p > -1)).toBe(true);
     const top = (teil) => Number((html.match(new RegExp('data-teil="' + teil + '" style="position:absolute;left:0;top:(\\d+)px')) || [])[1]);
@@ -110,28 +114,35 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
     expect(cv.match(/onNavigate\('karteikarten'\)/g)).toHaveLength(2);
     expect(cv).toMatch(/onNavigate\('karteikarten'\)/);
   });
-  it('der offene Koffer: fertige Fächer als Knöpfe im Deckel, geplante gestrichelt im Boden, keine Notfallkarte doppelt', () => {
+  it('der offene Koffer: fertige Fächer als Knöpfe im Boden, keine geplanten mehr, keine Notfallkarte doppelt', () => {
     const html = kapitel(DEMO_DATA);
-    const deckel = html.slice(html.indexOf('data-teil="koffer-deckel"'), html.indexOf('data-teil="koffer-boden"'));
-    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis', 'karteikarten', 'blister', 'thermometer']);
+    const boden = html.slice(html.indexOf('data-teil="koffer-boden"'));
+    expect(boden.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis', 'karteikarten', 'blister', 'thermometer']);
     expect(zaehle(html, /data-bald="ja"/g)).toBe(0); // seit dem Fiebertagebuch (20.11.2026) alle Fächer fertig
     expect(zaehle(html, /data-kachel="notfallkarte"/g)).toBe(1);
   });
-  // Sophie 20.11.2026, «A · Thermometer im Koffer-Boden»: die Franchise liegt im Koffer, darunter nur «Als Nächstes
-  // fällig». Das Fach heisst nur noch «Leistungen» (Doppeltes fällt weg: die Franchise steht im Boden).
-  it('das Thermometer liegt im Koffer-Boden, einmal; «Als Nächstes fällig» steht unter dem Koffer', () => {
+  // Sophie 20.11.2026, «B · Zahlen oben, Fächer unten» («alle drei Etappen im Koffer»): Franchise und Als Nächstes
+  // fällig im Deckel, die Fächer im Boden, darunter nichts. Das Fach heisst nur «Leistungen» (Doppeltes fällt weg).
+  it('alles im Koffer: Franchise und fällig im Deckel, die Fächer im Boden, darunter nichts', () => {
     const html = kapitel(MIT_BELEG);
-    const koffer = html.slice(html.indexOf('data-teil="gesundheit-koffer"'), html.indexOf('data-teil="gesundheit-faellig"'));
-    const boden = koffer.slice(koffer.indexOf('data-teil="koffer-boden"'));
-    expect(koffer.indexOf('data-teil="koffer-boden"')).toBeGreaterThan(koffer.indexOf('data-teil="koffer-deckel"'));
-    expect(zaehle(boden, /data-teil="gesundheit-franchise" data-im-koffer="ja"/g)).toBe(1);
-    expect(zaehle(boden, /data-franchise="gross"/g)).toBe(1);
+    const deckel = html.slice(html.indexOf('data-teil="koffer-deckel"'), html.indexOf('data-teil="koffer-boden"'));
+    const boden = html.slice(html.indexOf('data-teil="koffer-boden"'), html.indexOf('data-teil="notfall-vorsorge"'));
+    expect(html.indexOf('data-teil="koffer-boden"')).toBeGreaterThan(html.indexOf('data-teil="koffer-deckel"'));
+    expect(zaehle(deckel, /data-teil="gesundheit-franchise" data-im-koffer="ja"/g)).toBe(1);
+    expect(zaehle(deckel, /data-teil="gesundheit-faellig" data-im-koffer="ja"/g)).toBe(1);
+    expect(zaehle(deckel, /data-franchise="mittel"/g)).toBe(1);
+    expect(deckel).not.toContain('data-fach=');
+    expect(zaehle(boden, /<button[^>]*data-fach=/g)).toBe(6);
+    expect(boden).not.toMatch(/data-teil="gesundheit-(franchise|faellig)"/);
     expect(zaehle(html, /data-teil="gesundheit-franchise"/g)).toBe(1);
     expect(zaehle(html, /data-teil="gesundheit-faellig"/g)).toBe(1);
-    expect(html.indexOf('data-teil="gesundheit-faellig"')).toBeGreaterThan(html.indexOf('data-teil="koffer-boden"'));
-    expect(boden).not.toContain('data-teil="gesundheit-faellig"');
+    expect(html).not.toContain('data-teil="gesundheit-zuhause"'); // nichts mehr unter dem Koffer
     expect(t('arztkoffer.faecher.kvg.title')).toBe('Leistungen');
-    expect(lies('components/NotfallImKapitel.jsx')).toMatch(/teil: 'franchise', imKoffer: true/);
+    expect(lies('components/NotfallImKapitel.jsx')).toMatch(/stand: h\(GesundheitZuhause, \{ palette, t, data: alle, onNavigate, imKoffer: true \}\)/);
+    // Ohne stand bleibt der Koffer wie vorher: Fächer im Deckel, kein Boden.
+    const ohne = renderToStaticMarkup(React.createElement(GesundheitKoffer, { palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
+    expect(zaehle(ohne.slice(ohne.indexOf('data-teil="koffer-deckel"')), /<button[^>]*data-fach=/g)).toBe(6);
+    expect(ohne).not.toContain('data-teil="koffer-boden"');
     const nur = (teil) => renderToStaticMarkup(React.createElement(GesundheitZuhause, { palette: LIGHT_PALETTE, t, data: MIT_BELEG, onNavigate: () => {}, letzteBesuche: {}, heute: HEUTE, teil }));
     expect(nur('franchise')).not.toContain('data-teil="gesundheit-faellig"');
     expect(nur('faellig')).not.toContain('data-teil="gesundheit-franchise"');

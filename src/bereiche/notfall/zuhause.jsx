@@ -6,7 +6,7 @@ import { Kalenderblatt } from '../../components/Kalenderblatt.jsx';
 import { Icon } from '../../IconSystem.jsx';
 import { loadVorsorgeDates } from '../../utils/vorsorge.js';
 import { bereitschaft, lagenStand, franchiseStand, naechstesFaellig } from './rechnung.js';
-import { FranchiseAblesung, HerzPuls, gesundheitFarbe } from './bilder.jsx';
+import { FranchiseAblesung, FranchiseThermometer, HerzPuls, gesundheitFarbe } from './bilder.jsx';
 
 // Lebensbereich Notfall & Gesundheit · die Zuhause (Bauplan Lebensbereich, Stebler Studios 18.11.2026).
 //   BereitZuhause      Kapitel Notfall: Herz mit Puls gross → «17 von 20» → Satz.
@@ -31,8 +31,10 @@ export const monatJahr = (iso, locale) => {
   try { return d.toLocaleDateString(locale, { month: 'long', year: 'numeric' }); } catch { return iso.slice(5, 7) + '.' + iso.slice(0, 4); }
 };
 
-// teil: 'franchise' | 'faellig' | (ohne = beide). imKoffer: die Franchise liegt im Boden des Koffers (Sophie 20.11.2026,
-// «A · Thermometer im Koffer-Boden») — ohne eigene Karte, der Koffer ist der Rahmen.
+// teil: 'franchise' | 'faellig' | (ohne = beide). imKoffer: beide Fragen stehen im Deckel des Koffers (Sophie 20.11.2026,
+// «B · Zahlen oben, Fächer unten», nach «A · Thermometer im Koffer-Boden» am selben Tag): ohne eigene Karten, der Koffer
+// ist der Rahmen; das Thermometer klein (mittel 128, ohne Ablesewörter), Zahl und Satz daneben; nebeneinander, auf dem
+// Handy untereinander.
 export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche, heute = new Date(), teil, imKoffer = false }) => {
   const h = React.createElement;
   const lokal = (() => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; })();
@@ -44,9 +46,11 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
   const satz = (inhalt, teil) => h('div', { 'data-teil': teil, style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } }, inhalt);
   const weg = (label, onClick) => onNavigate && h('button', { type: 'button', onClick, style: { ...linkStil(palette), color: palette.skyDeep || palette.text, minHeight: '44px', fontSize: text.sm, padding: 0 } }, label + ' ›');
 
-  const franchise = teil !== 'faellig' && h('section', { 'data-teil': 'gesundheit-franchise', 'data-im-koffer': imKoffer ? 'ja' : undefined,
-    style: imKoffer ? { ...karte, background: 'none', border: 'none', padding: space.xs + 'px', marginBottom: 0 } : karte },
-    fr && h('div', { style: { flex: '0 1 auto' } }, h(FranchiseAblesung, { palette, t, stand: fr, groesse: 'gross' })),
+  const imDeckel = { ...karte, flexWrap: 'nowrap', background: 'none', border: 'none', padding: space.xs + 'px', marginBottom: 0 };
+  const franchise = teil !== 'faellig' && h('section', { 'data-teil': 'gesundheit-franchise', 'data-im-koffer': imKoffer ? 'ja' : undefined, style: imKoffer ? imDeckel : karte },
+    fr && h('div', { style: { flex: '0 0 auto' } }, imKoffer
+      ? h(FranchiseThermometer, { palette, stand: fr, groesse: 'mittel' })
+      : h(FranchiseAblesung, { palette, t, stand: fr, groesse: 'gross' })),
     h('div', { style: { minWidth: 0 } },
       frage('instrumente.franchise'),
       fr
@@ -58,7 +62,7 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
         : satz(t('gesundheitZuhause.franchiseLeer'), 'franchise-leer'),
       weg(t('gesundheitZuhause.zurFranchise'), () => onNavigate('kvg', undefined, 'franchise'))));
 
-  const naechstes = teil !== 'franchise' && h('section', { 'data-teil': 'gesundheit-faellig', style: karte },
+  const naechstes = teil !== 'franchise' && h('section', { 'data-teil': 'gesundheit-faellig', 'data-im-koffer': imKoffer ? 'ja' : undefined, style: imKoffer ? imDeckel : karte },
     faellig && h('div', { style: { flex: '0 0 auto', width: '80px', display: 'flex', justifyContent: 'center' } },
       h(Kalenderblatt, { iso: faellig.iso, palette, vorbei: faellig.vorbei, locale: lokal })),
     h('div', { style: { minWidth: 0 } },
@@ -79,7 +83,7 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
           ? weg(t('gesundheitZuhause.zumImpfausweis'), () => onNavigate('impfausweis'))
           : weg(t('gesundheitZuhause.zumKatalog'), () => onNavigate('kvg', undefined, 'katalog'))));
 
-  if (imKoffer) return franchise;
+  if (imKoffer) return h('div', { 'data-teil': 'koffer-stand', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.sm + 'px' } }, franchise, naechstes);
   return h('div', { 'data-teil': 'gesundheit-zuhause', style: { marginBottom: space.lg + 'px' } }, franchise, naechstes);
 };
 
@@ -119,35 +123,37 @@ export const KOFFER_FAECHER = [
 ];
 export const KOFFER_ANKER = 'mp-gesundheit-koffer';
 
-// boden: was unten im Koffer liegt. Sophie 20.11.2026, «A · Thermometer im Koffer-Boden»: die Franchise mit dem
-// Thermometer (GesundheitZuhause teil 'franchise', imKoffer). Geplante Fächer (gestrichelt) stünden davor.
-export const GesundheitKoffer = ({ palette, t, onNavigate, boden }) => {
+// stand: was im Deckel steht. Sophie 20.11.2026, «B · Zahlen oben, Fächer unten» («alle drei Etappen im Koffer»):
+// Franchise und Als Nächstes fällig (GesundheitZuhause imKoffer) im Deckel, die Fächer im Boden — zuerst der Stand,
+// dann die Wege (Bauplan: Bild → Zahl → Satz → Weg). Ohne stand: die Fächer im Deckel. Geplante Fächer (gestrichelt)
+// stehen immer im Boden, nach den fertigen.
+export const GesundheitKoffer = ({ palette, t, onNavigate, stand }) => {
   const h = React.createElement;
   const farbe = gesundheitFarbe(palette);
   const fertig = KOFFER_FAECHER.filter((f) => f.view);
   const bald = KOFFER_FAECHER.filter((f) => !f.view);
   const titel = (f) => t('arztkoffer.faecher.' + f.key + '.title');
   const raster = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: space.sm + 'px' };
+  const faecher = h('div', { 'data-teil': 'koffer-faecher', style: raster },
+    fertig.map((f) => h('button', { key: f.key, type: 'button', 'data-fach': f.key, onClick: () => onNavigate && onNavigate(f.view),
+      style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minHeight: '56px', padding: space.sm + 'px', textAlign: 'left',
+        background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit' } },
+      h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: farbe, flexShrink: 0 } }, h(Icon, { name: f.icon, size: 22 })),
+      // Ein langes Wort («Wochenblister», 20.11.2026) passt nicht in 130 px: trennen statt überstehen.
+      h('span', { style: { minWidth: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'anywhere', hyphens: 'auto', WebkitHyphens: 'auto' } }, titel(f)))));
+  const geplant = bald.length > 0 && h('div', { style: raster },
+    bald.map((f) => h('div', { key: f.key, 'data-fach': f.key, 'data-bald': 'ja',
+      style: { minHeight: '56px', padding: space.sm + 'px', border: '1px dashed ' + palette.border, borderRadius: radius.md, color: palette.mid } },
+      h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel(f)),
+      h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, t('arztkoffer.inVorbereitung')))));
+  const oben = stand || faecher;
+  const unten = (stand ? [faecher, geplant] : [geplant]).filter(Boolean);
   return h('section', { id: KOFFER_ANKER, 'data-teil': 'gesundheit-koffer', 'aria-labelledby': KOFFER_ANKER + '-titel', style: { margin: '0 0 ' + space.md + 'px' } },
     // Teil ② der Seite: der Titel des Koffers ist der Titel des Teils.
     h(TeilTitel, { palette, nr: 2, id: KOFFER_ANKER + '-titel' }, t('arztkoffer.title')),
     // Griff
     h('div', { 'aria-hidden': 'true', style: { width: '72px', height: '16px', margin: '0 auto', border: '4px solid ' + farbe, borderBottom: 'none', borderRadius: radius.lg + 'px ' + radius.lg + 'px 0 0' } }),
-    // Deckel: fertige Fächer
-    h('div', { 'data-teil': 'koffer-deckel', style: { border: '3px solid ' + farbe, borderRadius: bald.length || boden ? radius.lg + 'px ' + radius.lg + 'px ' + radius.xs + 'px ' + radius.xs + 'px' : radius.lg, padding: space.sm + 'px', ...raster } },
-      fertig.map((f) => h('button', { key: f.key, type: 'button', 'data-fach': f.key, onClick: () => onNavigate && onNavigate(f.view),
-        style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minHeight: '56px', padding: space.sm + 'px', textAlign: 'left',
-          background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit' } },
-        h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: farbe, flexShrink: 0 } }, h(Icon, { name: f.icon, size: 22 })),
-        // Ein langes Wort («Wochenblister», 20.11.2026) passt nicht in 130 px: trennen statt überstehen.
-        h('span', { style: { minWidth: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'anywhere', hyphens: 'auto', WebkitHyphens: 'auto' } }, titel(f))))),
-    // Boden: geplante Fächer (seit dem Fiebertagebuch 20.11.2026 keine), dann was im Koffer liegt (die Franchise).
-    // Ohne beides kein Boden.
-    (bald.length > 0 || boden) && h('div', { 'data-teil': 'koffer-boden', style: { border: '3px solid ' + farbe, borderTop: '1px solid ' + farbe, borderRadius: radius.xs + 'px ' + radius.xs + 'px ' + radius.lg + 'px ' + radius.lg + 'px', padding: space.sm + 'px', marginTop: '3px' } },
-      bald.length > 0 && h('div', { style: { ...raster, marginBottom: boden ? space.sm + 'px' : 0 } },
-        bald.map((f) => h('div', { key: f.key, 'data-fach': f.key, 'data-bald': 'ja',
-          style: { minHeight: '56px', padding: space.sm + 'px', border: '1px dashed ' + palette.border, borderRadius: radius.md, color: palette.mid } },
-          h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel(f)),
-          h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, t('arztkoffer.inVorbereitung'))))),
-      boden || null));
+    h('div', { 'data-teil': 'koffer-deckel', style: { border: '3px solid ' + farbe, borderRadius: unten.length ? radius.lg + 'px ' + radius.lg + 'px ' + radius.xs + 'px ' + radius.xs + 'px' : radius.lg, padding: space.sm + 'px' } }, oben),
+    unten.length > 0 && h('div', { 'data-teil': 'koffer-boden', style: { border: '3px solid ' + farbe, borderTop: '1px solid ' + farbe, borderRadius: radius.xs + 'px ' + radius.xs + 'px ' + radius.lg + 'px ' + radius.lg + 'px', padding: space.sm + 'px', marginTop: '3px',
+      display: 'grid', gap: space.sm + 'px' } }, ...unten));
 };
