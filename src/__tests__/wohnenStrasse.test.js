@@ -7,7 +7,6 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { WohnenStrasse, Vergleichshaus, lageZurRegion } from '../bereiche/wohnen/wohnen.js';
-import { INSTRUMENT_GROESSE } from '../config/tokens.js';
 import { PEGEL_SCALE } from '../data/pegel.js';
 
 const palette = { surface: '#fff', border: '#ccc', text: '#111', mid: '#555', soft: '#777', sand: '#c90', sage: '#6a6', gold: '#b80', sky: '#69c', skyDeep: '#357', roseDeep: '#a33', goldDeep: '#850', sageDeep: '#363' };
@@ -74,12 +73,13 @@ describe('Frage B · Vergleichshaus (Stebler Studios 11.11.2026: Kanton, Schweiz
     expect(tag(haus({ lage: lage(1500) }), 'stock-kanton')).toContain('stroke="#6a6"');
     expect(tag(haus({ lage: lage(1760) }), 'stock-kanton')).toContain('stroke="#555"');
   });
-  it('Fahnen je Stock: «ZG 1’732» und «CH Ø 1’446», mindestens 13 px auf der halben Bildbreite', () => {
+  it('Fahnen je Stock: «ZG 1’732» und «CH Ø 1’446», mindestens 13 px bei 190 px Hausbreite in der Strasse', () => {
     const h = haus();
     expect(h).toMatch(/data-teil="fahne-kanton"[^>]*>ZG 1’732</);
     expect(h).toMatch(/data-teil="fahne-schweiz"[^>]*>CH Ø 1’446</);
     const s = Number(tag(h, 'fahne-kanton').match(/font-size="([\d.]+)"/)[1]);
-    expect(s * INSTRUMENT_GROESSE.gross * 0.55 / 100).toBeGreaterThanOrEqual(13);
+    // Seit 20.11.2026 gleich gebaut wie das Drittel-Haus: viewBox 120 breit, in der Strasse 190 px breit.
+    expect(s * 190 / 120).toBeGreaterThanOrEqual(13);
   });
   it('Fahnen nur gross; mittel und klein ohne Wörter', () => {
     expect(haus({ groesse: 'mittel' })).not.toMatch(/<text/);

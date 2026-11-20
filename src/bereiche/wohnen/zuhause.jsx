@@ -51,7 +51,7 @@ export const WohnenStrasse = ({ palette, t, r, ml, hilfe, groesse = 'gross', isD
       h('div', { 'data-teil': 'wohnkosten-franken', style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
         t(ausprobiert ? 'wohnenInstrument.titelAusprobiert' : 'wohnenInstrument.titel') + ': ' + betrag(r.kosten))),
     // Frage B · das Vergleichshaus, Tür = Fass (Frage C)
-    ml && h('div', { 'data-teil': 'strasse-vergleich', style: spalte(Math.round(bildH * 0.85)) },
+    ml && h('div', { 'data-teil': 'strasse-vergleich', style: spalte(bildH) },
       h('div', { style: boden }, h('div', { style: { width: '100%' } },
         h(Vergleichshaus, { palette, lage: ml, fuell, tuer, groesse, kanton: ml.kanton }))),
       ml.lage && h('div', { 'data-instrument-zahl': 'miete', style: { ...zahlStil, color: palette.text, marginTop: space.xs + 'px' } }, lageWert(ml.lage)),

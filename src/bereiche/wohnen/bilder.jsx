@@ -93,7 +93,10 @@ export const lageFarben = (palette, lage) => {
   const r = lage?.richtung;
   return r === 'Above' ? [palette.gold, palette.goldDeep] : r === 'Below' ? [palette.sage, palette.sageDeep] : [palette.mid, palette.mid];
 };
-const VB = { b: 100, boden: 96, hoehe: 70, x: 16, haus: 68, dach: 11, luft: 6, tuerB: 16, tuerH: 24 };
+// Gleiches Haus wie das Drittel-Haus (Stebler Studios 20.11.2026, «die beiden Häuser sollten gleicher aussehen, um die
+// Logik und Verhältnisse besser zu verstehen»): derselbe Körper (HAUS), dasselbe Dach, dieselbe Füllung. Der Körper ist
+// hier die Franken-Skala; der höchste Wert reicht bis `kopf` unter die Traufe, darüber bleibt Platz für eine Fahne.
+const VB = { b: 120, boden: HAUS.oben + HAUS.stock * 3, hoehe: HAUS.stock * 3, x: HAUS.x, haus: HAUS.b, kopf: 1.2, tuerB: 16, tuerH: 24 };
 export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gross', kanton }) => {
   if (!ml || !ml.vergleich) return null;
   const h = React.createElement;
@@ -101,7 +104,7 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
   const klein = groesse === 'klein';
   const { regional, national } = ml.vergleich;
   const eu = gross && ml.ausland ? ml.ausland.eu : null;
-  const max = Math.max(regional, national, ml.netto || 0, eu ? eu.hoehe : 0) * 1.12 || 1;
+  const max = Math.max(regional, national, ml.netto || 0, eu ? eu.hoehe : 0) * VB.kopf || 1;
   const y = (v) => VB.boden - Math.max(3, (v / max) * VB.hoehe);
   const yR = y(regional), yN = y(national), yS = ml.netto > 0 ? y(ml.netto) : VB.boden;
 
@@ -109,14 +112,11 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
   const [kantonFarbe, kantonText] = lageFarben(palette, ml.lage);
   const linie = { vectorEffect: 'non-scaling-stroke' };
   const strich = klein ? 2.5 : 1.5;
-  // Schrift nur gross, bei 256 px Bildbreite genau 13 px (Regel H) — das Haus ist im Kapitel halb so breit wie die
-  // Strasse, darum gerechnet auf die halbe Breite.
-  const schrift = Math.ceil(text.xs * VB.b / (INSTRUMENT_GROESSE.gross * 0.55) * 100) / 100;
+  // Schrift nur gross, 13 px (Regel H) bei der Breite, mit der das Haus in der Strasse steht (190 px, BILDHOEHE.gross).
+  const schrift = Math.ceil(text.xs * VB.b / 190 * 100) / 100;
   // Fahnen stehen unter ihrem Stock, im Haus. Liegen zwei Stöcke enger als eine Schriftzeile, steht die obere
   // Fahne über ihrem Stock. Ein Rand in der Flächenfarbe hält die Schrift auf der Füllung lesbar.
   const nah = Math.abs(yR - yN) < schrift + 2;
-  // Gross: über dem obersten Stock Platz für eine Fahne, damit sie nicht unters Dach rutscht.
-  const top = Math.min(yR, yN, yS, eu ? y(eu.hoehe) : VB.boden) - (gross ? schrift + 4 : VB.luft);
   const fahne = (yy, txt, farbe, teil, oben) => h('text', { 'data-teil': teil, x: x + 3, y: oben ? yy - 2 : yy + schrift + 1, fontSize: schrift, fontWeight: 600, fill: farbe,
     stroke: palette.surface, strokeWidth: schrift / 4, paintOrder: 'stroke', strokeLinejoin: 'round' }, txt);
   // Tür
@@ -128,14 +128,15 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
   const getoent = !klein && tuer && tuer.programm && !fass;
   const clipId = 'vh-tuer-' + groesse;
   return h('svg', {
-    viewBox: '0 ' + (top - VB.dach - 2) + ' ' + VB.b + ' ' + (VB.boden - top + VB.dach + 4), width: '100%', 'aria-hidden': 'true', focusable: 'false',
+    viewBox: '0 0 ' + VB.b + ' ' + (VB.boden + 4), width: '100%', 'aria-hidden': 'true', focusable: 'false',
     'data-teil': 'vergleichs-haus', 'data-groesse': groesse,
     style: { display: 'block', maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto', overflow: 'visible' },
   },
     // Füllung = Ihre Miete
-    ml.netto > 0 && h('rect', { 'data-teil': 'vergleich-fuellung', x, y: yS, width: VB.haus, height: VB.boden - yS, fill: fuell, opacity: 0.4 }),
-    h('path', { d: 'M' + x + ' ' + VB.boden + 'V' + top + 'L' + (x + VB.haus / 2) + ' ' + (top - VB.dach) + 'L' + r + ' ' + top + 'V' + VB.boden + 'Z',
-      fill: 'none', stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
+    ml.netto > 0 && h('rect', { 'data-teil': 'vergleich-fuellung', x, y: yS, width: VB.haus, height: VB.boden - yS, fill: fuell }),
+    // Körper und Dach genau wie beim Drittel-Haus
+    h('rect', { x, y: HAUS.oben, width: VB.haus, height: VB.hoehe, fill: 'none', stroke: palette.text, strokeWidth: strich, ...linie }),
+    h('path', { d: 'M' + (x - 8) + ' ' + HAUS.oben + 'L60 6L' + (r + 8) + ' ' + HAUS.oben + 'Z', fill: 'none', stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
     h('line', { 'data-teil': 'stock-schweiz', x1: x, x2: r, y1: yN, y2: yN, stroke: palette.mid, strokeWidth: klein ? 2 : 1.5, strokeDasharray: '4 3', ...linie }),
     h('line', { 'data-teil': 'stock-kanton', x1: x, x2: r, y1: yR, y2: yR, stroke: kantonFarbe, strokeWidth: klein ? 3 : 2.5, ...linie }),
     eu && h('line', { 'data-teil': 'stock-eu', x1: x, x2: r, y1: y(eu.hoehe), y2: y(eu.hoehe), stroke: palette.skyDeep, strokeWidth: 2, strokeDasharray: '1 3', strokeLinecap: 'round', ...linie }),
