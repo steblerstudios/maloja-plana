@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finanzen Szenen Skizzen</title>
+<style>
+  /* Skizzen, kein App-Code. Farben aus der App (dunkel) und data/lebensbereiche.js, 20.11.2026. Zahlen: Beispiel Maria. */
+  :root {
+    --bg:#222120; --flaeche:#2B2A28; --rand:#423F39; --text:#ECE8E1; --mid:#A3A7AD;
+    --gold:#D2B77E; --golddunkel:#A88F57; --sand:#C4A06A; --sage:#9DB58A; --wohnen:#9DBA6A;
+    --vers:#86A6C2; --behoerden:#7C8798; --gesund:#D98F5C; --rest:#8E8A82;
+  }
+  :root[data-theme="light"] {
+    --bg:#F7F4EE; --flaeche:#FFFFFF; --rand:#E2DCD0; --text:#2A2824; --mid:#6B6760;
+    --gold:#C4A870; --golddunkel:#8F7843; --sand:#B08A4E; --sage:#6E8C5C; --wohnen:#6C8343;
+    --vers:#6787A5; --behoerden:#5A6472; --gesund:#C67A4A; --rest:#9A958C;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: Lexend, -apple-system, "Segoe UI", sans-serif; font-size:15px; line-height:1.5; }
+  header { max-width:1180px; margin:0 auto; padding:24px 16px 4px; display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:flex-start; }
+  h1 { font-size:20px; margin:0; font-weight:600; }
+  header p { margin:4px 0 0; color:var(--mid); font-size:13px; max-width:720px; }
+  .schalter { background:none; border:1px solid var(--rand); color:var(--text); border-radius:999px; padding:8px 14px; font:inherit; font-size:13px; cursor:pointer; min-height:44px; }
+  .reihe { max-width:1180px; margin:0 auto; padding:8px 16px 40px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; align-items:start; }
+  @media (max-width: 980px) { .reihe { grid-template-columns:1fr; max-width:520px; } }
+  section.szene { background:var(--flaeche); border:1px solid var(--rand); border-radius:18px; padding:16px; }
+  .kopf { display:flex; align-items:baseline; gap:8px; margin-bottom:2px; }
+  .kopf b { font-size:22px; color:var(--gold); }
+  .kopf span { font-weight:600; }
+  .idee { color:var(--mid); font-size:13px; margin:0 0 12px; }
+  .zahl { font-size:22px; font-weight:600; font-variant-numeric:tabular-nums; line-height:1.15; }
+  .zahl small { font-size:13px; color:var(--mid); font-weight:400; }
+  .satz { color:var(--mid); font-size:12.5px; line-height:1.4; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .kachel { border:1px solid var(--rand); border-radius:12px; padding:10px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .breit { grid-column:1 / -1; }
+  .spiegel { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+  .pille { font-size:12px; border:1px solid var(--rand); border-radius:999px; padding:4px 10px 4px 6px; display:inline-flex; gap:6px; align-items:center; color:var(--text); }
+  .pille i { width:14px; height:14px; border-radius:4px; display:inline-block; }
+  .pro, .contra { font-size:12.5px; margin:10px 0 0; padding-left:16px; }
+  .pro li::marker { content:"+  "; color:var(--sage); }
+  .contra li::marker { content:"–  "; color:var(--sand); }
+  .zentriert { text-align:center; }
+  svg text { font-family: inherit; }
+  .fuss { max-width:1180px; margin:0 auto; padding:0 16px 40px; color:var(--mid); font-size:12.5px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Finanzen · welche Szene?</h1>
+    <p>Drei Skizzen für «Finanzen wie Wohnen»: jede Frage ein Bild, jedes Bild einmal, eine Hauptzahl darunter.
+      Zahlen aus dem Beispiel Maria (netto 6'200, Steuer ≈ 8'431, Notgroschen 18'500). Nur Skizzen, kein App-Code.</p>
+  </div>
+  <button class="schalter" type="button" id="thema">Hell ansehen</button>
+</header>
+
+<main class="reihe">
+
+  <!-- ───────────── S1 Kacheln ───────────── -->
+  <section class="szene" aria-labelledby="s1">
+    <div class="kopf"><b>S1</b><span id="s1">Fläche aus Kacheln</span></div>
+    <p class="idee">Wie der laufende Entwurf: jedes Instrument eine Kachel, Antippen zeigt die Rechnung.</p>
+    <div class="grid2">
+      <div class="kachel breit">
+        <svg width="190" height="30" viewBox="0 0 190 30" aria-hidden="true">
+          <rect x="0" y="10" width="44" height="10" rx="5" fill="var(--sand)"/><rect x="48" y="10" width="44" height="10" rx="5" fill="var(--rand)"/><rect x="48" y="10" width="34" height="10" rx="5" fill="var(--sand)"/>
+          <rect x="96" y="10" width="44" height="10" rx="5" fill="var(--rand)"/><rect x="144" y="10" width="44" height="10" rx="5" fill="var(--rand)"/>
+          <circle cx="94" cy="15" r="5" fill="var(--sand)" stroke="var(--flaeche)" stroke-width="2"/>
+        </svg>
+        <div class="zahl">6'200 <small>/Mt. netto</small></div>
+        <div class="satz">≈ 6'796 brutto · Wo steht Ihr Lohn?</div>
+      </div>
+      <div class="kachel">
+        <svg width="40" height="44" viewBox="0 0 40 44" aria-hidden="true"><rect x="12" y="4" width="16" height="32" rx="3" fill="var(--golddunkel)"/><rect x="12" y="32" width="16" height="4" fill="var(--gold)"/><line x1="4" y1="38" x2="36" y2="38" stroke="var(--mid)"/></svg>
+        <div class="zahl">≈ 8'431</div>
+        <div class="satz">≈ 703 /Mt. · Einkommenssteuer</div>
+      </div>
+      <div class="kachel">
+        <svg width="56" height="34" viewBox="0 0 56 34" aria-hidden="true"><path d="M6 30 A22 22 0 0 1 28 8" fill="none" stroke="var(--sand)" stroke-width="6"/><path d="M28 8 A22 22 0 0 1 50 30" fill="none" stroke="var(--sage)" stroke-width="6"/><line x1="28" y1="30" x2="42" y2="16" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round"/><circle cx="28" cy="30" r="3" fill="var(--flaeche)" stroke="var(--text)" stroke-width="2"/></svg>
+        <div class="zahl">4.7 <small>Monate</small></div>
+        <div class="satz">So lange reicht der Notgroschen</div>
+      </div>
+    </div>
+    <div class="spiegel">
+      <span class="pille"><i style="background:var(--vers)"></i>IPV · kein Anspruch ›</span>
+      <span class="pille"><i style="background:var(--vers)"></i>Krankenkasse 540 ›</span>
+      <span class="pille"><i style="background:var(--behoerden)"></i>Steuererklärung 31.03. ›</span>
+      <span class="pille"><i style="background:var(--gesund)"></i>Gesundheit 240 ›</span>
+    </div>
+    <ul class="pro"><li>fast fertig gebaut, klar, gut antippbar</li><li>jede Zahl hat ihren Platz</li></ul>
+    <ul class="contra"><li>keine Szene: Säule, Tacho, Barometer sind drei Bildfamilien</li><li>wirkt eher wie Werkzeugkasten als wie «Ihr Geld»</li></ul>
+  </section>
+
+  <!-- ───────────── S2 Ring als Szene ───────────── -->
+  <section class="szene" aria-labelledby="s2">
+    <div class="kopf"><b>S2</b><span id="s2">Der Monatsring als Szene</span></div>
+    <p class="idee">Ein Bild, aus dem alles folgt: Der Lohn fliesst in den Ring, die Steuer ist sein Stück, was bleibt, sammelt sich im Tank.</p>
+    <svg viewBox="0 0 340 330" width="100%" role="img" aria-label="Skizze: Lohn fliesst in den Monatsring, Steuer ist ein Stück davon, was bleibt fliesst in den Tank">
+      <!-- Lohn kommt von links -->
+      <g>
+        <rect x="6" y="40" width="96" height="8" rx="4" fill="var(--rand)"/><rect x="6" y="40" width="58" height="8" rx="4" fill="var(--sand)"/>
+        <circle cx="70" cy="44" r="4" fill="var(--sand)" stroke="var(--flaeche)" stroke-width="2"/>
+        <text x="6" y="30" font-size="12" fill="var(--mid)">Lohn</text>
+        <text x="6" y="70" font-size="17" font-weight="600" fill="var(--text)">6'200</text>
+        <text x="58" y="70" font-size="11" fill="var(--mid)">netto</text>
+        <path d="M104 44 C 140 44, 150 70, 160 92" fill="none" stroke="var(--sand)" stroke-width="2" stroke-dasharray="4 4"/>
+      </g>
+      <!-- Ring: 6'200 = 360°, Segmente aus dem Monatsring -->
+      <g transform="translate(205,175)">
+        <circle r="78" fill="none" stroke="var(--rand)" stroke-width="22"/>
+        <!-- Wohnen 1830 = 106.3°, Steuer+Vorsorge 871 = 50.6°, Übriges 655 = 38°, Versicherungen 609 = 35.4°, bleibt 2235 = 129.8° -->
+        <circle r="78" fill="none" stroke="var(--wohnen)" stroke-width="22" stroke-dasharray="144.7 345.4" transform="rotate(-90)"/>
+        <circle r="78" fill="none" stroke="var(--gold)" stroke-width="28" stroke-dasharray="68.9 421.2" transform="rotate(16.3)"/>
+        <circle r="78" fill="none" stroke="var(--rest)" stroke-width="22" stroke-dasharray="51.7 438.4" transform="rotate(66.9)"/>
+        <circle r="78" fill="none" stroke="var(--vers)" stroke-width="22" stroke-dasharray="48.2 441.9" transform="rotate(104.9)"/>
+        <circle r="78" fill="none" stroke="var(--sage)" stroke-width="22" stroke-dasharray="176.7 313.4" transform="rotate(140.3)"/>
+        <text text-anchor="middle" y="-6" font-size="11" fill="var(--mid)">Jeden Monat bleiben</text>
+        <text text-anchor="middle" y="16" font-size="20" font-weight="600" fill="var(--text)">2'235</text>
+      </g>
+      <!-- Steuer-Stück herausgehoben, mit Steuerfranken -->
+      <g>
+        <line x1="268" y1="176" x2="300" y2="140" stroke="var(--gold)" stroke-width="1.5"/>
+        <circle cx="306" cy="122" r="18" fill="var(--gold)"/><circle cx="306" cy="122" r="13" fill="none" stroke="var(--golddunkel)" stroke-width="1.5"/>
+        <text x="306" y="127" text-anchor="middle" font-size="13" font-weight="700" fill="var(--golddunkel)">5</text>
+        <text x="266" y="92" font-size="12" fill="var(--mid)">Steuer</text>
+        <text x="240" y="76" font-size="17" font-weight="600" fill="var(--text)">≈ 703/Mt.</text>
+      </g>
+      <!-- bleibt → Tank -->
+      <g>
+        <path d="M150 230 C 120 262, 96 268, 80 276" fill="none" stroke="var(--sage)" stroke-width="2" stroke-dasharray="4 4"/>
+        <path d="M16 318 A40 40 0 0 1 56 278" fill="none" stroke="var(--sand)" stroke-width="7"/>
+        <path d="M56 278 A40 40 0 0 1 96 318" fill="none" stroke="var(--sage)" stroke-width="7"/>
+        <line x1="56" y1="318" x2="82" y2="294" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="106" y="304" font-size="17" font-weight="600" fill="var(--text)">4.7 Monate</text>
+        <text x="106" y="322" font-size="11" fill="var(--mid)">Notgroschen</text>
+      </g>
+    </svg>
+    <div class="spiegel">
+      <span class="pille"><i style="background:var(--vers)"></i>IPV ›</span>
+      <span class="pille"><i style="background:var(--vers)"></i>Krankenkasse ›</span>
+      <span class="pille"><i style="background:var(--behoerden)"></i>Steuerfrist ›</span>
+      <span class="pille"><i style="background:var(--gesund)"></i>Gesundheit ›</span>
+    </div>
+    <ul class="pro"><li>eine echte Szene, wie die Strasse bei Wohnen</li><li>erzählt die Geschichte: hinein → weg → bleibt</li><li>der Ring ist schon gebaut und beliebt</li></ul>
+    <ul class="contra"><li>grösster Umbau; auf dem Handy eng</li><li>Lohn gehört dann sicher zu Finanzen</li></ul>
+  </section>
+
+  <!-- ───────────── S3 Fünfliber ───────────── -->
+  <section class="szene" aria-labelledby="s3">
+    <div class="kopf"><b>S3</b><span id="s3">Fünfliber als Sprache</span></div>
+    <p class="idee">Alle Finanzen-Bilder aus Münzen. Der Fünfliber ist schon das Zeichen von Finanzen (Icons 06.11.).</p>
+    <div class="grid2">
+      <div class="kachel breit">
+        <!-- Steuerfranken: ein Fünfliber, Bund-Anteil 977/8431 = 11.6 % als Tortenstück -->
+        <svg width="84" height="84" viewBox="0 0 84 84" aria-hidden="true">
+          <circle cx="42" cy="42" r="38" fill="var(--gold)"/>
+          <path d="M42 42 L42 4 A38 38 0 0 1 67.6 13.9 Z" fill="var(--behoerden)"/>
+          <circle cx="42" cy="42" r="30" fill="none" stroke="var(--golddunkel)" stroke-width="1.5"/>
+          <text x="42" y="50" text-anchor="middle" font-size="24" font-weight="700" fill="var(--golddunkel)">5</text>
+        </svg>
+        <div class="zahl">≈ 8'431 <small>/Jahr</small> · ≈ 703 <small>/Mt.</small></div>
+        <div class="satz">Steuerfranken: das graue Stück geht an den Bund (977), der Rest an Kanton und Gemeinde</div>
+      </div>
+      <div class="kachel">
+        <!-- Notgroschen als Münzstapel: ein Stapel je Monat, Strich bei 3 -->
+        <svg width="120" height="64" viewBox="0 0 120 64" aria-hidden="true">
+          <g fill="var(--gold)" stroke="var(--golddunkel)" stroke-width="1">
+            <rect x="6" y="20" width="16" height="40" rx="3"/><rect x="26" y="20" width="16" height="40" rx="3"/><rect x="46" y="20" width="16" height="40" rx="3"/><rect x="66" y="20" width="16" height="40" rx="3"/><rect x="86" y="44" width="16" height="16" rx="3"/>
+          </g>
+          <line x1="64" y1="6" x2="64" y2="62" stroke="var(--mid)" stroke-dasharray="3 3"/>
+          <text x="66" y="12" font-size="9" fill="var(--mid)">empfohlen 3</text>
+        </svg>
+        <div class="zahl">4.7 <small>Monate</small></div>
+        <div class="satz">je Stapel ein Monat Ausgaben</div>
+      </div>
+      <div class="kachel">
+        <!-- KK-Last: zehn Fünfliber = 10 %-Marke, 8.7 gefüllt -->
+        <svg width="132" height="40" viewBox="0 0 132 40" aria-hidden="true">
+          <g>
+            <circle cx="10" cy="14" r="8" fill="var(--vers)"/><circle cx="28" cy="14" r="8" fill="var(--vers)"/><circle cx="46" cy="14" r="8" fill="var(--vers)"/><circle cx="64" cy="14" r="8" fill="var(--vers)"/><circle cx="82" cy="14" r="8" fill="var(--vers)"/>
+            <circle cx="10" cy="32" r="0"/>
+          </g>
+          <g transform="translate(0,18)">
+            <circle cx="10" cy="14" r="8" fill="var(--vers)"/><circle cx="28" cy="14" r="8" fill="var(--vers)"/><circle cx="46" cy="14" r="8" fill="var(--vers)"/>
+            <path d="M64 6 A8 8 0 0 1 64 22 Z" fill="var(--vers)"/><circle cx="64" cy="14" r="8" fill="none" stroke="var(--vers)"/>
+            <circle cx="82" cy="14" r="8" fill="none" stroke="var(--mid)" stroke-dasharray="2 2"/>
+          </g>
+          <text x="98" y="22" font-size="9" fill="var(--mid)">10 %</text>
+        </svg>
+        <div class="zahl">8.7 <small>%</small></div>
+        <div class="satz">Krankenkasse vom Lohn · Spiegel, Zuhause Versicherungen</div>
+      </div>
+    </div>
+    <div class="spiegel">
+      <span class="pille"><i style="background:var(--sand)"></i>Lohn-Barometer bleibt</span>
+      <span class="pille"><i style="background:var(--behoerden)"></i>Steuerfrist ›</span>
+    </div>
+    <ul class="pro"><li>ein Bild-Gegenstand für den ganzen Bereich, wie Häuser bei Wohnen</li><li>schweizerisch, warm, sofort «Geld»</li></ul>
+    <ul class="contra"><li>ersetzt den entschiedenen Tank (#827) durch Münzstapel</li><li>Münzen brauchen viele Zeichnungen in 3 Grössen</li></ul>
+  </section>
+</main>
+
+<p class="fuss">Die Szenen lassen sich mischen: z. B. S2 als Szene, darin der Steuerfranken aus S3. Der Lohn ist in allen
+  drei das Barometer (das Bild ist entschieden), nur sein Zuhause hängt an der Wahl.</p>
+
+<script>
+  const b = document.getElementById('thema');
+  b.addEventListener('click', () => {
+    const hell = document.documentElement.dataset.theme !== 'light';
+    document.documentElement.dataset.theme = hell ? 'light' : 'dark';
+    b.textContent = hell ? 'Dunkel ansehen' : 'Hell ansehen';
+  });
+</script>
+</body>
+</html>

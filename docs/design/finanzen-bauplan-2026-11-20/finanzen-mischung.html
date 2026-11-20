@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finanzen Ring und Münzen</title>
+<style>
+  /* Skizze S2 + S3, kein App-Code. Farben aus der App (dunkel) und data/lebensbereiche.js. Zahlen: Beispiel Maria.
+     Instrumente der anderen Orte in ihrer entschiedenen Form: Kalenderblatt (Behörden), Glas (IPV), Fieberthermometer
+     (Franchise, #867), zehn Fünfliber (KK-Last, Skizze 11.11.). 20.11.2026. */
+  :root {
+    --bg:#222120; --flaeche:#2B2A28; --rand:#423F39; --text:#ECE8E1; --mid:#A3A7AD;
+    --gold:#D2B77E; --golddunkel:#9C834C; --goldhell:#E6D3A6; --sand:#C4A06A; --sage:#9DB58A; --wohnen:#9DBA6A;
+    --vers:#86A6C2; --sky:#8DB4D6; --behoerden:#7C8798; --gesund:#D98F5C; --rest:#8E8A82;
+  }
+  :root[data-theme="light"] {
+    --bg:#F7F4EE; --flaeche:#FFFFFF; --rand:#E2DCD0; --text:#2A2824; --mid:#6B6760;
+    --gold:#C4A870; --golddunkel:#8F7843; --goldhell:#EADBB5; --sand:#B08A4E; --sage:#6E8C5C; --wohnen:#6C8343;
+    --vers:#6787A5; --sky:#5E8CB5; --behoerden:#5A6472; --gesund:#C67A4A; --rest:#9A958C;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: Lexend, -apple-system, "Segoe UI", sans-serif; font-size:15px; line-height:1.5; }
+  .seite { max-width:760px; margin:0 auto; padding:24px 16px 48px; }
+  .kopf { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:flex-start; }
+  h1 { font-size:20px; margin:0; font-weight:600; }
+  .kopf p { margin:4px 0 0; color:var(--mid); font-size:13px; max-width:560px; }
+  .schalter { background:none; border:1px solid var(--rand); color:var(--text); border-radius:999px; padding:8px 14px; font:inherit; font-size:13px; cursor:pointer; min-height:44px; }
+  .szene { margin-top:16px; background:var(--flaeche); border:1px solid var(--rand); border-radius:20px; padding:16px 12px; }
+  svg { display:block; width:100%; height:auto; }
+  svg text { font-family:inherit; }
+  .t-gross { font-size:20px; font-weight:600; fill:var(--text); }
+  .t-mittel { font-size:15px; font-weight:600; fill:var(--text); }
+  .t-klein { font-size:12px; fill:var(--mid); }
+  .t-weg { font-size:11.5px; fill:var(--sand); }
+  .notiz { margin-top:16px; font-size:13px; color:var(--mid); }
+  .notiz li { margin-bottom:4px; }
+  .notiz b { color:var(--text); font-weight:600; }
+</style>
+</head>
+<body>
+<div class="seite">
+  <div class="kopf">
+    <div>
+      <h1>Finanzen · Ring und Münzen</h1>
+      <p>Mischung aus S2 und S3: Der Monatsring ist die Szene, Finanzen spricht in Fünflibern, und was anderswo zu Hause ist,
+        steht mit seinem eigenen Instrument am Rand. Zahlen: Beispiel Maria. Skizze, kein App-Code.</p>
+    </div>
+    <button class="schalter" type="button" id="thema">Hell ansehen</button>
+  </div>
+
+  <div class="szene">
+  <svg viewBox="0 0 720 900" role="img" aria-label="Skizze Finanzen: Lohn als Münzleiste, Monatsring mit Steuerfranken, Notgroschen als Sparschwein, darunter Kalenderblatt, Glas, zehn Fünfliber und Fieberthermometer">
+    <defs>
+      <!-- Ein Fünfliber: Gold, Rand, «5». Gross und klein aus derselben Zeichnung. -->
+      <symbol id="fuenfliber" viewBox="-20 -20 40 40">
+        <circle r="19" fill="var(--gold)"/>
+        <circle r="15" fill="none" stroke="var(--golddunkel)" stroke-width="1.4"/>
+        <text y="6" text-anchor="middle" font-size="17" font-weight="700" fill="var(--golddunkel)">5</text>
+      </symbol>
+      <symbol id="leer" viewBox="-20 -20 40 40">
+        <circle r="18" fill="none" stroke="var(--rand)" stroke-width="2"/>
+      </symbol>
+      <marker id="pfeil" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--mid)"/>
+      </marker>
+    </defs>
+
+    <!-- ───── A · Lohn als Münzleiste (Barometer im Münzstil) ───── -->
+    <!-- vier Zonen wie das Lohn-Barometer: unteres Zehntel · unterer Bereich · oberer Bereich · oberes Zehntel,
+         je vier Münzen. Gefüllt bis zum Lohn (6'472 auf 40 Std., Zone 2 zu ~¾), Median = Grenze Zone 2|3. -->
+    <text x="40" y="30" class="t-klein">Lohn · wo steht er?</text>
+    <g transform="translate(40,58)">
+      <!-- Zone 1 -->
+      <use href="#fuenfliber" x="0" y="0" width="30" height="30"/><use href="#fuenfliber" x="34" y="0" width="30" height="30"/><use href="#fuenfliber" x="68" y="0" width="30" height="30"/><use href="#fuenfliber" x="102" y="0" width="30" height="30"/>
+      <!-- Zone 2 -->
+      <use href="#fuenfliber" x="150" y="0" width="30" height="30"/><use href="#fuenfliber" x="184" y="0" width="30" height="30"/><use href="#fuenfliber" x="218" y="0" width="30" height="30"/><use href="#leer" x="252" y="0" width="30" height="30"/>
+      <!-- Zone 3 -->
+      <use href="#leer" x="300" y="0" width="30" height="30"/><use href="#leer" x="334" y="0" width="30" height="30"/><use href="#leer" x="368" y="0" width="30" height="30"/><use href="#leer" x="402" y="0" width="30" height="30"/>
+      <!-- Zone 4 -->
+      <use href="#leer" x="450" y="0" width="30" height="30"/><use href="#leer" x="484" y="0" width="30" height="30"/><use href="#leer" x="518" y="0" width="30" height="30"/><use href="#leer" x="552" y="0" width="30" height="30"/>
+      <!-- Median-Marke zwischen Zone 2 und 3 -->
+      <line x1="291" y1="-8" x2="291" y2="38" stroke="var(--mid)" stroke-width="2"/>
+      <text x="291" y="-14" text-anchor="middle" class="t-klein">Median 7'024</text>
+      <text x="66" y="56" text-anchor="middle" class="t-klein">unteres Zehntel</text>
+      <text x="216" y="56" text-anchor="middle" class="t-klein">unterer Bereich</text>
+      <text x="516" y="56" text-anchor="middle" class="t-klein">oberes Zehntel</text>
+    </g>
+    <text x="40" y="160" class="t-gross">6'200 /Mt. netto</text>
+    <text x="246" y="160" class="t-klein">≈ 6'796 brutto · unter dem Median</text>
+
+    <!-- Lohn fliesst in den Ring -->
+    <path d="M200 175 C 220 220, 260 240, 300 262" fill="none" stroke="var(--sand)" stroke-width="2.5" stroke-dasharray="5 5" marker-end="url(#pfeil)"/>
+
+    <!-- ───── B · Monatsring (Einkommen = ganzer Ring) ───── -->
+    <!-- 6'200 = 360°: Wohnen 1'830 · Steuer & Vorsorge 871 · Übriges 655 · Versicherungen 609 · bleibt 2'235. r 120, U 754 -->
+    <g transform="translate(360,400)">
+      <circle r="120" fill="none" stroke="var(--rand)" stroke-width="30"/>
+      <circle r="120" fill="none" stroke="var(--wohnen)" stroke-width="30" stroke-dasharray="222.6 531.4" transform="rotate(-90)"/>
+      <circle r="120" fill="none" stroke="var(--gold)" stroke-width="40" stroke-dasharray="106.0 648.0" transform="rotate(16.3)"/>
+      <circle r="120" fill="none" stroke="var(--rest)" stroke-width="30" stroke-dasharray="79.7 674.3" transform="rotate(66.9)"/>
+      <circle r="120" fill="none" stroke="var(--vers)" stroke-width="30" stroke-dasharray="74.1 679.9" transform="rotate(104.9)"/>
+      <circle r="120" fill="none" stroke="var(--sage)" stroke-width="30" stroke-dasharray="271.8 482.2" transform="rotate(140.3)"/>
+      <text text-anchor="middle" y="-10" class="t-klein">Jeden Monat bleiben</text>
+      <text text-anchor="middle" y="20" class="t-gross" style="font-size:28px">2'235</text>
+      <text text-anchor="middle" y="42" class="t-klein">36 %</text>
+    </g>
+    <!-- ───── Miete · Mini-Drittel-Haus aus Wohnen am grünen Stück (oben rechts im Ring) ───── -->
+    <!-- Drittel-Haus klein: das Haus = ganzes Einkommen, drei gleiche Stockwerke, Füllung = Anteil Wohnen (1'830 / 6'200 = 30 %),
+         Linie beim Drittel. Dasselbe Bild wie im Kapitel Wohnen, nur klein (64). -->
+    <line x1="455" y1="320" x2="520" y2="262" stroke="var(--wohnen)" stroke-width="1.6"/>
+    <g transform="translate(520,182)">
+      <path d="M4 34 L32 8 L60 34" fill="none" stroke="var(--wohnen)" stroke-width="2.5" stroke-linejoin="round"/>
+      <rect x="10" y="34" width="44" height="54" fill="none" stroke="var(--wohnen)" stroke-width="2"/>
+      <rect x="11" y="71.5" width="42" height="15.5" fill="var(--wohnen)"/>
+      <line x1="6" y1="70" x2="58" y2="70" stroke="var(--text)" stroke-width="1.5"/>
+      <line x1="10" y1="52" x2="54" y2="52" stroke="var(--rand)" stroke-width="1"/>
+      <!-- Tür = Fass der Mietzinsbeiträge (Wohnen, 11.11.): Wasser = Einkommen, gestrichelt = Grenze -->
+      <rect x="25" y="62" width="14" height="26" rx="2" fill="var(--flaeche)" stroke="var(--wohnen)" stroke-width="1.5"/>
+      <rect x="26" y="66" width="12" height="21" fill="var(--sky)" opacity=".7"/>
+      <line x1="23" y1="74" x2="41" y2="74" stroke="var(--text)" stroke-width="1.2" stroke-dasharray="2 2"/>
+      <path d="M-6 82 L-6 62 M-11 68 L-6 62 L-1 68" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="592" y="222" class="t-mittel">1'830 /Mt.</text>
+    <text x="592" y="242" class="t-klein">Miete · 30 % vom Lohn</text>
+    <text x="592" y="260" class="t-klein">Tür ↑ über Grenze</text>
+    <text x="592" y="278" class="t-weg">Wohnen ›</text>
+
+    <!-- ───── Versicherungen · Netz-Schild klein am blauen Stück; Krankenkasse und IPV gehören in diese Logik ───── -->
+    <line x1="296" y1="505" x2="420" y2="668" stroke="var(--vers)" stroke-width="1.6"/>
+    <g transform="translate(420,662)">
+      <path d="M0 -6 L26 -14 L52 -6 L52 18 Q52 40 26 52 Q0 40 0 18 Z" fill="var(--flaeche)" stroke="var(--vers)" stroke-width="2"/>
+      <clipPath id="schild"><path d="M0 -6 L26 -14 L52 -6 L52 18 Q52 40 26 52 Q0 40 0 18 Z"/></clipPath>
+      <g clip-path="url(#schild)">
+        <rect x="0" y="8" width="52" height="48" fill="var(--vers)" opacity=".55"/>
+        <g stroke="var(--vers)" stroke-width="1">
+          <line x1="0" y1="6" x2="52" y2="6"/><line x1="0" y1="20" x2="52" y2="20"/><line x1="0" y1="34" x2="52" y2="34"/>
+          <line x1="13" y1="-14" x2="13" y2="52"/><line x1="26" y1="-14" x2="26" y2="52"/><line x1="39" y1="-14" x2="39" y2="52"/>
+        </g>
+      </g>
+    </g>
+    <text x="486" y="672" class="t-mittel">609 /Mt. Versicherungen</text>
+    <text x="486" y="690" class="t-klein">Krankenkasse 540 /Mt.</text>
+    <text x="486" y="706" class="t-klein">IPV: kein Anspruch</text>
+    <text x="486" y="724" class="t-weg">Versicherungen ›</text>
+
+    <!-- ───── C · Steuerfranken am goldenen Stück ───── -->
+    <line x1="470" y1="430" x2="560" y2="470" stroke="var(--gold)" stroke-width="1.6"/>
+    <g transform="translate(600,480)">
+      <circle r="38" fill="var(--gold)"/>
+      <!-- Bund 977 / 8'431 = 11.6 % -->
+      <path d="M0 0 L0 -38 A38 38 0 0 1 25.3 -28.3 Z" fill="var(--behoerden)"/>
+      <circle r="30" fill="none" stroke="var(--golddunkel)" stroke-width="1.5"/>
+      <text y="9" text-anchor="middle" font-size="24" font-weight="700" fill="var(--golddunkel)">5</text>
+    </g>
+    <text x="600" y="548" text-anchor="middle" class="t-mittel">≈ 8'431 /J.</text>
+    <text x="600" y="570" text-anchor="middle" class="t-mittel">≈ 703 /Mt.</text>
+    <text x="600" y="590" text-anchor="middle" class="t-klein">Steuer · grau = Bund</text>
+
+    <!-- ───── D · bleibt → Notgroschen als Sparschwein (der Tank-Gedanke: ein Gefäss füllt sich, Marke bei «empfohlen») ───── -->
+    <!-- Füllhöhe = Monate / 6 (wie die Tank-Skala, voll = 6 Monate): 4.7 / 6 = 78 %. Gestrichelte Linie bei 3 Monaten = 50 %.
+         Gefüllt mit Fünflibern (Münzsprache), Schlitz oben: dort fällt hinein, was jeden Monat bleibt. -->
+    <path d="M246 440 C 230 500, 222 540, 214 572" fill="none" stroke="var(--sage)" stroke-width="2.5" stroke-dasharray="5 5" marker-end="url(#pfeil)"/>
+    <use href="#fuenfliber" x="196" y="560" width="22" height="22" opacity=".9"/>
+    <defs>
+      <clipPath id="schweinbauch"><ellipse cx="0" cy="0" rx="92" ry="62"/></clipPath>
+    </defs>
+    <g transform="translate(150,670)">
+      <!-- Beine -->
+      <rect x="-62" y="44" width="20" height="30" rx="7" fill="var(--goldhell)" stroke="var(--golddunkel)" stroke-width="1.5"/>
+      <rect x="40" y="44" width="20" height="30" rx="7" fill="var(--goldhell)" stroke="var(--golddunkel)" stroke-width="1.5"/>
+      <!-- Ohr -->
+      <path d="M48 -54 L66 -82 L76 -50 Z" fill="var(--goldhell)" stroke="var(--golddunkel)" stroke-width="1.5" stroke-linejoin="round"/>
+      <!-- Bauch (Gefäss) -->
+      <ellipse cx="0" cy="0" rx="92" ry="62" fill="var(--flaeche)" stroke="var(--golddunkel)" stroke-width="2.5"/>
+      <g clip-path="url(#schweinbauch)">
+        <!-- Füllung von unten: 78 % von 124 = 97 → Oberkante y = 62 - 97 = -35 -->
+        <rect x="-92" y="-35" width="184" height="97" fill="var(--gold)" opacity=".9"/>
+        <g fill="none" stroke="var(--golddunkel)" stroke-width="1.2" opacity=".55">
+          <circle cx="-60" cy="30" r="12"/><circle cx="-30" cy="38" r="12"/><circle cx="0" cy="32" r="12"/><circle cx="30" cy="40" r="12"/><circle cx="60" cy="30" r="12"/>
+          <circle cx="-48" cy="6" r="12"/><circle cx="-18" cy="10" r="12"/><circle cx="14" cy="6" r="12"/><circle cx="44" cy="10" r="12"/>
+          <circle cx="-30" cy="-18" r="12"/><circle cx="2" cy="-20" r="12"/><circle cx="34" cy="-16" r="12"/>
+        </g>
+        <!-- Marke «empfohlen 3» = 50 % → y = 0 -->
+        <line x1="-92" y1="0" x2="92" y2="0" stroke="var(--text)" stroke-width="1.6" stroke-dasharray="6 4"/>
+      </g>
+      <ellipse cx="0" cy="0" rx="92" ry="62" fill="none" stroke="var(--golddunkel)" stroke-width="2.5"/>
+      <!-- Kopf, Rüssel, Auge, Schlitz, Schwänzchen -->
+      <ellipse cx="96" cy="6" rx="16" ry="20" fill="var(--goldhell)" stroke="var(--golddunkel)" stroke-width="2"/>
+      <circle cx="92" cy="2" r="2.5" fill="var(--golddunkel)"/><circle cx="100" cy="2" r="2.5" fill="var(--golddunkel)"/>
+      <circle cx="62" cy="-24" r="3.5" fill="var(--text)"/>
+      <rect x="-20" y="-66" width="40" height="7" rx="3.5" fill="var(--golddunkel)"/>
+      <path d="M-92 -6 q-18 -6 -12 -20 q6 -10 12 2" fill="none" stroke="var(--golddunkel)" stroke-width="2" stroke-linecap="round"/>
+      <text x="-80" y="-6" class="t-klein" style="fill:var(--text)">empfohlen 3</text>
+    </g>
+    <text x="270" y="630" class="t-gross">4.7 Monate</text>
+    <text x="270" y="650" class="t-klein">Notgroschen</text>
+    <text x="270" y="666" class="t-klein">voll bei 6 Monaten</text>
+
+    <!-- ───── Spielt mit · Instrumente der anderen Orte ───── -->
+    <line x1="24" y1="740" x2="696" y2="740" stroke="var(--rand)"/>
+    <text x="24" y="764" class="t-klein">Spielt mit · was kein Ring-Stück ist, mit eigenem Bild und Farbe</text>
+
+    <!-- Kalenderblatt · Steuerfrist (Behörden) -->
+    <g transform="translate(24,780)">
+      <rect width="62" height="66" rx="8" fill="var(--flaeche)" stroke="var(--behoerden)" stroke-width="1.5"/>
+      <rect width="62" height="20" rx="8" fill="var(--sky)" opacity=".55"/><rect y="12" width="62" height="8" fill="var(--sky)" opacity=".55"/>
+      <text x="31" y="15" text-anchor="middle" font-size="11" fill="var(--text)">März</text>
+      <text x="31" y="52" text-anchor="middle" font-size="24" font-weight="700" fill="var(--text)">31</text>
+      <text x="76" y="26" class="t-mittel">31.03.2027</text>
+      <text x="76" y="44" class="t-klein">Steuererklärung</text>
+      <text x="76" y="62" class="t-weg">Behörden ›</text>
+    </g>
+
+    <!-- Fieberthermometer · Franchise (liegend, Kugel links, eine Farbe sky, Strich am Ende) -->
+    <g transform="translate(260,790)">
+      <circle cx="12" cy="14" r="11" fill="var(--sky)"/>
+      <rect x="18" y="8" width="132" height="12" rx="6" fill="none" stroke="var(--sky)" stroke-width="2"/>
+      <rect x="18" y="10" width="21" height="8" rx="4" fill="var(--sky)"/>
+      <line x1="150" y1="2" x2="150" y2="26" stroke="var(--mid)" stroke-width="2"/>
+      <text x="0" y="48" class="t-mittel">240 von 1'500</text>
+      <text x="0" y="66" class="t-klein">Franchise erreicht</text>
+      <text x="0" y="84" class="t-weg">Gesundheit ›</text>
+    </g>
+  </svg>
+  </div>
+
+  <ul class="notiz">
+    <li><b>Lohn im Münzstil:</b> dasselbe Barometer (vier Zonen, Median dazwischen), nur dass die Zonen aus Münzen bestehen.
+      Gefüllte Fünfliber = so weit reicht der Lohn. Funktioniert, weil das Barometer ohnehin in gleich breiten Zonen denkt.</li>
+    <li><b>Steuerfranken:</b> hängt am goldenen Stück des Rings; das graue Tortenstück ist der Bund (Behörden-Grau, «spielt mit»).
+      Beim Bauen bräuchte der Ring die Steuer als eigenes Stück (heute «Steuern & Vorsorge» aus dem Budget).</li>
+    <li><b>Miete mit Mini-Haus:</b> am grünen Stück des Rings hängt das Drittel-Haus aus Wohnen (klein), mit der Hauptzahl
+      darunter und dem Weg nach Wohnen. Gleiche Idee wie der Steuerfranken: jedes Ring-Stück trägt das Bild seines Bereichs.
+      ⚠️ Wohnen-Regel «jedes Bild einmal» gilt je Seite — im Kapitel Finanzen steht das Haus damit nur hier, gross bleibt es in Wohnen.</li>
+    <li><b>Notgroschen als Sparschwein:</b> der Tank-Gedanke bleibt (ein Gefäss füllt sich, Marke bei «empfohlen 3», voll bei 6),
+      nur in der Münzsprache: das Schwein füllt sich mit Fünflibern, oben der Schlitz, in den fällt, was jeden Monat bleibt.
+      Der Tacho wird frei für einen anderen Ort. Die Münzstapel (je Stapel ein Monat) bleiben als Idee im Kopf.</li>
+    <li><b>Jedes Ring-Stück trägt sein Bild</b> (Entscheid 20.11.): Miete → Mini-Haus mit Tür, Steuer → Steuerfranken,
+      Versicherungen → Netz-Schild klein. Die <b>IPV</b> steht nicht mehr am Rand, sondern beim Versicherungs-Stück, in der Logik der
+      Krankenkasse (Prämie − Verbilligung). «Übriges» und «bleibt» haben kein eigenes Bild.</li>
+    <li><b>Tür am Mini-Haus:</b> das Fass der Mietzinsbeiträge (Wohnen, 11.11.): Wasser = Einkommen, gestrichelt = Grenze, Pfeil
+      ↑ über / ↓ unter der Grenze. Hinweis: Maria wohnt in Zürich, dort gibt es kein Programm mit Zahl — in der App wäre ihre Tür
+      schlicht. Hier zur Skizze gezeigt.</li>
+    <li><b>Spielt mit (Rand):</b> nur noch, was kein Ring-Stück ist: Kalenderblatt (Steuerfrist, Behörden) und Fieberthermometer
+      (Franchise, Gesundheit). Zahl 240 nur zur Skizze.</li>
+    <li><b>Krankenkasse vom Lohn (8.7 %):</b> Bild noch offen — Barometer mit 10-%-Marke (Empfehlung 11.11.) oder «zehn Fünfliber»
+      (Skizze 11.11.). Das Thermometer bleibt bei der Franchise (ein Bild, eine Bedeutung). Gehört in den Versicherungen-Bauplan.</li>
+    <li><b>Tacho:</b> frei, Ort offen.</li>
+  </ul>
+</div>
+<script>
+  const b = document.getElementById('thema');
+  b.addEventListener('click', () => {
+    const hell = document.documentElement.dataset.theme !== 'light';
+    document.documentElement.dataset.theme = hell ? 'light' : 'dark';
+    b.textContent = hell ? 'Dunkel ansehen' : 'Hell ansehen';
+  });
+</script>
+</body>
+</html>
