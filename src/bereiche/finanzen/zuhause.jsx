@@ -8,26 +8,26 @@ import { linkStil } from '../../components/PrimaryButton.jsx';
 import { Monatsring } from '../../components/Monatsring.jsx';
 import { NetzSchild } from '../../components/NetzSchild.jsx';
 import { Kalenderblatt } from '../../components/Kalenderblatt.jsx';
-import { DrittelHaus } from '../wohnen/bilder.jsx';
-import { wohnkostenRechnung } from '../wohnen/rechnung.js';
+import { DrittelHaus, MoeglichKnopf } from '../wohnen/bilder.jsx';
+import { wohnkostenRechnung, mietzinsHilfe } from '../wohnen/rechnung.js';
 import { FranchiseThermometer } from '../notfall/bilder.jsx';
 import { franchiseStand } from '../notfall/rechnung.js';
-import { lohnMuenzen, steuerFranken, notgroschen, steuerfrist } from './rechnung.js';
+import { lohnMuenzen, steuerFranken, notgroschen, steuerfrist, vermoegenMuenzen } from './rechnung.js';
 import { versicherungenSumme, monatsAusgaben } from '../../utils/monatsrechnung.js';
-import { MuenzLohn, SteuerMuenzen, Sparschwein } from './bilder.jsx';
+import { MuenzLohn, SteuerMuenzen, VermoegenStapel, Sparschwein } from './bilder.jsx';
 import { finanzWerte, ipvStatusKurz, formatCHF } from '../../components/FinanzAuswertung.jsx';
 import { ladeIPVModelle } from '../../config/cantonalData.js';
 
 // Lebensbereich Finanzen · die Szene (Bauplan Lebensbereich, Entwurf Stebler Studios 20.11.2026, Skizze
 // _werkbank/entwuerfe/finanzen-mischung.html). Der Monatsring ist die Szene:
 //   oben      der Lohn als Münzleiste — fliesst in den Ring
-//   der Ring  jedes Stück trägt das Bild seines Lebensbereichs: Wohnen das Drittel-Haus, Versicherungen das Netz-Schild,
-//             Steuern den Steuerfranken (mit der geschätzten Steuer darunter)
-//   unten     was bleibt, sammelt sich im Sparschwein (Notgroschen)
+//   der Ring  jedes Stück trägt das Bild seines Lebensbereichs: Wohnen das Drittel-Haus mit der Tür (Mietzinsbeitrag),
+//             Versicherungen das Netz-Schild; die Steuer ist ein eigenes Stück mit dem Münzstapel darunter
+//   unten     was bleibt, sammelt sich im Sparschwein (Notgroschen); das Vermögen daneben als Münzstapel
 //   am Rand   was kein Ring-Stück ist, mit seinem eigenen Bild: Kalenderblatt (Steuerfrist, Behörden), Fieberthermometer
 //             (Franchise, Gesundheit)
 // Jedes Bild steht auf der Seite einmal. Offen (FINANZEN-BAUPLAN-2026-11-20.md): Lohn-Zuhause, Bild der KK-Last (erst nach
-// Gesundheit), IPV in der Krankenkassen-Logik, Tür am Mini-Haus, Ort des Tachos.
+// Gesundheit), IPV-Bild in der Krankenkassen-Logik, Ort des Tachos.
 const zahlStil = { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, fontVariantNumeric: 'tabular-nums' };
 
 export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkommen, verplant, titel, titelJahr, zahl: bleibt, kopf }) => {
@@ -46,6 +46,8 @@ export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkom
   const frist = steuerfrist(data);
   const fr = franchiseStand(data);
   const wohnen = (() => { try { return wohnkostenRechnung(data?.wohnen, data); } catch { return null; } })();
+  const hilfe = (() => { try { return mietzinsHilfe(data); } catch { return null; } })();
+  const vm = w.hasAssets ? vermoegenMuenzen(w.totalAssets, data) : null;
   const v = data?.versicherungen || {};
   const netzOpts = { ...schildOptionen(data), finanzen: data?.finanzen, kanton: data?.basis?.canton };
 
@@ -59,17 +61,21 @@ export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkom
 
   // Bilder an den Ring-Stücken
   const bilder = {
-    wohnen: wohnen && wohnen.anteil != null ? h(DrittelHaus, { palette, t, anteil: wohnen.anteil, ueberDrittel: wohnen.ueberDrittel, fuell: bereichFillColor('wohnen', isDarkMode), groesse: 'klein' }) : null,
+    wohnen: wohnen && wohnen.anteil != null ? h(DrittelHaus, { palette, t, anteil: wohnen.anteil, ueberDrittel: wohnen.ueberDrittel, fuell: bereichFillColor('wohnen', isDarkMode), groesse: 'klein',
+      tuer: hilfe ? { programm: hilfe.programm, fass: hilfe.fass, farbe: bereichFillColor('behoerden', isDarkMode) || palette.mid } : null }) : null,
     versicherungen: h(NetzSchild, { palette, t, versicherungen: v, ...netzOpts, groesse: 'klein' }),
   };
   const praemie = Number(v.kkPremium) || 0;
   const unter = {
-    // Steuer als Münzbalken (eine Münze = 1 % vom Einkommen, Bund grau), darunter Jahr, Anteil und Legende.
-    steuern: steuer ? h('div', { 'data-teil': 'steuer-muenzen-zeile', style: { margin: space.xs + 'px 0' } },
+    // Wohnen: ist ein Mietzinsbeitrag möglich, steht der Wegweiser unter der Zeile (die Tür sitzt im Mini-Haus).
+    wohnen: hilfe && hilfe.moeglich && onNavigate ? h(MoeglichKnopf, { palette, t, onNavigate: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')), kurz: true }) : null,
+    // Steuer als Münzstapel (eine Münze = 1 % vom Einkommen, Bund grau unten), daneben Jahr, Anteil und Legende.
+    steuern: steuer ? h('div', { 'data-teil': 'steuer-muenzen-zeile', style: { display: 'flex', alignItems: 'flex-end', gap: space.sm + 'px', margin: space.xs + 'px 0' } },
       h(SteuerMuenzen, { palette, isDarkMode, anteil: steuer.anteilEinkommen, bundAnteil: steuer.bundAnteilEinkommen }),
-      h('div', { 'data-instrument-zahl': 'steuer', style: { fontSize: text.sm, color: palette.text, marginTop: '4px' } },
-        t('instrumente.steuerMuenzZeile', { betrag: betrag(steuer.total), pct: zahl(steuer.anteilEinkommen * 100, { hoechstens: 0 }) })),
-      h('div', { style: { fontSize: text.xs, color: palette.mid } }, t('instrumente.steuerMuenzLegende') + ' · ' + t('instrumente.steuerSatz'))) : null,
+      h('div', { style: { minWidth: 0 } },
+        h('div', { 'data-instrument-zahl': 'steuer', style: { fontSize: text.sm, color: palette.text } },
+          t('instrumente.steuerMuenzZeile', { betrag: betrag(steuer.total), pct: zahl(steuer.anteilEinkommen * 100, { hoechstens: 0 }) })),
+        h('div', { style: { fontSize: text.xs, color: palette.mid } }, t('instrumente.steuerMuenzLegende') + ' · ' + t('instrumente.steuerSatz')))) : null,
     // Satz aus dem KK-Spiegel (KKLastCard), der bis 20.11. als eigene Karte unten stand. Das Bild der KK-Last folgt erst
     // nach Gesundheit (FINANZEN-BAUPLAN-2026-11-20.md).
     versicherungen: praemie > 0 && verplant > 0 ? t(Math.round(versicherungenSumme(monatsAusgaben(data))) <= Math.round(praemie) ? 'kkLast.spiegelSatzAllein' : 'kkLast.spiegelSatz',
@@ -88,7 +94,7 @@ export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkom
         lohn.brutto && satz('≈ ' + betrag(lohn.brutto) + ' ' + t('einkommensfeld.brutto')),
         weg(t('lohnEinordnung.title'), () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung'))))),
     // Der Ring
-    h(Monatsring, { palette, t, data, einkommen, verplant, titel, titelJahr, zahl: bleibt, kopf, bilder, unter }),
+    h(Monatsring, { palette, t, data, einkommen, verplant, titel, titelJahr, zahl: bleibt, kopf, bilder, unter, steuerEigen: true }),
     // Was bleibt → Sparschwein
     tank.show && tank.mode === 'months' && block('szene-sparschwein',
       h(Sparschwein, { palette, isDarkMode, monate: tank.months, empfohlen: tank.recommendMonths, voll: tank.fullMonths }),
@@ -96,7 +102,12 @@ export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkom
         h('div', { 'data-instrument-zahl': 'notgroschen', style: { ...zahlStil, color: palette.text } }, zahl(tank.months, { hoechstens: 1 }),
           h('span', { style: { fontSize: text.sm, fontWeight: weight.normal, color: palette.mid } }, ' ' + t(tank.months === 1 ? 'instrumente.tankMonat' : 'instrumente.tankMonate'))),
         satz(t('instrumente.tankSatz')),
-        w.hasAssets && satz(t('finanzUebersicht.assets') + ': ' + formatCHF(w.totalAssets)))),
+        // Vermögen in derselben Münze wie die Steuer, je zehn ein Stapel (V3). Ohne erfasstes Einkommen nur die Zahl.
+        w.hasAssets && h('div', { 'data-teil': 'szene-vermoegen', style: { marginTop: space.sm + 'px' } },
+          vm && h(VermoegenStapel, { palette, isDarkMode, muenzen: vm.muenzen }),
+          satz(t('finanzUebersicht.assets') + ': ' + formatCHF(w.totalAssets)
+            + (vm ? ' · ' + t('instrumente.vermoegenMuenzZeile', { pct: zahl(vm.anteil * 100, { hoechstens: 0 }) }) : '')),
+          vm && h('div', { style: { fontSize: text.xs, color: palette.mid } }, t('instrumente.muenzRegel'))))),
     // Am Rand: was kein Ring-Stück ist, mit eigenem Bild
     (frist || fr) && h('div', { 'data-teil': 'szene-rand', style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px ' + space.xl + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88' } },
       frist && h('div', { 'data-rand': 'steuerfrist', style: { display: 'flex', gap: space.sm + 'px', alignItems: 'center', flex: '1 1 220px', minWidth: 0 } },

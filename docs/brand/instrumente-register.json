@@ -1,5 +1,6 @@
 {
   "_zweck": "Brand Book §7f (Formenlehre). Jedes Instrument der Kapitelzeile nennt Frage-Art, Form, Rechnung und Zuhause. Wächter: src/__tests__/instrumenteFormenlehre.test.js. Nur Doku + Test, nicht im App-Bündel.",
+  "_finanzenSzene": "Stand 20.11.2026 (Zweig feat/finanzen-bauplan): Das Kapitel Finanzen zeigt eine Szene um den Monatsring mit eigenen Bereichsbildern — Lohn als Münzleiste (lage), Steuer als Münzstapel (zusammensetzung, eine Münze = 1 % vom Einkommen), Notgroschen als Sparschwein (vorrat), Vermögen als Münzstapel in derselben Münze. Die Kacheln der Kapitelzeile (Dashboard) zeigen weiter Säule, Tank und Barometer. Darum hier noch NICHT als «zuhause» eingetragen: sonst wären Steuer und Tank «zuhauseAnderesBild», und die Sperrklinke lässt neue Einträge nicht zu. Entscheid offen: Kacheln umstellen oder Sperrklinke öffnen (FINANZEN-BAUPLAN-2026-11-20.md).",
   "formen": {
     "teile": "teile-bild",
     "anteil": "ring",
@@ -33,11 +34,16 @@
     ],
     "lage": [
       "haeuserzeile",
-      "vergleichshaus"
+      "vergleichshaus",
+      "muenzleiste"
     ],
     "vorrat": [
       "tank",
-      "glas"
+      "glas",
+      "sparschwein"
+    ],
+    "zusammensetzung": [
+      "muenzstapel"
     ]
   },
   "instrumente": {

@@ -46,6 +46,15 @@ export function steuerFranken(data) {
   } catch { return null; }
 }
 
+// Vermögen in Münzen (V3, Stebler Studios 20.11.2026 abends): dieselbe Einheit wie die Steuer-Münzen — eine Münze = 1 %
+// des erfassten Monatslohns × 12. Das Vermögen selbst rechnet finanzWerte (Konto + Wertschriften + übriges, ohne 3a).
+export function vermoegenMuenzen(vermoegen, data) {
+  const jahr = (Number(data?.finanzen?.monthlyIncome) || 0) * 12;
+  const v = Number(vermoegen) || 0;
+  if (!(jahr > 0) || !(v > 0)) return null;
+  return { muenzen: Math.round((v / jahr) * 100), anteil: v / jahr };
+}
+
 export function notgroschen(data) {
   return reserveTankState({ savings: Number(data?.finanzen?.savingsAccount) || 0, monthlyExpenses: monthlyExpenses(data) });
 }

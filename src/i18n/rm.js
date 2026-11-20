@@ -2467,7 +2467,7 @@ export default {
         jahrBleiben: "Mintga onn restan",
         jahrFehlen: "Mintga onn mancan",
         jahrHinweis: "Il mais × 12. In 13avel salari n’è betg quintà.",
-        teil: { wohnen: "Abitar", versicherungen: "Assicuranzas", steuern: "Taglias", uebriges: "Ulteriur" },
+        teil: { wohnen: "Abitar", versicherungen: "Assicuranzas", steuern: "Taglias", vorsorge: "Prevenziun", uebriges: "Ulteriur" },
       },
       passend: {
         // rm ungeprüft F5
@@ -7760,6 +7760,8 @@ export default {
     // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
     steuerMuenzZeile: '≈ {betrag} per onn · ≈ {pct} % da las entradas nettas',
     steuerMuenzLegende: 'Ina munaida = 1 % · grisch: Confederaziun',
+    vermoegenMuenzZeile: '≈ {pct} % da las entradas annualas', // rm: Gegenlese offen (20.11.2026)
+    muenzRegel: 'Ina munaida = 1 % da las entradas annualas', // rm: Gegenlese offen (20.11.2026)
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     title: { sie: 'Voss instruments', du: 'Tes instruments' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

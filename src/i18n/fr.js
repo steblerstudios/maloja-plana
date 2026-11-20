@@ -2206,7 +2206,7 @@ export default {
         jahrBleiben: "Il reste chaque année",
         jahrFehlen: "Il manque chaque année",
         jahrHinweis: "Le mois × 12. Un 13e salaire n’est pas compté.",
-        teil: { wohnen: "Logement", versicherungen: "Assurances", steuern: "Impôts", uebriges: "Autres" },
+        teil: { wohnen: "Logement", versicherungen: "Assurances", steuern: "Impôts", vorsorge: "Prévoyance", uebriges: "Autres" },
       },
       passend: {
         titel: "En lien avec ce domaine",
@@ -6549,6 +6549,8 @@ export default {
     // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
     steuerMuenzZeile: '≈ {betrag} par an · ≈ {pct} % du revenu net',
     steuerMuenzLegende: 'Une pièce = 1 % · en gris : Confédération',
+    vermoegenMuenzZeile: '≈ {pct} % du revenu annuel',
+    muenzRegel: 'Une pièce = 1 % du revenu annuel',
     title: { sie: 'Vos instruments', du: 'Tes instruments' },
     intro: { sie: 'Quatre auto-vérifications en un coup d\'œil — touchez-en une.', du: 'Quatre auto-vérifications en un coup d\'œil — touches-en une.' },
     tacho: 'Croix de franchise',

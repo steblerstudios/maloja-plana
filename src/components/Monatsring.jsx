@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { text, weight, space, radius, duration, ease } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
 import { bereichsTon } from '../utils/lebensbereichFruechte.js';
+import { bereichFillColor } from '../data/lebensbereiche.js';
 import { ausgabenPosten } from './Geldfluss.jsx';
 import { auswahlStil, KNOPF_RADIUS } from './PrimaryButton.jsx';
 
@@ -17,16 +18,22 @@ const GRUPPEN = {
   // Dieselbe Gruppe wie im Monatsbudget (F8-F1): Vorsorge gehört zu den Steuern, nicht ins Übrige.
   steuern: ['tax', 'pension3a', 'ahvSelbst', 'bvgSelbst'],
 };
+// Mit `steuerEigen` (Bauplan Finanzen, Stebler Studios 20.11.2026 abends: «Steuer eigenes Ring-Stück») trägt die Steuer ein
+// eigenes Stück; die Vorsorge steht daneben in ihrer Farbe — weiter nicht im Übrigen (F8-F1).
+const GRUPPEN_STEUER_EIGEN = { ...GRUPPEN, steuern: ['tax'], vorsorge: ['pension3a', 'ahvSelbst', 'bvgSelbst'] };
 
 // Daten ohne React, damit Tests die Stücke nachrechnen können. Grösster Bereich zuerst.
-export const ringDaten = ({ data, t, palette, einkommen, verplant }) => {
+export const ringDaten = ({ data, t, palette, einkommen, verplant, steuerEigen = false }) => {
   const posten = ausgabenPosten(data, t, palette);
   const farbe = {
     wohnen: bereichsTon('wohnen', palette) || palette.rose,
     versicherungen: bereichsTon('versicherungen', palette) || palette.sky,
-    steuern: palette.mid, uebriges: palette.gold,
+    steuern: palette.mid,
+    ...(steuerEigen ? { vorsorge: bereichFillColor('vorsorge', parseInt(String(palette.bg || '#ffffff').slice(1, 3), 16) < 128) || palette.mid } : {}),
+    uebriges: palette.gold,
   };
-  const inGruppe = (key) => Object.keys(GRUPPEN).find((g) => GRUPPEN[g].includes(key)) || 'uebriges';
+  const gruppenDef = steuerEigen ? GRUPPEN_STEUER_EIGEN : GRUPPEN;
+  const inGruppe = (key) => Object.keys(gruppenDef).find((g) => gruppenDef[g].includes(key)) || 'uebriges';
   const gruppen = Object.keys(farbe).map((key) => {
     const eigene = posten.filter((p) => inGruppe(p.key) === key);
     return { key, farbe: farbe[key], posten: eigene, wert: eigene.reduce((a, p) => a + p.value, 0) };
@@ -47,8 +54,8 @@ const LUFT = 0.35; // Abstand zwischen zwei Stücken, in Prozent des Rings
 // `bilder` / `unter` (Bauplan Finanzen, Entwurf 20.11.2026): je Bereich das Bild seines Lebensbereichs vor der Zeile
 // (Wohnen: Drittel-Haus klein · Versicherungen: Netz-Schild klein · Steuern: Steuerfranken) und eine kurze Zeile darunter.
 // Jedes Ring-Stück trägt so sein Bild; ohne die Props bleibt die Karte, wie sie war.
-export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titelJahr, zahl, kopf, bilder = null, unter = null }) => {
-  const { gruppen, basis, rest } = ringDaten({ data, t, palette, einkommen, verplant });
+export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titelJahr, zahl, kopf, bilder = null, unter = null, steuerEigen = false }) => {
+  const { gruppen, basis, rest } = ringDaten({ data, t, palette, einkommen, verplant, steuerEigen });
   const [offen, setOffen] = useState(null);
   const [faktor, setFaktor] = useState(1);
   const jahr = faktor === 12;
@@ -82,7 +89,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
         style: { display: 'block', width: '100%', minHeight: '44px', boxSizing: 'border-box', padding: '4px 0', background: 'none', border: 0, fontFamily: 'inherit', fontSize: text.sm, textAlign: 'left', color: palette.text, cursor: knopf ? 'pointer' : 'default' },
       },
         React.createElement('span', { style: raster },
-          React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, t(g.key === 'steuern' ? 'budgetSync.group.taxProvision' : 'chapters.finanzen.monat.teil.' + g.key)),
+          React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, t(g.key === 'steuern' && !steuerEigen ? 'budgetSync.group.taxProvision' : 'chapters.finanzen.monat.teil.' + g.key)),
           React.createElement('span', { style: zahlen }, chf(g.wert)),
           React.createElement('span', { style: { ...zahlen, fontSize: text.xs, color: palette.mid } }, anteil(g.wert, basis)),
           React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid, textAlign: 'center', transform: auf ? 'rotate(90deg)' : 'none', transition: 'transform ' + duration.fast + 'ms ' + ease } }, knopf ? '›' : '')

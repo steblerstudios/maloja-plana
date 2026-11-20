@@ -24,7 +24,7 @@ import { PEGEL_SCALE } from '../../data/pegel.js';
 // geteilt, nur gross · F möglicher Mietzinsbeitrag schraffiert in der Behörden-Farbe («bis zu»), gross + mittel.
 // Klein 64 zeigt nur A und B. Die Füllung bleibt immer grün (Wohnen); die Warnung tragen Linie und «!».
 const HAUS = { x: 12, oben: 44, b: 96, stock: 24 };
-export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brutto, teile, beitrag, fuell, groesse = 'gross' }) => {
+export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brutto, teile, beitrag, fuell, groesse = 'gross', tuer = null }) => {
   const h = React.createElement;
   const gross = groesse === 'gross';
   const klein = groesse === 'klein';
@@ -71,12 +71,38 @@ export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brut
     anteil01 > 0.29 && h('line', { x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: drittelY, y2: drittelY, stroke: palette.surface, strokeWidth: klein ? 5 : 4, ...linie }),
     h('line', { 'data-teil': 'drittel-haus-drittel', x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: drittelY, y2: drittelY, stroke: drittelFarbe, strokeWidth: klein ? 3 : 2, ...linie }),
     h('rect', { x: HAUS.x, y: HAUS.oben, width: HAUS.b, height: koerper, fill: 'none', stroke: palette.text, strokeWidth: strich, ...linie }),
+    // Tür nur auf Wunsch (Finanzen-Szene, Stebler Studios 20.11.2026: «Mietzinsverbilligung als Tür … Pfeil unter oder über
+    // Grenze»). Auf der Wohnen-Seite trägt das Vergleichshaus die Tür; dort bleibt das Drittel-Haus ohne (jedes Bild einmal).
+    tuer && drittelHausTuer(h, palette, tuer, boden, linie),
     h('path', { d: 'M' + (HAUS.x - 8) + ' ' + HAUS.oben + 'L60 6L' + (HAUS.x + HAUS.b + 8) + ' ' + HAUS.oben + 'Z', fill: 'none', stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
     urteil && h('text', { 'data-teil': 'drittel-ausrufe', x: HAUS.x + HAUS.b + 6, y: drittelY + (klein ? 8 : 6), fontSize: klein ? 24 : 16, fontWeight: 700, fill: drittelFarbe }, '!'),
     gross && t && h('text', { x: 60, y: HAUS.oben + HAUS.stock - 9, ...schrift }, t('wohnenInstrument.hausRest')),
     geteilt && t && h('text', { x: (HAUS.x + teilX) / 2, y: boden + 11, ...schrift }, t('wohnenInstrument.hausSie')),
     geteilt && t && h('text', { x: (teilX + HAUS.x + HAUS.b) / 2, y: boden + 11, ...schrift }, t('wohnenInstrument.hausPartner')),
   );
+};
+
+// Die Tür des Drittel-Hauses: dieselbe Lesart wie die Tür des Vergleichshauses (Wasser = Einkommen, gestrichelt = Grenze),
+// dazu ein Pfeil: nach unten = Einkommen unter der Grenze, nach oben = darüber. Programm ohne Zahl: Tür getönt.
+const drittelHausTuer = (h, palette, tuer, boden, linie) => {
+  // Die Tür bleibt im Erdgeschoss, unter der Drittel-Linie (die trägt die Aussage des Hauses).
+  const b = 18, hT = 21, tl = 60 - b / 2, tr = 60 + b / 2, tt = boden - hT;
+  const pfad = 'M' + tl + ' ' + boden + 'V' + (tt + 5) + 'A5 5 0 0 1 ' + (tl + 5) + ' ' + tt + 'H' + (tr - 5) + 'A5 5 0 0 1 ' + tr + ' ' + (tt + 5) + 'V' + boden + 'Z';
+  const fass = tuer.fass && tuer.fass.mode !== 'empty' ? tuer.fass : null;
+  const wasser = fass ? Math.min(1, fass.fraction / PEGEL_SCALE) * hT : 0;
+  const grenzeY = boden - hT / PEGEL_SCALE;
+  const getoent = tuer.programm && !fass;
+  const ueber = fass && fass.mode === 'over';
+  const px = tr + 10, py = tt + hT / 2;
+  return h('g', { 'data-teil': 'tuer', 'data-programm': tuer.programm ? 'ja' : 'nein', 'data-fass': fass ? 'ja' : 'nein', 'data-pfeil': fass ? (ueber ? 'ueber' : 'unter') : 'kein' },
+    fass && h('defs', null, h('clipPath', { id: 'drittel-haus-tuer' }, h('path', { d: pfad }))),
+    h('path', { d: pfad, fill: getoent ? (tuer.farbe || palette.mid) : palette.surface, fillOpacity: getoent ? 0.45 : 1 }),
+    fass && h('rect', { x: tl, y: boden - wasser, width: b, height: wasser, fill: tuer.farbe || palette.mid, opacity: 0.85, clipPath: 'url(#drittel-haus-tuer)' }),
+    fass && h('line', { x1: tl - 3, x2: tr + 3, y1: grenzeY, y2: grenzeY, stroke: palette.skyDeep || palette.text, strokeWidth: 2, strokeDasharray: '3 2', ...linie }),
+    h('path', { d: pfad, fill: 'none', stroke: palette.text, strokeWidth: 2, ...linie }),
+    fass && h('path', { 'data-teil': 'tuer-pfeil', d: ueber ? 'M' + px + ' ' + (py + 7) + 'V' + (py - 7) + 'M' + (px - 5) + ' ' + (py - 2) + 'L' + px + ' ' + (py - 7) + 'L' + (px + 5) + ' ' + (py - 2)
+      : 'M' + px + ' ' + (py - 7) + 'V' + (py + 7) + 'M' + (px - 5) + ' ' + (py + 2) + 'L' + px + ' ' + (py + 7) + 'L' + (px + 5) + ' ' + (py + 2),
+    fill: 'none', stroke: palette.text, strokeWidth: 2.5, strokeLinecap: 'round', strokeLinejoin: 'round', ...linie }));
 };
 
 // ── Vergleichshaus ──────────────────────────────────────────────────────────────────────────────────────────────────

@@ -10,7 +10,8 @@ import de from '../i18n/de.js';
 import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
-import { FinanzenSzene, lohnMuenzen, steuerFranken, notgroschen, LOHN_GRENZEN } from '../bereiche/finanzen/finanzen.js';
+import { FinanzenSzene, lohnMuenzen, steuerFranken, notgroschen, vermoegenMuenzen, VermoegenStapel, SteuerMuenzen, Sparschwein, LOHN_GRENZEN, VERMOEGEN_HOECHST } from '../bereiche/finanzen/finanzen.js';
+import { ringDaten } from '../components/Monatsring.jsx';
 
 const t = createT({ de }, 'de', 'sie');
 const SRC = path.resolve(__dirname, '..');
@@ -32,6 +33,8 @@ describe('Bauplan Finanzen · jedes Bild einmal in der Szene', () => {
     expect(zaehle(html, 'data-teil', 'kalenderblatt')).toBe(1);
     expect((html.match(/data-franchise="klein"/g) || []).length).toBe(1);
     expect(zaehle(html, 'data-teil', 'monatsring')).toBe(1);
+    expect(zaehle(html, 'data-bild', 'vermoegen-stapel')).toBe(1);
+    expect(zaehle(html, 'data-teil', 'tuer')).toBe(1);
   });
   it('die Bilder hängen an ihren Ring-Stücken: Wohnen und Versicherungen davor, die Steuer-Münzen darunter', () => {
     for (const k of ['wohnen', 'versicherungen']) expect(html).toContain('data-ring-bild="' + k + '"');
@@ -62,6 +65,60 @@ describe('Bauplan Finanzen · jedes Bild einmal in der Szene', () => {
   it('Hauptzahlen stehen unter bzw. neben ihrem Bild (Regel «Zahl»)', () => {
     expect(html.indexOf('data-instrument-zahl="lohn"')).toBeGreaterThan(html.indexOf('data-bild="muenz-lohn"'));
     expect(html.indexOf('data-instrument-zahl="notgroschen"')).toBeGreaterThan(html.indexOf('data-bild="sparschwein"'));
+  });
+});
+
+// Stebler Studios 20.11.2026 abends (Skizze finanzen-schwein-stapel.html, gewählt P2 · S-a · V3 · «Steuer eigenes Ring-Stück» ·
+// «Tür am Mini-Haus»).
+describe('Bauplan Finanzen · Stapel, Schwein, Ring-Stück, Tür', () => {
+  const html = szene(DEMO_DATA);
+  const svgAttr = (markup, bild) => {
+    const m = markup.match(new RegExp('<svg width="(\\d+)" height="(\\d+)"[^>]*data-bild="' + bild + '"'));
+    return m ? { b: Number(m[1]), h: Number(m[2]) } : null;
+  };
+  it('Steuer steht als senkrechter Stapel: höher als breit, leere Münzen bis zur nächsten Zehnerstelle', () => {
+    const m = svgAttr(html, 'steuer-muenzen');
+    expect(m.h).toBeGreaterThan(m.b);
+    const einzeln = renderToStaticMarkup(React.createElement(SteuerMuenzen, { palette: LIGHT_PALETTE, anteil: 0.113, bundAnteil: 0.013 }));
+    // 11 volle Münzen (1 Bund grau + 10 gold) und 9 leere bis 20
+    expect((einzeln.match(/<ellipse/g) || []).length).toBe(11);
+    expect((einzeln.match(/fill="none"/g) || []).length).toBe(9);
+  });
+  it('Vermögen: dieselbe Münze wie die Steuer (1 % vom Jahreseinkommen), je zehn ein Stapel', () => {
+    const vm = vermoegenMuenzen(18500, DEMO_DATA);
+    expect(vm.muenzen).toBe(Math.round(18500 / (6200 * 12) * 100));
+    expect(html).toContain('data-muenzen="' + vm.muenzen + '" data-stapel="' + Math.ceil(vm.muenzen / 10) + '"');
+    expect(vermoegenMuenzen(0, DEMO_DATA)).toBeNull();
+    const viel = renderToStaticMarkup(React.createElement(VermoegenStapel, { palette: LIGHT_PALETTE, muenzen: 340 }));
+    expect(viel).toContain('data-stapel="' + VERMOEGEN_HOECHST + '"');
+    const schwein = html.slice(html.indexOf('data-teil="szene-sparschwein"'), html.indexOf('data-teil="szene-rand"'));
+    expect(schwein).toContain('data-bild="vermoegen-stapel"');
+    expect(schwein).toContain('vom Einkommen im Jahr');
+  });
+  it('Sparschwein von vorne: runder Körper als Gefäss, Füllung und Marke «empfohlen»', () => {
+    const s = renderToStaticMarkup(React.createElement(Sparschwein, { palette: LIGHT_PALETTE, monate: 4.7 }));
+    expect(s).toContain('data-teil="sparschwein-fuellung"');
+    expect(s).toContain('data-teil="sparschwein-marke"');
+    expect(s).toMatch(/<clipPath[^>]*><circle/);
+    expect(s).toContain('data-anteil="78"');
+  });
+  it('die Steuer ist ein eigenes Ring-Stück, die Vorsorge steht daneben (nicht im Übrigen)', () => {
+    expect(html).toContain('data-gruppe="steuern"');
+    expect(html).not.toContain('Steuern &amp; Vorsorge');
+    const r = ringDaten({ data: DEMO_DATA, t, palette: LIGHT_PALETTE, einkommen: 6200, verplant: 3965, steuerEigen: true });
+    const steuern = r.gruppen.find((g) => g.key === 'steuern');
+    expect(steuern.posten.map((p) => p.key)).toEqual(['tax']);
+    const vorsorge = r.gruppen.find((g) => g.key === 'vorsorge');
+    if (vorsorge) expect(vorsorge.posten.every((p) => ['pension3a', 'ahvSelbst', 'bvgSelbst'].includes(p.key))).toBe(true);
+    expect(r.gruppen.find((g) => g.key === 'uebriges')?.posten.some((p) => p.key === 'pension3a') ?? false).toBe(false);
+    // ohne Schalter bleibt die alte Gruppe (Monatsbudget F8-F1)
+    const alt = ringDaten({ data: DEMO_DATA, t, palette: LIGHT_PALETTE, einkommen: 6200, verplant: 3965 });
+    expect(alt.gruppen.some((g) => g.key === 'vorsorge')).toBe(false);
+  });
+  it('die Tür sitzt im Mini-Haus am Wohnen-Stück, nirgends sonst', () => {
+    const wohnen = html.slice(html.indexOf('data-ring-bild="wohnen"'));
+    expect(wohnen.indexOf('data-teil="tuer"')).toBeGreaterThan(-1);
+    expect(wohnen.indexOf('data-teil="tuer"')).toBeLessThan(wohnen.indexOf('data-gruppe="wohnen"'));
   });
 });
 
