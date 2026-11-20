@@ -132,6 +132,9 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
     expect(boden).not.toContain('data-teil="gesundheit-faellig"');
     expect(t('arztkoffer.faecher.kvg.title')).toBe('Leistungen');
     expect(lies('components/NotfallImKapitel.jsx')).toMatch(/teil: 'franchise', imKoffer: true/);
+    const nur = (teil) => renderToStaticMarkup(React.createElement(GesundheitZuhause, { palette: LIGHT_PALETTE, t, data: MIT_BELEG, onNavigate: () => {}, letzteBesuche: {}, heute: HEUTE, teil }));
+    expect(nur('franchise')).not.toContain('data-teil="gesundheit-faellig"');
+    expect(nur('faellig')).not.toContain('data-teil="gesundheit-franchise"');
   });
   it('die frühere Seite gibt es nicht mehr; #/gesundheit führt zum Koffer im Kapitel', () => {
     expect(fs.existsSync(path.join(SRC, 'ArztkofferView.jsx'))).toBe(false);
