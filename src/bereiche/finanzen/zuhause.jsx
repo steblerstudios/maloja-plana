@@ -13,6 +13,7 @@ import { wohnkostenRechnung } from '../wohnen/rechnung.js';
 import { FranchiseThermometer } from '../notfall/bilder.jsx';
 import { franchiseStand } from '../notfall/rechnung.js';
 import { lohnMuenzen, steuerFranken, notgroschen, steuerfrist } from './rechnung.js';
+import { versicherungenSumme, monatsAusgaben } from '../../utils/monatsrechnung.js';
 import { MuenzLohn, Steuerfranken, Sparschwein } from './bilder.jsx';
 
 // Lebensbereich Finanzen · die Szene (Bauplan Lebensbereich, Entwurf Stebler Studios 20.11.2026, Skizze
@@ -52,14 +53,19 @@ export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkom
     versicherungen: h(NetzSchild, { palette, t, versicherungen: v, ...netzOpts, groesse: 'klein' }),
     steuern: steuer ? h(Steuerfranken, { palette, isDarkMode, bundAnteil: steuer.bundAnteil }) : null,
   };
+  const praemie = Number(v.kkPremium) || 0;
   const unter = {
     steuern: steuer ? '≈ ' + betrag(steuer.total) + ' · ' + t('instrumente.steuerSatz') : null,
+    // Satz aus dem KK-Spiegel (KKLastCard), der bis 20.11. als eigene Karte unten stand. Das Bild der KK-Last folgt erst
+    // nach Gesundheit (FINANZEN-BAUPLAN-2026-11-20.md).
+    versicherungen: praemie > 0 && verplant > 0 ? t(Math.round(versicherungenSumme(monatsAusgaben(data))) <= Math.round(praemie) ? 'kkLast.spiegelSatzAllein' : 'kkLast.spiegelSatz',
+      { praemie: Number.isInteger(praemie) ? zahl(praemie) : zahl(praemie, { stellen: 2 }), summe: zahl(Math.round(versicherungenSumme(monatsAusgaben(data)))) }) : null,
   };
 
   return h('div', { 'data-teil': 'finanzen-szene' },
     // Lohn als Münzleiste
     lohn.show && block('szene-lohn',
-      lohn.vergleichbar ? h(MuenzLohn, { palette, fuell: lohn.fuell, isDarkMode }) : null,
+      lohn.vergleichbar ? h(MuenzLohn, { palette, fuell: lohn.fuell, isDarkMode, groesse: 'gross' }) : null,
       h(React.Fragment, null,
         h('div', { 'data-instrument-zahl': 'lohn', style: { ...zahlStil, color: palette.text } }, betrag(lohn.netto),
           h('span', { style: { fontSize: text.sm, fontWeight: weight.normal, color: palette.mid } }, ' ' + t('common.perMonth'))),
@@ -76,11 +82,11 @@ export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkom
         satz(t('instrumente.tankSatz')))),
     // Am Rand: was kein Ring-Stück ist, mit eigenem Bild
     (frist || fr) && h('div', { 'data-teil': 'szene-rand', style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px ' + space.xl + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88' } },
-      frist && h('div', { 'data-rand': 'steuerfrist', style: { display: 'flex', gap: space.sm + 'px', alignItems: 'center' } },
+      frist && h('div', { 'data-rand': 'steuerfrist', style: { display: 'flex', gap: space.sm + 'px', alignItems: 'center', flex: '1 1 220px', minWidth: 0 } },
         h(Kalenderblatt, { iso: frist.iso, palette, vorbei: frist.vorbei, klein: true }),
         h('div', null, satz(t('instrumente.steuerFrist', { datum: frist.iso.split('-').reverse().join('.') })),
           weg(t('chapters.behoerden.title'), () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden'))))),
-      fr && h('div', { 'data-rand': 'franchise', style: { display: 'flex', gap: space.sm + 'px', alignItems: 'center' } },
+      fr && h('div', { 'data-rand': 'franchise', style: { display: 'flex', gap: space.sm + 'px', alignItems: 'center', flex: '1 1 220px', minWidth: 0 } },
         h('div', { 'aria-hidden': 'true' }, h(FranchiseThermometer, { palette, t, stand: fr, groesse: 'klein' })),
         h('div', null,
           h('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } },

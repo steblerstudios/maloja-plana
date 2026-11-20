@@ -17,7 +17,8 @@ import { LohnEinordnung } from './LohnEinordnung.jsx';
 import { lohnBandState, lohnSpiegel, lohnVergleichSperre } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
-import { KKLastCard, KKLastSpiegel } from '../KKLastCard.jsx';
+import { KKLastCard } from '../KKLastCard.jsx';
+import { steuerFranken } from '../bereiche/finanzen/rechnung.js';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { einnahmenZeilen } from '../data/haushaltsEinnahmen.js';
 import { renderSource } from '../utils/renderSource.js';
@@ -264,7 +265,7 @@ const generatePrintHTMLRoh = (t, data, w) => {
 // nicht ins eigene Kapitel — die Einkommensart liegt dort (LohnEinordnung).
 // F7-K4-1 (Stebler Studios 01.11.2026): Der Lohnvergleich gehört zur Arbeit. Im Kapitel Finanzen (`nurBefund`) bleibt der
 // Armutsgrenzen-Befund mit dem Weg dorthin; in Ausbildung & Arbeit (LohnImKapitel) steht der Vergleich ohne diesen Befund.
-export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel, nurBefund, ohneBefund }) => {
+export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel, nurBefund, ohneBefund, nurArmutsbefund }) => {
   // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
   const [selBranche, setSelBranche] = React.useState(null);
   const eigeneBranche = BRANCHENLOHN.find((b) => b.key !== 'gesamt' && b.key === data?.ausbildung?.branche) || null;
@@ -309,6 +310,9 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     incomeType: f.incomeType, dreizehnter: f.dreizehnter, alter: bvgAlter, rentenalter, beitragsfrei,
   }), data, { alter: bvgAlter, rentenalter, beitragsfrei });
 
+  // Bauplan Finanzen (20.11.2026): Lohn, Brutto und Weg stehen in der Szene (Münzleiste). Hier bleibt nur der
+  // Armutsgrenzen-Befund — und nur, wenn er zutrifft, damit das Signal nie fehlt.
+  if (nurArmutsbefund && !unterArmutsgrenze) return null;
   return React.createElement('div', {
     style: { padding: '12px 16px', background: palette.up, borderRadius: radius.md, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
   },
@@ -645,10 +649,12 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     w.hasData && React.createElement('div', { 'data-teil': 'geldfluss' },
       React.createElement(GeldflussImKapitel, { data, t, palette })
     ),
-    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true }),
+    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true, nurArmutsbefund: true }),
     w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
-      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), React.createElement(KKLastSpiegel, { palette, t, data, onNavigate }), gesundheitKarte(p), vermoegenKarte(p),
+      // Bauplan Finanzen (20.11.2026): Steuer und Krankenkasse stehen am Ring (Steuerfranken, Versicherungs-Stück). Die
+      // Steuer-Karte nur, wenn dort kein Steuerfranken steht (keine Kantonszahl) — dann trägt sie den Grund.
+      !steuerFranken(data) && steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), gesundheitKarte(p), vermoegenKarte(p),
       // Der Notgroschen steht seit dem Bauplan Finanzen (Entwurf 20.11.2026) als Sparschwein in der Szene oben — jedes Bild einmal.
       null
     ),
