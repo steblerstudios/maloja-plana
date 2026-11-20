@@ -2207,7 +2207,7 @@ export default {
         jahrBleiben: "Left over each year",
         jahrFehlen: "Missing each year",
         jahrHinweis: "The month × 12. A 13th salary is not included.",
-        teil: { wohnen: "Housing", versicherungen: "Insurance", steuern: "Taxes", uebriges: "Other" },
+        teil: { wohnen: "Housing", versicherungen: "Insurance", steuern: "Taxes", vorsorge: "Pension savings", uebriges: "Other" },
       },
       passend: {
         titel: "Related to this area",
@@ -2580,7 +2580,7 @@ export default {
   wohnenInstrument: {
     titel: 'Housing costs per month',
     titelAusprobiert: 'Housing costs per month · trying out',
-    anteil: '{pct}% of net income (CHF {einkommen})',
+    anteil: '{pct}% of income (CHF {einkommen})',
     anteilBrutto: '{pct}% of gross income (CHF {einkommen})',
     drittel: 'one third',
     faustregel: 'A rough guide often used: housing costs up to about a third of income. It is not a fixed limit — on a small income, less can already be tight.',
@@ -6547,6 +6547,11 @@ export default {
     selbstbehalt: 'Co-payment',
   },
   instrumente: {
+    // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
+    steuerMuenzZeile: '≈ {betrag} a year · ≈ {pct} % of net income',
+    steuerMuenzLegende: 'One coin = 1 % · grey: federal',
+    vermoegenMuenzZeile: '≈ {pct} % of annual income',
+    muenzRegel: 'One coin = 1 % of annual income',
     title: 'Your instruments',
     intro: 'Four calm self-checks at a glance — tap one.',
     tacho: 'Deductible cross',

@@ -3,7 +3,7 @@ import { I18nContext } from '../i18n/index.js';
 import { schildOptionen } from '../data/schutzschild.js';
 import { netzSchildTeile } from '../data/netzSchild.js';
 import { NetzSchild } from './NetzSchild.jsx';
-import { ReserveTank } from './ReserveTank.jsx';
+import { SteuerMuenzen, Sparschwein } from '../bereiche/finanzen/bilder.jsx';
 import { wohnkostenRechnung, DrittelHaus, wohnkostenSatzKey, Vergleichshaus, lageZurRegion, mietVorbehalte } from '../bereiche/wohnen/wohnen.js';
 import { Kalenderblatt } from './Kalenderblatt.jsx';
 import { GaengeKlein } from './BehoerdenInstrument.jsx';
@@ -26,7 +26,6 @@ import { heuteIso } from '../utils/fristen.js';
 import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise, kreuzState, kvgWechselfrist } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
-import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { zahl, betrag as chfBetrag } from '../utils/geld.js';
 import { PanelTitle } from './Heading.jsx';
 import { text, weight, space, radius, leading, duration, ease, INSTRUMENT_GROESSE } from '../config/tokens.js';
@@ -124,32 +123,9 @@ const miniGrundmauer = (palette, gesetzt, gesamt) => {
     }));
 };
 
-// Der kleine Tank stand bis 10.11.2026 hier als eigene Zeichnung (miniGauge) — jetzt ReserveTank groesse 'klein'.
-
-// Steuer-Säule im Kleinen — Spiegel der EINEN Säule aus SteuerSaeulen.jsx, die die Person
-// betrifft (Wunsch 25.09.2026): ihr Zivilstand, in Sand wie «aktuell gewählt» im Rechner,
-// oben gerundet, auf der Grundlinie stehend. Eine einzelne Säule hat nichts, woran ihre Höhe
-// sich messen könnte — darum feste Höhe; die Zahl darunter trägt die Aussage. Ohne Betrag
-// gestrichelt, wie die Platzhalter-Säule im Rechner. <title> mit Name und Betrag (Hover).
-// F7-K5-1 (01.11.2026): Mit Gesamtzahl zwei Teile: unten satt die Bundessteuer, oben heller Kanton und Gemeinde (Schätzung).
-const S_BASIS = 40, S_BREIT = 16, S_HOCH = 30;
-const oben = (x, y, w, h, r) => 'M ' + x + ' ' + (y + h) + ' V ' + (y + r) + ' Q ' + x + ' ' + y + ' ' + (x + r) + ' ' + y
-  + ' H ' + (x + w - r) + ' Q ' + (x + w) + ' ' + y + ' ' + (x + w) + ' ' + (y + r) + ' V ' + (y + h);
-const miniSaeule = (palette, t, { betragJahr, verheiratet, bundAnteil, titelText }) => {
-  const h = React.createElement;
-  const x = 20;
-  const titel = titelText || t('tax.saeulen.' + (verheiratet ? 'gemeinsam' : 'ledig')) + (betragJahr != null ? ': ' + chfBetrag(betragJahr) : '');
-  // Mindesthöhe, damit der Bund-Teil auch bei kleinem Anteil sichtbar bleibt; die Zahl steht im Text.
-  const bundHoch = bundAnteil != null ? Math.max(5, Math.round(S_HOCH * bundAnteil)) : null;
-  return h('svg', { viewBox: '0 0 56 44', width: '100%', style: { height: 'auto', display: 'block' }, role: 'img', 'aria-label': titel },
-    bundHoch != null && h('path', { d: oben(x, S_BASIS - S_HOCH, S_BREIT, S_HOCH, 3) + ' Z', fill: palette.sand, opacity: 0.4 }, h('title', null, titel)),
-    bundHoch != null && h('rect', { x, y: S_BASIS - bundHoch, width: S_BREIT, height: bundHoch, fill: palette.sand }),
-    bundHoch != null ? null : betragJahr != null
-      ? h('path', { d: oben(x, S_BASIS - S_HOCH, S_BREIT, S_HOCH, 3) + ' Z', fill: palette.sand }, h('title', null, titel))
-      : h('path', { d: oben(x + 0.5, S_BASIS - S_HOCH, S_BREIT - 1, S_HOCH, 2), fill: 'none', stroke: palette.mid, strokeWidth: 1, strokeDasharray: '2 2' }, h('title', null, titel)),
-    h('line', { x1: 12, x2: 44, y1: S_BASIS + 0.5, y2: S_BASIS + 0.5, stroke: palette.border, strokeWidth: 1 })
-  );
-};
+// Bis 20.11.2026 standen hier der kleine Tank (ReserveTank klein) und die Steuer-Säule (miniSaeule, F7-K5-1). Seither
+// zeigen die Kacheln dieselben Bilder wie das Kapitel Finanzen (Stebler Studios 20.11.2026: «Yes, switch tiles»):
+// Steuer als Münzstapel (eine Münze = 1 % vom Einkommen, Bund grau unten), Notgroschen als Sparschwein klein.
 
 // Franchise-Kreuz klein (B-F5, Stebler Studios 11.11.2026: «kreuz sollte kachel mit daten sein»): dieselbe Rechnung
 // wie das Kreuz im Werkzeug (kreuzState) — tiefe Franchise sand, hohe sky, wie dort; der Strich «bisher» steht bei
@@ -194,6 +170,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   // Mögliche Quellensteuer sperrt die Rechnung selbst (quellensteuerMoeglich), hier nur der kurze Satz.
   // Sonst bleibt die Bundessteuer allein.
   let bundessteuer = null;
+  const steuerJahrBasis = (Number(data?.finanzen?.monthlyIncome) || 0) * 12;
   let steuerGanz = null;
   let quellensteuer = false;
   try {
@@ -468,9 +445,12 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       sub: quellensteuer ? t('instrumente.steuerQuelle')
         : steuerGanz ? steuerSaetze.map((z, i) => h('span', { key: i, style: { display: 'block', marginTop: i ? '2px' : 0, color: i ? palette.soft : palette.mid } }, z))
           : bundessteuer != null ? t('instrumente.steuerBetrag', { value: zahl(bundessteuer) }) : setup,
-      glyph: miniSaeule(palette, t, {
-        betragJahr: quellensteuer ? null : bundessteuer, verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
-        bundAnteil: steuerGanz ? steuerGanz.bund / steuerGanz.total : null, titelText: steuerGanz ? steuerSaetze.join(' ') : null,
+      // Münzstapel wie im Kapitel: gemessen am erfassten Monatslohn × 12. Ohne Gesamtzahl nur die Bundessteuer (grau),
+      // mit Quellensteuer oder ohne Lohn leere Münzen — keine erfundene Höhe.
+      glyph: h(SteuerMuenzen, {
+        palette, isDarkMode: palette.bg === DARK_PALETTE.bg, px: 24, fuellt: true,
+        anteil: steuerJahrBasis > 0 && !quellensteuer ? (steuerGanz ? steuerGanz.total : bundessteuer || 0) / steuerJahrBasis : 0,
+        bundAnteil: steuerJahrBasis > 0 && !quellensteuer ? (steuerGanz ? steuerGanz.bund : bundessteuer || 0) / steuerJahrBasis : 0,
       }),
       onClick: () => (steuerGanz ? onNavigate('chapter', CHAPTER_KEYS.indexOf('finanzen')) : onNavigate('tax')),
     },
@@ -481,7 +461,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         ? { wert: zahl(tank.months, { hoechstens: 1 }), einheit: t(tank.months === 1 ? 'instrumente.tankMonat' : 'instrumente.tankMonate') } : null,
       satz: t('instrumente.tankSatz'),
       sub: tank.mode === 'months' ? t('instrumente.tankMonths', { months: tank.months }) : setup,
-      glyph: h(ReserveTank, { palette, t, savings: tank.savings, monthlyExpenses: tank.monthlyExpenses || 0, groesse: 'klein' }),
+      glyph: h(Sparschwein, { palette, isDarkMode: palette.bg === DARK_PALETTE.bg, monate: tank.mode === 'months' ? tank.months : 0, empfohlen: tank.recommendMonths || 3, voll: tank.fullMonths || 6, groesse: 'klein', fuellt: true }),
       onClick: () => onNavigate('finanzuebersicht'),
     },
     {

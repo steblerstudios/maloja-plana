@@ -2224,7 +2224,7 @@ export default {
         jahrBleiben: "Jedes Jahr bleiben",
         jahrFehlen: "Jedes Jahr fehlen",
         jahrHinweis: "Der Monat × 12. Ein 13. Monatslohn ist nicht eingerechnet.",
-        teil: { wohnen: "Wohnen", versicherungen: "Versicherungen", steuern: "Steuern", uebriges: "Übriges" },
+        teil: { wohnen: "Wohnen", versicherungen: "Versicherungen", steuern: "Steuern", vorsorge: "Vorsorge", uebriges: "Übriges" },
       },
       passend: {
         titel: "Passend zu diesem Bereich",
@@ -6634,6 +6634,11 @@ export default {
     selbstbehalt: 'Selbstbehalt',
   },
   instrumente: {
+    // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
+    steuerMuenzZeile: '≈ {betrag} im Jahr · ≈ {pct} % vom Einkommen',
+    steuerMuenzLegende: 'Eine Münze = 1 % · grau: Bund',
+    vermoegenMuenzZeile: '≈ {pct} % vom Einkommen im Jahr',
+    muenzRegel: 'Eine Münze = 1 % vom Einkommen im Jahr',
     title: { sie: 'Ihre Instrumente', du: 'Deine Instrumente' },
     intro: { sie: 'Vier ruhige Selbstchecks auf einen Blick — tippen Sie eines an.', du: 'Vier ruhige Selbstchecks auf einen Blick — tippe eines an.' },
     tacho: 'Franchise-Kreuz',

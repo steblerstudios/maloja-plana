@@ -2467,7 +2467,7 @@ export default {
         jahrBleiben: "Mintga onn restan",
         jahrFehlen: "Mintga onn mancan",
         jahrHinweis: "Il mais × 12. In 13avel salari n’è betg quintà.",
-        teil: { wohnen: "Abitar", versicherungen: "Assicuranzas", steuern: "Taglias", uebriges: "Ulteriur" },
+        teil: { wohnen: "Abitar", versicherungen: "Assicuranzas", steuern: "Taglias", vorsorge: "Prevenziun", uebriges: "Ulteriur" },
       },
       passend: {
         // rm ungeprüft F5
@@ -4862,7 +4862,7 @@ export default {
     zurueck: 'Enavos al tschains dad oz',
     ausprobierteMiete: 'Tschains empruvà: CHF {amount}',
     anteilEigen: { sie: "{pct} % da Vossa atgna entrada (CHF {einkommen})", du: "{pct} % da tia atgna entrada (CHF {einkommen})" },
-    anteilHaushalt: { sie: "{pct} % da las entradas nettas da Vossa economia da chasa (Vus e partenari/a, CHF {einkommen})", du: "{pct} % da las entradas nettas da tia economia da chasa (ti e partenari/a, CHF {einkommen})" },
+    anteilHaushalt: { sie: "{pct} % da las entradas da Vossa economia da chasa (Vus e partenari/a, CHF {einkommen})", du: "{pct} % da las entradas nettas da tia economia da chasa (ti e partenari/a, CHF {einkommen})" },
     viertel: 'in quart: recumandaziun da la Budgetberatung Schweiz',
     hausRest: 'tut il rest',
     hausSie: { sie: 'Vus', du: 'ti' },
@@ -7757,6 +7757,11 @@ export default {
     selbstbehalt: 'Quota da participaziun',
   },
   instrumente: {
+    // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
+    steuerMuenzZeile: '≈ {betrag} per onn · ≈ {pct} % da las entradas nettas',
+    steuerMuenzLegende: 'Ina munaida = 1 % · grisch: Confederaziun',
+    vermoegenMuenzZeile: '≈ {pct} % da las entradas annualas', // rm: Gegenlese offen (20.11.2026)
+    muenzRegel: 'Ina munaida = 1 % da las entradas annualas', // rm: Gegenlese offen (20.11.2026)
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     title: { sie: 'Voss instruments', du: 'Tes instruments' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

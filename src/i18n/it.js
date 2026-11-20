@@ -2207,7 +2207,7 @@ export default {
         jahrBleiben: "Ogni anno restano",
         jahrFehlen: "Ogni anno mancano",
         jahrHinweis: "Il mese × 12. Una 13a mensilità non è inclusa.",
-        teil: { wohnen: "Abitazione", versicherungen: "Assicurazioni", steuern: "Imposte", uebriges: "Altro" },
+        teil: { wohnen: "Abitazione", versicherungen: "Assicurazioni", steuern: "Imposte", vorsorge: "Previdenza", uebriges: "Altro" },
       },
       passend: {
         titel: "Collegato a questo ambito",
@@ -2580,7 +2580,7 @@ export default {
   wohnenInstrument: {
     titel: 'Costi abitativi al mese',
     titelAusprobiert: 'Costi abitativi al mese · in prova',
-    anteil: '{pct}% del reddito netto (CHF {einkommen})',
+    anteil: '{pct}% del reddito (CHF {einkommen})',
     anteilBrutto: '{pct}% del reddito lordo (CHF {einkommen})',
     drittel: 'un terzo',
     faustregel: 'Un orientamento approssimativo spesso usato: costi abitativi fino a circa un terzo del reddito. Non è un limite fisso — con un reddito basso anche meno può già essere stretto.',
@@ -6520,6 +6520,11 @@ export default {
     selbstbehalt: 'Aliquota',
   },
   instrumente: {
+    // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
+    steuerMuenzZeile: '≈ {betrag} all’anno · ≈ {pct} % del reddito netto',
+    steuerMuenzLegende: 'Una moneta = 1 % · in grigio: Confederazione',
+    vermoegenMuenzZeile: '≈ {pct} % del reddito annuo',
+    muenzRegel: 'Una moneta = 1 % del reddito annuo',
     title: { sie: 'I Suoi strumenti', du: 'I tuoi strumenti' },
     intro: { sie: 'Quattro controlli tranquilli a colpo d\'occhio — ne tocchi uno.', du: 'Quattro controlli tranquilli a colpo d\'occhio — toccane uno.' },
     tacho: 'Croce della franchigia',

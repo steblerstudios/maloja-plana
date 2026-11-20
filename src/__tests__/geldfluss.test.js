@@ -76,16 +76,17 @@ describe('Geldfluss', () => {
 });
 
 describe('Geldfluss am neuen Ort', () => {
-  it('im Kapitel Finanzen: nach dem Lebensbaum, vor dem Lohn', () => {
+  // Bauplan Finanzen (20.11.2026): der Lohn steht in der Szene oben; hier zählt der Platz vor «Was sich daraus ergibt».
+  it('im Kapitel Finanzen: nach dem Lebensbaum, vor «Weitere Ansprüche»', () => {
     const html = renderToStaticMarkup(React.createElement(FinanzenImKapitel, {
       teil: 'oben', palette: LIGHT_PALETTE, t, data: DEMO_DATA, onNavigate: () => {}, chapters: getChapters(t),
     }));
     const baum = html.indexOf('data-teil="lebensbaum"');
     const fluss = html.indexOf('data-teil="geldfluss"');
-    const lohn = html.indexOf('Wo steht Ihr Lohn?');
+    const folgt = html.indexOf('data-ansprueche');
     expect(baum).toBeGreaterThan(-1);
     expect(fluss).toBeGreaterThan(baum);
-    expect(lohn).toBeGreaterThan(fluss);
+    expect(folgt).toBeGreaterThan(fluss);
   });
 
   it('ohne Einkommen kein Geldfluss im Kapitel', () => {

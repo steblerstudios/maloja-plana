@@ -17,14 +17,14 @@ import { LohnEinordnung } from './LohnEinordnung.jsx';
 import { lohnBandState, lohnSpiegel, lohnVergleichSperre } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
-import { KKLastCard, KKLastSpiegel } from '../KKLastCard.jsx';
+import { KKLastCard } from '../KKLastCard.jsx';
+import { steuerFranken } from '../bereiche/finanzen/rechnung.js';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { einnahmenZeilen } from '../data/haushaltsEinnahmen.js';
 import { renderSource } from '../utils/renderSource.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
 import { GlossarText } from '../GlossarBegriff.jsx';
 import { betrag } from '../utils/geld.js';
-import { ReserveTank } from './ReserveTank.jsx';
 import { Lebensbaum } from '../Lebensbaum.jsx';
 import { astFarben, bereichsFruechte } from '../utils/lebensbereichFruechte.js';
 import { GeldflussImKapitel } from './Geldfluss.jsx';
@@ -265,7 +265,7 @@ const generatePrintHTMLRoh = (t, data, w) => {
 // nicht ins eigene Kapitel — die Einkommensart liegt dort (LohnEinordnung).
 // F7-K4-1 (Stebler Studios 01.11.2026): Der Lohnvergleich gehört zur Arbeit. Im Kapitel Finanzen (`nurBefund`) bleibt der
 // Armutsgrenzen-Befund mit dem Weg dorthin; in Ausbildung & Arbeit (LohnImKapitel) steht der Vergleich ohne diesen Befund.
-export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel, nurBefund, ohneBefund }) => {
+export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel, nurBefund, ohneBefund, nurArmutsbefund }) => {
   // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
   const [selBranche, setSelBranche] = React.useState(null);
   const eigeneBranche = BRANCHENLOHN.find((b) => b.key !== 'gesamt' && b.key === data?.ausbildung?.branche) || null;
@@ -310,6 +310,9 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     incomeType: f.incomeType, dreizehnter: f.dreizehnter, alter: bvgAlter, rentenalter, beitragsfrei,
   }), data, { alter: bvgAlter, rentenalter, beitragsfrei });
 
+  // Bauplan Finanzen (20.11.2026): Lohn, Brutto und Weg stehen in der Szene (Münzleiste). Hier bleibt nur der
+  // Armutsgrenzen-Befund — und nur, wenn er zutrifft, damit das Signal nie fehlt.
+  if (nurArmutsbefund && !unterArmutsgrenze) return null;
   return React.createElement('div', {
     style: { padding: '12px 16px', background: palette.up, borderRadius: radius.md, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
   },
@@ -462,6 +465,15 @@ export const steuerOrientierung = ({ palette, t, w }) =>
   w.steuerkanton && w.kantonsSchaetzung && !w.kantonal && React.createElement(KantonssteuerOrientierung, {
     palette, t, canton: w.steuerkanton, schaetzung: w.kantonsSchaetzung, jahr: KANTONAL_DATA_VERSION, style: { marginTop: '-4px' },
   });
+
+// Der IPV-Stand als kurzer Text — Karte und Szene (bereiche/finanzen, Versicherungs-Stück) sagen dasselbe (20.11.2026).
+export const ipvStatusKurz = (t, w) => {
+  const { ipv, ipvVerfuegung, ipvOhneJahr } = w;
+  if (ipvVerfuegung != null || ipvOhneJahr != null) return formatCHF(ipvVerfuegung != null ? ipvVerfuegung : ipvOhneJahr) + ' ' + t('common.perMonth');
+  if (ipv.eligible) return formatCHF(ipv.amount) + ' ' + t('common.perMonth');
+  if (ipv.belegt === false) return t('ipv.statusOffen');
+  return t(ipvUnterMindestbetrag(ipv) ? 'premium.keineAuszahlung' : 'finanzUebersicht.notEligible');
+};
 
 export const ipvKarte = ({ palette, t, onNavigate, w }) => {
   const { ipv, ipvVerfuegung, ipvOhneJahr, ipvFristVorbei } = w;
@@ -646,14 +658,16 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     w.hasData && React.createElement('div', { 'data-teil': 'geldfluss' },
       React.createElement(GeldflussImKapitel, { data, t, palette })
     ),
-    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true }),
-    w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
+    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true, nurArmutsbefund: true }),
+    // Bauplan Finanzen (20.11.2026): «Was sich daraus ergibt» fliesst in die Szene oben (Steuer-Münzen, IPV am Versicherungs-Stück,
+    // Gesundheitskosten am Thermometer, Vermögen am Sparschwein). Hier nur noch der Rückfall ohne Kantonszahl für die Steuer.
+    w.hasData && !steuerFranken(data) && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
-      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), React.createElement(KKLastSpiegel, { palette, t, data, onNavigate }), gesundheitKarte(p), vermoegenKarte(p),
-      // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? Nur wenn etwas erfasst ist.
-      (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, {
-        palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses,
-      })
+      // Bauplan Finanzen (20.11.2026): Steuer und Krankenkasse stehen am Ring (Steuerfranken, Versicherungs-Stück). Die
+      // Steuer-Karte nur, wenn dort kein Steuerfranken steht (keine Kantonszahl) — dann trägt sie den Grund.
+      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p),
+      // Der Notgroschen steht seit dem Bauplan Finanzen (Entwurf 20.11.2026) als Sparschwein in der Szene oben — jedes Bild einmal.
+      null
     ),
     w.hasData && React.createElement('details', {
       'data-ansprueche': anspruch ? 'moeglich' : 'keiner', open: anspruch || undefined,

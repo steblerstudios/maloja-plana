@@ -81,8 +81,10 @@ describe('Instrument Steuer-Säulen', () => {
     expect(erwartet).toBeGreaterThan(0);
     const kachel = (d) => renderToStaticMarkup(React.createElement(InstrumentePanel, { palette, t, data: d, onNavigate: () => {}, eingebettet: true }));
     const mit = kachel(data);
-    // F7-K5-1: die ganze Steuer, dieselbe Zahl wie das Kapitel Finanzen, mit Bund-Anteil.
-    expect(mit).toContain('instrumente.steuerGanz(' + zahl(st.kanton.kantonal.total) + ')');
+    // F7-K5-1: die ganze Steuer, dieselbe Zahl wie das Kapitel Finanzen, mit Bund-Anteil. Seit 20.11.2026 (Münzstapel statt
+    // Säule) steht die Gesamtzahl als grosse Zahl der Kachel; der Satz «steuerGanz» stand nur im Hover-Titel der Säule.
+    expect(mit).toContain(zahl(st.kanton.kantonal.total));
+    expect(mit).toContain('data-bild="steuer-muenzen"');
     expect(mit).toContain('instrumente.steuerDavon(' + zahl(erwartet) + ')');
     // Fachprüfung 01.11.2026: mögliche Quellensteuer und pensioniert ohne Zahl (Sperre in der Rechnung selbst).
     const quelle = kachel({ ...data, ausbildung: { workPermit: 'b' } });

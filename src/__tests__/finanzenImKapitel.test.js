@@ -29,29 +29,24 @@ const knapp = {
 };
 
 describe('Auswertung im Kapitel, oberer Teil', () => {
-  it('Reihenfolge: Lohn, «Was sich daraus ergibt» mit Steuern, IPV, KK-Last, dann «Weitere Ansprüche»', () => {
-    const text = nurText(teil('oben', DEMO_DATA));
-    const stelle = (s) => { const i = text.indexOf(s); expect(i, s).toBeGreaterThan(-1); return i; };
-    const lohn = stelle('Wo steht Ihr Lohn?');
-    const folgt = stelle('Was sich daraus ergibt');
-    // Ab «Was sich daraus ergibt» gesucht: seit 24.10.2026 steht «Steuern» auch als Ausgabe im
-    // Geldfluss weiter oben (geldfluss.test.js hält dessen Platz vor dem Lohn fest).
-    const steuern = text.indexOf('Steuern', folgt);
-    expect(steuern, 'Steuern').toBeGreaterThan(-1);
-    const ipv = stelle('Prämienverbilligung');
-    const weitere = stelle('Weitere Ansprüche');
-    const sozialhilfe = text.indexOf('Sozialhilfe', weitere);
-    expect(lohn).toBeLessThan(folgt);
-    expect(folgt).toBeLessThan(steuern);
-    expect(steuern).toBeLessThan(ipv);
-    expect(ipv).toBeLessThan(weitere);
-    expect(sozialhilfe).toBeGreaterThan(weitere);
+  // Bauplan Finanzen (Entwurf 20.11.2026): Lohn (Münzleiste) und Steuer (Steuerfranken) stehen in der Szene oben
+  // (bereiche/finanzen, Wächter bauplanFinanzen.test.js). Hier bleibt: «Was sich daraus ergibt» mit IPV, dann «Weitere Ansprüche».
+  // Bauplan Finanzen (20.11.2026): «Was sich daraus ergibt» fliesst in die Szene oben (bauplanFinanzen.test.js). Mit
+  // Kantonszahl steht hier nur noch «Weitere Ansprüche»; ohne Kantonszahl der Rückfall mit der Steuer-Karte.
+  it('mit Steuerfranken: kein eigener Teil «Was sich daraus ergibt», «Weitere Ansprüche» bleibt', () => {
+    const html = teil('oben', DEMO_DATA);
+    expect(html).not.toContain('data-teil="folgt"');
+    const text = nurText(html);
+    const weitere = text.indexOf('Weitere Ansprüche');
+    expect(weitere).toBeGreaterThan(-1);
+    expect(text.indexOf('Sozialhilfe', weitere)).toBeGreaterThan(weitere);
+    expect(text).not.toContain('Wo steht Ihr Lohn?');
   });
 
   it('mit Kapiteln steht der Lebensbaum vor der Rechnung', () => {
     const html = teil('oben', DEMO_DATA, { chapters });
     expect(html).toContain('data-teil="lebensbaum"');
-    expect(html.indexOf('data-teil="lebensbaum"')).toBeLessThan(html.indexOf('Wo steht Ihr Lohn?'));
+    expect(html.indexOf('data-teil="lebensbaum"')).toBeLessThan(html.indexOf('data-ansprueche'));
   });
 
   it('ohne Anspruch: «Weitere Ansprüche» eingeklappt', () => {
@@ -150,18 +145,17 @@ describe('Probiermodus-Knopf bei der Auswertung', () => {
 // Abnahme F6 (Stebler Studios 25.10.2026, Befunde 1, 5): Lohn-Hinweise hinter «So ist gerechnet», Steuer-Karte im
 // Kapitel kurz und ohne Verweis «ins Kapitel Finanzen & Geld».
 describe('Kapitel Finanzen · Abnahme F6', () => {
-  it('F7-K4-1: kein Lohnvergleich hier, nur der Weg nach Ausbildung & Arbeit', () => {
+  // F7-K4-1 gilt weiter: kein Lohnvergleich in Finanzen. Der Weg nach Ausbildung & Arbeit steht seit dem Bauplan
+  // Finanzen (Entwurf 20.11.2026) unter der Münzleiste der Szene (bauplanFinanzen.test.js).
+  it('F7-K4-1: kein Lohnvergleich und kein zweiter Lohn-Kasten hier', () => {
     const html = teil('oben', DEMO_DATA);
     expect(html).not.toContain('data-teil="lohn-so-gerechnet"');
     expect(nurText(html)).not.toContain('Branchenvergleich');
-    const weg = html.match(/<button[^>]*data-teil="lohn-weg"[^>]*>[\s\S]*?<\/button>/);
-    expect(weg).not.toBeNull();
-    expect(nurText(weg[0])).toContain('Wo steht Ihr Lohn? · Ausbildung & Arbeit');
+    expect(html).not.toContain('data-teil="lohn-weg"');
   });
-  it('Steuer-Karte im Kapitel: kurz, ohne Selbstverweis', () => {
+  it('Steuer im Kapitel: ohne Selbstverweis', () => {
     const text = nurText(teil('oben', DEMO_DATA));
     expect(text).not.toContain('im Kapitel «Finanzen & Geld»');
     expect(text).not.toContain('Messpunkten des Steuerrechners');
-    expect(text).toContain('grobe Schätzung für den Hauptort, ohne Kirchensteuer');
   });
 });
