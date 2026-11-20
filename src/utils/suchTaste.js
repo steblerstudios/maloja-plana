@@ -56,7 +56,9 @@ const setzeWennAnders = (el, name, wert) => { if (el.getAttribute(name) !== wert
 export const kuerzelNennen = (doc, an, knopf = doc?.querySelector(LUPE)) => {
   if (!knopf) return;
   // Nur schreiben, was sich ändert — sonst weckte jedes Schreiben den Beobachter erneut.
-  setzeWennAnders(knopf, 'aria-keyshortcuts', (an ? '/ ' : '') + knopf.getAttribute('aria-keyshortcuts').replace(/^\/ /, ''));
+  // Ohne aria-keyshortcuts (Handy: React nimmt es weg) nichts nennen — sonst stünde «/ » allein da.
+  const kuerzel = (knopf.getAttribute('aria-keyshortcuts') || '').replace(/^\/ /, '');
+  if (kuerzel) setzeWennAnders(knopf, 'aria-keyshortcuts', (an ? '/ ' : '') + kuerzel);
   const titel = (knopf.getAttribute('title') || '').replace(/ \(\/\)$/, '');
   if (titel) setzeWennAnders(knopf, 'title', titel + (an ? ' (/)' : ''));
 };

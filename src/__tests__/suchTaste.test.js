@@ -228,6 +228,17 @@ describe('Lupe nennt «/» nur, wenn es wirkt', () => {
     expect(() => kuerzelNennen(doc(null), false)).not.toThrow();
     expect(() => kuerzelNennen(undefined, false)).not.toThrow();
   });
+  // 20.11.2026: Lupe ohne aria-keyshortcuts direkt übergeben (Handy: React nimmt es weg). Vorher TypeError
+  // «reading 'replace'». Es darf auch kein leeres oder blosses «/ » hineingeschrieben werden.
+  it('Lupe ohne aria-keyshortcuts: kein Fehler, nichts gesetzt, Titel folgt weiter', () => {
+    for (const an of [true, false]) {
+      const k = knopf(undefined, 'Suchen (/)');
+      delete k.a['aria-keyshortcuts'];
+      expect(() => kuerzelNennen(doc(null), an, k)).not.toThrow();
+      expect('aria-keyshortcuts' in k.a).toBe(false);
+      expect(k.a.title).toBe(an ? 'Suchen (/)' : 'Suchen');
+    }
+  });
   it('das Anmelden des Zuhörers setzt den Knopf nach dem Schalter', () => {
     const k = knopf();
     const f = fenster();
