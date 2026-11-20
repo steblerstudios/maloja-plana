@@ -5,6 +5,7 @@
 //   3. Bereit             bereitschaft, lagenStand → Herz mit Puls   (Zuhause Kapitel Notfall · Kachel)
 //   4. Impfung fällig     naechsteImpfung       → Kalenderblatt     (Fach Impfausweis; zählt bei 2 mit)
 //   7. Wer behandelt mich? karteikarten         → Karteikasten      (Fach Karteikarten; Diagnosen: Liste ohne Bild)
+//   8. Was nehme ich wann? wochenblister        → Blisterpackung    (Fach Wochenblister)
 // Die Verfügungen (VORSORGE) sind eine Liste ohne Bild; ihre Rechnung steht hier, weil «Bereit» die
 // Patientenverfügung mitzählt.
 import { feldErledigt } from '../../utils/vollstaendigkeit.js';
@@ -384,3 +385,35 @@ export const karteikarten = (data) => {
 export const diagnosenListe = (data) => (Array.isArray(data?.notfall?.chronicDiseasesList) ? data.notfall.chronicDiseasesList : [])
   .map((x) => ({ name: textVon(x?.name), code: textVon(x?.code), notes: textVon(x?.notes) }))
   .filter((x) => x.name);
+
+// ─── 8 · Was nehme ich wann? (Fach Wochenblister, Sophie 20.11.2026: «A · Wochenblister», «Nur im Fach», Wochentage) ─
+// Keine eigene Datenhaltung: der Blister IST die Medikamentenliste des Kapitels Notfall (data.notfall.medicationsList,
+// MedicationManager: { name, dose, unit, frequency: ['morgens'|'mittags'|'abends'|'nachts'|'beiB'], tage?: [1..7], notes }).
+// `tage` = Wochentage nach ISO (1 Montag … 7 Sonntag); fehlt oder leer = jeden Tag. Keine Dosierung, keine Empfehlung:
+// gezählt wird nur, was eingetragen ist. Nur Einträge mit Namen.
+export const BLISTER_ZEITEN = ['morgens', 'mittags', 'abends', 'nachts'];
+export const WOCHENTAGE = [1, 2, 3, 4, 5, 6, 7];
+export const blisterTage = (x) => {
+  const t = (Array.isArray(x?.tage) ? x.tage : []).map(Number).filter((n) => WOCHENTAGE.includes(n));
+  return t.length ? WOCHENTAGE.filter((n) => t.includes(n)) : WOCHENTAGE;
+};
+
+// { medikamente: [{ name, dose, unit, notes, zeiten, beiBedarf, tage, jedenTag, index }], raster: [[n je Zeit] je Tag],
+//   regelmaessig, beiBedarf, ohneZeit, einnahmenMin, einnahmenMax }. raster[tag 0–6][zeit 0–3] = Anzahl Medikamente.
+// Einnahmen am Tag = belegte Fächer eines Tages; min/max über die Woche (gleich, wenn jeden Tag gleich).
+export const wochenblister = (data) => {
+  const liste = Array.isArray(data?.notfall?.medicationsList) ? data.notfall.medicationsList : [];
+  const medikamente = liste.map((x, index) => {
+    const freq = Array.isArray(x?.frequency) ? x.frequency : [];
+    const tage = blisterTage(x);
+    return { name: textVon(x?.name), dose: textVon(x?.dose), unit: textVon(x?.unit), notes: textVon(x?.notes),
+      zeiten: BLISTER_ZEITEN.filter((z) => freq.includes(z)), beiBedarf: freq.includes('beiB'), tage, jedenTag: tage.length === 7, index };
+  }).filter((m) => m.name);
+  const raster = WOCHENTAGE.map((tag) => BLISTER_ZEITEN.map((z) => medikamente.filter((m) => m.zeiten.includes(z) && m.tage.includes(tag)).length));
+  const proTag = raster.map((zeile) => zeile.filter((n) => n > 0).length);
+  return { medikamente, raster,
+    regelmaessig: medikamente.filter((m) => m.zeiten.length).length,
+    beiBedarf: medikamente.filter((m) => m.beiBedarf).length,
+    ohneZeit: medikamente.filter((m) => !m.zeiten.length && !m.beiBedarf).length,
+    einnahmenMin: Math.min(...proTag), einnahmenMax: Math.max(...proTag) };
+};

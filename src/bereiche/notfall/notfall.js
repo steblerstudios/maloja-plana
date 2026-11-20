@@ -5,3 +5,4 @@ export * from './bilder.jsx';
 export * from './zuhause.jsx';
 export * from './impfausweis.jsx';
 export * from './karteikarten.jsx';
+export * from './wochenblister.jsx';

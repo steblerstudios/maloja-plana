@@ -59,6 +59,7 @@ export const ICON_INVENTAR = {
     leaf: "Blatt — Natur, ruhiges Detail",
     mobility: "Mobilität — Fahrzeug",
     contacts: "Kontakte, Personen",
+    blister: "Medikamente, Wochenblister — Tablettenstreifen",
     paw: "Haustier — Pfote",
     palette: "Gestaltung, Darstellung",
     cowbell: "Erinnerungen und Benachrichtigungen — Kuhglocke als Strich (Punkt 1, A)",

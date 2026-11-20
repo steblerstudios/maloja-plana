@@ -141,3 +141,36 @@ export const Karteikasten = ({ palette, reiter = [], anzahl = 0, groesse = 'mitt
     h('rect', { 'data-teil': 'vorderwand', x: 10, y: 74, width: 140, height: 34, rx: 4, fill: palette.surface || '#fff', stroke: farbe, strokeWidth: 3 }),
     h('rect', { 'data-teil': 'griff', x: 66, y: 86, width: 28, height: 8, rx: 4, fill: 'none', stroke: farbe, strokeWidth: 2 }));
 };
+
+// Was nehme ich wann? als Blisterpackung (Sophie 20.11.2026, Auswahl «A · Wochenblister»). Ein Gegenstand aus dem
+// Arztkoffer, in der Farbe Gesundheit: 7 Tage (Spalten) × 4 Zeiten (Zeilen). Je Mulde so viele Tabletten, wie
+// Medikamente zu dieser Zeit an diesem Tag eingetragen sind (höchstens drei gezeichnet). Leere Mulde = nichts.
+// `raster` aus wochenblister(data). Die Ablesewörter (Tage, Zeiten) sind übersetzt und stehen am Rand, nicht in den
+// Mulden; die Zahl steht UNTER dem Bild (Regel «Zahl»). Ruhig: eine Farbe, kein «heute», nichts zum Abhaken.
+// viewBox in echten Pixeln (256 breit), Schrift 13 px wie die Ablesung am Thermometer.
+export const BLISTER_TABLETTEN_MAX = 3;
+export const Blisterpackung = ({ palette, t, raster = [], groesse = 'gross' }) => {
+  const h = React.createElement;
+  const farbe = gesundheitFarbe(palette);
+  const px = INSTRUMENT_GROESSE[groesse] || INSTRUMENT_GROESSE.gross;
+  const links = 56, oben = 20, zelle = 28, mulde = 23; // Zeiten ausgeschrieben («Morgen»): kein «Mo» wie Montag
+  const breite = links + 7 * zelle, hoehe = oben + 4 * zelle + 4;
+  const beschriftung = (key, x, y, inhalt, anker) => h('text', { key, x, y, fontSize: 13, fill: palette.mid, textAnchor: anker }, inhalt);
+  const mulden = [];
+  for (let tag = 0; tag < 7; tag++) {
+    for (let z = 0; z < 4; z++) {
+      const n = (raster[tag] && raster[tag][z]) || 0;
+      const x = links + tag * zelle + (zelle - mulde) / 2, y = oben + z * zelle + (zelle - mulde) / 2;
+      const gezeigt = Math.min(n, BLISTER_TABLETTEN_MAX);
+      mulden.push(h('g', { key: tag + '-' + z, 'data-teil': 'mulde', 'data-anzahl': n },
+        h('rect', { x, y, width: mulde, height: mulde, rx: 7, fill: 'none', stroke: n ? farbe : palette.border, strokeWidth: n ? 2 : 1.5 }),
+        ...Array.from({ length: gezeigt }, (_, i) => h('circle', { key: i, 'data-teil': 'tablette', cx: x + mulde / 2 + (i - (gezeigt - 1) / 2) * 6.5, cy: y + mulde / 2, r: gezeigt > 1 ? 2.8 : 4.5, fill: farbe }))));
+    }
+  }
+  return h('svg', { viewBox: '0 0 ' + breite + ' ' + hoehe, width: '100%', 'aria-hidden': true, 'data-teil': 'blisterpackung', 'data-groesse': groesse,
+    style: { maxWidth: px + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('rect', { 'data-teil': 'folie', x: links - 4, y: oben - 2, width: 7 * zelle + 8, height: 4 * zelle + 6, rx: 10, fill: 'none', stroke: farbe, strokeWidth: 3 }),
+    t && [1, 2, 3, 4, 5, 6, 7].map((tag, i) => beschriftung('t' + tag, links + i * zelle + zelle / 2, oben - 7, t('blister.tageKurz.' + tag), 'middle')),
+    t && ['morgens', 'mittags', 'abends', 'nachts'].map((z, i) => beschriftung('z' + z, links - 8, oben + i * zelle + zelle / 2 + 4, t('blister.zeitenKurz.' + z), 'end')),
+    ...mulden);
+};

@@ -11,7 +11,7 @@ import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE, getChapters } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
-import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE, Karteikarten, karteikarten, diagnosenListe, KARTEI_GRUPPEN } from '../bereiche/notfall/notfall.js';
+import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE, Karteikarten, karteikarten, diagnosenListe, KARTEI_GRUPPEN, Wochenblister, wochenblister, blisterTage, Blisterpackung } from '../bereiche/notfall/notfall.js';
 import { SPECIALTY_GRUPPEN } from '../DoctorManager.jsx';
 import { weitereAerzteAusListe, KEINE_AERZTE } from '../utils/weitereAerzte.js';
 
@@ -113,8 +113,8 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
   it('der offene Koffer: fertige Fächer als Knöpfe im Deckel, geplante gestrichelt im Boden, keine Notfallkarte doppelt', () => {
     const html = kapitel(DEMO_DATA);
     const deckel = html.slice(html.indexOf('data-teil="koffer-deckel"'), html.indexOf('data-teil="koffer-boden"'));
-    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis', 'karteikarten']);
-    expect(zaehle(html, /data-bald="ja"/g)).toBe(2);
+    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis', 'karteikarten', 'blister']);
+    expect(zaehle(html, /data-bald="ja"/g)).toBe(1);
     expect(zaehle(html, /data-kachel="notfallkarte"/g)).toBe(1);
   });
   it('die frühere Seite gibt es nicht mehr; #/gesundheit führt zum Koffer im Kapitel', () => {
@@ -420,5 +420,90 @@ describe('Fach Karteikarten · Wer behandelt mich?', () => {
     expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Karteikarten \}\)\)\)/);
     expect(lies('main.jsx')).toMatch(/view === 'karteikarten' && React\.createElement\(Karteikarten/);
     expect(lies('bereiche/notfall/karteikarten.jsx')).not.toMatch(/\.sort\(|doctorsList\)\.filter/); // rechnet nicht selbst
+  });
+});
+
+// Fach Wochenblister (Sophie 20.11.2026: «A · Wochenblister», «Nur im Fach», Wochentage wählbar).
+// Analyse §11 in stebler-studios/analysen/2026-11-18-notfall-gesundheit-bauplan.md.
+describe('Fach Wochenblister · Was nehme ich wann?', () => {
+  const blister = (notfall, extra = {}) => renderToStaticMarkup(React.createElement(Wochenblister, { palette: LIGHT_PALETTE, t, onUpdateData: () => {},
+    data: { ...DEMO_DATA, notfall: { ...notfall } }, ...extra }));
+  const LISTE = [
+    { name: 'Euthyrox', dose: '50', unit: 'µg', frequency: ['morgens'] },
+    { name: 'Atorvastatin', dose: '20', unit: 'mg', frequency: ['abends'] },
+    { name: 'Vitamin D', dose: '5600', unit: 'IE', frequency: ['morgens'], tage: [7] },
+    { name: 'Dafalgan', dose: '500', unit: 'mg', frequency: ['beiB'] },
+    { name: '', frequency: ['mittags'] },
+  ];
+  it('Rechnung: Raster 7 Tage × 4 Zeiten aus der Medikamentenliste, Wochentage nach ISO, nur mit Namen', () => {
+    const s = wochenblister({ notfall: { medicationsList: LISTE } });
+    expect(s.raster).toHaveLength(7);
+    expect(s.raster[0]).toEqual([1, 0, 1, 0]); // Montag: Euthyrox morgens, Atorvastatin abends
+    expect(s.raster[6]).toEqual([2, 0, 1, 0]); // Sonntag: dazu Vitamin D
+    expect(s.regelmaessig).toBe(3);
+    expect(s.beiBedarf).toBe(1);
+    expect(s.einnahmenMin).toBe(2);
+    expect(s.einnahmenMax).toBe(2); // belegte Fächer, nicht Tabletten
+    expect(s.medikamente.map((m) => m.name)).toEqual(['Euthyrox', 'Atorvastatin', 'Vitamin D', 'Dafalgan']);
+  });
+  it('Rechnung: Wochentage ohne Auswahl = jeden Tag; Unsinn fällt weg; verschiedene Tage ergeben eine Spanne', () => {
+    expect(blisterTage({})).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(blisterTage({ tage: [] })).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(blisterTage({ tage: [7, 1, 9, '3'] })).toEqual([1, 3, 7]);
+    const s = wochenblister({ notfall: { medicationsList: [{ name: 'A', frequency: ['morgens'] }, { name: 'B', frequency: ['nachts'], tage: [3] }] } });
+    expect([s.einnahmenMin, s.einnahmenMax]).toEqual([1, 2]);
+    expect(wochenblister({}).raster.flat().every((n) => n === 0)).toBe(true);
+  });
+  it('eine Liste: das Fach schreibt medicationsList; das Formular zeigt nur Namen und den Weg zum Wochenblister', () => {
+    expect(lies('bereiche/notfall/wochenblister.jsx')).toMatch(/schreibe\('medicationsList'/);
+    const cv = lies('ChapterView.jsx');
+    expect(cv).toMatch(/'data-teil': 'medikamente-im-blister'/);
+    expect(cv.match(/onNavigate\('blister'\)/g)).toHaveLength(1);
+    expect(lies('MedicationManager.jsx')).toMatch(/onUpdate\(\{ tage:/);
+    // «Bereit» zählt die Liste weiter mit (Feld medications über feldErledigt)
+    const ohne = bereitschaft({ notfall: {} }).erledigt;
+    expect(bereitschaft({ notfall: { medicationsList: LISTE } }).erledigt).toBe(ohne + 1);
+  });
+  it('Fachseite: ein Blister, die Zahl darunter, Medikamente je Zeit, Wochentage im Satz', () => {
+    const html = blister({ medicationsList: LISTE });
+    expect(zaehle(html, /data-teil="blisterpackung"/g)).toBe(1);
+    expect(zaehle(html, /data-instrument-zahl="blister"/g)).toBe(1);
+    expect(html.indexOf('data-instrument-zahl="blister"')).toBeGreaterThan(html.indexOf('data-teil="blisterpackung"'));
+    expect(html).toContain('2 Einnahmen am Tag');
+    expect(html).toContain('3 Medikamente · 1 bei Bedarf');
+    expect(zaehle(html, /data-teil="mulde"/g)).toBe(28);
+    expect(zaehle(html, /data-teil="tablette"/g)).toBe(15); // 7 × Euthyrox + 7 × Atorvastatin + 1 × Vitamin D
+    expect(html).toContain('Vitamin D 5600 IE');
+    expect(html).toContain('nur So');
+    expect(html).toMatch(/data-zeit="beiB"[\s\S]*Dafalgan 500 mg/);
+    expect(html).toContain('Packungsbeilage');
+    expect(zaehle(html, /data-teil="kalenderblatt"|data-franchise=|data-teil="herz-puls"|data-teil="karteikasten"/g)).toBe(0);
+  });
+  it('Fachseite leer und nur bei Bedarf: keine Zahl, ruhiger Satz', () => {
+    const leer = blister({});
+    expect(leer).toContain('data-teil="blisterpackung"');
+    expect(leer).not.toContain('data-instrument-zahl="blister"');
+    expect(leer).toContain('data-teil="blister-leer"');
+    expect(leer).toContain('Erstes Medikament eintragen');
+    expect(blister({ medicationsList: [LISTE[3]] })).toContain('Nur Medikamente bei Bedarf');
+    expect(blister({ medicationsList: [{ name: 'Ohne' }] })).toContain('data-teil="blister-ohne-zeit"');
+  });
+  it('das Bild zeichnet höchstens drei Tabletten je Mulde und trägt die Anzahl', () => {
+    const raster = [[5, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+    const html = renderToStaticMarkup(React.createElement(Blisterpackung, { palette: LIGHT_PALETTE, t, raster }));
+    expect(zaehle(html, /data-teil="tablette"/g)).toBe(3);
+    expect(html).toContain('data-anzahl="5"');
+    expect(html).toContain('>Morgen<');
+    expect(html).toContain('>So<');
+  });
+  it('Gesundheitsangabe: die Medikamentenliste steht in der Export-Vorschau als heikel', () => {
+    expect(lies('exportVorschau.js')).toMatch(/'doctorsList', 'medicationsList'/);
+  });
+  it('das Fach steht im Koffer, ist eine Seite mit Adresse und wird lazy über den Eingang geladen', () => {
+    expect(KOFFER_FAECHER.find((f) => f.key === 'blister')).toMatchObject({ view: 'blister', icon: 'blister' });
+    expect(lies('utils/hashRouter.js')).toMatch(/'blister'/);
+    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Wochenblister \}\)\)\)/);
+    expect(lies('main.jsx')).toMatch(/view === 'blister' && React\.createElement\(Wochenblister/);
+    expect(lies('bereiche/notfall/wochenblister.jsx')).not.toMatch(/medicationsList\)\.filter|\.reduce\(/); // rechnet nicht selbst
   });
 });
