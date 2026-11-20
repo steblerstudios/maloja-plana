@@ -133,7 +133,7 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
     style: { display: 'block', maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto', overflow: 'visible' },
   },
     // Füllung = Ihre Miete
-    ml.netto > 0 && h('rect', { 'data-teil': 'vergleich-fuellung', x, y: yS, width: VB.haus, height: VB.boden - yS, fill: fuell }),
+    ml.netto > 0 && h('rect', { 'data-teil': 'vergleich-fuellung', x, y: yS, width: VB.haus, height: VB.boden - yS, fill: fuell, opacity: 0.6 }),
     // Körper und Dach genau wie beim Drittel-Haus
     h('rect', { x, y: HAUS.oben, width: VB.haus, height: VB.hoehe, fill: 'none', stroke: palette.text, strokeWidth: strich, ...linie }),
     h('path', { d: 'M' + (x - 8) + ' ' + HAUS.oben + 'L60 6L' + (r + 8) + ' ' + HAUS.oben + 'Z', fill: 'none', stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
