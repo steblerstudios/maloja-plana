@@ -2231,7 +2231,7 @@ export default {
         lohnausweisSub: "Documents · Classeur de documents",
         budgetSub: "Revenus et dépenses en détail",
       },
-      folgt: { titel: "Ce qui en résulte", spieltMit: "Entre aussi en jeu", soGerechnet: "Comment c’est calculé" },
+      folgt: { titel: "Ce qui en résulte", soGerechnet: "Comment c’est calculé" },
       weitereAnsprueche: { titel: "Autres droits", sub: "Aide sociale et prestations complémentaires" },
       nebenerwerb: {
         titel: "Activité accessoire",

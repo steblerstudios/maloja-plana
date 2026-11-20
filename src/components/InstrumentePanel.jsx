@@ -73,7 +73,9 @@ const miniKreuz = (palette) => {
 // Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
 // `imKapitel` (Entwurf Finanzen, 20.11.2026): die Kacheln klein nebeneinander, nur Bild · Zahl · Satz — die Hinweise
 // (Bund, Annahmen, Frist) stehen im Kapitel an ihrem Ort: Rechnung unter «So gerechnet», Frist bei den Behörden.
-export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, imKapitel = false }) => {
+// `beiTipp(key)` + `offen`: im Kapitel klappt eine Kachel ihre Rechnung auf, statt wegzuführen.
+// `weitere`: Kacheln aus anderen Bereichen (Spiegel) in derselben Fläche — { key, glyph, zahl, satz, ziel, onClick }.
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, imKapitel = false, beiTipp = null, offen = null, weitere = [], einschub = null }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
   // Dieselbe Rechnung wie das Netz-Schild im Kapitel: eingetragen = Summe der gefüllten Stufen über alle Teile.
@@ -158,6 +160,8 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         zahl: { wert: '≈ ' + chfBetrag(steuerGanz.total), einheit: '' },
         satz: t('instrumente.steuerSatz'),
         mehr: steuerSaetze.slice(1),
+        // Im Kapitel beide Zahlen gross (Stebler Studios 20.11.2026): Jahr und Monat.
+        ...(imKapitel ? { zahl2: { wert: '≈ ' + chfBetrag(Math.round(steuerGanz.total / 12)), einheit: t('common.perMonth') } } : {}),
       } : {}),
       sub: quellensteuer ? t('instrumente.steuerQuelle')
         : steuerGanz ? steuerSaetze.map((z, i) => h('span', { key: i, style: { display: 'block', marginTop: i ? '2px' : 0, color: i ? palette.soft : palette.mid } }, z))
@@ -191,7 +195,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   ];
 
   // F7-D10: in der Kapitel-Zeile nur die Kacheln dieses Kapitels, ohne Titel.
-  const kacheln = nur ? nur.map((k) => tiles.find((x) => x.key === k)).filter(Boolean) : tiles;
+  // `einschub` (im Kapitel): die aufgeklappte Rechnung direkt unter den eigenen Kacheln, über die ganze Breite.
+  const eigene = nur ? nur.map((k) => tiles.find((x) => x.key === k)).filter(Boolean) : tiles;
+  const kacheln = [...eigene, ...(einschub ? [{ key: '_einschub', einschub }] : []), ...weitere];
   const titel = h(PanelTitle, {
     palette,
     style: eingebettet
@@ -206,29 +212,33 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     // Festes 2-Spalten-Raster: bei genau vier Instrumenten ergibt das ein ruhiges
     // 2×2 statt eines verwaisten 3+1 (auto-fit liess bei ~570 px drei Kacheln zu).
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
-      kacheln.map(tile => h('button', {
-        key: tile.key,
-        onClick: tile.onClick,
+      kacheln.map(tile => tile.einschub ? h('div', { key: tile.key, style: { gridColumn: '1 / -1' } }, tile.einschub) : h('button', {
+        key: tile.key, type: 'button', 'data-kachel': tile.key,
+        onClick: beiTipp && !tile.ziel ? () => beiTipp(tile.key) : tile.onClick,
+        ...(beiTipp && !tile.ziel ? { 'aria-expanded': offen === tile.key, 'aria-controls': 'mp-kachel-rechnung' } : {}),
         ...(tile.zahl ? { 'aria-label': tile.name + ': ' + tile.zahl.wert + (tile.zahl.einheit ? ' ' + tile.zahl.einheit : '') + '. ' + tile.satz + (tile.mehr && tile.mehr.length ? '. ' + tile.mehr.join(' ') : ''), title: tile.name } : {}),
         style: {
           // Die Säule trägt mehrere Sätze: In der Finanzen-Zeile hat jede Kachel die ganze Breite, sonst brechen sie auf dem Handy in viele kurze Zeilen.
           ...(nur?.includes('steuer') && !imKapitel ? { gridColumn: '1 / -1' } : {}),
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
           padding: space.md + 'px', background: 'transparent', color: palette.text,
-          border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
+          border: offen === tile.key ? '2px solid ' + palette.sand : '1px solid ' + palette.border + '44', borderRadius: radius.md,
           cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center',
           transition: 'background ' + duration.normal + 'ms ' + ease + ', border-color ' + duration.normal + 'ms ' + ease,
         },
         onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sage + '55'; },
-        onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
+        onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = offen === tile.key ? palette.sand : palette.border + '44'; },
       },
         // Spiegel Startseite: ein Behälter, eine Breite für alle Instrumente (INSTRUMENT_GROESSE.klein, Brand Book «Instrumente»).
         h('div', { 'data-instrument-glyph': tile.key, style: { width: INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
         // Grosse Zahl (10.11.2026, zuerst beim Tank): eine Stufe unter der Karte zuoberst (2xl statt 3xl),
         // damit dort die lauteste Stelle bleibt. Mit Zahl entfällt der kleine Satz — er sagte dasselbe.
         tile.zahl && h('div', { 'data-instrument-zahl': tile.key, style: { display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: space.xs + 'px', flexWrap: 'wrap' } },
-          h('span', { style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, tile.zahl.wert),
+          h('span', { style: { fontSize: tile.ziel ? text.lg : text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, tile.zahl.wert),
           tile.zahl.einheit && h('span', { style: { fontSize: text.sm, color: palette.mid } }, tile.zahl.einheit)),
+        tile.zahl2 && h('div', { 'data-instrument-zahl2': tile.key, style: { display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: space.xs + 'px', flexWrap: 'wrap', marginTop: '-4px' } },
+          h('span', { style: { fontSize: text.xl, fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, tile.zahl2.wert),
+          h('span', { style: { fontSize: text.sm, color: palette.mid } }, tile.zahl2.einheit)),
         // Mit Zahl: ein Satz, was sie bedeutet, statt des Namens (Skizze 10.11.2026, «ja super genau so»).
         // Der Name bleibt im aria-label/title, damit das Instrument benannt ist.
         tile.zahl
@@ -236,7 +246,8 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
           : h('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, tile.name),
         !imKapitel && tile.zahl && tile.mehr && tile.mehr.length > 0 && h('div', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal } },
           tile.mehr.map((z, i) => h('span', { key: i, style: { display: 'block', marginTop: i ? '2px' : 0 } }, z))),
-        !tile.zahl && h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub)
+        !tile.zahl && h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub),
+        tile.ziel && h('div', { style: { fontSize: text.xs, color: palette.sandDeep || palette.sand, lineHeight: leading.normal } }, tile.ziel + ' ›')
       ))
     )
   );

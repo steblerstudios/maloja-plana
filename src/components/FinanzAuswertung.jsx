@@ -17,7 +17,7 @@ import { LohnEinordnung } from './LohnEinordnung.jsx';
 import { lohnBandState, lohnSpiegel, lohnVergleichSperre } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
-import { KKLastCard, KKLastSpiegel } from '../KKLastCard.jsx';
+import { KKLastCard } from '../KKLastCard.jsx';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { einnahmenZeilen } from '../data/haushaltsEinnahmen.js';
 import { renderSource } from '../utils/renderSource.js';
@@ -33,8 +33,7 @@ import { belegeImJahr } from '../data/franchiseTacho.js';
 import { mitEchtenBetraegen } from '../utils/geld.js';
 import { InstrumentePanel } from './InstrumentePanel.jsx';
 import { ansichtIkon } from '../config/ansichtenRegister.js';
-import { chapterColor } from '../data/lebensbereiche.js';
-import { kachelZeichenFarbe } from '../utils/lebensbereichFruechte.js';
+import { LEBENSBEREICHE } from '../data/lebensbereiche.js';
 import { zahl as zahlFmt } from '../utils/geld.js';
 import { steuerfristVorbei } from '../utils/steuerfrist.js';
 import { heuteIso } from '../utils/fristen.js';
@@ -610,48 +609,38 @@ export const auswertungsHinweis = ({ palette, t }) =>
 
 // «Spielt mit» (Entwurf R3, 20.11.2026): Zahlen, die in einem anderen Bereich zu Hause sind, stehen hier nur als Weg
 // dorthin — Zeichen und Farbe des Bereichs, eine kurze Zahl, ein Pfeil. Die Erklärung steht im Zuhause.
-const bereichFarbe = (palette, kapitel, isDarkMode) => {
-  try {
-    const farbe = chapterColor(kapitel, !!isDarkMode);
-    return farbe ? { flaeche: farbe, zeichen: kachelZeichenFarbe(farbe, palette) } : null;
-  } catch { return null; }
+// Farbe des Lebensbereichs (nicht des Kapitels: Gesundheit hat kein eigenes Kapitel, sie trägt trotzdem ihre Farbe).
+const bereichFarbe = (bereich, isDarkMode) => {
+  const b = LEBENSBEREICHE.find((x) => x.key === bereich);
+  return b ? (isDarkMode ? b.dark : (b.lightDeep || b.light)) : null;
 };
-export const SpieltMit = ({ palette, t, data, onNavigate, w, isDarkMode }) => {
+// Kacheln aus anderen Bereichen (Entwurf, 20.11.2026): Zeichen und Farbe des Bereichs, die Zahl, wohin es geht.
+// Die Erklärung steht im Zuhause; hier steht nur der Spiegel mit dem Weg dorthin.
+export const spiegelKacheln = ({ palette, t, data, onNavigate, w, isDarkMode }) => {
   const praemie = Number(data?.versicherungen?.kkPremium) || 0;
   const frist = data?.behoerden?.taxFilingDeadline;
   const heute = heuteIso();
   const fristGilt = frist && (frist >= heute || steuerfristVorbei(data.behoerden, heute));
-  const wege = [
-    { key: 'ipv', kapitel: 'versicherungen', ikon: ansichtIkon('premium'), name: t('finanzUebersicht.ipv'), wert: ipvStatusKurz(t, w), gehe: () => onNavigate('premium') },
-    praemie > 0 && { key: 'kk', kapitel: 'versicherungen', ikon: ansichtIkon('praemien'), name: t('kkLast.spiegelTitel'),
-      wert: (Number.isInteger(praemie) ? zahlFmt(praemie) : zahlFmt(praemie, { stellen: 2 })) + ' ' + t('common.perMonth'), gehe: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')) },
-    // Steuerfrist: ein Termin der Behörden (Formenlehre «termin», Zuhause Behörden) — hier nur der Weg dorthin.
-    fristGilt && { key: 'steuerfrist', kapitel: 'behoerden', ikon: ansichtIkon('calendar'), name: t('instrumente.steuerFrist', { datum: frist.split('-').reverse().join('.') }),
-      wert: '', gehe: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')) },
-    w.hasGesundheitsausgaben && { key: 'gesundheit', kapitel: 'gesundheit', ikon: 'health', name: t('finanzUebersicht.healthCosts'),
-      wert: formatCHF(w.gesundheitsausgaben), gehe: () => onNavigate('kvg', undefined, 'franchise') },
+  // Zeichen in der Bereichsfarbe auf einem Hauch derselben Farbe (Grafik: 3:1 genügt, WCAG 1.4.11).
+  const glyph = (bereich, ikon) => {
+    const f = bereichFarbe(bereich, isDarkMode) || palette.sage;
+    return React.createElement('span', { 'aria-hidden': 'true', style: { width: '48px', height: '48px', borderRadius: radius.lg + 'px', display: 'grid', placeItems: 'center', background: f + '26', color: f } },
+      React.createElement(Icon, { name: ikon, size: 24 }));
+  };
+  const ziel = (kapitel) => t('chapters.' + kapitel + '.title');
+  return [
+    { key: 'ipv', glyph: glyph('versicherungen', ansichtIkon('premium')), zahl: { wert: ipvStatusKurz(t, w), einheit: '' }, satz: t('finanzUebersicht.ipv'), name: t('finanzUebersicht.ipv'),
+      ziel: ziel('versicherungen'), onClick: () => onNavigate('premium') },
+    praemie > 0 && { key: 'kk', glyph: glyph('versicherungen', ansichtIkon('praemien')),
+      zahl: { wert: Number.isInteger(praemie) ? zahlFmt(praemie) : zahlFmt(praemie, { stellen: 2 }), einheit: t('common.perMonth') }, satz: t('kkLast.spiegelTitel'), name: t('kkLast.spiegelTitel'),
+      ziel: ziel('versicherungen'), onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')) },
+    // Steuerfrist: ein Termin der Behörden (Formenlehre «termin», Zuhause Behörden).
+    fristGilt && { key: 'steuerfrist', glyph: glyph('behoerden', ansichtIkon('calendar')), zahl: { wert: frist.split('-').reverse().join('.'), einheit: '' },
+      satz: t('instrumente.steuerFrist', { datum: '' }).replace(/\s*$/, ''), name: t('instrumente.steuerFrist', { datum: frist.split('-').reverse().join('.') }),
+      ziel: ziel('behoerden'), onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')) },
+    w.hasGesundheitsausgaben && { key: 'gesundheit', glyph: glyph('gesundheit', 'health'), zahl: { wert: formatCHF(w.gesundheitsausgaben), einheit: '' },
+      satz: t('finanzUebersicht.healthCosts'), name: t('finanzUebersicht.healthCosts'), ziel: t('nav.kvgLeistungen'), onClick: () => onNavigate('kvg', undefined, 'franchise') },
   ].filter(Boolean);
-  if (!wege.length) return null;
-  return React.createElement('div', { 'data-teil': 'spielt-mit', style: { marginTop: space.md + 'px' } },
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px' } }, t('chapters.finanzen.folgt.spieltMit')),
-    wege.map((x) => {
-      const f = bereichFarbe(palette, x.kapitel, isDarkMode);
-      return React.createElement('button', {
-        key: x.key, type: 'button', 'data-weg': x.key, onClick: x.gehe,
-        style: {
-          display: 'grid', gridTemplateColumns: '32px 1fr auto 12px', alignItems: 'center', gap: space.sm + 'px', width: '100%',
-          minHeight: '48px', padding: '6px 0', background: 'none', border: 'none', borderTop: '1px solid ' + palette.border + '66',
-          cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left',
-        },
-      },
-        React.createElement('span', { 'aria-hidden': 'true', style: { width: '32px', height: '32px', borderRadius: radius.md + 'px', display: 'grid', placeItems: 'center', background: (f ? f.flaeche : palette.sage) + '2E', color: f ? f.zeichen : palette.text } },
-          React.createElement(Icon, { name: x.ikon, size: 18 })),
-        React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, x.name),
-        React.createElement('span', { style: { color: palette.mid, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, x.wert),
-        React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›')
-      );
-    })
-  );
 };
 
 // ─── Im Kapitel Finanzen (Bauschritt 3, docs/entscheide/finanzen-fusion.md §3) ──────────────
@@ -668,6 +657,8 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
   // «Orientierung offen»; danach einmal neu zeichnen — sonst blieb hier stehen, was vor dem Laden galt, und
   // Dashboard und Kapitel widersprachen sich (Entscheid O, «beobachtet, unbestätigt»). Muster wie PraemienOrientierung.
   const [, setIpvGeladen] = React.useState(0);
+  // Welche eigene Kachel ihre Rechnung zeigt (Entwurf 20.11.2026): 'steuer' · 'tank' · null.
+  const [kachelOffen, setKachelOffen] = React.useState(null);
   React.useEffect(() => {
     let aktiv = true;
     ladeIPVModelle().then(() => { if (aktiv) setIpvGeladen((n) => n + 1); }).catch(() => {});
@@ -704,30 +695,26 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
       React.createElement(GeldflussImKapitel, { data, t, palette })
     ),
     w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true }),
-    // ENTWURF R2+R3 (Stebler Studios 20.11.2026, _werkbank/FINANZEN-RUHE-2026-11-20.md): statt sechs Karten
-    // (1) die zwei Instrumente, die hier zu Hause sind (Formenlehre: Steuer = Säule, Notgroschen = Tank), als dieselben
-    // Kacheln wie in der Kapitelzeile — Bild · Zahl · Satz; (2) «Spielt mit»: was in anderen Bereichen zu Hause ist, als
-    // Weg dorthin in dessen Farbe und Zeichen; (3) die ganze Rechnung zugeklappt unter «So gerechnet». Nichts fällt weg.
+    // ENTWURF (Stebler Studios 20.11.2026, _werkbank/FINANZEN-RUHE-2026-11-20.md): «Was sich daraus ergibt», «Spielt mit» und
+    // «So gerechnet» in EINER Fläche. Die zwei Instrumente mit Zuhause Finanzen (Formenlehre: Steuer = Säule, Notgroschen =
+    // Tank) klappen beim Antippen ihre Rechnung darunter auf; Kacheln aus anderen Bereichen führen in ihr Zuhause.
     w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
-      React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: ['steuer', 'tank'], imKapitel: true }),
-      React.createElement(SpieltMit, { palette, t, data, onNavigate, w, isDarkMode }),
-      React.createElement('details', {
-        'data-teil': 'so-gerechnet',
-        style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', marginTop: space.md + 'px' },
+      React.createElement(InstrumentePanel, {
+        palette, t, data, onNavigate, nur: ['steuer', 'tank'], imKapitel: true,
+        beiTipp: (k) => setKachelOffen((o) => (o === k ? null : k)), offen: kachelOffen,
+        weitere: spiegelKacheln({ palette, t, data, onNavigate, w, isDarkMode }),
+        einschub: kachelOffen && React.createElement('div', {
+        id: 'mp-kachel-rechnung', 'data-teil': 'kachel-rechnung', role: 'region', 'aria-label': t('chapters.finanzen.folgt.soGerechnet'),
+        style: { padding: space.sm + 'px 0', borderTop: '2px solid ' + palette.sand, borderBottom: '1px solid ' + palette.border + '88' },
       },
-        React.createElement('summary', {
-          style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
-        }, t('chapters.finanzen.folgt.soGerechnet')),
-        React.createElement('div', { style: { paddingTop: space.sm + 'px' } },
-          steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), vermoegenKarte(p),
-          // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? Nur wenn etwas erfasst ist.
-          (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, {
-            palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses,
-          }),
-          ipvKarte(p), React.createElement(KKLastSpiegel, { palette, t, data, onNavigate }), gesundheitKarte(p)
-        )
-      )
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px' } }, t('chapters.finanzen.folgt.soGerechnet')),
+        kachelOffen === 'steuer' && React.createElement(React.Fragment, null, steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p)),
+        kachelOffen === 'tank' && React.createElement(React.Fragment, null,
+          (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, { palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses }),
+          vermoegenKarte(p))
+        ),
+      })
     ),
     w.hasData && React.createElement('details', {
       'data-ansprueche': anspruch ? 'moeglich' : 'keiner', open: anspruch || undefined,
