@@ -4863,7 +4863,7 @@ export default {
     weitereWege: 'Auters vias:',
     faecher: {
       // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für desc]
-      kvg: { title: 'Prestaziuns & franchisa', desc: { sie: 'Tge che l’assicuranza da basa paja e co che vossa franchisa funcziuna.', du: 'Tge che l’assicuranza da basa paja e co che tia franchisa funcziuna.' } },
+      kvg: { title: 'Prestaziuns', desc: { sie: 'Tge che l’assicuranza da basa paja e co che vossa franchisa funcziuna.', du: 'Tge che l’assicuranza da basa paja e co che tia franchisa funcziuna.' } },
       kkbeleg: { title: 'Register da quittanzas', desc: 'Rimnar quintas da medi, tegnair egl’egl franchisa & participaziun.' },
       notfall: { title: 'Urgenza', desc: 'Carta d’urgenza e las infurmaziuns pli impurtantas per il cas serius.' },
       // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).

@@ -1988,7 +1988,7 @@ export default {
     inVorbereitungHint: 'Bald im Koffer',
     weitereWege: 'Weitere Wege:',
     faecher: {
-      kvg: { title: 'Leistungen & Franchise', desc: { sie: 'Was die Grundversicherung zahlt und wie Ihre Franchise wirkt.', du: 'Was die Grundversicherung zahlt und wie deine Franchise wirkt.' } },
+      kvg: { title: 'Leistungen', desc: { sie: 'Was die Grundversicherung zahlt und wie Ihre Franchise wirkt.', du: 'Was die Grundversicherung zahlt und wie deine Franchise wirkt.' } },
       kkbeleg: { title: 'Beleg-Ordner', desc: 'Arztrechnungen sammeln, Franchise & Selbstbehalt im Blick behalten.' },
       notfall: { title: 'Notfall', desc: 'Notfallkarte und die wichtigsten Angaben für den Ernstfall.' },
       // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).

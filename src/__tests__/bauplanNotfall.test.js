@@ -115,8 +115,23 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
     const deckel = html.slice(html.indexOf('data-teil="koffer-deckel"'), html.indexOf('data-teil="koffer-boden"'));
     expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis', 'karteikarten', 'blister', 'thermometer']);
     expect(zaehle(html, /data-bald="ja"/g)).toBe(0); // seit dem Fiebertagebuch (20.11.2026) alle Fächer fertig
-    expect(html).not.toContain('data-teil="koffer-boden"');
     expect(zaehle(html, /data-kachel="notfallkarte"/g)).toBe(1);
+  });
+  // Sophie 20.11.2026, «A · Thermometer im Koffer-Boden»: die Franchise liegt im Koffer, darunter nur «Als Nächstes
+  // fällig». Das Fach heisst nur noch «Leistungen» (Doppeltes fällt weg: die Franchise steht im Boden).
+  it('das Thermometer liegt im Koffer-Boden, einmal; «Als Nächstes fällig» steht unter dem Koffer', () => {
+    const html = kapitel(MIT_BELEG);
+    const koffer = html.slice(html.indexOf('data-teil="gesundheit-koffer"'), html.indexOf('data-teil="gesundheit-faellig"'));
+    const boden = koffer.slice(koffer.indexOf('data-teil="koffer-boden"'));
+    expect(koffer.indexOf('data-teil="koffer-boden"')).toBeGreaterThan(koffer.indexOf('data-teil="koffer-deckel"'));
+    expect(zaehle(boden, /data-teil="gesundheit-franchise" data-im-koffer="ja"/g)).toBe(1);
+    expect(zaehle(boden, /data-franchise="gross"/g)).toBe(1);
+    expect(zaehle(html, /data-teil="gesundheit-franchise"/g)).toBe(1);
+    expect(zaehle(html, /data-teil="gesundheit-faellig"/g)).toBe(1);
+    expect(html.indexOf('data-teil="gesundheit-faellig"')).toBeGreaterThan(html.indexOf('data-teil="koffer-boden"'));
+    expect(boden).not.toContain('data-teil="gesundheit-faellig"');
+    expect(t('arztkoffer.faecher.kvg.title')).toBe('Leistungen');
+    expect(lies('components/NotfallImKapitel.jsx')).toMatch(/teil: 'franchise', imKoffer: true/);
   });
   it('die frühere Seite gibt es nicht mehr; #/gesundheit führt zum Koffer im Kapitel', () => {
     expect(fs.existsSync(path.join(SRC, 'ArztkofferView.jsx'))).toBe(false);

@@ -31,7 +31,9 @@ export const monatJahr = (iso, locale) => {
   try { return d.toLocaleDateString(locale, { month: 'long', year: 'numeric' }); } catch { return iso.slice(5, 7) + '.' + iso.slice(0, 4); }
 };
 
-export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche, heute = new Date() }) => {
+// teil: 'franchise' | 'faellig' | (ohne = beide). imKoffer: die Franchise liegt im Boden des Koffers (Sophie 20.11.2026,
+// «A · Thermometer im Koffer-Boden») — ohne eigene Karte, der Koffer ist der Rahmen.
+export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche, heute = new Date(), teil, imKoffer = false }) => {
   const h = React.createElement;
   const lokal = (() => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; })();
   const fr = franchiseStand(data, heute);
@@ -42,7 +44,8 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
   const satz = (inhalt, teil) => h('div', { 'data-teil': teil, style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } }, inhalt);
   const weg = (label, onClick) => onNavigate && h('button', { type: 'button', onClick, style: { ...linkStil(palette), color: palette.skyDeep || palette.text, minHeight: '44px', fontSize: text.sm, padding: 0 } }, label + ' ›');
 
-  const franchise = h('section', { 'data-teil': 'gesundheit-franchise', style: karte },
+  const franchise = teil !== 'faellig' && h('section', { 'data-teil': 'gesundheit-franchise', 'data-im-koffer': imKoffer ? 'ja' : undefined,
+    style: imKoffer ? { ...karte, background: 'none', border: 'none', padding: space.xs + 'px', marginBottom: 0 } : karte },
     fr && h('div', { style: { flex: '0 1 auto' } }, h(FranchiseAblesung, { palette, t, stand: fr, groesse: 'gross' })),
     h('div', { style: { minWidth: 0 } },
       frage('instrumente.franchise'),
@@ -55,7 +58,7 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
         : satz(t('gesundheitZuhause.franchiseLeer'), 'franchise-leer'),
       weg(t('gesundheitZuhause.zurFranchise'), () => onNavigate('kvg', undefined, 'franchise'))));
 
-  const naechstes = h('section', { 'data-teil': 'gesundheit-faellig', style: karte },
+  const naechstes = teil !== 'franchise' && h('section', { 'data-teil': 'gesundheit-faellig', style: karte },
     faellig && h('div', { style: { flex: '0 0 auto', width: '80px', display: 'flex', justifyContent: 'center' } },
       h(Kalenderblatt, { iso: faellig.iso, palette, vorbei: faellig.vorbei, locale: lokal })),
     h('div', { style: { minWidth: 0 } },
@@ -76,6 +79,7 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
           ? weg(t('gesundheitZuhause.zumImpfausweis'), () => onNavigate('impfausweis'))
           : weg(t('gesundheitZuhause.zumKatalog'), () => onNavigate('kvg', undefined, 'katalog'))));
 
+  if (imKoffer) return franchise;
   return h('div', { 'data-teil': 'gesundheit-zuhause', style: { marginBottom: space.lg + 'px' } }, franchise, naechstes);
 };
 
@@ -115,7 +119,9 @@ export const KOFFER_FAECHER = [
 ];
 export const KOFFER_ANKER = 'mp-gesundheit-koffer';
 
-export const GesundheitKoffer = ({ palette, t, onNavigate }) => {
+// boden: was unten im Koffer liegt. Sophie 20.11.2026, «A · Thermometer im Koffer-Boden»: die Franchise mit dem
+// Thermometer (GesundheitZuhause teil 'franchise', imKoffer). Geplante Fächer (gestrichelt) stünden davor.
+export const GesundheitKoffer = ({ palette, t, onNavigate, boden }) => {
   const h = React.createElement;
   const farbe = gesundheitFarbe(palette);
   const fertig = KOFFER_FAECHER.filter((f) => f.view);
@@ -128,17 +134,20 @@ export const GesundheitKoffer = ({ palette, t, onNavigate }) => {
     // Griff
     h('div', { 'aria-hidden': 'true', style: { width: '72px', height: '16px', margin: '0 auto', border: '4px solid ' + farbe, borderBottom: 'none', borderRadius: radius.lg + 'px ' + radius.lg + 'px 0 0' } }),
     // Deckel: fertige Fächer
-    h('div', { 'data-teil': 'koffer-deckel', style: { border: '3px solid ' + farbe, borderRadius: bald.length ? radius.lg + 'px ' + radius.lg + 'px ' + radius.xs + 'px ' + radius.xs + 'px' : radius.lg, padding: space.sm + 'px', ...raster } },
+    h('div', { 'data-teil': 'koffer-deckel', style: { border: '3px solid ' + farbe, borderRadius: bald.length || boden ? radius.lg + 'px ' + radius.lg + 'px ' + radius.xs + 'px ' + radius.xs + 'px' : radius.lg, padding: space.sm + 'px', ...raster } },
       fertig.map((f) => h('button', { key: f.key, type: 'button', 'data-fach': f.key, onClick: () => onNavigate && onNavigate(f.view),
         style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minHeight: '56px', padding: space.sm + 'px', textAlign: 'left',
           background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit' } },
         h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: farbe, flexShrink: 0 } }, h(Icon, { name: f.icon, size: 22 })),
         // Ein langes Wort («Wochenblister», 20.11.2026) passt nicht in 130 px: trennen statt überstehen.
         h('span', { style: { minWidth: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'anywhere', hyphens: 'auto', WebkitHyphens: 'auto' } }, titel(f))))),
-    // Boden: geplante Fächer. Seit dem Fiebertagebuch (20.11.2026) sind alle Fächer fertig: ohne geplante kein Boden.
-    bald.length > 0 && h('div', { 'data-teil': 'koffer-boden', style: { border: '3px solid ' + farbe, borderTop: '1px solid ' + farbe, borderRadius: radius.xs + 'px ' + radius.xs + 'px ' + radius.lg + 'px ' + radius.lg + 'px', padding: space.sm + 'px', marginTop: '3px', ...raster } },
-      bald.map((f) => h('div', { key: f.key, 'data-fach': f.key, 'data-bald': 'ja',
-        style: { minHeight: '56px', padding: space.sm + 'px', border: '1px dashed ' + palette.border, borderRadius: radius.md, color: palette.mid } },
-        h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel(f)),
-        h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, t('arztkoffer.inVorbereitung'))))));
+    // Boden: geplante Fächer (seit dem Fiebertagebuch 20.11.2026 keine), dann was im Koffer liegt (die Franchise).
+    // Ohne beides kein Boden.
+    (bald.length > 0 || boden) && h('div', { 'data-teil': 'koffer-boden', style: { border: '3px solid ' + farbe, borderTop: '1px solid ' + farbe, borderRadius: radius.xs + 'px ' + radius.xs + 'px ' + radius.lg + 'px ' + radius.lg + 'px', padding: space.sm + 'px', marginTop: '3px' } },
+      bald.length > 0 && h('div', { style: { ...raster, marginBottom: boden ? space.sm + 'px' : 0 } },
+        bald.map((f) => h('div', { key: f.key, 'data-fach': f.key, 'data-bald': 'ja',
+          style: { minHeight: '56px', padding: space.sm + 'px', border: '1px dashed ' + palette.border, borderRadius: radius.md, color: palette.mid } },
+          h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel(f)),
+          h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, t('arztkoffer.inVorbereitung'))))),
+      boden || null));
 };

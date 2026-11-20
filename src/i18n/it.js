@@ -1974,7 +1974,7 @@ export default {
     inVorbereitungHint: 'Presto nella valigetta',
     weitereWege: 'Altri percorsi:',
     faecher: {
-      kvg: { title: 'Prestazioni & franchigia', desc: { sie: 'Cosa copre l’assicurazione di base e come funziona la franchigia.', du: 'Cosa copre l’assicurazione di base e come funziona la franchigia.' } },
+      kvg: { title: 'Prestazioni', desc: { sie: 'Cosa copre l’assicurazione di base e come funziona la franchigia.', du: 'Cosa copre l’assicurazione di base e come funziona la franchigia.' } },
       kkbeleg: { title: 'Raccoglitore ricevute', desc: 'Raccogliere le fatture, tenere d’occhio franchigia e partecipazione.' },
       notfall: { title: 'Emergenza', desc: 'Scheda d’emergenza e i dati essenziali per il caso serio.' },
       // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).

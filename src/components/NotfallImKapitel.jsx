@@ -323,8 +323,9 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   // Seit 19.11.2026 in drei Teilen (Sophie, «A · Drei Teile»): ① Im Notfall — Anrufen, Krise, Bereit, Unterlagen ·
   // ② Arztkoffer — Fächer, Franchise, Als Nächstes fällig · ③ Vorsorge und Angaben — Vorsorge, darunter das Formular.
   // Die Krise bleibt vor «Bereit» (Lebenslagen C1+C2): sie soll ohne Scrollen erreichbar sein.
-  const koffer = h(GesundheitKoffer, { palette, t, onNavigate });
-  const gesundheit = h(GesundheitZuhause, { palette, t, data: alle, onNavigate });
+  // Sophie 20.11.2026, «A · Thermometer im Koffer-Boden»: die Franchise liegt im Koffer, darunter nur «Als Nächstes fällig».
+  const koffer = h(GesundheitKoffer, { palette, t, onNavigate, boden: h(GesundheitZuhause, { palette, t, data: alle, onNavigate, teil: 'franchise', imKoffer: true }) });
+  const gesundheit = h(GesundheitZuhause, { palette, t, data: alle, onNavigate, teil: 'faellig' });
   return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } },
     h('section', { 'data-teil': 'teil-notfall', 'aria-labelledby': NOTFALL_TEIL1 }, ernstfall, bereit, unterlagen),
     h('section', { 'data-teil': 'teil-koffer', 'aria-labelledby': 'mp-gesundheit-koffer-titel' }, koffer, gesundheit),
