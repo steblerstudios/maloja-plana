@@ -109,7 +109,9 @@ export const KOFFER_FAECHER = [
   { key: 'karteikarten', view: 'karteikarten', icon: 'contacts' },
   // Fach Wochenblister (Sophie 20.11.2026, «A · Wochenblister»): eigene Seite, Rechnung wochenblister.
   { key: 'blister', view: 'blister', icon: 'blister' },
-  { key: 'thermometer', view: null },
+  // Fach Fiebertagebuch (Sophie 20.11.2026, «A · Kurve auf Kalender»): eigene Seite, Rechnung fiebertagebuch. Der Schlüssel
+  // bleibt «thermometer» (Text arztkoffer.faecher.thermometer), das Bild ist die Fieberkurve, nicht das Thermometer.
+  { key: 'thermometer', view: 'fieber', icon: 'fieberkurve' },
 ];
 export const KOFFER_ANKER = 'mp-gesundheit-koffer';
 
@@ -126,15 +128,15 @@ export const GesundheitKoffer = ({ palette, t, onNavigate }) => {
     // Griff
     h('div', { 'aria-hidden': 'true', style: { width: '72px', height: '16px', margin: '0 auto', border: '4px solid ' + farbe, borderBottom: 'none', borderRadius: radius.lg + 'px ' + radius.lg + 'px 0 0' } }),
     // Deckel: fertige Fächer
-    h('div', { 'data-teil': 'koffer-deckel', style: { border: '3px solid ' + farbe, borderRadius: radius.lg + 'px ' + radius.lg + 'px ' + radius.xs + 'px ' + radius.xs + 'px', padding: space.sm + 'px', ...raster } },
+    h('div', { 'data-teil': 'koffer-deckel', style: { border: '3px solid ' + farbe, borderRadius: bald.length ? radius.lg + 'px ' + radius.lg + 'px ' + radius.xs + 'px ' + radius.xs + 'px' : radius.lg, padding: space.sm + 'px', ...raster } },
       fertig.map((f) => h('button', { key: f.key, type: 'button', 'data-fach': f.key, onClick: () => onNavigate && onNavigate(f.view),
         style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minHeight: '56px', padding: space.sm + 'px', textAlign: 'left',
           background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit' } },
         h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: farbe, flexShrink: 0 } }, h(Icon, { name: f.icon, size: 22 })),
         // Ein langes Wort («Wochenblister», 20.11.2026) passt nicht in 130 px: trennen statt überstehen.
         h('span', { style: { minWidth: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'anywhere', hyphens: 'auto', WebkitHyphens: 'auto' } }, titel(f))))),
-    // Boden: geplante Fächer
-    h('div', { 'data-teil': 'koffer-boden', style: { border: '3px solid ' + farbe, borderTop: '1px solid ' + farbe, borderRadius: radius.xs + 'px ' + radius.xs + 'px ' + radius.lg + 'px ' + radius.lg + 'px', padding: space.sm + 'px', marginTop: '3px', ...raster } },
+    // Boden: geplante Fächer. Seit dem Fiebertagebuch (20.11.2026) sind alle Fächer fertig: ohne geplante kein Boden.
+    bald.length > 0 && h('div', { 'data-teil': 'koffer-boden', style: { border: '3px solid ' + farbe, borderTop: '1px solid ' + farbe, borderRadius: radius.xs + 'px ' + radius.xs + 'px ' + radius.lg + 'px ' + radius.lg + 'px', padding: space.sm + 'px', marginTop: '3px', ...raster } },
       bald.map((f) => h('div', { key: f.key, 'data-fach': f.key, 'data-bald': 'ja',
         style: { minHeight: '56px', padding: space.sm + 'px', border: '1px dashed ' + palette.border, borderRadius: radius.md, color: palette.mid } },
         h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel(f)),

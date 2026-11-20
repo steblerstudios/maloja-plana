@@ -26,7 +26,8 @@ export const KAPITEL = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbil
 const GESUNDHEIT = {
   // Listen der Karteikarten (19.11.2026) und des Wochenblisters (20.11.2026): Diagnosen, Behandelnde und Medikamente
   // verraten Gesundheit wie die Felder daneben.
-  notfall: ['bloodType', 'allergies', 'medications', 'chronicDiseases', 'impfungen', 'chronicDiseasesList', 'doctorsList', 'medicationsList'],
+  // Das Fiebertagebuch (20.11.2026) hält Temperaturen und Symptome fest: ebenso eine Gesundheitsangabe.
+  notfall: ['bloodType', 'allergies', 'medications', 'chronicDiseases', 'impfungen', 'chronicDiseasesList', 'doctorsList', 'medicationsList', 'fiebertagebuch'],
   // Ein IV-Rentenbetrag verrät den IV-Bezug wie das Feld daneben.
   finanzen: ['ivBezug', 'ivRente'],
   versicherungen: ['kkBelege'],
