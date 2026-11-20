@@ -1974,7 +1974,7 @@ export default {
     inVorbereitungHint: 'Coming to the case',
     weitereWege: 'Other paths:',
     faecher: {
-      kvg: { title: 'Benefits & deductible', desc: 'What basic insurance covers and how your deductible works.' },
+      kvg: { title: 'Benefits', desc: 'What basic insurance covers and how your deductible works.' },
       kkbeleg: { title: 'Receipts folder', desc: 'Collect medical bills, keep deductible & co-payment in view.' },
       notfall: { title: 'Emergency', desc: 'Emergency card and the key details for a crisis.' },
       // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).

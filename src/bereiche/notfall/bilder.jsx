@@ -67,7 +67,7 @@ export const FranchiseAblesung = ({ palette, t, stand, groesse = 'mittel', fuell
   const yOffen = yStrich + zeile;
   const yFuell = Math.round((128 - 76 * a) * k - zeile / 2);
   const yErreicht = Math.min(Math.round(128 * k), Math.max(yOffen + zeile + 2, yFuell));
-  const marke = (teil, top, inhalt, stark) => h('div', { key: teil, 'data-teil': teil, style: { position: 'absolute', left: 0, top: top + 'px', whiteSpace: 'nowrap', fontSize: '13px', lineHeight: zeile + 'px', color: stark ? palette.text : palette.mid, fontWeight: stark ? 600 : 400 } }, inhalt);
+  const marke = (teil, top, inhalt, stark) => h('div', { key: teil, 'data-teil': teil, style: { position: 'absolute', left: 0, top: top + 'px', whiteSpace: 'nowrap', fontSize: '13px', lineHeight: zeile + 'px', color: stark ? palette.text : palette.mid, fontWeight: stark ? 600 : 400 } }, ...inhalt); // gespreizt: als Liste fehlte der key (Konsole, 20.11.2026)
   const wert = (n) => h('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } }, betrag(n, { hoechstens: 2 }));
   return h('div', { 'data-teil': 'franchise-ablesung', 'data-groesse': groesse, style: { display: 'flex', gap: '10px', alignItems: 'flex-start' } },
     h(FranchiseThermometer, { palette, stand, groesse, fuell }),

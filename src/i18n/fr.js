@@ -1974,7 +1974,7 @@ export default {
     inVorbereitungHint: 'Bientôt dans la trousse',
     weitereWege: 'Autres chemins :',
     faecher: {
-      kvg: { title: 'Prestations & franchise', desc: { sie: 'Ce que l’assurance de base couvre et comment fonctionne votre franchise.', du: 'Ce que l’assurance de base couvre et comment fonctionne ta franchise.' } },
+      kvg: { title: 'Prestations', desc: { sie: 'Ce que l’assurance de base couvre et comment fonctionne votre franchise.', du: 'Ce que l’assurance de base couvre et comment fonctionne ta franchise.' } },
       kkbeleg: { title: 'Classeur de justificatifs', desc: 'Rassembler les factures, garder franchise et quote-part en vue.' },
       notfall: { title: 'Urgence', desc: 'Carte d’urgence et les informations clés en cas de besoin.' },
       // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
