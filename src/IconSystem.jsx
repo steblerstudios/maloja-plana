@@ -236,6 +236,15 @@ const _blister = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
   React.createElement('circle', { cx: '16', cy: '15', r: '1.8', strokeWidth: '1.2' })
 );
 
+// Fieberkurve (Fach Fiebertagebuch, 20.11.2026): Kurve mit drei Punkten über einem Kalenderstreifen. Kein Thermometer:
+// das Thermometer bedeutet in der App nur die Franchise (11.11.2026).
+const _fieberkurve = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M 4 12 L 9 6 L 14 9 L 20 4' }),
+  ...[[4, 12], [9, 6], [14, 9], [20, 4]].map(([cx, cy]) => React.createElement('circle', { key: cx, cx, cy, r: '1.6', fill: 'currentColor', stroke: 'none' })),
+  React.createElement('rect', { x: '3', y: '15', width: '18', height: '6', rx: '1.5' }),
+  React.createElement('path', { d: 'M 9 15 V 21 M 15 15 V 21' })
+);
+
 const _legal = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Scale / balance
   React.createElement('line', { x1: '12', y1: '2', x2: '12', y2: '20', stroke: 'currentColor', strokeWidth: '2' }),
@@ -334,6 +343,7 @@ zeichenErgaenzen({
   selfEmployment: _selfEmployment,
   contacts: _contacts,
   blister: _blister,
+  fieberkurve: _fieberkurve,
   legal: _legal,
   edit: _edit,
   phone: _phone,

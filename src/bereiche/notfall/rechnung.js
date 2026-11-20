@@ -6,6 +6,7 @@
 //   4. Impfung fällig     naechsteImpfung       → Kalenderblatt     (Fach Impfausweis; zählt bei 2 mit)
 //   7. Wer behandelt mich? karteikarten         → Karteikasten      (Fach Karteikarten; Diagnosen: Liste ohne Bild)
 //   8. Was nehme ich wann? wochenblister        → Blisterpackung    (Fach Wochenblister)
+//   9. Wie ging es mir?   fiebertagebuch        → Fieberkurve       (Fach Fiebertagebuch)
 // Die Verfügungen (VORSORGE) sind eine Liste ohne Bild; ihre Rechnung steht hier, weil «Bereit» die
 // Patientenverfügung mitzählt.
 import { feldErledigt } from '../../utils/vollstaendigkeit.js';
@@ -416,4 +417,60 @@ export const wochenblister = (data) => {
     beiBedarf: medikamente.filter((m) => m.beiBedarf).length,
     ohneZeit: medikamente.filter((m) => !m.zeiten.length && !m.beiBedarf).length,
     einnahmenMin: Math.min(...proTag), einnahmenMax: Math.max(...proTag) };
+};
+
+// ─── 9 · Wie ging es mir die letzten Tage? (Fach Fiebertagebuch, Sophie 20.11.2026: «A · Kurve auf Kalender») ─────
+// Eigene Datenhaltung, lokal: data.notfall.fiebertagebuch = [{ id, zeit: 'YYYY-MM-DDTHH:MM', temp, symptome: [key…],
+// anderes, medikament, notiz, fuer }]. `fuer` frei (ohne Namen = ich), je Person ein eigener Verlauf. Einträge bleiben
+// FIEBER_AUFBEWAHREN_TAGE Tage (Sophie: «30 Tage, dann weg»). Keine Grenze «ab wann Fieber», keine Beurteilung, keine
+// Dosierung: gezählt und gezeigt wird nur, was eingetragen ist. Die Temperatur gilt nur von 34 bis 43 °C (Tippfehler).
+export const FIEBER_SYMPTOME = ['husten', 'halsweh', 'kopfweh', 'schnupfen', 'uebelkeit', 'durchfall', 'glieder', 'muede'];
+export const FIEBER_AUFBEWAHREN_TAGE = 30;
+export const FIEBER_TAGE = 7;
+export const FIEBER_LAUF_LUECKE = 2; // Tage ohne Eintrag, nach denen ein Verlauf als neu gilt
+const TAG_MS = 86400000;
+const tagIsoVon = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const tagNummer = (iso) => Math.round(new Date(iso + 'T12:00:00').getTime() / TAG_MS);
+export const fieberTemp = (v) => {
+  const n = typeof v === 'number' ? v : parseFloat(String(v ?? '').replace(',', '.'));
+  return Number.isFinite(n) && n >= 34 && n <= 43 ? Math.round(n * 10) / 10 : null;
+};
+const zeitGueltig = (z) => typeof z === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(z) && !Number.isNaN(new Date(z).getTime());
+
+// Die Rohliste ohne Einträge, die älter als die Aufbewahrung sind (zum stillen Aufräumen beim Öffnen).
+export const fieberBehalten = (liste, heute = new Date()) => {
+  const grenze = tagNummer(tagIsoVon(heute)) - FIEBER_AUFBEWAHREN_TAGE;
+  return (Array.isArray(liste) ? liste : []).filter((e) => zeitGueltig(e?.zeit) && tagNummer(e.zeit.slice(0, 10)) > grenze);
+};
+
+// { personen: [name…] ('' = ich), fuer, eintraege: [neueste zuerst], tage: [{ iso, wochentag, hoechste, symptome }],
+//   anzahl, zuletzt, zuletztTemp, aktuell, tagNr, laufTage }. tage = die letzten FIEBER_TAGE Tage bis heute; je Tag die
+// höchste eingetragene Temperatur. Verlauf = Einträge ohne Lücke über FIEBER_LAUF_LUECKE Tage, vom neuesten zurück.
+// aktuell = der neueste Eintrag ist höchstens FIEBER_LAUF_LUECKE Tage alt; dann tagNr = Tag seit Beginn bis heute.
+export const fiebertagebuch = (data, heute = new Date(), fuer = '') => {
+  const alle = fieberBehalten(data?.notfall?.fiebertagebuch, heute)
+    .map((e, i) => ({ id: e.id || 'e' + i, zeit: e.zeit.slice(0, 16), tag: e.zeit.slice(0, 10), temp: fieberTemp(e.temp),
+      symptome: FIEBER_SYMPTOME.filter((s) => Array.isArray(e.symptome) && e.symptome.includes(s)),
+      anderes: textVon(e.anderes), medikament: textVon(e.medikament), notiz: textVon(e.notiz), fuer: textVon(e.fuer) }))
+    .sort((a, b) => (a.zeit < b.zeit ? 1 : a.zeit > b.zeit ? -1 : 0));
+  const personen = [...new Set(alle.map((e) => e.fuer))];
+  const wer = personen.includes(textVon(fuer)) ? textVon(fuer) : (personen[0] ?? '');
+  const eintraege = alle.filter((e) => e.fuer === wer);
+  const heuteNr = tagNummer(tagIsoVon(heute));
+  const tage = Array.from({ length: FIEBER_TAGE }, (_, i) => {
+    const d = new Date(heute.getFullYear(), heute.getMonth(), heute.getDate() - (FIEBER_TAGE - 1 - i), 12);
+    const iso = tagIsoVon(d);
+    const amTag = eintraege.filter((e) => e.tag === iso);
+    const temps = amTag.map((e) => e.temp).filter((x) => x != null);
+    return { iso, wochentag: ((d.getDay() + 6) % 7) + 1, hoechste: temps.length ? Math.max(...temps) : null,
+      symptome: amTag.some((e) => e.symptome.length || e.anderes) };
+  });
+  const tagNrn = [...new Set(eintraege.map((e) => tagNummer(e.tag)))]; // absteigend, weil eintraege absteigend
+  let beginn = tagNrn[0];
+  for (const n of tagNrn.slice(1)) { if (beginn - n <= FIEBER_LAUF_LUECKE) beginn = n; else break; }
+  const zuletzt = eintraege[0] || null;
+  const aktuell = !!zuletzt && heuteNr - tagNrn[0] <= FIEBER_LAUF_LUECKE;
+  return { personen, fuer: wer, eintraege, tage, anzahl: eintraege.length, zuletzt,
+    zuletztTemp: (eintraege.find((e) => e.temp != null) || {}).temp ?? null, aktuell,
+    tagNr: aktuell ? heuteNr - beginn + 1 : null, laufTage: zuletzt ? tagNrn[0] - beginn + 1 : 0 };
 };

@@ -174,3 +174,37 @@ export const Blisterpackung = ({ palette, t, raster = [], groesse = 'gross' }) =
     t && ['morgens', 'mittags', 'abends', 'nachts'].map((z, i) => beschriftung('z' + z, links - 8, oben + i * zelle + zelle / 2 + 4, t('blister.zeitenKurz.' + z), 'end')),
     ...mulden);
 };
+
+// Wie ging es mir die letzten Tage? als Fieberkurve auf einem Kalenderstreifen (Sophie 20.11.2026, Auswahl «A · Kurve
+// auf Kalender»). KEIN Thermometer: das bedeutet in der App nur die Franchise (11.11.2026). Unten 7 Tage als Streifen
+// (Wochentage übersetzt, im Feld), darüber je Tag die höchste eingetragene Temperatur als Punkt; Punkte benachbarter
+// Tage mit einer Linie verbunden, ein Tag ohne Messung unterbricht die Linie (nichts erfinden). Unter dem Streifen ein
+// Strich für Tage mit Symptomen. Feste Höhe 36–40 °C (geklemmt), damit kleine Schwankungen nicht gross aussehen.
+// Ruhig: eine Farbe, keine Grenzlinie «ab hier Fieber», keine Ampel, keine Zahlen im Bild (Regel «Zahl»).
+// `tage` aus fiebertagebuch(data).
+export const FIEBER_SKALA = [36, 40];
+export const Fieberkurve = ({ palette, t, tage = [], groesse = 'gross' }) => {
+  const h = React.createElement;
+  const farbe = gesundheitFarbe(palette);
+  const px = INSTRUMENT_GROESSE[groesse] || INSTRUMENT_GROESSE.gross;
+  const zelle = 36, links = 2, oben = 10, kurve = 64, streifen = 26;
+  const breite = links * 2 + 7 * zelle, yStreifen = oben + kurve + 10, hoehe = yStreifen + streifen + 12;
+  const [tief, hoch] = FIEBER_SKALA;
+  const yVon = (temp) => oben + kurve - ((Math.min(hoch, Math.max(tief, temp)) - tief) / (hoch - tief)) * kurve;
+  const xVon = (i) => links + i * zelle + zelle / 2;
+  const linien = [];
+  tage.forEach((d, i) => {
+    const vor = tage[i - 1];
+    if (i > 0 && d.hoechste != null && vor && vor.hoechste != null) {
+      linien.push(h('line', { key: 'l' + i, 'data-teil': 'kurvenstueck', x1: xVon(i - 1), y1: yVon(vor.hoechste), x2: xVon(i), y2: yVon(d.hoechste), stroke: farbe, strokeWidth: 2.5, strokeLinecap: 'round' }));
+    }
+  });
+  return h('svg', { viewBox: '0 0 ' + breite + ' ' + hoehe, width: '100%', 'aria-hidden': true, 'data-teil': 'fieberkurve', 'data-groesse': groesse,
+    style: { maxWidth: px + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    ...linien,
+    ...tage.map((d, i) => d.hoechste != null && h('circle', { key: 'p' + i, 'data-teil': 'messpunkt', 'data-temp': d.hoechste, cx: xVon(i), cy: yVon(d.hoechste), r: 4.5, fill: farbe })),
+    h('rect', { 'data-teil': 'kalenderstreifen', x: links, y: yStreifen, width: 7 * zelle, height: streifen, rx: 6, fill: 'none', stroke: farbe, strokeWidth: 2 }),
+    ...tage.slice(1).map((_, i) => h('line', { key: 's' + i, x1: links + (i + 1) * zelle, y1: yStreifen, x2: links + (i + 1) * zelle, y2: yStreifen + streifen, stroke: palette.border, strokeWidth: 1 })),
+    ...(t ? tage.map((d, i) => h('text', { key: 't' + i, x: xVon(i), y: yStreifen + streifen / 2 + 4.5, fontSize: 13, fill: palette.mid, textAnchor: 'middle' }, t('blister.tageKurz.' + d.wochentag))) : []),
+    ...tage.map((d, i) => d.symptome && h('line', { key: 'y' + i, 'data-teil': 'symptomstrich', x1: xVon(i) - 8, y1: yStreifen + streifen + 7, x2: xVon(i) + 8, y2: yStreifen + streifen + 7, stroke: farbe, strokeWidth: 3, strokeLinecap: 'round' })));
+};

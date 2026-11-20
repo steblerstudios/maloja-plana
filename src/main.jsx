@@ -141,6 +141,7 @@ const KVGLeistungen = lazyMitTexten(() => import('./KVGLeistungen.jsx'));
 const Impfausweis = lazyMitTexten(() => import('./bereiche/notfall/notfall.js').then((m) => ({ default: m.Impfausweis })));
 const Karteikarten = lazyMitTexten(() => import('./bereiche/notfall/notfall.js').then((m) => ({ default: m.Karteikarten })));
 const Wochenblister = lazyMitTexten(() => import('./bereiche/notfall/notfall.js').then((m) => ({ default: m.Wochenblister })));
+const Fiebertagebuch = lazyMitTexten(() => import('./bereiche/notfall/notfall.js').then((m) => ({ default: m.Fiebertagebuch })));
 const FlyerView = lazyMitTexten(() => import('./FlyerView.jsx'));
 // MerklisteView: seit 27.10.2026 keine eigene Seite — Reiter in «Was ansteht» (UMLEITUNGEN, CalendarReminders.jsx).
 const SearchView = lazyMitTexten(() => import('./SearchView.jsx'));
@@ -1745,6 +1746,7 @@ const AppInner = ({ demo }) => {
         view === 'impfausweis' && React.createElement(Impfausweis, { palette, t, data: activeData, onUpdateData: updateData }),
         view === 'karteikarten' && React.createElement(Karteikarten, { palette, t, data: activeData, onUpdateData: updateData }),
         view === 'blister' && React.createElement(Wochenblister, { palette, t, lang, data: activeData, onUpdateData: updateData }),
+        view === 'fieber' && React.createElement(Fiebertagebuch, { palette, t, data: activeData, onUpdateData: updateData }),
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
         view === 'drucken' && React.createElement(UnterlagenDrucken, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate, wahl, onWahl: waehle }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),

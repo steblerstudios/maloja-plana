@@ -11,7 +11,7 @@ import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE, getChapters } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
-import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE, Karteikarten, karteikarten, diagnosenListe, KARTEI_GRUPPEN, Wochenblister, wochenblister, blisterTage, Blisterpackung } from '../bereiche/notfall/notfall.js';
+import { GesundheitZuhause, naechstesFaellig, naechsteVorsorge, lagenStand, bereitschaft, Impfausweis, impfAbstandJahre, naechsteImpfung, KOFFER_FAECHER, impfcheck, impfKosten, impfKostenJahr, impfZahlerVorschlag, IMPF_RICHTPREISE, Karteikarten, karteikarten, diagnosenListe, KARTEI_GRUPPEN, Wochenblister, wochenblister, blisterTage, Blisterpackung, Fiebertagebuch, fiebertagebuch, fieberBehalten, fieberTemp, Fieberkurve, FIEBER_AUFBEWAHREN_TAGE } from '../bereiche/notfall/notfall.js';
 import { SPECIALTY_GRUPPEN } from '../DoctorManager.jsx';
 import { weitereAerzteAusListe, KEINE_AERZTE } from '../utils/weitereAerzte.js';
 
@@ -113,8 +113,9 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
   it('der offene Koffer: fertige Fächer als Knöpfe im Deckel, geplante gestrichelt im Boden, keine Notfallkarte doppelt', () => {
     const html = kapitel(DEMO_DATA);
     const deckel = html.slice(html.indexOf('data-teil="koffer-deckel"'), html.indexOf('data-teil="koffer-boden"'));
-    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis', 'karteikarten', 'blister']);
-    expect(zaehle(html, /data-bald="ja"/g)).toBe(1);
+    expect(deckel.match(/<button[^>]*data-fach="([a-z]+)"/g).map((m) => m.match(/data-fach="([a-z]+)"/)[1])).toEqual(['kvg', 'kkbeleg', 'impfausweis', 'karteikarten', 'blister', 'thermometer']);
+    expect(zaehle(html, /data-bald="ja"/g)).toBe(0); // seit dem Fiebertagebuch (20.11.2026) alle Fächer fertig
+    expect(html).not.toContain('data-teil="koffer-boden"');
     expect(zaehle(html, /data-kachel="notfallkarte"/g)).toBe(1);
   });
   it('die frühere Seite gibt es nicht mehr; #/gesundheit führt zum Koffer im Kapitel', () => {
@@ -505,5 +506,109 @@ describe('Fach Wochenblister · Was nehme ich wann?', () => {
     expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Wochenblister \}\)\)\)/);
     expect(lies('main.jsx')).toMatch(/view === 'blister' && React\.createElement\(Wochenblister/);
     expect(lies('bereiche/notfall/wochenblister.jsx')).not.toMatch(/medicationsList\)\.filter|\.reduce\(/); // rechnet nicht selbst
+  });
+});
+
+// Fach Fiebertagebuch (Sophie 20.11.2026: «A · Kurve auf Kalender», Eintrag mit allem, «Für wen» frei, 30 Tage).
+// Analyse §12 in stebler-studios/analysen/2026-11-18-notfall-gesundheit-bauplan.md.
+describe('Fach Fiebertagebuch · Wie ging es mir die letzten Tage?', () => {
+  const JETZT = new Date('2026-11-20T09:00:00'); // Freitag
+  const LISTE = [
+    { id: 'a', zeit: '2026-11-17T20:00', temp: 38.4, symptome: ['husten', 'kopfweh'] },
+    { id: 'b', zeit: '2026-11-18T08:00', temp: '38,1' },
+    { id: 'c', zeit: '2026-11-18T20:00', temp: 38.6, medikament: 'Dafalgan' },
+    { id: 'd', zeit: '2026-11-20T08:10', temp: 37.4, symptome: ['husten'], notiz: 'viel getrunken' },
+    { id: 'e', zeit: '2026-11-19T19:00', temp: 39.2, fuer: 'Lea', symptome: ['halsweh'] },
+    { id: 'alt', zeit: '2026-10-01T08:00', temp: 38 },
+    { id: 'frueher', zeit: '2026-11-05T08:00', temp: 37.9 },
+  ];
+  const seite = (notfall, extra = {}) => renderToStaticMarkup(React.createElement(Fiebertagebuch, { palette: LIGHT_PALETTE, t, onUpdateData: () => {},
+    heute: JETZT, data: { ...DEMO_DATA, notfall: { ...notfall } }, ...extra }));
+  it('Rechnung: je Person ein Verlauf, neueste zuerst, höchste Temperatur je Tag, Tag seit Beginn', () => {
+    const s = fiebertagebuch({ notfall: { fiebertagebuch: LISTE } }, JETZT);
+    expect(s.personen).toEqual(['', 'Lea']);
+    expect(s.fuer).toBe('');
+    expect(s.eintraege.map((e) => e.id)).toEqual(['d', 'c', 'b', 'a', 'frueher']);
+    expect(s.tage.map((d) => d.iso)).toEqual(['2026-11-14', '2026-11-15', '2026-11-16', '2026-11-17', '2026-11-18', '2026-11-19', '2026-11-20']);
+    expect(s.tage.map((d) => d.hoechste)).toEqual([null, null, null, 38.4, 38.6, null, 37.4]); // Lea zählt nicht mit
+    expect(s.tage[6].wochentag).toBe(5);
+    expect(s.tage.map((d) => d.symptome)).toEqual([false, false, false, true, false, false, true]);
+    expect(s.aktuell).toBe(true);
+    expect(s.tagNr).toBe(4); // 17. bis 20.: der Eintrag vom 5. liegt über der Lücke
+    expect(s.zuletztTemp).toBe(37.4);
+    const lea = fiebertagebuch({ notfall: { fiebertagebuch: LISTE } }, JETZT, 'Lea');
+    expect(lea.eintraege.map((e) => e.id)).toEqual(['e']);
+    expect(lea.tagNr).toBe(2);
+  });
+  it('Rechnung: 30 Tage aufbewahren, Temperatur nur 34–43 °C, ein alter Verlauf ist nicht «Tag»', () => {
+    expect(FIEBER_AUFBEWAHREN_TAGE).toBe(30);
+    expect(fieberBehalten(LISTE, JETZT).map((e) => e.id)).not.toContain('alt');
+    expect(fieberBehalten([{ zeit: '2026-10-21T08:00' }, { zeit: '2026-10-22T08:00' }, { zeit: 'quatsch' }], JETZT)).toEqual([{ zeit: '2026-10-22T08:00' }]);
+    expect([fieberTemp('38,25'), fieberTemp(36), fieberTemp('3.8'), fieberTemp('44'), fieberTemp('')]).toEqual([38.3, 36, null, null, null]);
+    const alt = fiebertagebuch({ notfall: { fiebertagebuch: [{ zeit: '2026-11-10T08:00', temp: 38 }, { zeit: '2026-11-11T08:00' }] } }, JETZT);
+    expect(alt.aktuell).toBe(false);
+    expect(alt.tagNr).toBe(null);
+    expect(alt.laufTage).toBe(2);
+    expect(fiebertagebuch({}, JETZT)).toMatchObject({ anzahl: 0, zuletzt: null, personen: [] });
+  });
+  it('Fachseite: eine Fieberkurve, die Zahl darunter, kein Thermometer und keine anderen Bilder', () => {
+    const html = seite({ fiebertagebuch: LISTE });
+    expect(zaehle(html, /data-teil="fieberkurve"/g)).toBe(1);
+    expect(zaehle(html, /data-instrument-zahl="fieber"/g)).toBe(1);
+    expect(html.indexOf('data-instrument-zahl="fieber"')).toBeGreaterThan(html.indexOf('data-teil="fieberkurve"'));
+    expect(html).toContain('>Tag 4<');
+    expect(html).toContain('zuletzt 37,4 °C · Husten');
+    expect(zaehle(html, /data-teil="messpunkt"/g)).toBe(3);
+    expect(zaehle(html, /data-teil="kurvenstueck"/g)).toBe(1); // 17.–18. verbunden, 19. ohne Messung unterbricht
+    expect(zaehle(html, /data-teil="symptomstrich"/g)).toBe(2);
+    expect(zaehle(html, /data-teil="fieber-personen"/g)).toBe(1);
+    expect(html).toContain('Dafalgan genommen');
+    expect(html).toContain('viel getrunken');
+    expect(html).not.toContain('Lea</span><span'); // Leas Eintrag steht nicht im Verlauf «Ich selbst»
+    expect(zaehle(html, /data-franchise=|data-teil="kalenderblatt"|data-teil="herz-puls"|data-teil="karteikasten"|data-teil="blisterpackung"/g)).toBe(0);
+    expect(html).toContain('beurteilt nichts');
+    expect(html).toContain('30 Tage');
+  });
+  it('Fachseite leer: keine Zahl, ruhiger Satz, kein «Alle löschen»; Bild ohne Grenzlinie', () => {
+    const leer = seite({});
+    expect(leer).toContain('data-teil="fieberkurve"');
+    expect(leer).not.toContain('data-instrument-zahl="fieber"');
+    expect(leer).toContain('data-teil="fieber-leer"');
+    expect(leer).not.toContain('data-teil="fieber-alle-loeschen"');
+    expect(lies('bereiche/notfall/bilder.jsx').slice(lies('bereiche/notfall/bilder.jsx').indexOf('export const Fieberkurve'))).not.toMatch(/\b38\b|strokeDasharray/);
+  });
+  it('Formular: Temperatur, Symptome zum Antippen, Medikament aus dem Wochenblister, Notiz, Für wen', () => {
+    const html = seite({ fiebertagebuch: LISTE, medicationsList: [{ name: 'Dafalgan', frequency: ['beiB'] }, { name: '' }] }, { formularOffen: true });
+    expect(html).toContain('type="datetime-local"');
+    expect(html).toContain('value="2026-11-20T09:00"');
+    expect(zaehle(html, /data-symptom="/g)).toBe(8);
+    expect(zaehle(html, /aria-pressed="false" data-symptom=/g)).toBe(8);
+    expect(html).toMatch(/<datalist id="mp-fieber-medikamente"[^>]*><option value="Dafalgan"><\/option><\/datalist>/);
+    expect(html).toContain('id="mp-fieber-notiz"');
+    expect(html).toContain('id="mp-fieber-wer"');
+    expect(lies('bereiche/notfall/fiebertagebuch.jsx')).toMatch(/schreibe\(\[\.\.\.behalten, \{/);
+    expect(lies('bereiche/notfall/fiebertagebuch.jsx')).not.toMatch(/medicationsList/); // eine Liste: nur über wochenblister()
+  });
+  it('das Bild verbindet nur benachbarte Tage und klemmt die Höhe', () => {
+    const tage = [41.5, null, 37, 37.5, null, null, 35].map((hoechste, i) => ({ iso: 'x' + i, wochentag: i + 1, hoechste, symptome: false }));
+    const html = renderToStaticMarkup(React.createElement(Fieberkurve, { palette: LIGHT_PALETTE, t, tage }));
+    expect(zaehle(html, /data-teil="messpunkt"/g)).toBe(4);
+    expect(zaehle(html, /data-teil="kurvenstueck"/g)).toBe(1);
+    const ys = [...html.matchAll(/data-teil="messpunkt"[^>]*cy="([\d.]+)"/g)].map((m) => Number(m[1]));
+    expect(Math.min(...ys)).toBeGreaterThanOrEqual(10);
+    expect(Math.max(...ys)).toBeLessThanOrEqual(74);
+    expect(html).toContain('>Mo<');
+  });
+  it('Gesundheitsangabe: das Fiebertagebuch steht in der Export-Vorschau als heikel', () => {
+    expect(lies('exportVorschau.js')).toMatch(/'medicationsList', 'fiebertagebuch'\]/);
+  });
+  it('das Fach steht im Koffer mit eigenem Zeichen (kein Thermometer), hat eine Adresse und wird lazy geladen', () => {
+    expect(KOFFER_FAECHER.find((f) => f.key === 'thermometer')).toMatchObject({ view: 'fieber', icon: 'fieberkurve' });
+    expect(lies('IconSystem.jsx')).toMatch(/fieberkurve: _fieberkurve,/);
+    expect(lies('config/iconInventar.js')).toMatch(/fieberkurve: "/);
+    expect(lies('utils/hashRouter.js')).toMatch(/'blister', 'fieber',/);
+    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Fiebertagebuch \}\)\)\)/);
+    expect(lies('main.jsx')).toMatch(/view === 'fieber' && React\.createElement\(Fiebertagebuch/);
+    expect(lies('bereiche/notfall/fiebertagebuch.jsx')).not.toMatch(/\.reduce\(|Math\.max/); // rechnet nicht selbst
   });
 });
