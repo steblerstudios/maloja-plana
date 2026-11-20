@@ -24,7 +24,6 @@ import { renderSource } from '../utils/renderSource.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
 import { GlossarText } from '../GlossarBegriff.jsx';
 import { betrag } from '../utils/geld.js';
-import { ReserveTank } from './ReserveTank.jsx';
 import { Lebensbaum } from '../Lebensbaum.jsx';
 import { astFarben, bereichsFruechte } from '../utils/lebensbereichFruechte.js';
 import { GeldflussImKapitel } from './Geldfluss.jsx';
@@ -650,10 +649,8 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
       steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), React.createElement(KKLastSpiegel, { palette, t, data, onNavigate }), gesundheitKarte(p), vermoegenKarte(p),
-      // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? Nur wenn etwas erfasst ist.
-      (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, {
-        palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses,
-      })
+      // Der Notgroschen steht seit dem Bauplan Finanzen (Entwurf 20.11.2026) als Sparschwein in der Szene oben — jedes Bild einmal.
+      null
     ),
     w.hasData && React.createElement('details', {
       'data-ansprueche': anspruch ? 'moeglich' : 'keiner', open: anspruch || undefined,

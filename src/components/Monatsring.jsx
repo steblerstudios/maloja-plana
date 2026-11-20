@@ -44,7 +44,10 @@ const MASS = 220;
 const SPALTEN = 'minmax(0, 1fr) auto 36px 14px'; // Name · Betrag · Anteil · Pfeil: Beträge und Anteile stehen auf einer Kante
 const LUFT = 0.35; // Abstand zwischen zwei Stücken, in Prozent des Rings
 
-export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titelJahr, zahl, kopf }) => {
+// `bilder` / `unter` (Bauplan Finanzen, Entwurf 20.11.2026): je Bereich das Bild seines Lebensbereichs vor der Zeile
+// (Wohnen: Drittel-Haus klein · Versicherungen: Netz-Schild klein · Steuern: Steuerfranken) und eine kurze Zeile darunter.
+// Jedes Ring-Stück trägt so sein Bild; ohne die Props bleibt die Karte, wie sie war.
+export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titelJahr, zahl, kopf, bilder = null, unter = null }) => {
   const { gruppen, basis, rest } = ringDaten({ data, t, palette, einkommen, verplant });
   const [offen, setOffen] = useState(null);
   const [faktor, setFaktor] = useState(1);
@@ -72,7 +75,8 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
   const zeile = (g) => {
     const auf = offen === g.key;
     const knopf = g.posten.length > 1;
-    return React.createElement('div', { key: g.key, 'data-gruppe': g.key, style: { marginBottom: '4px' } },
+    const bild = bilder && bilder[g.key];
+    const zeileInhalt = React.createElement('div', { key: g.key, 'data-gruppe': g.key, style: { marginBottom: '4px', minWidth: 0, flex: '1 1 auto' } },
       React.createElement(knopf ? 'button' : 'div', {
         ...(knopf ? { type: 'button', 'aria-expanded': auf, onClick: () => setOffen(auf ? null : g.key) } : {}),
         style: { display: 'block', width: '100%', minHeight: '44px', boxSizing: 'border-box', padding: '4px 0', background: 'none', border: 0, fontFamily: 'inherit', fontSize: text.sm, textAlign: 'left', color: palette.text, cursor: knopf ? 'pointer' : 'default' },
@@ -94,8 +98,14 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
           React.createElement('span', { style: { ...zahlen, color: palette.mid } }, anteil(p.value, basis)),
           React.createElement('span', null)
         ))
-      )
+      ),
+      unter && unter[g.key] && React.createElement('div', { 'data-teil': 'ring-unter-' + g.key, style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.4, margin: '2px 0 0' } }, unter[g.key])
     );
+    // Mit Bildern rücken alle Zeilen gleich ein, auch die ohne eigenes Bild (Übriges).
+    if (!bilder) return zeileInhalt;
+    return React.createElement('div', { key: g.key, 'data-ring-bild': bild ? g.key : undefined, style: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start' } },
+      React.createElement('div', { 'aria-hidden': 'true', style: { width: '44px', flexShrink: 0, display: 'flex', justifyContent: 'center', paddingTop: '4px' } }, bild || null),
+      zeileInhalt);
   };
   return React.createElement('div', { 'data-teil': 'monatsring', style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg } },
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: space.xs + 'px ' + space.md + 'px', marginBottom: space.md + 'px' } },

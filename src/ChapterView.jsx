@@ -73,7 +73,8 @@ const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
-const Monatsring = React.lazy(() => import('./components/Monatsring.jsx').then((m) => ({ default: m.Monatsring })));
+// Seit dem Bauplan Finanzen (Entwurf 20.11.2026) steht der Monatsring in der Finanzen-Szene (bereiche/finanzen/zuhause.jsx).
+const FinanzenSzene = React.lazy(() => import('./bereiche/finanzen/finanzen.js').then((m) => ({ default: m.FinanzenSzene })));
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./bereiche/wohnen/wohnen.js').then((m) => ({ default: m.WohnenZuhause })));
@@ -2040,9 +2041,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('div', { style: label }, tr(titelKey)),
         React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(Math.abs(m.bleibt))),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, kopf(1))) },
-        React.createElement(Monatsring, {
+        React.createElement(FinanzenSzene, {
           palette, t: tr, data: { ...(allData || {}), finanzen: data }, einkommen: m.einkommen, verplant: m.verplant,
           titel: tr(titelKey), titelJahr: tr('chapters.finanzen.monat.' + (plus ? 'jahrBleiben' : 'jahrFehlen')), zahl: m.bleibt, kopf,
+          isDarkMode, onNavigate: onNavigate || (() => {}),
         })
       ),
       renderDoppeltVersichert(),
