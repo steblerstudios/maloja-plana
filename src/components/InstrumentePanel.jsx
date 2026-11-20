@@ -71,7 +71,9 @@ const miniKreuz = (palette) => {
 
 // eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
 // Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
-export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null }) => {
+// `imKapitel` (Entwurf Finanzen, 20.11.2026): die Kacheln klein nebeneinander, nur Bild · Zahl · Satz — die Hinweise
+// (Bund, Annahmen, Frist) stehen im Kapitel an ihrem Ort: Rechnung unter «So gerechnet», Frist bei den Behörden.
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, imKapitel = false }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
   // Dieselbe Rechnung wie das Netz-Schild im Kapitel: eingetragen = Summe der gefüllten Stufen über alle Teile.
@@ -210,7 +212,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         ...(tile.zahl ? { 'aria-label': tile.name + ': ' + tile.zahl.wert + (tile.zahl.einheit ? ' ' + tile.zahl.einheit : '') + '. ' + tile.satz + (tile.mehr && tile.mehr.length ? '. ' + tile.mehr.join(' ') : ''), title: tile.name } : {}),
         style: {
           // Die Säule trägt mehrere Sätze: In der Finanzen-Zeile hat jede Kachel die ganze Breite, sonst brechen sie auf dem Handy in viele kurze Zeilen.
-          ...(nur?.includes('steuer') ? { gridColumn: '1 / -1' } : {}),
+          ...(nur?.includes('steuer') && !imKapitel ? { gridColumn: '1 / -1' } : {}),
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
           padding: space.md + 'px', background: 'transparent', color: palette.text,
           border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
@@ -232,7 +234,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         tile.zahl
           ? h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, tile.satz)
           : h('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, tile.name),
-        tile.zahl && tile.mehr && tile.mehr.length > 0 && h('div', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal } },
+        !imKapitel && tile.zahl && tile.mehr && tile.mehr.length > 0 && h('div', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal } },
           tile.mehr.map((z, i) => h('span', { key: i, style: { display: 'block', marginTop: i ? '2px' : 0 } }, z))),
         !tile.zahl && h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub)
       ))

@@ -36,6 +36,8 @@ import { ansichtIkon } from '../config/ansichtenRegister.js';
 import { chapterColor } from '../data/lebensbereiche.js';
 import { kachelZeichenFarbe } from '../utils/lebensbereichFruechte.js';
 import { zahl as zahlFmt } from '../utils/geld.js';
+import { steuerfristVorbei } from '../utils/steuerfrist.js';
+import { heuteIso } from '../utils/fristen.js';
 
 // Die Auswertung der Finanzen — bis 24.10.2026 nur in FinanzUebersicht.jsx, seit der
 // Zusammenlegung mit dem Kapitel Finanzen (docs/entscheide/finanzen-fusion.md, Bauschritt 2)
@@ -616,10 +618,16 @@ const bereichFarbe = (palette, kapitel, isDarkMode) => {
 };
 export const SpieltMit = ({ palette, t, data, onNavigate, w, isDarkMode }) => {
   const praemie = Number(data?.versicherungen?.kkPremium) || 0;
+  const frist = data?.behoerden?.taxFilingDeadline;
+  const heute = heuteIso();
+  const fristGilt = frist && (frist >= heute || steuerfristVorbei(data.behoerden, heute));
   const wege = [
     { key: 'ipv', kapitel: 'versicherungen', ikon: ansichtIkon('premium'), name: t('finanzUebersicht.ipv'), wert: ipvStatusKurz(t, w), gehe: () => onNavigate('premium') },
     praemie > 0 && { key: 'kk', kapitel: 'versicherungen', ikon: ansichtIkon('praemien'), name: t('kkLast.spiegelTitel'),
       wert: (Number.isInteger(praemie) ? zahlFmt(praemie) : zahlFmt(praemie, { stellen: 2 })) + ' ' + t('common.perMonth'), gehe: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')) },
+    // Steuerfrist: ein Termin der Behörden (Formenlehre «termin», Zuhause Behörden) — hier nur der Weg dorthin.
+    fristGilt && { key: 'steuerfrist', kapitel: 'behoerden', ikon: ansichtIkon('calendar'), name: t('instrumente.steuerFrist', { datum: frist.split('-').reverse().join('.') }),
+      wert: '', gehe: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')) },
     w.hasGesundheitsausgaben && { key: 'gesundheit', kapitel: 'gesundheit', ikon: 'health', name: t('finanzUebersicht.healthCosts'),
       wert: formatCHF(w.gesundheitsausgaben), gehe: () => onNavigate('kvg', undefined, 'franchise') },
   ].filter(Boolean);
@@ -702,7 +710,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     // Weg dorthin in dessen Farbe und Zeichen; (3) die ganze Rechnung zugeklappt unter «So gerechnet». Nichts fällt weg.
     w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
-      React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: ['steuer', 'tank'] }),
+      React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: ['steuer', 'tank'], imKapitel: true }),
       React.createElement(SpieltMit, { palette, t, data, onNavigate, w, isDarkMode }),
       React.createElement('details', {
         'data-teil': 'so-gerechnet',
