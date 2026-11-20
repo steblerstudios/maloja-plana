@@ -14,7 +14,7 @@ import { BRANCHENLOHN, getBranchenvergleich } from '../data/branchenLohn.js';
 import { berechneArmutsgrenze } from '../data/sozialhilfeRechner.js';
 import { nettoZuBruttoRichtwert, AHV_FREIBETRAG_RENTNER_MONAT } from '../data/ahvRechner.js';
 import { LohnEinordnung } from './LohnEinordnung.jsx';
-import { lohnBandState, lohnSpiegel, lohnVergleichSperre } from '../data/lohnEinordnung.js';
+import { lohnBandState, lohnSpiegel, lohnVergleichSperre, LOHN_REFERENZ, SCALE_MIN, SCALE_MAX } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { KKLastCard } from '../KKLastCard.jsx';
@@ -24,7 +24,6 @@ import { renderSource } from '../utils/renderSource.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
 import { GlossarText } from '../GlossarBegriff.jsx';
 import { betrag } from '../utils/geld.js';
-import { ReserveTank } from './ReserveTank.jsx';
 import { Lebensbaum } from '../Lebensbaum.jsx';
 import { astFarben, bereichsFruechte } from '../utils/lebensbereichFruechte.js';
 import { GeldflussImKapitel } from './Geldfluss.jsx';
@@ -271,7 +270,7 @@ const generatePrintHTMLRoh = (t, data, w) => {
 // nicht ins eigene Kapitel — die Einkommensart liegt dort (LohnEinordnung).
 // F7-K4-1 (Stebler Studios 01.11.2026): Der Lohnvergleich gehört zur Arbeit. Im Kapitel Finanzen (`nurBefund`) bleibt der
 // Armutsgrenzen-Befund mit dem Weg dorthin; in Ausbildung & Arbeit (LohnImKapitel) steht der Vergleich ohne diesen Befund.
-export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel, nurBefund, ohneBefund }) => {
+export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel, nurBefund, ohneBefund, nurArmutsbefund }) => {
   // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
   const [selBranche, setSelBranche] = React.useState(null);
   const eigeneBranche = BRANCHENLOHN.find((b) => b.key !== 'gesamt' && b.key === data?.ausbildung?.branche) || null;
@@ -316,6 +315,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     incomeType: f.incomeType, dreizehnter: f.dreizehnter, alter: bvgAlter, rentenalter, beitragsfrei,
   }), data, { alter: bvgAlter, rentenalter, beitragsfrei });
 
+  if (nurArmutsbefund && !unterArmutsgrenze) return null;
   return React.createElement('div', {
     style: { padding: '12px 16px', background: palette.up, borderRadius: radius.md, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
   },
@@ -614,6 +614,44 @@ const bereichFarbe = (bereich, isDarkMode) => {
   const b = LEBENSBEREICHE.find((x) => x.key === bereich);
   return b ? (isDarkMode ? b.dark : (b.lightDeep || b.light)) : null;
 };
+// Lohn als eigenes Instrument dort, wo der Lohn steht (Stebler Studios 20.11.2026: «wie beim Wohnen»). Formenlehre: Lage →
+// Barometer. Das kleine Bild: die feste Skala, Striche bei P10 · Median · P90 (LSE), gefüllt bis zum eigenen Lohn.
+// Antippen öffnet darunter das ganze Lohn-Barometer mit den Branchen (LohnStandort).
+export const lohnKachel = ({ palette, t, data, w }) => {
+  if (!(w.income > 0)) return [];
+  const f = data.finanzen || {};
+  const { bvgAlter, rentenalter, beitragsfrei } = alterUndRentenalter(data.basis);
+  const st = lohnBandState({
+    income: f.monthlyIncome, canton: data.basis?.canton, hoursPerWeek: data.ausbildung?.workHoursPerWeek,
+    incomeType: f.incomeType, dreizehnter: f.dreizehnter, alter: bvgAlter, rentenalter, beitragsfrei,
+  });
+  // Wie das grosse Barometer (LohnEinordnung): vier gleich breite Zonen — unteres Zehntel · unterer · oberer Bereich ·
+  // oberes Zehntel —, gefüllt in Sand bis zum eigenen Lohn, Punkt beim Median. Ein Bild, eine Bedeutung.
+  const grenzen = [SCALE_MIN, LOHN_REFERENZ.p10, LOHN_REFERENZ.median, LOHN_REFERENZ.p90, SCALE_MAX];
+  const v = st.show && st.comparable ? st.incomeVergleich : 0;
+  const B = 200, y = 26, lu = 4, zb = (B - 3 * lu) / 4;
+  const h = React.createElement;
+  const zonen = [0, 1, 2, 3].map((i) => {
+    const von = grenzen[i], bis = grenzen[i + 1];
+    const voll = v > 0 ? Math.max(0, Math.min(1, (v - von) / (bis - von))) : 0;
+    const x = i * (zb + lu);
+    return h('g', { key: i },
+      h('rect', { x, y: y - 5, width: zb, height: 10, rx: 5, fill: palette.border }),
+      voll > 0 && h('rect', { x, y: y - 5, width: Math.max(10, voll * zb), height: 10, rx: 5, fill: palette.sand }));
+  });
+  const glyph = h('svg', { width: B, height: 52, viewBox: '0 0 ' + B + ' 52', 'aria-hidden': 'true' },
+    ...zonen,
+    h('circle', { cx: 2 * (zb + lu) - lu / 2, cy: y, r: 5, fill: palette.sand, stroke: palette.surface || palette.bg, strokeWidth: 2 }));
+  const satz = lohnSpiegel(st, data, { alter: bvgAlter, rentenalter, beitragsfrei });
+  return [{
+    key: 'lohn', breit: true, name: t('lohnEinordnung.title'), glyph,
+    zahl: { wert: formatCHF(w.income), einheit: t('common.perMonth') },
+    // Das geschätzte Brutto als zweite Zahl (wie Jahr/Monat bei der Steuer); der Satz lädt zum Antippen ein.
+    ...(satz ? { zahl2: { wert: '≈ ' + formatCHF(satz.brutto), einheit: t('einkommensfeld.brutto') } } : {}),
+    satz: t('lohnEinordnung.title'),
+  }];
+};
+
 // Kacheln aus anderen Bereichen (Entwurf, 20.11.2026): Zeichen und Farbe des Bereichs, die Zahl, wohin es geht.
 // Die Erklärung steht im Zuhause; hier steht nur der Spiegel mit dem Weg dorthin.
 export const spiegelKacheln = ({ palette, t, data, onNavigate, w, isDarkMode }) => {
@@ -694,7 +732,9 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     w.hasData && React.createElement('div', { 'data-teil': 'geldfluss' },
       React.createElement(GeldflussImKapitel, { data, t, palette })
     ),
-    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true }),
+    // Der Lohn hat sein Instrument jetzt als Kachel unten (Entwurf 20.11.2026); hier bleibt nur der Armutsgrenzen-Befund,
+    // damit dieses Signal nie hinter einem Antippen verschwindet.
+    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurArmutsbefund: true }),
     // ENTWURF (Stebler Studios 20.11.2026, _werkbank/FINANZEN-RUHE-2026-11-20.md): «Was sich daraus ergibt», «Spielt mit» und
     // «So gerechnet» in EINER Fläche. Die zwei Instrumente mit Zuhause Finanzen (Formenlehre: Steuer = Säule, Notgroschen =
     // Tank) klappen beim Antippen ihre Rechnung darunter auf; Kacheln aus anderen Bereichen führen in ihr Zuhause.
@@ -703,6 +743,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
       React.createElement(InstrumentePanel, {
         palette, t, data, onNavigate, nur: ['steuer', 'tank'], imKapitel: true,
         beiTipp: (k) => setKachelOffen((o) => (o === k ? null : k)), offen: kachelOffen,
+        vorne: lohnKachel({ palette, t, data, w }),
         weitere: spiegelKacheln({ palette, t, data, onNavigate, w, isDarkMode }),
         einschub: kachelOffen && React.createElement('div', {
         id: 'mp-kachel-rechnung', 'data-teil': 'kachel-rechnung', role: 'region', 'aria-label': t('chapters.finanzen.folgt.soGerechnet'),
@@ -710,9 +751,9 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
       },
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px' } }, t('chapters.finanzen.folgt.soGerechnet')),
         kachelOffen === 'steuer' && React.createElement(React.Fragment, null, steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p)),
-        kachelOffen === 'tank' && React.createElement(React.Fragment, null,
-          (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, { palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses }),
-          vermoegenKarte(p))
+        // Der Notgroschen steht nur einmal — in der Kachel. Darunter nur, was sie nicht schon sagt.
+        kachelOffen === 'tank' && vermoegenKarte(p),
+        kachelOffen === 'lohn' && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', ohneBefund: true })
         ),
       })
     ),

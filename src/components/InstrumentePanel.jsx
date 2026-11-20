@@ -75,7 +75,7 @@ const miniKreuz = (palette) => {
 // (Bund, Annahmen, Frist) stehen im Kapitel an ihrem Ort: Rechnung unter «So gerechnet», Frist bei den Behörden.
 // `beiTipp(key)` + `offen`: im Kapitel klappt eine Kachel ihre Rechnung auf, statt wegzuführen.
 // `weitere`: Kacheln aus anderen Bereichen (Spiegel) in derselben Fläche — { key, glyph, zahl, satz, ziel, onClick }.
-export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, imKapitel = false, beiTipp = null, offen = null, weitere = [], einschub = null }) => {
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, imKapitel = false, beiTipp = null, offen = null, weitere = [], einschub = null, vorne = [] }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
   // Dieselbe Rechnung wie das Netz-Schild im Kapitel: eingetragen = Summe der gefüllten Stufen über alle Teile.
@@ -196,8 +196,14 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
 
   // F7-D10: in der Kapitel-Zeile nur die Kacheln dieses Kapitels, ohne Titel.
   // `einschub` (im Kapitel): die aufgeklappte Rechnung direkt unter den eigenen Kacheln, über die ganze Breite.
-  const eigene = nur ? nur.map((k) => tiles.find((x) => x.key === k)).filter(Boolean) : tiles;
-  const kacheln = [...eigene, ...(einschub ? [{ key: '_einschub', einschub }] : []), ...weitere];
+  // `vorne`: eigene Kacheln, die nicht aus diesem Panel kommen (Lohn im Kapitel Finanzen), zuerst und breit.
+  // Die Rechnung steht unter der Zeile der offenen Kachel: unter einer breiten direkt, sonst unter den eigenen.
+  const eigene = [...vorne, ...(nur ? nur.map((k) => tiles.find((x) => x.key === k)).filter(Boolean) : tiles)];
+  const einschubKachel = einschub ? [{ key: '_einschub', einschub }] : [];
+  const nachIndex = vorne.findIndex((x) => x.key === offen && x.breit);
+  const kacheln = nachIndex >= 0
+    ? [...eigene.slice(0, nachIndex + 1), ...einschubKachel, ...eigene.slice(nachIndex + 1), ...weitere]
+    : [...eigene, ...einschubKachel, ...weitere];
   const titel = h(PanelTitle, {
     palette,
     style: eingebettet
@@ -219,7 +225,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         ...(tile.zahl ? { 'aria-label': tile.name + ': ' + tile.zahl.wert + (tile.zahl.einheit ? ' ' + tile.zahl.einheit : '') + '. ' + tile.satz + (tile.mehr && tile.mehr.length ? '. ' + tile.mehr.join(' ') : ''), title: tile.name } : {}),
         style: {
           // Die Säule trägt mehrere Sätze: In der Finanzen-Zeile hat jede Kachel die ganze Breite, sonst brechen sie auf dem Handy in viele kurze Zeilen.
-          ...(nur?.includes('steuer') && !imKapitel ? { gridColumn: '1 / -1' } : {}),
+          ...((nur?.includes('steuer') && !imKapitel) || tile.breit ? { gridColumn: '1 / -1' } : {}),
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
           padding: space.md + 'px', background: 'transparent', color: palette.text,
           border: offen === tile.key ? '2px solid ' + palette.sand : '1px solid ' + palette.border + '44', borderRadius: radius.md,
@@ -230,7 +236,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = offen === tile.key ? palette.sand : palette.border + '44'; },
       },
         // Spiegel Startseite: ein Behälter, eine Breite für alle Instrumente (INSTRUMENT_GROESSE.klein, Brand Book «Instrumente»).
-        h('div', { 'data-instrument-glyph': tile.key, style: { width: INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
+        h('div', { 'data-instrument-glyph': tile.key, style: { width: tile.breit ? 'auto' : INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
         // Grosse Zahl (10.11.2026, zuerst beim Tank): eine Stufe unter der Karte zuoberst (2xl statt 3xl),
         // damit dort die lauteste Stelle bleibt. Mit Zahl entfällt der kleine Satz — er sagte dasselbe.
         tile.zahl && h('div', { 'data-instrument-zahl': tile.key, style: { display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: space.xs + 'px', flexWrap: 'wrap' } },
