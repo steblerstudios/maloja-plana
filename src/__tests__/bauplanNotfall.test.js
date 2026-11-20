@@ -517,6 +517,7 @@ describe('Fach Fiebertagebuch · Wie ging es mir die letzten Tage?', () => {
     { id: 'a', zeit: '2026-11-17T20:00', temp: 38.4, symptome: ['husten', 'kopfweh'] },
     { id: 'b', zeit: '2026-11-18T08:00', temp: '38,1' },
     { id: 'c', zeit: '2026-11-18T20:00', temp: 38.6, medikament: 'Dafalgan' },
+    { id: 'f', zeit: '2026-11-18T22:00', temp: 37.9 }, // später, aber tiefer: der Tag zeigt die höchste
     { id: 'd', zeit: '2026-11-20T08:10', temp: 37.4, symptome: ['husten'], notiz: 'viel getrunken' },
     { id: 'e', zeit: '2026-11-19T19:00', temp: 39.2, fuer: 'Lea', symptome: ['halsweh'] },
     { id: 'alt', zeit: '2026-10-01T08:00', temp: 38 },
@@ -528,7 +529,7 @@ describe('Fach Fiebertagebuch · Wie ging es mir die letzten Tage?', () => {
     const s = fiebertagebuch({ notfall: { fiebertagebuch: LISTE } }, JETZT);
     expect(s.personen).toEqual(['', 'Lea']);
     expect(s.fuer).toBe('');
-    expect(s.eintraege.map((e) => e.id)).toEqual(['d', 'c', 'b', 'a', 'frueher']);
+    expect(s.eintraege.map((e) => e.id)).toEqual(['d', 'f', 'c', 'b', 'a', 'frueher']);
     expect(s.tage.map((d) => d.iso)).toEqual(['2026-11-14', '2026-11-15', '2026-11-16', '2026-11-17', '2026-11-18', '2026-11-19', '2026-11-20']);
     expect(s.tage.map((d) => d.hoechste)).toEqual([null, null, null, 38.4, 38.6, null, 37.4]); // Lea zählt nicht mit
     expect(s.tage[6].wochentag).toBe(5);
