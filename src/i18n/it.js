@@ -1957,6 +1957,7 @@ export default {
   gesundheitZuhause: {
     franchiseLeer: "Franchigia non ancora inserita. Una volta inserita, qui si vede quanta parte è raggiunta.",
     zurFranchise: "Al calcolo della franchigia",
+    zumRechner: "Calcolare",
     faelligTitel: "Prossima scadenza",
     faelligVorsorge: "prossimo controllo consigliato",
     faelligBeleg: "scadenza di una fattura aperta",

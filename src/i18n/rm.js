@@ -4844,6 +4844,8 @@ export default {
   gesundheitZuhause: {
     franchiseLeer: "Franchisa anc betg registrada. Cun la franchisa stat qua, quant ch’è cuntanschì.",
     zurFranchise: "Al calculader da la franchisa",
+    // TODO(rm): provisorisch — kurzer Weg in der Strasse (20.11.2026).
+    zumRechner: "Al calculader",
     faelligTitel: "Proxim termin",
     faelligVorsorge: "proxima controlla recumandada",
     faelligBeleg: "termin da pajament d’in quint avert",

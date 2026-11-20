@@ -35,7 +35,12 @@ export const monatJahr = (iso, locale) => {
 // «B · Zahlen oben, Fächer unten», nach «A · Thermometer im Koffer-Boden» am selben Tag): ohne eigene Karten, der Koffer
 // ist der Rahmen; das Thermometer klein (mittel 128, ohne Ablesewörter), Zahl und Satz daneben; nebeneinander, auf dem
 // Handy untereinander.
-export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche, heute = new Date(), teil, imKoffer = false }) => {
+// mitBereit (Probe 20.11.2026, Sophie: «zeig mal A», «gleiches Konzept wie beim Wohnen»): wie die Strasse bei Wohnen
+// stehen alle drei Fragen als Gegenstände nebeneinander — Herz · Thermometer · Kalenderblatt —, jedes Bild auf
+// einer gemeinsamen Höhe, die Zahl darunter. zuBereit: Weg zu dem, was für «Bereit» noch fehlt.
+export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche, heute = new Date(), teil, imKoffer = false, mitBereit = false, zuBereit }) => {
+  // In der Strasse stehen drei nebeneinander, auch auf dem Handy: Zahl und Satz eine Stufe kleiner.
+  const zahlHier = mitBereit ? { ...zahlStil, fontSize: text.lg } : zahlStil;
   const h = React.createElement;
   const lokal = (() => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; })();
   const fr = franchiseStand(data, heute);
@@ -43,33 +48,48 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
   const karte = { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.md + 'px', padding: space.md + 'px', background: palette.surface,
     border: '1px solid ' + palette.border, borderRadius: radius.lg, marginBottom: space.sm + 'px' };
   const frage = (key) => h('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '2px' } }, t(key));
-  const satz = (inhalt, teil) => h('div', { 'data-teil': teil, style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } }, inhalt);
-  const weg = (label, onClick) => onNavigate && h('button', { type: 'button', onClick, style: { ...linkStil(palette), color: palette.skyDeep || palette.text, minHeight: '44px', fontSize: text.sm, padding: 0 } }, label + ' ›');
+  const satz = (inhalt, teil) => h('div', { 'data-teil': teil, style: { fontSize: mitBereit ? text.xs : text.sm, color: palette.mid, marginTop: '2px' } }, inhalt);
+  const weg = (label, onClick) => onNavigate && h('button', { type: 'button', onClick, style: { ...linkStil(palette), color: palette.skyDeep || palette.text, minHeight: '44px', fontSize: mitBereit ? text.xs : text.sm, padding: 0, textAlign: 'left' } }, label + ' ›');
 
-  const imDeckel = { ...karte, flexWrap: 'nowrap', background: 'none', border: 'none', padding: space.xs + 'px', marginBottom: 0 };
+  const imDeckel = mitBereit
+    ? { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: space.xs + 'px', padding: space.xs + 'px', minWidth: 0 }
+    : { ...karte, flexWrap: 'nowrap', background: 'none', border: 'none', padding: space.xs + 'px', marginBottom: 0 };
+  // In der Strasse stehen die Bilder auf einer gemeinsamen Linie (wie die Häuser bei Wohnen).
+  const bildFuss = (inhalt, breite) => mitBereit
+    ? h('div', { style: { height: '128px', display: 'flex', alignItems: 'flex-end', borderBottom: '1px solid ' + palette.border, alignSelf: 'stretch', paddingBottom: '2px' } }, inhalt)
+    : h('div', { style: breite ? { flex: '0 0 auto', width: breite, display: 'flex', justifyContent: 'center' } : { flex: '0 0 auto' } }, inhalt);
+
+  const bs = mitBereit && bereitschaft(data);
+  const bereitTeil = mitBereit && h('section', { 'data-teil': 'gesundheit-bereit', 'data-im-koffer': 'ja', style: imDeckel },
+    bildFuss(h(HerzPuls, { palette, lagen: lagenStand(data), groesse: 'mittel' })),
+    h('div', { style: { minWidth: 0 } },
+      frage('notfallKapitel.bereitTitel'),
+      h('div', { 'data-instrument-zahl': 'bereit', style: { ...zahlHier, color: palette.text, whiteSpace: mitBereit ? 'nowrap' : undefined } }, t('notfallKapitel.vonN', { n: bs.erledigt, total: bs.gesamt })),
+      // In der Strasse sagt die Frage es schon; der Satz steht nicht unter dem Herz.
+      bs.fehlend.length > 0 && zuBereit && h('button', { type: 'button', onClick: zuBereit, style: { ...linkStil(palette), color: palette.skyDeep || palette.text, minHeight: '44px', fontSize: text.xs, padding: 0 } }, t('notfallKapitel.ergaenzen'))));
+
   const franchise = teil !== 'faellig' && h('section', { 'data-teil': 'gesundheit-franchise', 'data-im-koffer': imKoffer ? 'ja' : undefined, style: imKoffer ? imDeckel : karte },
-    fr && h('div', { style: { flex: '0 0 auto' } }, imKoffer
+    fr && (mitBereit ? bildFuss : (x) => h('div', { style: { flex: '0 0 auto' } }, x))(imKoffer
       ? h(FranchiseThermometer, { palette, stand: fr, groesse: 'mittel' })
       : h(FranchiseAblesung, { palette, t, stand: fr, groesse: 'gross' })),
     h('div', { style: { minWidth: 0 } },
       frage('instrumente.franchise'),
       fr
         ? h(React.Fragment, null,
-            h('div', { 'data-instrument-zahl': 'franchise', style: { ...zahlStil, color: palette.text } },
+            h('div', { 'data-instrument-zahl': 'franchise', style: { ...zahlHier, color: palette.text, whiteSpace: mitBereit ? 'nowrap' : undefined } },
               chfBetrag(fr.franchiseOffen > 0 ? fr.franchiseVerbraucht : fr.franchise),
-              fr.franchiseOffen > 0 && h('span', { style: { fontSize: text.sm, fontWeight: weight.normal, color: palette.mid } }, ' ' + t('instrumente.franchiseVon', { franchise: zahl(fr.franchise) }))),
-            satz(t(fr.franchiseOffen > 0 ? 'instrumente.franchiseSatz' : 'instrumente.franchiseErreichtSatz', { jahr: heute.getFullYear() }), 'franchise-satz'))
+              fr.franchiseOffen > 0 && h('span', { style: { display: mitBereit ? 'block' : 'inline', fontSize: mitBereit ? text.xs : text.sm, fontWeight: weight.normal, color: palette.mid } }, ' ' + t('instrumente.franchiseVon', { franchise: zahl(fr.franchise) }))),
+            !mitBereit && satz(t(fr.franchiseOffen > 0 ? 'instrumente.franchiseSatz' : 'instrumente.franchiseErreichtSatz', { jahr: heute.getFullYear() }), 'franchise-satz'))
         : satz(t('gesundheitZuhause.franchiseLeer'), 'franchise-leer'),
-      weg(t('gesundheitZuhause.zurFranchise'), () => onNavigate('kvg', undefined, 'franchise'))));
+      weg(t(mitBereit ? 'gesundheitZuhause.zumRechner' : 'gesundheitZuhause.zurFranchise'), () => onNavigate('kvg', undefined, 'franchise'))));
 
   const naechstes = teil !== 'franchise' && h('section', { 'data-teil': 'gesundheit-faellig', 'data-im-koffer': imKoffer ? 'ja' : undefined, style: imKoffer ? imDeckel : karte },
-    faellig && h('div', { style: { flex: '0 0 auto', width: '80px', display: 'flex', justifyContent: 'center' } },
-      h(Kalenderblatt, { iso: faellig.iso, palette, vorbei: faellig.vorbei, locale: lokal })),
+    faellig && bildFuss(h(Kalenderblatt, { iso: faellig.iso, palette, vorbei: faellig.vorbei, locale: lokal }), '80px'),
     h('div', { style: { minWidth: 0 } },
       frage('gesundheitZuhause.faelligTitel'),
       faellig
         ? h(React.Fragment, null,
-            h('div', { 'data-instrument-zahl': 'faellig', style: { ...zahlStil, color: palette.text } }, monatJahr(faellig.iso, lokal)),
+            h('div', { 'data-instrument-zahl': 'faellig', style: { ...zahlHier, color: palette.text } }, monatJahr(faellig.iso, lokal)),
             satz(faellig.art === 'vorsorge'
               ? t('kvg.' + faellig.key) + ' · ' + t('gesundheitZuhause.faelligVorsorge')
               : faellig.art === 'impfung'
@@ -83,7 +103,8 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
           ? weg(t('gesundheitZuhause.zumImpfausweis'), () => onNavigate('impfausweis'))
           : weg(t('gesundheitZuhause.zumKatalog'), () => onNavigate('kvg', undefined, 'katalog'))));
 
-  if (imKoffer) return h('div', { 'data-teil': 'koffer-stand', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.sm + 'px' } }, franchise, naechstes);
+  if (imKoffer) return h('div', { 'data-teil': 'koffer-stand', 'data-strasse': mitBereit ? 'ja' : undefined,
+    style: { display: 'grid', gridTemplateColumns: mitBereit ? 'repeat(3, minmax(0, 1fr))' : 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.sm + 'px' } }, bereitTeil, franchise, naechstes);
   return h('div', { 'data-teil': 'gesundheit-zuhause', style: { marginBottom: space.lg + 'px' } }, franchise, naechstes);
 };
 
@@ -95,9 +116,10 @@ export const TeilTitel = ({ palette, nr, id, children, tabIndex }) => {
   const h = React.createElement;
   const farbe = gesundheitFarbe(palette);
   return h('h3', { id, tabIndex, 'data-teil-nr': nr, style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px',
-    margin: (nr === 1 ? 0 : space.xl + 'px') + ' 0 ' + space.sm + 'px', paddingTop: nr === 1 ? 0 : space.lg + 'px',
-    borderTop: nr === 1 ? 'none' : '1px solid ' + palette.border, fontSize: text.lg, fontWeight: weight.semi, color: palette.text, scrollMarginTop: 'var(--mp-sprungabstand)' } },
-    h('span', { 'aria-hidden': 'true', style: { display: 'inline-grid', placeItems: 'center', width: '26px', height: '26px', flexShrink: 0, borderRadius: '50%',
+    margin: (nr === 1 || nr == null ? 0 : space.xl + 'px') + ' 0 ' + space.sm + 'px', paddingTop: nr === 1 || nr == null ? 0 : space.lg + 'px',
+    borderTop: nr === 1 || nr == null ? 'none' : '1px solid ' + palette.border, fontSize: text.lg, fontWeight: weight.semi, color: palette.text, scrollMarginTop: 'var(--mp-sprungabstand)' } },
+    // Ohne Nummer (Probe «wie Wohnen», 20.11.2026): kein Kreis, steht wie der erste Titel.
+    nr != null && h('span', { 'aria-hidden': 'true', style: { display: 'inline-grid', placeItems: 'center', width: '26px', height: '26px', flexShrink: 0, borderRadius: '50%',
       border: '2px solid ' + farbe, color: palette.text, fontSize: text.xs, fontWeight: weight.semi, fontVariantNumeric: 'tabular-nums' } }, String(nr)),
     h('span', { style: { color: palette.text } }, children));
 };
@@ -127,7 +149,7 @@ export const KOFFER_ANKER = 'mp-gesundheit-koffer';
 // Franchise und Als Nächstes fällig (GesundheitZuhause imKoffer) im Deckel, die Fächer im Boden — zuerst der Stand,
 // dann die Wege (Bauplan: Bild → Zahl → Satz → Weg). Ohne stand: die Fächer im Deckel. Geplante Fächer (gestrichelt)
 // stehen immer im Boden, nach den fertigen.
-export const GesundheitKoffer = ({ palette, t, onNavigate, stand }) => {
+export const GesundheitKoffer = ({ palette, t, onNavigate, stand, nr = 2 }) => {
   const h = React.createElement;
   const farbe = gesundheitFarbe(palette);
   const fertig = KOFFER_FAECHER.filter((f) => f.view);
@@ -150,7 +172,7 @@ export const GesundheitKoffer = ({ palette, t, onNavigate, stand }) => {
   const unten = (stand ? [faecher, geplant] : [geplant]).filter(Boolean);
   return h('section', { id: KOFFER_ANKER, 'data-teil': 'gesundheit-koffer', 'aria-labelledby': KOFFER_ANKER + '-titel', style: { margin: '0 0 ' + space.md + 'px' } },
     // Teil ② der Seite: der Titel des Koffers ist der Titel des Teils.
-    h(TeilTitel, { palette, nr: 2, id: KOFFER_ANKER + '-titel' }, t('arztkoffer.title')),
+    h(TeilTitel, { palette, nr, id: KOFFER_ANKER + '-titel' }, t('arztkoffer.title')),
     // Griff
     h('div', { 'aria-hidden': 'true', style: { width: '72px', height: '16px', margin: '0 auto', border: '4px solid ' + farbe, borderBottom: 'none', borderRadius: radius.lg + 'px ' + radius.lg + 'px 0 0' } }),
     h('div', { 'data-teil': 'koffer-deckel', style: { border: '3px solid ' + farbe, borderRadius: unten.length ? radius.lg + 'px ' + radius.lg + 'px ' + radius.xs + 'px ' + radius.xs + 'px' : radius.lg, padding: space.sm + 'px' } }, oben),

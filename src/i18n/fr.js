@@ -1957,6 +1957,7 @@ export default {
   gesundheitZuhause: {
     franchiseLeer: "Franchise pas encore saisie. Une fois saisie, on voit ici quelle part est atteinte.",
     zurFranchise: "Vers le calcul de la franchise",
+    zumRechner: "Calculer",
     faelligTitel: "Prochaine échéance",
     faelligVorsorge: "prochain contrôle recommandé",
     faelligBeleg: "échéance d’une facture ouverte",

@@ -1971,6 +1971,7 @@ export default {
   gesundheitZuhause: {
     franchiseLeer: "Franchise noch nicht erfasst. Mit der Franchise steht hier, wie viel davon erreicht ist.",
     zurFranchise: "Zum Franchise-Rechner",
+    zumRechner: "Zum Rechner",
     faelligTitel: "Als Nächstes fällig",
     faelligVorsorge: "nächste empfohlene Untersuchung",
     faelligBeleg: "Zahlungsfrist einer offenen Rechnung",

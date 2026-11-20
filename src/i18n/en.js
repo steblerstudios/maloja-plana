@@ -1957,6 +1957,7 @@ export default {
   gesundheitZuhause: {
     franchiseLeer: "Deductible not entered yet. Once it is, this shows how much of it has been reached.",
     zurFranchise: "To the deductible calculator",
+    zumRechner: "Calculator",
     faelligTitel: "Next due",
     faelligVorsorge: "next recommended check-up",
     faelligBeleg: "payment due on an open bill",

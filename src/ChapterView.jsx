@@ -25,7 +25,7 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 // Nicht lazy: «oben» ist der Knopf für den Ernstfall — er soll ohne Nachladen dastehen.
-import { NotfallImKapitel, NotfallErnstfallKnopf, NotfallTeilTitel } from './components/NotfallImKapitel.jsx';
+import { NotfallImKapitel, NotfallErnstfallKnopf } from './components/NotfallImKapitel.jsx';
 import { NOTFALL_ANGABEN } from './bereiche/notfall/notfall.js';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -2365,7 +2365,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // (früher «Notfallkarte drucken») ist eine der vier Kacheln; ihre Vorschau (K20, Feldnamen, nie
     // Werte) steht zugeklappt darunter, bis die Kachel sie öffnet.
     // Seite in drei Teilen (19.11.2026): der Titel von Teil ① steht vor dem stehenden Ernstfall-Knopf.
-    isNotfall && onNavigate && React.createElement(NotfallTeilTitel, { palette, t: tr }),
     isNotfall && React.createElement(NotfallErnstfallKnopf, { palette, t: tr, onNavigate }),
     isNotfall && React.createElement(NotfallImKapitel, {
       palette, t: tr, data: allData || { notfall: data }, chapters: chapters || [], onNavigate,
