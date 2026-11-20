@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { text, weight, space, leading } from '../../config/tokens.js';
 import { betrag, zahl } from '../../utils/geld.js';
 import { CHAPTER_KEYS } from '../../config/constants.js';
@@ -14,7 +14,9 @@ import { FranchiseThermometer } from '../notfall/bilder.jsx';
 import { franchiseStand } from '../notfall/rechnung.js';
 import { lohnMuenzen, steuerFranken, notgroschen, steuerfrist } from './rechnung.js';
 import { versicherungenSumme, monatsAusgaben } from '../../utils/monatsrechnung.js';
-import { MuenzLohn, Steuerfranken, Sparschwein } from './bilder.jsx';
+import { MuenzLohn, SteuerMuenzen, Sparschwein } from './bilder.jsx';
+import { finanzWerte, ipvStatusKurz, formatCHF } from '../../components/FinanzAuswertung.jsx';
+import { ladeIPVModelle } from '../../config/cantonalData.js';
 
 // Lebensbereich Finanzen · die Szene (Bauplan Lebensbereich, Entwurf Stebler Studios 20.11.2026, Skizze
 // _werkbank/entwuerfe/finanzen-mischung.html). Der Monatsring ist die Szene:
@@ -30,6 +32,14 @@ const zahlStil = { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1
 
 export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkommen, verplant, titel, titelJahr, zahl: bleibt, kopf }) => {
   const h = React.createElement;
+  // Die IPV-Kantonsmodelle laden nach (wie FinanzenImKapitel): danach einmal neu zeichnen.
+  const [, setIpvGeladen] = useState(0);
+  useEffect(() => {
+    let aktiv = true;
+    ladeIPVModelle().then(() => { if (aktiv) setIpvGeladen((n) => n + 1); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
+  const w = finanzWerte(data, t);
   const lohn = lohnMuenzen(data);
   const steuer = steuerFranken(data);
   const tank = notgroschen(data);
@@ -51,15 +61,21 @@ export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkom
   const bilder = {
     wohnen: wohnen && wohnen.anteil != null ? h(DrittelHaus, { palette, t, anteil: wohnen.anteil, ueberDrittel: wohnen.ueberDrittel, fuell: bereichFillColor('wohnen', isDarkMode), groesse: 'klein' }) : null,
     versicherungen: h(NetzSchild, { palette, t, versicherungen: v, ...netzOpts, groesse: 'klein' }),
-    steuern: steuer ? h(Steuerfranken, { palette, isDarkMode, bundAnteil: steuer.bundAnteil }) : null,
   };
   const praemie = Number(v.kkPremium) || 0;
   const unter = {
-    steuern: steuer ? '≈ ' + betrag(steuer.total) + ' · ' + t('instrumente.steuerSatz') : null,
+    // Steuer als Münzbalken (eine Münze = 1 % vom Einkommen, Bund grau), darunter Jahr, Anteil und Legende.
+    steuern: steuer ? h('div', { 'data-teil': 'steuer-muenzen-zeile', style: { margin: space.xs + 'px 0' } },
+      h(SteuerMuenzen, { palette, isDarkMode, anteil: steuer.anteilEinkommen, bundAnteil: steuer.bundAnteilEinkommen }),
+      h('div', { 'data-instrument-zahl': 'steuer', style: { fontSize: text.sm, color: palette.text, marginTop: '4px' } },
+        t('instrumente.steuerMuenzZeile', { betrag: betrag(steuer.total), pct: zahl(steuer.anteilEinkommen * 100, { hoechstens: 0 }) })),
+      h('div', { style: { fontSize: text.xs, color: palette.mid } }, t('instrumente.steuerMuenzLegende') + ' · ' + t('instrumente.steuerSatz'))) : null,
     // Satz aus dem KK-Spiegel (KKLastCard), der bis 20.11. als eigene Karte unten stand. Das Bild der KK-Last folgt erst
     // nach Gesundheit (FINANZEN-BAUPLAN-2026-11-20.md).
     versicherungen: praemie > 0 && verplant > 0 ? t(Math.round(versicherungenSumme(monatsAusgaben(data))) <= Math.round(praemie) ? 'kkLast.spiegelSatzAllein' : 'kkLast.spiegelSatz',
-      { praemie: Number.isInteger(praemie) ? zahl(praemie) : zahl(praemie, { stellen: 2 }), summe: zahl(Math.round(versicherungenSumme(monatsAusgaben(data)))) }) : null,
+      { praemie: Number.isInteger(praemie) ? zahl(praemie) : zahl(praemie, { stellen: 2 }), summe: zahl(Math.round(versicherungenSumme(monatsAusgaben(data)))) })
+      // Die IPV gehört in die Logik der Krankenkasse (Stebler Studios 20.11.2026), darum hier und nicht als eigene Karte.
+      + ' ' + t('finanzUebersicht.ipv') + ': ' + ipvStatusKurz(t, w) : null,
   };
 
   return h('div', { 'data-teil': 'finanzen-szene' },
@@ -79,7 +95,8 @@ export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkom
       h(React.Fragment, null,
         h('div', { 'data-instrument-zahl': 'notgroschen', style: { ...zahlStil, color: palette.text } }, zahl(tank.months, { hoechstens: 1 }),
           h('span', { style: { fontSize: text.sm, fontWeight: weight.normal, color: palette.mid } }, ' ' + t(tank.months === 1 ? 'instrumente.tankMonat' : 'instrumente.tankMonate'))),
-        satz(t('instrumente.tankSatz')))),
+        satz(t('instrumente.tankSatz')),
+        w.hasAssets && satz(t('finanzUebersicht.assets') + ': ' + formatCHF(w.totalAssets)))),
     // Am Rand: was kein Ring-Stück ist, mit eigenem Bild
     (frist || fr) && h('div', { 'data-teil': 'szene-rand', style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px ' + space.xl + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88' } },
       frist && h('div', { 'data-rand': 'steuerfrist', style: { display: 'flex', gap: space.sm + 'px', alignItems: 'center', flex: '1 1 220px', minWidth: 0 } },
@@ -92,6 +109,10 @@ export const FinanzenSzene = ({ palette, t, data, isDarkMode, onNavigate, einkom
           h('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } },
             betrag(fr.franchiseOffen > 0 ? fr.franchiseVerbraucht : fr.franchise),
             fr.franchiseOffen > 0 && h('span', { style: { fontSize: text.sm, fontWeight: weight.normal, color: palette.mid } }, ' ' + t('instrumente.franchiseVon', { franchise: zahl(fr.franchise) }))),
+          // Bezahlte Gesundheitskosten gehören zu Finanzen (#898); sie stehen beim Franchise-Stand, aus dem sie kommen.
+          w.hasGesundheitsausgaben && h('div', { style: { fontSize: text.xs, color: palette.mid } },
+            t('finanzUebersicht.healthCosts') + ': ' + formatCHF(w.gesundheitsausgaben)
+            + (w.gesundheitsausgabenOffen > 0 ? ' · ' + t('finanzUebersicht.healthCostsOpen', { amount: formatCHF(w.gesundheitsausgabenOffen) }) : '')),
           weg(t('instrumente.franchise'), () => onNavigate('gesundheit'))))
     )
   );

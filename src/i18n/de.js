@@ -6634,6 +6634,9 @@ export default {
     selbstbehalt: 'Selbstbehalt',
   },
   instrumente: {
+    // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
+    steuerMuenzZeile: '≈ {betrag} im Jahr · ≈ {pct} % vom Einkommen',
+    steuerMuenzLegende: 'Eine Münze = 1 % · grau: Bund',
     title: { sie: 'Ihre Instrumente', du: 'Deine Instrumente' },
     intro: { sie: 'Vier ruhige Selbstchecks auf einen Blick — tippen Sie eines an.', du: 'Vier ruhige Selbstchecks auf einen Blick — tippe eines an.' },
     tacho: 'Franchise-Kreuz',

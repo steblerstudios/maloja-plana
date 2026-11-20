@@ -55,31 +55,61 @@ export const Steuerfranken = ({ palette, bundAnteil = 0, isDarkMode, groesse = '
     bundAnteil > 0 && h('path', { d: 'M' + c + ' ' + c + ' L' + c + ' ' + (c - r) + ' A' + r + ' ' + r + ' 0 ' + (a > Math.PI ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Z', fill: behoerden }));
 };
 
-// Notgroschen: das Sparschwein füllt sich wie der Tank (voll = 6 Monate), gestrichelte Marke bei «empfohlen» (3 Monate).
+// Steuer als Münzbalken (Stebler Studios 20.11.2026: «ein Balken so wie er ist, aber aus Münzen, der Teil davon grau, und in
+// Relation zu etwas»). Eine Münze = 1 % des Nettoeinkommens im Jahr (dieselbe Regel wie die Skizze «zehn Fünfliber»).
+// Die ersten Münzen sind der Bund (Behörden-Grau), danach Kanton und Gemeinde (gold), danach leer bis zur nächsten Zehnerstelle.
+export const SteuerMuenzen = ({ palette, anteil = 0, bundAnteil = 0, isDarkMode }) => {
+  const h = React.createElement;
+  const prozent = Math.max(0, anteil * 100);
+  const bund = Math.min(prozent, Math.max(0, bundAnteil * 100));
+  const anzahl = Math.max(10, Math.ceil((prozent + 0.01) / 10) * 10);
+  const d = 14, luecke = 2, zehnerLuecke = 6;
+  const breite = anzahl * d + (anzahl - 1) * luecke + (anzahl / 10 - 1) * (zehnerLuecke - luecke);
+  const behoerden = bereichFillColor('behoerden', isDarkMode) || palette.mid;
+  const muenzen = [];
+  let x = d / 2;
+  for (let i = 0; i < anzahl; i++) {
+    const voll = Math.max(0, Math.min(1, prozent - i));
+    const grau = i < Math.round(bund) || (i === 0 && bund > 0);
+    if (voll <= 0.15) muenzen.push(h(Fuenfliber, { key: i, palette, isDarkMode, cx: x, cy: d / 2, r: d / 2, leer: true }));
+    else if (grau) muenzen.push(h('circle', { key: i, cx: x, cy: d / 2, r: d / 2, fill: behoerden }));
+    else muenzen.push(h(Fuenfliber, { key: i, palette, isDarkMode, cx: x, cy: d / 2, r: d / 2 }));
+    x += d + ((i + 1) % 10 === 0 ? zehnerLuecke : luecke);
+  }
+  return h('svg', { width: Math.min(breite, 360), viewBox: '0 0 ' + breite + ' ' + d, 'aria-hidden': true, 'data-bild': 'steuer-muenzen', 'data-prozent': Math.round(prozent), style: { display: 'block', maxWidth: '100%', height: 'auto' } }, ...muenzen);
+};
+
+// Notgroschen: das Sparschwein (Stebler Studios 20.11.2026: Tank-Gedanke als Sparschwein, «bitte besser zeichnen»).
+// Es füllt sich wie der Tank (voll = 6 Monate), gestrichelte Marke bei «empfohlen» (3 Monate). Ruhig und flach: ein Körper
+// mit weicher Linie, Rüssel mit zwei Nasenlöchern, ein Ohr, zwei Beine, Ringelschwanz, der Schlitz oben. Eine Farbe (Finanzen).
+const SCHWEIN = 'M24 52 C24 32 42 20 64 20 C80 20 92 26 98 36 C102 37 104 40 104 44 L104 58 C104 62 101 64 98 64 '
+  + 'C94 72 84 80 64 80 C42 80 24 72 24 52 Z';
 export const Sparschwein = ({ palette, monate = 0, empfohlen = 3, voll = 6, isDarkMode, groesse = 'mittel' }) => {
   const h = React.createElement;
   const px = groesse === 'gross' ? 220 : groesse === 'klein' ? 64 : 150;
   const g = gold(palette, isDarkMode);
+  const linie = palette.text;
   const anteil = Math.max(0, Math.min(1, monate / voll));
-  const rx = 46, ry = 31, cx = 56, cy = 44;
-  const fuellOben = cy + ry - anteil * 2 * ry;
-  const markeY = cy + ry - (empfohlen / voll) * 2 * ry;
+  const oben = 20, unten = 80;
+  const fuellOben = unten - anteil * (unten - oben);
+  const markeY = unten - (empfohlen / voll) * (unten - oben);
   const id = 'mp-schwein-' + groesse;
-  return h('svg', { width: px, height: Math.round(px * 0.72), viewBox: '0 0 120 86', 'aria-hidden': true, 'data-bild': 'sparschwein', 'data-anteil': Math.round(anteil * 100) },
-    h('defs', null, h('clipPath', { id }, h('ellipse', { cx, cy, rx, ry }))),
-    // Beine, Ohr
-    h('rect', { x: cx - 32, y: cy + ry - 8, width: 11, height: 18, rx: 4, fill: g, opacity: 0.75 }),
-    h('rect', { x: cx + 20, y: cy + ry - 8, width: 11, height: 18, rx: 4, fill: g, opacity: 0.75 }),
-    h('path', { d: 'M' + (cx + 22) + ' ' + (cy - ry + 4) + ' l9 -14 l5 16 z', fill: g, opacity: 0.75 }),
-    // Bauch = Gefäss
-    h('ellipse', { cx, cy, rx, ry, fill: palette.surface || palette.bg, stroke: g, strokeWidth: 2.5 }),
+  return h('svg', { width: px, height: Math.round(px * 0.8), viewBox: '0 0 120 96', 'aria-hidden': true, 'data-bild': 'sparschwein', 'data-anteil': Math.round(anteil * 100) },
+    h('defs', null, h('clipPath', { id }, h('path', { d: SCHWEIN }))),
+    // Beine hinter dem Körper
+    h('rect', { x: 36, y: 70, width: 12, height: 18, rx: 5, fill: g, stroke: linie, strokeOpacity: 0.55, strokeWidth: 1.5 }),
+    h('rect', { x: 78, y: 70, width: 12, height: 18, rx: 5, fill: g, stroke: linie, strokeOpacity: 0.55, strokeWidth: 1.5 }),
+    // Körper als Gefäss: leer = Fläche, gefüllt = Gold bis zur Höhe
+    h('path', { d: SCHWEIN, fill: palette.surface || palette.bg }),
     h('g', { clipPath: 'url(#' + id + ')' },
-      h('rect', { x: cx - rx, y: fuellOben, width: 2 * rx, height: 2 * ry, fill: g, opacity: 0.85 }),
-      h('line', { x1: cx - rx, x2: cx + rx, y1: markeY, y2: markeY, stroke: palette.text, strokeWidth: 1.5, strokeDasharray: '5 4' })),
-    h('ellipse', { cx, cy, rx, ry, fill: 'none', stroke: g, strokeWidth: 2.5 }),
-    // Kopf, Rüssel, Auge, Schlitz, Schwänzchen
-    h('ellipse', { cx: cx + rx + 6, cy: cy + 3, rx: 8, ry: 10, fill: g, opacity: 0.75 }),
-    h('circle', { cx: cx + 28, cy: cy - 12, r: 2.2, fill: palette.text }),
-    h('rect', { x: cx - 10, y: cy - ry - 4, width: 20, height: 4, rx: 2, fill: palette.text, opacity: 0.6 }),
-    h('path', { d: 'M' + (cx - rx) + ' ' + (cy - 4) + ' q-9 -3 -6 -10 q3 -5 6 1', fill: 'none', stroke: g, strokeWidth: 2, strokeLinecap: 'round' }));
+      h('rect', { x: 0, y: fuellOben, width: 120, height: 96, fill: g }),
+      h('line', { x1: 0, x2: 120, y1: markeY, y2: markeY, stroke: linie, strokeWidth: 1.5, strokeDasharray: '4 3', strokeOpacity: 0.8 })),
+    h('path', { d: SCHWEIN, fill: 'none', stroke: linie, strokeOpacity: 0.55, strokeWidth: 2, strokeLinejoin: 'round' }),
+    // Ohr, Auge, Rüssel mit Nasenlöchern, Schlitz, Ringelschwanz
+    h('path', { d: 'M76 24 C77 14 84 9 89 10 C90 17 87 24 82 27 Z', fill: g, stroke: linie, strokeOpacity: 0.55, strokeWidth: 1.5, strokeLinejoin: 'round' }),
+    h('circle', { cx: 88, cy: 40, r: 2.4, fill: linie }),
+    h('rect', { x: 102, y: 42, width: 10, height: 14, rx: 5, fill: g, stroke: linie, strokeOpacity: 0.55, strokeWidth: 1.5 }),
+    h('circle', { cx: 107, cy: 46.5, r: 1.3, fill: linie, opacity: 0.7 }), h('circle', { cx: 107, cy: 51.5, r: 1.3, fill: linie, opacity: 0.7 }),
+    h('rect', { x: 54, y: 17, width: 20, height: 5, rx: 2.5, fill: linie, opacity: 0.75 }),
+    h('path', { d: 'M24 46 C16 46 13 40 17 37 C21 34 24 39 20 42', fill: 'none', stroke: linie, strokeOpacity: 0.55, strokeWidth: 2, strokeLinecap: 'round' }));
 };

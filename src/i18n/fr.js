@@ -2579,7 +2579,7 @@ export default {
   wohnenInstrument: {
     titel: 'Frais de logement par mois',
     titelAusprobiert: 'Frais de logement par mois · à l\'essai',
-    anteil: '{pct} % du revenu net (CHF {einkommen})',
+    anteil: '{pct} % du revenu (CHF {einkommen})',
     anteilBrutto: '{pct} % du revenu brut (CHF {einkommen})',
     drittel: 'un tiers',
     faustregel: 'Repère approximatif souvent utilisé : des frais de logement jusqu\'à environ un tiers du revenu. Ce n\'est pas une limite fixe — avec un petit revenu, moins peut déjà être serré.',
@@ -6546,6 +6546,9 @@ export default {
     selbstbehalt: 'Quote-part',
   },
   instrumente: {
+    // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
+    steuerMuenzZeile: '≈ {betrag} par an · ≈ {pct} % du revenu net',
+    steuerMuenzLegende: 'Une pièce = 1 % · en gris : Confédération',
     title: { sie: 'Vos instruments', du: 'Tes instruments' },
     intro: { sie: 'Quatre auto-vérifications en un coup d\'œil — touchez-en une.', du: 'Quatre auto-vérifications en un coup d\'œil — touches-en une.' },
     tacho: 'Croix de franchise',

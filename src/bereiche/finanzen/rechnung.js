@@ -39,7 +39,10 @@ export function steuerFranken(data) {
     if (!st?.bund || !st.kanton?.kantonal) return null;
     const total = st.kanton.kantonal.total;
     const bund = Math.round(st.bund.steuer);
-    return { total, bund, monat: Math.round(total / 12), bundAnteil: total > 0 ? bund / total : 0 };
+    // Gemessen am erfassten Monatslohn × 12 (ohne 13., wie der Monatsring; netto oder brutto, wie erfasst), für die Münzen: eine Münze = 1 %.
+    const jahr = (Number(f.monthlyIncome) || 0) * 12;
+    return { total, bund, monat: Math.round(total / 12), bundAnteil: total > 0 ? bund / total : 0,
+      anteilEinkommen: jahr > 0 ? total / jahr : 0, bundAnteilEinkommen: jahr > 0 ? bund / jahr : 0 };
   } catch { return null; }
 }
 

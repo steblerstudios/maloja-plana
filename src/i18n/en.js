@@ -2580,7 +2580,7 @@ export default {
   wohnenInstrument: {
     titel: 'Housing costs per month',
     titelAusprobiert: 'Housing costs per month · trying out',
-    anteil: '{pct}% of net income (CHF {einkommen})',
+    anteil: '{pct}% of income (CHF {einkommen})',
     anteilBrutto: '{pct}% of gross income (CHF {einkommen})',
     drittel: 'one third',
     faustregel: 'A rough guide often used: housing costs up to about a third of income. It is not a fixed limit — on a small income, less can already be tight.',
@@ -6547,6 +6547,9 @@ export default {
     selbstbehalt: 'Co-payment',
   },
   instrumente: {
+    // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
+    steuerMuenzZeile: '≈ {betrag} a year · ≈ {pct} % of net income',
+    steuerMuenzLegende: 'One coin = 1 % · grey: federal',
     title: 'Your instruments',
     intro: 'Four calm self-checks at a glance — tap one.',
     tacho: 'Deductible cross',

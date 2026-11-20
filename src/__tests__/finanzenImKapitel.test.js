@@ -31,25 +31,22 @@ const knapp = {
 describe('Auswertung im Kapitel, oberer Teil', () => {
   // Bauplan Finanzen (Entwurf 20.11.2026): Lohn (Münzleiste) und Steuer (Steuerfranken) stehen in der Szene oben
   // (bereiche/finanzen, Wächter bauplanFinanzen.test.js). Hier bleibt: «Was sich daraus ergibt» mit IPV, dann «Weitere Ansprüche».
-  it('Reihenfolge: «Was sich daraus ergibt» mit IPV, dann «Weitere Ansprüche»', () => {
-    const text = nurText(teil('oben', DEMO_DATA));
-    const stelle = (s) => { const i = text.indexOf(s); expect(i, s).toBeGreaterThan(-1); return i; };
-    const folgt = stelle('Was sich daraus ergibt');
-    const ipv = stelle('Prämienverbilligung');
-    const weitere = stelle('Weitere Ansprüche');
-    const sozialhilfe = text.indexOf('Sozialhilfe', weitere);
-    expect(folgt).toBeLessThan(ipv);
-    expect(ipv).toBeLessThan(weitere);
-    expect(sozialhilfe).toBeGreaterThan(weitere);
-    // Lohn und Steuer nicht doppelt: sie stehen in der Szene
+  // Bauplan Finanzen (20.11.2026): «Was sich daraus ergibt» fliesst in die Szene oben (bauplanFinanzen.test.js). Mit
+  // Kantonszahl steht hier nur noch «Weitere Ansprüche»; ohne Kantonszahl der Rückfall mit der Steuer-Karte.
+  it('mit Steuerfranken: kein eigener Teil «Was sich daraus ergibt», «Weitere Ansprüche» bleibt', () => {
+    const html = teil('oben', DEMO_DATA);
+    expect(html).not.toContain('data-teil="folgt"');
+    const text = nurText(html);
+    const weitere = text.indexOf('Weitere Ansprüche');
+    expect(weitere).toBeGreaterThan(-1);
+    expect(text.indexOf('Sozialhilfe', weitere)).toBeGreaterThan(weitere);
     expect(text).not.toContain('Wo steht Ihr Lohn?');
-    expect(text).not.toContain('grobe Schätzung für den Hauptort, ohne Kirchensteuer');
   });
 
   it('mit Kapiteln steht der Lebensbaum vor der Rechnung', () => {
     const html = teil('oben', DEMO_DATA, { chapters });
     expect(html).toContain('data-teil="lebensbaum"');
-    expect(html.indexOf('data-teil="lebensbaum"')).toBeLessThan(html.indexOf('data-teil="folgt"'));
+    expect(html.indexOf('data-teil="lebensbaum"')).toBeLessThan(html.indexOf('data-ansprueche'));
   });
 
   it('ohne Anspruch: «Weitere Ansprüche» eingeklappt', () => {

@@ -466,6 +466,15 @@ export const steuerOrientierung = ({ palette, t, w }) =>
     palette, t, canton: w.steuerkanton, schaetzung: w.kantonsSchaetzung, jahr: KANTONAL_DATA_VERSION, style: { marginTop: '-4px' },
   });
 
+// Der IPV-Stand als kurzer Text — Karte und Szene (bereiche/finanzen, Versicherungs-Stück) sagen dasselbe (20.11.2026).
+export const ipvStatusKurz = (t, w) => {
+  const { ipv, ipvVerfuegung, ipvOhneJahr } = w;
+  if (ipvVerfuegung != null || ipvOhneJahr != null) return formatCHF(ipvVerfuegung != null ? ipvVerfuegung : ipvOhneJahr) + ' ' + t('common.perMonth');
+  if (ipv.eligible) return formatCHF(ipv.amount) + ' ' + t('common.perMonth');
+  if (ipv.belegt === false) return t('ipv.statusOffen');
+  return t(ipvUnterMindestbetrag(ipv) ? 'premium.keineAuszahlung' : 'finanzUebersicht.notEligible');
+};
+
 export const ipvKarte = ({ palette, t, onNavigate, w }) => {
   const { ipv, ipvVerfuegung, ipvOhneJahr, ipvFristVorbei } = w;
   return React.createElement(StatusCard, {
@@ -650,11 +659,13 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
       React.createElement(GeldflussImKapitel, { data, t, palette })
     ),
     w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true, nurArmutsbefund: true }),
-    w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
+    // Bauplan Finanzen (20.11.2026): «Was sich daraus ergibt» fliesst in die Szene oben (Steuer-Münzen, IPV am Versicherungs-Stück,
+    // Gesundheitskosten am Thermometer, Vermögen am Sparschwein). Hier nur noch der Rückfall ohne Kantonszahl für die Steuer.
+    w.hasData && !steuerFranken(data) && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
       // Bauplan Finanzen (20.11.2026): Steuer und Krankenkasse stehen am Ring (Steuerfranken, Versicherungs-Stück). Die
       // Steuer-Karte nur, wenn dort kein Steuerfranken steht (keine Kantonszahl) — dann trägt sie den Grund.
-      !steuerFranken(data) && steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), gesundheitKarte(p), vermoegenKarte(p),
+      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p),
       // Der Notgroschen steht seit dem Bauplan Finanzen (Entwurf 20.11.2026) als Sparschwein in der Szene oben — jedes Bild einmal.
       null
     ),

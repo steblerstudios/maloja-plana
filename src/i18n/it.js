@@ -2580,7 +2580,7 @@ export default {
   wohnenInstrument: {
     titel: 'Costi abitativi al mese',
     titelAusprobiert: 'Costi abitativi al mese · in prova',
-    anteil: '{pct}% del reddito netto (CHF {einkommen})',
+    anteil: '{pct}% del reddito (CHF {einkommen})',
     anteilBrutto: '{pct}% del reddito lordo (CHF {einkommen})',
     drittel: 'un terzo',
     faustregel: 'Un orientamento approssimativo spesso usato: costi abitativi fino a circa un terzo del reddito. Non è un limite fisso — con un reddito basso anche meno può già essere stretto.',
@@ -6520,6 +6520,9 @@ export default {
     selbstbehalt: 'Aliquota',
   },
   instrumente: {
+    // Bauplan Finanzen (Entwurf 20.11.2026): Steuer als Münzbalken, gemessen am Nettoeinkommen.
+    steuerMuenzZeile: '≈ {betrag} all’anno · ≈ {pct} % del reddito netto',
+    steuerMuenzLegende: 'Una moneta = 1 % · in grigio: Confederazione',
     title: { sie: 'I Suoi strumenti', du: 'I tuoi strumenti' },
     intro: { sie: 'Quattro controlli tranquilli a colpo d\'occhio — ne tocchi uno.', du: 'Quattro controlli tranquilli a colpo d\'occhio — toccane uno.' },
     tacho: 'Croce della franchigia',
