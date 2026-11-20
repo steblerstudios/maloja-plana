@@ -32,9 +32,11 @@ describe('ReserveTank: ein Zeichen, zwei Grössen', () => {
     expect(html).toContain('max-width:256px');
     expect(html).toContain('finanzUebersicht.tankReadout');
   });
-  it('die Kapitelzeile nimmt denselben kleinen Tank, keine eigene Zeichnung', () => {
+  // Seit 20.11.2026 (Bauplan Finanzen, Stebler Studios «Yes, switch tiles») zeigt die Kapitelzeile das Sparschwein klein,
+  // dasselbe Bild wie das Kapitel Finanzen. Weiter gilt: keine eigene Zeichnung im Panel.
+  it('die Kapitelzeile nimmt das Sparschwein aus dem Kapitel, keine eigene Zeichnung', () => {
     const panel = quelle('../InstrumentePanel.jsx');
-    expect(panel).toMatch(/h\(ReserveTank, \{[^}]*groesse: 'klein'/);
+    expect(panel).toMatch(/h\(Sparschwein, \{[^}]*groesse: 'klein'/);
     expect(panel).not.toMatch(/const miniGauge/);
   });
 });

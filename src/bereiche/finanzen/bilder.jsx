@@ -71,12 +71,15 @@ const muenzeSeitlich = (h, key, art, y, palette, g, behoerden) => {
     h('ellipse', { cx: 20, cy: y + 4, rx: 19, ry: 3.2, fill: farbe }));
 };
 // Ein Stapel, von unten nach oben. `px` = Breite in Pixeln.
-const Stapel = ({ palette, isDarkMode, muenzen, px = 40, bild, extra = {} }) => {
+const Stapel = ({ palette, isDarkMode, muenzen, px = 40, bild, extra = {}, fuellt = false }) => {
   const h = React.createElement;
   const g = gold(palette, isDarkMode);
   const behoerden = bereichFillColor('behoerden', isDarkMode) || palette.mid;
   const hoehe = muenzen.length * MUENZ_H + 8;
-  return h('svg', { width: px, height: Math.round(hoehe * px / 40), viewBox: '0 0 40 ' + hoehe, 'aria-hidden': true, 'data-bild': bild, ...extra, style: { display: 'block', flexShrink: 0 } },
+  // `fuellt` (Kachel der Kapitelzeile): die Glyphe füllt ihren Behälter, höchstens `px` breit, wie alle Mini-Instrumente.
+  const masse = fuellt ? { width: '100%', style: { display: 'block', maxWidth: px + 'px', height: 'auto', margin: '0 auto' } }
+    : { width: px, height: Math.round(hoehe * px / 40), style: { display: 'block', flexShrink: 0 } };
+  return h('svg', { ...masse, viewBox: '0 0 40 ' + hoehe, 'aria-hidden': true, 'data-bild': bild, ...extra },
     ...muenzen.map((art, i) => muenzeSeitlich(h, i, art, hoehe - 10 - i * MUENZ_H, palette, g, behoerden)));
 };
 const reihe = (n, art) => Array.from({ length: Math.max(0, n) }, () => art);
@@ -84,13 +87,13 @@ const reihe = (n, art) => Array.from({ length: Math.max(0, n) }, () => art);
 // Steuer als Münzstapel (S-a). Eine Münze = 1 % des erfassten Einkommens im Jahr (dieselbe Regel wie die Skizze «zehn
 // Fünfliber»). Unten der Bund (Behörden-Grau), darüber Kanton und Gemeinde (gold), darüber leere Münzen bis zur nächsten
 // Zehnerstelle: so steht der Stapel in Relation zum Einkommen.
-export const SteuerMuenzen = ({ palette, anteil = 0, bundAnteil = 0, isDarkMode }) => {
+export const SteuerMuenzen = ({ palette, anteil = 0, bundAnteil = 0, isDarkMode, px = 34, fuellt = false }) => {
   const prozent = Math.max(0, anteil * 100);
   const voll = Math.round(prozent);
   const bund = voll > 0 ? Math.min(voll, Math.max(1, Math.round(bundAnteil * 100))) : 0;
   const anzahl = Math.max(10, Math.ceil((voll + 0.01) / 10) * 10);
   const muenzen = [...reihe(bund, 'grau'), ...reihe(voll - bund, 'gold'), ...reihe(anzahl - voll, 'leer')];
-  return React.createElement(Stapel, { palette, isDarkMode, muenzen, px: 34, bild: 'steuer-muenzen', extra: { 'data-prozent': Math.round(prozent), 'data-stapel': 1 } });
+  return React.createElement(Stapel, { palette, isDarkMode, muenzen, px, fuellt, bild: 'steuer-muenzen', extra: { 'data-prozent': Math.round(prozent), 'data-stapel': 1 } });
 };
 
 // Vermögen als Stapel (V3): dieselbe Münze wie die Steuer — 1 % des erfassten Einkommens im Jahr —, je zehn Münzen ein
@@ -113,7 +116,7 @@ export const VermoegenStapel = ({ palette, muenzen = 0, isDarkMode }) => {
 // (voll = 6 Monate), gestrichelte Marke bei «empfohlen» (3 Monate). Runder Kopf-Bauch, zwei Ohren, zwei Füsse, Augen,
 // der Rüssel in der Mitte, der Schlitz oben. Eine Farbe (Finanzen), flach, keine Schatten.
 const KOERPER = { cx: 60, cy: 52, r: 34 };
-export const Sparschwein = ({ palette, monate = 0, empfohlen = 3, voll = 6, isDarkMode, groesse = 'mittel' }) => {
+export const Sparschwein = ({ palette, monate = 0, empfohlen = 3, voll = 6, isDarkMode, groesse = 'mittel', fuellt = false }) => {
   const h = React.createElement;
   const px = groesse === 'gross' ? 220 : groesse === 'klein' ? 64 : 150;
   const g = gold(palette, isDarkMode);
@@ -124,7 +127,8 @@ export const Sparschwein = ({ palette, monate = 0, empfohlen = 3, voll = 6, isDa
   const markeY = unten - (empfohlen / voll) * (unten - oben);
   const id = 'mp-schwein-' + groesse;
   const kontur = { stroke: linie, strokeOpacity: 0.6, strokeWidth: 2, strokeLinejoin: 'round' };
-  return h('svg', { width: px, height: Math.round(px * 100 / 120), viewBox: '0 0 120 100', 'aria-hidden': true, 'data-bild': 'sparschwein', 'data-anteil': Math.round(anteil * 100) },
+  const masse = fuellt ? { width: '100%', style: { display: 'block', maxWidth: px + 'px', height: 'auto' } } : { width: px, height: Math.round(px * 100 / 120) };
+  return h('svg', { ...masse, viewBox: '0 0 120 100', 'aria-hidden': true, 'data-bild': 'sparschwein', 'data-anteil': Math.round(anteil * 100) },
     h('defs', null, h('clipPath', { id }, h('circle', KOERPER))),
     // Ohren und Füsse hinter dem Körper
     h('path', { d: 'M34 30 L30 8 L52 21 Z', fill: g, ...kontur }),

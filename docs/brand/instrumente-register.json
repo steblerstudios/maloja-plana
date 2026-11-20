@@ -1,6 +1,6 @@
 {
   "_zweck": "Brand Book §7f (Formenlehre). Jedes Instrument der Kapitelzeile nennt Frage-Art, Form, Rechnung und Zuhause. Wächter: src/__tests__/instrumenteFormenlehre.test.js. Nur Doku + Test, nicht im App-Bündel.",
-  "_finanzenSzene": "Stand 20.11.2026 (Zweig feat/finanzen-bauplan): Das Kapitel Finanzen zeigt eine Szene um den Monatsring mit eigenen Bereichsbildern — Lohn als Münzleiste (lage), Steuer als Münzstapel (zusammensetzung, eine Münze = 1 % vom Einkommen), Notgroschen als Sparschwein (vorrat), Vermögen als Münzstapel in derselben Münze. Die Kacheln der Kapitelzeile (Dashboard) zeigen weiter Säule, Tank und Barometer. Darum hier noch NICHT als «zuhause» eingetragen: sonst wären Steuer und Tank «zuhauseAnderesBild», und die Sperrklinke lässt neue Einträge nicht zu. Entscheid offen: Kacheln umstellen oder Sperrklinke öffnen (FINANZEN-BAUPLAN-2026-11-20.md).",
+  "_finanzenSzene": "Stand 20.11.2026 (Zweig feat/finanzen-bauplan): Kapitel Finanzen und Kacheln zeigen dieselben Bereichsbilder — Steuer als Münzstapel (zusammensetzung, eine Münze = 1 % vom Einkommen, Bund grau unten), Notgroschen als Sparschwein (vorrat). Das Kapitel zeigt dazu den Lohn als Münzleiste (lage) und das Vermögen in derselben Münze; die Lohn-Kachel steht in Ausbildung & Arbeit und bleibt Barometer (Lohn-Zuhause offen, F7-K4-1). Säule (B-F4) und Tank-Kachel seit 20.11. ersetzt (Stebler Studios: «Yes, switch tiles»).",
   "formen": {
     "teile": "teile-bild",
     "anteil": "ring",
@@ -113,14 +113,14 @@
     "steuer": {
       "kapitel": "finanzen",
       "frage": "zusammensetzung",
-      "form": "saeule",
+      "form": "muenzstapel",
       "rechnung": "src/data/kantonaleSteuerdaten.js#steuernFuerProfil",
-      "zuhause": null
+      "zuhause": "finanzen"
     },
     "tank": {
       "kapitel": "finanzen",
       "frage": "vorrat",
-      "form": "tank",
+      "form": "sparschwein",
       "rechnung": "src/data/reserveTank.js#reserveTankState",
       "zuhause": "finanzen"
     },
@@ -177,7 +177,6 @@
   "_offen": "Sperrklinke: diese Listen dürfen nur kürzer werden. Wer eine Abweichung behebt, streicht sie hier; der Wächter wird rot, wenn eine neue dazukommt.",
   "offen": {
     "formAbweichung": {
-      "steuer": "B-F4: Säule trägt zwei Bedeutungen; Steuer-Bild in Arbeit (Skizzen A–C, 11.11.2026)",
       "tacho": "B-F5: Mini-Kreuz ohne Daten; Spiegel soll ein Barometer «Ihre Kosten» werden"
     },
     "ohneRechnung": {},
@@ -186,7 +185,6 @@
       "ausweis": "Zuhause Basis fehlt (Matrix §4c)",
       "referenz": "Zuhause Basis fehlt",
       "grundordnung": "Zuhause Basis fehlt",
-      "steuer": "Kapitel Finanzen: nur Text-Karte (Steuer-Bild in Arbeit)",
       "gaenge": "Zuhause Behörden-Gänge fehlt"
     }
   }

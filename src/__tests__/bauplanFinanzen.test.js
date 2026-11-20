@@ -12,6 +12,7 @@ import { LIGHT_PALETTE } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { FinanzenSzene, lohnMuenzen, steuerFranken, notgroschen, vermoegenMuenzen, VermoegenStapel, SteuerMuenzen, Sparschwein, LOHN_GRENZEN, VERMOEGEN_HOECHST } from '../bereiche/finanzen/finanzen.js';
 import { ringDaten } from '../components/Monatsring.jsx';
+import { InstrumentePanel } from '../components/InstrumentePanel.jsx';
 
 const t = createT({ de }, 'de', 'sie');
 const SRC = path.resolve(__dirname, '..');
@@ -119,6 +120,21 @@ describe('Bauplan Finanzen · Stapel, Schwein, Ring-Stück, Tür', () => {
     const wohnen = html.slice(html.indexOf('data-ring-bild="wohnen"'));
     expect(wohnen.indexOf('data-teil="tuer"')).toBeGreaterThan(-1);
     expect(wohnen.indexOf('data-teil="tuer"')).toBeLessThan(wohnen.indexOf('data-gruppe="wohnen"'));
+  });
+});
+
+// Stebler Studios 20.11.2026: «Yes, switch tiles» — die Kacheln zeigen dieselben Bilder wie das Kapitel.
+describe('Bauplan Finanzen · Kacheln wie das Kapitel', () => {
+  const panel = renderToStaticMarkup(React.createElement(InstrumentePanel, { palette: LIGHT_PALETTE, t, data: DEMO_DATA, onNavigate: () => {}, nur: ['steuer', 'tank'] }));
+  it('Steuer-Kachel = Münzstapel mit demselben Prozent wie das Kapitel, Tank-Kachel = Sparschwein', () => {
+    expect(zaehle(panel, 'data-bild', 'steuer-muenzen')).toBe(1);
+    expect(zaehle(panel, 'data-bild', 'sparschwein')).toBe(1);
+    const m = panel.match(/data-bild="steuer-muenzen" data-prozent="(\d+)"/);
+    expect(Number(m[1])).toBe(Math.round(steuerFranken(DEMO_DATA).anteilEinkommen * 100));
+  });
+  it('keine Säule und kein Tank mehr in der Kachel', () => {
+    const q = lies('components/InstrumentePanel.jsx');
+    expect(q).not.toMatch(/miniSaeule\(|h\(ReserveTank|import \{ ReserveTank/);
   });
 });
 
