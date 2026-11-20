@@ -98,7 +98,8 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
       const alle = Object.values(ZUM_VERSTEHEN);
       for (const [href] of alle.flatMap((z) => z.seiten)) expect(fs.existsSync(path.resolve(process.cwd(), 'public', href.slice(1), 'index.html')), href).toBe(true);
       const karten = alle.flatMap((z) => z.karten);
-      expect(karten.length).toBe(10);
+      // Wohnen seit 20.11.2026 ohne Atlas-Links: Miete und Leerwohnungen stehen als Bilder im Kapitel (Dreier-Set).
+      expect(karten.length).toBe(8);
       for (const [href, name] of karten) expect(kopf(href.split('#')[1]), href).toBe(name);
     });
 
@@ -119,10 +120,10 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
       expect(html).toContain('href="/kantonsatlas/#karte-el"');
     });
 
-    it('Wohnen: nur Karten, keine leere Überschrift «Zum Verstehen»', () => {
+    // Seit 20.11.2026 zeigt das Kapitel Wohnen Miete und Leerwohnungen selbst (Dreier-Set): keine Zeile, keine leere Sektion.
+    it('Wohnen: keine Links mehr, und keine leere Sektion', () => {
       const html = renderToStaticMarkup(React.createElement(ZumVerstehen, { palette: LIGHT_PALETTE, t, kapitel: 'wohnen' }));
-      expect(html).not.toContain(t('erklaerseite.zumVerstehen'));
-      expect(html).toContain(t('erklaerseite.aufDerKarte'));
+      expect(html).toBe('');
     });
   });
 

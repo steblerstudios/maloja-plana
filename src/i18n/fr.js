@@ -2564,6 +2564,22 @@ export default {
     alles: "Tout sur la franchise et la comparaison",
   },
   // Kopf und Rand im Kapitel Wohnen (Stebler Studios 20.11.2026, «wie die Finanzen»)
+  // Dreier-Set «Mietbeiträge und Wohnungsmarkt» im Kapitel Wohnen (Stebler Studios 20.11.2026)
+  wohnenKarten: {
+    titel: 'Aides au loyer et marché du logement',
+    miete: 'Loyer 3 pièces',
+    leer: 'Logements vacants',
+    programm: 'Programme connu',
+    unklar: 'incertain',
+    programmSatz: '{kanton} : programme saisi dans l’app',
+    unklarSatz: '{kanton} : aucun programme saisi, à vérifier',
+    mieteSatz: 'Suisse Ø {ch}',
+    leerSatz: 'Suisse {ch} · rang {rang} sur {von}',
+    schweiz: 'Suisse',
+    mieteAria: 'Loyer net moyen d’un 3 pièces par canton, mis en évidence : {kanton}',
+    leerLegende: 'Part de logements vacants par canton, le plus élevé à gauche, la Suisse en pointillé. Valeur basse : peu de logements libres.',
+    quelleWort: 'Source',
+  },
   wohnenKopf: {
     versichert: 'assuré',
     zeitraum: 'Période',

@@ -2565,6 +2565,22 @@ export default {
     alles: "Tutto sulla franchigia e il confronto",
   },
   // Kopf und Rand im Kapitel Wohnen (Stebler Studios 20.11.2026, «wie die Finanzen»)
+  // Dreier-Set «Mietbeiträge und Wohnungsmarkt» im Kapitel Wohnen (Stebler Studios 20.11.2026)
+  wohnenKarten: {
+    titel: 'Contributi all’affitto e mercato dell’alloggio',
+    miete: 'Affitto 3 locali',
+    leer: 'Abitazioni vuote',
+    programm: 'Programma noto',
+    unklar: 'incerto',
+    programmSatz: '{kanton}: programma registrato nell’app',
+    unklarSatz: '{kanton}: nessun programma registrato, da verificare',
+    mieteSatz: 'Svizzera Ø {ch}',
+    leerSatz: 'Svizzera {ch} · posto {rang} su {von}',
+    schweiz: 'Svizzera',
+    mieteAria: 'Affitto netto medio di un 3 locali per cantone, evidenziato: {kanton}',
+    leerLegende: 'Quota di abitazioni vuote per cantone, la più alta a sinistra, la Svizzera tratteggiata. Valore basso: poche abitazioni libere.',
+    quelleWort: 'Fonte',
+  },
   wohnenKopf: {
     versichert: 'assicurato',
     zeitraum: 'Periodo',

@@ -2583,6 +2583,22 @@ export default {
     alles: "Alles zur Franchise und zum Vergleich",
   },
   // Kopf und Rand im Kapitel Wohnen (Stebler Studios 20.11.2026, «wie die Finanzen»)
+  // Dreier-Set «Mietbeiträge und Wohnungsmarkt» im Kapitel Wohnen (Stebler Studios 20.11.2026)
+  wohnenKarten: {
+    titel: 'Mietbeiträge und Wohnungsmarkt',
+    miete: 'Miete 3 Zimmer',
+    leer: 'Leerwohnungen',
+    programm: 'Programm bekannt',
+    unklar: 'unklar',
+    programmSatz: '{kanton}: Programm in der App erfasst',
+    unklarSatz: '{kanton}: kein Programm erfasst, bitte prüfen',
+    mieteSatz: 'Schweiz Ø {ch}',
+    leerSatz: 'Schweiz {ch} · Rang {rang} von {von}',
+    schweiz: 'Schweiz',
+    mieteAria: 'Durchschnittliche Nettomiete 3 Zimmer je Kanton, hervorgehoben: {kanton}',
+    leerLegende: 'Anteil leerer Wohnungen je Kanton, höchster links, gestrichelt die Schweiz. Tiefer Wert: wenige freie Wohnungen.',
+    quelleWort: 'Quelle',
+  },
   wohnenKopf: {
     versichert: 'versichert',
     zeitraum: 'Zeitraum',

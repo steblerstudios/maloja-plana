@@ -156,29 +156,69 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
 
 // ── Kachelkarte ─────────────────────────────────────────────────────────────────────────────────────────────────────
 // Die 26 Kantone als kleine Häuser, gefüllt = Programm in der App erfasst, leer = unklar (nie «gibt es nicht»).
+// Seit 20.11.2026 auch für andere Werte (Dreier-Set im Kapitel Wohnen): `farbe(k)` gibt je Kanton
+// { fill, deck, hellSchrift } oder null (leer). `mini`: ohne Kürzel, für die Kachel. `teil`/`aria` je Verwendung.
 const KACHEL = { b: 26, h: 18, dach: 7, abstand: 3 };
-export const Kachelkarte = ({ palette, t, kanton, gefuellt, isDarkMode }) => {
+export const Kachelkarte = ({ palette, t, kanton, gefuellt = [], isDarkMode, farbe = null, mini = false, teil = 'kachelkarte', aria = null }) => {
   const h = React.createElement;
   const zelleB = KACHEL.b + KACHEL.abstand, zelleH = KACHEL.h + KACHEL.dach + KACHEL.abstand;
   const breite = 8 * zelleB;
   const hoehe = 6 * zelleH;
   const frucht = bereichFillColor('wohnen', isDarkMode) || palette.sage;
   const schrift = Math.ceil(text.xs * breite / INSTRUMENT_GROESSE.gross * 100) / 100;
+  const wert = farbe || ((k) => gefuellt.includes(k) ? { fill: frucht, deck: 0.45 } : null);
   return h('svg', {
-    viewBox: '0 0 ' + breite + ' ' + hoehe, width: '100%', role: 'img', 'data-teil': 'kachelkarte',
-    'aria-label': t('mietzinsSzene.karteAria', { liste: gefuellt.join(', '), kanton }),
-    style: { display: 'block', maxWidth: INSTRUMENT_GROESSE.gross + 'px', height: 'auto' },
+    viewBox: '0 0 ' + breite + ' ' + hoehe, width: '100%', 'data-teil': teil,
+    ...(mini || !t ? { 'aria-hidden': 'true', focusable: 'false' } : { role: 'img', 'aria-label': aria || t('mietzinsSzene.karteAria', { liste: gefuellt.join(', '), kanton }) }),
+    style: { display: 'block', maxWidth: (mini ? INSTRUMENT_GROESSE.klein * 1.3 : INSTRUMENT_GROESSE.gross) + 'px', height: 'auto' },
   },
     Object.entries(KACHELKARTE_LAGE).map(([k, [zeile, spalte]]) => {
-      const voll = gefuellt.includes(k);
+      const f = wert(k);
+      const voll = !!f;
       const ihr = k === kanton;
       const x = spalte * zelleB + 1, oben = zeile * zelleH + KACHEL.dach + 1;
-      const rand = { stroke: ihr ? palette.text : voll ? frucht : palette.border, strokeWidth: ihr ? 2.5 : 1, strokeLinejoin: 'round' };
-      return h('g', { key: k, 'data-kanton': k, 'data-programm': voll ? 'ja' : 'nein', ...(ihr ? { 'data-ihr': 'ja' } : {}), 'aria-hidden': 'true' },
+      const rand = { stroke: ihr ? palette.text : voll ? f.fill : palette.border, strokeWidth: ihr ? 2.5 : 1, strokeLinejoin: 'round' };
+      return h('g', { key: k, 'data-kanton': k, 'data-programm': !farbe ? (voll ? 'ja' : 'nein') : undefined, ...(ihr ? { 'data-ihr': 'ja' } : {}), 'aria-hidden': 'true' },
         h('path', { 'data-form': 'haus', d: 'M' + x + ' ' + (oben + KACHEL.h) + 'V' + oben + 'L' + (x + KACHEL.b / 2) + ' ' + (oben - KACHEL.dach) + 'L' + (x + KACHEL.b) + ' ' + oben + 'V' + (oben + KACHEL.h) + 'Z',
-          fill: voll ? frucht : 'none', fillOpacity: voll ? 0.45 : 0, ...rand }),
-        h('text', { x: x + KACHEL.b / 2, y: oben + KACHEL.h / 2 + schrift * 0.35, textAnchor: 'middle', fontSize: schrift, fill: voll || ihr ? palette.text : palette.mid }, k));
+          fill: voll ? f.fill : 'none', fillOpacity: voll ? (f.deck ?? 1) : 0, ...rand }),
+        !mini && h('text', { x: x + KACHEL.b / 2, y: oben + KACHEL.h / 2 + schrift * 0.35, textAnchor: 'middle', fontSize: schrift,
+          fill: voll && f.hellSchrift ? palette.surface : voll || ihr ? palette.text : palette.mid }, k));
     }));
+};
+
+// ── Häuserzeile (Rangfolge) ─────────────────────────────────────────────────────────────────────────────────────────
+// Alle Kantone als Häuser nebeneinander, so hoch wie ihr Wert, höchster links (Stebler Studios 20.11.2026: Leerwohnungen
+// «in grün und nur in Rangfolge»). Ihr Kanton voll in der Wohnen-Farbe mit Rand, die anderen hell; der Schweizer Wert
+// gestrichelt. `werte`: { KT: Zahl }. `mini`: ohne Namen und Linie, für die Kachel. Rein Bild, die Zahlen stehen daneben.
+export const HaeuserRang = ({ palette, werte, kanton, ch = null, isDarkMode, mini = false, schreib = (n) => String(n), chText = '' }) => {
+  const h = React.createElement;
+  const reihe = Object.entries(werte).filter(([, n]) => Number.isFinite(n)).sort((a, b) => b[1] - a[1]);
+  if (reihe.length === 0) return null;
+  const max = Math.max(reihe[0][1], ch || 0) || 1;
+  const gruen = bereichFillColor('wohnen', isDarkMode) || palette.sage;
+  const n = reihe.length, sp = 10, b = 8, dach = 3;
+  const hoch = mini ? 110 : 62, oben = mini ? 2 : 14, unten = mini ? 0 : 10;
+  const breite = n * sp, boden = oben + hoch;
+  const y = (v) => boden - Math.max(4, (v / max) * hoch);
+  const linie = { vectorEffect: 'non-scaling-stroke' };
+  // 13 px (Regel H) bei der grössten Breite, mit der die Zeile im Kapitel steht (zwei Hausbreiten, 512 px).
+  const schrift = Math.ceil(text.xs * breite / (INSTRUMENT_GROESSE.gross * 2) * 100) / 100;
+  return h('svg', {
+    viewBox: '0 0 ' + breite + ' ' + (boden + unten), width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-teil': mini ? 'haeuser-rang-mini' : 'haeuser-rang',
+    style: { display: 'block', maxWidth: (mini ? INSTRUMENT_GROESSE.klein * 1.75 : INSTRUMENT_GROESSE.gross * 2) + 'px', height: 'auto', overflow: 'visible' },
+  },
+    reihe.map(([k, v], i) => {
+      const ihr = k === kanton, x = i * sp + (sp - b) / 2, yy = y(v);
+      return h('g', { key: k, 'data-kanton': k, ...(ihr ? { 'data-ihr': 'ja' } : {}) },
+        h('path', { d: 'M' + x + ' ' + boden + 'V' + (yy + dach) + 'L' + (x + b / 2) + ' ' + yy + 'L' + (x + b) + ' ' + (yy + dach) + 'V' + boden + 'Z',
+          fill: gruen, fillOpacity: ihr ? 1 : 0.35, stroke: ihr ? palette.text : 'none', strokeWidth: 1.5, strokeLinejoin: 'round', ...linie }),
+        !mini && h('text', { x: x + b / 2, y: boden + 8, textAnchor: 'middle', fontSize: schrift * 0.9, fontWeight: ihr ? 700 : 400, fill: ihr ? palette.text : palette.mid }, k),
+        !mini && ihr && h('text', { 'data-teil': 'rang-ihr', x: Math.min(Math.max(x + b / 2, 18), breite - 18), y: yy - 3, textAnchor: 'middle', fontSize: schrift, fontWeight: 700, fill: palette.text,
+          stroke: palette.surface, strokeWidth: 1.5, paintOrder: 'stroke' }, k + ' ' + schreib(v)));
+    }),
+    !mini && ch != null && h('line', { 'data-teil': 'rang-schweiz', x1: 0, x2: breite, y1: y(ch), y2: y(ch), stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '4 3', ...linie }),
+    !mini && ch != null && chText && h('text', { x: breite, y: y(ch) - 2, textAnchor: 'end', fontSize: schrift, fill: palette.mid, stroke: palette.surface, strokeWidth: 1.5, paintOrder: 'stroke' }, chText),
+    h('line', { x1: 0, x2: breite, y1: boden, y2: boden, stroke: palette.mid, strokeWidth: 1, ...linie }));
 };
 
 // ── Wegweiser «möglich ›» ───────────────────────────────────────────────────────────────────────────────────────────

@@ -2565,6 +2565,22 @@ export default {
     alles: "Everything about the deductible and comparison",
   },
   // Kopf und Rand im Kapitel Wohnen (Stebler Studios 20.11.2026, «wie die Finanzen»)
+  // Dreier-Set «Mietbeiträge und Wohnungsmarkt» im Kapitel Wohnen (Stebler Studios 20.11.2026)
+  wohnenKarten: {
+    titel: 'Rent support and housing market',
+    miete: 'Rent, 3 rooms',
+    leer: 'Vacant homes',
+    programm: 'Programme known',
+    unklar: 'unclear',
+    programmSatz: '{kanton}: programme recorded in the app',
+    unklarSatz: '{kanton}: no programme recorded, please check',
+    mieteSatz: 'Switzerland avg. {ch}',
+    leerSatz: 'Switzerland {ch} · rank {rang} of {von}',
+    schweiz: 'Switzerland',
+    mieteAria: 'Average net rent for 3 rooms by canton, highlighted: {kanton}',
+    leerLegende: 'Share of vacant homes by canton, highest on the left, Switzerland dashed. Low value: few homes available.',
+    quelleWort: 'Source',
+  },
   wohnenKopf: {
     versichert: 'insured',
     zeitraum: 'Period',

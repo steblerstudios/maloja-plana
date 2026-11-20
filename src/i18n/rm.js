@@ -4829,6 +4829,22 @@ export default {
     alles: "Tut davart la franschisa ed il cumparegliar",
   },
   // Kopf und Rand im Kapitel Wohnen (Stebler Studios 20.11.2026, «wie die Finanzen») — rm zur Gegenlese
+  // Dreier-Set «Mietbeiträge und Wohnungsmarkt» im Kapitel Wohnen (Stebler Studios 20.11.2026) — rm zur Gegenlese
+  wohnenKarten: {
+    titel: 'Contribuziuns al fit e martgà d’abitaziuns',
+    miete: 'Fit 3 stanzas',
+    leer: 'Abitaziuns vidas',
+    programm: 'Program enconuschent',
+    unklar: 'malcler',
+    programmSatz: '{kanton}: program registrà en l’app',
+    unklarSatz: '{kanton}: nagin program registrà, per plaschair controllar',
+    mieteSatz: 'Svizra Ø {ch}',
+    leerSatz: 'Svizra {ch} · plaz {rang} da {von}',
+    schweiz: 'Svizra',
+    mieteAria: 'Fit net mesaun d’ina abitaziun da 3 stanzas per chantun, accentuà: {kanton}',
+    leerLegende: 'Part d’abitaziuns vidas per chantun, la pli auta a sanestra, la Svizra strivlada. Valur bassa: paucas abitaziuns libras.',
+    quelleWort: 'Funtauna',
+  },
   wohnenKopf: {
     versichert: 'assicurà',
     zeitraum: 'Perioda',

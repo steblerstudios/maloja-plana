@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { text, weight, space, leading, duration, ease, radius } from '../../config/tokens.js';
 import { bereichFillColor } from '../../data/lebensbereiche.js';
 import { PROGRAMM_KANTONE } from '../../data/mietzinsbeitraege.js';
@@ -13,7 +13,9 @@ import { Icon } from '../../IconSystem.jsx';
 import { CHAPTER_KEYS } from '../../config/constants.js';
 import { calcDuration, addressLine } from '../../MirrorCards.jsx';
 import { wohnkostenRechnung, anteilText, wohnkostenSatzKey, drittelSatzKey, mieteLage, mietVorbehalte, mietzinsHilfe, beitragAnteil, lageWert } from './rechnung.js';
-import { DrittelHaus, Vergleichshaus, MoeglichKnopf, Kachelkarte } from './bilder.jsx';
+import { DrittelHaus, Vergleichshaus, MoeglichKnopf, Kachelkarte, HaeuserRang } from './bilder.jsx';
+import { getCantonName } from '../../config/kantonPLZ.js';
+import { ExternerLink } from '../../components/ExternerLink.jsx';
 
 // Lebensbereich Wohnen · die Orte (Bauplan Lebensbereich, Stebler Studios 18.11.2026).
 //   WohnenZuhause   Kapitel Wohnen, gross 256
@@ -110,6 +112,96 @@ const BeitragLegende = ({ palette, t, hoechst, farbe }) => React.createElement('
   React.createElement('svg', { width: 14, height: 10, viewBox: '0 0 14 10', 'aria-hidden': 'true', style: { flexShrink: 0, marginTop: '4px' } },
     React.createElement('rect', { x: 0.75, y: 0.75, width: 12.5, height: 8.5, fill: 'none', stroke: farbe, strokeWidth: 1.5, strokeDasharray: '3 2' })),
   t('mietzinsSzene.beitragLegende', { betrag: zahl(hoechst) }));
+
+// ── Dreier-Set «Mietbeiträge und Wohnungsmarkt» ─────────────────────────────────────────────────────────────────────
+// Stebler Studios 20.11.2026 (Vorschau docs/design/wohnen-karten-set.html, «Ja, so bauen»): drei Kacheln mit kleinem Bild
+// und der Zahl Ihres Kantons; die angetippte öffnet darunter das grosse Bild. Mietbeiträge als Kachelkarte (wie bisher),
+// Miete 3 Zimmer nur als Karte in den Stufen des Kantonsatlas, Leerwohnungen in Wohnen-Grün nur als Rangfolge.
+// Ersetzt die offene Kantonskarte der Mietbeiträge und die Links «Auf der Karte» am Kapitelende.
+// Werte: src/data/kantonskarten.js (aus dem Kantonsatlas erzeugt). Die Quelle der Leerwohnungsziffer steht dort nicht
+// mit; sie ist dieselbe wie im Atlas (scripts/seiten/kantone-im-vergleich.mjs, Schlüssel bfsLeer).
+const LEER_QUELLE = { text: 'BFS, Leerwohnungszählung 2026, Stichtag 1.6.2026', url: 'https://dam-api.bfs.admin.ch/hub/api/dam/assets/36836216/master' };
+const atlasZahl = (s) => Number(String(s ?? '').replace(/[’'\s%]/g, '').replace(',', '.'));
+const schweizer = (s) => String(s).replace(/'/g, '’');
+// Die Kantonsdaten kommen nachgeladen wie die Karten im Werkzeug (Wächter verstehenImWerkzeug.test.js): bis sie da sind,
+// steht nur die Kachel der Mietbeiträge, die ohne sie auskommt.
+export const marktWerte = (KARTEN) => {
+  const m = KARTEN.miete;
+  const leer = Object.fromEntries(Object.entries(m.vergleich?.werte || {}).map(([k, v]) => [k, atlasZahl(v)]));
+  return { miete: m, leer, leerText: m.vergleich?.werte || {}, leerCh: atlasZahl(m.vergleich?.ch), leerChText: m.vergleich?.ch };
+};
+const MarktSet = ({ palette, t, kanton, hilfe, isDarkMode }) => {
+  const h = React.createElement;
+  const [aktiv, setAktiv] = useState(hilfe ? 'beitrag' : 'miete');
+  const [daten, setDaten] = useState(null);
+  useEffect(() => {
+    let lebt = true;
+    import('../../data/kantonskarten.js').then((m) => { if (lebt) setDaten(m); }).catch(() => {});
+    return () => { lebt = false; };
+  }, []);
+  const w = daten ? marktWerte(daten.KARTEN) : null;
+  const stufen = daten ? daten.STUFEN_FARBEN.birne[isDarkMode ? 'dunkel' : 'hell'] : {};
+  const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
+  const name = kanton ? getCantonName(kanton, t) : '';
+  const miete = w?.miete, leer = w?.leer || {}, leerText = w?.leerText || {}, leerCh = w?.leerCh, leerChText = w?.leerChText;
+  const mieteFarbe = (k) => { const x = miete?.werte[k]; return x ? { fill: stufen[x.s], hellSchrift: x.s >= 3 } : null; };
+  const rang = kanton && leer[kanton] != null ? Object.values(leer).filter((n) => n > leer[kanton]).length + 1 : null;
+  const mieteIhr = kanton && miete?.werte[kanton] ? atlasZahl(miete.werte[kanton].text) : null;
+  const quelle = (q) => h('div', { 'data-teil': 'markt-quelle', style: { ...klein, fontStyle: 'italic', marginTop: space.xs + 'px' } },
+    t('wohnenKarten.quelleWort') + ': ', h(ExternerLink, { t, href: q.url, style: { color: palette.mid } }, q.text));
+  const legendeMiete = miete && h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.sm + 'px', marginTop: space.xs + 'px' } },
+    miete.spannen.map((sp) => h('span', { key: sp.s, style: { ...klein, display: 'inline-flex', alignItems: 'center', gap: '4px' } },
+      h('span', { 'aria-hidden': 'true', style: { width: '12px', height: '10px', borderRadius: radius.hair + 'px', background: stufen[sp.s], display: 'inline-block' } }), schweizer(sp.text))));
+
+  const set = [
+    hilfe && {
+      key: 'beitrag', titel: t('mietzinsSzene.titel'),
+      mini: h(Kachelkarte, { palette, kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode, mini: true, teil: 'markt-mini' }),
+      zahl: t(hilfe.programm ? 'wohnenKarten.programm' : 'wohnenKarten.unklar'),
+      satz: name ? t(hilfe.programm ? 'wohnenKarten.programmSatz' : 'wohnenKarten.unklarSatz', { kanton: name }) : '',
+      gross: h(React.Fragment, null,
+        h(Kachelkarte, { palette, t, kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode }),
+        h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('mietzinsSzene.karteLegende'))),
+    },
+    miete && {
+      key: 'miete', titel: t('wohnenKarten.miete'),
+      mini: h(Kachelkarte, { palette, kanton, isDarkMode, farbe: mieteFarbe, mini: true, teil: 'markt-mini' }),
+      zahl: betrag(mieteIhr ?? atlasZahl(miete.ch)),
+      satz: mieteIhr != null ? t('wohnenKarten.mieteSatz', { ch: schweizer(miete.ch) }) : t('wohnenKarten.schweiz'),
+      gross: h(React.Fragment, null,
+        h(Kachelkarte, { palette, t, kanton, isDarkMode, farbe: mieteFarbe, teil: 'markt-miete', aria: t('wohnenKarten.mieteAria', { kanton: name || '–' }) }),
+        legendeMiete, quelle(miete.quellen[0])),
+    },
+    w && {
+      key: 'leer', titel: t('wohnenKarten.leer'),
+      mini: h(HaeuserRang, { palette, werte: leer, kanton, isDarkMode, mini: true }),
+      zahl: kanton && leerText[kanton] ? leerText[kanton] : leerChText,
+      satz: rang ? t('wohnenKarten.leerSatz', { ch: leerChText, rang, von: Object.keys(leer).length }) : t('wohnenKarten.schweiz'),
+      gross: h(React.Fragment, null,
+        h(HaeuserRang, { palette, werte: leer, kanton, ch: leerCh, isDarkMode, schreib: () => leerText[kanton] || '', chText: 'CH ' + leerChText }),
+        h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('wohnenKarten.leerLegende')),
+        quelle(LEER_QUELLE)),
+    },
+  ].filter(Boolean);
+  // Ohne Kanton und bevor die Daten da sind, gibt es keine Kachel: dann bleibt das Set weg.
+  if (set.length === 0) return null;
+  const offen = set.find((x) => x.key === aktiv) || set[0];
+  return h('div', { 'data-teil': 'markt-set' },
+    h('div', { role: 'group', 'aria-label': t('wohnenKarten.titel'), style: { display: 'flex', gap: space.sm + 'px', marginTop: space.sm + 'px' } },
+      set.map((x) => {
+        const an = x.key === offen.key;
+        return h('button', {
+          key: x.key, type: 'button', 'data-kachel': x.key, 'aria-pressed': an ? 'true' : 'false', onClick: () => setAktiv(x.key),
+          style: { flex: '1 1 0', minWidth: 0, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', color: palette.text, background: palette.card || palette.surface,
+            border: (an ? 2 : 1) + 'px solid ' + (an ? palette.text : palette.border), borderRadius: radius.lg + 'px', padding: (an ? space.sm - 1 : space.sm) + 'px' },
+        },
+          h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs + 'px' } }, x.titel),
+          h('div', { 'aria-hidden': 'true', style: { height: '64px', display: 'flex', alignItems: 'flex-end' } }, x.mini),
+          h('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, marginTop: space.xs + 'px', fontVariantNumeric: 'tabular-nums' } }, x.zahl),
+          x.satz && h('div', { style: { ...klein, marginTop: '2px' } }, x.satz));
+      })),
+    h('div', { 'data-teil': 'markt-offen', 'data-offen': offen.key, style: { marginTop: space.md + 'px' } }, offen.gross));
+};
 
 // Satz zu Frage C: die Einschätzung des Kantons, nie «Anspruch».
 const hilfeSatz = (t, hilfe) => {
@@ -221,13 +313,12 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
     r.anteil == null && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('wohnenInstrument.ohneEinkommen')),
     ml && h(MieteQuelle, { palette, t, ml }),
 
-    // Mietbeiträge: die Tür im Vergleichshaus ist das Fass, hier der Satz und die Kantonskarte, offen.
-    hilfe && h('div', { 'data-teil': 'mietzins-szene', style: { marginTop: space.md + 'px' } },
-      h('h3', { style: kapH }, t('mietzinsSzene.titel')),
-      h('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, hilfeSatz(t, hilfe)),
-      h('div', { style: { marginTop: space.sm + 'px' } },
-        h(Kachelkarte, { palette, t, kanton: hilfe.kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode }),
-        h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('mietzinsSzene.karteLegende')))),
+    // Mietbeiträge und Wohnungsmarkt: der Satz der Mietbeiträge, darunter das Dreier-Set. Die Tür im Vergleichshaus
+    // bleibt das Fass der Mietbeiträge.
+    h('div', { 'data-teil': 'mietzins-szene', style: { marginTop: space.md + 'px' } },
+      h('h3', { style: kapH }, t('wohnenKarten.titel')),
+      hilfe && h('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, hilfeSatz(t, hilfe)),
+      h(MarktSet, { palette, t, kanton: hilfe?.kanton || allData?.basis?.canton || '', hilfe, isDarkMode })),
 
     // Regler «andere Miete», offen. Nichts wird gespeichert.
     !r.eigentum && h('div', { 'data-teil': 'miete-ausprobieren', style: trenner },
