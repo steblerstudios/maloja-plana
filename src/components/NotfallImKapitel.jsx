@@ -6,7 +6,7 @@ import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
 import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
 import { NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
-import { SCENARIOS, bereitschaft, angabeBereit, VORSORGE, vorsorgeEintragGeregelt, BereitZuhause, GesundheitKoffer, GesundheitZuhause, TeilTitel, gesundheitFarbe } from '../bereiche/notfall/notfall.js';
+import { SCENARIOS, bereitschaft, angabeBereit, VORSORGE, vorsorgeEintragGeregelt, GesundheitKoffer, GesundheitZuhause } from '../bereiche/notfall/notfall.js';
 
 // Kapitel Notfall · «ein Ort» (Fassung 6, Runde 9, Entwurf AE, Entscheid Stebler Studios 24.10.2026; gebaut Abnahme
 // 25.10.2026). Das Kapitel ist der eine Notfall-Ort; der frühere Einstieg (#/notfalleinstieg) leitet hierher.
@@ -95,11 +95,8 @@ export const NotfallErnstfallKnopf = ({ palette, t, onNavigate }) => {
       h('span', { 'aria-hidden': 'true', style: { color: '#fff', fontSize: text.lg } }, '›')));
 };
 
-// Teil ① «Im Notfall» (Sophie 19.11.2026, «A · Drei Teile»): der Titel steht im Kapitel VOR dem stehenden
-// Ernstfall-Knopf (ChapterView), damit der Knopf zum ersten Teil gehört. Der Knopf selbst kann nicht in einen
-// Abschnitt: stehen bleiben kann er nur in einem Behälter, der so hoch ist wie das Kapitel.
-export const NOTFALL_TEIL1 = 'mp-notfall-teil-notfall';
-export const NotfallTeilTitel = ({ palette, t }) => React.createElement(TeilTitel, { palette, nr: 1, id: NOTFALL_TEIL1 }, t('notfallKapitel.teilNotfall'));
+// Die Teile ① ② ③ (19.11.2026) sind seit 20.11.2026 weg (Sophie, Probe «wie Wohnen» → «Ja, A fertig machen»): keine
+// Nummern mehr, der Koffer steht oben wie die Strasse bei Wohnen.
 
 export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpdate, demoMode, zumFeld, onKarteDrucken, karteMoeglich, karteVorschau }) => {
   const [eingaben, setEingaben] = useState({});
@@ -217,8 +214,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   });
   const bereit = h('section', { 'data-teil': 'notfall-bereit', 'aria-labelledby': 'mp-notfall-bereit' },
     h('h3', { id: 'mp-notfall-bereit', style: kapH }, t('notfallKapitel.bereitTitel')),
-    // Bauplan (18.11.2026): Herz mit Puls gross, darunter die Zahl (Regel «Zahl») — dasselbe Bild wie die Kachel.
-    h(BereitZuhause, { palette, t, data: alle }),
+    // Probe «wie Wohnen» (20.11.2026): Herz und Zahl stehen im Koffer (Strasse); hier nur, was fehlt.
     stand.fehlend.length === 0
       ? h('p', { style: { fontSize: text.sm, color: palette.sageDeep || palette.text, margin: '0 0 ' + space.sm + 'px' } }, t('notfallEinstieg.allDone'))
       : stand.fehlend.map(fehlZeile),
@@ -268,13 +264,11 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   // Überschrift als h('h3', { id: 'mp-notfall-vorsorge' … }) im Quelltext verlangt.
   const teil3Stil = { display: 'flex', alignItems: 'center', gap: space.sm + 'px', margin: space.xl + 'px 0 ' + space.sm + 'px', paddingTop: space.lg + 'px',
     borderTop: '1px solid ' + palette.border, fontSize: text.lg, fontWeight: weight.semi, color: palette.text, scrollMarginTop: 'var(--mp-sprungabstand)' };
-  const teil3Nr = { display: 'inline-grid', placeItems: 'center', width: '26px', height: '26px', flexShrink: 0, borderRadius: '50%',
-    border: '2px solid ' + gesundheitFarbe(palette), color: palette.text, fontSize: text.xs, fontWeight: weight.semi };
   const vorsorge = h('section', { 'data-teil': 'notfall-vorsorge', 'aria-labelledby': 'mp-notfall-vorsorge' },
     // Teil ③ «Vorsorge und Angaben»: die Überschrift der Vorsorge ist der Titel des Teils; die Angaben (Formular des
     // Kapitels) folgen gleich darunter. Gleiche Gestalt wie TeilTitel, als h3 mit dieser id (Sprungmarke).
-    h('h3', { id: 'mp-notfall-vorsorge', tabIndex: -1, 'data-teil-nr': 3, style: teil3Stil },
-      h('span', { 'aria-hidden': 'true', style: teil3Nr }, '3'), h('span', { style: { color: palette.text } }, t('notfallKapitel.teilVorsorge'))),
+    h('h3', { id: 'mp-notfall-vorsorge', tabIndex: -1, style: teil3Stil },
+      h('span', { style: { color: palette.text } }, t('notfallKapitel.teilVorsorge'))),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('notfallKapitel.vorsorgeSatz'), ' ',
       h('span', { style: { color: palette.text } }, t('notfallKapitel.geregelt', { n: geregelt, total: VORSORGE.length }))),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
@@ -325,10 +319,14 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   // Die Krise bleibt vor «Bereit» (Lebenslagen C1+C2): sie soll ohne Scrollen erreichbar sein.
   // Sophie 20.11.2026, «B · Zahlen oben, Fächer unten»: alles im Koffer — Franchise und Als Nächstes fällig im Deckel,
   // die Fächer im Boden, darunter nichts mehr.
-  const koffer = h(GesundheitKoffer, { palette, t, onNavigate, stand: h(GesundheitZuhause, { palette, t, data: alle, onNavigate, imKoffer: true }) });
+  // Probe «wie Wohnen» (Sophie 20.11.2026, «zeig mal A»): wie die Strasse bei Wohnen steht der Koffer ganz oben, mit allen
+  // drei Fragen im Deckel (Herz · Thermometer · Kalenderblatt), die Fächer im Boden. Danach Anrufen und Krise, was für
+  // «Bereit» fehlt, Unterlagen, Vorsorge. Keine Nummern. Der Ernstfall-Knopf bleibt oben angeheftet (ChapterView).
+  const koffer = h(GesundheitKoffer, { palette, t, onNavigate, nr: null,
+    stand: h(GesundheitZuhause, { palette, t, data: alle, onNavigate, imKoffer: true, mitBereit: true, zuBereit: () => springeZuAnker('mp-notfall-bereit') }) });
   return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } },
-    h('section', { 'data-teil': 'teil-notfall', 'aria-labelledby': NOTFALL_TEIL1 }, ernstfall, bereit, unterlagen),
     h('section', { 'data-teil': 'teil-koffer', 'aria-labelledby': 'mp-gesundheit-koffer-titel' }, koffer),
+    h('section', { 'data-teil': 'teil-notfall', 'aria-labelledby': 'mp-notfall-bereit' }, ernstfall, bereit, unterlagen),
     vorsorge);
 };
 
