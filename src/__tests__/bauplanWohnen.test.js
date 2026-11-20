@@ -43,12 +43,32 @@ describe('Bauplan Wohnen · jedes Bild einmal je Seite', () => {
     expect(html.indexOf('data-instrument-zahl="wohnkosten"')).toBeGreaterThan(html.indexOf('data-teil="drittel-haus"'));
     expect(html.indexOf('data-instrument-zahl="miete"')).toBeGreaterThan(html.indexOf('data-teil="vergleichs-haus"'));
   });
-  it('Regler, Ausland und (mit Fass) die Kantonskarte stehen unter «Mehr dazu»', () => {
+  // Seit 20.11.2026 (Stebler Studios, Varianten 4 A+B+C): Kantonskarte und Regler offen, «Mehr dazu» nur die Sätze.
+  it('Kantonskarte und Regler offen, Ausland und Sätze unter «Mehr dazu»', () => {
     const html = kapitel(BS_TIEF);
-    const mehr = html.slice(html.indexOf('data-teil="wohnen-mehr"'));
-    expect(mehr).toContain('id="wohnen-regler"');
+    const i = html.indexOf('data-teil="wohnen-mehr"');
+    const vor = html.slice(0, i), mehr = html.slice(i);
+    expect(vor).toContain('id="wohnen-regler"');
+    expect(vor).toContain('data-teil="kachelkarte"');
+    expect(mehr).not.toContain('id="wohnen-regler"');
+    expect(mehr).not.toContain('data-teil="kachelkarte"');
     expect(mehr).toContain('data-teil="international-hinweis"');
-    expect(mehr).toContain('data-teil="kachelkarte"');
+    expect(mehr).toContain('data-teil="miete-saetze"');
+  });
+  it('Kopf wie Finanzen: Wohnkosten gross, Monat oder Jahr, darunter Bestandteile und Adresse', () => {
+    const html = kapitel(DEMO_DATA);
+    expect(html.indexOf('data-teil="wohnen-kopf"')).toBeLessThan(html.indexOf('data-teil="wohnen-strasse"'));
+    expect(html).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF 1’830/);
+    expect(html).toMatch(/aria-pressed="true"[^>]*>Monat</);
+    expect(html).toContain('Miete CHF 1’650 + Nebenkosten CHF 180 · Langstrasse 42, 8004 Zürich');
+  });
+  it('am Rand: Wohndauer (Kalenderblatt), Hausrat & Haftpflicht (Schild), Vermieterschaft — Mietbeiträge nicht, die trägt die Tür', () => {
+    const html = kapitel(DEMO_DATA);
+    const rand = html.slice(html.indexOf('data-teil="wohnen-rand"'), html.indexOf('data-teil="wohnen-mehr"'));
+    expect(rand).toContain('data-rand="wohndauer"');
+    expect(rand).toContain('data-rand="zuhause-versichert"');
+    expect(rand).toMatch(/data-rand="vermieterschaft"[\s\S]*href="tel:\+41443125500"/);
+    expect(rand).not.toContain('mietzins');
   });
 });
 

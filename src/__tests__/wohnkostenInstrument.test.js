@@ -100,7 +100,8 @@ describe('Kapitel Wohnen · Anzeige', () => {
   it('unter einem Drittel: Faustregel-Satz, über einem Drittel: «Mehr als ein Drittel» in Sand', () => {
     const unten = render(profil().wohnen, profil());
     expect(unten).toContain('wohnenInstrument.faustregel');
-    expect(unten).toContain('wohnenInstrument.titel');
+    // Seit 20.11.2026 stehen die Wohnkosten gross im Kopf (wie Finanzen), nicht mehr unter dem Haus.
+    expect(unten).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF 1’830/);
     const p = profil({ monthlyIncome: '4000' });
     const oben = render(p.wohnen, p);
     expect(oben).toContain('wohnenInstrument.mehrAlsDrittel');
@@ -119,8 +120,9 @@ describe('Kapitel Wohnen · Anzeige', () => {
     expect(REGLER_MIN).toBe(800);
     expect(REGLER_MAX).toBe(3500);
     const html = render(profil().wohnen, profil());
-    // Seit 18.11.2026 (Bauplan Wohnen) unter «Mehr dazu», zusammen mit Ausland und Kantonskarte.
-    expect(html).toMatch(/<details[^>]*data-teil="wohnen-mehr"[\s\S]*data-teil="miete-ausprobieren"/);
+    // Seit 20.11.2026 offen vor «Mehr dazu» (Stebler Studios, Varianten 4 A+B+C).
+    expect(html.indexOf('data-teil="miete-ausprobieren"')).toBeGreaterThan(-1);
+    expect(html.indexOf('data-teil="miete-ausprobieren"')).toBeLessThan(html.indexOf('data-teil="wohnen-mehr"'));
     expect(html).not.toMatch(/<details[^>]*open/);
     expect(html).toMatch(/type="range"[^>]*min="800"[^>]*max="3500"/);
     expect(html).toContain('wohnenInstrument.durchspielen');
@@ -194,7 +196,7 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
     expect(r.eigentum).toBe(true);
     expect(r.kosten).toBe(1500);
     const html = render(p.wohnen, p);
-    expect(html).toContain('wohnenInstrument.titel');
+    expect(html).toContain('wohnenKopf.hypothek(CHF 1’200)');
     expect(html).not.toContain('miete-ausprobieren');
     // «Hypothek vorhanden? Nein»: ein stehengebliebener Betrag zählt nicht.
     const nein = profil({}, { mortgageStatus: 'no', mortgagePayment: '1200' });
