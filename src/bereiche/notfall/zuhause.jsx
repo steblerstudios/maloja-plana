@@ -131,7 +131,8 @@ export const GesundheitKoffer = ({ palette, t, onNavigate }) => {
         style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minHeight: '56px', padding: space.sm + 'px', textAlign: 'left',
           background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit' } },
         h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: farbe, flexShrink: 0 } }, h(Icon, { name: f.icon, size: 22 })),
-        h('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, titel(f))))),
+        // Ein langes Wort («Wochenblister», 20.11.2026) passt nicht in 130 px: trennen statt überstehen.
+        h('span', { style: { minWidth: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'anywhere', hyphens: 'auto', WebkitHyphens: 'auto' } }, titel(f))))),
     // Boden: geplante Fächer
     h('div', { 'data-teil': 'koffer-boden', style: { border: '3px solid ' + farbe, borderTop: '1px solid ' + farbe, borderRadius: radius.xs + 'px ' + radius.xs + 'px ' + radius.lg + 'px ' + radius.lg + 'px', padding: space.sm + 'px', marginTop: '3px', ...raster } },
       bald.map((f) => h('div', { key: f.key, 'data-fach': f.key, 'data-bald': 'ja',
