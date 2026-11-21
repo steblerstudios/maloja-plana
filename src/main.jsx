@@ -115,6 +115,7 @@ const ZuzugAusland = lazyMitTexten(() => import('./ZuzugAusland.jsx'));
 // Aussteuerung: seit 24.10.2026 keine eigene Seite — letzter Teil von «Stelle verloren» (UMLEITUNGEN).
 const Quellensteuer = lazyMitTexten(() => import('./Quellensteuer.jsx'));
 const WohnungGekuendigt = lazyMitTexten(() => import('./WohnungGekuendigt.jsx'));
+const MieteSteigt = lazyMitTexten(() => import('./MieteSteigt.jsx'));
 const Selbstaendigkeit = lazyMitTexten(() => import('./Selbstaendigkeit.jsx'));
 const Heirat = lazyMitTexten(() => import('./Heirat.jsx'));
 const KindBekommen = lazyMitTexten(() => import('./KindBekommen.jsx'));
@@ -1708,6 +1709,7 @@ const AppInner = ({ demo }) => {
         view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'quellensteuer' && React.createElement(Quellensteuer, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'wohnunggekuendigt' && React.createElement(WohnungGekuendigt, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'mietesteigt' && React.createElement(MieteSteigt, { palette, t, onNavigate: handleNavigate }),
         view === 'selbstaendigkeit' && React.createElement(Selbstaendigkeit, { palette, t, onNavigate: handleNavigate }),
         view === 'heirat' && React.createElement(Heirat, { palette, t, onNavigate: handleNavigate }),
         view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate, kanton: activeData?.basis?.canton }),

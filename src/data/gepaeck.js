@@ -18,6 +18,7 @@ export const GEGENSTAENDE = [
       { key: 'wegzug', view: 'wegzug', icon: 'ereignisWegzug' },
       { key: 'einbuergerung', view: 'einbuergerung', icon: 'ereignisEinbuergerung' },
       { key: 'wohnunggekuendigt', view: 'wohnunggekuendigt', icon: 'ereignisWohnunggekuendigt' },
+      { key: 'mietesteigt', view: 'mietesteigt', icon: 'ereignisMietesteigt' },
       { key: 'umzug', view: 'umzug', icon: 'ereignisUmzug' },
       { key: 'neuch', view: 'zuzug', icon: 'ereignisNeuch' },
       { key: 'bewilligung', view: 'bewilligung', icon: 'ereignisBewilligung' },

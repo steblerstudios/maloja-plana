@@ -10,6 +10,8 @@ export const EREIGNIS_PFADE = {
   ereignisWegzug: ['M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z', 'M9 8V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2', 'M9 12v4M15 12v4'],
   ereignisEinbuergerung: ['M5 4h14v16H5z', 'M12 8l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.8 2.6-.4z'],
   ereignisWohnunggekuendigt: ['M3 11l9-7 9 7', 'M5 10v10h14V10', 'M9 14l6 6', 'M15 14l-6 6'],
+  // Haus mit Pfeil nach oben: die Miete steigt (21.11.2026).
+  ereignisMietesteigt: ['M3 11l9-7 9 7', 'M5 10v10h14V10', 'M12 19v-6.5', 'M9.5 15L12 12.5 14.5 15'],
   ereignisUmzug: ['M3 12l9-8 9 8', 'M5 10v10h14V10', 'M10 20v-6h4v6'],
   ereignisNeuch: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18', 'M3 12h18', 'M12 3c3 3 3 15 0 18', 'M12 3c-3 3-3 15 0 18'],
   ereignisBewilligung: ['M3 5h18v14H3z', 'M8 11a2 2 0 1 0 0-.01', 'M13 9h5', 'M13 13h5'],

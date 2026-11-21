@@ -2110,7 +2110,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         { key: 'familie', ueberschrift: tr('sections.basis.family') },
         weg('heirat'), weg('zusammenziehen'), weg('kind'), weg('adoption'), weg('trennung'), weg('todesfall'),
       ];
-      case 'wohnen': return [weg('umzug', { sub: schritte(4) }), weg('mietzins', { sub: P('mietzinsSub') }), weg('wohnunggekuendigt', { sub: P('gekuendigtSub') }), ablage('chapterView.passend.ablageWohnen')];
+      case 'wohnen': return [weg('umzug', { sub: schritte(4) }), weg('mietzins', { sub: P('mietzinsSub') }), weg('wohnunggekuendigt', { sub: P('gekuendigtSub') }), weg('mietesteigt', { sub: P('steigtSub') }), ablage('chapterView.passend.ablageWohnen')];
       // Runde 9 AA nachgebessert: zuoberst «Alle Versicherungen auf einen Blick» → die Versicherungs-Übersicht
       // (Runde 9 AB, seiten-buendeln.md §11), im Untertitel mit ihrem Namen wie im Entwurf.
       case 'versicherungen': return [
