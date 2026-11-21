@@ -196,7 +196,8 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
     expect(r.eigentum).toBe(true);
     expect(r.kosten).toBe(1500);
     const html = render(p.wohnen, p);
-    expect(html).toContain('wohnenKopf.hypothek(CHF 1’200)');
+    // Seit 21.11.2026 als Bestandteil im Kopf: Name darüber, Betrag darunter.
+    expect(html).toMatch(/data-kopf-teil="hypothek"[\s\S]*?wohnenKopf\.teil\.hypothek[\s\S]*?CHF 1’200/);
     expect(html).not.toContain('miete-ausprobieren');
     // «Hypothek vorhanden? Nein»: ein stehengebliebener Betrag zählt nicht.
     const nein = profil({}, { mortgageStatus: 'no', mortgagePayment: '1200' });

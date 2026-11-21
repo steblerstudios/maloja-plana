@@ -52,7 +52,7 @@ export const WohnenStrasse = ({ palette, t, r, ml, hilfe, groesse = 'gross', isD
     // Frage A · Ihr Haus
     mitAnteil && h('div', { 'data-teil': 'strasse-drittel', style: spalte(bildH) },
       h('div', { style: boden }, h('div', { style: { width: '100%' } },
-        h(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto,
+        h(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto, fahnen: kapitel,
           teile: groesse === 'gross' && r.haushalt ? { sie: r.einkommen - r.partnerEinkommen, partner: r.partnerEinkommen } : null,
           beitrag: r.beitrag ? { ...r.beitrag, farbe: behoerden } : null, fuell, groesse }))),
       h('div', { 'data-instrument-zahl': 'wohnkosten', 'aria-live': 'polite', style: { ...zahlStil, color: palette.text, marginTop: space.xs + 'px' } }, anteilText(r)),
@@ -259,12 +259,29 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
 
   // Kopf: Wohnkosten gross, darunter woraus sie bestehen und wo.
   const hypothek = w.mortgageStatus === 'no' ? 0 : Number(w.mortgagePayment) || 0;
+  // Bestandteile der Wohnkosten (Stebler Studios 21.11.2026, Kombination der Varianten A, B und C aus
+  // docs/design/wohnen-kopf-und-fahnen.html): ein dünner Balken zeigt die Anteile, darunter je Teil der Name und der
+  // Betrag, mit «+» dazwischen wie auf einer Abrechnung; die Zimmer daneben. Die Adresse steht beim Kalenderblatt.
   const teile = [
-    r.netto > 0 && t('wohnenKopf.miete', { betrag: geld(r.netto) }),
-    hypothek > 0 && t('wohnenKopf.hypothek', { betrag: geld(hypothek) }),
-    r.nk > 0 && t('wohnenKopf.nebenkosten', { betrag: geld(r.nk) }),
-    Number(w.buildingsInsurance) > 0 && t('wohnenKopf.gebaeude', { betrag: geld(Number(w.buildingsInsurance) / 12) }),
+    r.netto > 0 && { key: 'miete', wert: r.netto },
+    hypothek > 0 && { key: 'hypothek', wert: hypothek },
+    r.nk > 0 && { key: 'nebenkosten', wert: r.nk },
+    Number(w.buildingsInsurance) > 0 && { key: 'gebaeude', wert: Number(w.buildingsInsurance) / 12 },
   ].filter(Boolean);
+  const summeTeile = teile.reduce((a, x) => a + x.wert, 0) || 1;
+  const DECK = [1, 0.5, 0.3, 0.18];
+  const kleineZahl = (label, wert, teil) => h('div', { key: teil, 'data-kopf-teil': teil, style: { minWidth: 0 } },
+    h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.tight } }, label),
+    h('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, wert));
+  const bestandteile = teile.length > 0 && h('div', { 'data-teil': 'wohnkosten-teile', style: { marginTop: space.sm + 'px' } },
+    teile.length > 1 && h('div', { 'aria-hidden': 'true', style: { display: 'flex', height: '8px', borderRadius: radius.full + 'px', overflow: 'hidden', gap: '2px', marginBottom: space.xs + 'px' } },
+      teile.map((x, i) => h('div', { key: x.key, style: { width: (x.wert / summeTeile * 100) + '%', background: fuell, opacity: DECK[i] } }))),
+    h('div', { style: { display: 'flex', alignItems: 'flex-end', gap: space.xs + 'px ' + space.md + 'px', flexWrap: 'wrap' } },
+      ...teile.flatMap((x, i) => [
+        i > 0 && h('span', { key: 'plus-' + i, 'aria-hidden': 'true', style: { fontSize: text.lg, color: palette.mid, paddingBottom: '1px' } }, '+'),
+        kleineZahl(t('wohnenKopf.teil.' + x.key), geld(x.wert), x.key),
+      ]).filter(Boolean),
+      zimmer && h('div', { style: { marginLeft: 'auto' } }, kleineZahl(t('wohnenKopf.teil.zimmer'), zimmer, 'zimmer'))));
   const adresse = addressLine(w);
   // Derselbe Umschalter wie beim Monatsring (auswahlStil): Kontrast hell und dunkel geprüft.
   const pille = (an, label, onClick) => h('button', {
@@ -278,8 +295,7 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
       h('div', { 'data-instrument-zahl': 'wohnkosten-kopf', 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } },
         geld(r.kosten), h('span', { style: { fontSize: text.sm, fontWeight: weight.normal, color: palette.mid } }, ' ' + (jahr ? t('wohnenKopf.imJahr') : t('common.perMonth')))),
       aendern('rentAmount')),
-    (teile.length > 0 || adresse || zimmer) && h('div', { style: satz },
-      [teile.join(' + '), zimmer && t('wohnenKopf.zimmer', { n: zimmer }), adresse].filter(Boolean).join(' · ')),
+    bestandteile,
     formular('rentAmount'),
     // Eigentum: als Zeile im Kopf; mit Hypothek steht sie schon in den Kosten oben.
     angaben && h('div', { 'data-teil': 'eigentum-zeile', style: { ...satz, display: 'flex', alignItems: 'center', gap: space.sm + 'px', flexWrap: 'wrap' } },
@@ -306,6 +322,8 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
     (dauer || angaben) && randStueck('wohndauer', dauer ? h(Kalenderblatt, { iso: String(w.moveInDate).slice(0, 10), palette, klein: true }) : h(Icon, { name: 'wohnen', size: 40, color: fuell }),
       // Die Dauer allein (Nominativ wie «Wohndauer 5 Jahre, 3 Monate»); «seit» stünde im Dativ.
       randZahl(dauer || adresse || t('wohnenKopf.adresse')),
+      // Die Adresse steht hier, wo sie hingehört (seit 21.11.2026 nicht mehr im Kopf).
+      dauer && adresse && h('div', { 'data-teil': 'rand-adresse', style: { ...satz, color: palette.text } }, adresse),
       h('div', { style: satz }, [wohnform, dauer && t('wohnenKopf.seitDatum', { datum: String(w.moveInDate).slice(0, 10).split('-').reverse().join('.') })].filter(Boolean).join(' · ')
         || (adresse ? '' : t('wohnenKopf.nochLeer'))),
       h('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap' } },
@@ -328,10 +346,8 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
     kopf,
     h(WohnenStrasse, { palette, t, r, ml, hilfe, groesse: 'gross', isDarkMode, onNavigate, ausprobiert, kapitel: true }),
 
-    // Was die Linien im Drittel-Haus heissen, und woher die Zahlen im Vergleichshaus kommen.
-    r.anteil != null && h('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
-      h('span', null, h(LegendenMarke, { form: 'strich', color: r.ueberDrittel && !r.mitPartner ? palette.roseDeep : palette.text, palette }), t('wohnenInstrument.drittel')),
-      !r.mitPartner && !r.brutto && h('span', { 'data-teil': 'viertel-legende' }, h(LegendenMarke, { form: 'punktlinie', color: palette.mid, palette }), t('wohnenInstrument.viertel'))),
+    // Drittel und Viertel stehen seit 21.11.2026 als Fahnen im Drittel-Haus (Stebler Studios: «oben in die Häuser
+    // einbauen»); der Satz zur Budgetberatung steht unter «Mehr dazu». Hier nur noch, woher die Zahlen kommen.
     r.beitrag && h(BeitragLegende, { palette, t, hoechst: r.beitrag.hoechst, farbe: behoerden }),
     r.anteil == null && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('wohnenInstrument.ohneEinkommen')),
     ml && h(MieteQuelle, { palette, t, ml }),
@@ -379,6 +395,8 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
       h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, listStyle: 'none' } },
         h('span', null, t('wohnenInstrument.mehrDazu')),
         h('span', { 'aria-hidden': 'true', 'data-teil': 'ausprobieren-zeichen', style: { fontSize: text.lg, lineHeight: 1, color: palette.mid, transform: offen ? 'rotate(90deg)' : 'none', transition: 'transform ' + duration.fast + 'ms ' + ease } }, '›')),
+      r.anteil != null && !r.mitPartner && !r.brutto && h('p', { 'data-teil': 'viertel-legende', style: { ...klein, margin: space.xs + 'px 0 0' } },
+        h(LegendenMarke, { form: 'punktlinie', color: palette.mid, palette }), t('wohnenInstrument.viertel')),
       r.anteil != null && h('p', { 'data-teil': 'drittel-satz', style: { ...klein, margin: space.xs + 'px 0 0', color: r.ueberDrittel ? palette.text : palette.mid } }, t(drittelSatzKey(r))),
       ml && h(MieteSaetze, { palette, t, ml, imKapitel: true, ohneQuelle: true }),
       ml && h(InternationalHinweis, { palette, t })),

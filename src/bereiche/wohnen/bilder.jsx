@@ -24,7 +24,9 @@ import { PEGEL_SCALE } from '../../data/pegel.js';
 // geteilt, nur gross · F möglicher Mietzinsbeitrag schraffiert in der Behörden-Farbe («bis zu»), gross + mittel.
 // Klein 64 zeigt nur A und B. Die Füllung bleibt immer grün (Wohnen); die Warnung tragen Linie und «!».
 const HAUS = { x: 12, oben: 44, b: 96, stock: 24 };
-export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brutto, teile, beitrag, fuell, groesse = 'gross' }) => {
+// `fahnen` (Stebler Studios 21.11.2026, «ein Drittel / ein Viertel … oben in die Häuser einbauen»): die Legende steht als
+// Fahne an ihrer Linie im Haus, wie Kanton und Schweiz im Vergleichshaus. Nur gross.
+export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brutto, teile, beitrag, fuell, groesse = 'gross', fahnen = false }) => {
   const h = React.createElement;
   const gross = groesse === 'gross';
   const klein = groesse === 'klein';
@@ -74,6 +76,16 @@ export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brut
     h('path', { d: 'M' + (HAUS.x - 8) + ' ' + HAUS.oben + 'L60 6L' + (HAUS.x + HAUS.b + 8) + ' ' + HAUS.oben + 'Z', fill: 'none', stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
     urteil && h('text', { 'data-teil': 'drittel-ausrufe', x: HAUS.x + HAUS.b + 6, y: drittelY + (klein ? 8 : 6), fontSize: klein ? 24 : 16, fontWeight: 700, fill: drittelFarbe }, '!'),
     gross && t && h('text', { x: 60, y: HAUS.oben + HAUS.stock - 9, ...schrift }, t('wohnenInstrument.hausRest')),
+    // Fahnen: 13 px bei 190 px Hausbreite in der Strasse (wie die Fahnen des Vergleichshauses), Rand in der Flächenfarbe.
+    ...(fahnen && gross && t ? (() => {
+      const fs = Math.ceil(text.xs * 120 / 190 * 100) / 100;
+      const fahne = (y, txt, farbe, teil) => h('text', { key: teil, 'data-teil': teil, x: HAUS.x + 3, y, fontSize: fs, fontWeight: 600, fill: farbe,
+        stroke: palette.surface, strokeWidth: fs / 4, paintOrder: 'stroke', strokeLinejoin: 'round' }, txt);
+      return [
+        fahne(drittelY - 2, t('wohnenInstrument.fahneDrittel'), drittelFarbe, 'fahne-drittel'),
+        urteil && !brutto && fahne(viertelY + fs + 1, t('wohnenInstrument.fahneViertel'), palette.mid, 'fahne-viertel'),
+      ];
+    })() : []),
     geteilt && t && h('text', { x: (HAUS.x + teilX) / 2, y: boden + 11, ...schrift }, t('wohnenInstrument.hausSie')),
     geteilt && t && h('text', { x: (teilX + HAUS.x + HAUS.b) / 2, y: boden + 11, ...schrift }, t('wohnenInstrument.hausPartner')),
   );

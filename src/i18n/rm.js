@@ -4846,11 +4846,11 @@ export default {
     quelleWort: 'Funtauna',
   },
   wohnenKopf: {
+    teil: { miete: 'Fit', hypothek: 'Ipoteca', nebenkosten: 'Custs accessoris', gebaeude: 'Assicuranza da l’edifizi', zimmer: 'Stanzas' },
     adresse: 'Adressa',
     aendern: 'midar',
     ergaenzen: 'cumplettar',
     adresseAendern: 'Midar l’adressa',
-    zimmer: '{n} stanzas',
     eigentum: 'Proprietad',
     nochLeer: 'anc vid',
     vermieterschaft: 'Locatur',
@@ -4862,10 +4862,6 @@ export default {
     monat: 'Mais',
     jahr: 'Onn',
     imJahr: 'per onn',
-    miete: 'Fit {betrag}',
-    hypothek: 'Ipoteca {betrag}',
-    nebenkosten: 'Custs accessoris {betrag}',
-    gebaeude: 'Assicuranza da l’edifizi {betrag}',
     seitDatum: 'a questa adressa dapi ils {datum}',
     umzug: 'Midada',
     hausrat: 'Mobiliar',
@@ -4874,6 +4870,8 @@ export default {
     anrufen: 'Telefonar',
   },
   wohnenInstrument: {
+    fahneDrittel: '⅓ in terz',
+    fahneViertel: '¼ cussegliaziun',
     titel: "Custs d'abitar per mais",
     titelAusprobiert: "Custs d'abitar per mais · empruvà",
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
