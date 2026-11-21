@@ -2545,6 +2545,14 @@ export default {
     vorsorgeWegSub: "Wer handelt, was medizinisch gilt",
     vorsorgeImNotfall: "Vorsorge im Kapitel Notfall",
   },
+  // Kapitel Behörden nach Bauplan (Stebler Studios 21.11.2026, Szene «Gemeindehaus»).
+  behoerdenZuhause: {
+    leistungen: "Leistungen",
+    wegEins: { sie: "Ein möglicher Weg aus Ihren Angaben: {name}. Bitte bei der zuständigen Stelle prüfen.", du: "Ein möglicher Weg aus deinen Angaben: {name}. Bitte bei der zuständigen Stelle prüfen." },
+    wege: { sie: "{n} mögliche Wege aus Ihren Angaben: {liste}. Bitte bei den zuständigen Stellen prüfen.", du: "{n} mögliche Wege aus deinen Angaben: {liste}. Bitte bei den zuständigen Stellen prüfen." },
+    hinweis: "Eine Orientierung, kein Entscheid über einen Anspruch.",
+    anspruchSub: "Alle Leistungen und wie man sie beantragt",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: { sie: "Ihr Lebenslauf — Vorschau", du: "Dein Lebenslauf — Vorschau" },

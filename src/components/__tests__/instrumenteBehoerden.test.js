@@ -7,7 +7,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { fristAbstand } from '../../utils/fristAbstand.js';
-import { GaengeKlein } from '../BehoerdenInstrument.jsx';
+import { Gemeindehaus } from '../../bereiche/behoerden/behoerden.js';
 
 const palette = { surface: '#fff', border: '#ccc', text: '#111', mid: '#444', sand: '#c90' };
 const quelle = (rel) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8');
@@ -30,17 +30,18 @@ describe('fristAbstand: eine Regel für Kapitel und Kachel', () => {
     expect(fristAbstand('', jetzt)).toBeNull();
   });
   it('das Kapitel nutzt dieselbe Regel', () => {
-    expect(quelle('../BehoerdenInstrument.jsx')).toMatch(/const a = fristAbstand\(iso\);/);
+    expect(quelle('../../bereiche/behoerden/rechnung.js')).toMatch(/const ab = fristAbstand\(iso, heute\.getTime\(\)\);/);
   });
 });
 
+// Seit dem Bauplan Behörden (21.11.2026): dasselbe Gemeindehaus wie im Kapitel, klein 64; ein Fenster je Gang.
 describe('Behördengänge klein', () => {
-  it('ein Kästchen je Gang, erledigte gefüllt, keine Wörter, 64 px', () => {
-    const html = renderToStaticMarkup(React.createElement(GaengeKlein, { palette, erledigt: 2, total: 5 }));
-    expect(html).toContain('data-gaenge="klein"');
+  it('ein Fenster je Gang, erledigte hell, keine Wörter, 64 px', () => {
+    const html = renderToStaticMarkup(React.createElement(Gemeindehaus, { palette, erledigt: 2, total: 5, groesse: 'klein' }));
+    expect(html).toContain('data-teil="gemeindehaus"');
     expect(html).toContain('max-width:64px');
-    expect((html.match(/<rect/g) || []).length).toBe(5);
-    expect((html.match(/fill="#c90"/g) || []).length).toBe(2);
+    expect((html.match(/data-fenster=/g) || []).length).toBe(5);
+    expect((html.match(/data-an="ja"/g) || []).length).toBe(2);
     expect(html).not.toMatch(/<text/);
   });
 });

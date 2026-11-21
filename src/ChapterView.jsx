@@ -76,7 +76,8 @@ const Monatsring = React.lazy(() => import('./components/Monatsring.jsx').then((
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./bereiche/wohnen/wohnen.js').then((m) => ({ default: m.WohnenZuhause })));
-const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
+// Behörden nach Bauplan (Stebler Studios 21.11.2026, Szene «Gemeindehaus»): ein Eingang wie Wohnen.
+const BehoerdenInstrument = React.lazy(() => import('./bereiche/behoerden/behoerden.js').then((m) => ({ default: m.BehoerdenZuhause })));
 const LohnImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.LohnImKapitel })));
 // Arbeit im Kapitel (10.11.2026, Stebler Studios «… und auch wo wir sehen mit dem Lohn-Barometer»): Dienstjahre,
 // Ferien und Pensum direkt unter dem Barometer — dieselben Kacheln wie in der Übersicht.
@@ -2326,12 +2327,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         } : null })
     ),
 
-    // Fassung 6 · Kapitel Behörden (Runde 9, Entwurf AD): Steuerfrist als Kalenderblatt, Behördengänge offen,
-    // «Für den Fall der Fälle». Die Haken der Behördengänge bleiben im selben Speicher wie die frühere Checkliste.
+    // Kapitel Behörden nach Bauplan (21.11.2026): Gemeindehaus mit Anschlagbrett (Steuerfrist) und Wegweiser (Leistungen),
+    // darunter je Frage Satz und Weg, «Mehr dazu». Die Haken der Behördengänge bleiben im selben Speicher wie die frühere Checkliste.
     chapter.key === 'behoerden' && React.createElement(React.Suspense, { key: 'behoerden-instrument', fallback: null },
       React.createElement(BehoerdenInstrument, {
         allData,
-        palette, t: tr, behoerden: data, onNavigate, lang, checked: checklistChecked,
+        palette, t: tr, behoerden: data, onNavigate, lang, checked: checklistChecked, isDarkMode,
         onToggle: (id, wert) => {
           const next = { ...checklistChecked, [id]: wert };
           setChecklistChecked(next);

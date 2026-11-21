@@ -17,7 +17,7 @@ import { Wegzug } from '../Wegzug.jsx';
 import { Fuehrerausweis } from '../Fuehrerausweis.jsx';
 import { AsylView } from '../AsylView.jsx';
 import { ChapterViewComplete } from '../ChapterView.jsx';
-import { BehoerdenInstrument } from '../components/BehoerdenInstrument.jsx';
+import { BehoerdenZuhause as BehoerdenInstrument } from '../bereiche/behoerden/behoerden.js';
 import { erledigtesSteuerjahr } from '../utils/behoerdenGaenge.js';
 import { freiwilligeAhv } from '../data/freiwilligeAhv.js';
 
@@ -181,10 +181,11 @@ describe('Kapitelseite', () => {
     expect(nurText(kapitel({ ...DEMO_DATA.basis, dateOfBirth: (jahr - 20) + '-05-01' }))).toContain(t('nav.dienst'));
     expect(nurText(kapitel({ ...DEMO_DATA.basis, dateOfBirth: (jahr - 50) + '-05-01' }))).not.toContain(t('nav.dienst'));
   });
-  it('B: Steuerfrist, Behördengänge, Fall der Fälle auf Stufe 3', () => {
+  // Seit dem Bauplan Behörden (21.11.2026) dazu «Leistungen» (Frage C); «Für den Fall der Fälle» steht unter «Mehr dazu».
+  it('B: Steuerfrist, Behördengänge, Leistungen, Fall der Fälle auf Stufe 3', () => {
     const h = renderToStaticMarkup(React.createElement(BehoerdenInstrument, { palette: LIGHT_PALETTE, t, behoerden: DEMO_DATA.behoerden, onNavigate: () => {}, onToggle: () => {} }));
     expect(h).not.toContain('<h4');
-    expect((h.match(/<h3 /g) || []).length).toBe(3);
+    expect((h.match(/<h3 /g) || []).length).toBe(4);
   });
   it('C: kein Intro mehr, das «Ansprechpersonen» verspricht', () => {
     expect(nurText(kapitel())).not.toContain('Ansprechpersonen');

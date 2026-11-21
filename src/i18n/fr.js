@@ -2526,6 +2526,14 @@ export default {
     vorsorgeWegSub: "Qui agit, ce qui s’applique médicalement",
     vorsorgeImNotfall: "Prévoyance dans le chapitre Urgence",
   },
+  // Chapitre Autorités selon le plan (21.11.2026, scène « maison communale »).
+  behoerdenZuhause: {
+    leistungen: "Prestations",
+    wegEins: { sie: "Une piste possible d’après vos données : {name}. Veuillez vérifier auprès du service compétent.", du: "Une piste possible d’après tes données : {name}. Vérifie auprès du service compétent." },
+    wege: { sie: "{n} pistes possibles d’après vos données : {liste}. Veuillez vérifier auprès des services compétents.", du: "{n} pistes possibles d’après tes données : {liste}. Vérifie auprès des services compétents." },
+    hinweis: "Une orientation, pas une décision sur un droit.",
+    anspruchSub: "Toutes les prestations et comment les demander",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: { sie: "Votre CV — aperçu", du: "Ton CV — aperçu" },

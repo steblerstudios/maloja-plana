@@ -2,7 +2,7 @@
 // new Date('2027-03-31') ist UTC-Mitternacht und kippt westlich von Greenwich auf den Vortag.
 // Seitenrundgang 26.10.2026: drei Stellen formatierten je selbst (Dashboard-Frist, «Zuletzt gesichert»,
 // Geburtsdatum auf der Portemonnaie-Karte), eine davon ohne Rückfall bei fehlender Sprache.
-// rm wie im Kapitel Behörden (components/BehoerdenInstrument.jsx) mit de-CH: nicht jeder Browser kennt
+// rm wie im Kapitel Behörden (bereiche/behoerden/zuhause.jsx) mit de-CH: nicht jeder Browser kennt
 // eine rätoromanische Datumsform, und auf einer Seite sollen nicht zwei Stile stehen.
 
 const LOCALE = { de: 'de-CH', fr: 'fr-CH', it: 'it-CH', en: 'en-GB', rm: 'de-CH' };

@@ -2527,6 +2527,14 @@ export default {
     vorsorgeWegSub: "Who acts, what applies medically",
     vorsorgeImNotfall: "Advance planning in the Emergency chapter",
   },
+  // Authorities chapter by blueprint (21.11.2026, scene "town hall").
+  behoerdenZuhause: {
+    leistungen: "Benefits",
+    wegEins: "One possible option based on your details: {name}. Please check with the responsible office.",
+    wege: "{n} possible options based on your details: {liste}. Please check with the responsible offices.",
+    hinweis: "Guidance only, not a decision on entitlement.",
+    anspruchSub: "All benefits and how to apply",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: "Your CV — preview",

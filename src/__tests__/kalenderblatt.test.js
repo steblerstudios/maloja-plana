@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Kalenderblatt, blattDatum, BAND_ALPHA } from '../components/Kalenderblatt.jsx';
-import { BehoerdenInstrument } from '../components/BehoerdenInstrument.jsx';
+import { BehoerdenZuhause as BehoerdenInstrument } from '../bereiche/behoerden/behoerden.js';
 import { LIGHT_PALETTE, DARK_PALETTE } from '../config/constants.js';
 
 const blatt = (props) => renderToStaticMarkup(React.createElement(Kalenderblatt, { palette: LIGHT_PALETTE, ...props }));
@@ -81,12 +81,14 @@ describe('Kalenderblatt', () => {
     expect(html).toMatch(new RegExp('data-teil="blatt" style="[^"]*border:1px solid ' + LIGHT_PALETTE.sky));
   });
 
-  it('Kapitel Behörden zeigt die Steuerfrist als blaues Blatt', () => {
+  // Seit dem Bauplan Behörden (21.11.2026) hängt das Blatt am Anschlagbrett neben dem Gemeindehaus; das Brett trägt
+  // den Bereich, darum ohne eigenen Themen-Stempel.
+  it('Kapitel Behörden zeigt die Steuerfrist als blaues Blatt am Anschlagbrett', () => {
     const html = renderToStaticMarkup(React.createElement(BehoerdenInstrument, {
       palette: LIGHT_PALETTE, t: (k) => k, behoerden: { taxFilingDeadline: '2099-03-31' }, lang: 'de',
     }));
     expect(html).toContain('data-teil="kalenderblatt" data-zustand="offen"');
     expect(html).toContain('border:1px solid ' + LIGHT_PALETTE.sky);
-    expect(html).toContain('data-bereich="behoerden"');
+    expect(html).toMatch(/data-teil="anschlagbrett"[\s\S]*data-teil="kalenderblatt"/);
   });
 });

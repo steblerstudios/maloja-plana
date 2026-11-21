@@ -2527,6 +2527,14 @@ export default {
     vorsorgeWegSub: "Chi agisce, che cosa vale sul piano medico",
     vorsorgeImNotfall: "Previdenza nel capitolo Emergenza",
   },
+  // Capitolo Autorità secondo il piano (21.11.2026, scena «casa comunale»).
+  behoerdenZuhause: {
+    leistungen: "Prestazioni",
+    wegEins: { sie: "Una via possibile in base ai Suoi dati: {name}. La preghiamo di verificare presso l’ufficio competente.", du: "Una via possibile in base ai tuoi dati: {name}. Verifica presso l’ufficio competente." },
+    wege: { sie: "{n} vie possibili in base ai Suoi dati: {liste}. La preghiamo di verificare presso gli uffici competenti.", du: "{n} vie possibili in base ai tuoi dati: {liste}. Verifica presso gli uffici competenti." },
+    hinweis: "Un orientamento, non una decisione su un diritto.",
+    anspruchSub: "Tutte le prestazioni e come richiederle",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: { sie: "Il Suo curriculum — anteprima", du: "Il tuo curriculum — anteprima" },

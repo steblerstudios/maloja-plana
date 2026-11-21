@@ -4790,6 +4790,14 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
     vorsorgeImNotfall: "Prevenziun en il chapitel Urgenza",
   },
+  // Chapitel Autoritads tenor plan (21.11.2026, scena «chasa communala»). rm ungeprüft.
+  behoerdenZuhause: {
+    leistungen: "Prestaziuns",
+    wegEins: { sie: "Ina via pussaivla tenor Vossas indicaziuns: {name}. Examinai per plaschair tar il post cumpetent.", du: "Ina via pussaivla tenor tias indicaziuns: {name}. Examinescha per plaschair tar il post cumpetent." },
+    wege: { sie: "{n} vias pussaivlas tenor Vossas indicaziuns: {liste}. Examinai per plaschair tar ils posts cumpetents.", du: "{n} vias pussaivlas tenor tias indicaziuns: {liste}. Examinescha per plaschair tar ils posts cumpetents." },
+    hinweis: "Ina orientaziun, betg ina decisiun davart in dretg.",
+    anspruchSub: "Tut las prestaziuns e co dumandar ellas",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: { sie: "Voss curriculum vitae — prevista", du: "Tes curriculum vitae — prevista" },

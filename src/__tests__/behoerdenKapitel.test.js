@@ -8,7 +8,7 @@ import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ChapterViewComplete } from '../ChapterView.jsx';
-import { BehoerdenInstrument, GAENGE, gangErledigt } from '../components/BehoerdenInstrument.jsx';
+import { BehoerdenZuhause as BehoerdenInstrument, GAENGE, gangErledigt } from '../bereiche/behoerden/behoerden.js';
 import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
@@ -101,7 +101,7 @@ describe('Texte in allen fünf Sprachen', () => {
 
 // Nachprüfung 25.10.2026 (swiss-precision Muss): der Haken nennt das Steuerjahr und ist als Vorschlag gekennzeichnet —
 // sonst stand «Steuererklärung eingereicht» angehakt neben der Frist fürs nächste Jahr.
-import { erledigtesSteuerjahr, offeneErklaerungen } from '../components/BehoerdenInstrument.jsx';
+import { erledigtesSteuerjahr, offeneErklaerungen } from '../bereiche/behoerden/behoerden.js';
 import { LIGHT_PALETTE as PALETTE_K51 } from '../config/constants.js';
 
 describe('F7-K5-1: Behörden nennt dieselbe Steuerzahl wie Finanzen', () => {
