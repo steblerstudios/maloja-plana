@@ -11,7 +11,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { DrittelHaus } from '../components/WohnkostenInstrument.jsx';
+import { DrittelHaus } from '../bereiche/wohnen/wohnen.js';
 import { duration } from '../config/tokens.js';
 
 const palette = { text: '#111', mid: '#555', sand: '#c90', roseDeep: '#a33' };
@@ -72,8 +72,12 @@ describe('C · Legende mit Quelle im Kapitel', () => {
       const s = (await import(`../i18n/${lang}.js`)).default;
       expect(s.wohnenInstrument.viertel, lang).toMatch(/Budgetberatung Schweiz/);
     }
-    expect(readFileSync(fileURLToPath(new URL('../components/WohnkostenInstrument.jsx', import.meta.url)), 'utf8'))
-      .toMatch(/!r\.mitPartner && !r\.brutto && React\.createElement\('span', \{ 'data-teil': 'viertel-legende' \}/);
+    // Seit 21.11.2026 steht die Viertel-Linie als Fahne «¼ Budgetberatung» im Haus; der ganze Satz steht zugeklappt unter
+    // dem Drittel-Haus («Warum ein Drittel?»), die Quelle in der Quellenzeile der Strasse.
+    const z = readFileSync(fileURLToPath(new URL('../bereiche/wohnen/zuhause.jsx', import.meta.url)), 'utf8');
+    expect(z).toMatch(/const mitViertel = r\.anteil != null && !r\.mitPartner && !r\.brutto;/);
+    expect(z).toMatch(/mitViertel && h\('p', \{ 'data-teil': 'viertel-legende'/);
+    expect(z).toMatch(/mitViertel && QUELLE_BUDGET/);
   });
 });
 

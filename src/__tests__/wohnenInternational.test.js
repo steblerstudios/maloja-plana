@@ -31,8 +31,10 @@ describe('Wohnen international: die eine Rechnung', () => {
     expect(auslandStoecke(0)).toBeNull();
   });
   it('im Kapitel: EU-Stock im Vergleichshaus, Satz mit den Nachbarländern darunter', () => {
-    const w = readFileSync(fileURLToPath(new URL('../components/WohnkostenInstrument.jsx', import.meta.url)), 'utf8');
-    expect(w).toMatch(/ausland: auslandStoecke\(vergleich\.national\),/);
-    expect(w).toMatch(/React\.createElement\(InternationalHinweis, \{ palette, t \}\)/);
+    // Seit 18.11.2026 (Bauplan Wohnen): Rechnung in rechnung.js (mieteLage), der Satz unter «Mehr dazu» im Kapitel.
+    const lies = (rel) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8');
+    expect(lies('../bereiche/wohnen/rechnung.js')).toMatch(/ausland: auslandStoecke\(vergleich\.national\) \}/);
+    // Seit 21.11.2026 unter dem Vergleichshaus («Wie verglichen?»); die Quelle in der Quellenzeile der Strasse.
+    expect(lies('../bereiche/wohnen/zuhause.jsx')).toMatch(/ml\.ausland && h\(InternationalHinweis, \{ palette, t, ohneQuelle: true \}\)/);
   });
 });

@@ -160,9 +160,11 @@ describe('Kreditkarte in der Form X', () => {
 
 describe('Mietzinsbeiträge in der Form X', () => {
   const bs = { basis: { canton: 'BS', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 3000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 } };
-  it('Einschätzung zuerst, mit dem Miet-Barometer (F7-R3) im Ergebnis', () => {
+  // Seit 18.11.2026 (Bauplan Wohnen) ist der Miet-Vergleich das Vergleichshaus in der Strasse Wohnen (ohne Titel
+  // «Wo steht Ihre Miete?»): die Einschätzung bleibt zuerst, der Vergleich im Ergebnis.
+  it('Einschätzung zuerst, mit dem Miet-Vergleich (F7-R3) im Ergebnis', () => {
     const teil = ergebnisTeil(render(MietzinsOrientierung, bs));
-    expect(teil).toContain(de.mietzinsView.compareTitle.sie || de.mietzinsView.compareTitle);
+    expect(teil).toContain('data-teil="vergleichs-haus"');
     expect(teil.indexOf('data-ergebnis-art')).toBeGreaterThan(0);
   });
   it('ohne Kanton: der App-Satz an der Stelle des Ergebnisses', () => {

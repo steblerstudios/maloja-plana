@@ -104,7 +104,7 @@ function formatCHF(value) {
   return betrag(num, { hoechstens: 2 });
 }
 
-function calcDuration(moveInDate, t) {
+export function calcDuration(moveInDate, t) {
   if (!moveInDate) return null;
   try {
     const start = new Date(moveInDate);
@@ -129,7 +129,7 @@ function calcDuration(moveInDate, t) {
   }
 }
 
-function addressLine(data) {
+export function addressLine(data) {
   const parts = [];
   if (data.address) parts.push(data.address);
   const plzCity = [(data.postalCode || ''), (data.city || '')].filter(Boolean).join(' ');
@@ -138,6 +138,10 @@ function addressLine(data) {
 }
 
 function buildWohnenSentence(data, t) {
+  // Sind Wohnkosten erfasst, trägt die Szene (bereiche/wohnen/zuhause.jsx) Adresse, Kosten, Wohndauer und
+  // Vermieterschaft selbst (Stebler Studios 20.11.2026, «wie die Finanzen»): der Satz wäre doppelt.
+  const n = (v) => Number(v) || 0;
+  if (n(data.rentAmount) + n(data.utilities) + n(data.buildingsInsurance) + (data.mortgageStatus === 'no' ? 0 : n(data.mortgagePayment)) > 0) return null;
   const addr = addressLine(data);
   if (!addr) return null;
 

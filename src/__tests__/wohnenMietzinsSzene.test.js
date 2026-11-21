@@ -1,6 +1,8 @@
 // Mietzinsbeiträge als Szene (Stebler Studios 11.11.2026: «Ja, so bauen»): im Drittel-Haus der mögliche Beitrag
 // gestrichelt in der Behörden-Farbe (bis zu), daneben das Glas (Pegel, Lesart IPV: Einkommen gegen Grenze), ein
 // Schild «möglich», darunter die Kachelkarte der 26 Kantone. Eine Rechnung: mietzinsEinschaetzung (Werkzeug und Kapitel).
+// Seit 18.11.2026 (Bauplan Wohnen): das Glas ist die Tür des Vergleichshauses (data-fass), das Schild der Wegweiser in
+// der Strasse; die Kantonskarte steht im Kapitel offen oder unter «Mehr dazu», im Werkzeug immer offen.
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -8,7 +10,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { mietzinsEinschaetzung, beitragHoechstMonat, KACHELKARTE_LAGE } from '../data/mietzinsbeitraege.js';
 import { mietzinsPegelState, PEGEL_SCALE } from '../data/pegel.js';
-import { MietzinsSzene, DrittelHaus } from '../components/WohnkostenInstrument.jsx';
+import { WohnenZuhause, WohnenWerkzeug, DrittelHaus } from '../bereiche/wohnen/wohnen.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
 import { LIGHT_PALETTE } from '../config/constants.js';
 import de from '../i18n/de.js';
@@ -20,19 +22,25 @@ const profil = (canton, lohn = 3000, wohnen = {}) => ({
   finanzen: { monthlyIncome: String(lohn), incomeType: 'netto' },
   wohnen: { rentAmount: '1500', utilities: '200', rooms: '3', ...wohnen },
 });
-const szene = (d, p = {}) => renderToStaticMarkup(React.createElement(MietzinsSzene, { palette: LIGHT_PALETTE, t, data: d, isDarkMode: false, ...p }));
+// Überholt 18.11.2026 (Bauplan Wohnen): die eigene «MietzinsSzene» (Glas, Reihe, zweites Haus) gibt es nicht mehr. Frage C
+// steht in der Strasse: das Fass ist die Tür des Vergleichshauses, der Wegweiser steht daneben. Geprüft wird darum an den
+// zwei Orten selbst: Kapitel (WohnenZuhause, gross, Wegweiser ins Werkzeug) und Werkzeug (WohnenWerkzeug, mittel).
+const szene = (d, p = {}) => renderToStaticMarkup(React.createElement(WohnenWerkzeug, { palette: LIGHT_PALETTE, t, data: d, isDarkMode: false, kanton: d.basis.canton, ...p }));
+const kapitel = (d, p = {}) => renderToStaticMarkup(React.createElement(WohnenZuhause, { palette: LIGHT_PALETTE, t, wohnen: d.wohnen, allData: d, isDarkMode: false, ...p }));
 const quelle = (rel) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8');
 
 describe('eine Rechnung', () => {
   it('Kapitel und Werkzeug rufen mietzinsEinschaetzung', () => {
     expect(quelle('../MietzinsOrientierung.jsx')).toMatch(/= mietzinsEinschaetzung\(data, canton\);/);
-    expect(quelle('../components/WohnkostenInstrument.jsx')).toMatch(/mietzinsEinschaetzung\(data, /);
+    const rechnung = quelle('../bereiche/wohnen/rechnung.js');
+    expect(rechnung).toMatch(/const e = mietzinsEinschaetzung\(data, kanton\);/);
+    expect(rechnung).toMatch(/beitragHoechstMonat\(mietzinsEinschaetzung\(data, kanton\), data\?\.wohnen\?\.rooms\)/);
   });
-  it('die Szene steht im Kapitel Wohnen (Beitrag im grossen Haus) und im Werkzeug «Mietzins» (mittel, mit Haus)', () => {
-    const w = quelle('../components/WohnkostenInstrument.jsx');
-    expect(w).toMatch(/beitrag: imHaus, fuell \}/);
-    expect(w).toMatch(/React\.createElement\(MietzinsSzene, \{ palette, t, data: allData, isDarkMode, onNavigate, ohneTuer: !!vergleich \}\)/);
-    expect(quelle('../MietzinsOrientierung.jsx')).toMatch(/React\.createElement\(MietzinsSzene, \{ palette, t, data, isDarkMode, kanton: canton, groesse: 'mittel', mitHaus: true, ohneSatz: true \}\)/);
+  it('Frage C steht im Kapitel Wohnen (Beitrag im grossen Haus) und im Werkzeug «Mietzins» (mittel, mit Haus)', () => {
+    const z = quelle('../bereiche/wohnen/zuhause.jsx');
+    expect(z).toMatch(/beitrag: r\.beitrag \? \{ \.\.\.r\.beitrag, farbe: behoerden \} : null/);
+    expect(z).toMatch(/h\(WohnenStrasse, \{ palette, t, r, ml, hilfe, groesse: 'gross', isDarkMode, onNavigate, ausprobiert, kapitel: true,/);
+    expect(quelle('../MietzinsOrientierung.jsx')).toMatch(/React\.createElement\(WohnenWerkzeug, \{ palette, t, data, isDarkMode, kanton: canton \}\)/);
   });
   it('die Einschätzung: unter der Grenze «likely», darüber «incomeHigh», ohne Programm keine', () => {
     expect(mietzinsEinschaetzung(profil('ZG', 3000, { wfgWohnung: 'ja' }), 'ZG').assessment.key).toBe('likely');
@@ -41,7 +49,7 @@ describe('eine Rechnung', () => {
   });
 });
 
-describe('Glas: dieselbe Form wie die IPV (Pegel, Lesart «Luft»)', () => {
+describe('Fass (seit 18.11.2026 die Tür, bis dahin das Glas): dieselbe Form wie die IPV (Pegel, Lesart «Luft»)', () => {
   it('Wasser = Einkommen, Linie = Grenze; vier Zustände', () => {
     expect(mietzinsPegelState({ annualIncome: 30000, incomeLimit: 60000 })).toMatchObject({ show: true, variant: 'luft', mode: 'clear', fraction: 0.5 });
     expect(mietzinsPegelState({ annualIncome: 55000, incomeLimit: 60000 }).mode).toBe('edge');
@@ -52,62 +60,66 @@ describe('Glas: dieselbe Form wie die IPV (Pegel, Lesart «Luft»)', () => {
 });
 
 describe('Szene je Zustand', () => {
-  it('Programm, unter der Grenze (ZG): Glas und Schild', () => {
+  it('Programm, unter der Grenze (ZG): Fass in der Tür und Wegweiser', () => {
     const h = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
-    expect(h).toContain('data-teil="mietzins-glas"');
+    expect(h).toContain('data-fass="ja"');
     expect(h).toContain('data-teil="mietzins-cta"');
     expect(h).toContain('data-teil="kachelkarte"');
   });
-  it('Programm, über der Grenze: Glas ohne Schild', () => {
+  it('Programm, über der Grenze: Fass ohne Wegweiser', () => {
     const h = szene(profil('ZG', 9000, { wfgWohnung: 'ja' }));
-    expect(h).toContain('data-teil="mietzins-glas"');
+    expect(h).toContain('data-fass="ja"');
     expect(h).not.toContain('data-teil="mietzins-cta"');
   });
-  it('Kanton unklar: kein Glas, kein Schild, der Satz «bitte prüfen», die Karte bleibt', () => {
+  it('Kanton unklar: schlichte Tür, kein Wegweiser, im Kapitel der Satz «bitte prüfen», die Karte bleibt', () => {
     const h = szene(profil('ZH'));
-    expect(h).not.toContain('data-teil="mietzins-glas"');
+    expect(h).toContain('data-fass="nein"');
+    expect(h).not.toContain('tuer-fuellung');
     expect(h).not.toContain('data-teil="mietzins-cta"');
-    expect(h).toContain(t('mietzins.check').slice(0, 30));
     expect(h).toContain('data-teil="kachelkarte"');
+    expect(kapitel(profil('ZH'))).toContain(t('mietzins.check').slice(0, 30));
   });
-  it('ohne Kanton: nichts', () => {
-    expect(szene(profil(''))).toBe('');
+  it('ohne Kanton: keine Tür, kein Wegweiser, keine Karte', () => {
+    const h = szene(profil(''));
+    expect(h).not.toContain('data-teil="tuer"');
+    expect(h).not.toContain('data-teil="mietzins-cta"');
+    expect(h).not.toContain('data-teil="kachelkarte"');
   });
 });
 
-const werkzeugText = () => szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
 describe('Stebler Studios 11.11.2026: Häuser, grau, Knopf', () => {
   it('jeder Kanton ist ein kleines Haus', () => {
     expect((szene(profil('ZH')).match(/data-form="haus"/g) || []).length).toBe(26);
   });
-  it('die Tonne ist grau gefüllt (Behörden-Zwetschge), nicht Salbei', () => {
+  it('das Fass in der Tür ist grau gefüllt (Behörden-Zwetschge), nicht Salbei', () => {
     const h = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
-    const glas = h.slice(h.indexOf('data-teil="mietzins-glas"'));
-    expect(glas).toContain('fill="' + bereichFillColor('behoerden', false) + '"');
-    expect(glas.slice(0, glas.indexOf('</svg>'))).not.toContain('fill="' + LIGHT_PALETTE.sage + '"');
+    const tuer = h.slice(h.indexOf('data-teil="tuer"'), h.indexOf('</g>', h.indexOf('data-teil="tuer"')));
+    expect(tuer).toContain('data-teil="tuer-fuellung"');
+    expect(tuer).toContain('fill="' + bereichFillColor('behoerden', false) + '"');
+    expect(tuer).not.toContain('fill="' + LIGHT_PALETTE.sage + '"');
   });
   it('«möglich» ist ein Knopf mit Zeichen: im Kapitel ins Werkzeug «Mietzins», im Werkzeug zur kantonalen Stelle', () => {
     const ziele = [];
-    const kapitel = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }), { onNavigate: (v) => ziele.push(v) });
-    expect(kapitel).toMatch(/<button type="button" data-teil="mietzins-cta"/);
-    expect(kapitel).toContain(t('mietzinsSzene.cta'));
-    expect(kapitel).toMatch(/data-teil="mietzins-cta"[^>]*><svg aria-hidden="true"[^>]*><path d="M0 0H92L100 22L92 44H0Z"/); // das Pfeil-Schild
-    expect(kapitel).toMatch(/<span aria-hidden="true" role="img"[^>]*><svg/); // das Zeichen ist wirklich da
-    expect(kapitel).toContain('data-teil="mietzins-wegweiser"');
-    // rechts neben der Tonne, ohne Umbruch: dieselbe Reihe, Tonne zuerst, die Reihe bricht nicht um
-    const reihe = kapitel.slice(kapitel.indexOf('data-teil="mietzins-reihe"'));
-    expect(reihe).toMatch(/^data-teil="mietzins-reihe" style="[^"]*flex-wrap:nowrap/);
-    expect(reihe.indexOf('mietzins-glas')).toBeLessThan(reihe.indexOf('mietzins-wegweiser'));
-    expect(werkzeugText()).toContain(t('mietzinsSzene.ctaStelle')); // das Zeichen ist wirklich da
+    const k = kapitel(profil('ZG', 3000, { wfgWohnung: 'ja' }), { onNavigate: (v) => ziele.push(v) });
+    expect(k).toMatch(/<button type="button" data-teil="mietzins-cta"/);
+    expect(k).toContain('aria-label="' + t('mietzinsSzene.cta') + '"');
+    expect(k).toMatch(/data-teil="mietzins-cta"[^>]*><svg aria-hidden="true"[^>]*><path d="M0 0H92L100 22L92 44H0Z"/); // das Pfeil-Schild
+    expect(k).toMatch(/<span aria-hidden="true" role="img"[^>]*><svg/); // das Zeichen ist wirklich da
+    expect(k).toContain('data-teil="mietzins-wegweiser"');
+    // rechts neben dem Vergleichshaus mit dem Fass, in derselben Strasse
+    const s0 = k.slice(k.indexOf('data-teil="wohnen-strasse"'));
+    expect(s0.indexOf('data-fass="ja"')).toBeGreaterThan(-1);
+    expect(s0.indexOf('data-fass="ja"')).toBeLessThan(s0.indexOf('mietzins-wegweiser'));
     const werkzeug = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
+    expect(werkzeug).toContain('aria-label="' + t('mietzinsSzene.ctaStelle') + '"');
     expect(werkzeug).toMatch(/<a [^>]*href="https:\/\/zg\.ch[^"]*"[^>]*data-teil="mietzins-cta"|<a [^>]*data-teil="mietzins-cta"[^>]*href="https:\/\/zg\.ch/);
-    expect(quelle('../components/WohnkostenInstrument.jsx')).toMatch(/onClick: \(\) => onNavigate\('mietzins'\)/);
+    expect(quelle('../bereiche/wohnen/bilder.jsx')).toMatch(/onClick: \(\) => onNavigate\('mietzins'\)/);
   });
 });
 
 describe('Wegweiser kurz in der Strasse', () => {
   it('«möglich ›» sichtbar, der ganze Satz im Vorlesetext', async () => {
-    const { MoeglichKnopf } = await import('../components/WohnkostenInstrument.jsx');
+    const { MoeglichKnopf } = await import('../bereiche/wohnen/wohnen.js');
     const h = renderToStaticMarkup(React.createElement(MoeglichKnopf, { palette: LIGHT_PALETTE, t, onNavigate: () => {}, kurz: true }));
     expect(h).toContain('aria-label="' + t('mietzinsSzene.cta') + '"');
     expect(h).toContain(t('mietzinsSzene.ctaKurz') + ' ›');
@@ -154,9 +166,10 @@ describe('Haus: der Beitrag gestrichelt in der Behörden-Farbe, als «bis zu»',
     const h = renderToStaticMarkup(React.createElement(DrittelHaus, { palette: LIGHT_PALETTE, anteil: 40, ueberDrittel: true, fuell: '#7a5', groesse: 'klein', beitrag: { anteil: 20, farbe: zwetschge } }));
     expect(h).not.toContain('drittel-haus-beitrag');
   });
-  it('Kapitel BS, unter der Grenze: das Haus zeigt den Beitrag, die Legende sagt «bis zu»', () => {
+  it('BS, unter der Grenze: Kapitel und Werkzeug zeigen den Beitrag, die Legende sagt «bis zu»', () => {
     const d = profil('BS');
-    const h = szene(d, { mitHaus: true, groesse: 'mittel' });
+    expect(kapitel(d)).toContain('data-teil="drittel-haus-beitrag"');
+    const h = szene(d);
     expect(h).toContain('data-teil="drittel-haus-beitrag"');
     expect(h).toContain(t('mietzinsSzene.beitragLegende', { betrag: '1’060' }).slice(0, 20));
   });
