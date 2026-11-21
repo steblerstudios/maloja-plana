@@ -595,7 +595,8 @@ const AppInner = ({ demo }) => {
   const [demoModeOn, setDemoMode] = useState(false);
   const [demoData, setDemoData] = useState(demo && demo.data);
   // K24: Dokumente im Beispiel — eigene Liste nur im Arbeitsspeicher.
-  const [demoDocs, setDemoDocs] = useState([]);
+  // Startet mit den Beispiel-Dokumenten (Kopie, damit Löschen im Beispiel die Vorlage nicht ändert).
+  const [demoDocs, setDemoDocs] = useState(() => (demo && Array.isArray(demo.docs) ? [...demo.docs] : []));
   // Demo von der Code-Wand bleibt Demo, bis onLeave zur Code-Wand zurückführt.
   const demoMode = !!demo || demoModeOn;
   const docs = demoMode ? demoDocs : documents;
@@ -628,7 +629,7 @@ const AppInner = ({ demo }) => {
   // Beispiel betreten (Fusszeile und Dashboard-Kachel): Demo-Datensatz erst beim Betreten laden;
   // demoMode wird erst gesetzt, wenn er da ist (kein Render-Fenster mit demoMode ohne demoData —
   // sonst zeigte das «Beispiel» die echten Daten). Das Beispiel beginnt ohne Dokumente (K24).
-  const beispielBetreten = () => import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoDocs([]); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }).catch((e) => { console.warn('Beispiel konnte nicht geladen werden', e); });
+  const beispielBetreten = () => import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoDocs([...(m.DEMO_DOCS || [])]); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }).catch((e) => { console.warn('Beispiel konnte nicht geladen werden', e); });
   const probeSchliessen = () => { setSandboxMode(false); setSandboxData(null); setSandboxLeer(false); setErsetzenFragen(false); };
   const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); setSandboxLeer(false); setErsetzenFragen(false); beispielVerlassen(); };
   const discardSandbox = probeSchliessen;

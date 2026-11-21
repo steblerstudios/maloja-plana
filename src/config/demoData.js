@@ -39,6 +39,10 @@ export const DEMO_DATA = {
     // zeigen dafür den Brutto-Hinweis. Ohne Art füllte seit #357 kein Rechner mehr vor
     // (Entscheid Stebler Studios 25.09.2026).
     incomeType: 'netto',
+    // Auffüllen (19.11.2026, Sophie: «Beispiel soll alles anzeigen»): 13. Monatslohn und Arbeitskanton,
+    // damit Lohn-Einordnung und Mindestlohn-Frage eine Antwort zeigen statt einer Rückfrage.
+    dreizehnter: 'yes',
+    workCanton: 'ZH',
     employer: 'Kantonsspital Zürich',
     employmentType: 'employed',
     startDate: '2019-04-01',
@@ -55,8 +59,16 @@ export const DEMO_DATA = {
     savingsAccount: '18500',
     bankName: 'ZKB',
     creditCard: 'one',
+    // Beispielwerte, nicht belegt: eine Karte mit üblicher Limite und einem kleinen offenen Saldo,
+    // damit Kredit-Abschnitt und offene Posten etwas zeigen.
+    creditCardLimit: '5000',
+    creditCardBalance: '420',
     loans: '',
-    pension3a: '250',
+    // Das Feld zählt pro Jahr («CHF/Jahr»). Bis 19.11.2026 stand hier 250, gemeint war 250 im Monat
+    // (Sophie, 19.11.2026: «Ja, auf 250/Mt.») → 3’000 im Jahr, unter dem 3a-Höchstbetrag mit Pensionskasse.
+    pension3a: '3000',
+    // Beispielwert, nicht belegt: passt zu 3’000 / Jahr seit Stellenantritt 2019 (rund sieben Einzahlungen, etwas Zins).
+    pension3aBalance: '21800',
     pension3b: '',
     investmentFunds: '',
   },
@@ -95,6 +107,7 @@ export const DEMO_DATA = {
     // Beispielwert, nicht belegt: Hausrat für 3 Zimmer in der Stadt Zürich etwa 150–350 / Jahr (bis 25.10.2026: 22).
     householdInsuranceAmount: '240',
     travelInsurance: 'TCS',
+    legalInsurance: 'yes',
     cyberInsurance: '',
     autoInsurance: '',
     autoInsuranceAmount: '',
@@ -137,7 +150,8 @@ export const DEMO_DATA = {
     medications: '',
     // Ein Eintrag, damit das Beispiel kein leeres Feld zeigt und der SL-Preis sichtbar wird (F7-K6-2, 27.10.2026).
     medicationsList: [{ name: 'Euthyrox', substance: 'Levothyroxin', dose: '50', unit: 'µg', frequency: ['morgens'], notes: '' }],
-    chronicDiseases: '',
+    // Passt zum Euthyrox in der Medikamentenliste (Levothyroxin ist das übliche Mittel dagegen).
+    chronicDiseases: 'Schilddrüsenunterfunktion (Hypothyreose)',
     // Hausarzt in der Liste, die das Kapitel zeigt (DoctorManager). Das alte Feld bleibt für Dossier,
     // Notfallkarte und Rucksack, die noch nur `doctor` lesen — ohne Liste erschien das Beispiel als
     // «Früherer Eintrag» unter einer leeren Liste (Seitenrundgang 27.09., K-F6).
@@ -151,3 +165,29 @@ export const DEMO_DATA = {
     bestattungswuensche: 'no',
   },
 };
+
+// Beispiel-Dokumente (19.11.2026): ohne sie war die Ablage im Beispiel leer. Gleiche Form wie ein
+// Upload im Kapitel (ChapterView), Datei inline wie im Beispiel-Modus üblich (docBlobs.js, K24).
+// Der Inhalt ist ein kurzer Text, keine echte Urkunde — darum .txt, nicht .pdf.
+const beispielDatei = (titel) =>
+  'data:text/plain;charset=utf-8,' + encodeURIComponent(`Beispieldokument: ${titel}\nMaria Muster, Beispiel-Modus von Maloja Plana.\nKeine echte Urkunde.`);
+const dok = (id, chapter, type, fileName, titel, expiryDate) => ({
+  id: 'demo-dok-' + id, chapter, type, fileName, fileSize: '0.1 KB',
+  uploadDate: '01.10.2026', expiryDate, status: 'active', data: beispielDatei(titel),
+});
+
+// Ein Datum relativ zu heute, damit «Bald fällig» im Beispiel nicht mit der Zeit verschwindet.
+// Ohne Ablaufdatum fiele ein Dokument in kein Fach (DocumentTresor.jsx imFach), darum hat jedes eins.
+const inTagen = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+
+export const DEMO_DOCS = [
+  // Läuft in 60 Tagen ab: zeigt das Fach «Bald fällig» (unter 90 Tagen).
+  dok('id', 'basis', 'id', 'Identitaetskarte_Beispiel.txt', 'Identitätskarte', inTagen(60)),
+  // Abgelaufen: zeigt das Archiv.
+  dok('kk-alt', 'versicherungen', 'kkcard', 'Krankenkassenkarte_alt_Beispiel.txt', 'Alte Krankenkassenkarte', '2025-12-31'),
+  dok('lease', 'wohnen', 'lease', 'Mietvertrag_Langstrasse_Beispiel.txt', 'Mietvertrag', '2031-07-31'),
+  dok('tax', 'finanzen', 'tax_return', 'Steuererklaerung_2025_Beispiel.txt', 'Steuererklärung 2025', '2036-12-31'),
+  dok('kk', 'versicherungen', 'kkcard', 'Krankenkassenkarte_CSS_Beispiel.txt', 'Krankenkassenkarte', '2028-12-31'),
+  dok('bvg', 'versicherungen', 'bvg_cert', 'BVK_Vorsorgeausweis_2026_Beispiel.txt', 'Vorsorgeausweis 2026', '2027-12-31'),
+  dok('diplom', 'ausbildung', 'diploma', 'Bachelor_Pflege_ZHAW_Beispiel.txt', 'Bachelor-Diplom', '2099-12-31'),
+];

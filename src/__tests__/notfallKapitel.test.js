@@ -33,7 +33,8 @@ const ort = (allData = DEMO_DATA, extra = {}) => renderToStaticMarkup(React.crea
 }));
 // Maria ohne Medikament: so stand das Beispiel bis F7-K6-2 (27.10.2026). Bleibt für die Wege, die ein fehlendes
 // Medikament zeigen — das Beispiel selbst hat seither «Euthyrox 50 µg».
-const OHNE_MEDI = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, medicationsList: [] } };
+// chronicDiseases leer: Maria hat seit 19.11.2026 einen Eintrag, der Fall «nicht erfasst» wird hier gebaut.
+const OHNE_MEDI = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, medicationsList: [], chronicDiseases: '' } };
 const QUELLE = (datei) => fs.readFileSync(path.resolve(__dirname, '..', datei), 'utf8');
 
 describe('Bereit für den Ernstfall', () => {
