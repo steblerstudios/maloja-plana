@@ -24,7 +24,9 @@ import { PEGEL_SCALE } from '../../data/pegel.js';
 // geteilt, nur gross · F möglicher Mietzinsbeitrag schraffiert in der Behörden-Farbe («bis zu»), gross + mittel.
 // Klein 64 zeigt nur A und B. Die Füllung bleibt immer grün (Wohnen); die Warnung tragen Linie und «!».
 const HAUS = { x: 12, oben: 44, b: 96, stock: 24 };
-export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brutto, teile, beitrag, fuell, groesse = 'gross' }) => {
+// `fahnen` (Stebler Studios 21.11.2026, «ein Drittel / ein Viertel … oben in die Häuser einbauen»): die Legende steht als
+// Fahne an ihrer Linie im Haus, wie Kanton und Schweiz im Vergleichshaus. Nur gross.
+export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brutto, teile, beitrag, fuell, groesse = 'gross', fahnen = false }) => {
   const h = React.createElement;
   const gross = groesse === 'gross';
   const klein = groesse === 'klein';
@@ -74,6 +76,16 @@ export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brut
     h('path', { d: 'M' + (HAUS.x - 8) + ' ' + HAUS.oben + 'L60 6L' + (HAUS.x + HAUS.b + 8) + ' ' + HAUS.oben + 'Z', fill: 'none', stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
     urteil && h('text', { 'data-teil': 'drittel-ausrufe', x: HAUS.x + HAUS.b + 6, y: drittelY + (klein ? 8 : 6), fontSize: klein ? 24 : 16, fontWeight: 700, fill: drittelFarbe }, '!'),
     gross && t && h('text', { x: 60, y: HAUS.oben + HAUS.stock - 9, ...schrift }, t('wohnenInstrument.hausRest')),
+    // Fahnen: 13 px bei 190 px Hausbreite in der Strasse (wie die Fahnen des Vergleichshauses), Rand in der Flächenfarbe.
+    ...(fahnen && gross && t ? (() => {
+      const fs = Math.ceil(text.xs * 120 / 190 * 100) / 100;
+      const fahne = (y, txt, farbe, teil) => h('text', { key: teil, 'data-teil': teil, x: HAUS.x + 3, y, fontSize: fs, fontWeight: 600, fill: farbe,
+        stroke: palette.surface, strokeWidth: fs / 4, paintOrder: 'stroke', strokeLinejoin: 'round' }, txt);
+      return [
+        fahne(drittelY - 2, t('wohnenInstrument.fahneDrittel'), drittelFarbe, 'fahne-drittel'),
+        urteil && !brutto && fahne(viertelY + fs + 1, t('wohnenInstrument.fahneViertel'), palette.mid, 'fahne-viertel'),
+      ];
+    })() : []),
     geteilt && t && h('text', { x: (HAUS.x + teilX) / 2, y: boden + 11, ...schrift }, t('wohnenInstrument.hausSie')),
     geteilt && t && h('text', { x: (teilX + HAUS.x + HAUS.b) / 2, y: boden + 11, ...schrift }, t('wohnenInstrument.hausPartner')),
   );
@@ -93,7 +105,10 @@ export const lageFarben = (palette, lage) => {
   const r = lage?.richtung;
   return r === 'Above' ? [palette.gold, palette.goldDeep] : r === 'Below' ? [palette.sage, palette.sageDeep] : [palette.mid, palette.mid];
 };
-const VB = { b: 100, boden: 96, hoehe: 70, x: 16, haus: 68, dach: 11, luft: 6, tuerB: 16, tuerH: 24 };
+// Gleiches Haus wie das Drittel-Haus (Stebler Studios 20.11.2026, «die beiden Häuser sollten gleicher aussehen, um die
+// Logik und Verhältnisse besser zu verstehen»): derselbe Körper (HAUS), dasselbe Dach, dieselbe Füllung. Der Körper ist
+// hier die Franken-Skala; der höchste Wert reicht bis `kopf` unter die Traufe, darüber bleibt Platz für eine Fahne.
+const VB = { b: 120, boden: HAUS.oben + HAUS.stock * 3, hoehe: HAUS.stock * 3, x: HAUS.x, haus: HAUS.b, kopf: 1.2, tuerB: 16, tuerH: 24 };
 export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gross', kanton }) => {
   if (!ml || !ml.vergleich) return null;
   const h = React.createElement;
@@ -101,7 +116,7 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
   const klein = groesse === 'klein';
   const { regional, national } = ml.vergleich;
   const eu = gross && ml.ausland ? ml.ausland.eu : null;
-  const max = Math.max(regional, national, ml.netto || 0, eu ? eu.hoehe : 0) * 1.12 || 1;
+  const max = Math.max(regional, national, ml.netto || 0, eu ? eu.hoehe : 0) * VB.kopf || 1;
   const y = (v) => VB.boden - Math.max(3, (v / max) * VB.hoehe);
   const yR = y(regional), yN = y(national), yS = ml.netto > 0 ? y(ml.netto) : VB.boden;
 
@@ -109,14 +124,11 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
   const [kantonFarbe, kantonText] = lageFarben(palette, ml.lage);
   const linie = { vectorEffect: 'non-scaling-stroke' };
   const strich = klein ? 2.5 : 1.5;
-  // Schrift nur gross, bei 256 px Bildbreite genau 13 px (Regel H) — das Haus ist im Kapitel halb so breit wie die
-  // Strasse, darum gerechnet auf die halbe Breite.
-  const schrift = Math.ceil(text.xs * VB.b / (INSTRUMENT_GROESSE.gross * 0.55) * 100) / 100;
+  // Schrift nur gross, 13 px (Regel H) bei der Breite, mit der das Haus in der Strasse steht (190 px, BILDHOEHE.gross).
+  const schrift = Math.ceil(text.xs * VB.b / 190 * 100) / 100;
   // Fahnen stehen unter ihrem Stock, im Haus. Liegen zwei Stöcke enger als eine Schriftzeile, steht die obere
   // Fahne über ihrem Stock. Ein Rand in der Flächenfarbe hält die Schrift auf der Füllung lesbar.
   const nah = Math.abs(yR - yN) < schrift + 2;
-  // Gross: über dem obersten Stock Platz für eine Fahne, damit sie nicht unters Dach rutscht.
-  const top = Math.min(yR, yN, yS, eu ? y(eu.hoehe) : VB.boden) - (gross ? schrift + 4 : VB.luft);
   const fahne = (yy, txt, farbe, teil, oben) => h('text', { 'data-teil': teil, x: x + 3, y: oben ? yy - 2 : yy + schrift + 1, fontSize: schrift, fontWeight: 600, fill: farbe,
     stroke: palette.surface, strokeWidth: schrift / 4, paintOrder: 'stroke', strokeLinejoin: 'round' }, txt);
   // Tür
@@ -128,14 +140,15 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
   const getoent = !klein && tuer && tuer.programm && !fass;
   const clipId = 'vh-tuer-' + groesse;
   return h('svg', {
-    viewBox: '0 ' + (top - VB.dach - 2) + ' ' + VB.b + ' ' + (VB.boden - top + VB.dach + 4), width: '100%', 'aria-hidden': 'true', focusable: 'false',
+    viewBox: '0 0 ' + VB.b + ' ' + (VB.boden + 4), width: '100%', 'aria-hidden': 'true', focusable: 'false',
     'data-teil': 'vergleichs-haus', 'data-groesse': groesse,
     style: { display: 'block', maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto', overflow: 'visible' },
   },
     // Füllung = Ihre Miete
-    ml.netto > 0 && h('rect', { 'data-teil': 'vergleich-fuellung', x, y: yS, width: VB.haus, height: VB.boden - yS, fill: fuell, opacity: 0.4 }),
-    h('path', { d: 'M' + x + ' ' + VB.boden + 'V' + top + 'L' + (x + VB.haus / 2) + ' ' + (top - VB.dach) + 'L' + r + ' ' + top + 'V' + VB.boden + 'Z',
-      fill: 'none', stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
+    ml.netto > 0 && h('rect', { 'data-teil': 'vergleich-fuellung', x, y: yS, width: VB.haus, height: VB.boden - yS, fill: fuell, opacity: 0.6 }),
+    // Körper und Dach genau wie beim Drittel-Haus
+    h('rect', { x, y: HAUS.oben, width: VB.haus, height: VB.hoehe, fill: 'none', stroke: palette.text, strokeWidth: strich, ...linie }),
+    h('path', { d: 'M' + (x - 8) + ' ' + HAUS.oben + 'L60 6L' + (r + 8) + ' ' + HAUS.oben + 'Z', fill: 'none', stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
     h('line', { 'data-teil': 'stock-schweiz', x1: x, x2: r, y1: yN, y2: yN, stroke: palette.mid, strokeWidth: klein ? 2 : 1.5, strokeDasharray: '4 3', ...linie }),
     h('line', { 'data-teil': 'stock-kanton', x1: x, x2: r, y1: yR, y2: yR, stroke: kantonFarbe, strokeWidth: klein ? 3 : 2.5, ...linie }),
     eu && h('line', { 'data-teil': 'stock-eu', x1: x, x2: r, y1: y(eu.hoehe), y2: y(eu.hoehe), stroke: palette.skyDeep, strokeWidth: 2, strokeDasharray: '1 3', strokeLinecap: 'round', ...linie }),
@@ -155,29 +168,69 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
 
 // ── Kachelkarte ─────────────────────────────────────────────────────────────────────────────────────────────────────
 // Die 26 Kantone als kleine Häuser, gefüllt = Programm in der App erfasst, leer = unklar (nie «gibt es nicht»).
+// Seit 20.11.2026 auch für andere Werte (Dreier-Set im Kapitel Wohnen): `farbe(k)` gibt je Kanton
+// { fill, deck, hellSchrift } oder null (leer). `mini`: ohne Kürzel, für die Kachel. `teil`/`aria` je Verwendung.
 const KACHEL = { b: 26, h: 18, dach: 7, abstand: 3 };
-export const Kachelkarte = ({ palette, t, kanton, gefuellt, isDarkMode }) => {
+export const Kachelkarte = ({ palette, t, kanton, gefuellt = [], isDarkMode, farbe = null, mini = false, teil = 'kachelkarte', aria = null }) => {
   const h = React.createElement;
   const zelleB = KACHEL.b + KACHEL.abstand, zelleH = KACHEL.h + KACHEL.dach + KACHEL.abstand;
   const breite = 8 * zelleB;
   const hoehe = 6 * zelleH;
   const frucht = bereichFillColor('wohnen', isDarkMode) || palette.sage;
   const schrift = Math.ceil(text.xs * breite / INSTRUMENT_GROESSE.gross * 100) / 100;
+  const wert = farbe || ((k) => gefuellt.includes(k) ? { fill: frucht, deck: 0.45 } : null);
   return h('svg', {
-    viewBox: '0 0 ' + breite + ' ' + hoehe, width: '100%', role: 'img', 'data-teil': 'kachelkarte',
-    'aria-label': t('mietzinsSzene.karteAria', { liste: gefuellt.join(', '), kanton }),
-    style: { display: 'block', maxWidth: INSTRUMENT_GROESSE.gross + 'px', height: 'auto' },
+    viewBox: '0 0 ' + breite + ' ' + hoehe, width: '100%', 'data-teil': teil,
+    ...(mini || !t ? { 'aria-hidden': 'true', focusable: 'false' } : { role: 'img', 'aria-label': aria || t('mietzinsSzene.karteAria', { liste: gefuellt.join(', '), kanton }) }),
+    style: { display: 'block', maxWidth: (mini ? INSTRUMENT_GROESSE.klein * 1.3 : INSTRUMENT_GROESSE.gross) + 'px', height: 'auto' },
   },
     Object.entries(KACHELKARTE_LAGE).map(([k, [zeile, spalte]]) => {
-      const voll = gefuellt.includes(k);
+      const f = wert(k);
+      const voll = !!f;
       const ihr = k === kanton;
       const x = spalte * zelleB + 1, oben = zeile * zelleH + KACHEL.dach + 1;
-      const rand = { stroke: ihr ? palette.text : voll ? frucht : palette.border, strokeWidth: ihr ? 2.5 : 1, strokeLinejoin: 'round' };
-      return h('g', { key: k, 'data-kanton': k, 'data-programm': voll ? 'ja' : 'nein', ...(ihr ? { 'data-ihr': 'ja' } : {}), 'aria-hidden': 'true' },
+      const rand = { stroke: ihr ? palette.text : voll ? f.fill : palette.border, strokeWidth: ihr ? 2.5 : 1, strokeLinejoin: 'round' };
+      return h('g', { key: k, 'data-kanton': k, 'data-programm': !farbe ? (voll ? 'ja' : 'nein') : undefined, ...(ihr ? { 'data-ihr': 'ja' } : {}), 'aria-hidden': 'true' },
         h('path', { 'data-form': 'haus', d: 'M' + x + ' ' + (oben + KACHEL.h) + 'V' + oben + 'L' + (x + KACHEL.b / 2) + ' ' + (oben - KACHEL.dach) + 'L' + (x + KACHEL.b) + ' ' + oben + 'V' + (oben + KACHEL.h) + 'Z',
-          fill: voll ? frucht : 'none', fillOpacity: voll ? 0.45 : 0, ...rand }),
-        h('text', { x: x + KACHEL.b / 2, y: oben + KACHEL.h / 2 + schrift * 0.35, textAnchor: 'middle', fontSize: schrift, fill: voll || ihr ? palette.text : palette.mid }, k));
+          fill: voll ? f.fill : 'none', fillOpacity: voll ? (f.deck ?? 1) : 0, ...rand }),
+        !mini && h('text', { x: x + KACHEL.b / 2, y: oben + KACHEL.h / 2 + schrift * 0.35, textAnchor: 'middle', fontSize: schrift,
+          fill: voll && f.hellSchrift ? palette.surface : voll || ihr ? palette.text : palette.mid }, k));
     }));
+};
+
+// ── Häuserzeile (Rangfolge) ─────────────────────────────────────────────────────────────────────────────────────────
+// Alle Kantone als Häuser nebeneinander, so hoch wie ihr Wert, höchster links (Stebler Studios 20.11.2026: Leerwohnungen
+// «in grün und nur in Rangfolge»). Ihr Kanton voll in der Wohnen-Farbe mit Rand, die anderen hell; der Schweizer Wert
+// gestrichelt. `werte`: { KT: Zahl }. `mini`: ohne Namen und Linie, für die Kachel. Rein Bild, die Zahlen stehen daneben.
+export const HaeuserRang = ({ palette, werte, kanton, ch = null, isDarkMode, mini = false, schreib = (n) => String(n), chText = '' }) => {
+  const h = React.createElement;
+  const reihe = Object.entries(werte).filter(([, n]) => Number.isFinite(n)).sort((a, b) => b[1] - a[1]);
+  if (reihe.length === 0) return null;
+  const max = Math.max(reihe[0][1], ch || 0) || 1;
+  const gruen = bereichFillColor('wohnen', isDarkMode) || palette.sage;
+  const n = reihe.length, sp = 10, b = 8, dach = 3;
+  const hoch = mini ? 110 : 62, oben = mini ? 2 : 14, unten = mini ? 0 : 10;
+  const breite = n * sp, boden = oben + hoch;
+  const y = (v) => boden - Math.max(4, (v / max) * hoch);
+  const linie = { vectorEffect: 'non-scaling-stroke' };
+  // 13 px (Regel H) bei der grössten Breite, mit der die Zeile im Kapitel steht (zwei Hausbreiten, 512 px).
+  const schrift = Math.ceil(text.xs * breite / (INSTRUMENT_GROESSE.gross * 2) * 100) / 100;
+  return h('svg', {
+    viewBox: '0 0 ' + breite + ' ' + (boden + unten), width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-teil': mini ? 'haeuser-rang-mini' : 'haeuser-rang',
+    style: { display: 'block', maxWidth: (mini ? INSTRUMENT_GROESSE.klein * 1.75 : INSTRUMENT_GROESSE.gross * 2) + 'px', height: 'auto', overflow: 'visible' },
+  },
+    reihe.map(([k, v], i) => {
+      const ihr = k === kanton, x = i * sp + (sp - b) / 2, yy = y(v);
+      return h('g', { key: k, 'data-kanton': k, ...(ihr ? { 'data-ihr': 'ja' } : {}) },
+        h('path', { d: 'M' + x + ' ' + boden + 'V' + (yy + dach) + 'L' + (x + b / 2) + ' ' + yy + 'L' + (x + b) + ' ' + (yy + dach) + 'V' + boden + 'Z',
+          fill: gruen, fillOpacity: ihr ? 1 : 0.35, stroke: ihr ? palette.text : 'none', strokeWidth: 1.5, strokeLinejoin: 'round', ...linie }),
+        !mini && h('text', { x: x + b / 2, y: boden + 8, textAnchor: 'middle', fontSize: schrift * 0.9, fontWeight: ihr ? 700 : 400, fill: ihr ? palette.text : palette.mid }, k),
+        !mini && ihr && h('text', { 'data-teil': 'rang-ihr', x: Math.min(Math.max(x + b / 2, 18), breite - 18), y: yy - 3, textAnchor: 'middle', fontSize: schrift, fontWeight: 700, fill: palette.text,
+          stroke: palette.surface, strokeWidth: 1.5, paintOrder: 'stroke' }, k + ' ' + schreib(v)));
+    }),
+    !mini && ch != null && h('line', { 'data-teil': 'rang-schweiz', x1: 0, x2: breite, y1: y(ch), y2: y(ch), stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '4 3', ...linie }),
+    !mini && ch != null && chText && h('text', { x: breite, y: y(ch) - 2, textAnchor: 'end', fontSize: schrift, fill: palette.mid, stroke: palette.surface, strokeWidth: 1.5, paintOrder: 'stroke' }, chText),
+    h('line', { x1: 0, x2: breite, y1: boden, y2: boden, stroke: palette.mid, strokeWidth: 1, ...linie }));
 };
 
 // ── Wegweiser «möglich ›» ───────────────────────────────────────────────────────────────────────────────────────────

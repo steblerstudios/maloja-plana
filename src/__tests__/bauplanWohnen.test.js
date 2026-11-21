@@ -43,12 +43,62 @@ describe('Bauplan Wohnen · jedes Bild einmal je Seite', () => {
     expect(html.indexOf('data-instrument-zahl="wohnkosten"')).toBeGreaterThan(html.indexOf('data-teil="drittel-haus"'));
     expect(html.indexOf('data-instrument-zahl="miete"')).toBeGreaterThan(html.indexOf('data-teil="vergleichs-haus"'));
   });
-  it('Regler, Ausland und (mit Fass) die Kantonskarte stehen unter «Mehr dazu»', () => {
+  // Seit 21.11.2026 (Stebler Studios, «wohnen-aufraeumen.html»): kein «Mehr dazu» mehr. Die Sätze stehen zugeklappt unter
+  // ihrem Haus, die Quellen der Strasse in einer Zeile im Hausstil; Kantonskarte und Regler bleiben offen.
+  it('Erklärungen unter dem Haus, eine Quellenzeile, Karte und Regler offen, kein «Mehr dazu»', () => {
     const html = kapitel(BS_TIEF);
-    const mehr = html.slice(html.indexOf('data-teil="wohnen-mehr"'));
-    expect(mehr).toContain('id="wohnen-regler"');
-    expect(mehr).toContain('data-teil="international-hinweis"');
-    expect(mehr).toContain('data-teil="kachelkarte"');
+    expect(html).not.toContain('data-teil="wohnen-mehr"');
+    expect(html).toContain('id="wohnen-regler"');
+    expect(html).toContain('data-teil="kachelkarte"');
+    const drittel = html.slice(html.indexOf('data-teil="strasse-drittel"'), html.indexOf('data-teil="strasse-vergleich"'));
+    expect(drittel).toMatch(/data-teil="warum-drittel"[\s\S]*data-teil="drittel-satz"[\s\S]*data-teil="viertel-legende"/);
+    const vergleich = html.slice(html.indexOf('data-teil="strasse-vergleich"'), html.indexOf('data-teil="strasse-quellen"'));
+    expect(vergleich).toMatch(/data-teil="wie-verglichen"[\s\S]*data-teil="miete-saetze"[\s\S]*data-teil="international-hinweis"/);
+    expect(vergleich).not.toContain('barometer-eigener-wert');
+    const q = html.slice(html.indexOf('data-teil="strasse-quellen"'), html.indexOf('data-teil="mietzins-szene"'));
+    expect(q).toContain('data-belege="liste"');
+    for (const s of ['T 09.03.03.01', 'budgetberatung.ch/wohnen', 'eurostat']) expect(q).toContain(s);
+    expect(html).not.toContain('data-teil="miete-quelle"');
+  });
+  it('Kopf wie Finanzen: Wohnkosten gross, Monat oder Jahr, darunter Bestandteile und Adresse', () => {
+    const html = kapitel(DEMO_DATA);
+    expect(html.indexOf('data-teil="wohnen-kopf"')).toBeLessThan(html.indexOf('data-teil="wohnen-strasse"'));
+    expect(html).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF 1’830/);
+    expect(html).toMatch(/aria-pressed="true"[^>]*>Monat</);
+    // Seit 21.11.2026 (Kombination A+B+C): Balken der Anteile, Miete + Nebenkosten als kleine Zahlen, Zimmer daneben;
+    // die Adresse steht beim Kalenderblatt. Drittel und Viertel als Fahnen im Haus, keine Legende darunter.
+    const teile = html.slice(html.indexOf('data-teil="wohnkosten-teile"'), html.indexOf('data-teil="wohnen-strasse"'));
+    expect(teile).toMatch(/data-kopf-teil="miete"[\s\S]*Miete[\s\S]*CHF 1’650[\s\S]*\+[\s\S]*data-kopf-teil="nebenkosten"[\s\S]*CHF 180[\s\S]*data-kopf-teil="zimmer"[\s\S]*2\.5/);
+    expect(teile).not.toContain('Langstrasse');
+    expect(html).toMatch(/data-teil="rand-adresse"[^>]*>Langstrasse 42, 8004 Zürich</);
+    expect(html).toContain('data-teil="fahne-drittel"');
+    expect(html).toContain('data-teil="fahne-viertel"');
+    expect(html).toMatch(/data-teil="warum-drittel"[\s\S]*data-teil="viertel-legende"/);
+    // Unter den Häusern (21.11.2026): was die Zahl heisst, darunter die zwei Beträge.
+    expect(html).toMatch(/data-teil="wohnkosten-bezug"[^>]*>vom Nettoeinkommen</);
+    expect(html).toMatch(/data-teil="wohnkosten-franken"[^>]*>CHF\u00a01’830 von CHF\u00a06’200</);
+    expect(html).toMatch(/data-teil="lage-bezug"[^>]*>unter dem Kanton Zürich</);
+    expect(html).toMatch(/data-teil="strasse-betrag"[^>]*>CHF\u00a01’650 statt Ø CHF\u00a01’732</);
+  });
+  // «A, am Bild» (Stebler Studios 20.11.2026): ändern an Kosten, Adresse, Vermieterschaft und Eigentum; das Formular
+  // öffnet an seiner Stelle, unten bleibt «Alle Angaben». `angaben` ist hier eine Attrappe der Kapitelseite.
+  it('ändern am Bild: Links zu, Formular offen an seiner Stelle', () => {
+    const offen = new Set(['landlord']);
+    const angaben = { offen: (k) => offen.has(k), umschalten: () => {}, formular: (k) => React.createElement('form', { 'data-formular': k }) };
+    const html = renderToStaticMarkup(React.createElement(WohnenZuhause, { palette: LIGHT_PALETTE, t, wohnen: DEMO_DATA.wohnen, allData: DEMO_DATA, angaben }));
+    for (const k of ['rentAmount', 'address', 'mortgageStatus']) expect(html).toContain('data-aendern="' + k + '"');
+    expect(html).not.toContain('data-aendern="landlord"');
+    expect(html).toMatch(/data-teil="wohnen-rand"[\s\S]*data-szene-formular="landlord"[^>]*><form data-formular="landlord"/);
+    expect(html).toContain('Hauptwohnsitz');
+    expect(html).toMatch(/Eigentum: noch leer[\s\S]*?ergänzen ›/);
+  });
+  it('am Rand: Wohndauer (Kalenderblatt), Hausrat & Haftpflicht (Schild), Vermieterschaft — Mietbeiträge nicht, die trägt die Tür', () => {
+    const html = kapitel(DEMO_DATA);
+    const rand = html.slice(html.indexOf('data-teil="wohnen-rand"'), html.indexOf('data-teil="wohnen-mehr"'));
+    expect(rand).toContain('data-rand="wohndauer"');
+    expect(rand).toContain('data-rand="zuhause-versichert"');
+    expect(rand).toMatch(/data-rand="vermieterschaft"[\s\S]*href="tel:\+41443125500"/);
+    expect(rand).not.toContain('mietzins');
   });
 });
 
@@ -64,7 +114,7 @@ describe('Bauplan Wohnen · die Tür ist das Fass (Stebler Studios 11.11. und 18
     const html = kapitel(DEMO_DATA);
     expect(html).toMatch(/data-teil="tuer"[^>]*data-fass="nein"/);
     expect(html).not.toContain('data-teil="mietzins-cta"');
-    expect(html.indexOf('data-teil="kachelkarte"')).toBeLessThan(html.indexOf('data-teil="wohnen-mehr"'));
+    expect(html).toMatch(/data-teil="markt-offen" data-offen="beitrag"[\s\S]*data-teil="hilfe-satz"[\s\S]*data-teil="kachelkarte"/);
   });
 });
 
