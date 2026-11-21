@@ -599,6 +599,10 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
       },
         React.createElement('iframe', {
           srcDoc: previewHtml,
+          // Leeres sandbox: kein Skript, kein Formular, eigene Herkunft. Der Brief ist reines
+          // HTML aus Nutzereingaben; so kann eingetipptes Markup in der Vorschau nichts ausführen
+          // und nicht auf den Speicher der App zugreifen (Predeploy-Ampel 02.11., «Kann»).
+          sandbox: '',
           style: { width: '100%', height: '700px', border: 'none', filter: verdeckt ? 'blur(6px)' : 'none' },
           title: t('backup.letterPreview'),
           'aria-hidden': verdeckt || undefined, tabIndex: verdeckt ? -1 : undefined, ref: vorschauRef,
