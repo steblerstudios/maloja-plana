@@ -25,7 +25,8 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 // Nicht lazy: «oben» ist der Knopf für den Ernstfall — er soll ohne Nachladen dastehen.
-import { NotfallImKapitel, NotfallErnstfallKnopf, NOTFALL_ANGABEN } from './components/NotfallImKapitel.jsx';
+import { NotfallImKapitel, NotfallErnstfallKnopf } from './components/NotfallImKapitel.jsx';
+import { NOTFALL_ANGABEN } from './bereiche/notfall/notfall.js';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
@@ -2184,7 +2185,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('organ'),
         ablage('chapterView.passend.ablageDokumente'),
         { key: 'gruppe-krankenkasse', ueberschrift: P('gruppeKrankenkasse') },
-        weg('kvg'), weg('kk'), weg('gesundheit'),
+        // weg('gesundheit') entfiel 18.11.2026: der Arztkoffer steht jetzt oben in diesem Kapitel.
+        weg('kvg'), weg('kk'),
         { key: 'gruppe-passiert', ueberschrift: P('gruppePassiert') },
         weg('unfallkrankheit'), weg('iv'), weg('pflege'),
       ];

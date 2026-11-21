@@ -4658,6 +4658,18 @@ export default {
     accountNote: { sie: 'Tut resta local sin quest apparat — nagin conto, nagin login necessari. Vossas datas As appartegnan.', du: 'Tut resta local sin quest apparat — nagin conto, nagin login necessari. Tias datas ta appartegnan.' },
     backup: 'Backup & export',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Franchisa anc betg registrada. Cun la franchisa stat qua, quant ch’è cuntanschì.",
+    zurFranchise: "Al calculader da la franchisa",
+    faelligTitel: "Proxim termin",
+    faelligVorsorge: "proxima controlla recumandada",
+    faelligBeleg: "termin da pajament d’in quint avert",
+    faelligVorbei: "La data è passada.",
+    faelligLeer: "Nagut registrà. En il catalog sa la davosa controlla da prevenziun vegnir registrada.",
+    zumKatalog: "Al catalog",
+    zuDenBelegen: "Als mussaments",
+  },
   arztkoffer: {
     title: 'Vossa valisch da sanadad',
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
@@ -4670,7 +4682,8 @@ export default {
       kvg: { title: 'Prestaziuns & franchisa', desc: { sie: 'Tge che l’assicuranza da basa paja e co che vossa franchisa funcziuna.', du: 'Tge che l’assicuranza da basa paja e co che tia franchisa funcziuna.' } },
       kkbeleg: { title: 'Register da quittanzas', desc: 'Rimnar quintas da medi, tegnair egl’egl franchisa & participaziun.' },
       notfall: { title: 'Urgenza', desc: 'Carta d’urgenza e las infurmaziuns pli impurtantas per il cas serius.' },
-      thermometer: { title: 'Termometer', desc: 'Registrar simptoms e fevra durant ils dis.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Diari da fevra', desc: 'Registrar simptoms e fevra durant ils dis.' },
       blister: { title: 'Blister da mesemna', desc: 'Medicaments ed ingla d’in sguard.' },
       karteikarten: { title: 'Cartotecas', desc: 'Medis, diagnosas e contacts en in lieu.' },
       impfausweis: { title: 'Attest da vaccinaziun', desc: 'Vaccinaziuns sin palpiri e digital ensemen.' },
@@ -7790,6 +7803,9 @@ export default {
   },
   // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
   thermometer: {
+    // Ablesung am Thermometer (18.11.2026)
+    offen: 'resta',
+    erreicht: 'cuntanschì',
     franchise: 'Franschisa',
     selbstbehalt: 'Quota da participaziun',
   },

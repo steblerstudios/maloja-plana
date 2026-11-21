@@ -1776,6 +1776,18 @@ export default {
     accountNote: { sie: 'Tout reste local sur cet appareil — aucun compte, aucune connexion nécessaire. Vos données vous appartiennent.', du: 'Tout reste local sur cet appareil — aucun compte, aucune connexion nécessaire. Tes données t’appartiennent.' },
     backup: 'Sauvegarde et export',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Franchise pas encore saisie. Une fois saisie, on voit ici quelle part est atteinte.",
+    zurFranchise: "Vers le calcul de la franchise",
+    faelligTitel: "Prochaine échéance",
+    faelligVorsorge: "prochain contrôle recommandé",
+    faelligBeleg: "échéance d’une facture ouverte",
+    faelligVorbei: "La date est passée.",
+    faelligLeer: "Rien de saisi. Le dernier contrôle de dépistage peut être noté dans le catalogue.",
+    zumKatalog: "Vers le catalogue",
+    zuDenBelegen: "Vers les justificatifs",
+  },
   arztkoffer: {
     title: 'Trousse santé',
     subtitle: { sie: 'Vos sujets de santé au même endroit — assurance, prestations, urgences et plus à venir.', du: 'Tes sujets de santé au même endroit — assurance, prestations, urgences et plus à venir.' },
@@ -1786,7 +1798,8 @@ export default {
       kvg: { title: 'Prestations & franchise', desc: { sie: 'Ce que l’assurance de base couvre et comment fonctionne votre franchise.', du: 'Ce que l’assurance de base couvre et comment fonctionne ta franchise.' } },
       kkbeleg: { title: 'Classeur de justificatifs', desc: 'Rassembler les factures, garder franchise et quote-part en vue.' },
       notfall: { title: 'Urgence', desc: 'Carte d’urgence et les informations clés en cas de besoin.' },
-      thermometer: { title: 'Thermomètre', desc: 'Suivre symptômes et fièvre au fil des jours.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Journal de fièvre', desc: 'Suivre symptômes et fièvre au fil des jours.' },
       blister: { title: 'Pilulier', desc: 'Médicaments et prise en un coup d’œil.' },
       karteikarten: { title: 'Fiches', desc: 'Médecins, diagnostics et contacts au même endroit.' },
       impfausweis: { title: 'Carnet de vaccination', desc: 'Vaccinations papier et numérique réunies.' },
@@ -6579,6 +6592,9 @@ export default {
   },
   // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
   thermometer: {
+    // Ablesung am Thermometer (18.11.2026)
+    offen: 'reste',
+    erreicht: 'atteint',
     franchise: 'Franchise',
     selbstbehalt: 'Quote-part',
   },

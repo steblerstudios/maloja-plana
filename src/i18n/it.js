@@ -1776,6 +1776,18 @@ export default {
     accountNote: { sie: 'Tutto resta locale su questo dispositivo — nessun account, nessun login. I Suoi dati appartengono a Lei.', du: 'Tutto resta locale su questo dispositivo — nessun account, nessun login. I tuoi dati sono tuoi.' },
     backup: 'Backup ed esporta',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Franchigia non ancora inserita. Una volta inserita, qui si vede quanta parte è raggiunta.",
+    zurFranchise: "Al calcolo della franchigia",
+    faelligTitel: "Prossima scadenza",
+    faelligVorsorge: "prossimo controllo consigliato",
+    faelligBeleg: "scadenza di una fattura aperta",
+    faelligVorbei: "La data è passata.",
+    faelligLeer: "Nulla inserito. Nel catalogo si può annotare l’ultimo controllo preventivo.",
+    zumKatalog: "Al catalogo",
+    zuDenBelegen: "Ai giustificativi",
+  },
   arztkoffer: {
     title: 'La valigetta della salute',
     subtitle: { sie: 'I Suoi temi di salute in un unico posto — assicurazione, prestazioni, emergenze e altro in arrivo.', du: 'I tuoi temi di salute in un unico posto — assicurazione, prestazioni, emergenze e altro in arrivo.' },
@@ -1786,7 +1798,8 @@ export default {
       kvg: { title: 'Prestazioni & franchigia', desc: { sie: 'Cosa copre l’assicurazione di base e come funziona la franchigia.', du: 'Cosa copre l’assicurazione di base e come funziona la franchigia.' } },
       kkbeleg: { title: 'Raccoglitore ricevute', desc: 'Raccogliere le fatture, tenere d’occhio franchigia e partecipazione.' },
       notfall: { title: 'Emergenza', desc: 'Scheda d’emergenza e i dati essenziali per il caso serio.' },
-      thermometer: { title: 'Termometro', desc: 'Annotare sintomi e febbre nei giorni.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Diario della febbre', desc: 'Annotare sintomi e febbre nei giorni.' },
       blister: { title: 'Portapillole', desc: 'Farmaci e assunzione a colpo d’occhio.' },
       karteikarten: { title: 'Schede', desc: 'Medici, diagnosi e contatti in un unico posto.' },
       impfausweis: { title: 'Libretto vaccinazioni', desc: 'Vaccinazioni cartacee e digitali insieme.' },
@@ -6553,6 +6566,9 @@ export default {
   },
   // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
   thermometer: {
+    // Ablesung am Thermometer (18.11.2026)
+    offen: 'resta',
+    erreicht: 'raggiunto',
     franchise: 'Franchigia',
     selbstbehalt: 'Aliquota',
   },

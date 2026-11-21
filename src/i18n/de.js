@@ -1790,6 +1790,18 @@ export default {
     accountNote: { sie: 'Alles bleibt lokal auf diesem Gerät — kein Konto, kein Login nötig. Ihre Daten gehören Ihnen.', du: 'Alles bleibt lokal auf diesem Gerät — kein Konto, kein Login nötig. Deine Daten gehören dir.' },
     backup: 'Backup & Export',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Franchise noch nicht erfasst. Mit der Franchise steht hier, wie viel davon erreicht ist.",
+    zurFranchise: "Zum Franchise-Rechner",
+    faelligTitel: "Als Nächstes fällig",
+    faelligVorsorge: "nächste empfohlene Untersuchung",
+    faelligBeleg: "Zahlungsfrist einer offenen Rechnung",
+    faelligVorbei: "Das Datum ist vorbei.",
+    faelligLeer: "Nichts eingetragen. Im Katalog lässt sich die letzte Vorsorge-Untersuchung eintragen.",
+    zumKatalog: "Zum Katalog",
+    zuDenBelegen: "Zu den Belegen",
+  },
   arztkoffer: {
     title: 'Arztkoffer',
     subtitle: { sie: 'Ihre Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.', du: 'Deine Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.' },
@@ -1800,7 +1812,8 @@ export default {
       kvg: { title: 'Leistungen & Franchise', desc: { sie: 'Was die Grundversicherung zahlt und wie Ihre Franchise wirkt.', du: 'Was die Grundversicherung zahlt und wie deine Franchise wirkt.' } },
       kkbeleg: { title: 'Beleg-Ordner', desc: 'Arztrechnungen sammeln, Franchise & Selbstbehalt im Blick behalten.' },
       notfall: { title: 'Notfall', desc: 'Notfallkarte und die wichtigsten Angaben für den Ernstfall.' },
-      thermometer: { title: 'Fieberthermometer', desc: 'Symptome und Fieber über die Tage festhalten.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Fiebertagebuch', desc: 'Symptome und Fieber über die Tage festhalten.' },
       blister: { title: 'Wochenblister', desc: 'Medikamente und Einnahme im Überblick.' },
       karteikarten: { title: 'Karteikarten', desc: 'Ärztinnen, Diagnosen und Kontakte an einem Ort.' },
       impfausweis: { title: 'Impfausweis', desc: 'Impfungen auf Papier und digital beisammen.' },
@@ -6667,6 +6680,9 @@ export default {
   },
   // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
   thermometer: {
+    // Ablesung am Thermometer (18.11.2026)
+    offen: 'noch offen',
+    erreicht: 'erreicht',
     franchise: 'Franchise',
     selbstbehalt: 'Selbstbehalt',
   },

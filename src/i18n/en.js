@@ -1776,6 +1776,18 @@ export default {
     accountNote: 'Everything stays local on this device — no account, no login needed. Your data is yours.',
     backup: 'Backup & export',
   },
+  // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
+  gesundheitZuhause: {
+    franchiseLeer: "Deductible not entered yet. Once it is, this shows how much of it has been reached.",
+    zurFranchise: "To the deductible calculator",
+    faelligTitel: "Next due",
+    faelligVorsorge: "next recommended check-up",
+    faelligBeleg: "payment due on an open bill",
+    faelligVorbei: "The date has passed.",
+    faelligLeer: "Nothing entered. The last screening check-up can be noted in the catalogue.",
+    zumKatalog: "To the catalogue",
+    zuDenBelegen: "To the receipts",
+  },
   arztkoffer: {
     title: 'Your health case',
     subtitle: 'Your health matters in one place — insurance, benefits, emergencies and more to come.',
@@ -1786,7 +1798,8 @@ export default {
       kvg: { title: 'Benefits & deductible', desc: 'What basic insurance covers and how your deductible works.' },
       kkbeleg: { title: 'Receipts folder', desc: 'Collect medical bills, keep deductible & co-payment in view.' },
       notfall: { title: 'Emergency', desc: 'Emergency card and the key details for a crisis.' },
-      thermometer: { title: 'Thermometer', desc: 'Track symptoms and fever over the days.' },
+      // Fach heisst «Fiebertagebuch» (Entscheid 11.11.2026: das Thermometer bedeutet nur die Franchise).
+      thermometer: { title: 'Fever diary', desc: 'Track symptoms and fever over the days.' },
       blister: { title: 'Pill organizer', desc: 'Medications and intake at a glance.' },
       karteikarten: { title: 'Index cards', desc: 'Doctors, diagnoses and contacts in one place.' },
       impfausweis: { title: 'Vaccination record', desc: 'Vaccinations on paper and digital together.' },
@@ -6580,6 +6593,9 @@ export default {
   },
   // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
   thermometer: {
+    // Ablesung am Thermometer (18.11.2026)
+    offen: 'left',
+    erreicht: 'reached',
     franchise: 'Deductible',
     selbstbehalt: 'Co-payment',
   },
