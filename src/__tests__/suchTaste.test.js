@@ -228,6 +228,17 @@ describe('Lupe nennt «/» nur, wenn es wirkt', () => {
     expect(() => kuerzelNennen(doc(null), false)).not.toThrow();
     expect(() => kuerzelNennen(undefined, false)).not.toThrow();
   });
+  // 20.11.2026: Lupe ohne aria-keyshortcuts direkt übergeben (Handy: React nimmt es weg). Vorher TypeError
+  // «reading 'replace'». Es darf auch kein leeres oder blosses «/ » hineingeschrieben werden.
+  it('Lupe ohne aria-keyshortcuts: kein Fehler, nichts gesetzt, Titel folgt weiter', () => {
+    for (const an of [true, false]) {
+      const k = knopf(undefined, 'Suchen (/)');
+      delete k.a['aria-keyshortcuts'];
+      expect(() => kuerzelNennen(doc(null), an, k)).not.toThrow();
+      expect('aria-keyshortcuts' in k.a).toBe(false);
+      expect(k.a.title).toBe(an ? 'Suchen (/)' : 'Suchen');
+    }
+  });
   it('das Anmelden des Zuhörers setzt den Knopf nach dem Schalter', () => {
     const k = knopf();
     const f = fenster();
@@ -274,6 +285,30 @@ describe('Lupe nennt «/» nur, wenn es wirkt', () => {
     expect(k.a['aria-keyshortcuts']).toBe('Control+K Meta+K');
     ab();
     expect(getrennt).toBe(true);
+  });
+  // Browser-Lauf 19.11.2026 (PR #901): beim Wechsel Desktop → Handy nimmt React dem noch hängenden Knopf
+  // aria-keyshortcuts weg (main.jsx: isMobile ? undefined). Der gemerkte Knopf passt dann nicht mehr zur
+  // Suche — er darf nicht weiter beschrieben werden (vorher: TypeError «reading 'replace'» aus dem Beobachter).
+  it('Handy-Wechsel: der gemerkte Knopf verliert aria-keyshortcuts — kein Fehler, neu gesucht', () => {
+    const k = knopf();
+    const lupeSel = '[aria-keyshortcuts~="Meta+K"]';
+    k.isConnected = true;
+    k.matches = (sel) => sel === lupeSel && /(^| )Meta\+K( |$)/.test(k.a['aria-keyshortcuts'] || '');
+    let melde = null;
+    const f = fenster();
+    f.document.body = {};
+    const frage = f.document.querySelector;
+    f.document.querySelector = (sel) => (sel === lupeSel ? (k.matches(sel) ? k : null) : frage(sel));
+    f.localStorage = { getItem: () => '1', setItem: () => {} };
+    f.MutationObserver = class { constructor(cb) { melde = cb; } observe() {} disconnect() {} };
+    suchTasteAnmelden(() => true, f);
+    melde([{ type: 'attributes' }]);                       // Knopf gemerkt
+    delete k.a['aria-keyshortcuts'];                        // React am Handy, Knopf hängt weiter
+    expect(() => melde([{ type: 'attributes' }])).not.toThrow();
+    expect(k.a['aria-keyshortcuts']).toBeUndefined();      // nichts hineingeschrieben
+    k.a['aria-keyshortcuts'] = 'Control+K Meta+K';          // zurück auf Desktop
+    melde([{ type: 'attributes' }]);
+    expect(k.a['aria-keyshortcuts']).toBe('/ Control+K Meta+K');
   });
   it('der Schalter in den Einstellungen meldet sich mit «or5:suchtaste» — die Lupe folgt sofort', () => {
     const k = knopf();
