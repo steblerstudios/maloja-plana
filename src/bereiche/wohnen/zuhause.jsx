@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { text, weight, space, leading, duration, ease, radius } from '../../config/tokens.js';
+import { text, weight, space, leading, radius } from '../../config/tokens.js';
 import { bereichFillColor } from '../../data/lebensbereiche.js';
 import { PROGRAMM_KANTONE } from '../../data/mietzinsbeitraege.js';
 import { WOHNEN_INTERNATIONAL } from '../../data/wohnenInternational.js';
 import { renderSource } from '../../utils/renderSource.js';
 import { zahl, betrag } from '../../utils/geld.js';
 import { LegendenMarke } from '../../components/LegendenMarke.jsx';
-import { Belege } from '../../components/Belege.jsx';
+import { Belege, zerlegeBelege } from '../../components/Belege.jsx';
 import { knopfStil, linkStil, auswahlStil } from '../../components/PrimaryButton.jsx';
 import { Kalenderblatt } from '../../components/Kalenderblatt.jsx';
 import { Icon } from '../../IconSystem.jsx';
@@ -15,7 +15,6 @@ import { calcDuration, addressLine } from '../../MirrorCards.jsx';
 import { wohnkostenRechnung, anteilText, wohnkostenSatzKey, drittelSatzKey, mieteLage, mietVorbehalte, mietzinsHilfe, beitragAnteil, lageWert } from './rechnung.js';
 import { DrittelHaus, Vergleichshaus, MoeglichKnopf, Kachelkarte, HaeuserRang } from './bilder.jsx';
 import { getCantonName } from '../../config/kantonPLZ.js';
-import { ExternerLink } from '../../components/ExternerLink.jsx';
 
 // Lebensbereich Wohnen · die Orte (Bauplan Lebensbereich, Stebler Studios 18.11.2026).
 //   WohnenZuhause   Kapitel Wohnen, gross 256
@@ -38,7 +37,12 @@ const BILDHOEHE = { gross: 190, mittel: 128 };
 // ins Werkzeug (`onNavigate`), im Werkzeug zur kantonalen Stelle (`url`).
 // `kapitel`: die Kosten stehen schon gross im Kopf, darum sagt die Zeile unter dem Drittel-Haus, worauf sich die
 // Prozente beziehen (Stebler Studios 20.11.2026, «wie die Finanzen»).
-export const WohnenStrasse = ({ palette, t, r, ml, hilfe, groesse = 'gross', isDarkMode, onNavigate, ausprobiert = false, kapitel = false }) => {
+// Ein Betrag bricht nicht in sich um («CHF» und Zahl bleiben zusammen; Nachzug Fachprüfung).
+const fest = (b) => String(b).replace(/ /g, '\u00a0');
+// Wessen Einkommen gemeint ist — dieselben fünf Fälle wie wohnkostenSatzKey (Fachprüfung), nur kurz.
+export const bezugKey = (r) => 'wohnenKopf.bezug.' + (r.brutto ? (r.ganzBrutto ? 'brutto' : 'gemischt') : r.haushalt ? 'haushalt' : r.mitPartner ? 'eigen' : 'netto');
+// `unterDrittel` / `unterVergleich`: was im Kapitel unter dem jeweiligen Haus steht (Erklärung zum Aufklappen).
+export const WohnenStrasse = ({ palette, t, r, ml, hilfe, groesse = 'gross', isDarkMode, onNavigate, ausprobiert = false, kapitel = false, unterDrittel = null, unterVergleich = null }) => {
   const h = React.createElement;
   const fuell = bereichFillColor('wohnen', isDarkMode) || palette.sage;
   const behoerden = bereichFillColor('behoerden', isDarkMode) || palette.mid;
@@ -56,16 +60,27 @@ export const WohnenStrasse = ({ palette, t, r, ml, hilfe, groesse = 'gross', isD
           teile: groesse === 'gross' && r.haushalt ? { sie: r.einkommen - r.partnerEinkommen, partner: r.partnerEinkommen } : null,
           beitrag: r.beitrag ? { ...r.beitrag, farbe: behoerden } : null, fuell, groesse }))),
       h('div', { 'data-instrument-zahl': 'wohnkosten', 'aria-live': 'polite', style: { ...zahlStil, color: palette.text, marginTop: space.xs + 'px' } }, anteilText(r)),
+      // Im Kapitel (Stebler Studios 21.11.2026, «wohnen-aufraeumen.html» Teil 1): unter der Zahl, was sie heisst, darunter
+      // die zwei Beträge, aus denen sie kommt — gleich gebaut wie unter dem Vergleichshaus.
+      kapitel && !ausprobiert && h('div', { 'data-teil': 'wohnkosten-bezug', style: { fontSize: text.sm, color: palette.text, marginTop: '2px', lineHeight: leading.tight } },
+        t(bezugKey(r))),
       h('div', { 'data-teil': 'wohnkosten-franken', style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
-        kapitel && !ausprobiert ? t(wohnkostenSatzKey(r)) + ' (' + betrag(r.einkommen) + ')'
-          : t(ausprobiert ? 'wohnenInstrument.titelAusprobiert' : 'wohnenInstrument.titel') + ': ' + betrag(r.kosten))),
+        kapitel && !ausprobiert ? t('wohnenKopf.vonBetrag', { teil: fest(betrag(r.kosten)), ganz: fest(betrag(r.einkommen)) })
+          : t(ausprobiert ? 'wohnenInstrument.titelAusprobiert' : 'wohnenInstrument.titel') + ': ' + betrag(r.kosten)),
+      unterDrittel),
     // Frage B · das Vergleichshaus, Tür = Fass (Frage C)
     ml && h('div', { 'data-teil': 'strasse-vergleich', style: spalte(bildH) },
       h('div', { style: boden }, h('div', { style: { width: '100%' } },
         h(Vergleichshaus, { palette, lage: ml, fuell, tuer, groesse, kanton: ml.kanton }))),
       ml.lage && h('div', { 'data-instrument-zahl': 'miete', style: { ...zahlStil, color: palette.text, marginTop: space.xs + 'px' } }, lageWert(ml.lage)),
-      h('div', { 'data-teil': 'strasse-betrag', style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', whiteSpace: 'nowrap' } },
-        (ausprobiert ? t('strasse.ausprobiert') : t('strasse.eigen')) + ': ' + betrag(ml.netto))),
+      kapitel && !ausprobiert && ml.lage && h('div', { 'data-teil': 'lage-bezug', style: { fontSize: text.sm, marginTop: '2px', lineHeight: leading.tight,
+        color: ml.lage.richtung === 'Above' ? palette.goldDeep : ml.lage.richtung === 'Below' ? palette.sageDeep : palette.mid } },
+        t('wohnenKopf.lage.' + ml.lage.richtung, { kanton: getCantonName(ml.kanton, t) })),
+      h('div', { 'data-teil': 'strasse-betrag', style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+        kapitel && !ausprobiert && ml.vergleich?.regional
+          ? t('wohnenKopf.stattSchnitt', { ihre: fest(betrag(ml.netto)), schnitt: fest(betrag(ml.vergleich.regional)) })
+          : (ausprobiert ? t('strasse.ausprobiert') : t('strasse.eigen')) + ': ' + betrag(ml.netto)),
+      unterVergleich),
     // Frage C · der Wegweiser steht auf dem Boden der Strasse, rechts vom Vergleichshaus
     schild && h('div', { 'data-teil': 'wegweiser-in-strasse', style: { ...spalte(140), flex: '0 0 auto' } },
       h('div', { style: { ...boden, borderBottom: '1px solid ' + palette.mid } }, schild)),
@@ -73,7 +88,7 @@ export const WohnenStrasse = ({ palette, t, r, ml, hilfe, groesse = 'gross', isD
 };
 
 // Die Sätze zur Lage (ehemals im Barometer): eigener Wert gegen den Kanton, Kanton gegen die Schweiz, Vorbehalte, Quelle.
-export const MieteSaetze = ({ palette, t, ml, imKapitel, ohneQuelle = false }) => {
+export const MieteSaetze = ({ palette, t, ml, imKapitel, ohneQuelle = false, ohneEigenen = false }) => {
   if (!ml) return null;
   const h = React.createElement;
   const ns = 'po.regionalCompare.';
@@ -84,7 +99,7 @@ export const MieteSaetze = ({ palette, t, ml, imKapitel, ohneQuelle = false }) =
   const textFarbe = ml.lage?.richtung === 'Above' ? palette.goldDeep : ml.lage?.richtung === 'Below' ? palette.sageDeep : palette.mid;
   const klein = { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal };
   return h('div', { 'data-teil': 'miete-saetze' },
-    ml.lage && h('div', { 'data-teil': 'barometer-eigener-wert', style: { fontSize: text.sm, color: textFarbe, fontWeight: weight.medium, marginTop: space.sm + 'px', lineHeight: leading.normal } },
+    ml.lage && !ohneEigenen && h('div', { 'data-teil': 'barometer-eigener-wert', style: { fontSize: text.sm, color: textFarbe, fontWeight: weight.medium, marginTop: space.sm + 'px', lineHeight: leading.normal } },
       t(k + 'user' + ml.lage.richtung, { pct: Math.abs(ml.lage.pct) })),
     h('div', { 'data-teil': 'barometer-region', style: klein }, t(ns + 'region' + dir, { pct: Math.abs(rund) })),
     h('div', { 'data-teil': 'miete-vergleich-groesse', style: klein }, mietVorbehalte(t, ml.vergleich, { imKapitel }).join(' ')),
@@ -99,12 +114,12 @@ export const MieteQuelle = ({ palette, t, ml }) => React.createElement('div', {
 }, renderSource(t('po.regionalCompare.rent.source', { year: ml.vergleich.year }), null, t));
 
 // Der Satz und die Quelle zum EU-Stock: abgeleitet, keine gemessenen Preise in Franken.
-export const InternationalHinweis = ({ palette, t }) => React.createElement('div', { 'data-teil': 'international-hinweis', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 ' + space.sm + 'px' } },
+export const InternationalHinweis = ({ palette, t, ohneQuelle = false }) => React.createElement('div', { 'data-teil': 'international-hinweis', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 ' + space.sm + 'px' } },
   React.createElement('p', { style: { margin: 0 } }, t('wohnenInternational.satz', Object.fromEntries(['DE', 'AT', 'FR', 'IT'].map((c) => {
     const p = Math.round((WOHNEN_INTERNATIONAL.index[c] / WOHNEN_INTERNATIONAL.index.CH - 1) * 100);
     return [c, (p >= 0 ? '+' : '−') + Math.abs(p)];
   })))),
-  React.createElement(Belege, { palette, t, zeile: t('wohnenInternational.quelle'), style: { fontSize: text.xs } }));
+  !ohneQuelle && React.createElement(Belege, { palette, t, zeile: t('wohnenInternational.quelle'), style: { fontSize: text.xs } }));
 
 const BeitragLegende = ({ palette, t, hoechst, farbe }) => React.createElement('p', {
   'data-teil': 'beitrag-legende', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 0', display: 'flex', gap: '4px' },
@@ -121,6 +136,15 @@ const BeitragLegende = ({ palette, t, hoechst, farbe }) => React.createElement('
 // Werte: src/data/kantonskarten.js (aus dem Kantonsatlas erzeugt). Die Quelle der Leerwohnungsziffer steht dort nicht
 // mit; sie ist dieselbe wie im Atlas (scripts/seiten/kantone-im-vergleich.mjs, Schlüssel bfsLeer).
 const LEER_QUELLE = { text: 'BFS, Leerwohnungszählung 2026, Stichtag 1.6.2026', url: 'https://dam-api.bfs.admin.ch/hub/api/dam/assets/36836216/master' };
+// Quellen im Hausstil (Belege, Stebler Studios 21.11.2026 «alle Quellen bitte sauber aufräumen»): eine Zeile je Bildgruppe,
+// aufgeklappt nummeriert. Das Prüfdatum steht in derselben Form wie bei den übrigen Quellen (aus wohnenInternational.quelle).
+const QUELLE_MIETE = { text: 'BFS, Mietpreis nach Kanton und Zimmerzahl 2024 (T 09.03.03.01)', url: 'https://dam-api.bfs.admin.ch/hub/api/dam/assets/36398431/master' };
+const QUELLE_BUDGET = { text: 'Budgetberatung Schweiz, Wohnen', url: 'https://budgetberatung.ch/wohnen' };
+export const quellenZeile = (t, liste) => {
+  const datum = zerlegeBelege(t('wohnenInternational.quelle'))?.datum;
+  return t('wohnenKarten.quellenWort') + ': ' + liste.map((q) => '[[' + q.text + '|' + q.url + ']]').join(', ') + (datum ? ' (' + datum + ')' : '') + '.';
+};
+const eurostat = (t) => { const b = zerlegeBelege(t('wohnenInternational.quelle')); return b && b.links[0] ? { text: b.links[0].label, url: b.links[0].href } : null; };
 const atlasZahl = (s) => Number(String(s ?? '').replace(/[’'\s%]/g, '').replace(',', '.'));
 const schweizer = (s) => String(s).replace(/'/g, '’');
 // Die Kantonsdaten kommen nachgeladen wie die Karten im Werkzeug (Wächter verstehenImWerkzeug.test.js): bis sie da sind,
@@ -130,7 +154,7 @@ export const marktWerte = (KARTEN) => {
   const leer = Object.fromEntries(Object.entries(m.vergleich?.werte || {}).map(([k, v]) => [k, atlasZahl(v)]));
   return { miete: m, leer, leerText: m.vergleich?.werte || {}, leerCh: atlasZahl(m.vergleich?.ch), leerChText: m.vergleich?.ch };
 };
-const MarktSet = ({ palette, t, kanton, hilfe, isDarkMode }) => {
+const MarktSet = ({ palette, t, kanton, hilfe, hilfeText = null, isDarkMode }) => {
   const h = React.createElement;
   const [aktiv, setAktiv] = useState(hilfe ? 'beitrag' : 'miete');
   const [daten, setDaten] = useState(null);
@@ -147,8 +171,6 @@ const MarktSet = ({ palette, t, kanton, hilfe, isDarkMode }) => {
   const mieteFarbe = (k) => { const x = miete?.werte[k]; return x ? { fill: stufen[x.s], hellSchrift: x.s >= 3 } : null; };
   const rang = kanton && leer[kanton] != null ? Object.values(leer).filter((n) => n > leer[kanton]).length + 1 : null;
   const mieteIhr = kanton && miete?.werte[kanton] ? atlasZahl(miete.werte[kanton].text) : null;
-  const quelle = (q) => h('div', { 'data-teil': 'markt-quelle', style: { ...klein, fontStyle: 'italic', marginTop: space.xs + 'px' } },
-    t('wohnenKarten.quelleWort') + ': ', h(ExternerLink, { t, href: q.url, style: { color: palette.mid } }, q.text));
   const legendeMiete = miete && h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.sm + 'px', marginTop: space.xs + 'px' } },
     miete.spannen.map((sp) => h('span', { key: sp.s, style: { ...klein, display: 'inline-flex', alignItems: 'center', gap: '4px' } },
       h('span', { 'aria-hidden': 'true', style: { width: '12px', height: '10px', borderRadius: radius.hair + 'px', background: stufen[sp.s], display: 'inline-block' } }), schweizer(sp.text))));
@@ -158,8 +180,10 @@ const MarktSet = ({ palette, t, kanton, hilfe, isDarkMode }) => {
       key: 'beitrag', titel: t('mietzinsSzene.titel'),
       mini: h(Kachelkarte, { palette, kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode, mini: true, teil: 'markt-mini' }),
       zahl: t(hilfe.programm ? 'wohnenKarten.programm' : 'wohnenKarten.unklar'),
-      satz: name ? t(hilfe.programm ? 'wohnenKarten.programmSatz' : 'wohnenKarten.unklarSatz', { kanton: name }) : '',
+      satz: t(hilfe.programm ? 'wohnenKarten.programmKurz' : 'wohnenKarten.unklarKurz'),
       gross: h(React.Fragment, null,
+        // Der Satz zu den Mietbeiträgen steht seit 21.11.2026 hier, in der aufgeklappten Kachel (Wortlaut unverändert).
+        hilfeText && h('p', { 'data-teil': 'hilfe-satz', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, hilfeText),
         h(Kachelkarte, { palette, t, kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode }),
         h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('mietzinsSzene.karteLegende'))),
     },
@@ -170,37 +194,43 @@ const MarktSet = ({ palette, t, kanton, hilfe, isDarkMode }) => {
       satz: mieteIhr != null ? t('wohnenKarten.mieteSatz', { ch: schweizer(miete.ch) }) : t('wohnenKarten.schweiz'),
       gross: h(React.Fragment, null,
         h(Kachelkarte, { palette, t, kanton, isDarkMode, farbe: mieteFarbe, teil: 'markt-miete', aria: t('wohnenKarten.mieteAria', { kanton: name || '–' }) }),
-        legendeMiete, quelle(miete.quellen[0])),
+        legendeMiete),
     },
     w && {
       key: 'leer', titel: t('wohnenKarten.leer'),
       mini: h(HaeuserRang, { palette, werte: leer, kanton, isDarkMode, mini: true }),
       zahl: kanton && leerText[kanton] ? leerText[kanton] : leerChText,
-      satz: rang ? t('wohnenKarten.leerSatz', { ch: leerChText, rang, von: Object.keys(leer).length }) : t('wohnenKarten.schweiz'),
+      satz: rang ? t('wohnenKarten.rangSatz', { rang, von: Object.keys(leer).length }) : t('wohnenKarten.schweiz'),
       gross: h(React.Fragment, null,
         h(HaeuserRang, { palette, werte: leer, kanton, ch: leerCh, isDarkMode, schreib: () => leerText[kanton] || '', chText: 'CH ' + leerChText }),
-        h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('wohnenKarten.leerLegende')),
-        quelle(LEER_QUELLE)),
+        h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('wohnenKarten.leerSatz', { ch: leerChText, rang: rang || '–', von: Object.keys(leer).length }) + ' ' + t('wohnenKarten.leerLegende'))),
     },
   ].filter(Boolean);
   // Ohne Kanton und bevor die Daten da sind, gibt es keine Kachel: dann bleibt das Set weg.
   if (set.length === 0) return null;
   const offen = set.find((x) => x.key === aktiv) || set[0];
+  // Raster (Stebler Studios 21.11.2026): die Kacheln teilen sich Zeilen für Titel, Bild, Zahl und Satz (subgrid), damit alles
+  // auf derselben Höhe steht. Die angetippte Kachel ist umrandet; ihr Bild steht darunter in einem Rahmen, ohne Spitze.
+  const quellen = [miete && QUELLE_MIETE, w && LEER_QUELLE].filter(Boolean);
   return h('div', { 'data-teil': 'markt-set' },
-    h('div', { role: 'group', 'aria-label': t('wohnenKarten.titel'), style: { display: 'flex', gap: space.sm + 'px', marginTop: space.sm + 'px' } },
+    h('p', { 'data-teil': 'markt-einstieg', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } },
+      name ? t('wohnenKarten.einstieg', { kanton: name }) : t('wohnenKarten.einstiegOhne')),
+    h('div', { role: 'group', 'aria-label': t('wohnenKarten.titel'), style: { display: 'grid', gridTemplateColumns: 'repeat(' + set.length + ', minmax(0, 1fr))', gridTemplateRows: 'auto 60px auto auto', gap: '0 ' + space.sm + 'px' } },
       set.map((x) => {
         const an = x.key === offen.key;
         return h('button', {
           key: x.key, type: 'button', 'data-kachel': x.key, 'aria-pressed': an ? 'true' : 'false', onClick: () => setAktiv(x.key),
-          style: { flex: '1 1 0', minWidth: 0, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', color: palette.text, background: palette.card || palette.surface,
+          style: { display: 'grid', gridTemplateRows: 'subgrid', gridRow: 'span 4', rowGap: space.xs + 'px', minWidth: 0, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
+            color: palette.text, background: an ? (palette.card || palette.surface) : 'transparent',
             border: (an ? 2 : 1) + 'px solid ' + (an ? palette.text : palette.border), borderRadius: radius.lg + 'px', padding: (an ? space.sm - 1 : space.sm) + 'px' },
         },
-          h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs + 'px' } }, x.titel),
-          h('div', { 'aria-hidden': 'true', style: { height: '64px', display: 'flex', alignItems: 'flex-end' } }, x.mini),
-          h('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, marginTop: space.xs + 'px', fontVariantNumeric: 'tabular-nums' } }, x.zahl),
-          x.satz && h('div', { style: { ...klein, marginTop: '2px' } }, x.satz));
+          h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, lineHeight: leading.tight } }, x.titel),
+          h('span', { 'aria-hidden': 'true', style: { display: 'flex', alignItems: 'flex-end', justifyContent: 'center', minHeight: 0 } }, x.mini),
+          h('span', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums', lineHeight: leading.tight } }, x.zahl),
+          h('span', { style: { ...klein, lineHeight: leading.tight } }, x.satz || ''));
       })),
-    h('div', { 'data-teil': 'markt-offen', 'data-offen': offen.key, style: { marginTop: space.md + 'px' } }, offen.gross));
+    h('div', { 'data-teil': 'markt-offen', 'data-offen': offen.key, style: { marginTop: space.sm + 'px', border: '1px solid ' + palette.border, borderRadius: radius.lg + 'px', padding: space.md + 'px' } }, offen.gross),
+    quellen.length > 0 && h(Belege, { palette, t, zeile: quellenZeile(t, quellen), style: { marginTop: space.xs + 'px' } }));
 };
 
 // Satz zu Frage C: die Einschätzung des Kantons, nie «Anspruch».
@@ -230,7 +260,6 @@ const halb = (v) => Math.round(Number(v) || 0);
 export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavigate, angaben = null }) => {
   const h = React.createElement;
   const [probe, setProbe] = useState(null);
-  const [offen, setOffen] = useState(false);
   const [jahr, setJahr] = useState(false);
   const { r, ml, hilfe } = szene(allData, wohnen, probe);
   // Ohne erfasste Wohnkosten bleibt das Instrument weg — das Formular darunter ist der Ort zum Eintragen.
@@ -342,22 +371,36 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
         aendern('landlord', w.landlord ? 'aendern' : 'ergaenzen'))),
   ].filter(Boolean);
 
+  // Erklärungen zum Aufklappen, je unter ihrem Haus (Stebler Studios 21.11.2026, statt «Mehr dazu»): Wortlaut unverändert.
+  const erklaerung = (teil, titel, ...inhalt) => h('details', { 'data-teil': teil, style: { marginTop: space.xs + 'px' } },
+    h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, fontWeight: weight.semi, color: palette.goldDeep, listStyle: 'none' } }, titel + ' ›'),
+    h('div', { style: { paddingBottom: space.xs + 'px' } }, ...inhalt));
+  const mitViertel = r.anteil != null && !r.mitPartner && !r.brutto;
+  const erklDrittel = r.anteil != null && erklaerung('warum-drittel', t('wohnenKopf.warumDrittel'),
+    h('p', { 'data-teil': 'drittel-satz', style: { ...klein, margin: 0, color: r.ueberDrittel ? palette.text : palette.mid } }, t(drittelSatzKey(r))),
+    mitViertel && h('p', { 'data-teil': 'viertel-legende', style: { ...klein, margin: space.xs + 'px 0 0' } },
+      h(LegendenMarke, { form: 'punktlinie', color: palette.mid, palette }), t('wohnenInstrument.viertel')));
+  const erklLage = ml && erklaerung('wie-verglichen', t('wohnenKopf.wieVerglichen'),
+    h(MieteSaetze, { palette, t, ml, imKapitel: true, ohneQuelle: true, ohneEigenen: true }),
+    ml.ausland && h(InternationalHinweis, { palette, t, ohneQuelle: true }));
+  // Alle Quellen der Strasse in einer Zeile im Hausstil.
+  const eu = ml && ml.ausland ? eurostat(t) : null;
+  const strassenQuellen = [ml && QUELLE_MIETE, mitViertel && QUELLE_BUDGET, eu].filter(Boolean);
+
   return h('section', { 'data-teil': 'wohnkosten', style: { marginBottom: space.lg + 'px' } },
     kopf,
-    h(WohnenStrasse, { palette, t, r, ml, hilfe, groesse: 'gross', isDarkMode, onNavigate, ausprobiert, kapitel: true }),
+    h(WohnenStrasse, { palette, t, r, ml, hilfe, groesse: 'gross', isDarkMode, onNavigate, ausprobiert, kapitel: true, unterDrittel: erklDrittel, unterVergleich: erklLage }),
 
-    // Drittel und Viertel stehen seit 21.11.2026 als Fahnen im Drittel-Haus (Stebler Studios: «oben in die Häuser
-    // einbauen»); der Satz zur Budgetberatung steht unter «Mehr dazu». Hier nur noch, woher die Zahlen kommen.
+    // Drittel und Viertel stehen seit 21.11.2026 als Fahnen im Drittel-Haus; die Sätze dazu unter dem Haus.
     r.beitrag && h(BeitragLegende, { palette, t, hoechst: r.beitrag.hoechst, farbe: behoerden }),
     r.anteil == null && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('wohnenInstrument.ohneEinkommen')),
-    ml && h(MieteQuelle, { palette, t, ml }),
+    strassenQuellen.length > 0 && h('div', { 'data-teil': 'strasse-quellen' }, h(Belege, { palette, t, zeile: quellenZeile(t, strassenQuellen) })),
 
     // Mietbeiträge und Wohnungsmarkt: der Satz der Mietbeiträge, darunter das Dreier-Set. Die Tür im Vergleichshaus
     // bleibt das Fass der Mietbeiträge.
     h('div', { 'data-teil': 'mietzins-szene', style: { marginTop: space.md + 'px' } },
       h('h3', { style: kapH }, t('wohnenKarten.titel')),
-      hilfe && h('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, hilfeSatz(t, hilfe)),
-      h(MarktSet, { palette, t, kanton: hilfe?.kanton || allData?.basis?.canton || '', hilfe, isDarkMode })),
+      h(MarktSet, { palette, t, kanton: hilfe?.kanton || allData?.basis?.canton || '', hilfe, hilfeText: hilfe ? hilfeSatz(t, hilfe) : null, isDarkMode })),
 
     // Regler «andere Miete», offen. Nichts wird gespeichert.
     !r.eigentum && h('div', { 'data-teil': 'miete-ausprobieren', style: trenner },
@@ -388,18 +431,6 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
     // Formulare der Rand-Stücke unter der Zeile, in voller Breite.
     formular('address'), formular('landlord'),
 
-    // Mehr dazu: nur noch die Sätze (Drittel-Regel, Lage, Ausland).
-    // Das «›» zeigt, dass die Zeile aufgeht (Abnahme F6, 25.10.2026: ohne Zeichen wirkte sie nicht aufklappbar;
-    // `display: flex` nimmt dem summary das eigene Dreieck).
-    h('details', { 'data-teil': 'wohnen-mehr', onToggle: (e) => setOffen(e.currentTarget.open), style: trenner },
-      h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, listStyle: 'none' } },
-        h('span', null, t('wohnenInstrument.mehrDazu')),
-        h('span', { 'aria-hidden': 'true', 'data-teil': 'ausprobieren-zeichen', style: { fontSize: text.lg, lineHeight: 1, color: palette.mid, transform: offen ? 'rotate(90deg)' : 'none', transition: 'transform ' + duration.fast + 'ms ' + ease } }, '›')),
-      r.anteil != null && !r.mitPartner && !r.brutto && h('p', { 'data-teil': 'viertel-legende', style: { ...klein, margin: space.xs + 'px 0 0' } },
-        h(LegendenMarke, { form: 'punktlinie', color: palette.mid, palette }), t('wohnenInstrument.viertel')),
-      r.anteil != null && h('p', { 'data-teil': 'drittel-satz', style: { ...klein, margin: space.xs + 'px 0 0', color: r.ueberDrittel ? palette.text : palette.mid } }, t(drittelSatzKey(r))),
-      ml && h(MieteSaetze, { palette, t, ml, imKapitel: true, ohneQuelle: true }),
-      ml && h(InternationalHinweis, { palette, t })),
   );
 };
 

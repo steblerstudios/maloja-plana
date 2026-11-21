@@ -34,6 +34,7 @@ describe('Wohnen international: die eine Rechnung', () => {
     // Seit 18.11.2026 (Bauplan Wohnen): Rechnung in rechnung.js (mieteLage), der Satz unter «Mehr dazu» im Kapitel.
     const lies = (rel) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8');
     expect(lies('../bereiche/wohnen/rechnung.js')).toMatch(/ausland: auslandStoecke\(vergleich\.national\) \}/);
-    expect(lies('../bereiche/wohnen/zuhause.jsx')).toMatch(/ml && h\(InternationalHinweis, \{ palette, t \}\)/);
+    // Seit 21.11.2026 unter dem Vergleichshaus («Wie verglichen?»); die Quelle in der Quellenzeile der Strasse.
+    expect(lies('../bereiche/wohnen/zuhause.jsx')).toMatch(/ml\.ausland && h\(InternationalHinweis, \{ palette, t, ohneQuelle: true \}\)/);
   });
 });

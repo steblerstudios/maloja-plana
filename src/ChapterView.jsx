@@ -2427,10 +2427,32 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // (finanzen-fusion.md §3, Entscheid 2 «nach den Angaben»; damit überholt).
     istFinanzen && renderAuswertung('oben'),
 
+    // Wohnen mit Szene (Stebler Studios 21.11.2026, «wohnen-aufraeumen.html» Teil 6): statt der zwei Reiter zwei ruhige
+    // Zeilen mit Bild wie am Rand — «Alle Angaben» (die Abschnitte stehen oben am Bild) und «Dokumente».
+    wohnSzene && (() => {
+      const reihe = (teil, icon, titel, unter, label, an, onClick) => React.createElement('div', {
+        'data-teil': teil, style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: space.sm + 'px 0', borderTop: '1px solid ' + palette.border + '88' },
+      },
+        React.createElement('span', { 'aria-hidden': 'true', style: { flex: '0 0 auto', display: 'flex', color: palette.text } }, React.createElement(Icon, { name: icon, size: 28 })),
+        React.createElement('div', { style: { flex: '1 1 auto', minWidth: 0 } },
+          React.createElement('h3', { style: { margin: 0, fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, titel),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, unter)),
+        React.createElement('button', { type: 'button', className: 'mp-link', 'aria-expanded': an, onClick, style: linkKnopf }, label + (an ? '' : ' ›')));
+      const angabenOffen = expandedSection === 'fields' && alleAngaben;
+      const dokumenteOffen = expandedSection === 'documents';
+      return React.createElement('div', { 'data-teil': 'wohnen-angaben-dokumente', style: { marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border + '88' } },
+        reihe('alle-angaben', 'document', tr('wohnenKopf.alleAngaben'), abschnittGruppen(chapter.fields, chapter.title).map((g) => g.titel).join(' · '),
+          tr(angabenOffen ? 'wohnenKopf.ausblenden' : 'wohnenKopf.anzeigen'), angabenOffen,
+          () => { if (angabenOffen) setAlleAngaben(false); else { setExpandedSection('fields'); setAlleAngaben(true); } }),
+        chapter.docs && reihe('dokumente', 'ordner', tr('chapterView.documents'), chapter.docs.map((d) => d.label).join(', '),
+          tr(dokumenteOffen ? 'wohnenKopf.ausblenden' : 'wohnenKopf.ablegen'), dokumenteOffen,
+          () => setExpandedSection(dokumenteOffen ? 'fields' : 'documents')));
+    })(),
+
     // Tabs
     // marginBottom klein halten: der Sektions-Reiter darunter soll als Unter-Ebene
     // von „Angaben" gelesen werden, nicht losgelöst tief darunter schweben.
-    React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
+    !wohnSzene && React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
       React.createElement('button', {
         onClick: () => setExpandedSection('fields'),
         'aria-pressed': expandedSection === 'fields',
@@ -2479,15 +2501,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // (components/NetzSchild.jsx, F7-K3-6), was gedeckt ist.
       // Wohnen mit Szene: die Abschnitte stehen oben am Bild; hier eine Zeile «Alle Angaben», die die Übersicht
       // aufklappt (ohne die Abschnitte, die oben gerade offen sind — kein Formular doppelt).
+      // Wohnen mit Szene: die Zeile «Alle Angaben» steht oben bei «Dokumente»; hier nur die aufgeklappte Übersicht
+      // (ohne die Abschnitte, die oben gerade offen sind — kein Formular doppelt).
       wohnSzene
-        ? React.createElement('div', { 'data-teil': 'alle-angaben' },
-            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', minHeight: '44px', borderTop: '1px solid ' + palette.border + '88' } },
-              React.createElement('div', null,
-                React.createElement('h3', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, tr('wohnenKopf.alleAngaben')),
-                React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, abschnittGruppen(chapter.fields, chapter.title).map((g) => g.titel).join(' · '))),
-              React.createElement('button', { type: 'button', className: 'mp-link', 'aria-expanded': alleAngaben, onClick: () => setAlleAngaben((x) => !x), style: linkKnopf },
-                tr(alleAngaben ? 'wohnenKopf.ausblenden' : 'wohnenKopf.anzeigen') + (alleAngaben ? '' : ' ›'))),
-            alleAngaben && abschnittsliste({ ohne: WOHN_SZENE_ABSCHNITTE.filter((k) => offeneAbschnitte[k]) }))
+        ? alleAngaben && abschnittsliste({ ohne: WOHN_SZENE_ABSCHNITTE.filter((k) => offeneAbschnitte[k]) })
         : abschnittsliste()
     ),
 

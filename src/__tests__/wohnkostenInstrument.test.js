@@ -92,7 +92,8 @@ describe('Kapitel Wohnen · Rechnung aus der einen Monatsrechnung', () => {
     const html = render(p.wohnen, p);
     expect(html).toContain('budgetSync.availableNeedsNetto');
     expect(html).not.toContain('wohnenInstrument.freiDanach');
-    expect(html).toContain('instrumente.wohnkostenSatzBrutto');
+    // Seit 21.11.2026 kurz unter dem Haus: «vom Bruttoeinkommen» (dieselben Fälle wie wohnkostenSatzKey).
+    expect(html).toContain('wohnenKopf.bezug.brutto');
   });
 });
 
@@ -120,9 +121,9 @@ describe('Kapitel Wohnen · Anzeige', () => {
     expect(REGLER_MIN).toBe(800);
     expect(REGLER_MAX).toBe(3500);
     const html = render(profil().wohnen, profil());
-    // Seit 20.11.2026 offen vor «Mehr dazu» (Stebler Studios, Varianten 4 A+B+C).
+    // Seit 20.11.2026 offen; seit 21.11.2026 gibt es «Mehr dazu» nicht mehr (Erklärungen unter den Häusern).
     expect(html.indexOf('data-teil="miete-ausprobieren"')).toBeGreaterThan(-1);
-    expect(html.indexOf('data-teil="miete-ausprobieren"')).toBeLessThan(html.indexOf('data-teil="wohnen-mehr"'));
+    expect(html).not.toContain('data-teil="wohnen-mehr"');
     expect(html).not.toMatch(/<details[^>]*open/);
     expect(html).toMatch(/type="range"[^>]*min="800"[^>]*max="3500"/);
     expect(html).toContain('wohnenInstrument.durchspielen');
@@ -167,7 +168,7 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
     expect(r.mitPartner).toBe(true);
     expect(r.einkommen).toBe(4000);
     const html = render(p.wohnen, p);
-    expect(html).toContain('instrumente.wohnkostenSatzEigen');
+    expect(html).toContain('wohnenKopf.bezug.eigen');
     expect(html).toContain('wohnenInstrument.mitPartner');
     expect(html).not.toContain('wohnenInstrument.mehrAlsDrittel');
   });
@@ -179,15 +180,15 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
     expect(r.haushalt).toBe(true);
     expect(r.einkommen).toBe(8000);
     const html = render(p.wohnen, p);
-    expect(html).toContain('instrumente.wohnkostenSatzHaushalt');
+    expect(html).toContain('wohnenKopf.bezug.haushalt');
     expect(html).not.toContain('wohnenInstrument.mitPartner');
   });
 
   it('nur der Nebenerwerb brutto: «teils brutto», nicht «des Bruttoeinkommens»', () => {
     const p = profil({ monthlyIncome: '4000', sideIncome: '800', sideIncomeType: 'brutto' });
     const html = render(p.wohnen, p);
-    expect(html).toContain('instrumente.wohnkostenSatzTeilsBrutto');
-    expect(html).not.toContain('instrumente.wohnkostenSatzBrutto (');
+    expect(html).toContain('wohnenKopf.bezug.gemischt');
+    expect(html).not.toContain('wohnenKopf.bezug.brutto');
   });
 
   it('Eigentum mit Hypothek: Hypothek und Gebäudeversicherung zählen, kein Regler', () => {
@@ -242,7 +243,8 @@ describe('Kapitel Wohnen · Nachzug Fachprüfung', () => {
   // Seit 11.11.2026 (Matrix §10, Regel «Zahl»): unter dem Vergleichshaus die Lage gross, darunter Ihr Betrag in einer Zeile.
   it('Ihr Betrag unter dem Vergleichshaus bricht nicht in sich um', () => {
     const html = render(profil().wohnen, profil());
-    expect(html).toMatch(/data-teil="strasse-betrag"[^>]*white-space:nowrap/);
+    // Seit 21.11.2026 zwei Beträge in der Zeile: jeder bleibt in sich zusammen (geschütztes Leerzeichen).
+    expect(html).toMatch(/data-teil="strasse-betrag"[^>]*>wohnenKopf\.stattSchnitt\(CHF\u00a01’650\|CHF\u00a0\d’\d{3}\)</);
   });
 });
 
@@ -278,13 +280,15 @@ describe('Kapitel Wohnen · Abnahme F6', () => {
   });
   it('Werte am Vergleichshaus mit Tausender-Zeichen', () => {
     const html = render(profil().wohnen, profil());
-    expect(html).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.eigen: CHF 1’650</);
+    expect(html).toMatch(/data-teil="strasse-betrag"[^>]*>wohnenKopf\.stattSchnitt\(CHF\u00a01’650\|/);
     expect(html).toMatch(/data-teil="fahne-kanton"[^>]*>ZH \d’\d{3}</);
     expect(html).toMatch(/data-teil="fahne-schweiz"[^>]*>CH Ø \d’\d{3}</);
   });
-  // Seit 18.11.2026 trägt die Zeile «Mehr dazu» (mit dem Regler darin) das Zeichen.
-  it('die aufklappbare Zeile «Mehr dazu» zeigt ein «›»', () => {
-    expect(render(profil().wohnen, profil())).toMatch(/<summary[^>]*list-style:none[^>]*>[\s\S]*data-teil="ausprobieren-zeichen"[^>]*>›</);
+  // Seit 21.11.2026 statt «Mehr dazu» je Haus eine Erklärung zum Aufklappen, mit «›».
+  it('die Erklärungen unter den Häusern zeigen ein «›»', () => {
+    const html = render(profil().wohnen, profil());
+    expect(html).toMatch(/<details data-teil="warum-drittel"[^>]*><summary[^>]*list-style:none[^>]*>wohnenKopf\.warumDrittel ›</);
+    expect(html).toMatch(/<details data-teil="wie-verglichen"[^>]*><summary[^>]*list-style:none[^>]*>wohnenKopf\.wieVerglichen ›</);
   });
   it('der neue Hinweis steht in allen fünf Sprachen', () => {
     for (const s of [i18nDe, i18nEn, i18nFr, i18nIt, i18nRm]) {

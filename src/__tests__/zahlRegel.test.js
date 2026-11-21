@@ -33,8 +33,9 @@ describe('Regel «Zahl» · Kapitel Wohnen (gross)', () => {
     const zahl = html.indexOf('data-instrument-zahl="wohnkosten"');
     const franken = html.indexOf('data-teil="wohnkosten-franken"');
     expect(franken).toBeGreaterThan(zahl);
-    // Seit 20.11.2026 stehen die Franken gross im Kopf; unter dem Haus der Satz, worauf sich die Prozente beziehen.
-    expect(html).toMatch(/data-teil="wohnkosten-franken"[^>]*>instrumente\.wohnkostenSatz \(CHF 6’000\)</);
+    // Seit 21.11.2026: unter dem Haus was die Zahl heisst, darunter die zwei Beträge (über betrag()).
+    expect(html).toMatch(/data-teil="wohnkosten-bezug"[^>]*>wohnenKopf\.bezug\.netto</);
+    expect(html).toMatch(/data-teil="wohnkosten-franken"[^>]*>wohnenKopf\.vonBetrag\(CHF\u00a01’830\|CHF\u00a06’000\)</);
     expect(html).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF 1’830/);
   });
   it('ohne Einkommen kein Anteil: dann bleiben die Franken die Hauptzahl', () => {
@@ -76,7 +77,8 @@ describe('Regel «Zahl» · Werkzeug Mietzins (mittel)', () => {
 describe('Regel «Zahl» · Kapitel ohne doppelte Zahl', () => {
   it('unter der grossen Zahl der Kachel-Satz mit Einkommen, nicht nochmals «… %»', () => {
     const html = kapitel(profil());
-    expect(html).toMatch(/data-teil="wohnkosten-franken"[^>]*>instrumente\.wohnkostenSatz \(CHF 6’000\)</);
+    expect(html).toMatch(/data-teil="wohnkosten-franken"[^>]*>wohnenKopf\.vonBetrag\(CHF\u00a01’830\|CHF\u00a06’000\)</);
+    expect(html).not.toMatch(/data-teil="wohnkosten-franken"[^>]*>[^<]*%/);
   });
 });
 

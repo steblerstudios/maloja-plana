@@ -39,7 +39,7 @@ describe('eine Rechnung', () => {
   it('Frage C steht im Kapitel Wohnen (Beitrag im grossen Haus) und im Werkzeug «Mietzins» (mittel, mit Haus)', () => {
     const z = quelle('../bereiche/wohnen/zuhause.jsx');
     expect(z).toMatch(/beitrag: r\.beitrag \? \{ \.\.\.r\.beitrag, farbe: behoerden \} : null/);
-    expect(z).toMatch(/h\(WohnenStrasse, \{ palette, t, r, ml, hilfe, groesse: 'gross', isDarkMode, onNavigate, ausprobiert, kapitel: true \}\)/);
+    expect(z).toMatch(/h\(WohnenStrasse, \{ palette, t, r, ml, hilfe, groesse: 'gross', isDarkMode, onNavigate, ausprobiert, kapitel: true,/);
     expect(quelle('../MietzinsOrientierung.jsx')).toMatch(/React\.createElement\(WohnenWerkzeug, \{ palette, t, data, isDarkMode, kanton: canton \}\)/);
   });
   it('die Einschätzung: unter der Grenze «likely», darüber «incomeHigh», ohne Programm keine', () => {
