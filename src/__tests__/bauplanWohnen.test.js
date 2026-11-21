@@ -60,7 +60,19 @@ describe('Bauplan Wohnen · jedes Bild einmal je Seite', () => {
     expect(html.indexOf('data-teil="wohnen-kopf"')).toBeLessThan(html.indexOf('data-teil="wohnen-strasse"'));
     expect(html).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF 1’830/);
     expect(html).toMatch(/aria-pressed="true"[^>]*>Monat</);
-    expect(html).toContain('Miete CHF 1’650 + Nebenkosten CHF 180 · Langstrasse 42, 8004 Zürich');
+    expect(html).toContain('Miete CHF 1’650 + Nebenkosten CHF 180 · 2.5 Zimmer · Langstrasse 42, 8004 Zürich');
+  });
+  // «A, am Bild» (Stebler Studios 20.11.2026): ändern an Kosten, Adresse, Vermieterschaft und Eigentum; das Formular
+  // öffnet an seiner Stelle, unten bleibt «Alle Angaben». `angaben` ist hier eine Attrappe der Kapitelseite.
+  it('ändern am Bild: Links zu, Formular offen an seiner Stelle', () => {
+    const offen = new Set(['landlord']);
+    const angaben = { offen: (k) => offen.has(k), umschalten: () => {}, formular: (k) => React.createElement('form', { 'data-formular': k }) };
+    const html = renderToStaticMarkup(React.createElement(WohnenZuhause, { palette: LIGHT_PALETTE, t, wohnen: DEMO_DATA.wohnen, allData: DEMO_DATA, angaben }));
+    for (const k of ['rentAmount', 'address', 'mortgageStatus']) expect(html).toContain('data-aendern="' + k + '"');
+    expect(html).not.toContain('data-aendern="landlord"');
+    expect(html).toMatch(/data-teil="wohnen-rand"[\s\S]*data-szene-formular="landlord"[^>]*><form data-formular="landlord"/);
+    expect(html).toContain('Hauptwohnsitz');
+    expect(html).toMatch(/Eigentum: noch leer[\s\S]*?ergänzen ›/);
   });
   it('am Rand: Wohndauer (Kalenderblatt), Hausrat & Haftpflicht (Schild), Vermieterschaft — Mietbeiträge nicht, die trägt die Tür', () => {
     const html = kapitel(DEMO_DATA);

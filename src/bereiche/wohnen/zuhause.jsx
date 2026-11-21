@@ -7,7 +7,7 @@ import { renderSource } from '../../utils/renderSource.js';
 import { zahl, betrag } from '../../utils/geld.js';
 import { LegendenMarke } from '../../components/LegendenMarke.jsx';
 import { Belege } from '../../components/Belege.jsx';
-import { knopfStil, linkStil } from '../../components/PrimaryButton.jsx';
+import { knopfStil, linkStil, auswahlStil } from '../../components/PrimaryButton.jsx';
 import { Kalenderblatt } from '../../components/Kalenderblatt.jsx';
 import { Icon } from '../../IconSystem.jsx';
 import { CHAPTER_KEYS } from '../../config/constants.js';
@@ -225,7 +225,9 @@ const szene = (data, wohnen, probe, kanton) => {
 // Zeilen mit Balken) · Mietbeiträge mit der Kantonskarte offen (die Tür im Vergleichshaus ist das Fass dazu) ·
 // Regler offen · am Rand Wohndauer, Hausrat & Haftpflicht (Schild), Vermieterschaft · «Mehr dazu» nur noch die Sätze.
 const halb = (v) => Math.round(Number(v) || 0);
-export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavigate }) => {
+// `angaben` (aus ChapterView, nur im Kapitel mit Szene): { offen(k), umschalten(k), formular(k) } — die Abschnitte
+// Adresse, Kosten, Vermieterschaft und Eigentum öffnen ihr Formular hier am Bild (Stebler Studios 20.11.2026, «A, am Bild»).
+export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavigate, angaben = null }) => {
   const h = React.createElement;
   const [probe, setProbe] = useState(null);
   const [offen, setOffen] = useState(false);
@@ -246,6 +248,14 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
   const v = allData?.versicherungen || {};
   const f = jahr ? 12 : 1;
   const geld = (x) => betrag(halb(x * f));
+  // «ändern ›» / «ergänzen ›» am Bild und das Formular an seiner Stelle.
+  const aendernStil = { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, fontWeight: weight.semi, color: palette.sandDeep || palette.goldDeep, textDecoration: 'none' };
+  const aendern = (k, wort = 'aendern') => angaben && !angaben.offen(k) && h('button', {
+    type: 'button', className: 'mp-link', 'data-aendern': k, onClick: () => angaben.umschalten(k), style: aendernStil,
+  }, t('wohnenKopf.' + wort) + ' ›');
+  const formular = (k) => angaben && angaben.offen(k) && h('div', { key: 'f-' + k, 'data-szene-formular': k, style: { margin: space.sm + 'px 0' } }, angaben.formular(k));
+  const wohnform = (() => { const fd = t('chapters.wohnen.fields.residenceType'); return fd && typeof fd === 'object' && fd.options ? fd.options[w.residenceType] || null : null; })();
+  const zimmer = String(w.rooms || '').trim();
 
   // Kopf: Wohnkosten gross, darunter woraus sie bestehen und wo.
   const hypothek = w.mortgageStatus === 'no' ? 0 : Number(w.mortgagePayment) || 0;
@@ -256,17 +266,26 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
     Number(w.buildingsInsurance) > 0 && t('wohnenKopf.gebaeude', { betrag: geld(Number(w.buildingsInsurance) / 12) }),
   ].filter(Boolean);
   const adresse = addressLine(w);
+  // Derselbe Umschalter wie beim Monatsring (auswahlStil): Kontrast hell und dunkel geprüft.
   const pille = (an, label, onClick) => h('button', {
     type: 'button', 'aria-pressed': an ? 'true' : 'false', onClick,
-    style: { minHeight: '44px', padding: '0 ' + space.md + 'px', border: 'none', borderRadius: radius.md + 'px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
-      fontWeight: an ? weight.semi : weight.normal, color: palette.text, background: an ? palette.gold : palette.border + '55' },
+    style: { ...auswahlStil(palette, an), minHeight: '44px', padding: '0 ' + space.ms + 'px', fontSize: text.xs, fontWeight: weight.normal },
   }, label);
   const kopf = h('div', { 'data-teil': 'wohnen-kopf', style: { marginBottom: space.md + 'px' } },
     h('div', { role: 'group', 'aria-label': t('wohnenKopf.zeitraum'), style: { display: 'flex', gap: space.xs + 'px', marginBottom: space.sm + 'px' } },
       pille(!jahr, t('wohnenKopf.monat'), () => setJahr(false)), pille(jahr, t('wohnenKopf.jahr'), () => setJahr(true))),
-    h('div', { 'data-instrument-zahl': 'wohnkosten-kopf', 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } },
-      geld(r.kosten), h('span', { style: { fontSize: text.sm, fontWeight: weight.normal, color: palette.mid } }, ' ' + (jahr ? t('wohnenKopf.imJahr') : t('common.perMonth')))),
-    (teile.length > 0 || adresse) && h('div', { style: satz }, [teile.join(' + '), adresse].filter(Boolean).join(' · ')));
+    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm + 'px', flexWrap: 'wrap' } },
+      h('div', { 'data-instrument-zahl': 'wohnkosten-kopf', 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } },
+        geld(r.kosten), h('span', { style: { fontSize: text.sm, fontWeight: weight.normal, color: palette.mid } }, ' ' + (jahr ? t('wohnenKopf.imJahr') : t('common.perMonth')))),
+      aendern('rentAmount')),
+    (teile.length > 0 || adresse || zimmer) && h('div', { style: satz },
+      [teile.join(' + '), zimmer && t('wohnenKopf.zimmer', { n: zimmer }), adresse].filter(Boolean).join(' · ')),
+    formular('rentAmount'),
+    // Eigentum: als Zeile im Kopf; mit Hypothek steht sie schon in den Kosten oben.
+    angaben && h('div', { 'data-teil': 'eigentum-zeile', style: { ...satz, display: 'flex', alignItems: 'center', gap: space.sm + 'px', flexWrap: 'wrap' } },
+      h('span', null, t('wohnenKopf.eigentum') + (w.mortgageStatus ? '' : ': ' + t('wohnenKopf.nochLeer'))),
+      aendern('mortgageStatus', w.mortgageStatus ? 'aendern' : 'ergaenzen')),
+    formular('mortgageStatus'));
 
   // Am Rand: was kein Haus ist, mit eigenem Bild (wie Kalenderblatt und Thermometer bei Finanzen).
   const weg = (label, ziel) => onNavigate && h('button', {
@@ -284,21 +303,25 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
     v.liabilityInsurance === 'yes' && Number(v.liabilityPremium) > 0 && betrag(Number(v.liabilityPremium))].filter(Boolean);
   const telefon = String(w.landlordPhone || '').trim();
   const rand = [
-    dauer && randStueck('wohndauer', h(Kalenderblatt, { iso: String(w.moveInDate).slice(0, 10), palette, klein: true }),
+    (dauer || angaben) && randStueck('wohndauer', dauer ? h(Kalenderblatt, { iso: String(w.moveInDate).slice(0, 10), palette, klein: true }) : h(Icon, { name: 'wohnen', size: 40, color: fuell }),
       // Die Dauer allein (Nominativ wie «Wohndauer 5 Jahre, 3 Monate»); «seit» stünde im Dativ.
-      randZahl(dauer),
-      h('div', { style: satz }, t('wohnenKopf.seitDatum', { datum: String(w.moveInDate).slice(0, 10).split('-').reverse().join('.') })),
-      weg(t('wohnenKopf.umzug'), () => onNavigate('umzug'))),
+      randZahl(dauer || adresse || t('wohnenKopf.adresse')),
+      h('div', { style: satz }, [wohnform, dauer && t('wohnenKopf.seitDatum', { datum: String(w.moveInDate).slice(0, 10).split('-').reverse().join('.') })].filter(Boolean).join(' · ')
+        || (adresse ? '' : t('wohnenKopf.nochLeer'))),
+      h('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap' } },
+        weg(t('wohnenKopf.umzug'), () => onNavigate('umzug')), aendern('address', adresse ? 'adresseAendern' : 'ergaenzen'))),
     (hausrat || haftpflicht) && randStueck('zuhause-versichert', h(Icon, { name: 'versicherungen', size: 44, color: bereichFillColor('versicherungen', isDarkMode) || palette.text }),
       randZahl([hausrat && t('wohnenKopf.hausrat') + status(v.householdInsurance), haftpflicht && t('wohnenKopf.haftpflicht') + status(v.liabilityInsurance)].filter(Boolean).join(' · ')),
       (v.householdInsurance === 'yes' || v.liabilityInsurance === 'yes') && h('div', { style: satz },
         [t('wohnenKopf.versichert'), praemien.length > 0 && praemien.join(' + ') + ' ' + t('wohnenKopf.imJahr')].filter(Boolean).join(' · ')),
       weg(t('chapters.versicherungen.title'), () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')))),
-    w.landlord && randStueck('vermieterschaft', h(Icon, { name: 'phone', size: 36, color: palette.text }),
-      randZahl(w.landlord),
-      telefon && h('div', { style: satz }, telefon),
-      telefon && h('a', { href: 'tel:' + telefon.replace(/[^+\d]/g, ''), className: 'mp-link',
-        style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', minHeight: '44px', fontSize: text.sm } }, t('wohnenKopf.anrufen') + ' ›')),
+    (w.landlord || angaben) && randStueck('vermieterschaft', h(Icon, { name: 'phone', size: 36, color: palette.text }),
+      randZahl(w.landlord || t('wohnenKopf.vermieterschaft')),
+      (telefon || !w.landlord) && h('div', { style: satz }, telefon || t('wohnenKopf.nochLeer')),
+      h('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap' } },
+        telefon && h('a', { href: 'tel:' + telefon.replace(/[^+\d]/g, ''), className: 'mp-link',
+          style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', minHeight: '44px', fontSize: text.sm } }, t('wohnenKopf.anrufen') + ' ›'),
+        aendern('landlord', w.landlord ? 'aendern' : 'ergaenzen'))),
   ].filter(Boolean);
 
   return h('section', { 'data-teil': 'wohnkosten', style: { marginBottom: space.lg + 'px' } },
@@ -346,6 +369,8 @@ export const WohnenZuhause = ({ palette, t, wohnen, allData, isDarkMode, onNavig
 
     // Am Rand
     rand.length > 0 && h('div', { 'data-teil': 'wohnen-rand', style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px ' + space.xl + 'px', ...trenner } }, ...rand),
+    // Formulare der Rand-Stücke unter der Zeile, in voller Breite.
+    formular('address'), formular('landlord'),
 
     // Mehr dazu: nur noch die Sätze (Drittel-Regel, Lage, Ausland).
     // Das «›» zeigt, dass die Zeile aufgeht (Abnahme F6, 25.10.2026: ohne Zeichen wirkte sie nicht aufklappbar;
