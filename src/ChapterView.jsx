@@ -77,6 +77,8 @@ const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
 const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
+// «Lohnt sich die Karte?» — seit 20.11.2026 ein aufklappbarer Teil im Kapitel Finanzen statt eigener Seite.
+const KreditkarteRechner = React.lazy(() => import('./Kreditkarte.jsx'));
 const LohnImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.LohnImKapitel })));
 const LebenslaufVorschau = React.lazy(() => import('./components/LebenslaufVorschau.jsx').then((m) => ({ default: m.LebenslaufVorschau })));
 const VersicherungenInstrument = React.lazy(() => import('./components/VersicherungenInstrument.jsx').then((m) => ({ default: m.VersicherungenInstrument })));
@@ -179,6 +181,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     return offen;
   };
   const [offeneAbschnitte, setOffeneAbschnitte] = useState(abschnitteAnfang);
+  // Der Kreditkarten-Rechner lädt erst, wenn sein Teil aufgeht (auch über die Sprungmarke `mp-kreditkarte`).
+  const [kreditkarteOffen, setKreditkarteOffen] = useState(false);
   // Kapitelwechsel ohne Neuaufbau: die Regel gilt fürs neue Kapitel neu.
   useEffect(() => { setOffeneAbschnitte(abschnitteAnfang()); }, [chapter.key]); // eslint-disable-line react-hooks/exhaustive-deps
   // Ein angefangener Upload gehört zum Kapitel, in dem er begann — sonst landete er mit dem
@@ -1993,6 +1997,22 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             style: knopfStil(palette, 'leise'),
           }, tr(showSecondary ? 'chapterView.showLess' : 'chapterView.showMore')),
           !showSecondary && secondaryHasData && React.createElement('small', { 'data-hinweis': 'ausgeblendet-mit-daten', style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.hasHiddenData'))
+        ),
+        // Kreditkarte (Seitenrunde Finanzen, Stebler Studios 20.11.2026): bis dahin die eigene Seite `#/kreditkarte`,
+        // jetzt hier unter den Angaben — `#/kreditkarte` springt her (UMLEITUNGEN). Zugeklappt, der Rechner lädt beim Öffnen.
+        React.createElement('details', {
+          key: 'kreditkarte', id: 'mp-kreditkarte', 'data-teil': 'kreditkarte',
+          onToggle: (e) => setKreditkarteOffen(e.currentTarget.open),
+          style: { scrollMarginTop: 'var(--mp-sprungabstand)', marginBottom: space.lg + 'px', borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' },
+        },
+          React.createElement('summary', {
+            style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
+          }, hinweisZeichen(ansichtIkon('kreditkarte'), 14), tr('nav.crosslink.kreditkarteHint')),
+          kreditkarteOffen && React.createElement(React.Suspense, { fallback: null },
+            React.createElement(KreditkarteRechner, {
+              palette, t: tr, data: allData || { finanzen: data }, onUpdateData: onUpdateIn,
+              onNavigate: onNavigate || (() => {}), eingebettet: true,
+            }))
         )
       );
     }

@@ -39,6 +39,8 @@ export const WERKZEUGE = [
   // («Monatsbudget», budgetSync.title) — vorher hiess der Eintrag «Budget-Sync» (nav.budgetSync, entfernt).
   { view: 'sync', nav: 'budgetSync.title', sub: 'nav.sub.budgetSync', icon: 'budgetWallet', bereich: 'finanzen', fach: 'geld', aliases: ['budget', 'sync', 'ausgaben', 'haushalt', 'csv', 'import'] },
   { view: 'schulden', nav: 'nav.debts', icon: 'debt', bereich: 'finanzen', fach: 'geld', aliases: ['schulden', 'betreibung', 'debt', 'abzahlung'] },
+  // Seit 20.11.2026 keine eigene Seite: der View ist eine Umleitung (utils/hashRouter.js UMLEITUNGEN) zum
+  // aufklappbaren Teil «Lohnt sich die Karte?» im Kapitel Finanzen. Der Eintrag bleibt, damit Suche und Menü hinführen.
   { view: 'kreditkarte', nav: 'nav.kreditkarte', sub: 'nav.sub.kreditkarte', icon: 'money', bereich: 'finanzen', fach: 'geld', aliases: ['kreditkarte', 'cashback', 'jahresgebühr', 'credit card', 'carte de crédit', 'carta di credito'] },
   // Seit 24.10.2026 keine eigene Seite: der View ist ein Alias (utils/hashRouter.js UMLEITUNGEN) und
   // führt ins Kapitel Finanzen zur Auswertung. «finanzen» als Suchwort fällt weg — das Kapitel
