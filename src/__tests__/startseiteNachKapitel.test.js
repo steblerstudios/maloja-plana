@@ -98,8 +98,8 @@ describe('Übersicht: alle Seiten nach Kapitel', () => {
     }
   });
 
-  it('alle 36 Abläufe stehen in einem Kapitel', () => {
-    expect(ABLAEUFE).toHaveLength(36);
+  it('alle 37 Abläufe stehen in einem Kapitel', () => {
+    expect(ABLAEUFE).toHaveLength(37);
     const kapitel = gruppen(zeichne(CHAPTER_KEYS.map(kapitelTitel))).slice(0, 7).map((g) => g.inhalt).join('');
     for (const a of ABLAEUFE) expect(kapitel, a.view).toContain('>' + t(a.nav).replace(/&/g, '&amp;') + '</div>');
   });
