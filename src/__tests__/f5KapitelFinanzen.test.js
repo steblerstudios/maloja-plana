@@ -50,10 +50,10 @@ describe('«Jeden Monat bleiben»', () => {
 
   // Fassung 6 (24.10.2026): die Säule 3a (CHF 250/Jahr) zählt jetzt auch im Kapitel — eine Zahl
   // mit dem Budget, darum keine Haushalts-Zeile mehr. Vorher: 2’480 hier, 2’459 im Budget. Seit 25.10.2026 (KK-Prämie 540.30, Hausrat und Haftpflicht ÷ 12): 2’274.
-  it('Maria: CHF 2’235 von CHF 6’200 Einkommen, netto; kein Satz wiederholt die Karte (F7-K2-2)', () => {
+  it('Maria: CHF 2’006 von CHF 6’200 Einkommen, netto; kein Satz wiederholt die Karte (F7-K2-2)', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     const text = html.replace(/<[^>]+>/g, '');
-    expect(text).toContain('Jeden Monat bleibenCHF 2’235');
+    expect(text).toContain('Jeden Monat bleibenCHF 2’006');
     expect(text).toContain('Einkommen CHF 6’200, netto');
     expect(text).not.toContain('Es bleiben');
     expect(text).not.toContain('Monatliches Einkommen CHF 6’200');
@@ -74,7 +74,7 @@ describe('«Jeden Monat bleiben»', () => {
     const text = html.replace(/<[^>]+>/g, '').split('Monatliches Einkommen')[0];
     expect(text).toContain('Jeden Monat bleiben');
     expect(text).toContain('Ein Lohn ist als Bruttolohn erfasst');
-    expect(text).not.toContain('CHF 2’235');
+    expect(text).not.toContain('CHF 2’006');
     expect(text).not.toContain('verplant');
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
@@ -84,7 +84,7 @@ describe('«Jeden Monat bleiben»', () => {
   it('Einkommen brutto: Spiegelsatz mit Einkommen und Ausgaben, ohne «Es bleiben / Es fehlen»', () => {
     const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto' }).replace(/<[^>]+>/g, '');
     expect(text).toContain('Monatliches Einkommen CHF 6’200');
-    expect(text).toContain('Erfasste monatliche Ausgaben CHF 3’965.');
+    expect(text).toContain('Erfasste monatliche Ausgaben CHF 4’194.');
     expect(text).not.toContain('Es bleiben');
     const minus = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto', monthlyIncome: '1000' }).replace(/<[^>]+>/g, '');
     expect(minus).not.toContain('Es fehlen');
@@ -192,7 +192,8 @@ describe('Nebenerwerb — die fünf Felder erst mit Nebenerwerb', () => {
 
 describe('Weitere Bereiche anzeigen', () => {
   it('ohne Daten in den Zusatzfeldern: eingeklappt, steuerbares Einkommen und Vorsorge verborgen', () => {
-    const ohne = { ...DEMO_DATA.finanzen, pension3a: '' };
+    // pension3aBalance: seit 19.11.2026 im Beispiel gefüllt, hier für den leeren Fall wieder leer.
+    const ohne = { ...DEMO_DATA.finanzen, pension3a: '', pension3aBalance: '' };
     const html = render('finanzen', ohne, { anfangsOffen: 'alle' });
     expect(html).toContain('Weitere Bereiche anzeigen');
     expect(html).not.toContain(kapitel('finanzen').fields.find((f) => f.k === 'taxableIncome').label);

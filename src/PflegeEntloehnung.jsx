@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
 import { text, weight, space, radius, leading } from './config/tokens.js';
@@ -28,12 +28,15 @@ const WOCHEN_PRO_MONAT = 4.33;    // 52/12
 // nie eine Angabe (der Regler hat immer einen Wert).
 export const PFLEGE_ENTLOEHNUNG_ERGEBNIS = ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
 
-export const PflegeEntloehnung = ({ palette, t }) => {
+// `onErgebnis` (optional): meldet die Monatsspanne nach oben — für die Übersicht im Pflege-Ablauf.
+// Ohne das Prop verhält sich der Rechner wie bisher.
+export const PflegeEntloehnung = ({ palette, t, onErgebnis }) => {
   const [stunden, setStunden] = useState(14);
   const monat = (satz) => Math.round(stunden * WOCHEN_PRO_MONAT * satz);
   const jahr = (satz) => Math.round(stunden * 52 * satz);
   const von = monat(LOHN_SPANNE.von);
   const bis = monat(LOHN_SPANNE.bis);
+  useEffect(() => { if (onErgebnis) onErgebnis({ stunden, monatVon: von, monatBis: bis }); }, [onErgebnis, stunden, von, bis]);
 
   const s = {
     wrap: { marginTop: space.sm + 'px' },

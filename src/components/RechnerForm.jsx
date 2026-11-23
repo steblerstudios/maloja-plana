@@ -44,7 +44,7 @@ const abschnittTitel = (palette, id, inhalt) => React.createElement('h3', {
 export const RechnerForm = ({
   palette, t, view, onNavigate, titel, satz,
   etikett, ergebnis, ohneErgebnis, art, vorbehalt, instrument,
-  angaben, tun, stelle, quelle, children, reiter,
+  angaben, tun, stelle, quelle, children, reiter, ohneKopf,
 }) => {
   const kapitel = RECHNER_KAPITEL[view] || null;
   const farbe = kapitel ? zeichenFarbe(palette, kapitel) : null;
@@ -87,8 +87,9 @@ export const RechnerForm = ({
   ];
 
   return React.createElement('div', { 'data-rechner-form': view, style: { maxWidth: '720px', color: palette.text } },
-    // (1) Kopf links
-    React.createElement('div', { 'data-teil': 'kopf' },
+    // (1) Kopf links. `ohneKopf`: der Rechner steht als Teil in einer anderen Seite (Kreditkarte im Kapitel
+    // Finanzen, 20.11.2026) — dort tragen Seite und Aufklapp-Zeile Brotkrume und Titel; es bleibt nur der Satz.
+    ohneKopf ? (satz && React.createElement('p', { 'data-teil': 'kopf', style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px', maxWidth: '560px' } }, satz)) : React.createElement('div', { 'data-teil': 'kopf' },
       React.createElement('nav', { 'aria-label': t('nav.pfad'), style: { marginBottom: space.xs + 'px' } },
         React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 8px' } },
           React.createElement('button', { type: 'button', className: 'mp-link', style: stufe, onClick: () => onNavigate && onNavigate('dashboard') }, t('nav.backToDashboard')),

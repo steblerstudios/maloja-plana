@@ -9,6 +9,8 @@ import { text, weight, leading, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { Belege } from './components/Belege.jsx';
+import { KantonsAnlaufstelle, KantonMehrsprachig, ZhRestpraemie } from './components/Nichtbezug.jsx';
 import { betrag } from './utils/geld.js';
 import { linkStil } from './components/PrimaryButton.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
@@ -153,6 +155,15 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     // Orientation note — visually distinct so users don't overlook it
     React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.md, padding: space.md + 'px', background: palette.sky + '18', borderRadius: radius.lg + 'px', borderLeft: '3px solid ' + palette.sky } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('sozialhilfe.orientationNote'))
+    ),
+
+    // Nichtbezug (18.11.2026): Gründe und der Weg, ohne Quote (die Zahlen gelten nur für Basel-Stadt).
+    React.createElement('div', { 'data-hinweis': 'nichtbezug', style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.md } },
+      React.createElement('p', { style: { margin: 0, color: palette.mid } }, t('nichtbezug.sozialhilfe')),
+      React.createElement(KantonsAnlaufstelle, { palette, t, canton }),
+      React.createElement(KantonMehrsprachig, { palette, t, canton }),
+      React.createElement(ZhRestpraemie, { palette, t, canton, data }),
+      React.createElement(Belege, { palette, t, zeile: t('nichtbezug.quelle') })
     ),
 
     // Children context (only when children present)

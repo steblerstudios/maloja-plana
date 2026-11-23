@@ -23,7 +23,7 @@
 
 // Der Beispiel-Datensatz reist mit, damit die Code-Wand nur EINEN Lazy-Import braucht
 // (jeder zusätzliche import() kostet Bytes im Hauptbundle).
-export { DEMO_DATA } from '../config/demoData.js';
+export { DEMO_DATA, DEMO_DOCS } from '../config/demoData.js';
 
 const DEMO_FEHLER = 'Demo: es wird nichts gespeichert';
 

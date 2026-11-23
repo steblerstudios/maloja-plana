@@ -56,7 +56,9 @@ const setzeWennAnders = (el, name, wert) => { if (el.getAttribute(name) !== wert
 export const kuerzelNennen = (doc, an, knopf = doc?.querySelector(LUPE)) => {
   if (!knopf) return;
   // Nur schreiben, was sich ändert — sonst weckte jedes Schreiben den Beobachter erneut.
-  setzeWennAnders(knopf, 'aria-keyshortcuts', (an ? '/ ' : '') + knopf.getAttribute('aria-keyshortcuts').replace(/^\/ /, ''));
+  // Ohne aria-keyshortcuts (Handy: React nimmt es weg) nichts nennen — sonst stünde «/ » allein da.
+  const kuerzel = (knopf.getAttribute('aria-keyshortcuts') || '').replace(/^\/ /, '');
+  if (kuerzel) setzeWennAnders(knopf, 'aria-keyshortcuts', (an ? '/ ' : '') + kuerzel);
   const titel = (knopf.getAttribute('title') || '').replace(/ \(\/\)$/, '');
   if (titel) setzeWennAnders(knopf, 'title', titel + (an ? ' (/)' : ''));
 };
@@ -68,7 +70,8 @@ export const suchTasteAnmelden = (oeffnen, fenster = window) => {
   // Den Knopf merken, solange er hängt — der Beobachter läuft bei jeder DOM-Änderung, die Suche nur bei Bedarf.
   let lupe = null;
   const nennen = () => {
-    if (!lupe || lupe.isConnected === false) lupe = doc.querySelector(LUPE);
+    // Neu suchen auch, wenn der Knopf noch hängt, aber nicht mehr passt (Handy: React nimmt aria-keyshortcuts weg).
+    if (!lupe || lupe.isConnected === false || lupe.matches?.(LUPE) === false) lupe = doc.querySelector(LUPE);
     kuerzelNennen(doc, slashAn(fenster.localStorage), lupe);
   };
   const beobachter = fenster.MutationObserver && doc.body ? new fenster.MutationObserver(nennen) : null;
