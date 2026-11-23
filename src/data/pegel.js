@@ -118,3 +118,17 @@ function sozialhilfePegelRoh(data) {
     mitGanzerMiete: mode === 'gap' && !!sh?.mitGanzerMiete,
   };
 }
+
+// Mietzinsbeiträge (Stebler Studios 11.11.2026): dieselbe Lesart «Luft» wie die IPV — Wasser = Jahreseinkommen,
+// Linie = Einkommensgrenze des Kantons. Rechnet nichts neu: Einkommen und Grenze kommen aus mietzinsEinschaetzung.
+// Ohne Grenze als Zahl (BL, GE, BS-Sonderfälle) kein Glas.
+export function mietzinsPegelState({ annualIncome, incomeLimit }) {
+  const limit = Number(incomeLimit) || 0;
+  if (!(limit > 0)) return null;
+  const income = Number(annualIncome) || 0;
+  if (income <= 0) return { show: true, variant: 'luft', mode: 'empty', fraction: 0, income: 0, maxIncome: limit };
+  const roh = income / limit;
+  const mode = roh >= 1 ? 'over' : roh >= 0.85 ? 'edge' : 'clear';
+  const fraction = Math.max(0, Math.min(PEGEL_SCALE, mode === 'over' ? Math.max(roh, 1) : roh));
+  return { show: true, variant: 'luft', mode, fraction, income, maxIncome: limit };
+}

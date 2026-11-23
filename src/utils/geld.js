@@ -12,7 +12,6 @@
 
 const APOSTROPH = '’';
 const MINUS = '−'; // U+2212, wie in den bisherigen formatCHF-Kopien
-const NBSP = '\u00a0';
 
 const gruppieren = (ganz) => ganz.replace(/\B(?=(\d{3})+(?!\d))/g, APOSTROPH);
 
@@ -53,7 +52,7 @@ export function betragEcht(n, optionen = {}) {
   const z = zahl(Math.abs(x), optionen);
   const negativ = x < 0 && z !== '0' && !/^0(\.0+)?$/.test(z);
   // Geschützte Leerzeichen (U+00A0, Sophie 23.11.2026 E5): «CHF» und Betrag, Minus und «CHF» trennen nie am Zeilenende.
-  return (negativ ? MINUS + NBSP : '') + 'CHF' + NBSP + z;
+  return (negativ ? MINUS + '\u00a0' : '') + 'CHF\u00a0' + z;
 }
 
 // Sichtschutz «Beträge verbergen» (Kopfzeile, seit 10.11.2026, Idee aus dem Nessie-Abgleich):

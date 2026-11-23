@@ -1563,6 +1563,7 @@ const AppInner = ({ demo }) => {
           // Hauptbundle hat kaum Luft. Begründung in InstallHinweis.jsx.
           // Als Funktion: die Landschaft sagt, ob sie im schmalen (Handy-)Ausschnitt steht.
           hatDokumente: (docs || []).length > 0,
+          dokumente: docs,
           // Gruppe A D (11.11.2026): erst der Rundgang, dann die Karte — nie beide zugleich auf dem Bild.
           installKarte: !tourOpen && ((klein) => React.createElement(React.Suspense, { fallback: null },
             React.createElement(InstallHinweis, {

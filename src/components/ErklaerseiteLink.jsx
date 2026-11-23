@@ -60,7 +60,8 @@ export const ErklaerseiteLink = ({ palette, t, view }) => {
 const ATLAS = '/kantonsatlas/#karte-';
 export const ZUM_VERSTEHEN = {
   basis: { seiten: [], karten: [[ATLAS + 'kinderzulage', 'Kinderzulage'], [ATLAS + 'kita', 'Abzug für Kinderbetreuung']] },
-  wohnen: { seiten: [], karten: [[ATLAS + 'miete', 'Miete 3 Zimmer'], [ATLAS + 'leer', 'Leerwohnungsziffer']] },
+  // Wohnen: Miete und Leerwohnungen stehen seit 20.11.2026 als Bilder im Kapitel (Dreier-Set, bereiche/wohnen/zuhause.jsx).
+  wohnen: { seiten: [], karten: [] },
   finanzen: {
     seiten: [['/sozialhilfe/', 'Sozialhilfe'], ['/steuern/', 'Steuern']],
     karten: [[ATLAS + 'steuer', "Steuern bei 80'000 Fr. Lohn"], [ATLAS + 'sozialhilfe', 'Sozialhilfequote']],
@@ -79,7 +80,7 @@ const kleinerLink = (palette, t, href, name) => React.createElement(ExternerLink
 
 export const ZumVerstehen = ({ palette, t, kapitel }) => {
   const z = ZUM_VERSTEHEN[kapitel];
-  if (!z) return null;
+  if (!z || z.seiten.length + z.karten.length === 0) return null;
   const titel = (schluessel) => React.createElement('h4', { style: { margin: space.sm + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t(schluessel));
   const zeile = (liste) => React.createElement('p', { lang: 'de', style: { margin: 0, fontSize: text.sm } }, liste.map(([href, name]) => kleinerLink(palette, t, href, name)));
   return React.createElement('section', { 'data-teil': 'zum-verstehen', style: { marginTop: space.lg + 'px' } },

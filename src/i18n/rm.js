@@ -534,7 +534,7 @@ export default {
     intro: 'Tgira che vegn prestada en silenzi resta savens senza attenziun — malgrà che quai dat dretgs che blers na dumondan mai. Ina survista: bonificaziun da renta, indemnisaziun, sgravi.',
     step1Title: '1 · Bonificaziun d’assistenza da l’AVS',
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step1Text: 'Eine Betreuungsgutschrift erhält, wer Verwandte betreut, die eine Hilflosenentschädigung (AHV, IV, Unfall- oder Militärversicherung) beziehen und leicht erreichbar sind — in der Regel höchstens 30 km oder eine Stunde entfernt. Verwandte sind die auf- und absteigende Linie, etwa Eltern, Grosseltern, Kinder und Enkel, sowie Geschwister; gleichgestellt sind Ehefrau oder Ehemann, eingetragene Partnerin oder eingetragener Partner, Schwiegereltern, Stiefkinder und eine Lebenspartnerin oder ein Lebenspartner nach fünf Jahren ununterbrochen im gemeinsamen Haushalt (ATSG Art. 13a). Die Gutschrift erhöht die spätere AHV-Rente, gleich hoch wie die Erziehungsgutschrift (AHVG Art. 29septies, AHVV Art. 52g). Jedes Jahr bei der Ausgleichskasse am Wohnsitz der betreuten Person anmelden; nach fünf Jahren verfällt der Anspruch für das betreffende Jahr.',
+    step1Text: 'Eine Betreuungsgutschrift erhält, wer Verwandte betreut, die eine Hilflosenentschädigung (AHV, IV, Unfall- oder Militärversicherung) beziehen und leicht erreichbar sind — in der Regel höchstens 30 km oder eine Stunde entfernt. Verwandte sind die auf- und absteigende Linie, etwa Eltern, Grosseltern, Kinder und Enkel, sowie Geschwister; gleichgestellt sind Ehefrau oder Ehemann, eingetragene Partnerin oder eingetragener Partner, Schwiegereltern, Stiefkinder und eine Lebenspartnerin oder ein Lebenspartner nach fünf Jahren ununterbrochen im gemeinsamen Haushalt (AHVG Art. 29septies Abs. 1, ATSG Art. 13a). Die Gutschrift erhöht die spätere AHV-Rente, gleich hoch wie die Erziehungsgutschrift (AHVG Art. 29septies, AHVV Art. 52g). Jedes Jahr bei der Ausgleichskasse am Wohnsitz der betreuten Person anmelden; nach fünf Jahren verfällt der Anspruch für das betreffende Jahr.',
     step1Link: 'Endatar en il calculatur da prevenziun',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     stepLohnTitle: { sie: '2 · Laschar indemnisar Voss stgaffiment', du: '2 · Laschar indemnisar tes stgaffiment' },
@@ -567,6 +567,7 @@ export default {
       monat: "mais",
       jahr: "onn d’assistenza",
       heute: "oz",
+      angerechnet: "messa a quint, betg pajada ora",
       anDich: { sie: "Per Vus: salari per la tgira", du: "Per tai: salari per la tgira" },
       anDichSub: "Grondezza dal pass 2, mo sch’ina organisaziun emploia.",
       anGepflegte: "Per la persuna tgirada: indemnisaziun d’impotenza",
@@ -2721,6 +2722,8 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
         branche: { label: 'Branscha', options: { it: 'IT', pharma: 'Farma', finanz: 'Finanzas', versicherung: 'Assicuranza', beratung: 'Cussegliaziun', telekom: 'Telekom', energie: 'Energia', oeffentlich: 'Admin. publica', bildung: 'Furmaziun', gesundheit: 'Sanadad', bau: 'Construcziun', industrie: 'Industria', handel: 'Commerzi', transport: 'Transport', gastro: 'Gastronomia', reinigung: 'Nettegiament', landwirtschaft: 'Agricultura', detailhandel: 'Commerzi al detail' } },
         workHoursPerWeek: "Uras da lavur per l'emna",
+        ferienTageJahr: 'Dis da vacanzas per onn',
+        ferienTageBezogen: 'Da quels prendids quest onn',
         languages: 'Linguas',
       },
       docs: {
@@ -4915,7 +4918,60 @@ export default {
     pk: "La cassa da pensiun (CHF\u00a0{betrag}) è gia deducida da la paja.",
     alles: "Tut davart la franschisa ed il cumparegliar",
   },
+  // Kopf und Rand im Kapitel Wohnen (Stebler Studios 20.11.2026, «wie die Finanzen») — rm zur Gegenlese
+  // Dreier-Set «Mietbeiträge und Wohnungsmarkt» im Kapitel Wohnen (Stebler Studios 20.11.2026) — rm zur Gegenlese
+  wohnenKarten: {
+    einstieg: '{kanton} en cumparegliaziun: tge sustegn ch’i dat, tge che las abitaziuns custan, quantas ch’èn libras.',
+    einstiegOhne: 'En cumparegliaziun: tge sustegn ch’i dat, tge che las abitaziuns custan, quantas ch’èn libras.',
+    programmKurz: 'program registrà en l’app',
+    unklarKurz: 'nagin program registrà',
+    rangSatz: 'plaz {rang} da {von}',
+    quellenWort: 'Funtaunas',
+    titel: 'Contribuziuns al fit e martgà d’abitaziuns',
+    miete: 'Fit 3 stanzas',
+    leer: 'Abitaziuns vidas',
+    programm: 'Program enconuschent',
+    unklar: 'malcler',
+    mieteSatz: 'Svizra Ø {ch}',
+    leerSatz: 'Svizra {ch} · plaz {rang} da {von}',
+    schweiz: 'Svizra',
+    mieteAria: 'Fit net mesaun d’ina abitaziun da 3 stanzas per chantun, accentuà: {kanton}',
+    leerLegende: 'Part d’abitaziuns vidas per chantun, la pli auta a sanestra, la Svizra strivlada. Valur bassa: paucas abitaziuns libras.',
+  },
+  wohnenKopf: {
+    bezug: { netto: 'da l’entrada netta', eigen: 'da l’atgna entrada', haushalt: 'da las entradas nettas da la chasada', brutto: 'da l’entrada brutta', gemischt: 'da l’entrada registrada (per part brutta)' },
+    vonBetrag: '{teil} da {ganz}',
+    lage: { Above: 'sur il chantun {kanton}', Below: 'sut il chantun {kanton}', Equal: 'sco en il chantun {kanton}' },
+    stattSchnitt: '{ihre} empè Ø {schnitt}',
+    warumDrittel: 'Pertge in terz?',
+    wieVerglichen: 'Co cumparà?',
+    ablegen: 'deponer',
+    teil: { miete: 'Fit', hypothek: 'Ipoteca', nebenkosten: 'Custs accessoris', gebaeude: 'Assicuranza da l’edifizi', zimmer: 'Stanzas' },
+    adresse: 'Adressa',
+    aendern: 'midar',
+    ergaenzen: 'cumplettar',
+    adresseAendern: 'Midar l’adressa',
+    eigentum: 'Proprietad',
+    nochLeer: 'anc vid',
+    vermieterschaft: 'Locatur',
+    alleAngaben: 'Tut las indicaziuns',
+    anzeigen: 'mussar',
+    ausblenden: 'zuppentar',
+    versichert: 'assicurà',
+    zeitraum: 'Perioda',
+    monat: 'Mais',
+    jahr: 'Onn',
+    imJahr: 'per onn',
+    seitDatum: 'a questa adressa dapi ils {datum}',
+    umzug: 'Midada',
+    hausrat: 'Mobiliar',
+    haftpflicht: 'Responsabladad civila',
+    keine: 'nagina registrada',
+    anrufen: 'Telefonar',
+  },
   wohnenInstrument: {
+    fahneDrittel: '⅓ in terz',
+    fahneViertel: '¼ cussegliaziun',
     titel: "Custs d'abitar per mais",
     titelAusprobiert: "Custs d'abitar per mais · empruvà",
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
@@ -4926,6 +4982,8 @@ export default {
     mehrAlsDrittel: "Dapli ch'in terz da l'entrada va per abitar. Quai è ina reglacurta, nagin'obligaziun — il quint cun tut las expensas mussa, sch'i va si.",
     ohneEinkommen: "Uschespert ch'ina entrada è registrada en il chapitel Finanzas, sa mussi qua, tge part che l'abitar dovra.",
     ausprobieren: 'Empruvar: in auter tschains',
+    // Bauplan Wohnen (18.11.2026): Regler, Kantonskarte und Ausland unter einer Aufklapp-Zeile.
+    mehrDazu: 'Dapli davart quai', // TODO(rm): gegenlesen
     wohnungssuche: "Tschertga d'abitaziun",
     reglerLabel: "Tschains net d'ina nova abitaziun",
     nebenkostenWieHeute: 'Custs accessorics (sco oz)',
@@ -4934,8 +4992,14 @@ export default {
     zurueck: 'Enavos al tschains dad oz',
     ausprobierteMiete: 'Tschains empruvà: CHF\u00a0{amount}',
     anteilEigen: { sie: "{pct}\u202f% da Vossa atgna entrada (CHF\u00a0{einkommen})", du: "{pct}\u202f% da tia atgna entrada (CHF\u00a0{einkommen})" },
+    anteilHaushalt: { sie: "{pct}\u202f% da las entradas nettas da Vossa economia da chasa (Vus e partenari/a, CHF\u00a0{einkommen})", du: "{pct}\u202f% da las entradas nettas da tia economia da chasa (ti e partenari/a, CHF\u00a0{einkommen})" },
+    viertel: 'in quart: recumandaziun da la Budgetberatung Schweiz',
+    hausRest: 'tut il rest',
+    hausSie: { sie: 'Vus', du: 'ti' },
+    hausPartner: 'partenari/a',
     anteilTeilsBrutto: "{pct}\u202f% da l'entrada registrada (CHF\u00a0{einkommen}, per part brut)",
     mitPartner: "Ils custs d'abitar valan per l'economia da chasa, qua è quintada mo l'atgna entrada. Ensemen cun il partenari u la partenaria è la part pli pitschna.",
+    partnerOffen: { sie: "Ils custs d'abitar valan per l'economia da chasa. Inditgai en il chapitel «Basa persunala» la paja netta da la segunda persuna (0, sch'ella n'ha nagina), lura quinta la chasa cun l'entira economia da chasa.", du: "Ils custs d'abitar valan per l'economia da chasa. Inditgescha en il chapitel «Basa persunala» la paja netta da la segunda persuna (0, sch'ella n'ha nagina), lura quinta la chasa cun l'entira economia da chasa." },
     fehltDanach: 'I manca suenter',
   },
 
@@ -6181,6 +6245,10 @@ export default {
   },
 
   eo: {
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildErsatz: 'Indemnisaziun per di',
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildLohn: 'salari per di fin ussa',
     title: 'Cumpensaziun da gudogn (EO)',
     einkommen: 'Entrada annaira brut (CHF)',
     einkommenHint: "Ultima entrada annaira avant l'eveniment",
@@ -6960,6 +7028,29 @@ export default {
     fieldSuggest: { sie: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pudais Vus deselecziunar la cuvrida d’accident da la cassa.', du: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pos ti deselecziunar la cuvrida d’accident da la cassa.' },
     fieldUnter8: { sie: 'Sut 8 uras l’emna na As assicurescha la plazza betg cunter accidents en il temp liber. Tegnai la cuvrida d’accident tar la cassa da malsauns.', du: 'Sut 8 uras l’emna na t’assicurescha la plazza betg cunter accidents en il temp liber. Tegna la cuvrida d’accident tar la cassa da malsauns.' },
   },
+  // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
+  strasse: { eigen: { sie: 'Vus', du: 'ti' }, ausprobiert: 'empruvà', region: 'regiun', regionKanton: 'regiun {kanton}', schweiz: 'Svizra' },
+  // Wohnen international: Schild neben dem Vergleichshaus (11.11.2026). Eurostat-Preisniveau, kein Mietvergleich.
+  wohnenInternational: {
+    titel: 'Abitar ed energia',
+    unter: 'Svizra cumparada cun …',
+    teurer: '{name}: en Svizra {pct}\u202f% pli char',
+    guenstiger: '{name}: en Svizra {pct}\u202f% pli bunmartg',
+    namen: { EU: 'media UE', DE: 'Germania', AT: 'Austria', FR: 'Frantscha', IT: 'Italia' },
+    satz: "L'auzada «UE» è derivada: la media svizra al nivel dals pretschs per abitar ed energia da la media UE (electricitad, gas ed aua cumpigliads). I n'èn nagins pretschs mesirads. Pajais vischins: Germania {DE}\u202f%, Austria {AT}\u202f%, Frantscha {FR}\u202f%, Italia {IT}\u202f%.",
+    quelle: 'Funtauna: [[Eurostat, nivel dals pretschs abitar ed energia 2025 (prc_ppp_ind_1)|https://ec.europa.eu/eurostat/databrowser/view/prc_ppp_ind_1/default/table]] (verifitgà en november 2026).',
+  },
+  mietzinsSzene: {
+    titel: 'Contribuziuns al fitg',
+    beitragLegende: "puntignà: quai che il chantun pudess surpigliar al maximum, fin CHF\u00a0{betrag} il mais. L'import effectiv quinta il chantun.",
+    schild: 'pussaivel',
+    cta: 'pussaivel: verifitgar las contribuziuns al fitg',
+    ctaStelle: 'pussaivel: al servetsch chantunal',
+    ctaKurz: 'pussaivel',
+    karteAria: { sie: 'Chantuns cun in program enconuschent: {liste}. Voss chantun: {kanton}.', du: 'Chantuns cun in program enconuschent: {liste}. Tes chantun: {kanton}.' },
+    karteLegende: { sie: 'emplenì: program enconuschent · vid: nunclera, per plaschair verifitgar · ur gross: Voss chantun', du: 'emplenì: program enconuschent · vid: nunclera, per plaschair verifitgar · ur gross: tes chantun' },
+  },
   mietzins: {
     title: 'Contribuziuns a la fittanza:',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -7336,6 +7427,10 @@ export default {
   },
   // «Lohnt sich meine Karte?» — Kreditkarten-Rechner (27.09.2026). Neutral formuliert, keine Sie/Du-Fassung nötig.
   stundenlohnView: {
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildSie: 'Salari per ura',
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildMindest: 'Salari minimal',
     // TODO(rm): provisorisch — Gegenlese Muttersprachler:in (Stundenlohn-Rechner neu, 28.09.2026).
     // Gesetzes-Abkürzungen vorläufig nach deutscher Form (OR, BVG, UVV) mit «art.»/«al.».
     title: 'Salari per ura: tge ma tutga?',
@@ -7783,6 +7878,11 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026) — nur w.selbstmahnen
     w: { digitaleordnung: 'Digitale Ordnung', selbstmahnen: 'Insatgi ma debita daners', bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Admoniziun retschavida', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Zahlungsbefehl erhalten', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
+  // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
+  thermometer: {
+    franchise: 'Franschisa',
+    selbstbehalt: 'Quota da participaziun',
+  },
   instrumente: {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     title: { sie: 'Voss instruments', du: 'Tes instruments' },
@@ -7799,6 +7899,78 @@ export default {
     kompassFound: '{n} vias pussaivlas',
     kompassFoundOne: 'ina via pussaivla',
     kompassNone: 'autras vias',
+    tankSatz: { sie: 'Uschè ditg tanscha Vossa reserva', du: 'Uschè ditg tanscha tia reserva' },
+    tankMonat: 'mais',
+    tankMonate: 'mais',
+    steuerSatz: 'Taglia sin l’entrada per onn, stimaziun approximativa',
+    schildSatz: { sie: 'Quant da Vossa protecziun è registrà', du: 'Quant da tia protecziun è registrà' },
+    kreuzWechselKurz: 'Plitost questa franchisa (stimaziun, premias {jahr})',
+    kreuzWechselPolsterKurz: 'Plitost questa franchisa, sche la reserva tanscha (stimaziun)',
+    wohnkosten: 'Part da l’abitar',
+    wohnkostenSatz: { sie: 'Quant da Vossa entrada netta va per l’abitar', du: 'Quant da tia entrada netta va per l’abitar' },
+    wohnkostenSatzEigen: { sie: 'Quant da Vossa atgna entrada va per l’abitar', du: 'Quant da tia atgna entrada va per l’abitar' },
+    wohnkostenSatzHaushalt: { sie: 'Quant da las entradas nettas da Vossa economia da chasa va per l’abitar', du: 'Quant da las entradas nettas da tia economia da chasa va per l’abitar' },
+    wohnkostenSatzBrutto: 'Quant da l’entrada brutta va per l’abitar',
+    wohnkostenSatzTeilsBrutto: 'Quant da l’entrada registrada (per part brutta) va per l’abitar',
+    wohnkostenDrittel: 'Lingia: in terz — ina regla empirica, betg ina prescripziun.',
+    wohnkostenOhneEinkommen: 'La part sa mussa, uschespert ch’ina entrada è registrada.',
+    miete: 'Fitg en cumparegliaziun',
+    mieteSatz: { sie: 'Voss fitg net cumpareglià cun la media da Vossa regiun (UST {year})', du: 'Tes fitg net cumpareglià cun la media da tia regiun (UST {year})' },
+    mieteEigentum: 'Nagina cumparegliaziun da fitg per proprietad',
+    steuerfrist: 'Termin da taglia',
+    steuerfristSatz: 'Temp fin al termin da taglia',
+    steuerfristVorbeiSatz: 'Temp dapi ch’il termin da taglia è passà',
+    wechselfrist: 'Midar la cassa da malsauns',
+    wechselfristSatz: 'Temp fin al termin da disditga da la cassa da malsauns',
+    wechselfristKapitel: 'Suenter la communicaziun da la nova premia sto la disditga esser arrivada fin ils {date} tar la cassa veglia (LAMal art. 7 al. 2).',
+    tage: 'dis',
+    tageEins: 'di',
+    monate: 'mais',
+    monateEins: 'mais',
+    gaenge: 'Fatschentas uffizialas',
+    gaengeSatz: 'Fatschentas uffizialas fatgas',
+    bereit: 'Pront per l’urgenza',
+    bereitSatz: 'Indicaziuns d’urgenza prontas',
+    franchise: 'Stadi da la franchisa',
+    franchiseVon: 'da CHF\u00a0{franchise}',
+    franchiseSatz: 'Part da la franchisa cuntanschida l’onn {jahr}, tenor ils mussaments registrads',
+    franchiseErreichtSatz: 'Franchisa {jahr} cuntanschida, tenor ils mussaments registrads',
+    lohn: { sie: 'Nua stat Voss salari?', du: 'Nua stat tes salari?' },
+    lohnSatz: { sie: 'Voss salari cumpareglià cun la mediana svizra (UST {jahr}, temp cumplain, brut)', du: 'Tes salari cumpareglià cun la mediana svizra (UST {jahr}, temp cumplain, brut)' },
+    lohnGeschaetzt: 'Brut stimà a basa dal net.',
+    lohnUnterMindestlohn: { sie: 'Voss salari para dad esser sut il salari minimal chantunal.', du: 'Tes salari para dad esser sut il salari minimal chantunal.' },
+    lohnKeinVergleich: 'Qua nagina cumparegliaziun cun la mediana',
+    dienst: 'Onns da servetsch',
+    jahre: 'onns',
+    jahrEins: 'onn',
+    dienstSatz: { sie: 'Uschè ditg essas Vus en Vossa plazza', du: 'Uschè ditg es ti en tia plazza' },
+    dienstSatzBei: { sie: 'Uschè ditg lavurais Vus tar {employer}', du: 'Uschè ditg lavuras ti tar {employer}' },
+    // TODO(rm): provisorisch — «DO», «CNL», «CCL» und Fachbegriffe ohne amtliche rm-Fassung, Gegenlese offen
+    dienstFrist: 'Termin da disdetga legal per in contract nunterminà: {n} mais sin la fin dal mais (DO art. 335c), sch’il contract, il CNL u il CCL na reglan betg auter.',
+    dienstFristEins: 'Termin da disdetga legal per in contract nunterminà: 1 mais sin la fin dal mais (DO art. 335c), sch’il contract, il CNL u il CCL na reglan betg auter.',
+    dienstProbezeit: 'Durant il temp d’emprova vala senza auter accord in termin da disdetga da 7 dis (DO art. 335b).',
+    // TODO(rm): provisorisch — «Pensum» wie im Deutschen, Gegenlese offen
+    pensum: 'Pensum',
+    stunden: 'uras',
+    pensumSatz: 'Temp da lavur per emna',
+    pensumAnteil: { sie: '≈ {pct}\u202f% mesirà a {basis} uras (basa da la cumparegliaziun da salari, UST). Decisiv è il pensum en Voss contract.', du: '≈ {pct}\u202f% mesirà a {basis} uras (basa da la cumparegliaziun da salari, UST). Decisiv è il pensum en tes contract.' },
+    dienstProbezeitLaenger: 'Sch’il contract prevesa in temp d’emprova pli lung (fin 3 mais), valan fin lura 7 dis (DO art. 335b).',
+    dienstLehre: 'Il contract da giarsunadi ha atgnas reglas: temp d’emprova da 3 mais senza auter accord (DO art. 344a), lura dissoluziun mo senza termin per motivs impurtants (DO art. 346).',
+    pensumVollzeit: 'Temp cumplain, mesirà a {basis} uras (basa da la cumparegliaziun da salari, UST).',
+    ferien: 'Vacanzas',
+    ferienOffenSatz: 'Dis da vacanzas anc averts quest onn',
+    ferienJahrSatz: 'Dis da vacanzas per onn',
+    ferienMinimum: 'Tenor lescha almain 4 emnas per onn da servetsch, fin ils 20 onns cumplenids 5 emnas (DO art. 329a).',
+    ausweis: 'Document d’identitad',
+    ausweisSatz: { sie: 'Uschè ditg è Voss document anc valaivel', du: 'Uschè ditg è tes document anc valaivel' },
+    ausweisAbgelaufenSatz: { sie: 'Uschè ditg è Voss document gia scadì', du: 'Uschè ditg è tes document gia scadì' },
+    referenz: 'Vegliadetgna da referenza',
+    referenzSatz: 'Temp fin a la vegliadetgna da referenza AVS ({alter})',
+    referenzAlterMonate: '{jahre} onns e {monate} mais',
+    referenzOhneGeschlecht: 'Senza indicaziun dal schlattaina quintà cun 65; per dunnas naschidas 1961–1963 è ella pli bassa (AVS 21).',
+    referenzErreicht: 'Vegliadetgna da referenza cuntanschida',
+    grundordnung: 'Urden da basa',
+    grundordnungSatz: { sie: 'Quant da Voss urden da basa stat', du: 'Quant da tes urden da basa stat' },
     tank: 'Indicatur da reserva',
     tankMonths: '{months} mais reserva',
     schild: 'Scud',
@@ -8424,6 +8596,12 @@ export default {
     disclaimer: "Ils cuntegns servan a l'orientaziun. Els na remplazzan nagin cussegliament giuridic u finanzial individual. Verifitgai las indicaziuns tar il post cumpetent.", // TODO(rm): Flyer A5 25.09., Gegenlese
   },
   alv: {
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildErsatz: 'Indemnisaziuns per mais',
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildLohn: 'salari fin ussa',
+    // TODO(rm): provisorisch — Gegenlese (Arbeit-Rechner-Bilder, 11.11.2026)
+    bildMonate: 'Fin {n} mais · in fegl per mais',
     title: "Indemnisaziun da dischoccupaziun",
     intro: { sie: "In'orientaziun che Vus pudessas survegnir sco indemnisaziun dal di en cas da perdita da lavur. Il quint obligatoric vegn fatg dal RAV e da Vossa cassa da dischoccupaziun.", du: "In'orientaziun che ti pudessas survegnir sco indemnisaziun dal di en cas da perdita da lavur. Il quint obligatoric vegn fatg dal RAV e da tia cassa da dischoccupaziun." },
     bruttolohn: "Salari brut mensil fin ussa (CHF)",

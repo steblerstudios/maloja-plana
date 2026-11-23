@@ -88,7 +88,9 @@ describe('B · Mindestschrift', () => {
   it('der kleinste Schritt der Skala ist 14 px', () => {
     // Sophie 23.11.2026 (Rundgang Grössen/Weissraum, E2): Untergrenze 14, Lesetext 16.
     expect(textPx.xs).toBe(14);
-    expect(text.xs).toBe('0.875rem');
+    // text (rem) und textPx (Zahl) sind dieselbe Skala.
+    for (const [k, v] of Object.entries(textPx)) expect(parseFloat(text[k]) * 16).toBe(v);
+    expect(Object.keys(text)).toEqual(Object.keys(textPx));
   });
 
   // Grafiken (SVG-Beschriftungen, Etiketten in Bildern) und Deko-Zeichen (Aufklapp-Pfeile der Auswahlfelder):

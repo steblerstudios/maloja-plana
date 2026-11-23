@@ -14,6 +14,7 @@ import { weight } from '../config/tokens.js';
 //   markers: [{value,label?,color?}]   — Marken mit optionaler Beschriftung
 //   endLabels: {left,right}            — kleine Beschriftung unter den Enden
 //   needleColor            — Farbe des Zeigers (Default palette.text)
+//   maxBreite              — grösste Breite in px (Default 280; Instrumente: INSTRUMENT_GROESSE)
 // Die Grafik selbst ist aria-hidden (dekorativ) — die Ablesung steht als
 // sichtbarer Text direkt darunter beim Consumer und ist die a11y-Quelle
 // (sonst läse der Screenreader dieselbe Aussage zweimal).
@@ -30,13 +31,18 @@ function polar(frac, rr) {
   return [CX + rr * Math.cos(a), CY - rr * Math.sin(a)];
 }
 
+// Halbkreis-Geometrie für beliebige Mittelpunkte — auch für die kleinen Instrumente
+// (ReserveTank klein, InstrumentePanel). Eine Quelle statt Kopien (10.11.2026).
+export const halbkreisPunkt = (f, r, cx, cy) => { const a = Math.PI * (1 - clamp(f, 0, 1)); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
+export const halbkreisBogen = (f1, f2, r, cx, cy) => { const [x1, y1] = halbkreisPunkt(f1, r, cx, cy); const [x2, y2] = halbkreisPunkt(f2, r, cx, cy); return 'M ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r + ' ' + r + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1); };
+
 function arcPath(f1, f2, rr) {
   const [x1, y1] = polar(f1, rr);
   const [x2, y2] = polar(f2, rr);
   return 'M ' + x1.toFixed(2) + ' ' + y1.toFixed(2) + ' A ' + rr + ' ' + rr + ' 0 0 1 ' + x2.toFixed(2) + ' ' + y2.toFixed(2);
 }
 
-export const Gauge = ({ palette, value, min = 0, max = 100, zones = [], markers = [], endLabels, needleColor }) => {
+export const Gauge = ({ palette, value, min = 0, max = 100, zones = [], markers = [], endLabels, needleColor, maxBreite = 280 }) => {
   const h = React.createElement;
   const frac = (v) => gaugeFrac(v, min, max);
   const nColor = needleColor || palette.text;
@@ -74,7 +80,7 @@ export const Gauge = ({ palette, value, min = 0, max = 100, zones = [], markers 
 
   return h('svg', {
     viewBox: '0 0 ' + W + ' ' + H, width: '100%',
-    style: { maxWidth: '280px', height: 'auto', display: 'block', margin: '0 auto', overflow: 'visible' },
+    style: { maxWidth: maxBreite + 'px', height: 'auto', display: 'block', margin: '0 auto', overflow: 'visible' },
     'aria-hidden': true,
   }, els);
 };

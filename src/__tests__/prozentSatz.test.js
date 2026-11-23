@@ -28,11 +28,11 @@ describe('prozent()', () => {
 });
 
 describe('kein normales Leerzeichen vor %', () => {
-  it('im Code: kein Literal \' %\'', () => {
+  it('im Code: kein « %» in Literalen und Template-Strings', () => {
     const funde = dateien()
       .filter((p) => !p.includes(join('src', 'i18n')))
       .flatMap((p) => readFileSync(p, 'utf8').split('\n')
-        .map((z, i) => (/' %'/.test(z) ? relative(SRC, p) + ':' + (i + 1) : null))
+        .map((z, i) => (/' %|\} %/.test(z) ? relative(SRC, p) + ':' + (i + 1) : null))
         .filter(Boolean));
     expect(funde).toEqual([]);
   });
@@ -56,8 +56,8 @@ describe('CHF mit geschütztem Leerzeichen', () => {
     expect(betrag(7)).toBe('CHF 7');
     expect(VERBORGEN).toBe('CHF ···');
   });
-  it('t() setzt «CHF {x}» immer mit U+00A0', () => {
-    const t = createT({ de: { a: 'ca. CHF {x}/Jahr', b: 'CHF {x}' } }, 'de', 'sie');
+  it('t() behält das geschützte Leerzeichen aus der Übersetzung und formatiert die Zahl', () => {
+    const t = createT({ de: { a: 'ca. CHF\u00a0{x}/Jahr', b: 'CHF {x}' } }, 'de', 'sie');
     expect(t('a', { x: 2160 })).toBe('ca. CHF 2’160/Jahr');
     expect(t('b', { x: '1’500' })).toBe('CHF 1’500');
   });

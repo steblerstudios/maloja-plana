@@ -229,7 +229,7 @@ export const HEARTFELT = [
   { key: 'heartfelt28', name: 'Reclaim City', url: 'https://play.multiversegames.ai/reclaim-city/', group: 'digital' }, // Datenschutz-Spiel (Multiverse), englisch, kein Affiliate; Anstoss für «Digitale Ordnung», angesehen 01.11.2026
   { key: 'heartfelt29', name: 'Proton Mail', url: 'https://proton.me/mail', group: 'digital' }, // Proton AG, Plan-les-Ouates GE, Datenschutzerklärung Stand 12.05.2026; kein Affiliate, Beispiel nach Entscheid 01.11.2026 (Konzept §6)
   { key: 'heartfelt27', name: 'Nexter', url: 'https://crewz.io/de/nexter/', group: 'digital' }, // Habit-Tracker der Crewz GmbH (Freiburg i. Br.) – kein Affiliate, Seite geprüft 25.09.2026 (erfundene Adresse → 404)
-  { key: 'heartfelt30', name: 'noahbytes', url: 'https://noahbytes.com/', group: 'digital' }, // Noah Müller, Basel – Websites, Tools, Informatik-Unterricht; kein Affiliate; Noah weiss Bescheid (Sophie, 18.11.2026); Seite geprüft 18.11.2026
+  { key: 'heartfelt30', name: 'noahbytes', url: 'https://noahbytes.com/', group: 'digital' }, // Websites, Tools, Informatik-Unterricht; kein Affiliate; Noah weiss Bescheid (Stebler Studios, 18.11.2026); Seite geprüft 18.11.2026
 ];
 
 // Reihenfolge der Gruppen in der Anzeige.

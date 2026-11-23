@@ -527,7 +527,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('button', {
           type: 'button',
           onClick: () => onSelectChapter(i),
-          'aria-label': `${chapterTitle}, ${Math.round(pct)} %`,
+          'aria-label': `${chapterTitle}, ${Math.round(pct)}\u202f%`,
           style: {
             position: 'absolute', left: -sz / 2 + 'px', top: -sz / 2 + 'px',
             width: sz + 'px', height: sz + 'px', padding: 0,

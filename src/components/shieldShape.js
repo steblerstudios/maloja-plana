@@ -1,5 +1,5 @@
 // Einzige Quelle der Wappen-Form für die Instrumente-Familie: das volle
-// Schutzschild (Schutzschild.jsx) und die Mini-Glyphe im Dashboard-Spiegel
+// Schutzschild (_archiv/Schutzschild.jsx, seit 11.11.2026 archiviert) und die Mini-Glyphe im Dashboard-Spiegel
 // (InstrumentePanel.jsx) leiten ihren SVG-Pfad aus derselben Funktion ab —
 // kein zweiter hartcodierter Pfad, der auseinanderdriften kann.
 //

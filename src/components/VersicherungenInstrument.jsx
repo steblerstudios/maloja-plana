@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { I18nContext } from '../i18n/index.js';
+import { Kalenderblatt } from './Kalenderblatt.jsx';
+import { fristAbstand } from '../utils/fristAbstand.js';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { monatsAusgaben, versicherungenSumme } from '../utils/monatsrechnung.js';
 import { betrag, zahl, PROZENT } from '../utils/geld.js';
@@ -6,12 +9,12 @@ import { schildOptionen, schildState, bvgAktiv } from '../data/schutzschild.js';
 import { betraegeFuer } from '../data/netzSchild.js';
 import { bereichsTon } from '../utils/lebensbereichFruechte.js';
 import { ausgabenPosten } from './Geldfluss.jsx';
-import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
+import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise, kvgWechselfrist } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { NetzSchild, betragText } from './NetzSchild.jsx';
 import { FranchiseKreuz } from './FranchiseKreuz.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
-import { KKLastEinordnung, VERGLEICHSMARKE, kkLastBasisKey, kkLastIpv } from '../KKLastCard.jsx';
+import { KKLastEinordnung, VERGLEICHSMARKE, kkLastAnteil, kkLastBasisKey, kkLastIpv } from '../KKLastCard.jsx';
 import { istAngestellt } from '../utils/anstellung.js';
 
 // Kapitel Versicherungen · das Instrument oben (Fassung 6, Runde 9, Entwurf AA, Entscheid Stebler Studios 24.10.2026,
@@ -32,8 +35,11 @@ const zahl2 = (x) => Number(x) || 0;
 
 // `uebersicht` (Versicherungs-Übersicht, Schritt 3): nur Geld und KK-Last, die Posten zugeklappt unter «Was darin steckt»;
 // Schutzschild und Franchise-Kreuz zeigt die Übersicht selbst.
-export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, onNavigate, uebersichtName, uebersicht = false }) => {
+// `jetzt`: nur für Tests (Wechselzeit); sonst heute.
+export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, onNavigate, uebersichtName, uebersicht = false, jetzt = null }) => {
   const v = versicherungen || {};
+  const lang = useContext(I18nContext)?.lang || 'de';
+  const blattLocale = { de: 'de-CH', fr: 'fr-CH', it: 'it-CH', en: 'en-GB', rm: 'de-CH' }[lang] || 'de-CH';
   const daten = { ...(allData || {}), versicherungen: v };
   const p = monatsAusgaben(daten);
   const summe = versicherungenSumme(p);
@@ -82,13 +88,12 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const f = daten.finanzen || {};
   const pk = Number(v.bvgContribution) > 0 && istAngestellt(f) && f.incomeType === 'netto' ? Number(v.bvgContribution) : 0;
 
-  // KK-Last wie KKLastCard: Grundversicherungs-Prämie ÷ monatliches Einkommen.
-  const kkPraemie = Number(v.kkPremium) || 0;
-  const einkommen = Number(daten.finanzen?.monthlyIncome) || 0;
-  const anteil = kkPraemie > 0 && einkommen > 0 ? (kkPraemie / einkommen) * 100 : null;
+  // KK-Last: dieselbe Rechnung wie KKLastCard und KKLastSpiegel (kkLastAnteil, B-R4).
+  const last = kkLastAnteil(daten);
+  const anteil = last ? last.anteil : null;
   const skala = anteil == null ? 15 : Math.max(15, Math.ceil(anteil / 5) * 5);
   // IPV-Stand wie KKLastCard: was abgezogen werden darf, entscheidet data/ipvAbzug.js.
-  const kkStand = anteil != null ? kkLastIpv(daten, kkPraemie, einkommen) : null;
+  const kkStand = last ? kkLastIpv(daten, last.praemie, last.einkommen) : null;
 
   const schildDa = schildState(v, schildOptionen(daten)).touched;
 
@@ -174,6 +179,23 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     pk > 0 && h('p', { 'data-teil': 'versicherungen-hinweis', style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.pk', { betrag: zahl(pk) })),
     ja(v.autoInsurance) && Number(v.autoInsuranceAmount) > 0 && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.fahrzeug')));
 
+  // Wechselfrist der Krankenkasse (Stebler Studios 11.11.2026, Matrix §9): Kalenderblatt, nur in der Wechselzeit.
+  // Dieselbe Rechnung wie Kachel und Werkzeug (kvgWechselfrist). Regel «Zahl»: unter dem Blatt die Tage gross.
+  const wechsel = kvgWechselfrist(jetzt || new Date());
+  const wechselAb = wechsel.zeigen ? fristAbstand(wechsel.iso, (jetzt || new Date()).getTime()) : null;
+  const wechselDatum = wechsel.iso.slice(8, 10) + '.' + wechsel.iso.slice(5, 7) + '.' + wechsel.iso.slice(0, 4);
+  const wechselfrist = !uebersicht && wechselAb && h('div', { 'data-teil': 'kvg-wechselfrist', style: { display: 'flex', gap: space.md + 'px', alignItems: 'flex-start', marginTop: space.lg + 'px' } },
+    h('div', { style: { flexShrink: 0, textAlign: 'center' } },
+      h(Kalenderblatt, { iso: wechsel.iso, palette, locale: blattLocale, thema: { bereich: 'versicherungen', icon: 'insurance' } }),
+      h('div', { 'data-instrument-zahl': 'wechselfrist', style: { fontSize: text['2xl'], fontWeight: weight.semi, color: palette.text, lineHeight: 1.1, fontVariantNumeric: 'tabular-nums', marginTop: space.xs + 'px' } },
+        wechselAb.tage === 0 ? t('behördenStatus.today') : String(wechselAb.n)),
+      wechselAb.tage !== 0 && h('div', { style: { fontSize: text.sm, color: palette.mid } }, t('instrumente.' + wechselAb.einheit + (wechselAb.n === 1 ? 'Eins' : '')))),
+    h('div', { style: { minWidth: 0 } },
+      h('h4', { style: { ...kapH, marginTop: 0 } }, t('instrumente.wechselfrist')),
+      h('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, t('instrumente.wechselfristKapitel', { date: wechselDatum })),
+      onNavigate && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('kvgwechsel'), style: { background: 'none', border: 'none', padding: 0, minHeight: '44px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textDecoration: 'underline' } },
+        t('instrumente.wechselfrist') + ' ›')));
+
   const schild = !uebersicht && h(React.Fragment, null,
     schildDa && h('h3', { style: hatGeld ? kapH : { ...kapH, marginTop: 0 } }, t('instrumente.schild')),
     // Netz-Schild statt der zwei kleinen Schilde und des Spinnennetzes (F7-K3-6, 27.10.2026).
@@ -182,12 +204,14 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   return h('section', { 'data-teil': 'versicherungen-instrument', style: { marginBottom: space.lg + 'px' } },
     (hatGeld || ausserhalb.length > 0) && h('div', { 'data-teil': 'versicherungen-karte', style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, marginBottom: space.md + 'px' } },
       hatGeld && h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, t('versInstrument.titel')),
-      hatGeld && h('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(Math.round(summe))),
+      // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): erst das Bild (der Balken), darunter die Zahl gross.
       hatGeld && stapel(),
+      hatGeld && h('div', { 'data-instrument-zahl': 'versicherungen', style: { fontSize: text['2xl'], fontWeight: weight.semi, color: palette.text, lineHeight: 1.1, fontVariantNumeric: 'tabular-nums' } }, betrag(Math.round(summe))),
       hatGeld && postenZeilen(),
       hatGeld && postenHinweise(),
       ausserhalbListe()),
     schild,
+    wechselfrist,
 
     !uebersicht && franchiseOpt && h(React.Fragment, null,
       h('h3', { style: kapH }, t('instrumente.tacho')),

@@ -44,12 +44,12 @@ export const StorageWarning = ({ palette, t }) => {
       display: 'flex',
       alignItems: 'start',
       gap: space.ms,
-      fontSize: rem(textPx.sm - 1),
+      fontSize: '.9375rem', // 15 px
       lineHeight: leading.normal,
     }
   },
     React.createElement('span', {
-      style: { fontSize: rem(textPx.sm + 1), flexShrink: 0, marginTop: '1px' }
+      style: { fontSize: '1.0625rem', flexShrink: 0, marginTop: '1px' } // 17 px
     }, hinweisZeichen(isCritical ? 'warning' : 'info', 12)),
 
     React.createElement('div', { style: { flex: 1 } },
@@ -79,7 +79,7 @@ export const StorageWarning = ({ palette, t }) => {
         border: 'none',
         color: palette.mid,
         cursor: 'pointer',
-        fontSize: rem(textPx.sm + 1),
+        fontSize: '1.0625rem', // 17 px
         padding: '0 ' + space.xs + 'px',
         flexShrink: 0,
       }

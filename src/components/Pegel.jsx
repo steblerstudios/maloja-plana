@@ -21,7 +21,11 @@ const VESSEL_CLIP = 'M33 17 L33 123 Q33 137 46 137 L82 137 Q95 137 95 123 L95 17
 
 const fmtCHF = (n) => betrag(n || 0);
 
-export const Pegel = ({ palette, t, state }) => {
+// `nurGlas` (11.11.2026, Mietzinsbeiträge im Kapitel Wohnen): nur das Gefäss, ohne Ablesung — dieselbe Form an
+// einem anderen Ort, die Sätze stehen dort daneben.
+// `fuellFarbe` (11.11.2026): die Farbe des Wassers, wo das Glas in einem anderen Bereich steht — Mietbeiträge grau
+// (Behörden-Zwetschge, Stebler Studios «grau gefüllt»). Ohne Angabe Salbei wie bei IPV und Sozialhilfe.
+export const Pegel = ({ palette, t, state, nurGlas = false, fuellFarbe }) => {
   const h = React.createElement;
   if (!state || !state.show) return null;
   const variant = state.variant || 'luft';
@@ -57,7 +61,7 @@ export const Pegel = ({ palette, t, state }) => {
       // aufstockung: schraffierte Aufstockung von der Linie bis zur Wasser-Oberkante
       showSupport && h('rect', { x: 33, y: LINE_Y, width: 62, height: waterTopY - LINE_Y, fill: 'url(#' + uid + '-hatch)' }),
       // Einkommen (sage)
-      h('rect', { x: 33, y: sageTopY, width: 62, height: INNER_BOTTOM - sageTopY + 2, fill: palette.sage, opacity: 0.82 }),
+      h('rect', { x: 33, y: sageTopY, width: 62, height: INNER_BOTTOM - sageTopY + 2, fill: fuellFarbe || palette.sage, opacity: 0.82 }),
       // Meniskus
       h('rect', { x: 33, y: waterTopY - 1.5, width: 62, height: 3, fill: palette.surface, opacity: 0.3 })
     ),
@@ -83,6 +87,8 @@ export const Pegel = ({ palette, t, state }) => {
     muster(h('line', { x1: 0, y1: 5, x2: 14, y2: 5, stroke: palette.skyDeep, strokeWidth: 1.8, strokeDasharray: '5 3' }), lineLabel, palette.skyDeep),
     showSupport && muster(h('rect', { x: 0, y: 0, width: 14, height: 10, fill: 'url(#' + uid + '-hatch)', stroke: palette.sage, strokeWidth: 1 }), t('pegel.aufstockung'), palette.sageDeep),
     showLuft && muster(h('path', { d: 'M4 1 H10 M7 1 V9 M4 9 H10', stroke: palette.mid, strokeWidth: 1.2, fill: 'none' }), t('pegel.luft'), palette.mid));
+  // Nur das Glas (seit #915): die Namen gehören seit 23.11.2026 zur Legende, darum kommt sie mit.
+  if (nurGlas) return h('div', { 'data-teil': 'pegel-glas' }, h('div', { style: { flexShrink: 0 } }, svg, legende));
 
   // ── Ablesung ──
   const title = soz ? t('nav.sozialhilfe') : t('schnellcheck.ipv');

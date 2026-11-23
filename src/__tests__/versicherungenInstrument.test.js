@@ -133,7 +133,7 @@ describe('Nachprüfung', () => {
     const pal = new Proxy({}, { get: () => '#000' });
     const html = renderToStaticMarkup(React.createElement(KKLastSpiegel, { palette: pal, t: tt, data: DEMO_DATA, onNavigate: () => {} }));
     expect(html).toContain('kkLast.spiegelSatz');
-    expect(html).toContain('8.7 %');
+    expect(html).toContain('8.7\u202f%');
     expect(html).not.toContain('kkLast.marker');
     expect(html).not.toContain('kkLast.kanton');
   });
