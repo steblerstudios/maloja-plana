@@ -134,7 +134,7 @@ de   k=languages type="textarea" section~8955896f label~8955896f sectionIntro~85
 de   doc k=diploma label~d65d7498
 de   doc k=certificates label~6883c28b
 de   doc k=cv_file label~b8f43900
-de kapitel=behoerden title~61ba669b short~033e78a7 description~c43c4149 felder=10 docs=4
+de kapitel=behoerden title~61ba669b short~033e78a7 description~c43c4149 felder=11 docs=4
 de   k=cantoneOfTaxation type="select" mvo=true section~a3dcb96b orientation~23dfb9d3 label~e1f7d840 sectionIntro~28d5e10b options=26 optWerte~25f3960d optLabels~5a274633
 de   k=taxId type="text" label~05fb1ebf
 de   k=taxFilingDeadline type="date" label~90bd9dbf
@@ -145,6 +145,7 @@ de   k=courtCases type="select" label~bd0cc30a options=2 optWerte~2bfd19fd optLa
 de   k=legalRepresentative type="text" section~5dca6923 label~70fd3696 sectionIntro~c8e6925b
 de   k=representativePhone type="tel" label~fe6ae533
 de   k=willMade type="select" orientation~07493aae link~2c2317f6 label~aa1af562 options=4 optWerte~ba1da0c9 optLabels~94003baa
+de   k=gemeindeWebsite type="text" section~f1fb9833 label~993f7e89 sectionIntro~811c9dc5 weitere=inputMode
 de   doc k=betreibungsauszug label~0e973d0c
 de   doc k=will label~aa111790
 de   doc k=power_of_attorney label~264c7d29
@@ -302,7 +303,7 @@ fr   k=languages type="textarea" section~37f82364 label~37f82364 sectionIntro~13
 fr   doc k=diploma label~212b8a6f
 fr   doc k=certificates label~41ce1b52
 fr   doc k=cv_file label~b76a72e1
-fr kapitel=behoerden title~cd67a7aa short~d56b3dc1 description~749e1e4d felder=10 docs=4
+fr kapitel=behoerden title~cd67a7aa short~d56b3dc1 description~749e1e4d felder=11 docs=4
 fr   k=cantoneOfTaxation type="select" mvo=true section~b3e26776 orientation~99f6d0b7 label~902a6e6a sectionIntro~0af69d8a options=26 optWerte~25f3960d optLabels~869f43a7
 fr   k=taxId type="text" label~81b0177d
 fr   k=taxFilingDeadline type="date" label~3e1f4c64
@@ -313,6 +314,7 @@ fr   k=courtCases type="select" label~20b9d4a7 options=2 optWerte~2bfd19fd optLa
 fr   k=legalRepresentative type="text" section~47681fdc label~43eca758 sectionIntro~3196baa2
 fr   k=representativePhone type="tel" label~7bbf8cc7
 fr   k=willMade type="select" orientation~cb49009f link~5ffebf04 label~197789ff options=4 optWerte~ba1da0c9 optLabels~3b744bfd
+fr   k=gemeindeWebsite type="text" section~599722f1 label~90d3952c sectionIntro~811c9dc5 weitere=inputMode
 fr   doc k=betreibungsauszug label~5030071d
 fr   doc k=will label~aa111790
 fr   doc k=power_of_attorney label~f0cdd99b
@@ -470,7 +472,7 @@ it   k=languages type="textarea" section~d9190757 label~d9190757 sectionIntro~d6
 it   doc k=diploma label~34551f6d
 it   doc k=certificates label~57ce3df4
 it   doc k=cv_file label~da047e32
-it kapitel=behoerden title~41bd1066 short~43f19ca3 description~c9e9b2a4 felder=10 docs=4
+it kapitel=behoerden title~41bd1066 short~43f19ca3 description~c9e9b2a4 felder=11 docs=4
 it   k=cantoneOfTaxation type="select" mvo=true section~64420548 orientation~5cf3ccfb label~38fb9708 sectionIntro~12f105f6 options=26 optWerte~25f3960d optLabels~cf4927a4
 it   k=taxId type="text" label~1cb159bc
 it   k=taxFilingDeadline type="date" label~5897c933
@@ -481,6 +483,7 @@ it   k=courtCases type="select" label~9a2ca8f9 options=2 optWerte~2bfd19fd optLa
 it   k=legalRepresentative type="text" section~5a3eab11 label~1e82eb05 sectionIntro~c1f06288
 it   k=representativePhone type="tel" label~d0a1d1cf
 it   k=willMade type="select" orientation~490c26eb link~d56f10b4 label~4c267d0b options=4 optWerte~ba1da0c9 optLabels~9e43a748
+it   k=gemeindeWebsite type="text" section~14025158 label~5e1b83ec sectionIntro~811c9dc5 weitere=inputMode
 it   doc k=betreibungsauszug label~bc93e2f7
 it   doc k=will label~b7e8c66d
 it   doc k=power_of_attorney label~c432f491
@@ -638,7 +641,7 @@ en   k=languages type="textarea" section~0c632e38 label~0c632e38 sectionIntro~25
 en   doc k=diploma label~2a550faf
 en   doc k=certificates label~b88e4cd9
 en   doc k=cv_file label~4d2bc7a5
-en kapitel=behoerden title~59f3010e short~cf239e0e description~7f425261 felder=10 docs=4
+en kapitel=behoerden title~59f3010e short~cf239e0e description~7f425261 felder=11 docs=4
 en   k=cantoneOfTaxation type="select" mvo=true section~0d438a7a orientation~df85f479 label~69e1ee39 sectionIntro~d5815415 options=26 optWerte~25f3960d optLabels~b651dc64
 en   k=taxId type="text" label~3acd429b
 en   k=taxFilingDeadline type="date" label~6d68c60c
@@ -649,6 +652,7 @@ en   k=courtCases type="select" label~b9e95469 options=2 optWerte~2bfd19fd optLa
 en   k=legalRepresentative type="text" section~587e9830 label~15b541c3 sectionIntro~6ce32e48
 en   k=representativePhone type="tel" label~34c50bfb
 en   k=willMade type="select" orientation~41d1a32b link~ef3beccd label~53f4e27a options=4 optWerte~ba1da0c9 optLabels~54d770bb
+en   k=gemeindeWebsite type="text" section~4167ae5d label~2aa8a85c sectionIntro~811c9dc5 weitere=inputMode
 en   doc k=betreibungsauszug label~4bc008c4
 en   doc k=will label~903cb9ad
 en   doc k=power_of_attorney label~9d16cfd7
@@ -806,7 +810,7 @@ rm   k=languages type="textarea" section~ee5d4fe8 label~ee5d4fe8 sectionIntro~52
 rm   doc k=diploma label~aaded0b0
 rm   doc k=certificates label~41ce1b52
 rm   doc k=cv_file label~6ffb39cb
-rm kapitel=behoerden title~6daf42eb short~e7bce7bd description~62d0eaa0 felder=10 docs=4
+rm kapitel=behoerden title~6daf42eb short~e7bce7bd description~62d0eaa0 felder=11 docs=4
 rm   k=cantoneOfTaxation type="select" mvo=true section~fda928f7 orientation~7cfcecd6 label~094b02ef sectionIntro~c2084392 options=26 optWerte~25f3960d optLabels~635a07c4
 rm   k=taxId type="text" label~a398d9f7
 rm   k=taxFilingDeadline type="date" label~91e2c20e
@@ -817,6 +821,7 @@ rm   k=courtCases type="select" label~ecccbeb4 options=2 optWerte~2bfd19fd optLa
 rm   k=legalRepresentative type="text" section~2fc92f34 label~c55bf97d sectionIntro~130b06d6
 rm   k=representativePhone type="tel" label~4f1460dc
 rm   k=willMade type="select" orientation~3c7ca434 link~2c2317f6 label~343cbd22 options=6 optWerte~d51cb516 optLabels~c894eab4
+rm   k=gemeindeWebsite type="text" section~b227c213 label~23dfb911 sectionIntro~811c9dc5 weitere=inputMode
 rm   doc k=betreibungsauszug label~8328c5f6
 rm   doc k=will label~aa111790
 rm   doc k=power_of_attorney label~c432f491

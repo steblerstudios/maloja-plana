@@ -1361,7 +1361,7 @@ export default {
     finanzen: { income: 'Revenus', budgetLight: 'Dépenses mensuelles', obligations: 'Obligations', savings: 'Épargne', assets: 'Patrimoine & titres', credit: 'Crédit', provision: 'Prévoyance' },
     versicherungen: { basic: 'Assurance de base', occupational: 'Prévoyance professionnelle', additional: 'Assurances complémentaires', property: 'Assurances biens & voyage', mobility: 'Mobilité', social: 'Assurance sociale' },
     ausbildung: { education: 'Formation', work: 'Emploi', languages: 'Langues' },
-    behoerden: { taxes: 'Impôts', legal: 'Droit', representation: 'Représentation' },
+    behoerden: { taxes: 'Impôts', legal: 'Droit', representation: 'Représentation', gemeinde: "Commune" },
     notfall: { contact: 'Contact d\'urgence', medical: 'Médical', care: 'Soins médicaux', provision: 'Dispositions personnelles' },
   },
   sectionIntros: {
@@ -2670,6 +2670,7 @@ export default {
         legalRepresentative: 'Représentant juridique',
         representativePhone: 'Téléphone du représentant juridique',
         willMade: { label: 'Testament rédigé ?', options: { no: 'Non', handwritten: 'Oui, olographe', public: 'Oui, par acte public', inProgress: 'En cours' } },
+        gemeindeWebsite: "Site web de la commune",
       },
       docs: {
         betreibungsauszug: 'Extrait du registre des poursuites',
@@ -2835,6 +2836,17 @@ export default {
     fensterTipp: { sie: "Touchez une fenêtre de la maison pour voir la démarche.", du: "Touche une fenêtre de la maison pour voir la démarche." },
     gangWaehlen: "Choisir une démarche",
     kurz: { steuererklaerung: "Impôts", betreibungsauszug: "Poursuites", ausweisRenewal: "Pièce d’identité", wohnsitzbestaetigung: "Domicile", strafregisterauszug: "Casier judiciaire" },
+    gemeinde: {
+      titel: "Commune de {name}",
+      titelOhne: { sie: "Votre commune", du: "Ta commune" },
+      satz: "L’attestation de domicile est délivrée par le service qui tient le registre des habitants – en général la commune. Les autres démarches qui se font à la commune varient selon le canton et la commune.",
+      website: "Site web de la commune",
+      websiteErgaenzen: "Ajouter le site web",
+      plzFehlt: { sie: "Votre commune apparaît dès que le numéro postal figure sous {wohnen}.", du: "Ta commune apparaît dès que le numéro postal figure sous {wohnen}." },
+      mehrdeutig: "Ce numéro postal couvre plusieurs communes, c’est pourquoi aucun nom n’apparaît ici.",
+      tuerAria: "Porte : commune de {name}",
+      tuerAriaOhne: "Porte : commune",
+    },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {

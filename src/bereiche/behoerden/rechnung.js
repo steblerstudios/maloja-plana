@@ -52,3 +52,29 @@ export const leistungenLage = (profil, { fertig = false } = {}) => {
 
 // Welcher Text zu welchem Weg gehört (dieselben Namen wie in der Leistungsliste der Übersicht).
 export const WEG_NAME = { ipv: 'dashboard.quickCheckIpv', soz: 'nav.sozialhilfe', el: 'schnellcheck.el' };
+
+// ── Tür im Gemeindehaus (Stebler Studios 23.11.2026, «3 klingt gut»: die Tür ist die eigene Gemeinde) ─────────────────
+// Die Gemeinde kommt aus der Postleitzahl bei Wohnen (data/plzGemeinde.js, swisstopo, Amtliches Ortschaftenverzeichnis).
+// Nur eindeutig: die PLZ gehört zu genau einer Gemeinde. Kein Abgleich mit dem Ort (Fachprüfung 23.11.2026, Blocker):
+// der Ort bei Wohnen ist der Postort, nicht die Gemeinde — «1032 Romanel-sur-Lausanne» liegt zu 19 % in Lausanne,
+// 638 solche Paare. Lieber kein Name als die falsche Gemeinde über der Tür. `treffer`: lookupPLZ(plz).
+export const gemeindeLage = (treffer) => {
+  const liste = Array.isArray(treffer) ? treffer : [];
+  if (liste.length === 0) return { state: 'ohne' };
+  return liste.length === 1 ? { state: 'eindeutig', ...liste[0] } : { state: 'mehrdeutig' };
+};
+
+// Der Link, den die Person selbst eingetragen hat — nur http(s), sonst keiner (kein «javascript:», keine Leerzeichen).
+// «www.musterhausen.ch» wird zu «https://www.musterhausen.ch». Ergebnis: die Adresse oder null.
+export const sichereWebsite = (roh) => {
+  const s = String(roh || '').trim();
+  if (!s || /\s/.test(s)) return null;
+  const mitSchema = /^https?:\/\//i.test(s) ? s : /^[a-z0-9-]+(\.[a-z0-9-]+)+(\/.*)?$/i.test(s) ? 'https://' + s : null;
+  if (!mitSchema) return null;
+  try {
+    const u = new URL(mitSchema);
+    // Sicherheitsprüfung 23.11.2026: keine Zugangsdaten in der Adresse (https://name:pw@…).
+    if (u.username || u.password) return null;
+    return (u.protocol === 'https:' || u.protocol === 'http:') && u.hostname.includes('.') ? u.href : null;
+  } catch { return null; }
+};

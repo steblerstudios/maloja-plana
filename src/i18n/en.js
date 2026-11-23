@@ -1361,7 +1361,7 @@ export default {
     finanzen: { income: 'Income', budgetLight: 'Monthly expenses', obligations: 'Obligations', savings: 'Savings', assets: 'Assets & securities', credit: 'Credit', provision: 'Provision' },
     versicherungen: { basic: 'Basic insurance', occupational: 'Occupational pension', additional: 'Additional insurance', property: 'Property & travel insurance', mobility: 'Mobility', social: 'Social insurance' },
     ausbildung: { education: 'Education', work: 'Employment', languages: 'Languages' },
-    behoerden: { taxes: 'Taxes', legal: 'Legal', representation: 'Representation' },
+    behoerden: { taxes: 'Taxes', legal: 'Legal', representation: 'Representation', gemeinde: "Municipality" },
     notfall: { contact: 'Emergency contact', medical: 'Medical', care: 'Medical care', provision: 'Personal arrangements' },
   },
   sectionIntros: {
@@ -2671,6 +2671,7 @@ export default {
         legalRepresentative: 'Legal representative',
         representativePhone: 'Phone legal representative',
         willMade: { label: 'Will created?', options: { no: 'No', handwritten: 'Yes, handwritten', public: 'Yes, public', inProgress: 'In progress' } },
+        gemeindeWebsite: "Municipality website",
       },
       docs: {
         betreibungsauszug: 'Debt register extract',
@@ -2836,6 +2837,17 @@ export default {
     fensterTipp: "Tap a window in the house to see that task.",
     gangWaehlen: "Choose a task",
     kurz: { steuererklaerung: "Taxes", betreibungsauszug: "Debt register", ausweisRenewal: "ID", wohnsitzbestaetigung: "Residence", strafregisterauszug: "Criminal record" },
+    gemeinde: {
+      titel: "Municipality of {name}",
+      titelOhne: { sie: "Your municipality", du: "Your municipality" },
+      satz: "The confirmation of residence is issued by the office that keeps the residents’ register – usually the municipality. Which other errands are handled by the municipality varies by canton and municipality.",
+      website: "Municipality website",
+      websiteErgaenzen: "Add website",
+      plzFehlt: { sie: "Your municipality appears once the postcode is entered under {wohnen}.", du: "Your municipality appears once the postcode is entered under {wohnen}." },
+      mehrdeutig: "This postcode covers several municipalities, so no name is shown here.",
+      tuerAria: "Door: municipality of {name}",
+      tuerAriaOhne: "Door: municipality",
+    },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {

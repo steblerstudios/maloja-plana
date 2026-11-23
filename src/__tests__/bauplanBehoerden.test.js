@@ -12,7 +12,8 @@ import { LIGHT_PALETTE } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { ladeIPVModelle } from '../config/cantonalData.js';
 import { QuickCheck } from '../components/Leistungsliste.jsx';
-import { BehoerdenZuhause, steuerfristLage, gaengeLage, leistungenLage } from '../bereiche/behoerden/behoerden.js';
+import { BehoerdenZuhause, steuerfristLage, gaengeLage, leistungenLage, gemeindeLage, sichereWebsite, Gemeindehaus, namenZeilen } from '../bereiche/behoerden/behoerden.js';
+import { lookupPLZ } from '../data/plzGemeinde.js';
 import { Kachelkarte } from '../bereiche/wohnen/wohnen.js';
 
 const t = createT({ de }, 'de', 'sie');
@@ -206,6 +207,68 @@ describe('Bauplan Behörden · Formen im Vergleich', () => {
     const q = lies('bereiche/behoerden/zuhause.jsx');
     expect(q).toMatch(/FORM = \{ steuer: 'muenze', sozialhilfe: 'schirm', el: 'puzzle' \}/);
     expect((q.match(/form: FORM\[key\]/g) || []).length).toBe(2);
+  });
+});
+
+// Tür im Gemeindehaus (Stebler Studios 23.11.2026, «3 klingt gut»): die eigene Gemeinde.
+describe('Bauplan Behörden · Tür = Gemeinde', () => {
+  // Fachprüfung 23.11.2026 (Blocker): der Ort bei Wohnen ist der Postort, nicht die Gemeinde — kein Abgleich mit ihm.
+  it('Gemeinde aus der PLZ nur, wenn die PLZ zu genau einer Gemeinde gehört', () => {
+    expect(gemeindeLage(lookupPLZ('8004'))).toMatchObject({ state: 'eindeutig', gemeinde: 'Zürich', kanton: 'ZH' });
+    for (const plz of ['1008', '1015', '1032', '1700', '8152']) expect(gemeindeLage(lookupPLZ(plz)).state, plz).toBe('mehrdeutig');
+    expect(gemeindeLage(lookupPLZ('0000')).state).toBe('ohne');
+    expect(lies('bereiche/behoerden/zuhause.jsx')).toContain('gemeindeLage(plz.lookupPLZ(plzWert))');
+  });
+  it('Website nur http(s): kein javascript:, data:, ftp:, keine Leerzeichen; www.… bekommt https://', () => {
+    expect(sichereWebsite('www.musterhausen.ch')).toBe('https://www.musterhausen.ch/');
+    expect(sichereWebsite('https://www.zuerich.ch/a?b=1')).toBe('https://www.zuerich.ch/a?b=1');
+    for (const boese of ['javascript:alert(1)', 'JaVaScRiPt://x.ch', 'data:text/html,x', 'ftp://a.ch', 'https://a.ch" onclick', 'http://x', 'zürich', '', null, 'https://name:pw@evil.ch', 'https://name@evil.ch']) {
+      expect(sichereWebsite(boese), String(boese)).toBeNull();
+    }
+  });
+  // «der Name der Gemeinde in der Tür» (23.11.2026): eine Zeile wenn möglich, sonst zwei an Bindestrich/Leerzeichen,
+  // unter Schrift 6 kein Name in der Tür (er steht in der Karte und im Vorlesenamen).
+  it('Name in der Tür: kurze Namen ja, nie unter Schrift 6; zu lange passen nicht (dann über der Tür)', () => {
+    expect(namenZeilen('Zürich')).toEqual({ zeilen: ['Zürich'], groesse: 9.1 });
+    expect(namenZeilen('Lausanne').groesse).toBeGreaterThanOrEqual(6);
+    expect(namenZeilen('Bad Ragaz').zeilen).toEqual(['Bad', 'Ragaz']);
+    for (const n of ['Schaffhausen', 'Rapperswil-Jona', 'Saint-Légier-La Chiésaz']) expect(namenZeilen(n), n).toBeNull();
+    expect(namenZeilen('')).toBeNull();
+    const ueber = renderToStaticMarkup(React.createElement(Gemeindehaus, { palette: LIGHT_PALETTE, gemeinde: 'Saint-Légier-La Chiésaz', onTuer: () => {} }));
+    expect(ueber).toMatch(/data-teil="gemeinde-name" data-ort="ueber"/);
+  });
+  it('Gemeindehaus: Name in der Tür, Tür als Knopf mit Namen; klein ohne Name und schmale Tür', () => {
+    const haus = (p) => renderToStaticMarkup(React.createElement(Gemeindehaus, { palette: LIGHT_PALETTE, ...p }));
+    const html = haus({ gemeinde: 'Zürich', onTuer: () => {}, tuerLabel: 'Tür: Gemeinde Zürich', farbe: '#5a6472' });
+    expect(html).toMatch(/data-teil="gemeinde-name"[^>]*fill="#FFFFFF"[^>]*><tspan[^>]*>Zürich</);
+    expect(html).toMatch(/d="M66 160 L66 128/);
+    expect(html).toMatch(/data-teil="tuer-treffer"[^>]*role="button"[^>]*aria-label="Tür: Gemeinde Zürich"/);
+    expect(haus({ gemeinde: 'Zürich', groesse: 'klein' })).not.toContain('gemeinde-name');
+    expect(haus({ groesse: 'klein' })).toMatch(/d="M73 160 L73 124/);
+    expect(haus({})).not.toContain('tuer-treffer');
+  });
+  it('Icons in den Fenstern: je Gang sein Zeichen, Farbe nach Stand; die Kachel ohne Icons', () => {
+    const fenster = [{ an: true, label: 'a', ikon: 'steuern' }, { an: false, label: 'b', ikon: 'quittung' }];
+    const html = renderToStaticMarkup(React.createElement(Gemeindehaus, { palette: LIGHT_PALETTE, fenster, onWaehle: () => {} }));
+    expect(html).toMatch(/data-fenster-ikon="steuern"[^>]*color="#24262A"/);
+    expect(html).toMatch(/data-fenster-ikon="quittung"[^>]*color="#5E6167"/);
+    expect(renderToStaticMarkup(React.createElement(Gemeindehaus, { palette: LIGHT_PALETTE, erledigt: 2, groesse: 'klein' }))).not.toContain('data-fenster-ikon');
+  });
+  it('im Kapitel trägt jedes Fenster das Icon seines Gangs', () => {
+    const html = kapitel();
+    for (const ikon of ['steuern', 'quittung', 'contacts', 'home', 'legal']) expect(html, ikon).toContain('data-fenster-ikon="' + ikon + '"');
+  });
+  it('im Kapitel ist die Tür ein Knopf, auch bevor der Name geladen ist', () => {
+    expect(kapitel()).toMatch(/data-teil="tuer-treffer"[^>]*aria-label="Tür: Gemeinde"/);
+  });
+  it('Gemeinde-Karte: Link nur über sichereWebsite, neues Fenster mit noopener; Satz ohne Behauptung über Kantonsgänge', () => {
+    const q = lies('bereiche/behoerden/zuhause.jsx');
+    expect(q).toContain('const website = sichereWebsite(d.gemeindeWebsite);');
+    expect(q).toContain('h(ExternerLink, { t, href: website,');
+    expect(q).toContain("new URL(website).hostname");
+    expect(q).not.toMatch(/href: d\.gemeindeWebsite/);
+    // Fachprüfung 23.11.2026: nicht überall die Gemeinde (BS, GE) — «meist», und kein Versprechen über andere Gänge.
+    expect(t('behoerdenZuhause.gemeinde.satz')).toMatch(/meist die Gemeinde[\s\S]*je nach Kanton und Gemeinde verschieden/);
   });
 });
 

@@ -1367,7 +1367,7 @@ export default {
     finanzen: { income: 'Einkommen', budgetLight: 'Monatliche Ausgaben', obligations: 'Verpflichtungen', savings: 'Sparen', assets: 'Vermögen & Wertschriften', credit: 'Kredit', provision: 'Vorsorge' },
     versicherungen: { basic: 'Grundversicherung', occupational: 'Berufliche Vorsorge', additional: 'Weitere Versicherungen', property: 'Sach- & Reiseversicherungen', mobility: 'Mobilität', social: 'Sozialversicherung' },
     ausbildung: { education: 'Bildung', work: 'Arbeit', languages: 'Sprachen' },
-    behoerden: { taxes: 'Steuern', legal: 'Recht', representation: 'Vertretung' },
+    behoerden: { taxes: 'Steuern', legal: 'Recht', representation: 'Vertretung', gemeinde: "Gemeinde" },
     notfall: { contact: 'Notfallkontakt', medical: 'Medizinisches', care: 'Ärztliche Betreuung', provision: 'Organspende & Verfügungen' },
   },
   sectionIntros: {
@@ -2688,6 +2688,7 @@ export default {
         legalRepresentative: 'Rechtsbeistand',
         representativePhone: 'Telefon Rechtsbeistand',
         willMade: { label: 'Testament erstellt?', options: { no: 'Nein', handwritten: 'Ja, eigenhändig', public: 'Ja, öffentlich beurkundet', inProgress: 'In Bearbeitung' } },
+        gemeindeWebsite: "Website der Gemeinde",
       },
       docs: {
         betreibungsauszug: 'Betreibungsauszug',
@@ -2855,6 +2856,17 @@ export default {
     fensterTipp: "Ein Fenster im Haus antippen zeigt den Gang.",
     gangWaehlen: "Behördengang wählen",
     kurz: { steuererklaerung: "Steuern", betreibungsauszug: "Betreibung", ausweisRenewal: "Ausweis", wohnsitzbestaetigung: "Wohnsitz", strafregisterauszug: "Strafregister" },
+    gemeinde: {
+      titel: "Gemeinde {name}",
+      titelOhne: { sie: "Ihre Gemeinde", du: "Deine Gemeinde" },
+      satz: "Die Wohnsitzbestätigung stellt die Stelle aus, die das Einwohnerregister führt – meist die Gemeinde. Welche Gänge sonst bei der Gemeinde laufen, ist je nach Kanton und Gemeinde verschieden.",
+      website: "Website der Gemeinde",
+      websiteErgaenzen: "Website ergänzen",
+      plzFehlt: { sie: "Ihre Gemeinde erscheint, sobald bei {wohnen} die Postleitzahl steht.", du: "Deine Gemeinde erscheint, sobald bei {wohnen} die Postleitzahl steht." },
+      mehrdeutig: "Zu dieser Postleitzahl gehören mehrere Gemeinden, darum steht hier kein Name.",
+      tuerAria: "Tür: Gemeinde {name}",
+      tuerAriaOhne: "Tür: Gemeinde",
+    },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {

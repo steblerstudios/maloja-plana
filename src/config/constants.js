@@ -434,6 +434,8 @@ export function getChapters(t) {
         { k: 'legalRepresentative', type: 'text', sec: 'representation' },
         { k: 'representativePhone', type: 'tel' },
         { k: 'willMade', type: 'select', sel: 1, orientation: or(t, 'testament'), link: lk(t, 'testament') },
+        // Tür im Gemeindehaus (23.11.2026): der Link zur eigenen Gemeinde, von der Person selbst eingetragen.
+        { k: 'gemeindeWebsite', type: 'text', sec: 'gemeinde', inputMode: 'url' },
       ],
       docs: [
         'betreibungsauszug',
@@ -496,7 +498,7 @@ export const FIELD_KEYS = {
   finanzen: ['monthlyIncome', 'incomeType', 'dreizehnter', 'employer', 'workCanton', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
   versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'kkZusatzPremium', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'lifeInsurancePremium', 'freizuegigkeit', 'uvg', 'uvgZusatz', 'uvgZusatzPremium', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'liabilityPremium', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'branche', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'ferienTageJahr', 'ferienTageBezogen', 'languages'],
-  behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
+  behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade', 'gemeindeWebsite'],
   notfall: ['emergencyContact', 'emergencyPhone', 'bloodType', 'allergies', 'medications', 'chronicDiseases', 'doctor', 'doctorPhone', 'hospital', 'organDonor', 'patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'],
 };
 
