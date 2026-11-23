@@ -27,7 +27,8 @@ export const VERWANDTE = {
   asyl: ['bewilligung', 'kkerst'],
   iv: ['unfallkrankheit', 'ergaenzungsleistungen', 'pflege'],
   pflege: ['iv', 'ergaenzungsleistungen', 'vorsorgeauftrag'],
-  wohnunggekuendigt: ['umzug', 'mahnung'],
+  wohnunggekuendigt: ['umzug', 'mahnung', 'mietesteigt'],
+  mietesteigt: ['wohnunggekuendigt', 'umzug'],
   quellensteuer: ['neuerjob', 'bewilligung', 'wegzug'],
   // Umleitung auf «Stelle verloren» (letzter Teil dort); der Eintrag zählt trotzdem als Ablauf im Register.
   // EL bleibt: ab 60 können auf die Überbrückungsleistungen EL folgen (ÜLG Art. 3 Abs. 1, ELG Art. 4) —

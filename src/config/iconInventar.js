@@ -139,6 +139,7 @@ export const ICON_INVENTAR = {
     ereignisWegzug: "Lebensereignis: Wegzug ins Ausland",
     ereignisEinbuergerung: "Lebensereignis: Einbürgerung",
     ereignisWohnunggekuendigt: "Lebensereignis: Wohnung gekündigt",
+    ereignisMietesteigt: "Lebensereignis: Die Miete steigt",
     ereignisUmzug: "Lebensereignis: Umzug",
     ereignisNeuch: "Lebensereignis: Neu in der Schweiz",
     ereignisBewilligung: "Lebensereignis: Aufenthalt & Bewilligung",

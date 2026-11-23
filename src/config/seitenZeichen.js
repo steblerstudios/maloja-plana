@@ -96,6 +96,7 @@ export const SEITEN_ZEICHEN = {
   // ── Wohnen ──
   umzug: { zeichen: 'pfeilHinaus', mit: null },
   wohnunggekuendigt: { zeichen: 'kreuzchen', mit: null },
+  mietesteigt: { zeichen: 'waage', mit: GELD }, // Recht und Geld: Erhöhung prüfen (21.11.2026)
   zusammenziehen: { zeichen: 'herz', mit: 'familie' },
   mietzins: { zeichen: 'fuenfliber', mit: GELD },
   // ── Finanzen ──

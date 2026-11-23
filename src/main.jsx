@@ -115,6 +115,7 @@ const ZuzugAusland = lazyMitTexten(() => import('./ZuzugAusland.jsx'));
 // Aussteuerung: seit 24.10.2026 keine eigene Seite — letzter Teil von «Stelle verloren» (UMLEITUNGEN).
 const Quellensteuer = lazyMitTexten(() => import('./Quellensteuer.jsx'));
 const WohnungGekuendigt = lazyMitTexten(() => import('./WohnungGekuendigt.jsx'));
+const MieteSteigt = lazyMitTexten(() => import('./MieteSteigt.jsx'));
 const Selbstaendigkeit = lazyMitTexten(() => import('./Selbstaendigkeit.jsx'));
 const Heirat = lazyMitTexten(() => import('./Heirat.jsx'));
 const KindBekommen = lazyMitTexten(() => import('./KindBekommen.jsx'));
@@ -146,7 +147,9 @@ const SearchView = lazyMitTexten(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 import { knopfStil, linkStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
-import { GlossarText } from './GlossarBegriff.jsx';
+// Glossar nachgeladen (23.11.2026, Startbündel-Deckel 65 kB): die Leistungs-Zeile unten ist sein
+// einziger Nutzer im Startbündel. Bis es da ist, steht derselbe Satz ohne Glossar-Unterstreichung.
+const GlossarText = lazyMitTexten(() => import('./GlossarBegriff.jsx').then((m) => ({ default: m.GlossarText })));
 import { inDays } from './utils/helpers.js';
 // heuteIso (utils/fristen.js) zog die ganze Fristen-Datei ins Startbündel; inDays(0) liefert dasselbe (lokal,
 // YYYY-MM-DD) und liegt ohnehin hier (Startbündel-Diät 26.10.2026).
@@ -1220,7 +1223,8 @@ const AppInner = ({ demo }) => {
       width: '100%', maxWidth: contentMax, margin: space.lg + 'px auto 0',
       boxSizing: 'border-box', color: palette.mid, fontSize: text.xs, lineHeight: leading.relaxed,
     },
-  }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit')));
+  }, React.createElement(React.Suspense, { fallback: t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit') },
+    React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))));
 
   // Fusszeile — im Web pinned unten; auf Handy/Tablet als ruhige letzte Zeile im
   // Scroll-Inhalt (kein fixer zweiter Balken über dem Boden-Anker).
@@ -1712,6 +1716,7 @@ const AppInner = ({ demo }) => {
         view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'quellensteuer' && React.createElement(Quellensteuer, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'wohnunggekuendigt' && React.createElement(WohnungGekuendigt, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'mietesteigt' && React.createElement(MieteSteigt, { palette, t, onNavigate: handleNavigate }),
         view === 'selbstaendigkeit' && React.createElement(Selbstaendigkeit, { palette, t, onNavigate: handleNavigate }),
         view === 'heirat' && React.createElement(Heirat, { palette, t, onNavigate: handleNavigate }),
         view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate, kanton: activeData?.basis?.canton }),
