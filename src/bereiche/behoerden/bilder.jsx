@@ -14,13 +14,14 @@ const linie = { vectorEffect: 'non-scaling-stroke' };
 // ── Anschlagbrett ───────────────────────────────────────────────────────────────────────────────────────────────────
 // Ein Brett auf einem Pfosten, darauf das Kalenderblatt der Steuerfrist (dasselbe Bauteil wie die Kachel). Die Höhe des
 // Pfostens folgt der Szene, damit das Brett auf demselben Boden steht wie das Haus.
-export const Anschlagbrett = ({ palette, iso, locale, vorbei, pfosten = 60 }) => {
+// `klein`: das kleine Kalenderblatt (schmale Fassung); im Kapitel das grosse (dritte Runde, Bilder gross wie Wohnen).
+export const Anschlagbrett = ({ palette, iso, locale, vorbei, pfosten = 60, klein = true }) => {
   const h = React.createElement;
   const holz = palette.sand || palette.mid;
   return h('div', { 'aria-hidden': 'true', 'data-teil': 'anschlagbrett', style: { display: 'flex', flexDirection: 'column', alignItems: 'center' } },
-    h('div', { style: { background: holz, borderRadius: radius.sm, padding: '6px' } },
-      h(Kalenderblatt, { iso, palette, locale, vorbei, klein: true })),
-    h('div', { style: { width: '4px', height: pfosten + 'px', background: holz } }));
+    h('div', { style: { background: holz, borderRadius: radius.sm, padding: klein ? '6px' : '8px' } },
+      h(Kalenderblatt, { iso, palette, locale, vorbei, klein })),
+    h('div', { style: { width: klein ? '4px' : '5px', height: pfosten + 'px', background: holz } }));
 };
 
 // ── Gemeindehaus ────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -70,13 +71,14 @@ export const Gemeindehaus = ({ palette, erledigt = 0, total = 5, farbe, groesse 
 // ── Wegweiser mit Kompass ───────────────────────────────────────────────────────────────────────────────────────────
 // Pfosten, Schild nach rechts (die Richtung zu den Leistungen), oben der Kompass. Die Nadel wie in der Übersicht
 // (components/LeistungsKompass.jsx): Spitze nach Norden bei gefundenen Leistungen, sonst nach Süden; ohne Einkommen ruht sie.
-export const Wegweiser = ({ palette, kompass, farbe }) => {
+// `breite`: 84 in der schmalen Fassung, 120 im Kapitel (dritte Runde, Bilder gross wie Wohnen).
+export const Wegweiser = ({ palette, kompass, farbe, breite = 84 }) => {
   const h = React.createElement;
   const { state = 'idle', bearing = 0 } = kompass || {};
   const spitze = state === 'found' ? palette.sage : state === 'none' ? (palette.sky || palette.mid) : palette.mid;
   const schild = farbe || palette.mid;
   return h('svg', {
-    viewBox: '0 0 84 150', width: 84, 'aria-hidden': 'true', focusable: 'false', 'data-teil': 'wegweiser', 'data-kompass': state,
+    viewBox: '0 0 84 150', width: breite, 'aria-hidden': 'true', focusable: 'false', 'data-teil': 'wegweiser', 'data-kompass': state,
     style: { display: 'block', height: 'auto', overflow: 'visible' },
   },
     h('line', { x1: 40, y1: 50, x2: 40, y2: 150, stroke: palette.mid, strokeWidth: 3 }),

@@ -2210,19 +2210,22 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         const alterImJahr = jahrgang ? new Date().getFullYear() - Number(jahrgang[1]) : null;
         const dienstPasst = alterImJahr == null || (alterImJahr >= 17 && alterImJahr <= 37);
         const auslaendisch = b.nationality !== 'swiss';
+        // Dritte Runde (Stebler Studios 23.11.2026 abends, wie Gesundheit 19.11.): was oben schon einen Weg hat, steht hier
+        // nicht noch einmal — Steuern (Erklärung unter dem Anschlagbrett), Betreibungsauszug (Rand), Ablage (Zeile
+        // «Dokumente» darüber). Der Rest in zwei Gruppen; kein Ablauf fällt weg (Entscheid 10.11.2026: alle erreichbar).
         return [
         // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
         ...(data?.betreibungsStatus === 'entries' ? [weg('betreibung'), weg('schulden')] : []),
         ...(auslaendisch ? [weg('bewilligung'), weg('einbuergerung'), weg('zuzug'), weg('asyl')] : []),
+        { key: 'gruppe-unterwegs', ueberschrift: P('gruppeUnterwegs') },
         weg('ausweis'), weg('fuehrerausweis'), weg('wegzug'),
         ...(dienstPasst ? [weg('dienst')] : []),
-        weg('tax', { sub: P('steuernSub') }), weg('betreibungsauszug'),
+        { key: 'gruppe-schreiben', ueberschrift: P('gruppeSchreiben') },
         ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
         weg('selbstmahnen'),
         weg('briefe', { sub: P('briefeSub') }),
         // Das Behörden-Dossier stand bis 23.11.2026 unter «Mehr dazu» im Kapitel; seit der zweiten Runde hier bei den Wegen.
         { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'legal' },
-        ablage('chapterView.passend.ablageDokumente'),
       ];
       }
       // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen aus «Vorsorge» oben selbst zum

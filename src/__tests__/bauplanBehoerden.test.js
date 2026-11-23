@@ -100,8 +100,8 @@ describe('Bauplan Behörden · jedes Bild einmal, die Zahl darunter', () => {
     for (const r of ['betreibung', 'rechtsbeistand', 'fall-der-faelle']) expect(rand, r).toContain('data-rand="' + r + '"');
     // Kein Text-Schlüssel auf der Seite (gesehen 23.11.2026: «nav.ankerSatz.betreibungsauszug ›»).
     expect(html).not.toMatch(/>[a-zA-Z]+\.[a-zA-Z.]+ ›</);
-    expect(rand).toContain('Betreibungsauszug bestellen ›');
-    expect(html.slice(html.indexOf('id="mp-erkl-leistungen"'))).toContain('data-weg="sozialhilfe"');
+    expect(rand).toContain('Auszug bestellen ›');
+    expect(html.slice(html.indexOf('data-teil="leistungen"'))).toContain('data-weg="sozialhilfe"');
   });
   it('Kopf: Kanton gross, Steuernummer, offene Erklärungen und eingereichtes Jahr klein', () => {
     const html = kapitel();
@@ -116,15 +116,35 @@ describe('Bauplan Behörden · jedes Bild einmal, die Zahl darunter', () => {
     expect((html.match(/data-fenster="\d" data-an="(ja|nein)"[^>]*role="button"/g) || []).length).toBe(5);
     expect(html).toContain('aria-label="Steuererklärung 2025 eingereicht, erledigt"');
     expect(html).toContain('aria-label="Betreibungsauszug bestellt, offen"');
-    expect(html).toMatch(/data-teil="gang-karte" data-gang="steuererklaerung"[\s\S]*Vorschlag aus/);
+    expect(html).toMatch(/data-teil="gang-karte" data-gang="steuererklaerung"[\s\S]*Haken gesetzt, weil keine Steuererklärung offen ist/);
     expect((html.match(/data-gang-knopf=/g) || []).length).toBe(5);
   });
-  it('Erklärungen: zu, aber im Dokument; eine verpasste Frist steht offen da', () => {
+  // Dritte Runde (23.11.2026 abends, wie «Warum ein Drittel? ›» bei Wohnen): je unter ihrem Bild ein <details>, zu.
+  it('Erklärungen: unter ihrem Bild zum Aufklappen, zu, aber im Dokument; eine verpasste Frist steht offen da', () => {
     const html = kapitel();
-    expect(html).toMatch(/id="mp-erkl-frist"[^>]*hidden=""/);
-    expect(html).toMatch(/data-erkl="frist" aria-expanded="false" aria-controls="mp-erkl-frist"/);
+    for (const [teil, bild] of [['steuerfrist', 'strasse-frist'], ['leistungen', 'strasse-wegweiser']]) {
+      expect(html, teil).toMatch(new RegExp('<details data-teil="' + teil + '"'));
+      expect(html, teil).not.toMatch(new RegExp('<details data-teil="' + teil + '"[^>]* open'));
+      expect(html.indexOf('data-teil="' + teil + '"'), teil).toBeGreaterThan(html.indexOf('data-teil="' + bild + '"'));
+    }
     const vorbei = kapitel({ ...DEMO_DATA.behoerden, taxFilingDeadline: '2020-03-31', pendingTaxReturns: '1' });
     expect(vorbei).toMatch(/data-teil="frist-vorbei"[^>]*>Die erfasste Frist ist vorbei/);
+  });
+  // Dritte Runde (23.11.2026 abends, Muster Wohnen): unter jeder Zahl, woraus sie kommt.
+  it('Detail unter den Bildern: Datum der Frist, offene Gänge; ohne Weg der ganze Satz', () => {
+    const html = kapitel();
+    expect(html).toMatch(/data-teil="frist-detail"[^>]*>\d{1,2}\. [A-Za-zä]+ \d{4}</);
+    expect(html).toMatch(/data-teil="gaenge-detail"[^>]*>Offen: Betreibung · Ausweis · Wohnsitz · Strafregister</);
+    expect(html).toMatch(/data-teil="kompass-detail"[^>]*>Über das Einkommen nichts Direktes/);
+    const alle = kapitel(DEMO_DATA.behoerden, { betreibungsauszug: true, ausweisRenewal: true, wohnsitzbestaetigung: true, strafregisterauszug: true });
+    expect(alle).toMatch(/data-teil="gaenge-detail"[^>]*>Alle Gänge erledigt</);
+  });
+  it('Passend: Steuern, Betreibungsauszug und Ablage stehen oben schon, hier nicht noch einmal; zwei Gruppen', () => {
+    const q = lies('ChapterView.jsx');
+    const block = q.slice(q.indexOf("case 'behoerden': {"), q.indexOf("case 'notfall':"));
+    for (const w of ["weg('tax'", "weg('betreibungsauszug')", 'ablage(']) expect(block, w).not.toContain(w);
+    for (const g of ['gruppeUnterwegs', 'gruppeSchreiben']) expect(block, g).toContain(g);
+    for (const w of ['ausweis', 'fuehrerausweis', 'wegzug', 'dienst', 'betreibung', 'selbstmahnen', 'briefe']) expect(block, w).toContain("weg('" + w + "'");
   });
   it('die Haken schalten die Fenster: so viele hell, wie Gänge erledigt sind', () => {
     const fenster = (checked) => (kapitel(DEMO_DATA.behoerden, checked).match(/data-an="ja"/g) || []).length;

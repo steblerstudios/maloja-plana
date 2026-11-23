@@ -8,6 +8,7 @@ import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ChapterViewComplete } from '../ChapterView.jsx';
+import MirrorCards from '../MirrorCards.jsx';
 import { BehoerdenZuhause as BehoerdenInstrument, GAENGE, gangErledigt } from '../bereiche/behoerden/behoerden.js';
 import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
 import { createT } from '../i18n/index.js';
@@ -35,8 +36,13 @@ describe('Kapitel Behörden', () => {
     expect(kapitel('behoerden', DEMO_DATA.behoerden)).not.toContain('Folgende Stände und Fristen sind erfasst');
     expect(QUELLE).not.toContain("tr('behördenStatus.intro')");
   });
-  it('Zusammenfassung mit Steuererklärung und Betreibungsregister', () => {
-    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toContain('Ihre Steuerangelegenheiten laufen über den Kanton Zürich. Keine offene Steuererklärung, laut Ihren Angaben ist das Betreibungsregister ohne Einträge.');
+  // Dritte Runde (23.11.2026 abends, wie Wohnen): mit Szene trägt sie Kanton, offene Erklärungen und Betreibungsregister
+  // selbst; die Zusammenfassung wäre doppelt. Ohne Szene (kein allData) steht sie wie bisher.
+  it('Zusammenfassung: mit Szene weg, ohne Szene mit Steuererklärung und Betreibungsregister', () => {
+    const satz = 'Ihre Steuerangelegenheiten laufen über den Kanton Zürich. Keine offene Steuererklärung, laut Ihren Angaben ist das Betreibungsregister ohne Einträge.';
+    expect(kapitel('behoerden', DEMO_DATA.behoerden)).not.toContain(satz);
+    const ohneSzene = renderToStaticMarkup(React.createElement(MirrorCards, { chapterKey: 'behoerden', data: DEMO_DATA.behoerden, palette: LIGHT_PALETTE, t }));
+    expect(ohneSzene).toContain(satz);
   });
   // Seit dem Muster M2 (25.10.2026) gilt das für jedes Kapitel: leere Felder stehen leise in «Nicht erfasst: …»
   // (vorher eine eigene Zeile nur für die Vertretung).
@@ -58,7 +64,9 @@ describe('Instrument oben', () => {
   it('Steuerfrist als Kalenderblatt mit Satz, offen, Weg zu Steuern und zum Kapitel Finanzen', () => {
     const text = instrument();
     expect(text).toContain('Steuererklärung fällig am 31. März 2027');
-    expect(text).toContain('Offene Steuererklärungen: 0');
+    // Die offenen Erklärungen stehen seit der dritten Runde (23.11.2026 abends) nur noch im Kopf, nicht doppelt bei der Frist.
+    expect(text).toContain('Offene Erklärungen 0');
+    expect(text).not.toContain('Offene Steuererklärungen: 0');
     expect(text).toContain('Alles zu Ihren Steuern');
     expect(text).toContain('Steuerbetrag und Belastung');
   });
@@ -148,6 +156,6 @@ describe('Nachprüfung: Steuerjahr und leere Werte', () => {
   it('Maria: «Steuererklärung 2025 eingereicht» mit Hinweis auf den Vorschlag', () => {
     const text = instrument();
     expect(text).toContain('Steuererklärung 2025 eingereicht');
-    expect(text).toContain('Vorschlag aus «Offene Steuererklärungen: 0»');
+    expect(text).toContain('Haken gesetzt, weil keine Steuererklärung offen ist');
   });
 });

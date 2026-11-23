@@ -4516,6 +4516,8 @@ export default {
       gruppeKrankenkasse: 'Krankenkasse & Leistungen',
       // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
       gruppePassiert: 'Wenn es passiert',
+      gruppeUnterwegs: "Documents ed en viadi",
+      gruppeSchreiben: "Daners, brevs, dossier",
       steuerfrist: "Termin & decleraziun da taglia",
       steuerfristSub: "Chapitel Autoritads · termin, numer da taglia, decleraziuns avertas",
       // Muster M7 (Fassung 6, 25.10.2026): Namen und Untertitel wie im Entwurf — rm ungeprüft.
@@ -5078,7 +5080,7 @@ export default {
     fallSatz: { sie: "Voss testament tutga qua. Mandat da precauziun e disposiziun da pazient èn en il chapitel Urgenza.", du: "Tes testament tutga qua. Mandat da precauziun e disposiziun da pazient èn en il chapitel Urgenza." },
     nichtErfasst: "betg endatà",
     steuererklaerungJahr: "Decleraziun da taglia {jahr} inoltrada",
-    vorschlag: "Proposta da «Decleraziuns avertas: 0»",
+    vorschlag: "Marcà, perquai che nagina decleraziun n’è averta",
     vorsorgeWegSub: "Tgi che agescha, tge che vala medicalmain",
     // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
     vorsorgeImNotfall: "Prevenziun en il chapitel Urgenza",
@@ -5092,7 +5094,24 @@ export default {
     anspruchSub: "Tut las prestaziuns e co dumandar ellas",
     kanton: "Chantun {kanton}",
     kantonOffen: "Chantun da taxaziun anc vid",
-    kopfZusatz: "Taglias",
+    // Dritte Runde (23.11.2026 abends): Detail unter dem Gemeindehaus, Rand, Kanton im Vergleich. rm ungeprüft.
+    offenListe: "Avert: {liste}",
+    alleErledigt: "Tut las vias fatgas",
+    auszugBestellen: "Empustar l’extract",
+    vergleich: {
+      titel: "Taglias e sustegn en cumparegliaziun",
+      einstieg: "{kanton} en cumparegliaziun: taglias sin ina paja da 80’000 francs e quantas persunas retschaivan agid social u prestaziuns supplementaras.",
+      einstiegOhne: "Ils chantuns en cumparegliaziun: taglias sin ina paja da 80’000 francs, agid social e prestaziuns supplementaras.",
+      fehler: "La cumparegliaziun na po betg vegnir chargiada ussa.",
+      aria: "{titel} tenor chantun, {kanton}: {wert}",
+      steuer: "Taglias sin 80’000 paja",
+      sozialhilfe: "Agid social",
+      el: "PS tar l’AVS",
+      steuerSatz: "da la paja bruta, chaumanoir",
+      steuerLegende: "Taglias a la Confederaziun, al chantun ed a la vischnanca en il chaumanoir per ina paja bruta da 80’000 francs, nubil, senza uffants e senza confessiun, onn fiscal 2026.",
+      sozialhilfeLegende: "Part da la populaziun che ha retschavì il 2025 agid social economic, q.v.d. daners dal servetsch social.",
+      elLegende: "Part da las persunas cun renta da vegliadetgna che han retschavì en december 2025 prestaziuns supplementaras (PS).",
+    },
     offen: "Decleraziuns averts",
     eingereicht: "Ultima inoltrada",
     fristMehr: "Termin",
