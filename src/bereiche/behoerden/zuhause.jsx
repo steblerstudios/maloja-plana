@@ -127,7 +127,7 @@ export const KantonsVergleich = ({ palette, t, kanton, isDarkMode }) => {
   }, []);
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
   // Laden: nichts zeigen (wie Wohnen). Fehler: ein ruhiger Satz statt einer leeren Stelle.
-  if (fehler) return h('p', { 'data-teil': 'vergleich-fehler', style: { ...klein, margin: 0 } }, t('behoerdenZuhause.vergleich.fehler'));
+  if (fehler) return h('p', { 'data-teil': 'vergleich-fehler', role: 'status', style: { ...klein, margin: 0 } }, t('behoerdenZuhause.vergleich.fehler'));
   if (!daten) return null;
   const name = kanton ? getCantonName(kanton, t) : '';
   const set = VERGLEICH.map((key) => {
@@ -161,7 +161,7 @@ export const KantonsVergleich = ({ palette, t, kanton, isDarkMode }) => {
       set.map((x) => {
         const an = x.key === offen.key;
         return h('button', {
-          key: x.key, type: 'button', 'data-kachel': x.key, 'aria-pressed': an ? 'true' : 'false', onClick: () => setAktiv(x.key),
+          key: x.key, type: 'button', 'data-kachel': x.key, 'aria-pressed': an ? 'true' : 'false', 'aria-controls': 'mp-vergleich-offen', onClick: () => setAktiv(x.key),
           style: { display: 'grid', gridTemplateRows: 'subgrid', gridRow: 'span 4', rowGap: space.xs + 'px', minWidth: 0, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
             color: palette.text, background: an ? (palette.card || palette.surface) : 'transparent',
             border: (an ? 2 : 1) + 'px solid ' + (an ? palette.text : palette.border), borderRadius: radius.lg + 'px', padding: (an ? space.sm - 1 : space.sm) + 'px' },
@@ -171,7 +171,8 @@ export const KantonsVergleich = ({ palette, t, kanton, isDarkMode }) => {
           h('span', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums', lineHeight: leading.tight } }, x.zahl),
           h('span', { style: { ...klein, lineHeight: leading.tight } }, x.satz || ''));
       })),
-    h('div', { 'data-teil': 'vergleich-offen', 'data-offen': offen.key, style: { marginTop: space.sm + 'px', border: '1px solid ' + palette.border, borderRadius: radius.lg + 'px', padding: space.md + 'px' } }, offen.gross),
+    // A11y-Prüfung 23.11.2026: die Kacheln steuern diesen Bereich (aria-controls), er trägt den Titel der gewählten.
+    h('div', { id: 'mp-vergleich-offen', role: 'region', 'aria-label': offen.titel, 'aria-live': 'polite', 'data-teil': 'vergleich-offen', 'data-offen': offen.key, style: { marginTop: space.sm + 'px', border: '1px solid ' + palette.border, borderRadius: radius.lg + 'px', padding: space.md + 'px' } }, offen.gross),
     quellen.length > 0 && h(Belege, { palette, t, zeile: t('wohnenKarten.quellenWort') + ': ' + quellen.join(', ') + '.', style: { marginTop: space.xs + 'px' } }));
 };
 
@@ -212,8 +213,8 @@ const BehoerdenKapitel = ({ palette, t, behoerden, allData, onNavigate, checked 
       h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel),
       sub && h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, sub)),
     h('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›'));
-  const weg = (label, ziel, key) => onNavigate && h('button', {
-    type: 'button', className: 'mp-link', 'data-weg': key, onClick: ziel,
+  const weg = (label, ziel, key, voll = null) => onNavigate && h('button', {
+    type: 'button', className: 'mp-link', 'data-weg': key, onClick: ziel, ...(voll ? { 'aria-label': voll } : {}),
     style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, textAlign: 'left' },
   }, label + ' ›');
   // «ändern ›» / «ergänzen ›» am Bild und das Formular an seiner Stelle (wie Wohnen).
@@ -305,7 +306,7 @@ const BehoerdenKapitel = ({ palette, t, behoerden, allData, onNavigate, checked 
       randSatz([String(d.registryOffice || '').trim() && feldName(t, 'registryOffice') + ': ' + String(d.registryOffice).trim(),
         gericht && t('behördenStatus.courtCases') + ': ' + gericht].filter(Boolean).join(' · ') || (betreibung ? '' : t('wohnenKopf.nochLeer'))),
       // Kurzer Name, damit «ändern ›» daneben Platz hat (dritte Runde; vorher stand es allein auf einer Zeile).
-      zeile(weg(t('behoerdenZuhause.auszugBestellen'), () => onNavigate('betreibungsauszug'), 'betreibungsauszug'),
+      zeile(weg(t('behoerdenZuhause.auszugBestellen'), () => onNavigate('betreibungsauszug'), 'betreibungsauszug', t('nav.betreibungsauszug')),
         aendern('registryOffice', betreibung ? 'aendern' : 'ergaenzen'))),
     randStueck('rechtsbeistand', 'legal',
       randZahl(feldName(t, 'legalRepresentative') + (beistand ? ': ' + beistand : '')),

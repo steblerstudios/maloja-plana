@@ -53,18 +53,27 @@ export const Gemeindehaus = ({ palette, erledigt = 0, total = 5, farbe, groesse 
     // Dach und Haus
     h('path', { d: 'M8 58 L85 22 L162 58 Z', fill: palette.surface, stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
     h('rect', { x: 16, y: 58, width: 138, height: 102, fill: 'none', stroke: palette.text, strokeWidth: strich, ...linie }),
-    ...plaetze.map(([x, y], i) => h('rect', {
-      key: 'f' + i, 'data-fenster': i, 'data-an': an(i) ? 'ja' : 'nein', x, y, width: 26, height: 24, rx: 2,
-      fill: an(i) ? licht : palette.surface,
-      stroke: aktiv === i ? palette.text : an(i) ? licht : palette.mid,
-      strokeWidth: aktiv === i ? 3 : klein ? 2.5 : 1.5, ...linie,
-      ...(tippbar ? {
+    // Erledigt: Sand gefüllt UND dunkel umrandet — Sand allein hat hell nur 2,3:1 gegen die Fläche (A11y-Prüfung
+    // 23.11.2026, WCAG 1.4.11). Im Kapitel liegt über jedem Fenster eine unsichtbare Trefferfläche von 40×38 Einheiten
+    // (bei 190 px Spalte rund 45×42 px), damit das Antippen nicht an 29×27 px hängt.
+    ...plaetze.flatMap(([x, y], i) => {
+      const zeichen = h('rect', {
+        key: 'f' + i, x, y, width: 26, height: 24, rx: 2,
+        fill: an(i) ? licht : palette.surface,
+        stroke: aktiv === i ? palette.text : an(i) ? palette.text : palette.mid,
+        strokeWidth: aktiv === i ? 3 : klein ? 2.5 : 1.5, ...linie,
+        ...(tippbar ? { 'aria-hidden': 'true', style: { pointerEvents: 'none' } } : { 'data-fenster': i, 'data-an': an(i) ? 'ja' : 'nein' }),
+      });
+      if (!tippbar) return [zeichen];
+      return [zeichen, h('rect', {
+        key: 't' + i, 'data-fenster': i, 'data-an': an(i) ? 'ja' : 'nein', x: x - 7, y: y - 7, width: 40, height: 38, rx: 4,
+        fill: 'transparent', stroke: 'none', pointerEvents: 'all',
         role: 'button', tabIndex: 0, 'aria-label': fenster[i].label, 'aria-pressed': aktiv === i ? 'true' : 'false',
         style: { cursor: 'pointer' },
         onClick: () => onWaehle(i),
         onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onWaehle(i); } },
-      } : {}),
-    })),
+      })];
+    }),
     h('path', { 'data-teil': 'gemeindehaus-tuer', d: 'M73 160 L73 124 Q85 110 97 124 L97 160 Z', fill: tuer }));
 };
 
