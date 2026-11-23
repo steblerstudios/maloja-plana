@@ -17,7 +17,7 @@ import { Wegzug } from '../Wegzug.jsx';
 import { Fuehrerausweis } from '../Fuehrerausweis.jsx';
 import { AsylView } from '../AsylView.jsx';
 import { ChapterViewComplete } from '../ChapterView.jsx';
-import { BehoerdenInstrument } from '../components/BehoerdenInstrument.jsx';
+import { BehoerdenZuhause as BehoerdenInstrument } from '../bereiche/behoerden/behoerden.js';
 import { erledigtesSteuerjahr } from '../utils/behoerdenGaenge.js';
 import { freiwilligeAhv } from '../data/freiwilligeAhv.js';
 
@@ -181,10 +181,11 @@ describe('Kapitelseite', () => {
     expect(nurText(kapitel({ ...DEMO_DATA.basis, dateOfBirth: (jahr - 20) + '-05-01' }))).toContain(t('nav.dienst'));
     expect(nurText(kapitel({ ...DEMO_DATA.basis, dateOfBirth: (jahr - 50) + '-05-01' }))).not.toContain(t('nav.dienst'));
   });
-  it('B: Steuerfrist, Behördengänge, Fall der Fälle auf Stufe 3', () => {
+  // Seit der zweiten Runde Behörden (23.11.2026) ohne eigene Überschriften wie Wohnen: Kopf, Szene, Gang-Karte, Rand.
+  it('B: Kopf, Szene, Gang-Karte und Rand, keine Überschriften unter der Kapitelüberschrift', () => {
     const h = renderToStaticMarkup(React.createElement(BehoerdenInstrument, { palette: LIGHT_PALETTE, t, behoerden: DEMO_DATA.behoerden, onNavigate: () => {}, onToggle: () => {} }));
-    expect(h).not.toContain('<h4');
-    expect((h.match(/<h3 /g) || []).length).toBe(3);
+    expect(h).not.toMatch(/<h[34]/);
+    for (const teil of ['behoerden-kopf', 'behoerden-strasse', 'gang-karte', 'behoerden-rand']) expect(h, teil).toContain('data-teil="' + teil + '"');
   });
   it('C: kein Intro mehr, das «Ansprechpersonen» verspricht', () => {
     expect(nurText(kapitel())).not.toContain('Ansprechpersonen');

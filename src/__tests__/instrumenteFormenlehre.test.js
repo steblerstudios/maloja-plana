@@ -18,7 +18,8 @@ const imCode = Object.entries(jeKapitel).flatMap(([kapitel, keys]) => keys.map((
 
 // Sperrklinke: die Zahl der offenen Punkte darf nur sinken. Wer einen behebt, senkt die Zahl hier.
 // 18.11.2026 (Bauplan Notfall & Gesundheit): Bereit = Herz mit Puls an beiden Orten, Franchise-Zuhause = Arztkoffer.
-const HOECHSTENS = { formAbweichung: 2, ohneRechnung: 0, zuhauseAnderesBild: 0, ohneZuhause: 5 };
+// 23.11.2026 (Bauplan Behörden): gaenge hat sein Zuhause im Gemeindehaus.
+const HOECHSTENS = { formAbweichung: 2, ohneRechnung: 0, zuhauseAnderesBild: 0, ohneZuhause: 4 };
 
 describe('Formenlehre: jedes Instrument steht im Register', () => {
   it('jedes Instrument der Kapitelzeile hat einen Eintrag, im richtigen Kapitel', () => {

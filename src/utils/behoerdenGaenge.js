@@ -1,4 +1,4 @@
-// Die Behördengänge im Kapitel Behörden — EINE Liste für das Kapitel (components/BehoerdenInstrument.jsx)
+// Die Behördengänge im Kapitel Behörden — EINE Liste für das Kapitel (bereiche/behoerden/)
 // und die Bereichszeile auf dem Dashboard. Seitenrundgang 26.10.2026: das Dashboard zählte die Haken
 // selbst und gegen «/6», obwohl es fünf Gänge gibt; ein alter Haken (Patientenverfügung, seit #578 nicht
 // mehr hier) zählte mit, der Vorschlag aus «0 offen» nicht. Eigenes Blatt, damit das Dashboard die Liste
@@ -28,6 +28,9 @@ export const erledigtesSteuerjahr = (behoerden, heute = new Date()) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(behoerden?.taxFilingDeadline || ''));
   if (!m || offeneErklaerungen(behoerden) !== 0) return null;
   const fristJahr = Number(m[1]);
+  // Fachprüfung 23.11.2026: eine alte Frist (mehr als ein Jahr zurück) sagt nichts mehr über das laufende Steuerjahr —
+  // «0 offen» kann dann veraltet sein. Kein Vorschlag, die Person setzt den Haken selbst.
+  if (heute.getFullYear() - fristJahr > 1) return null;
   return heute.getFullYear() >= fristJahr ? fristJahr - 1 : fristJahr - 2;
 };
 

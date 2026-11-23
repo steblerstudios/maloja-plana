@@ -8,7 +8,8 @@ import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ChapterViewComplete } from '../ChapterView.jsx';
-import { BehoerdenInstrument, GAENGE, gangErledigt } from '../components/BehoerdenInstrument.jsx';
+import MirrorCards from '../MirrorCards.jsx';
+import { BehoerdenZuhause as BehoerdenInstrument, GAENGE, gangErledigt } from '../bereiche/behoerden/behoerden.js';
 import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
@@ -35,14 +36,27 @@ describe('Kapitel Behörden', () => {
     expect(kapitel('behoerden', DEMO_DATA.behoerden)).not.toContain('Folgende Stände und Fristen sind erfasst');
     expect(QUELLE).not.toContain("tr('behördenStatus.intro')");
   });
-  it('Zusammenfassung mit Steuererklärung und Betreibungsregister', () => {
-    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toContain('Ihre Steuerangelegenheiten laufen über den Kanton Zürich. Keine offene Steuererklärung, laut Ihren Angaben ist das Betreibungsregister ohne Einträge.');
+  // Dritte Runde (23.11.2026 abends, wie Wohnen): mit Szene trägt sie Kanton, offene Erklärungen und Betreibungsregister
+  // selbst; die Zusammenfassung wäre doppelt. Ohne Szene (kein allData) steht sie wie bisher.
+  it('Zusammenfassung: mit Szene weg, ohne Szene mit Steuererklärung und Betreibungsregister', () => {
+    const satz = 'Ihre Steuerangelegenheiten laufen über den Kanton Zürich. Keine offene Steuererklärung, laut Ihren Angaben ist das Betreibungsregister ohne Einträge.';
+    expect(kapitel('behoerden', DEMO_DATA.behoerden)).not.toContain(satz);
+    const ohneSzene = renderToStaticMarkup(React.createElement(MirrorCards, { chapterKey: 'behoerden', data: DEMO_DATA.behoerden, palette: LIGHT_PALETTE, t }));
+    expect(ohneSzene).toContain(satz);
   });
   // Seit dem Muster M2 (25.10.2026) gilt das für jedes Kapitel: leere Felder stehen leise in «Nicht erfasst: …»
   // (vorher eine eigene Zeile nur für die Vertretung).
-  it('Vertretung leer: «Nicht erfasst: Rechtsbeistand …»', () => {
-    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
-    expect(kapitel('behoerden', { ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).not.toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
+  // Seit der zweiten Runde (23.11.2026) steht Behörden mit Szene: der Rechtsbeistand am Rand («noch leer»), die Liste mit
+  // «Nicht erfasst: …» erst unter «Alle Angaben».
+  it('Vertretung leer: am Rand «Rechtsbeistand noch leer», in «Alle Angaben» «Nicht erfasst: Rechtsbeistand …»', () => {
+    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toMatch(/Rechtsbeistand noch leer/);
+    expect(kapitel('behoerden', { ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).toMatch(/Rechtsbeistand: Anwältin X/);
+    const liste = (b) => nurText(renderToStaticMarkup(React.createElement(ChapterViewComplete, {
+      palette: LIGHT_PALETTE, t, chapter: chapters.find((c) => c.key === 'behoerden'), data: b, allData: { ...DEMO_DATA, behoerden: b },
+      onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, anfangsOffen: 'liste',
+    })));
+    expect(liste(DEMO_DATA.behoerden)).toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
+    expect(liste({ ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).not.toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
   });
 });
 
@@ -50,7 +64,9 @@ describe('Instrument oben', () => {
   it('Steuerfrist als Kalenderblatt mit Satz, offen, Weg zu Steuern und zum Kapitel Finanzen', () => {
     const text = instrument();
     expect(text).toContain('Steuererklärung fällig am 31. März 2027');
-    expect(text).toContain('Offene Steuererklärungen: 0');
+    // Die offenen Erklärungen stehen seit der dritten Runde (23.11.2026 abends) nur noch im Kopf, nicht doppelt bei der Frist.
+    expect(text).toContain('Offene Erklärungen 0');
+    expect(text).not.toContain('Offene Steuererklärungen: 0');
     expect(text).toContain('Alles zu Ihren Steuern');
     expect(text).toContain('Steuerbetrag und Belastung');
   });
@@ -67,10 +83,11 @@ describe('Instrument oben', () => {
     expect(gangErledigt('steuererklaerung', {}, { pendingTaxReturns: '1' })).toBe(false);
     expect(instrument()).toContain('1 von 5 erledigt.');
   });
+  // Seit der zweiten Runde am Rand, mit dem Satz «Ihr Testament gehört hierher …».
   it('«Für den Fall der Fälle»: nur das Testament, die Vorsorge steht im Notfall (F7-K5-2)', () => {
     const text = instrument();
-    expect(text).toContain('Für den Fall der Fälle');
-    expect(text).toMatch(/Testament Nein/);
+    expect(text).toContain('Ihr Testament gehört hierher.');
+    expect(text).toMatch(/Testament: Nein/);
     expect(text).toContain('Vorsorge im Kapitel Notfall');
     expect(text).not.toMatch(/Vorsorgeauftrag Noch nicht/);
     expect(text).not.toMatch(/Patientenverfügung Noch nicht/);
@@ -101,7 +118,7 @@ describe('Texte in allen fünf Sprachen', () => {
 
 // Nachprüfung 25.10.2026 (swiss-precision Muss): der Haken nennt das Steuerjahr und ist als Vorschlag gekennzeichnet —
 // sonst stand «Steuererklärung eingereicht» angehakt neben der Frist fürs nächste Jahr.
-import { erledigtesSteuerjahr, offeneErklaerungen } from '../components/BehoerdenInstrument.jsx';
+import { erledigtesSteuerjahr, offeneErklaerungen } from '../bereiche/behoerden/behoerden.js';
 import { LIGHT_PALETTE as PALETTE_K51 } from '../config/constants.js';
 
 describe('F7-K5-1: Behörden nennt dieselbe Steuerzahl wie Finanzen', () => {
@@ -130,6 +147,13 @@ describe('Nachprüfung: Steuerjahr und leere Werte', () => {
     expect(erledigtesSteuerjahr({ pendingTaxReturns: '0' }, heute)).toBeNull();
     expect(erledigtesSteuerjahr({ taxFilingDeadline: '2027-03-31', pendingTaxReturns: '1' }, heute)).toBeNull();
   });
+  // Fachprüfung 23.11.2026: eine alte Frist (mehr als ein Jahr zurück) gibt keinen Vorschlag mehr.
+  it('alte Frist: kein Vorschlag aus «0 offen»', () => {
+    const heute = new Date(2026, 10, 23);
+    expect(erledigtesSteuerjahr({ taxFilingDeadline: '2024-03-31', pendingTaxReturns: '0' }, heute)).toBeNull();
+    expect(erledigtesSteuerjahr({ taxFilingDeadline: '2025-03-31', pendingTaxReturns: '0' }, heute)).toBe(2024);
+    expect(erledigtesSteuerjahr({ taxFilingDeadline: '2027-03-31', pendingTaxReturns: '0' }, heute)).toBe(2025);
+  });
   it('leer, null und Leerzeichen heissen «nicht erfasst»', () => {
     expect(offeneErklaerungen({ pendingTaxReturns: null })).toBeNull();
     expect(offeneErklaerungen({ pendingTaxReturns: ' ' })).toBeNull();
@@ -139,6 +163,6 @@ describe('Nachprüfung: Steuerjahr und leere Werte', () => {
   it('Maria: «Steuererklärung 2025 eingereicht» mit Hinweis auf den Vorschlag', () => {
     const text = instrument();
     expect(text).toContain('Steuererklärung 2025 eingereicht');
-    expect(text).toContain('Vorschlag aus «Offene Steuererklärungen: 0»');
+    expect(text).toContain('Vorgeschlagen, weil 0 offene Steuererklärungen erfasst sind');
   });
 });

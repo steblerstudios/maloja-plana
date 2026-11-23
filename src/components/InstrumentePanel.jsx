@@ -5,8 +5,8 @@ import { netzSchildTeile } from '../data/netzSchild.js';
 import { NetzSchild } from './NetzSchild.jsx';
 import { ReserveTank } from './ReserveTank.jsx';
 import { wohnkostenRechnung, DrittelHaus, wohnkostenSatzKey, Vergleichshaus, lageZurRegion, mietVorbehalte } from '../bereiche/wohnen/wohnen.js';
+import { Gemeindehaus } from '../bereiche/behoerden/behoerden.js';
 import { Kalenderblatt } from './Kalenderblatt.jsx';
-import { GaengeKlein } from './BehoerdenInstrument.jsx';
 import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaenge.js';
 import { bereitschaft, lagenStand, franchiseStand, FranchiseThermometer, HerzPuls } from '../bereiche/notfall/notfall.js';
 import { lohnLage, LohnKlein, lohnLageWert } from './LohnEinordnung.jsx';
@@ -344,7 +344,8 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         satz: t('instrumente.gaengeSatz'),
       } : {}),
       sub: setup,
-      glyph: h(GaengeKlein, { palette, erledigt: erledigteGaenge, total: GAENGE.length }),
+      // Dasselbe Gemeindehaus wie im Kapitel, klein 64 (Bauplan Behörden 21.11.2026; vorher ein Kästchen je Gang).
+      glyph: h(Gemeindehaus, { palette, erledigt: erledigteGaenge, total: GAENGE.length, farbe: bereichFillColor('behoerden', palette.bg === DARK_PALETTE.bg) || palette.mid, groesse: 'klein' }),
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')),
     },
     {

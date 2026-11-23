@@ -224,8 +224,12 @@ function selectLabel(t, chapterKey, fieldKey, value) {
 
 // ─── Behörden ─────────────────────────────────────────────
 
-function buildBehoerdenSentence(data, t) {
+function buildBehoerdenSentence(data, allData, t) {
   if (!data.cantoneOfTaxation) return null;
+  // Dritte Runde (Stebler Studios 23.11.2026 abends, wie Wohnen): mit `allData` zeigt das Kapitel die Szene
+  // (ChapterView: Szene bei Behörden, sobald allData da ist), und die trägt Kanton, offene Erklärungen und
+  // Betreibungsregister selbst — Kopf und Rand. Der Satz wäre doppelt. Ohne Szene bleibt er.
+  if (allData) return null;
 
   const canton = getCantonName(data.cantoneOfTaxation, t);
   const satz = data.legalRepresentative
@@ -356,7 +360,7 @@ function buildLifeSentence(chapterKey, data, allData, t) {
   if (chapterKey === 'basis') return buildBasisSentence(data, t);
   if (chapterKey === 'wohnen') return buildWohnenSentence(data, t);
   if (chapterKey === 'finanzen') return buildFinanzenSentence(data, allData, t);
-  if (chapterKey === 'behoerden') return buildBehoerdenSentence(data, t);
+  if (chapterKey === 'behoerden') return buildBehoerdenSentence(data, allData, t);
   if (chapterKey === 'notfall') return buildNotfallSentence(data, t);
   if (chapterKey === 'versicherungen') return buildVersicherungenSentence(data, t);
   if (chapterKey === 'ausbildung') return buildAusbildungSentence(data, t);
