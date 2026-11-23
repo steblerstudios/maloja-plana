@@ -39,7 +39,7 @@ export const DEMO_DATA = {
     // zeigen dafür den Brutto-Hinweis. Ohne Art füllte seit #357 kein Rechner mehr vor
     // (Entscheid Stebler Studios 25.09.2026).
     incomeType: 'netto',
-    // Auffüllen (19.11.2026, Sophie: «Beispiel soll alles anzeigen»): 13. Monatslohn und Arbeitskanton,
+    // Auffüllen (19.11.2026, Stebler Studios: «Beispiel soll alles anzeigen»): 13. Monatslohn und Arbeitskanton,
     // damit Lohn-Einordnung und Mindestlohn-Frage eine Antwort zeigen statt einer Rückfrage.
     dreizehnter: 'yes',
     workCanton: 'ZH',
@@ -65,7 +65,7 @@ export const DEMO_DATA = {
     creditCardBalance: '420',
     loans: '',
     // Das Feld zählt pro Jahr («CHF/Jahr»). Bis 19.11.2026 stand hier 250, gemeint war 250 im Monat
-    // (Sophie, 19.11.2026: «Ja, auf 250/Mt.») → 3’000 im Jahr, unter dem 3a-Höchstbetrag mit Pensionskasse.
+    // (Stebler Studios, 19.11.2026: «Ja, auf 250/Mt.») → 3’000 im Jahr, unter dem 3a-Höchstbetrag mit Pensionskasse.
     pension3a: '3000',
     // Beispielwert, nicht belegt: passt zu 3’000 / Jahr seit Stellenantritt 2019 (rund sieben Einzahlungen, etwas Zins).
     pension3aBalance: '21800',

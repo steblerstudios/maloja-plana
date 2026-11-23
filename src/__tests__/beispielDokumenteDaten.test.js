@@ -3,7 +3,7 @@ import { DEMO_DOCS } from '../config/demoData.js';
 import { DEMO_DOCS as AUS_SPEICHER } from '../demo/demoSpeicher.js';
 import { imFach, ablageZaehler } from '../DocumentTresor.jsx';
 
-// 19.11.2026 (Sophie: «Beispiel soll alles anzeigen»): Maria bringt Dokumente mit, damit die Ablage
+// 19.11.2026 (Stebler Studios: «Beispiel soll alles anzeigen»): Maria bringt Dokumente mit, damit die Ablage
 // im Beispiel nicht leer ist und alle drei Fächer etwas zeigen.
 describe('Beispiel-Dokumente', () => {
   it('jedes Dokument liegt in einem Fach (sonst wäre es unsichtbar)', () => {
