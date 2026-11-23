@@ -9,6 +9,10 @@ import { plusTage } from './utils/fristen.js';
 // 270c, 270d, VMWG 17), Ausnahmen (OR 253b, VMWG 2), Form und Säumnis im Schlichtungsverfahren
 // (ZPO 130, 202, 206, 209–211), Kündigungsschutz 271a vollständig mit Frist OR 273,
 // gemeinsames Anfechten bei mehreren Mietenden (BGE 136 III 431).
+// Fassung 3 vom 23.11.2026 nach der zweiten Fachprüfung (0 blockierend): OR 271a Abs. 1 Bst. b,
+// zu späte Mitteilung belegt mit BGE 107 II 189, Kündigungsfrist ohne Aufschub (BGE 143 III 15),
+// Klagebewilligung bei anderen einseitigen Änderungen, dichte Schritte in Absätze geteilt.
+// Bewusst nicht übernommen: «Erhöhung rückwirkend geschuldet» — in keiner vorliegenden Quelle belegt.
 //
 // Wortlaut gelesen aus den amtlichen Fedlex-Dateien: OR Fassung 01.10.2026, VMWG 01.10.2025,
 // ZPO 01.07.2026 (DE, FR, IT).
@@ -41,6 +45,8 @@ export const MieteSteigt = ({ palette, t, onNavigate }) => {
     ),
     React.createElement(AblaufStep, { palette, title: t('mieteSteigt.step2Title') },
       React.createElement('p', { style: s.stepText }, t('mieteSteigt.step2Text')),
+      absatz('mieteSteigt.step2Formular'),
+      absatz('mieteSteigt.step2Zeit'),
       React.createElement(AblaufWarnung, { palette }, t('mieteSteigt.step2Zahlen')),
       absatz('mieteSteigt.step2Staffel'),
       absatz('mieteSteigt.step2Index'),
@@ -54,7 +60,9 @@ export const MieteSteigt = ({ palette, t, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('mieteSteigt.step4Title') },
       React.createElement('p', { style: s.stepText }, t('mieteSteigt.step4Text')),
       absatz('mieteSteigt.step4Verfahren'),
-      absatz('mieteSteigt.step4Schutz')
+      absatz('mieteSteigt.step4Schutz'),
+      absatz('mieteSteigt.step4SchutzFrist'),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('nav.wohnunggekuendigt'), onClick: () => onNavigate('wohnunggekuendigt') })
     ),
     React.createElement(AblaufStep, { palette, title: t('mieteSteigt.step5Title') },
       React.createElement('p', { style: s.stepText }, t('mieteSteigt.step5Text'))
