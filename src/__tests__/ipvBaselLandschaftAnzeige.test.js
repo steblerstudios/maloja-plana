@@ -43,14 +43,14 @@ describe('K31 IPV-Rechner, Kanton Basel-Landschaft', () => {
     const html = render(profil(2000));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 2’736');
-    expect(html).toContain('CHF 228');
+    expect(html).toContain('CHF\u00a02’736');
+    expect(html).toContain('CHF\u00a0228');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(2000, { kkPremium: null }));
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 2’736');
+    expect(html).not.toContain('CHF\u00a02’736');
   });
 
   it('nennt die amtliche Obergrenze — nicht die Musterwerte', () => {

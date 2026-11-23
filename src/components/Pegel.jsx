@@ -47,7 +47,7 @@ export const Pegel = ({ palette, t, state, nurGlas = false, fuellFarbe }) => {
   const sageTopY = soz ? waterTopY : Math.max(waterTopY, LINE_Y);
   const lineLabel = soz ? t('pegel.bedarf') : t('pegel.grenze');
 
-  const svg = h('svg', { viewBox: '0 0 128 152', width: 112, height: 133, 'aria-hidden': true, style: { flexShrink: 0 } },
+  const svg = h('svg', { viewBox: '0 0 128 152', width: 112, height: 133, 'aria-hidden': true, style: { display: 'block' } },
     h('defs', null,
       h('clipPath', { id: uid + '-clip' }, h('path', { d: VESSEL_CLIP })),
       soz && h('pattern', { id: uid + '-hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
@@ -69,20 +69,26 @@ export const Pegel = ({ palette, t, state, nurGlas = false, fuellFarbe }) => {
     h('path', { d: VESSEL, fill: 'none', stroke: empty ? palette.border : palette.soft, strokeWidth: 2, strokeLinecap: 'round', strokeDasharray: empty ? '4 4' : 'none' }),
     // Referenz-Linie
     h('line', { x1: 24, y1: LINE_Y, x2: 104, y2: LINE_Y, stroke: palette.skyDeep, strokeWidth: 1.8, strokeDasharray: '5 3', opacity: empty ? 0.5 : 1 }),
-    h('text', { x: 104, y: LINE_Y - 5, textAnchor: 'end', fontSize: 8.5, fontWeight: 700, fill: palette.skyDeep }, lineLabel),
-    // Aufstockungs-Label (nur wenn Lücke gefüllt)
-    showSupport && h('text', { x: 35, y: (LINE_Y + waterTopY) / 2 + 3, fontSize: 8, fontWeight: 700, fill: palette.sageDeep }, t('pegel.aufstockung')),
-    // „Luft"-Klammer (nur IPV, drunter)
+    // „Luft"-Klammer (nur IPV, drunter). Die Namen stehen seit 23.11.2026 in der Legende unter dem Glas.
     showLuft && h('g', null,
       h('line', { x1: 100, y1: LINE_Y, x2: 100, y2: waterTopY, stroke: palette.mid, strokeWidth: 1.2 }),
       h('line', { x1: 97, y1: LINE_Y, x2: 103, y2: LINE_Y, stroke: palette.mid, strokeWidth: 1.2 }),
-      h('line', { x1: 97, y1: waterTopY, x2: 103, y2: waterTopY, stroke: palette.mid, strokeWidth: 1.2 }),
-      h('text', { x: 108, y: (LINE_Y + waterTopY) / 2 + 3, fontSize: 8, fill: palette.mid }, t('pegel.luft'))
+      h('line', { x1: 97, y1: waterTopY, x2: 103, y2: waterTopY, stroke: palette.mid, strokeWidth: 1.2 })
     ),
     h('line', { x1: 30, y1: 146, x2: 98, y2: 146, stroke: palette.border, strokeWidth: 3, strokeLinecap: 'round' })
   );
 
-  if (nurGlas) return h('div', { 'data-teil': 'pegel-glas' }, svg);
+  // Legende unter dem Glas (Sophie 23.11.2026, Schriftskala): die Namen standen mit 8 Einheiten im Glas,
+  // am Schirm rund 7 px. In 14 px passen sie dort nicht, darum hier, mit Musterstrich wie im Bild.
+  const muster = (kind, wort, farbe) => h('div', { key: wort, style: { display: 'flex', alignItems: 'center', gap: '4px', fontSize: text.xs, lineHeight: leading.tight, color: farbe, overflowWrap: 'break-word', minWidth: 0 } },
+    h('svg', { width: 14, height: 10, viewBox: '0 0 14 10', 'aria-hidden': true, style: { flexShrink: 0 } }, kind),
+    wort);
+  const legende = h('div', { 'aria-hidden': true, style: { display: 'flex', flexDirection: 'column', gap: '2px', marginTop: '4px', width: '112px' } },
+    muster(h('line', { x1: 0, y1: 5, x2: 14, y2: 5, stroke: palette.skyDeep, strokeWidth: 1.8, strokeDasharray: '5 3' }), lineLabel, palette.skyDeep),
+    showSupport && muster(h('rect', { x: 0, y: 0, width: 14, height: 10, fill: 'url(#' + uid + '-hatch)', stroke: palette.sage, strokeWidth: 1 }), t('pegel.aufstockung'), palette.sageDeep),
+    showLuft && muster(h('path', { d: 'M4 1 H10 M7 1 V9 M4 9 H10', stroke: palette.mid, strokeWidth: 1.2, fill: 'none' }), t('pegel.luft'), palette.mid));
+  // Nur das Glas (seit #915): die Namen gehören seit 23.11.2026 zur Legende, darum kommt sie mit.
+  if (nurGlas) return h('div', { 'data-teil': 'pegel-glas' }, h('div', { style: { flexShrink: 0 } }, svg, legende));
 
   // ── Ablesung ──
   const title = soz ? t('nav.sozialhilfe') : t('schnellcheck.ipv');
@@ -120,7 +126,7 @@ export const Pegel = ({ palette, t, state, nurGlas = false, fuellFarbe }) => {
       padding: space.md + 'px', marginTop: space.md + 'px', marginBottom: space.md + 'px',
       background: palette.up, borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border,
     },
-  }, svg, readout);
+  }, h('div', { style: { flexShrink: 0 } }, svg, legende), readout);
 };
 
 export default Pegel;

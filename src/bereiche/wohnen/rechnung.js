@@ -38,7 +38,7 @@ import { mietzinsEinschaetzung, beitragHoechstMonat } from '../../data/mietzinsb
 import { mietzinsPegelState } from '../../data/pegel.js';
 import { auslandStoecke } from '../../data/wohnenInternational.js';
 import { lageZurRegion, lageWert } from '../../utils/lage.js';
-import { zahl } from '../../utils/geld.js';
+import { zahl, PROZENT } from '../../utils/geld.js';
 
 export { lageZurRegion, lageWert };
 
@@ -86,7 +86,7 @@ export function drittelGrenzeMiete(r) {
 
 // Hauptzahl Frage A, gleich geschrieben an allen Orten: ganze Prozent, nur knapp über einem Drittel eine Stelle
 // (sonst stünde 33 % neben «mehr als ein Drittel»).
-export const anteilText = (r) => (r.anteil == null ? null : zahl(r.anteil, { hoechstens: r.ueberDrittel && Math.round(r.anteil) === 33 ? 1 : 0 }) + ' %');
+export const anteilText = (r) => (r.anteil == null ? null : zahl(r.anteil, { hoechstens: r.ueberDrittel && Math.round(r.anteil) === 33 ? 1 : 0 }) + PROZENT);
 
 // Satz unter dem Anteil (Kachel, Kapitel, Werkzeug): wessen Einkommen gemeint ist — netto, eigenes, Haushalt, brutto.
 export const wohnkostenSatzKey = (r) => r.brutto ? (r.ganzBrutto ? 'instrumente.wohnkostenSatzBrutto' : 'instrumente.wohnkostenSatzTeilsBrutto')

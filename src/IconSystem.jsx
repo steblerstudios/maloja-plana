@@ -320,7 +320,24 @@ const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
 // `delete`, `filter` (Trichter).
 // Stebler Studios hat entschieden: behalten. Nur auf Zuruf entfernen.
 // (09.11.2026: `kalenderUhr` und `exportTool` standen hier auch; mit B5a aufgelöst.)
+// Aus dem Kern hierher verschoben (Schriftskala 23.11.2026, Startbündel): kaestchen, home, heart —
+// keine fest geladene Datei zeigt sie, alle Nutzer importieren schon dieses Register.
+const _kaestchen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('rect', { x: '4', y: '4', width: '16', height: '16', rx: '2' })
+);
+const _home = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M 3 12 L 12 3 L 21 12' }),
+  React.createElement('path', { d: 'M 5 12 L 5 20 Q 5 21 6 21 L 18 21 Q 19 21 19 20 L 19 12' }),
+  React.createElement('rect', { x: '10', y: '14', width: '4', height: '7' })
+);
+const _heart = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none' },
+  React.createElement('path', { d: 'M 12 20 C 12 20 4 14.5 4 8.8 C 4 6.1 6.1 4 8.6 4 C 10.2 4 11.4 4.9 12 6 C 12.6 4.9 13.8 4 15.4 4 C 17.9 4 20 6.1 20 8.8 C 20 14.5 12 20 12 20 Z', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }),
+);
+
 zeichenErgaenzen({
+  kaestchen: _kaestchen,
+  home: _home,
+  heart: _heart,
   schulden: _schulden,
   steuern: _steuern,
   organspende: _organspende,

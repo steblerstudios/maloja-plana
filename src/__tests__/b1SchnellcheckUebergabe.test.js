@@ -124,7 +124,7 @@ describe('B-1 · der IPV-Rechner rechnet mit den Schnellcheck-Zahlen, das Profil
     // GE ist nicht amtlich belegt (E9; bis 28.09.2026 BS): neutrale Orientierung, kein Betrag. (Bis 23.09.2026 LU.)
     // Dass mit 3000 statt 5000 gerechnet wird, zeigt der Test mit belegtem Kanton unten.
     expect(html).toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 3');
+    expect(html).toContain('CHF\u00a03');
     expect(writes).toEqual([]);
   });
 
@@ -173,7 +173,7 @@ describe('B-1 · der IPV-Rechner rechnet mit den Schnellcheck-Zahlen, das Profil
       expect(calculateIPV(profil()).eligible).toBe(false);
       const { html } = renderMitProps(PremiumSubsidy, { data: profil(), schnellcheckZahlen: zahlen, onUpdateData: () => {} });
       expect(html).toContain('premium.eligible');
-      expect(html).toContain('CHF ' + mit3000.amount);
+      expect(html).toContain('CHF\u00a0' + mit3000.amount);
       expect(html).not.toContain('premium.notEligible');
     });
   });

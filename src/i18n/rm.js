@@ -33,7 +33,7 @@ export default {
         vhsbb: { titel: 'Volkshochschule beider Basel', text: 'Cun la KulturLegi fin 50% sconti sin curs.' },
         zhAktionen: { titel: 'Bigliets gratuits & acziuns (Turitg)', text: 'Acziuns concretas en il chantun Turitg cun la KulturLegi — p.ex. buns per cudeschs e gieus, computers per la participaziun digitala.' },
         vhszh: { titel: 'Scola populara Turitg', text: 'Cun la KulturLegi 50% sconti sin curs-referats e 20% sin auters curs.' },
-        ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Pass da vacanzas da stad per uffants (6–16); mez pretsch cun la KulturLegi (CHF 18.50 empè da 37).' },
+        ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Pass da vacanzas da stad per uffants (6–16); mez pretsch cun la KulturLegi (CHF\u00a018.50 empè da 37).' },
         gggWegweiser: { titel: 'GGG Wegweiser Basilea', text: 'Orientaziun e cussegliaziun gratuita en dumondas socialas — er agid cumplenir formulars e cussegliaziun en la vegliadetgna.' },
         caritasMarkt: { titel: 'Caritas-Markt', text: 'Victualias ed artitgels dal mintgadi a pretsch reducì per persunas cun in budget stgars — access cun la carta da client Caritas-Markt (via la KulturLegi).' },
       },
@@ -546,7 +546,7 @@ export default {
       month: 'mais',
       year: 'onn',
       rateNote: 'Spanna da {von} fin {bis} CHF per ura: confamigliars che tgiran survegnan tenor ina communicaziun dal chantun Basilea-Citad «per regla ina contribuziun da 30 fin 40 francs per ura» (16.12.2025). Sch’i sa tracta da brutto u netto, na stat betg là. I n’exista nagina cifra uffiziala per l’entira Svizra; en l’agen chantun e tar l’atgna organisaziun po quai esser auter.',
-      vergleich: 'Per cumparegliar: per la tgira da basa paja l’assicuranza da malsauns a l’organisaziun che engascha CHF {betrag} per ura (KLV art. 7a al. 1 lit. c). Quai n’è ni il salari ni l’entira indemnisaziun da l’organisaziun: tut tenor chantun vegnan vitiers contribuziuns dal chantun u da la vischnanca e da la persuna tgirada.',
+      vergleich: 'Per cumparegliar: per la tgira da basa paja l’assicuranza da malsauns a l’organisaziun che engascha CHF\u00a0{betrag} per ura (KLV art. 7a al. 1 lit. c). Quai n’è ni il salari ni l’entira indemnisaziun da l’organisaziun: tut tenor chantun vegnan vitiers contribuziuns dal chantun u da la vischnanca e da la persuna tgirada.',
       nurGrundpflege: 'Per regla vegn indemnisada mo la tgira da basa en il basegn examinà, betg l’assistenza u la chasada. Tge uras che quintan, di l’organisaziun che engascha.',
       zuschlaege: 'Per intervents la saira, la fin d’emna u la notg èn supplements pussaivels tut tenor l’organisaziun.',
       disclaimer: 'Orientaziun nunliand. Il salari real dependa da l’organisaziun che engascha e dal chantun — betg ina tariffa garantida.',
@@ -660,7 +660,7 @@ export default {
     step2Title: '2 · S’annunziar baud a l’AI',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step2Text: { sie: 'Zeichnet sich ab, dass die Einschränkung länger dauert, melden Sie sich früh bei der IV (Früherfassung). Die IV setzt zuerst auf Eingliederung — „Eingliederung vor Rente“ —, diese Massnahmen kommen früh. Eine Rente ist erst möglich, wenn die Eingliederung nicht reicht, nach einem Jahr mit durchschnittlich mindestens 40 % Arbeitsunfähigkeit und frühestens sechs Monate nach der Anmeldung (IVG Art. 28, 29).', du: 'Zeichnet sich ab, dass die Einschränkung länger dauert, melde dich früh bei der IV (Früherfassung). Die IV setzt zuerst auf Eingliederung — „Eingliederung vor Rente“ —, diese Massnahmen kommen früh. Eine Rente ist erst möglich, wenn die Eingliederung nicht reicht, nach einem Jahr mit durchschnittlich mindestens 40 % Arbeitsunfähigkeit und frühestens sechs Monate nach der Anmeldung (IVG Art. 28, 29).' },
+    step2Text: { sie: 'Zeichnet sich ab, dass die Einschränkung länger dauert, melden Sie sich früh bei der IV (Früherfassung). Die IV setzt zuerst auf Eingliederung — „Eingliederung vor Rente“ —, diese Massnahmen kommen früh. Eine Rente ist erst möglich, wenn die Eingliederung nicht reicht, nach einem Jahr mit durchschnittlich mindestens 40\u202f% Arbeitsunfähigkeit und frühestens sechs Monate nach der Anmeldung (IVG Art. 28, 29).', du: 'Zeichnet sich ab, dass die Einschränkung länger dauert, melde dich früh bei der IV (Früherfassung). Die IV setzt zuerst auf Eingliederung — „Eingliederung vor Rente“ —, diese Massnahmen kommen früh. Eine Rente ist erst möglich, wenn die Eingliederung nicht reicht, nach einem Jahr mit durchschnittlich mindestens 40\u202f% Arbeitsunfähigkeit und frühestens sechs Monate nach der Anmeldung (IVG Art. 28, 29).' },
     step2Button: 'Promemoria «Examinar l’annunzia AI» en il chalender ({date})',
     step2Done: 'Termin memorisà en il chalender.',
     step2CalendarLink: 'Guardar en il chalender',
@@ -879,14 +879,14 @@ export default {
     step3Title: '3 · Serrar las largias d’assicuranza',
     // TODO(rm): Gegenlese — Kapitel 5 (10.11.2026): Sie-Fassung aus den Vus-Formen der Nachbarsätze gebildet,
     // Satz zur grossen Säule 3a neu — beides von einer Person gegenlesen lassen, die Romanisch schreibt.
-    step3Text: { sie: "Sco independent n’essas Vus betg pli assicurà automaticamain cunter accidents (LAINF) e na pajais betg pli en ina cassa da pensiun (LPP). Includai l’accident en Vossa cassa da malsauns u As assecurai voluntarmain, pensai ad ina indemnisaziun da malsogna (IGM) e fabritgai Vossa prevenziun cul pilaster 3a u la LPP facultativa. Senza cassa da pensiun pudais Vus pajar en il pilaster 3a fin 20 % dal gudogn, maximalmain {max3a} francs ({jahr3a}).", du: "Sco independent n’es ti betg pli assicurà automaticamain cunter accidents (LAINF) e na pajas betg pli en ina cassa da pensiun (LPP). Includa l’accident en tia cassa da malsauns u assecurescha’t voluntarmain, pensa ad ina indemnisaziun da malsogna (IGM) e fabritgescha tia prevenziun cul pilaster 3a u la LPP facultativa. Senza cassa da pensiun pos ti pajar en il pilaster 3a fin 20 % dal gudogn, maximalmain {max3a} francs ({jahr3a})." },
+    step3Text: { sie: "Sco independent n’essas Vus betg pli assicurà automaticamain cunter accidents (LAINF) e na pajais betg pli en ina cassa da pensiun (LPP). Includai l’accident en Vossa cassa da malsauns u As assecurai voluntarmain, pensai ad ina indemnisaziun da malsogna (IGM) e fabritgai Vossa prevenziun cul pilaster 3a u la LPP facultativa. Senza cassa da pensiun pudais Vus pajar en il pilaster 3a fin 20\u202f% dal gudogn, maximalmain {max3a} francs ({jahr3a}).", du: "Sco independent n’es ti betg pli assicurà automaticamain cunter accidents (LAINF) e na pajas betg pli en ina cassa da pensiun (LPP). Includa l’accident en tia cassa da malsauns u assecurescha’t voluntarmain, pensa ad ina indemnisaziun da malsogna (IGM) e fabritgescha tia prevenziun cul pilaster 3a u la LPP facultativa. Senza cassa da pensiun pos ti pajar en il pilaster 3a fin 20\u202f% dal gudogn, maximalmain {max3a} francs ({jahr3a})." },
     step3LinkUk: 'Accident u malsogna — tge che conta',
     step3LinkVorsorge: 'Guardar la prevenziun',
     // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026)
     step4Title: "4 · AHV-Beiträge, Steuern und Mehrwertsteuer zurücklegen",
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026): AHV-Akontobeiträge neu, alter Satz war fachlich falsch
-    step4Text: { sie: "Die AHV/IV/EO-Beiträge zahlen Sie selbst, als Akontobeiträge jedes Quartal an die Ausgleichskasse. Ab {grenze} Franken Jahreseinkommen sind es {satz} %, darunter weniger, mindestens aber {mindest} Franken im Jahr, dazu Verwaltungskosten. Im Nebenerwerb bis 2 500 Franken im Jahr gibt es Beiträge nur auf Wunsch. Wer zu spät zahlt, zahlt {zins} % Verzugszins im Jahr (AHVG Art. 8, AHVV Art. 21 und 42, AHV-Merkblatt 2.02; Stand {jahr}). Legen Sie auch für die Steuern von Anfang an Geld zurück: Sie werden nicht vom Lohn abgezogen, sondern in Raten oder mit der Schlussrechnung bezahlt. Mehrwertsteuerpflichtig werden Sie ab 100 000 Franken steuerbarem Umsatz im Jahr, im In- und Ausland zusammengezählt, ohne von der Steuer ausgenommene Leistungen (MWSTG Art. 10). Eine saubere Buchhaltung von Tag eins erspart später viel.", du: "Die AHV/IV/EO-Beiträge zahlst du selbst, als Akontobeiträge jedes Quartal an die Ausgleichskasse. Ab {grenze} Franken Jahreseinkommen sind es {satz} %, darunter weniger, mindestens aber {mindest} Franken im Jahr, dazu Verwaltungskosten. Im Nebenerwerb bis 2 500 Franken im Jahr gibt es Beiträge nur auf Wunsch. Wer zu spät zahlt, zahlt {zins} % Verzugszins im Jahr (AHVG Art. 8, AHVV Art. 21 und 42, AHV-Merkblatt 2.02; Stand {jahr}). Leg auch für die Steuern von Anfang an Geld zurück: Sie werden nicht vom Lohn abgezogen, sondern in Raten oder mit der Schlussrechnung bezahlt. Mehrwertsteuerpflichtig wirst du ab 100 000 Franken steuerbarem Umsatz im Jahr, im In- und Ausland zusammengezählt, ohne von der Steuer ausgenommene Leistungen (MWSTG Art. 10). Eine saubere Buchhaltung von Tag eins erspart später viel." },
+    step4Text: { sie: "Die AHV/IV/EO-Beiträge zahlen Sie selbst, als Akontobeiträge jedes Quartal an die Ausgleichskasse. Ab {grenze} Franken Jahreseinkommen sind es {satz}\u202f%, darunter weniger, mindestens aber {mindest} Franken im Jahr, dazu Verwaltungskosten. Im Nebenerwerb bis 2 500 Franken im Jahr gibt es Beiträge nur auf Wunsch. Wer zu spät zahlt, zahlt {zins}\u202f% Verzugszins im Jahr (AHVG Art. 8, AHVV Art. 21 und 42, AHV-Merkblatt 2.02; Stand {jahr}). Legen Sie auch für die Steuern von Anfang an Geld zurück: Sie werden nicht vom Lohn abgezogen, sondern in Raten oder mit der Schlussrechnung bezahlt. Mehrwertsteuerpflichtig werden Sie ab 100 000 Franken steuerbarem Umsatz im Jahr, im In- und Ausland zusammengezählt, ohne von der Steuer ausgenommene Leistungen (MWSTG Art. 10). Eine saubere Buchhaltung von Tag eins erspart später viel.", du: "Die AHV/IV/EO-Beiträge zahlst du selbst, als Akontobeiträge jedes Quartal an die Ausgleichskasse. Ab {grenze} Franken Jahreseinkommen sind es {satz}\u202f%, darunter weniger, mindestens aber {mindest} Franken im Jahr, dazu Verwaltungskosten. Im Nebenerwerb bis 2 500 Franken im Jahr gibt es Beiträge nur auf Wunsch. Wer zu spät zahlt, zahlt {zins}\u202f% Verzugszins im Jahr (AHVG Art. 8, AHVV Art. 21 und 42, AHV-Merkblatt 2.02; Stand {jahr}). Leg auch für die Steuern von Anfang an Geld zurück: Sie werden nicht vom Lohn abgezogen, sondern in Raten oder mit der Schlussrechnung bezahlt. Mehrwertsteuerpflichtig wirst du ab 100 000 Franken steuerbarem Umsatz im Jahr, im In- und Ausland zusammengezählt, ohne von der Steuer ausgenommene Leistungen (MWSTG Art. 10). Eine saubere Buchhaltung von Tag eins erspart später viel." },
     step4Link: 'Guardar las taglias',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Planisai Vossa prevenziun conscientamain — la largia senza cassa da pensiun As tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.', du: 'Planisescha tia prevenziun conscientamain — la largia senza cassa da pensiun at tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.' },
@@ -1218,7 +1218,7 @@ export default {
     step2LinkKk: 'Krankenkasse ansehen',
     step2LinkZusatz: 'Zusatzversicherung',
     step3Title: '3 · AHV: freiwillig weiterversichern — nur unter Bedingungen',
-    step3Text: 'Mit dem Wohnsitz (und ohne Erwerb in der Schweiz) endet die obligatorische AHV (AHVG Art. 1a Abs. 1 Bst. a und b). Weiterführen können sie etwa Personen, die für einen Arbeitgeber mit Sitz in der Schweiz im Ausland arbeiten und von ihm entlöhnt werden, wenn er einverstanden ist, sowie nicht erwerbstätige Studierende bis Ende des Jahres, in dem sie 30 werden (AHVG Art. 1a Abs. 3). Der freiwilligen Versicherung beitreten können nur Schweizer Staatsangehörige und Staatsangehörige der EU/EFTA, die nicht in einem EU/EFTA-Staat leben und unmittelbar vorher mindestens fünf aufeinanderfolgende Jahre obligatorisch versichert waren (AHVG Art. 2 Abs. 1). Die Beitrittserklärung geht schriftlich an die Schweizerische Ausgleichskasse, innerhalb eines Jahres ab dem Ausscheiden aus der obligatorischen Versicherung — danach ist ein Beitritt nicht mehr möglich (VFV Art. 2, Art. 8 Abs. 1). Der Mindestbeitrag für AHV und IV zusammen beträgt {min} Franken im Jahr (AHV {ahv}, IV {iv} Franken); dazu kommen 5 % Verwaltungskosten (AHVG Art. 2 Abs. 4 und 5, IVG Art. 3 Abs. 1bis, VFV Art. 13b und 18a, Verordnung des EDI über den Höchstansatz der Verwaltungskostenbeiträge in der AHV, SR 831.143.41, Art. 1; Beträge für {jahr}).',
+    step3Text: 'Mit dem Wohnsitz (und ohne Erwerb in der Schweiz) endet die obligatorische AHV (AHVG Art. 1a Abs. 1 Bst. a und b). Weiterführen können sie etwa Personen, die für einen Arbeitgeber mit Sitz in der Schweiz im Ausland arbeiten und von ihm entlöhnt werden, wenn er einverstanden ist, sowie nicht erwerbstätige Studierende bis Ende des Jahres, in dem sie 30 werden (AHVG Art. 1a Abs. 3). Der freiwilligen Versicherung beitreten können nur Schweizer Staatsangehörige und Staatsangehörige der EU/EFTA, die nicht in einem EU/EFTA-Staat leben und unmittelbar vorher mindestens fünf aufeinanderfolgende Jahre obligatorisch versichert waren (AHVG Art. 2 Abs. 1). Die Beitrittserklärung geht schriftlich an die Schweizerische Ausgleichskasse, innerhalb eines Jahres ab dem Ausscheiden aus der obligatorischen Versicherung — danach ist ein Beitritt nicht mehr möglich (VFV Art. 2, Art. 8 Abs. 1). Der Mindestbeitrag für AHV und IV zusammen beträgt {min} Franken im Jahr (AHV {ahv}, IV {iv} Franken); dazu kommen 5\u202f% Verwaltungskosten (AHVG Art. 2 Abs. 4 und 5, IVG Art. 3 Abs. 1bis, VFV Art. 13b und 18a, Verordnung des EDI über den Höchstansatz der Verwaltungskostenbeiträge in der AHV, SR 831.143.41, Art. 1; Beträge für {jahr}).',
     fristLabel: { sie: 'Wegzugsdatum (der Tag, an dem Sie die Schweiz verlassen bzw. auf den Sie sich abmelden)', du: 'Wegzugsdatum (der Tag, an dem du die Schweiz verlässt bzw. auf den du dich abmeldest)' },
     fristHinweis: { sie: 'Das gilt nur, wenn Sie beitreten können: als Schweizer Staatsangehörige oder Staatsangehörige der EU/EFTA, nicht bei einem Wegzug in einen EU/EFTA-Staat und nach mindestens fünf aufeinanderfolgenden Jahren obligatorischer Versicherung unmittelbar davor (AHVG Art. 2 Abs. 1). Dann sollte die Beitrittserklärung spätestens am {date} bei der Schweizerischen Ausgleichskasse sein (VFV Art. 8 Abs. 1). Gerechnet ab dem Wegzug — endet Ihre obligatorische Versicherung später, ist die echte Frist länger. Früher ist nie falsch.', du: 'Das gilt nur, wenn du beitreten kannst: als Schweizer Staatsangehörige oder Staatsangehöriger der EU/EFTA, nicht bei einem Wegzug in einen EU/EFTA-Staat und nach mindestens fünf aufeinanderfolgenden Jahren obligatorischer Versicherung unmittelbar davor (AHVG Art. 2 Abs. 1). Dann sollte die Beitrittserklärung spätestens am {date} bei der Schweizerischen Ausgleichskasse sein (VFV Art. 8 Abs. 1). Gerechnet ab dem Wegzug — endet deine obligatorische Versicherung später, ist die echte Frist länger. Früher ist nie falsch.' },
     fristVorbei: { sie: 'Die Jahresfrist war am {date} vorbei, gerechnet ab dem Wegzug. Endete Ihre obligatorische Versicherung später, kann sie noch laufen — fragen Sie sofort bei der Schweizerischen Ausgleichskasse nach.', du: 'Die Jahresfrist war am {date} vorbei, gerechnet ab dem Wegzug. Endete deine obligatorische Versicherung später, kann sie noch laufen — frag sofort bei der Schweizerischen Ausgleichskasse nach.' },
@@ -1400,7 +1400,7 @@ export default {
     step4Text3: { sie: 'Soziale Medien: Sichern Sie Konten mit starkem Passwort und Zwei-Faktor-Authentisierung und seien Sie bei Links in Direktnachrichten vorsichtig.', du: 'Soziale Medien: Sichere Konten mit starkem Passwort und Zwei-Faktor-Authentisierung und sei bei Links in Direktnachrichten vorsichtig.' }, // TODO(rm): Übersetzung
     step4Link: 'Robinsonliste des SDV', // TODO(rm): Übersetzung
     step5Title: '5 · Wer hat meine Daten', // TODO(rm): Übersetzung
-    step5Text: { sie: "Sie können von Firmen schriftlich Auskunft verlangen, ob sie Daten über Sie bearbeiten, und wirken bei der Identifikation mit (DSG Art. 25, DSV Art. 16). Die Auskunft ist grundsätzlich kostenlos, ausnahmsweise ist eine Beteiligung bis CHF 300 möglich (DSV Art. 19). Sie wird in der Regel innerhalb von 30 Tagen erteilt, kann aber mit Begründung verweigert, eingeschränkt oder aufgeschoben werden (DSG Art. 25 Abs. 7, Art. 26). Unrichtige Daten können Sie in der Regel berichtigen lassen (Art. 32 Abs. 1).", du: "Du kannst von Firmen schriftlich Auskunft verlangen, ob sie Daten über dich bearbeiten, und wirkst bei der Identifikation mit (DSG Art. 25, DSV Art. 16). Die Auskunft ist grundsätzlich kostenlos, ausnahmsweise ist eine Beteiligung bis CHF 300 möglich (DSV Art. 19). Sie wird in der Regel innerhalb von 30 Tagen erteilt, kann aber mit Begründung verweigert, eingeschränkt oder aufgeschoben werden (DSG Art. 25 Abs. 7, Art. 26). Unrichtige Daten kannst du in der Regel berichtigen lassen (Art. 32 Abs. 1)." }, // TODO(rm): Übersetzung
+    step5Text: { sie: "Sie können von Firmen schriftlich Auskunft verlangen, ob sie Daten über Sie bearbeiten, und wirken bei der Identifikation mit (DSG Art. 25, DSV Art. 16). Die Auskunft ist grundsätzlich kostenlos, ausnahmsweise ist eine Beteiligung bis CHF\u00a0300 möglich (DSV Art. 19). Sie wird in der Regel innerhalb von 30 Tagen erteilt, kann aber mit Begründung verweigert, eingeschränkt oder aufgeschoben werden (DSG Art. 25 Abs. 7, Art. 26). Unrichtige Daten können Sie in der Regel berichtigen lassen (Art. 32 Abs. 1).", du: "Du kannst von Firmen schriftlich Auskunft verlangen, ob sie Daten über dich bearbeiten, und wirkst bei der Identifikation mit (DSG Art. 25, DSV Art. 16). Die Auskunft ist grundsätzlich kostenlos, ausnahmsweise ist eine Beteiligung bis CHF\u00a0300 möglich (DSV Art. 19). Sie wird in der Regel innerhalb von 30 Tagen erteilt, kann aber mit Begründung verweigert, eingeschränkt oder aufgeschoben werden (DSG Art. 25 Abs. 7, Art. 26). Unrichtige Daten kannst du in der Regel berichtigen lassen (Art. 32 Abs. 1)." }, // TODO(rm): Übersetzung
     step5Text2: { sie: "Die Löschung können Sie verlangen. Durchsetzbar ist sie vor allem, wenn die Bearbeitung widerrechtlich oder der Zweck weggefallen ist, am Ende vor dem Zivilgericht; eine Firma kann ablehnen (DSG Art. 6 Abs. 4, 30, 31, 32 Abs. 2). Für Bundesstellen gibt es eigene Vorlagen, für kantonale Stellen gilt kantonales Recht. Das Betreibungsregister folgt eigenen Regeln. Bei Fragen zu Forderung und Abzahlung verweist der EDÖB (Eidgenössischer Datenschutz- und Öffentlichkeitsbeauftragter) auf die Schuldenberatung.", du: "Die Löschung kannst du verlangen. Durchsetzbar ist sie vor allem, wenn die Bearbeitung widerrechtlich oder der Zweck weggefallen ist, am Ende vor dem Zivilgericht; eine Firma kann ablehnen (DSG Art. 6 Abs. 4, 30, 31, 32 Abs. 2). Für Bundesstellen gibt es eigene Vorlagen, für kantonale Stellen gilt kantonales Recht. Das Betreibungsregister folgt eigenen Regeln. Bei Fragen zu Forderung und Abzahlung verweist der EDÖB (Eidgenössischer Datenschutz- und Öffentlichkeitsbeauftragter) auf die Schuldenberatung." }, // TODO(rm): Übersetzung
     step5Link: 'Musterbriefe des EDÖB', // TODO(rm): Übersetzung
     step5LinkBetreibung: 'Betreibungsauszug bestellen', // TODO(rm): Übersetzung
@@ -1479,7 +1479,7 @@ export default {
     step2Text: { sie: 'Cumparegliai l’import, il numer dal quint e la prestaziun cun Voss documents. Sche Vus avais gia pajà, tramettai la quittanza da pajament. Sch’insatge è nuncler u fauss, contestai la pretensiun en scrit e pretendai ina glista detagliada — uschia pudais Vus cumprovar pli tard che Vus avais reagì.', du: 'Cumpareglia l’import, il numer dal quint e la prestaziun cun tes documents. Sche ti has gia pajà, tramette la quittanza da pajament. Sch’insatge è nuncler u fauss, contestescha la pretensiun en scrit e pretenda ina glista detagliada — uschia pos ti cumprovar pli tard che ti has reagì.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step2Verjaehrung: { sie: 'Sche la pretensiun è fitg veglia, po ella esser surannada: las bleras suenter diesch onns, per exempel tschains da fittanza sco er quints d’artisans e da medis suenter tschintg onns, mintgamai a partir da la scadenza (OR art. 127, 128, 130). Ina pretensiun or d’in attest da mancanza da bains suranna dentant pir 20 onns suenter sia emissiun (SchKG art. 149a al. 1); tschains n’èn betg debitads sin quella (art. 149 al. 4). La dretgira na resguarda la surannaziun betg da sasezza — ins sto la far valair sez (OR art. 142). Mintga pajament parzial vala sco renconuschientscha e lascha cumenzar da nov la surannaziun (OR art. 135 cifra 1, art. 137 al. 1). Na suttascrivai nagina renconuschientscha da debit avant che la pretensiun è controllada: sch’ella vegn renconuschida cun in document, importa il nov termin da surannaziun adina diesch onns (OR art. 137 al. 2). Tar pretensiuns veglias perquai l’emprim controllar u sa laschar cussegliar, lura pajar.', du: 'Sche la pretensiun è fitg veglia, po ella esser surannada: las bleras suenter diesch onns, per exempel tschains da fittanza sco er quints d’artisans e da medis suenter tschintg onns, mintgamai a partir da la scadenza (OR art. 127, 128, 130). Ina pretensiun or d’in attest da mancanza da bains suranna dentant pir 20 onns suenter sia emissiun (SchKG art. 149a al. 1); tschains n’èn betg debitads sin quella (art. 149 al. 4). La dretgira na resguarda la surannaziun betg da sasezza — ins sto la far valair sez (OR art. 142). Mintga pajament parzial vala sco renconuschientscha e lascha cumenzar da nov la surannaziun (OR art. 135 cifra 1, art. 137 al. 1). Na suttascriva nagina renconuschientscha da debit avant che la pretensiun è controllada: sch’ella vegn renconuschida cun in document, importa il nov termin da surannaziun adina diesch onns (OR art. 137 al. 2). Tar pretensiuns veglias perquai l’emprim controllar u sa laschar cussegliar, lura pajar.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step3Title: '3 · Tge che dastga vegnir vitiers', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
-    step3Text: { sie: 'Sche Vus essas en retard cun in debit da daners, dastga il creditur pretender tschains da retard: 5 % l’onn, u in tschains pli aut, sch’il contract al prevesa (OR art. 104 al. 1–2) — 5 % sin 1000 francs èn radund 4 francs il mais. Tschains sin tschains da retard n’è betg permess (OR art. 105 al. 3). Il Dretg d’obligaziuns na prevesa nagina taxa d’admoniziun. Taxas d’admoniziun e d’incasso na stuais Vus perquai per regla betg pajar: debitadas èn ellas mo, sche Vus avais consentì ad ellas ordavant explicitamain, per exempel en las cundiziuns dal contract — tenor K-Tipp Rechtsschutz cun in import cifrà (K-Tipp Rechtsschutz; SRF Kassensturz). Uschiglio debitais Vus la pretensiun ed il tschains da retard. Sche Vus pajais quels, notai tar il pajament il numer dal quint e «Pretensiun e tschains da retard, taxas contestadas», e contestai las taxas en scrit — la brev «Contestar ina pretensiun» ha per quai in’atgna schelta. Eran las taxas tuttina concordadas, dastga il creditur quintar il pajament l’emprim sin tschains e custs, ed i resta in rest avert (OR art. 85 al. 1). Sche Vus avais plirs quints tar il medem creditur, determinais Vus tar il pajament, tge quint che Vus pajais (OR art. 86 al. 1). Sch’ultra da quai in donn è debità (OR art. 106), è savens contestà; ina cussegliaziun da debits gida a valitar quai. Insatge auter èn ils custs da scussiun: quels porta il debitur (SchKG art. 68 al. 1). Tar autoritads e posts publics, per exempel la cassa da malsauns (pass 4), pon valair taxas legalas.', du: 'Sche ti es en retard cun in debit da daners, dastga il creditur pretender tschains da retard: 5 % l’onn, u in tschains pli aut, sch’il contract al prevesa (OR art. 104 al. 1–2) — 5 % sin 1000 francs èn radund 4 francs il mais. Tschains sin tschains da retard n’è betg permess (OR art. 105 al. 3). Il Dretg d’obligaziuns na prevesa nagina taxa d’admoniziun. Taxas d’admoniziun e d’incasso na stos ti perquai per regla betg pajar: debitadas èn ellas mo, sche ti has consentì ad ellas ordavant explicitamain, per exempel en las cundiziuns dal contract — tenor K-Tipp Rechtsschutz cun in import cifrà (K-Tipp Rechtsschutz; SRF Kassensturz). Uschiglio debitas ti la pretensiun ed il tschains da retard. Sche ti pajas quels, notescha tar il pajament il numer dal quint e «Pretensiun e tschains da retard, taxas contestadas», e contestescha las taxas en scrit — la brev «Contestar ina pretensiun» ha per quai in’atgna schelta. Eran las taxas tuttina concordadas, dastga il creditur quintar il pajament l’emprim sin tschains e custs, ed i resta in rest avert (OR art. 85 al. 1). Sche ti has plirs quints tar il medem creditur, determineschas ti tar il pajament, tge quint che ti pajas (OR art. 86 al. 1). Sch’ultra da quai in donn è debità (OR art. 106), è savens contestà; ina cussegliaziun da debits gida a valitar quai. Insatge auter èn ils custs da scussiun: quels porta il debitur (SchKG art. 68 al. 1). Tar autoritads e posts publics, per exempel la cassa da malsauns (pass 4), pon valair taxas legalas.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
+    step3Text: { sie: 'Sche Vus essas en retard cun in debit da daners, dastga il creditur pretender tschains da retard: 5\u202f% l’onn, u in tschains pli aut, sch’il contract al prevesa (OR art. 104 al. 1–2) — 5\u202f% sin 1000 francs èn radund 4 francs il mais. Tschains sin tschains da retard n’è betg permess (OR art. 105 al. 3). Il Dretg d’obligaziuns na prevesa nagina taxa d’admoniziun. Taxas d’admoniziun e d’incasso na stuais Vus perquai per regla betg pajar: debitadas èn ellas mo, sche Vus avais consentì ad ellas ordavant explicitamain, per exempel en las cundiziuns dal contract — tenor K-Tipp Rechtsschutz cun in import cifrà (K-Tipp Rechtsschutz; SRF Kassensturz). Uschiglio debitais Vus la pretensiun ed il tschains da retard. Sche Vus pajais quels, notai tar il pajament il numer dal quint e «Pretensiun e tschains da retard, taxas contestadas», e contestai las taxas en scrit — la brev «Contestar ina pretensiun» ha per quai in’atgna schelta. Eran las taxas tuttina concordadas, dastga il creditur quintar il pajament l’emprim sin tschains e custs, ed i resta in rest avert (OR art. 85 al. 1). Sche Vus avais plirs quints tar il medem creditur, determinais Vus tar il pajament, tge quint che Vus pajais (OR art. 86 al. 1). Sch’ultra da quai in donn è debità (OR art. 106), è savens contestà; ina cussegliaziun da debits gida a valitar quai. Insatge auter èn ils custs da scussiun: quels porta il debitur (SchKG art. 68 al. 1). Tar autoritads e posts publics, per exempel la cassa da malsauns (pass 4), pon valair taxas legalas.', du: 'Sche ti es en retard cun in debit da daners, dastga il creditur pretender tschains da retard: 5\u202f% l’onn, u in tschains pli aut, sch’il contract al prevesa (OR art. 104 al. 1–2) — 5\u202f% sin 1000 francs èn radund 4 francs il mais. Tschains sin tschains da retard n’è betg permess (OR art. 105 al. 3). Il Dretg d’obligaziuns na prevesa nagina taxa d’admoniziun. Taxas d’admoniziun e d’incasso na stos ti perquai per regla betg pajar: debitadas èn ellas mo, sche ti has consentì ad ellas ordavant explicitamain, per exempel en las cundiziuns dal contract — tenor K-Tipp Rechtsschutz cun in import cifrà (K-Tipp Rechtsschutz; SRF Kassensturz). Uschiglio debitas ti la pretensiun ed il tschains da retard. Sche ti pajas quels, notescha tar il pajament il numer dal quint e «Pretensiun e tschains da retard, taxas contestadas», e contestescha las taxas en scrit — la brev «Contestar ina pretensiun» ha per quai in’atgna schelta. Eran las taxas tuttina concordadas, dastga il creditur quintar il pajament l’emprim sin tschains e custs, ed i resta in rest avert (OR art. 85 al. 1). Sche ti has plirs quints tar il medem creditur, determineschas ti tar il pajament, tge quint che ti pajas (OR art. 86 al. 1). Sch’ultra da quai in donn è debità (OR art. 106), è savens contestà; ina cussegliaziun da debits gida a valitar quai. Insatge auter èn ils custs da scussiun: quels porta il debitur (SchKG art. 68 al. 1). Tar autoritads e posts publics, per exempel la cassa da malsauns (pass 4), pon valair taxas legalas.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step3Inkasso: { sie: 'Sch’i s’annunzia empè dal creditur in biro d’incasso, pretendai l’emprim la cumprova ch’el dastga far valair la pretensiun: in plainpudair u ina decleraziun da cessiun dal creditur original. Tenor la Cussegliaziun da debits da Berna restan er lura debitads mo la pretensiun originala, il tschains da retard ed ils custs d’ina scussiun giustifitgada — nun che Vus hajas consentì ordavant explicitamain ad ulteriuras taxas (guardai survart); posts sco «donn da retard», «cussegliader giuridic» u «differentas expensas» n’èn tenor ella betg debitads. Sch’il biro d’incasso represchenta il creditur davant l’uffizi da scussiun, na dastgan ils custs da questa represchentanza betg vegnir surdads a Vus (SchKG art. 27 al. 2).', du: 'Sch’i s’annunzia empè dal creditur in biro d’incasso, pretenda l’emprim la cumprova ch’el dastga far valair la pretensiun: in plainpudair u ina decleraziun da cessiun dal creditur original. Tenor la Cussegliaziun da debits da Berna restan er lura debitads mo la pretensiun originala, il tschains da retard ed ils custs d’ina scussiun giustifitgada — nun che ti hajas consentì ordavant explicitamain ad ulteriuras taxas (guarda survart); posts sco «donn da retard», «cussegliader giuridic» u «differentas expensas» n’èn tenor ella betg debitads. Sch’il biro d’incasso represchenta il creditur davant l’uffizi da scussiun, na dastgan ils custs da questa represchentanza betg vegnir surdads a tai (SchKG art. 27 al. 2).' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step3LinkSchulden: 'Ordinar las pretensiuns avertas', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     zins: { // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
@@ -1488,8 +1488,8 @@ export default {
       seit: 'En retard dapi',
       seitHilfe: 'Il di che l’admoniziun è arrivada, u il di da pajament concordà (pass 1).',
       satz: 'Pertschient da tschains l’onn',
-      satzHilfe: '5 %, nun ch’il contract prevesia in pertschient pli aut (OR art. 104). Per taglias vala in agen pertschient.',
-      ergebnis: 'Per {tage} dis a {satz} %: radund CHF {z365} (quintà cun 365 dis l’onn) u CHF {z360} (cun 360). Il OR na fixescha betg la dumbraziun dals dis; tscherts crediturs quintan mintga mais cun 30 dis, lura divergescha l’import in pau. Nagin tschains sin tschains (OR art. 105 al. 3).',
+      satzHilfe: '5\u202f%, nun ch’il contract prevesia in pertschient pli aut (OR art. 104). Per taglias vala in agen pertschient.',
+      ergebnis: 'Per {tage} dis a {satz}\u202f%: radund CHF\u00a0{z365} (quintà cun 365 dis l’onn) u CHF\u00a0{z360} (cun 360). Il OR na fixescha betg la dumbraziun dals dis; tscherts crediturs quintan mintga mais cun 30 dis, lura divergescha l’import in pau. Nagin tschains sin tschains (OR art. 105 al. 3).',
       ohne: 'Endatar l’import e la data, lura cumpara ina valur indicativa. Nagut na vegn memorisà.',
       satzUngueltig: 'Il pertschient da tschains sco cifra, per exempel 5 — il pli aut 30.',
       nochNicht: 'Fin oz n’è anc passà nagin di en retard — i n’è anc creschì nagin tschains da retard.',
@@ -1497,7 +1497,7 @@ export default {
     step4Title: '4 · Fittanza, cassa da malsauns, multas, taglias: qua valan reglas fixas', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step4Miete: { sie: 'Fittanza: sch’il tschains da fittanza u ils custs accessorics èn en retard, po la locatura As fixar en scrit in termin da pajament e smanatschar la disditga. Tar in’abitaziun importa quest termin almain 30 dis. Sche Vus na pajais betg entaifer il termin, po ella disdir cun in termin d’almain 30 dis per la fin d’in mais (OR art. 257d). Tractai in’admoniziun uschia l’emprim — i va per l’abitaziun.', du: 'Fittanza: sch’il tschains da fittanza u ils custs accessorics èn en retard, po la locatura ta fixar en scrit in termin da pajament e smanatschar la disditga. Tar in’abitaziun importa quest termin almain 30 dis. Sche ti na pajas betg entaifer il termin, po ella disdir cun in termin d’almain 30 dis per la fin d’in mais (OR art. 257d). Tracta in’admoniziun uschia l’emprim — i va per l’abitaziun.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step4LinkWohnung: 'Abitaziun disditga?', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
-    step4Kk: { sie: 'Cassa da malsauns: tar premias e participaziuns als custs vegn l’emprim almain in’admoniziun en scrit, lura ina dumonda da pajament cun in termin supplementar da 30 dis ed in’indicaziun a las consequenzas. Sch’il pajament resta ora, sto la cassa introducir la scussiun (KVG art. 64a al. 1–2). Sin premias scadidas importa il tschains da retard 5 % l’onn (KVV art. 105a). Taxas d’elavuraziun dastga ella pretender mo, sche Vus avais chaschunà la lavur supplementara e sche sias disposiziuns generalas prevesan quai — e mo fin als imports maximals dal DFI (KVV art. 105b al. 2). Uschè ditg che pajaments èn averts, na pudais Vus per regla betg midar la cassa (KVG art. 64a al. 6). Insaquants chantuns mainan ultra da quai ina glista da persunas che na pajan betg lur premias: tgi che na paja betg malgrà la scussiun, a quel suspenda la cassa lura la surpigliada dals custs — cun excepziun dals cas d’urgenza (KVG art. 64a al. 7).', du: 'Cassa da malsauns: tar premias e participaziuns als custs vegn l’emprim almain in’admoniziun en scrit, lura ina dumonda da pajament cun in termin supplementar da 30 dis ed in’indicaziun a las consequenzas. Sch’il pajament resta ora, sto la cassa introducir la scussiun (KVG art. 64a al. 1–2). Sin premias scadidas importa il tschains da retard 5 % l’onn (KVV art. 105a). Taxas d’elavuraziun dastga ella pretender mo, sche ti has chaschunà la lavur supplementara e sche sias disposiziuns generalas prevesan quai — e mo fin als imports maximals dal DFI (KVV art. 105b al. 2). Uschè ditg che pajaments èn averts, na pos ti per regla betg midar la cassa (KVG art. 64a al. 6). Insaquants chantuns mainan ultra da quai ina glista da persunas che na pajan betg lur premias: tgi che na paja betg malgrà la scussiun, a quel suspenda la cassa lura la surpigliada dals custs — cun excepziun dals cas d’urgenza (KVG art. 64a al. 7).' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
+    step4Kk: { sie: 'Cassa da malsauns: tar premias e participaziuns als custs vegn l’emprim almain in’admoniziun en scrit, lura ina dumonda da pajament cun in termin supplementar da 30 dis ed in’indicaziun a las consequenzas. Sch’il pajament resta ora, sto la cassa introducir la scussiun (KVG art. 64a al. 1–2). Sin premias scadidas importa il tschains da retard 5\u202f% l’onn (KVV art. 105a). Taxas d’elavuraziun dastga ella pretender mo, sche Vus avais chaschunà la lavur supplementara e sche sias disposiziuns generalas prevesan quai — e mo fin als imports maximals dal DFI (KVV art. 105b al. 2). Uschè ditg che pajaments èn averts, na pudais Vus per regla betg midar la cassa (KVG art. 64a al. 6). Insaquants chantuns mainan ultra da quai ina glista da persunas che na pajan betg lur premias: tgi che na paja betg malgrà la scussiun, a quel suspenda la cassa lura la surpigliada dals custs — cun excepziun dals cas d’urgenza (KVG art. 64a al. 7).', du: 'Cassa da malsauns: tar premias e participaziuns als custs vegn l’emprim almain in’admoniziun en scrit, lura ina dumonda da pajament cun in termin supplementar da 30 dis ed in’indicaziun a las consequenzas. Sch’il pajament resta ora, sto la cassa introducir la scussiun (KVG art. 64a al. 1–2). Sin premias scadidas importa il tschains da retard 5\u202f% l’onn (KVV art. 105a). Taxas d’elavuraziun dastga ella pretender mo, sche ti has chaschunà la lavur supplementara e sche sias disposiziuns generalas prevesan quai — e mo fin als imports maximals dal DFI (KVV art. 105b al. 2). Uschè ditg che pajaments èn averts, na pos ti per regla betg midar la cassa (KVG art. 64a al. 6). Insaquants chantuns mainan ultra da quai ina glista da persunas che na pajan betg lur premias: tgi che na paja betg malgrà la scussiun, a quel suspenda la cassa lura la surpigliada dals custs — cun excepziun dals cas d’urgenza (KVG art. 64a al. 7).' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step4LinkIpv: 'Controllar la reducziun da premias', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step4Bussen: 'Multas e painas pecuniaras: l’autoritad d’execuziun fixescha in termin da pajament d’in fin sis mais; ella po ordinar ratas e prolungar il termin sin dumonda (StGB art. 35 al. 1, per multas art. 106 al. 5). Sch’ina multa na vegn betg pajada per atgna culpa, vegn empè da quella ina paina da detenziun substitutiva; ella scroda, uschenavant che la multa vegn pajada posteriuramain (art. 106 al. 2 e 4). Sin dumonda po ina multa u ina paina pecuniara er vegnir prestada sco lavur d’utilitad publica, sch’i na dat nagin privel da fugia u da recidiva; quatter uras correspundan ad ina taxa dal di resp. ad in di da detenziun substitutiva (art. 79a al. 1 e 4). Perquai dumandar baud tar l’autoritad per ratas, dapli temp u lavur d’utilitad publica. Per multas disciplinaras, per exempel en il traffic sin via, valan atgnas reglas. Sche la multa è gia transfurmada en ina paina da detenziun substitutiva, n’è lavur d’utilitad publica betg pli pussaivla (art. 79a al. 2) — perquai dumandar ordavant.', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step4Steuer: 'Taglias: la taglia federala directa sto vegnir pajada entaifer 30 dis suenter la scadenza; lura curra in tschains da retard che fixescha il Departament federal da finanzas (DBG art. 163, 164). Sch’il pajament è ina grevezza considerabla, po l’autoritad d’incassament prolungar il termin u permetter ratas (DBG art. 166). En ina situaziun d’urgenza è in relasch pussaivel — ina dumonda da relasch vegn dentant mo tractada, sch’ella vegn inoltrada avant ch’in cumond da pajament per questa taglia è consegnà (DBG art. 167 al. 1 e 4). Perquai dumandar baud. Cumpetenta è er per la taglia federala l’administraziun chantunala da taglia (DBG art. 2). Per taglias chantunalas e communalas vala il dretg chantunal — er per la dumonda, fin cura ch’ina dumonda da relasch è pussaivla.', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
@@ -1829,9 +1829,9 @@ export default {
     qrErstellt: "Code QR generà.", // TODO(rm): provisorisch
     appName: 'Maloja Plana',
     percent: '{value}%',
-    chf: 'CHF {value}',
-    chfPerMonth: 'CHF {value}/mais',
-    chfPerYear: 'CHF {value}/onn',
+    chf: 'CHF\u00a0{value}',
+    chfPerMonth: 'CHF\u00a0{value}/mais',
+    chfPerYear: 'CHF\u00a0{value}/onn',
     perMonth: '/mais',
     perYear: '/onn',
     yes: 'Gea',
@@ -2135,7 +2135,7 @@ export default {
       addressInWohnen: { sie: "Vossa adressa è deponida en il chapitel «Abitar»", du: "Tia adressa è deponida en il chapitel «Abitar»" },
       employerInFinanzen: 'Patrun & entrada en il chapitel «Finanzas»',
       // TODO(rm): provisorisch — Gegenlese (Bildungsabzug, 21.10.2026)
-      educationTaxHint: "Custs da furmaziun? Fin a CHF 13'000 deducibels per la taglia federala (stadi 2026), ils chantuns han agens limits",
+      educationTaxHint: "Custs da furmaziun? Fin a CHF\u00a013'000 deducibels per la taglia federala (stadi 2026), ils chantuns han agens limits",
       taxFromBehoerdenHint: 'Stimar la chargia fiscala',
       schuldenFromBehoerdenHint: 'Administrar las esecuziuns',
     },
@@ -2144,7 +2144,7 @@ export default {
   },
 
   wohnen: {
-    nkEstimate: "Custs accessorics: CHF {monthly}/mais → ca. CHF {annual}/onn. Tar cooperativas vegn savens agiuntà in quint annual.",
+    nkEstimate: "Custs accessorics: CHF\u00a0{monthly}/mais → ca. CHF\u00a0{annual}/onn. Tar cooperativas vegn savens agiuntà in quint annual.",
     umzugTitle: 'Glista da controlla suenter la spendrà',
     umzugGemeinde: 'Vischnanca: annunzia entaifer 14 dis',
     umzugKK: 'Cassa da malsauns: annunziar la midada da adressa',
@@ -2339,7 +2339,7 @@ export default {
     highlightIpv: 'Examinar il dretg IPV',
     highlightIpvSub: { sie: 'Dependa dal chantun e da l\'entrada — endatai omadus directamain en il calculatur.', du: 'Dependa dal chantun e da l\'entrada — endatescha omadus directamain en il calculatur.' },
     highlightSozialhilfe: 'Orientaziun agid social',
-    highlightSozialhilfeSub: { sie: "CHF {betrag}/mais basegn da basa (1 persuna) — nua stais Vus?", du: "CHF {betrag}/mais basegn da basa (1 persuna) — nua stas Ti?" },
+    highlightSozialhilfeSub: { sie: "CHF\u00a0{betrag}/mais basegn da basa (1 persuna) — nua stais Vus?", du: "CHF\u00a0{betrag}/mais basegn da basa (1 persuna) — nua stas Ti?" },
     highlightNotfall: 'Preparaziun per il cas d’urgenza',
     highlightNotfallSub: 'Carta d’urgenza, pass d’urgenza e prevenziun en in lieu.',
     highlightPrivacy: { sie: 'Endataziuns restan sin Voss apparat', du: 'Endataziuns restan sin tes apparat' }, // TODO(rm): E43 umformuliert, Gegenlese
@@ -2348,7 +2348,7 @@ export default {
     quickCheckWithIncome: 'Cun questa entrada pudessas ti avair dretg a:',
     quickCheckAllLeistungen: 'Verifitgar tuttas prestaziuns',
     quickCheckIncome: 'Entrada per mais (brut)',
-    quickCheckResult: "Tar CHF {income}/onn: reducziun pussaivla da ca. CHF {amount}/onn.",
+    quickCheckResult: "Tar CHF\u00a0{income}/onn: reducziun pussaivla da ca. CHF\u00a0{amount}/onn.",
     quickCheckDurchspielen: "Empruvar in’autra entrada", // TODO(rm): provisorisch
     quickCheckHint: "Orientaziun grossa — l'import exact dependa dal chantun.",
     quickCheckMore: 'Tar il calculatur IPV cumplet',
@@ -2847,7 +2847,7 @@ export default {
       intro2: 'Transparent ditg: per che quai restia uschia, dumandain nus quels che pon sa la lubir ina contribuziun voluntaria. Uschia resta Maloja gratuit per persunas cun pauc daners — senza sforz, senza controlla da las entradas, senza funcziuns bloccadas.',
       scaleTitle: 'Contribuir tenor las pussaivladads',
       // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
-      tierLow: '0 CHF: Maloja bleibt für alle kostenlos, auch ohne Beitrag.',
+      tierLow: '0\u00a0CHF: Maloja bleibt für alle kostenlos, auch ohne Beitrag.',
       tierMid: 'I va uschè-uschè: ina pitschna contribuziun ina giada gida gia.',
       tierHigh: 'I ma va bain: ina contribuziun regulara tegna Maloja avert per auters.',
       medianNote: 'Tgi che ha in pau spazi sustegna per il mument — e cun mintga partener vegn Maloja pli favuraivel.',
@@ -3709,8 +3709,8 @@ export default {
     ohneDreizehntenKurz: 'quintà senza 13avla paja', // TODO(rm): provisorisch
     annahmePartnerOhneDreizehnten: 'L’entrada da la segunda persuna è quintada senza 13avla paja — Maloja na dumonda betg quai. Sche ella survegn ina, è la reducziun pli bassa u nulla.', // TODO(rm): provisorisch
     annahmeAusBrutto: 'La paja è inditgada brut en il profil. Quintà è cun ina paja netta stimada: Maloja deducescha forfetarmain las deducziuns usitadas. Cun la paja netta dal quint da paja è il resultat pli exact. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
-    incomeAboveLimit: 'Entrada decisiva probablamain sur la limita (CHF {value} per onn)',
-    eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
+    incomeAboveLimit: 'Entrada decisiva probablamain sur la limita (CHF\u00a0{value} per onn)',
+    eligible: 'Dretg a la reducziun da premias: CHF\u00a0{value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
     orientierungOffen: 'Sch’igl exista in dretg ed en tge autezza, decida il chantun. Cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.',
     renteNichtEnthalten: "La renta n’è anc betg endatada (chapitel «Finanzas & daners», rentas). Perquai na numna l’app nagin import. Sch’igl exista in dretg, decida il chantun; cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.", // TODO(rm)
@@ -3758,7 +3758,7 @@ export default {
     luFristNichtAbgezogen: 'Reducziun da premias Lucerna: betg deducida qua. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     fristNichtAbgezogen: 'Reducziun da premias: betg deducida qua. Il termin da dumonda u d’annunzia per {jahr} è scadì, e Maloja na sa betg sch’ina dumonda è vegnida inoltrada a temp. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida».', // TODO(rm): provisorisch — Gegenlese (K31 FR Nachtrag 28.09.2026)
     vorbehaltFR: 'En il chantun Friburg è la basa la taxaziun fiscala {basisjahr} — dus onns avant l’onn da dretg —, betg l’entrada dad oz. La reducziun è ina procentuala da la premia media regiunala, maximalmain dentant la premia netta debitada. Tgi che n’ha survegnì nagina reducziun ils dus onns precedents e da tgi la situaziun finanziala da l’onn precedent divergescha almain 30 pertschient, po dumandar tar la Cassa chantunala da cumpensaziun ch’i vegnia fatg quint cun la taxaziun da la nova perioda fiscala. Imports retschavids a tort ston vegnir restituids.', // TODO(rm): provisorisch — Gegenlese (K31 FR 28.09.2026)
-    frKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva n’è betg sut la limita ch’il chantun Friburg fixescha per quest chasadi (CHF {value}). La taxaziun fiscala deducescha dentant deducziuns che mancan qua (per exempel custs professiunals u da tgira dals uffants) — l’entrada è qua pia plitost quintada memia auta. Tgi ch’è datiers da la limita, lascha tuttina examinar il dretg tar la Cassa chantunala da cumpensaziun: surtut tar famiglias decida in pitschen import davart l’entira reducziun.', // TODO(rm): provisorisch — Gegenlese (K31 FR Nachtrag 28.09.2026)
+    frKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva n’è betg sut la limita ch’il chantun Friburg fixescha per quest chasadi (CHF\u00a0{value}). La taxaziun fiscala deducescha dentant deducziuns che mancan qua (per exempel custs professiunals u da tgira dals uffants) — l’entrada è qua pia plitost quintada memia auta. Tgi ch’è datiers da la limita, lascha tuttina examinar il dretg tar la Cassa chantunala da cumpensaziun: surtut tar famiglias decida in pitschen import davart l’entira reducziun.', // TODO(rm): provisorisch — Gegenlese (K31 FR Nachtrag 28.09.2026)
     frFristLaeuft: 'En il chantun Friburg sto la reducziun da premias vegnir dumandada — per {jahr} il pli tard fin ils 31 d’avust {jahr}, tar la Cassa chantunala da cumpensaziun a Givisiez (decisiva è la data da retschavida). Il dretg cumenza il pli baud l’emprim di dal mais che la dumonda arriva; l’import qua mussa l’entir dretg annual. Tgi che survegniva gia fin la fin da l’onn precedent ina reducziun u survegn prestaziuns cumplementaras, vegn examinà d’uffizi.', // TODO(rm): provisorisch — Gegenlese (K31 FR 28.09.2026)
     frFristVorbei: 'Il termin da dumonda per {jahr} durava fin ils 31 d’avust {jahr}. Ina dumonda pli tardiva accepta la Cassa chantunala da cumpensaziun mo pli, sche suenter ils 31 d’avust cumenza in agid social, i dat ina arrivada da l’exteriur u las prestaziuns cumplementaras crodan davent. Senza nova dumonda vegnan examinads d’uffizi quels che survegnivan gia fin la fin da l’onn precedent ina reducziun u ch’han inoltrà l’onn precedent ina dumonda e n’han anc nagina decisiun. L’import qua mussa per tge ch’i va. Per {folgejahr} dura il termin fin ils 31 d’avust {folgejahr} — il dretg cumenza dentant il pli baud en il mais che la dumonda arriva: tgi che dumonda baud en l’onn, na perda nagins mais. Las valurs per il {folgejahr} n’èn anc betg integradas qua.', // TODO(rm): provisorisch — Gegenlese (K31 FR Nachtrag 28.09.2026)
     frFristNichtAbgezogen: 'Reducziun da premias Friburg: betg deducida qua. Il termin da dumonda per {jahr} è scadì ils 31 d’avust {jahr}, e Maloja na sa betg sch’ina dumonda è vegnida inoltrada u sche la Cassa da cumpensaziun examinescha il dretg d’uffizi. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida».', // TODO(rm): provisorisch — Gegenlese (K31 FR 28.09.2026)
@@ -3795,14 +3795,14 @@ export default {
     glFristNichtAbgezogen: 'Reducziun da premias Glaruna: qua betg deducida. Il termin per {jahr} è scadì ils 31 da schaner {jahr}. Tgi che dumonda pli tard, survegn la reducziun mo per las premias a partir dal mais suenter la dumonda. Sche la decisiun è qua, sa lascha endatar ses import tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg far dumonda.',
     // TODO(rm): provisorisch — Gegenlese (K31 BL, 28.09.2026)
     vorbehaltBL: 'En il chantun Basilea-Champagna è la basa la taxaziun fiscala definitiva {basisjahr} — pli exactamain il total intermediar da las entradas taxablas —, betg l’entrada dad oz. Alimentaziuns retschavidas e supplements da famiglia tutgan tier, alimentaziuns pajadas vegnan deducidas. Sche l’entrada è sa midada l’onn precedent per dapli che 20 pertschient u sche la chasada è sa midada, vegn la reducziun adattada sin dumonda; la dumonda sto arrivar fin ils 31 da december {jahr} tar la SVA Basel-Landschaft. Tgi ch’è taxabel en il chantun pir dapi curt, fa atgna dumonda. La part dals uffants n’è qua betg limitada a lur atgnas premias; sche la premia d’in uffant è pli bassa, è l’import pli bass. Imports pajads a tort ston vegnir restituids.',
-    blKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva surpassa la limita superiura da CHF {grenze} per onn ch’il chantun Basilea-Champagna fixescha per questa chasada; sur quella croda la reducziun dal tuttafatg. Decisiv è dentant il total intermediar da la taxaziun {basisjahr}, betg l’entrada dad oz: sch’el era pli bass, exista tuttina in dretg — la SVA Basel-Landschaft tramet lura il formular d’uffizi.',
+    blKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva surpassa la limita superiura da CHF\u00a0{grenze} per onn ch’il chantun Basilea-Champagna fixescha per questa chasada; sur quella croda la reducziun dal tuttafatg. Decisiv è dentant il total intermediar da la taxaziun {basisjahr}, betg l’entrada dad oz: sch’el era pli bass, exista tuttina in dretg — la SVA Basel-Landschaft tramet lura il formular d’uffizi.',
     blAntrag: 'En il chantun Basilea-Champagna tramet la SVA Basel-Landschaft d’uffizi il formular da dumonda cun l’import quintà, uschespert che la taxaziun {basisjahr} è definitiva. El sto vegnir returnà suttascrit entaifer in onn, uschiglio croda il dretg. Tgi che na survegn nagin formular, fa sez ina dumonda en scrit fin ils 31 da december {jahr}.',
     vorbehaltVS: 'En il Vallais è la basa la taxaziun fiscala {basisjahr} — dus onns avant l’onn da dretg —, betg l’entrada dad oz. La Cassa da cumpensaziun dal chantun Vallais registrescha las persunas cun dretg automaticamain a basa da las datas fiscalas e communitgescha il dretg la fin da favrer; tgi ch’ha nov il dretg, la tramet ina copia da la polizza da la cassa da malsauns. Tgi ch’è taxà a la funtauna u ha survegnì l’onn precedent ina permissiun C, na vegn betg registrà automaticamain ed inoltrescha sez ina dumonda. Tgi che ademplescha las cundiziuns, ma na survegn nagina decisiun, inoltrescha ina dumonda motivada — il pli segir fin ils 31 da december {jahr}; fin lura er dumondas spezialas, per exempel sche l’entrada è sa sbassada l’onn precedent per 30 pertschient u dapli (betg per persunas independentas). Tgi che survegn prestaziuns cumplementaras u agid social, survegn 100 pertschient da la premia da referenza (agid social: mintga onn sin dumonda). Questa quintada na enconuscha betg tut: senza custs professiunals e debits è l’entrada qua plitost memia auta e l’import memia bass; contribuziuns d’alimentaziun e supplements da famiglia retschavids èn quintads — sch’il supplement per uffants è gia cuntegnì en la paga netta registrada, quinta el qua duas giadas e l’import è memia bass. La reducziun importa maximalmain la premia effectiva. Imports retschavids a tort ston vegnir restituids.', // TODO(rm): provisorisch — Gegenlese (K31 VS Nachtrag 28.09.2026)
     vsKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva è sur la limita la pli auta da la scala d’entradas dal Vallais per quest chasadi.', // TODO(rm): provisorisch — Gegenlese (K31 VS 28.09.2026)
     vorbehaltBS: 'En il chantun Basilea-Citad quinta l’Amt für Sozialbeiträge per regla cun l’ultima taxaziun fiscala; sche l’entrada u la facultad dad oz sa distanzieschan per almain 20 pertschient da quella, valan ils documents actuals. Tar la chasada tutgan er uffants fin 25 onns en l’emprima furmaziun. Alimentaziuns retschavidas e supplements da famiglia dumbran sco entrada, alimentaziuns pajadas vegnan deducidas — supplements da famiglia ch’èn gia en la paja netta na ston betg vegnir endatads anc ina giada. A tgi che viva sulet u educhescha sulet ils uffants e lavura main che 80 pertschient, quinta l’uffizi ina entrada ipotetica — cun excepziun per exempel da la tgira d’uffants sut 16 onns, da la furmaziun, da malsogna, da daners da dischoccupaziun u sur 60 onns. Contribuziuns retratgas a tort ston vegnir restituidas.',
-    bsKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva surpassa la limita da CHF {grenze} per onn che vala en il chantun Basilea-Citad per ina chasada da questa grondezza.',
-    bsAntrag: 'En il chantun Basilea-Citad dat la reducziun da premias mo sin dumonda tar l’Amt für Sozialbeiträge. Ella cumenza il mais suenter la dumonda — i vala pia la paina da dumandar baud. L’import qua vala per il model da standard da l’assicuranza da basa. Tgi ch’è assicurà en in model alternativ (per exempel medi da famiglia, HMO u telemedischina) e cumprova quai cun la polizza, survegn per regla in supplement: lura èn quai CHF {monatAlternativ} empè da CHF {monat} per mais.',
-    bsAntragAvm: 'En il chantun Basilea-Citad dat la reducziun da premias mo sin dumonda tar l’Amt für Sozialbeiträge. Ella cumenza il mais suenter la dumonda — i vala pia la paina da dumandar baud. Quint cun il supplement per in model d’assicuranza alternativ, sco ch’el è registrà qua: el vala, sche la polizza vegn inoltrada cun la dumonda e suenter mintga onn; l’uffizi po pretender in rabat minimal. Senza supplement fissan quai CHF {monat} per mais.',
+    bsKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva surpassa la limita da CHF\u00a0{grenze} per onn che vala en il chantun Basilea-Citad per ina chasada da questa grondezza.',
+    bsAntrag: 'En il chantun Basilea-Citad dat la reducziun da premias mo sin dumonda tar l’Amt für Sozialbeiträge. Ella cumenza il mais suenter la dumonda — i vala pia la paina da dumandar baud. L’import qua vala per il model da standard da l’assicuranza da basa. Tgi ch’è assicurà en in model alternativ (per exempel medi da famiglia, HMO u telemedischina) e cumprova quai cun la polizza, survegn per regla in supplement: lura èn quai CHF\u00a0{monatAlternativ} empè da CHF\u00a0{monat} per mais.',
+    bsAntragAvm: 'En il chantun Basilea-Citad dat la reducziun da premias mo sin dumonda tar l’Amt für Sozialbeiträge. Ella cumenza il mais suenter la dumonda — i vala pia la paina da dumandar baud. Quint cun il supplement per in model d’assicuranza alternativ, sco ch’el è registrà qua: el vala, sche la polizza vegn inoltrada cun la dumonda e suenter mintga onn; l’uffizi po pretender in rabat minimal. Senza supplement fissan quai CHF\u00a0{monat} per mais.',
     bsAntragStandard: 'En il chantun Basilea-Citad dat la reducziun da premias mo sin dumonda tar l’Amt für Sozialbeiträge. Ella cumenza il mais suenter la dumonda — i vala pia la paina da dumandar baud. Quint per il model da standard da l’assicuranza da basa, sco ch’el è registrà qua.',
     // TODO(rm): provisorisch — Gegenlese (K31 BS Fixrunde 2, 28.09.2026): bsHypothetischGerechnet, bsPensumAngenommen
     bsHypothetischGerechnet: 'Quint cun ina entrada ipotetica: tenor las uras da lavur registradas (activitad principala ed accessorica ensemen; 100 pertschient èn supponids cun 42 uras per emna) è il pensum sut 80 pertschient, ed il chantun Basilea-Citad quinta la differenza (100 pertschient dumbran sco 36 000 francs netto per onn). Quai na vala betg tar la tgira d’uffants sut 16 onns, en furmaziun, en cas da malsogna, cun daners da dischoccupaziun u rendita AI — lura è l’import pli aut.',
@@ -3818,7 +3818,7 @@ export default {
     // rm-Entwurf, ungeprüft (bis zur Gegenlese nicht ausgeliefert): vorbehaltVD2027: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal proxim mais suenter la dumonda. Retroactivamain vegn concedì insatge mo excepziunalmain, il pli baud a partir dal cumenzament da l’onn current, e mo en dus cas: sch’igl è cumprovà ch’ina dumonda pli baud n’era betg pussaivla senza atgna culpa, u sche la dumonda suonda ina infurmaziun periodica dal chantun; l’OVAM decida. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
     // TODO(rm): provisorisch — Gegenlese (Rechtsvorbehalt VD, deutsche Fassung bis Gegenlese, 21.10.2026)
     vorbehaltVD2027: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am ersten Tag des Monats, der auf den Antrag folgt. Rückwirkend gibt es nur ausnahmsweise etwas, höchstens ab Beginn des laufenden Jahres, und nur in zwei Fällen: wenn nachgewiesen ist, dass ein früherer Antrag ohne eigenes Verschulden nicht möglich war, oder wenn der Antrag auf eine periodische Information des Kantons hin gestellt wird; das entscheidet das OVAM. Änderungen bei Einkommen, Vermögen oder Haushalt sind sofort zu melden; zu Unrecht bezogene Beträge werden zurückgefordert.',
-    vdKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg al subsidi ordinari: l’entrada decisiva surpassa CHF {value}, la limita dal chantun Vad per quest tip da chasada.',
+    vdKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg al subsidi ordinari: l’entrada decisiva surpassa CHF\u00a0{value}, la limita dal chantun Vad per quest tip da chasada.',
     vdSpezifischerSubside: 'La premia registrada è auta en relaziun cun l’entrada. Il chantun Vad conceda ultra da quai in subsidi specific, sche las premias surpassan, suenter la deducziun dal subsidi ordinari, 10 pertschient da l’entrada decisiva. L’applicaziun na quinta betg l’import — per quai dovri las premias da tut las persunas da la chasada. L’OVAM al examinescha tar la dumonda.',
     // K31 UR (28.09.2026) — TODO(rm): provisorisch, Gegenlese offen
     jahrUR: 'Quint per l’onn da dretg {jahr}. En il chantun Uri vala la medema premia da referenza en tut il chantun — i na dat naginas regiuns da premias.',
@@ -3831,14 +3831,14 @@ export default {
     vorbehaltNE: 'En il chantun Neuchâtel è la taxaziun fiscala {basisjahr} la basa, betg l’entrada dad oz. Là vegnan deducids ils custs professiunals (fin 10 000 francs); l’applicaziun n’als enconuscha betg e quinta perquai per il solit l’import pli gugent memia bass — ina classa è mo 1 140 francs lada. Pauc sur 15 000 francs po quai esser il cuntrari: sche l’entrada croda suenter questas deducziuns sut la limita, na classifitgescha il chantun betg automaticamain. Supplements da famiglia e contribuziuns da mantegniment retschavidas registradas na vegnan anc betg resguardadas qua (l’import è lura memia aut); contribuziuns da mantegniment pajadas na vegnan anc betg deducidas (l’import è lura memia bass). Per uffants èn quintads 160 francs al mais; cun ina premia pli bassa u cun ina franchisa facultativa da l’uffant dat quai tant main. L’import cuntegna il supplement extraordinari 2026 dal Cussegl grond. Tgi che ha nov in dretg sto trametter enavos il cupun da resposta da l’OCAB entaifer 30 dis, uschiglio croda il dretg. Sche la taxaziun posteriura divergia per dapli che 20 pertschient, po il chantun pretender enavos quai che è vegnì retschavì memia bler.',
     neGesuchNichtAbgezogen: 'Reducziun da premias Neuchâtel: qua betg deducida. L’entrada è pauc sur la limita da 15 000 francs; sche ella croda suenter la deducziun dals custs professiunals sut la limita, na classifitgescha il chantun betg automaticamain — la reducziun dat i lura mo sin dumonda tar il guichet social régional (GSR).',
     neRevenuMinimumNahe: 'L’entrada registrada è pauc sur la limita neuchâteloise da 15 000 francs (plus 3 000 francs per uffant minorenn). Decisiva è l’entrada suenter la deducziun dals custs professiunals — sche quella croda sut la limita, na classifitgescha il chantun betg automaticamain e la reducziun dat i mo sin dumonda tar il guichet social régional (GSR).',
-    neKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva surpassa CHF {value}, la limita suprema dal chantun Neuchâtel per questa chasada.',
+    neKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva surpassa CHF\u00a0{value}, la limita suprema dal chantun Neuchâtel per questa chasada.',
     // K31 GE (28.09.2026): LaLAMal rsGE J 3 05 Art. 20–23, 33 · RaLAMal J 3 05.01 Art. 10, 10A, 11D · LRDU J 4 06 Art. 8–10. TODO(rm): provisorisch — Gegenlese
     jahrGE: 'Quint per l’onn da dretg {jahr}. En il chantun Genevra na dependa l’import betg d’ina regiun da premias: imports mensils fixs per gruppa d’entrada, ils medems en tut il chantun. In franc dapli po far ina gruppa entira.',
     vorbehaltGE: 'En il chantun Genevra è la basa l’entrada decisiva unifitgada (revenu déterminant unifié, RDU) da l’ultima taxaziun fiscala definitiva — per regla la taxaziun {basisjahr}, betg l’entrada dad oz. In quindeschavel da la facultad vegn quintà latiers. Supplements da famiglia, alimentaziuns retschavidas e pajadas e custs da tgira d’uffants registrads n’èn qua anc betg quintads — els pon spustar l’import ensi u engiu. Sch’il l’entrada decisiva è dapi la taxaziun sa reducida permanentamain (dapli che sis mais) per almain 20 pertschient, po ina nova quintada vegnir dumandada en scrit tar il Service de l’assurance-maladie (SAM) — avant ils 30 da november {jahr}; sche la pegiuraziun capita en il segund mez onn, fin ils 30 da zercladur da l’onn suandant. Tgi che ha survegnì ina tala nova quintada, sto annunziar immediat al SAM ina meglieraziun. Liant è mo l’attestaziun dal SAM. Imports retschavids a tort ston vegnir restituids; in relasch è en tscherts cas pussaivel.', // TODO(rm): provisorisch — Gegenlese
     geWegAutomatisch: 'Per regla automaticamain tras il Service de l’assurance-maladie (SAM) sin basa da la taxaziun fiscala. Ina dumonda è tranter auter necessaria en cas d’arrivada a Genevra l’onn precedent u l’onn da dretg, d’imposiziun a la funtauna, senza taxaziun per l’onn da referenza u en cas da situaziun midada. Medemamain en cas d’ina entrada decisiva (RDU) fitg bassa en l’onn da referenza — sut 15 000 francs per ina persuna suletta, sut 20 000 francs per in pèr, 3 000 francs dapli per uffant —, era sche l’entrada dad oz, cun la quala vegn quintà qua, è pli auta. En cas d’arrivada, d’imposiziun a la funtauna e d’ina entrada fitg bassa sto la dumonda arrivar tar il SAM avant ils 30 da november da l’onn da dretg.',
     geWegAntrag: 'Dumonda necessaria tar il Service de l’assurance-maladie (SAM) — vesair l’indicaziun sper l’import.',
-    geAntragNoetig: 'Attenziun: cun ina entrada decisiva (RDU) sut CHF {value} presuma il chantun Genevra che las relaziuns na sajan betg modestas e n’examinescha il dretg betg automaticamain — cun excepziun da l’agid social. La reducziun da las premias sto vegnir dumandada tar il Service de l’assurance-maladie (SAM), cun formular e cumprovas, avant ils 30 da november {jahr}. Il SAM n’entra betg en dumondas tardivas.', // TODO(rm): provisorisch — Gegenlese
-    geAntragFristVorbei: 'Cun ina entrada decisiva (RDU) sut CHF {value} examinescha il chantun Genevra il dretg mo sin dumonda — e la dumonda per {jahr} stueva arrivar tar il SAM avant ils 30 da november {jahr}. Il SAM n’entra betg en dumondas tardivas. Duas excepziuns: sche la situaziun è sa pegiurada pir en il segund mez onn, dura il termin fin ils 30 da zercladur {folgejahr}; sche la taxaziun è vegnida notifitgada pir suenter ils 30 da november, avant ils 31 da december {jahr}. L’import qua mussa, da tge ch’i sa tracta.', // TODO(rm): provisorisch — Gegenlese
+    geAntragNoetig: 'Attenziun: cun ina entrada decisiva (RDU) sut CHF\u00a0{value} presuma il chantun Genevra che las relaziuns na sajan betg modestas e n’examinescha il dretg betg automaticamain — cun excepziun da l’agid social. La reducziun da las premias sto vegnir dumandada tar il Service de l’assurance-maladie (SAM), cun formular e cumprovas, avant ils 30 da november {jahr}. Il SAM n’entra betg en dumondas tardivas.', // TODO(rm): provisorisch — Gegenlese
+    geAntragFristVorbei: 'Cun ina entrada decisiva (RDU) sut CHF\u00a0{value} examinescha il chantun Genevra il dretg mo sin dumonda — e la dumonda per {jahr} stueva arrivar tar il SAM avant ils 30 da november {jahr}. Il SAM n’entra betg en dumondas tardivas. Duas excepziuns: sche la situaziun è sa pegiurada pir en il segund mez onn, dura il termin fin ils 30 da zercladur {folgejahr}; sche la taxaziun è vegnida notifitgada pir suenter ils 30 da november, avant ils 31 da december {jahr}. L’import qua mussa, da tge ch’i sa tracta.', // TODO(rm): provisorisch — Gegenlese
     geFristNichtAbgezogen: 'Reducziun da premias Genevra: betg deducida qua. Cun ina entrada decisiva bassa dovri ina dumonda tar il Service de l’assurance-maladie (SAM) avant ils 30 da november {jahr}; il SAM n’entra betg en dumondas tardivas (excepziuns: pegiuraziun en il segund mez onn, taxaziun tardiva). Sche la dumonda è vegnida fatga a temp, po l’import da l’attestaziun vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida».', // TODO(rm): provisorisch — Gegenlese
     geAntragKindNeu: 'Attenziun: in uffant ch’è vegnì en la famiglia suenter l’onn da referenza {basisjahr} n’è anc betg en la taxaziun. Il chantun Genevra al resguarda mo sin dumonda en scrit tar il Service de l’assurance-maladie (SAM) — avant ils 30 da november {jahr}; sch’il uffant è vegnì en il segund mez onn, fin ils 30 da zercladur {folgejahr}. L’import qua è quintà cun l’uffant.',
     geNurKinder: 'L’entrada decisiva è sur l’ultima gruppa per creschids. Il chantun Genevra paja lura mo pli la contribuziun per uffants minorens (gruppa 9), fin ad in RDU da {value} francs.',
@@ -3919,13 +3919,13 @@ export default {
       wohneigentumGE: 'Cun proprietad d’abitar quinta il chantun Genevra l’immobiglia tenor sia valur fiscala a la facultad bruta — senza deducir l’ipoteca. Sche la facultad bruta surpassa 250 000 francs, n’examinescha il chantun betg automaticamain: la reducziun da las premias sto lura vegnir dumandada tar il Service de l’assurance-maladie (SAM), avant ils 30 da november da l’onn da dretg. L’applicaziun na conuscha betg la valur fiscala, perquai nagina cifra qua.', // TODO(rm): provisorisch — Gegenlese
       vermoegenAntragGE: 'Sur ina facultad bruta da 250 000 francs presuma il chantun Genevra che las relaziuns na sajan betg modestas. Quai n’è nagina exclusiun: la reducziun da las premias è lura pussaivla mo sin dumonda motivada tar il Service de l’assurance-maladie (SAM), per brev, avant ils 30 da november da l’onn da dretg. Il chantun quinta lura cun 95 pertschient da l’entrada bruta plus in quindeschavel da la facultad bruta. Decisiva è la facultad bruta fiscala, che n’è betg registrada cumplettamain qua.', // TODO(rm): provisorisch — Gegenlese
       grKinder: 'Per chasadas cun uffants na quinta l’applicaziun en il chantun Grischun en quest sectur d’entradas anc betg: la lescha na fixescha betg, sche la reducziun speziala da las premias dals uffants vegn cumparegliada per l’entira chasada u per mintga uffant separadamain. La differenza po surpassar 2000 francs per onn; la dumonda è pendenta tar la SVA dal Grischun. S’annunziar fin ils 31 da december vala tuttina la paina.',
-      tgSteuerbetrag: 'En il chantun Turgovia na dependa la reducziun da las premias betg da l’entrada, mabain da la taglia simpla a 100 % tenor las datas fiscalas provisoricas da l’onn precedent — e mo sche na resta nagina facultad imponibla. Imponibel è pir quai che resta suenter ils imports libers da taglia: fr. 100 000 per persunas solitaras, fr. 200 000 per persunas maridadas, ultra da quai fr. 100 000 per uffant. Per il 2026 datti imports fixs: cun ina taglia simpla fin fr. 400 fr. 3 408, fin fr. 600 fr. 2 556, fin fr. 800 fr. 1 704; per uffants fr. 1 236, sche la taglia simpla dals geniturs na surpassa betg fr. 1 600. Questa cifra da taglia na enconuscha l’applicaziun betg, perquai na stat qua nagin import. La vischnanca eruescha las persunas autorisadas e las trametta la primavaira in formular da dumonda; el sto vegnir inoltrà fin ils 31 da december tar il post da controlla da la cassa da malsauns da la vischnanca (Krankenkassenkontrollstelle), uschiglio scada il dretg. Tgi che n’ha survegnì nagin formular, po dumandar entaifer 30 dis suenter il quint final da taglia definitiv ina nova valitaziun tar la Krankenkassenkontrollstelle — d’uffizi na capita quai betg.',
+      tgSteuerbetrag: 'En il chantun Turgovia na dependa la reducziun da las premias betg da l’entrada, mabain da la taglia simpla a 100\u202f% tenor las datas fiscalas provisoricas da l’onn precedent — e mo sche na resta nagina facultad imponibla. Imponibel è pir quai che resta suenter ils imports libers da taglia: fr. 100 000 per persunas solitaras, fr. 200 000 per persunas maridadas, ultra da quai fr. 100 000 per uffant. Per il 2026 datti imports fixs: cun ina taglia simpla fin fr. 400 fr. 3 408, fin fr. 600 fr. 2 556, fin fr. 800 fr. 1 704; per uffants fr. 1 236, sche la taglia simpla dals geniturs na surpassa betg fr. 1 600. Questa cifra da taglia na enconuscha l’applicaziun betg, perquai na stat qua nagin import. La vischnanca eruescha las persunas autorisadas e las trametta la primavaira in formular da dumonda; el sto vegnir inoltrà fin ils 31 da december tar il post da controlla da la cassa da malsauns da la vischnanca (Krankenkassenkontrollstelle), uschiglio scada il dretg. Tgi che n’ha survegnì nagin formular, po dumandar entaifer 30 dis suenter il quint final da taglia definitiv ina nova valitaziun tar la Krankenkassenkontrollstelle — d’uffizi na capita quai betg.',
       tiKinder: 'Per chasadas cun uffants na quinta l’applicaziun en il chantun Tessin anc betg: la reducziun vegn quintada là per l’entira chasada ed è limitada a la summa da tut las premias effectivamain pajadas. Las premias dals uffants n’èn betg registradas qua.', // TODO(rm): provisorisch — Gegenlese
       tiEltern: 'Tgi che ha il pli 30 onns, gudogna pauc e fa ina emprima scolaziun, vegn quintà en il chantun Tessin ensemen cun ils geniturs. Sche quai è il cas, na sa l’applicaziun betg — perquai na stat qua nagina cifra. L’IAS dat infurmaziuns.', // TODO(rm): provisorisch — Gegenlese
       kindNachStichtag: 'In uffant è naschì pir suenter il 1. da schaner da l’onn dal dretg. Decisivas èn las relaziuns ils 1. da schaner, e per l’uffant cumenza il dretg pir il mais suenter la naschientscha. Co che quai vegn quintà ensemen, na sa lascha betg dir cun segirezza qua.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
       saeule2Unbekannt: 'Co ch’il pajament en la 3. pitga A quinta, dependa en quest chantun da quai, sch’i dat ina cassa da pensiun. Quai n’è betg registrà qua. En il chapitel Assicuranzas inscriver la contribuziun LPP mensila — u, sch’i na dat nagina, inscriver 0 u tscherner tar «Cassa da pensiun» «Na concerna betg». Lura po l’applicaziun quintar.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026; Säule 2, 26.10.2026)
       praemieFranchise: 'En quest chantun è la reducziun il pli uschè auta sco la premia cun la franchisa ordinaria da 300 francs e cun cuvrida d’accidents — betg sco la premia registrada. L’import quintà è sur la premia registrada; tge limita superiura che vala, dependa d’ina premia che n’è betg registrada qua. Il dretg è almain uschè aut sco la premia registrada.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
-      // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12 % offen · W3 Kind 18+ ohne «Paare»-Satz. — TODO(rm): provisorisch, Gegenlese offen
+      // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12\u202f% offen · W3 Kind 18+ ohne «Paare»-Satz. — TODO(rm): provisorisch, Gegenlese offen
       owSelbstbehaltRahmen: 'Cun questa entrada imputabla è la franchisa en il chantun Sursilvania tenor la decisiun per il 2026 pli auta che 12 pertschient. Dapi il 1. d’avrigl 2026 numna la lescha dentant ina rama da 9 fin 12 pertschient. Tgenina regla che vala per las disposiziuns 2026 è avert — perquai na stat qua nagina cifra. L’Ausgleichskasse Obwalden dat infurmaziuns.',
       kind18: 'In uffant cumplenescha 18 onns en l’onn da dretg u è pli vegl. Sch’el dumbra lura anc en la dumonda dals geniturs, regla il chantun tenor vegliadetgna e furmaziun; quest cas na quinta l’app betg. Il post chantunal dat infurmaziuns.',
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch». — TODO(rm): provisorisch, Gegenlese offen
@@ -4383,7 +4383,7 @@ export default {
     tankOrientation: { sie: "Uschespert che Vossas expensas èn registradas, mussa l'indicatur quants mais che Vossa reserva cuvra.", du: "Uschespert che tias expensas èn registradas, mussa l'indicatur quants mais che tia reserva cuvra." },
     tankReadoutEmpty: 'Anc nagina reserva registrada — {recommend} mais d\'expensas èn recumandads.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    tankReadout: { sie: 'Vossa reserva (CHF {savings}) cuvra var {months} mais. {recommend} èn recumandads.', du: 'Tia reserva (CHF {savings}) cuvra var {months} mais. {recommend} èn recumandads.' },
+    tankReadout: { sie: 'Vossa reserva (CHF\u00a0{savings}) cuvra var {months} mais. {recommend} èn recumandads.', du: 'Tia reserva (CHF\u00a0{savings}) cuvra var {months} mais. {recommend} èn recumandads.' },
     printAction: 'Stampar la survista / memorisar sco PDF',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     disclaimer: { sie: "Tut las valurs servan a l'orientaziun. Per infurmaziuns vinculantas, contactai la post cumpetenta.", du: "Tut las valurs servan a l'orientaziun. Per infurmaziuns vinculantas, contactescha la post cumpetenta." },
@@ -4563,9 +4563,9 @@ export default {
     budgetTight: { sie: "Voss budget è stretg. I dat posts da cussegliaziun da budget gratuitas — per exempel tar la Caritas u Vossa vischnanca.", du: "Tes budget è stretg. I dat posts da cussegliaziun da budget gratuitas — per exempel tar la Caritas u Tia vischnanca." },
     deficitInfo: { sie: "Las expensas èn actualmain pli autas che las entradas. Quai po esser temporar — tar la cussegliaziun da debits da Voss chantun chattais Vus agid.", du: "Las expensas èn actualmain pli autas che las entradas. Quai po esser temporar — tar la cussegliaziun da debits da Tes chantun chattas Ti agid." },
     budgetCalm: { sie: 'Vus avais ina survista da Vossas finanzas. Mintga sectur registrà gida.', du: 'Ti has ina survista da Tias finanzas. Mintga sectur registrà gida.' },
-    ipvHint: { sie: "Vus avais eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Vossa vischnanca u cassa da cumpensaziun chantunala.", du: "Ti has eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Tia vischnanca u cassa da cumpensaziun chantunalas." },
-    ipvHintVerfuegung: 'Reducziun da premias (IPV) tenor la decisiun: CHF {amount}/mais — deducida en il budget da la premia da la cassa da malsauns.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
-    ipvHintVerfuegungUnzugeordnet: { sie: 'Reducziun da premias (IPV): CHF {amount}/mais deducids en il budget — al pli la summa da Vossa decisiun, mai dapli che la stima. En la decisiun mancan chantun ed onn; Vus pudais l’attribuir sut «Reducziun da premias».', du: 'Reducziun da premias (IPV): CHF {amount}/mais deducids en il budget — al pli la summa da tia decisiun, mai dapli che la stima. En la decisiun mancan chantun ed onn; ti pos l’attribuir sut «Reducziun da premias».' }, // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
+    ipvHint: { sie: "Vus avais eventualmain dretg a la reducziun da premias (IPV) — ca. CHF\u00a0{amount}/mais. L'IPV po vegnir dumandada tar Vossa vischnanca u cassa da cumpensaziun chantunala.", du: "Ti has eventualmain dretg a la reducziun da premias (IPV) — ca. CHF\u00a0{amount}/mais. L'IPV po vegnir dumandada tar Tia vischnanca u cassa da cumpensaziun chantunalas." },
+    ipvHintVerfuegung: 'Reducziun da premias (IPV) tenor la decisiun: CHF\u00a0{amount}/mais — deducida en il budget da la premia da la cassa da malsauns.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
+    ipvHintVerfuegungUnzugeordnet: { sie: 'Reducziun da premias (IPV): CHF\u00a0{amount}/mais deducids en il budget — al pli la summa da Vossa decisiun, mai dapli che la stima. En la decisiun mancan chantun ed onn; Vus pudais l’attribuir sut «Reducziun da premias».', du: 'Reducziun da premias (IPV): CHF\u00a0{amount}/mais deducids en il budget — al pli la summa da tia decisiun, mai dapli che la stima. En la decisiun mancan chantun ed onn; ti pos l’attribuir sut «Reducziun da premias».' }, // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
     ipvHintOhneBetrag: 'Reducziun da premias (IPV): dretg ed import decida il chantun. Cunzunt cun in budget stretg vala la paina dad examinar.', // TODO(rm): provisorisch
     ipvHintLuFristVorbei: 'Reducziun da premias Lucerna: betg deducida en il budget. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Il budget na sa betg, sche e cura che l’annunzia è succedida — cun ina annunzia a temp vala l’entir dretg annual.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
     ipvHintFristVorbei: 'Reducziun da premias: betg deducida en il budget. Il termin da dumonda u d’annunzia per {jahr} è scadì, ed il budget na sa betg sch’ina dumonda è vegnida inoltrada a temp. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias.', // TODO(rm): provisorisch — Gegenlese (K31 FR Nachtrag 28.09.2026)
@@ -4739,7 +4739,7 @@ export default {
     bvg: 'LPP — prevenziun professiunala (cassa da pensiun): il segund pilaster che furma, cun l’AVS, la renta.',
     uvg: 'LAA — assicuranza cunter accidents: cuvra ils custs d’accidents professiunals e betg professiunals.',
     franchise: 'Franchisa — la part dals custs da sanadad pajada sez mintga onn avant che la cassa da malsauns paja.',
-    selbstbehalt: 'Quota da participaziun — la atgna part (per ordinari 10 %) dals custs sur la franchisa, fin in maximum annual.',
+    selbstbehalt: 'Quota da participaziun — la atgna part (per ordinari 10\u202f%) dals custs sur la franchisa, fin in maximum annual.',
     beistandschaft: 'Beistandschaft (assistenza) — ina mesira da sustegn ordinada da la KESB (autoritad da protecziun d’uffants e da creschids) sche insatgi na po betg pli reglar sez tschertas fatschentas. Uschè pauc sco necessari, graduà. Basa: ZGB art. 390 ss.',
   },
   settingsDrawer: {
@@ -4803,7 +4803,7 @@ export default {
       satz: "maximalmain da pajar sez, da {gesamt} en total",
       zusatzOffen: "Ultra da quai vaccinaziuns senza import documentà (assicuranza supplementara, HPV, avant il 2026 u pajader avert).",
       leer: "Anc nagins pretschs registrads. Cun registrar ina vaccinaziun pon ins endatar vaccin e taxa.",
-      wer: "Dapi il 2026 paja l’assicuranza da basa vaccinaziuns recumandadas senza franchisa; la participaziun da 10 % resta. Quai vala per la vaccinaziun en la pratica medicala u en l’ospital. En l’apoteca na paja ella betg il vaccinar, cun recept medical mo il vaccin. Vaccinaziuns da viadi u professiunalas na paja ella betg; tschertas assicuranzas supplementaras gea: verifitgar la polizza.",
+      wer: "Dapi il 2026 paja l’assicuranza da basa vaccinaziuns recumandadas senza franchisa; la participaziun da 10\u202f% resta. Quai vala per la vaccinaziun en la pratica medicala u en l’ospital. En l’apoteca na paja ella betg il vaccinar, cun recept medical mo il vaccin. Vaccinaziuns da viadi u professiunalas na paja ella betg; tschertas assicuranzas supplementaras gea: verifitgar la polizza.",
       ausblenden: "Zuppentar ils custs",
       zeigen: "Mussar ils custs",
       eigen: "da pajar sez: maximalmain {betrag}",
@@ -5105,12 +5105,12 @@ export default {
     ausserhalbWeitere: "Quai ch’è endatà sut «Ulteriuras assicuranzas» dumbra en il total. Tge assicuranzas che quai cumpiglia n’è betg endatà.",
     titel: "Assicuranzas per mais",
     kk: "Cassa da malsauns (assicuranza da basa)",
-    hausrat: "Ménaschi (CHF {jahr} / onn)",
-    haftpflicht: "Responsabladad civila (CHF {jahr} / onn)",
+    hausrat: "Ménaschi (CHF\u00a0{jahr} / onn)",
+    haftpflicht: "Responsabladad civila (CHF\u00a0{jahr} / onn)",
     weitere: "Ulteriuras assicuranzas (chapitel Finanzas)",
     kkZusatz: "Cassa da malsauns (supplement)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
-    uvgZusatz: "Supplement d’accident (CHF {jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
-    leben: "Assicuranza da vita (CHF {jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    uvgZusatz: "Supplement d’accident (CHF\u00a0{jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    leben: "Assicuranza da vita (CHF\u00a0{jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
     nichtErfasst: "{liste}: premia betg endatada.",
     nameHausrat: "Ménaschi",
     nameHaftpflicht: "Responsabladad civila",
@@ -5118,7 +5118,7 @@ export default {
     nameLeben: "Assicuranza da vita", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
     nameKK: "Cassa da malsauns",
     fahrzeug: "L’assicuranza dal vehichel na quinta betg qua — ils custs da l’auto tutgan en il chapitel Finanzas tar «Mobilitad».",
-    pk: "La cassa da pensiun (CHF {betrag}) è gia deducida da la paja.",
+    pk: "La cassa da pensiun (CHF\u00a0{betrag}) è gia deducida da la paja.",
     alles: "Tut davart la franschisa ed il cumparegliar",
   },
   // Kopf und Rand im Kapitel Wohnen (Stebler Studios 20.11.2026, «wie die Finanzen») — rm zur Gegenlese
@@ -5178,8 +5178,8 @@ export default {
     titel: "Custs d'abitar per mais",
     titelAusprobiert: "Custs d'abitar per mais · empruvà",
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-    anteil: "{pct} % da l'entrada netta (CHF {einkommen})",
-    anteilBrutto: "{pct} % da l'entrada bruta (CHF {einkommen})",
+    anteil: "{pct}\u202f% da l'entrada netta (CHF\u00a0{einkommen})",
+    anteilBrutto: "{pct}\u202f% da l'entrada bruta (CHF\u00a0{einkommen})",
     drittel: 'in terz',
     faustregel: "Sco orientaziun grossa vala savens: custs d'abitar fin radund in terz da l'entrada. Quai n'è nagin cunfin fix — cun ina pitschna entrada po er main gia esser stretg.",
     mehrAlsDrittel: "Dapli ch'in terz da l'entrada va per abitar. Quai è ina reglacurta, nagin'obligaziun — il quint cun tut las expensas mussa, sch'i va si.",
@@ -5193,14 +5193,14 @@ export default {
     freiDanach: 'Liber suenter',
     durchspielen: { sie: "Mo per empruvar — i na vegn memorisà nagut. Las cifras survart suondan il reglader, fin che Vus al reponis.", du: "Mo per empruvar — i na vegn memorisà nagut. Las cifras survart suondan il reglader, fin che ti al reponas." },
     zurueck: 'Enavos al tschains dad oz',
-    ausprobierteMiete: 'Tschains empruvà: CHF {amount}',
-    anteilEigen: { sie: "{pct} % da Vossa atgna entrada (CHF {einkommen})", du: "{pct} % da tia atgna entrada (CHF {einkommen})" },
-    anteilHaushalt: { sie: "{pct} % da las entradas nettas da Vossa economia da chasa (Vus e partenari/a, CHF {einkommen})", du: "{pct} % da las entradas nettas da tia economia da chasa (ti e partenari/a, CHF {einkommen})" },
+    ausprobierteMiete: 'Tschains empruvà: CHF\u00a0{amount}',
+    anteilEigen: { sie: "{pct}\u202f% da Vossa atgna entrada (CHF\u00a0{einkommen})", du: "{pct}\u202f% da tia atgna entrada (CHF\u00a0{einkommen})" },
+    anteilHaushalt: { sie: "{pct}\u202f% da las entradas nettas da Vossa economia da chasa (Vus e partenari/a, CHF\u00a0{einkommen})", du: "{pct}\u202f% da las entradas nettas da tia economia da chasa (ti e partenari/a, CHF\u00a0{einkommen})" },
     viertel: 'in quart: recumandaziun da la Budgetberatung Schweiz',
     hausRest: 'tut il rest',
     hausSie: { sie: 'Vus', du: 'ti' },
     hausPartner: 'partenari/a',
-    anteilTeilsBrutto: "{pct} % da l'entrada registrada (CHF {einkommen}, per part brut)",
+    anteilTeilsBrutto: "{pct}\u202f% da l'entrada registrada (CHF\u00a0{einkommen}, per part brut)",
     mitPartner: "Ils custs d'abitar valan per l'economia da chasa, qua è quintada mo l'atgna entrada. Ensemen cun il partenari u la partenaria è la part pli pitschna.",
     partnerOffen: { sie: "Ils custs d'abitar valan per l'economia da chasa. Inditgai en il chapitel «Basa persunala» la paja netta da la segunda persuna (0, sch'ella n'ha nagina), lura quinta la chasa cun l'entira economia da chasa.", du: "Ils custs d'abitar valan per l'economia da chasa. Inditgescha en il chapitel «Basa persunala» la paja netta da la segunda persuna (0, sch'ella n'ha nagina), lura quinta la chasa cun l'entira economia da chasa." },
     fehltDanach: 'I manca suenter',
@@ -5225,28 +5225,28 @@ export default {
     zoneHigh: 'decil superiur',
     zoneLowSub: 'bass salaris',
     zoneHighSub: 'auts salaris',
-    yourWage: { sie: 'Voss salari: CHF {amount}', du: 'Tes salari: CHF {amount}' },
+    yourWage: { sie: 'Voss salari: CHF\u00a0{amount}', du: 'Tes salari: CHF\u00a0{amount}' },
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-    yourWage40: { sie: 'Voss salari, quintà sin 40 uras l\'emna: CHF {amount}', du: 'Tes salari, quintà sin 40 uras l\'emna: CHF {amount}' },
-    geschaetztAusNetto: 'Stimà d\'in net da CHF {netto} — la balla mussa il brut proximativ (la controlla dal salari minim vala mo cun il brut real).',
+    yourWage40: { sie: 'Voss salari, quintà sin 40 uras l\'emna: CHF\u00a0{amount}', du: 'Tes salari, quintà sin 40 uras l\'emna: CHF\u00a0{amount}' },
+    geschaetztAusNetto: 'Stimà d\'in net da CHF\u00a0{netto} — la balla mussa il brut proximativ (la controlla dal salari minim vala mo cun il brut real).',
     readoutNear: { sie: 'Voss salari è datiers dal median svizzer.', du: 'Tes salari è datiers dal median svizzer.' },
     readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },
     readoutBelow: { sie: 'Voss salari è sut il median svizzer.', du: 'Tes salari è sut il median svizzer.' },
-    mindestlohnLine: 'Salari minimal chantunal: CHF {stunde}/ura — a temp cumplain circa CHF {amount} al mais (stadi {jahr}).',
+    mindestlohnLine: 'Salari minimal chantunal: CHF\u00a0{stunde}/ura — a temp cumplain circa CHF\u00a0{amount} al mais (stadi {jahr}).',
     mindestlohnJahrNichtBelegt: 'Salari minimal chantunal: verifitgà tenor las funtaunas uffizialas per {jahr}, per {laufend} anc naginas valurs verifitgadas — perquai qua senza import e senza cumparegliaziun cun il salari minimal.', // TODO(rm): Gegenlese Muttersprachler:in
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     mindestlohnBreachedLine: { sie: 'Voss salari para dad esser sutvart.', du: 'Tes salari para dad esser sutvart.' },
     fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
     // TODO(rm): von Claude, provisorisch.
-    ketteNetto: { sie: 'Net CHF {betrag}, Vossa indicaziun', du: 'Net CHF {betrag}, tia indicaziun' },
-    ketteBrutto: 'Brut ≈ CHF {betrag}, stimà',
-    ketteBruttoOhnePk: 'Brut ≈ CHF {betrag}, stimà senza cassa da pensiun',
-    ketteBruttoOhneAbzug: 'Brut CHF {betrag}, quintà senza deducziuns',
-    ketteBruttoAngabe: { sie: 'Brut CHF {betrag}, Vossa indicaziun', du: 'Brut CHF {betrag}, tia indicaziun' },
-    ketteAuf40: { sie: 'Sin 40 uras l’emna ≈ CHF {betrag}, Vus lavurais {stunden} uras', du: 'Sin 40 uras l’emna ≈ CHF {betrag}, ti lavuras {stunden} uras' },
-    ketteMit13: 'Cun 13avel salari ≈ CHF {betrag}',
-    ketteMedian: 'Median svizzer {jahr} CHF {betrag}, brut, temp plain, cun part dal 13avel salari e da pajaments spezials',
-    ketteHinweis13: { sie: 'Sche Vus survegnis in 13avel salari, è Voss valur da cumparegliaziun var 8 % pli aut.', du: 'Sche ti survegns in 13avel salari, è tia valur da cumparegliaziun var 8 % pli auta.' },
+    ketteNetto: { sie: 'Net CHF\u00a0{betrag}, Vossa indicaziun', du: 'Net CHF\u00a0{betrag}, tia indicaziun' },
+    ketteBrutto: 'Brut ≈ CHF\u00a0{betrag}, stimà',
+    ketteBruttoOhnePk: 'Brut ≈ CHF\u00a0{betrag}, stimà senza cassa da pensiun',
+    ketteBruttoOhneAbzug: 'Brut CHF\u00a0{betrag}, quintà senza deducziuns',
+    ketteBruttoAngabe: { sie: 'Brut CHF\u00a0{betrag}, Vossa indicaziun', du: 'Brut CHF\u00a0{betrag}, tia indicaziun' },
+    ketteAuf40: { sie: 'Sin 40 uras l’emna ≈ CHF\u00a0{betrag}, Vus lavurais {stunden} uras', du: 'Sin 40 uras l’emna ≈ CHF\u00a0{betrag}, ti lavuras {stunden} uras' },
+    ketteMit13: 'Cun 13avel salari ≈ CHF\u00a0{betrag}',
+    ketteMedian: 'Median svizzer {jahr} CHF\u00a0{betrag}, brut, temp plain, cun part dal 13avel salari e da pajaments spezials',
+    ketteHinweis13: { sie: 'Sche Vus survegnis in 13avel salari, è Voss valur da cumparegliaziun var 8\u202f% pli aut.', du: 'Sche ti survegns in 13avel salari, è tia valur da cumparegliaziun var 8\u202f% pli auta.' },
     // TODO(rm): provisorisch, Gegenlese offen
     ketteLernende: 'Las pajas dad emprendistas ed emprendists sco era da praticantas e praticants na quintan betg en il median. Per els di questa cumparegliaziun pauc.',
     spiegel: 'Net {netto}, ≈ {brutto} brut (stimà).',
@@ -5256,29 +5256,29 @@ export default {
     sperre_lernend: { sie: 'Il median svizzer na quinta betg las pajas dad emprendistas ed emprendists, perquai na mussain nus qua nagina cumparegliaziun. Era ils salaris minimals chantunals n’èn betg obligatorics per emprendissadis. Per Voss salari quinta Voss contract dad emprendissadi. Sche in contract collectiv da lavur vala en Vossa branscha, po er quel cuntegnair prescripziuns.', du: 'Il median svizzer na quinta betg las pajas dad emprendistas ed emprendists, perquai na mussain nus qua nagina cumparegliaziun. Era ils salaris minimals chantunals n’èn betg obligatorics per emprendissadis. Per tes salari quinta tes contract dad emprendissadi. Sche in contract collectiv da lavur vala en tia branscha, po er quel cuntegnair prescripziuns.' },
     sperre_quellensteuer: { sie: 'Cun ina taglia a la funtauna pussaivla na sa lascha betg stimar in brut fidaivel dal net. Endatai il salari brut da Voss quint da salari, lura classifitgain nus il salari.', du: 'Cun ina taglia a la funtauna pussaivla na sa lascha betg stimar in brut fidaivel dal net. Endatescha il salari brut da tes quint da salari, lura classifitgain nus il salari.' },
     soIstGerechnet: 'Uschia è quint',
-    dreizehnterNote: "La valur da confrunt cuntegna la part dal 13avel salari (×13/12), per correspunder al median da l'UST. Senza 13avel fissi quai CHF {fte}.",
-    ohneDreizehnterNote: "Confrunt senza part dal 13avel salari. Cun in 13avel fiss la valur var 8 % pli auta.",
+    dreizehnterNote: "La valur da confrunt cuntegna la part dal 13avel salari (×13/12), per correspunder al median da l'UST. Senza 13avel fissi quai CHF\u00a0{fte}.",
+    ohneDreizehnterNote: "Confrunt senza part dal 13avel salari. Cun in 13avel fiss la valur var 8\u202f% pli auta.",
     konformMit13Line: "Conform grazia al 13avel salari — sche il 13avel vegn quintà tar il salari minimal (a Basilea-Citad mo sch'el vegn pajà mensilmain).",
-    fteNote: 'Temp parzial ({hours} uras/emna): proiectà sin 100 % fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
-    overFteNote: 'Dapli che temp cumplain ({hours} uras/emna): convertì sin 40 uras fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
+    fteNote: 'Temp parzial ({hours} uras/emna): proiectà sin 100\u202f% fa quai CHF\u00a0{fte} (registrà: CHF\u00a0{actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
+    overFteNote: 'Dapli che temp cumplain ({hours} uras/emna): convertì sin 40 uras fa quai CHF\u00a0{fte} (registrà: CHF\u00a0{actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     hoursUnknownNote: { sie: "Senza Vossas uras d'emna na po Voss salari betg vegnir cumpareglià cun il median a temp cumplain — endatai ellas, lura al plazzain nus.", du: "Senza tias uras d'emna na po tes salari betg vegnir cumpareglià cun il median a temp cumplain — endatescha ellas, lura al plazzain nus." },
     hoursImplausibleNote: { sie: "{hours} uras per emna èn nunusitadamain bleras. Èsi forsa manegià in pensum en pertschient? Lura endatai per plaschair Vossas uras d'emna — fin lura na quintain nus betg cun quai.", du: "{hours} uras per emna èn nunusitadamain bleras. Èsi forsa manegià in pensum en pertschient? Lura endatescha per plaschair tias uras d'emna — fin lura na quintain nus betg cun quai." },
     // TODO(rm): provisorisch, Gegenlese offen
-    hoursTooLowNote: { sie: "{hours} uras per emna èn fitg paucas. Èsi forsa manegià in pensum, per exempel 0.8 per 80 %? Lura endatai per plaschair Vossas uras d'emna. Fin lura na quintain nus betg cun quai.", du: "{hours} uras per emna èn fitg paucas. Èsi forsa manegià in pensum, per exempel 0.8 per 80 %? Lura endatescha per plaschair tias uras d'emna. Fin lura na quintain nus betg cun quai." },
-    aria: 'Salari CHF {amount}, median svizzer CHF {median}.',
-    source: 'Funtauna: [[UST|www.bfs.admin.ch]], Relevaziun svizra da la structura dals salaris {jahr} (median CHF {median}, incl. 13avel salari proporziunal).',
+    hoursTooLowNote: { sie: "{hours} uras per emna èn fitg paucas. Èsi forsa manegià in pensum, per exempel 0.8 per 80\u202f%? Lura endatai per plaschair Vossas uras d'emna. Fin lura na quintain nus betg cun quai.", du: "{hours} uras per emna èn fitg paucas. Èsi forsa manegià in pensum, per exempel 0.8 per 80\u202f%? Lura endatescha per plaschair tias uras d'emna. Fin lura na quintain nus betg cun quai." },
+    aria: 'Salari CHF\u00a0{amount}, median svizzer CHF\u00a0{median}.',
+    source: 'Funtauna: [[UST|www.bfs.admin.ch]], Relevaziun svizra da la structura dals salaris {jahr} (median CHF\u00a0{median}, incl. 13avel salari proporziunal).',
     empty: { sie: 'Uschespert che Voss entrada è registrada, la plazzain nus qua cun calma.', du: 'Uschespert che tia entrada è registrada, la plazzain nus qua cun calma.' },
   },
   lohnCheck: {
     // TODO(rm): Gegenlese Muttersprachler:in
-    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} {stelleSatz}", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} {stelleSatz}" },
+    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF\u00a0{lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF\u00a0{mindestStunde}/ura, stadi {jahr}). {ausnahmen} {stelleSatz}", du: "Indicaziun: Tes salari (CHF\u00a0{lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF\u00a0{mindestStunde}/ura, stadi {jahr}). {ausnahmen} {stelleSatz}" },
     // TODO(rm): provisorisch — deutscher Rückfall (Kapitel 5, 10.11.2026); die frühere rm-Fassung behauptete Ausnahmen, die nicht in allen Kantonen gelten.
     ausnahmen: 'Der Mindestlohn gilt allerdings nicht für alle. Die Ausnahmen legt jeder Kanton selbst fest, etwa für Lernende, Praktika, Ferienjobs von Jugendlichen oder Branchen mit einem Gesamtarbeitsvertrag, und manche Kantone kennen tiefere Sätze, etwa in der Landwirtschaft.',
     stelleSatz: { sie: 'Sche nagut da quai na vala, pudais Vus contactar l’organ cumpetent: {stelle}.', du: 'Sche nagut da quai na vala, pos ti contactar l’organ cumpetent: {stelle}.' }, // TODO(rm): Gegenlese Muttersprachler:in
     stelleSatzNeutral: { sie: 'Sche nagut da quai na vala, pudais Vus contactar l’organ chantunal cumpetent.', du: 'Sche nagut da quai na vala, pos ti contactar l’organ chantunal cumpetent.' }, // TODO(rm): Gegenlese Muttersprachler:in
     keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },
     hoursEquiv: '≈ {month} uras/mais · {year} uras/onn',
-    hourlyWage: 'Salari per ura (salari mensil ÷ uras effectivas): CHF {wage}',
+    hourlyWage: 'Salari per ura (salari mensil ÷ uras effectivas): CHF\u00a0{wage}',
     hoursMissing: { sie: "Per la controlla dal salari minimal mancan anc Vossas uras d'emna — senza ellas na po Voss salari per ura betg vegnir calculà. Endatar ussa", du: "Per la controlla dal salari minimal mancan anc Tias uras d'emna — senza ellas na po tes salari per ura betg vegnir calculà. Endatescha ussa" },
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     basisMissing: { sie: "Per la controlla dal salari minimal manca anc la spezia da entrada — il salari minimal legal è in salari brut. Tscherner la spezia da entrada", du: "Per la controlla dal salari minimal manca anc la spezia da entrada — il salari minimal legal è in salari brut. Tscherna la spezia da entrada" },
@@ -5327,7 +5327,7 @@ export default {
   },
 
   sozialhilfeCalc: {
-    entitled: "Dretg ad agid social: CHF {value}/mais",
+    entitled: "Dretg ad agid social: CHF\u00a0{value}/mais",
     notEntitled: "Nagin dretg — l'entrada cuvra il basegn",
   },
 
@@ -5377,7 +5377,7 @@ export default {
     testament: "En Svizra vala senza testament la successiun legala (ZGB Art. 457 ss.). In testament a maun sto esser scrit cumplettamain a maun, datà e suttascrit (Art. 505 al. 1). Tar la documentaziun publica coopereschan ina persuna da documentaziun e dus perditgas (Art. 499) — sbagls da furma èn lura main probabels. In testament a maun po vegnir deponì tar in post uffizial che il chantun designescha (Art. 505 al. 2).",
     contextFamilienzulagen: { sie: "Per Voss uffants As stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Voss patrun po gidar enavant.", du: "Per Tes uffants Ta stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Tes patrun po gidar enavant." },
     ipv: { sie: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Vus.", du: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Tai." },
-    familienzulagen: "Per uffants datti en Svizra allocaziuns per famiglia. La summa è differenta tenor il chantun — almain CHF 215 per uffant e mais, per uffants en furmaziun almain CHF 268 (FamZG Art. 5).", // TODO(rm): provisorisch — Gegenlese (CHF 268 / FamZG Art. 5 ergänzt, 16.11.2026)
+    familienzulagen: "Per uffants datti en Svizra allocaziuns per famiglia. La summa è differenta tenor il chantun — almain CHF\u00a0215 per uffant e mais, per uffants en furmaziun almain CHF\u00a0268 (FamZG Art. 5).", // TODO(rm): provisorisch — Gegenlese (CHF\u00a0268 / FamZG Art. 5 ergänzt, 16.11.2026)
     bewilligung_c: { sie: "La permissiun C è illimitada. Vus na stuais betg la prolungar e avais pratischamain ils medems dretgs sco burgais svizzers.", du: "La permissiun C è illimitada. Ti na stos betg la prolungar e has pratischamain ils medems dretgs sco burgais svizzers." },
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
     el: { sie: 'Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Die EL-Stelle Ihres Kantons sagt Ihnen, ob Sie Anspruch haben (ELG Art. 21).', du: "Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Die EL-Stelle deines Kantons sagt dir, ob du Anspruch hast (ELG Art. 21)." },
@@ -5385,7 +5385,7 @@ export default {
     rav: { sie: "Il RAV (Mediaziun regiunala da lavur) è Vossa post d'infurmaziun en cas da dischoccupaziun. Annunziai Vus là l'emprim di.", du: "Il RAV (Mediaziun regiunala da lavur) è Tia post d'infurmaziun en cas da dischoccupaziun. Annunzia Tai là l'emprim di." },
     skos: 'Las directivas SKOS recumondan quant auta che l’agid social duess esser. Ellas èn liantas mo uschè lunsch sco in chantun las surpiglia en ses dretg.',
     iv: "L'assicuranza d'invaliditad (AI) sustegna persunas che èn limitadas durablamain pervia da malsogna u accident.",
-    selbstbehalt: { sie: "Sper la franschischa pajais Vus 10% dals custs da medi sez — quai è il parteniment. Maximalmain CHF 700 per onn.", du: "Sper la franschischa pajas Ti 10% dals custs da medi sez — quai è il parteniment. Maximalmain CHF 700 per onn." },
+    selbstbehalt: { sie: "Sper la franschischa pajais Vus 10% dals custs da medi sez — quai è il parteniment. Maximalmain CHF\u00a0700 per onn.", du: "Sper la franschischa pajas Ti 10% dals custs da medi sez — quai è il parteniment. Maximalmain CHF\u00a0700 per onn." },
     verlustschein: 'In attestat da deficit munta: Ina scussiun è terminada, ma il debit resta — 20 onns ditg.',
     eo: { sie: "Tar servetsch militar, servetsch civil u maternitad retschavais Vus ina cumpensaziun per il gudogn pers.", du: "Tar servetsch militar, servetsch civil u maternitad retschaivas Ti ina cumpensaziun per il gudogn pers." },
   },
@@ -5398,7 +5398,7 @@ export default {
     canton: 'Chantun: {name}',
     cantonUnknown: 'Betg enconuschent',
     model: 'Model: {value}',
-    maxIncome: 'Limita da l’entrada decisiva: CHF {value} per onn',
+    maxIncome: 'Limita da l’entrada decisiva: CHF\u00a0{value} per onn',
     note: 'Indicaziun: {value}',
     enterCanton: { sie: 'Per plaschair endatai Voss chantun sut "Basa persunala" u Vossa PLZ sut "Abitar".', du: 'Per plaschair endatescha Tes chantun sut "Basa persunala" u Tia PLZ sut "Abitar".' },
     cantonChoose: { sie: 'En tge chantun abitais Vus?', du: 'En tge chantun abitas ti?' },
@@ -5419,7 +5419,7 @@ export default {
     monthlySubsidy: 'Promoziun mensiala',
     annualSubsidy: 'Promoziun annaira',
     reductionNote: "Dependent da l'entrada ({percent}% dal maximum)",
-    maxPossible: 'Maximum: CHF {value}/onn',
+    maxPossible: 'Maximum: CHF\u00a0{value}/onn',
     taxSavings: 'Spargn da taglia',
     compareCantons: 'Cumparegliar tut ils chantuns',
     requiredDocs: 'Documents necessaris',
@@ -5468,8 +5468,8 @@ export default {
     elOnlyAhvIv: 'PC mo cun ina prestaziun AVS/AI',
     elPossible: 'Dretg pussaivel',
     elPruefen: "Laschar examinar prestaziuns supplementaras", // TODO(rm)
-    totalIncome: 'Entrada totala: CHF {value}',
-    totalExpenses: 'Expensas: CHF {value}',
+    totalIncome: 'Entrada totala: CHF\u00a0{value}',
+    totalExpenses: 'Expensas: CHF\u00a0{value}',
     skosTable: 'Tabella basegn fundamental COSAS',
     nextSteps: 'Proxims pass:',
     step1: 'Contactar il servetsch social da la vischnanca da domicil',
@@ -5545,8 +5545,8 @@ export default {
     education: 'Furmaziun supplementara',
     otherDeductions: 'Autras deducziuns',
     grenze_pension3a: 'Gesetzlich höchstens {max} (Säule 3a, Steuerjahr {jahr})', // TODO(rm): übersetzen
-    hinweis3aOhnePk: 'Lohn bis zur BVG-Eintrittsschwelle: Ohne Pensionskasse lassen sich höchstens 20 % des Erwerbseinkommens einzahlen und abziehen (BVV 3 Art. 7 Abs. 1 Bst. b), aus dem Hauptlohn gerechnet rund {betrag} je Person. Mit Pensionskasse gilt der Betrag oben; die Kasse dann bei den Versicherungen eintragen.', // TODO(rm): übersetzen
-    hinweis3aPartner: 'Verheiratet oder eingetragen: Die Grenze gilt je erwerbstätige Person (BVV 3 Art. 7 Abs. 2). Für die Partnerin oder den Partner sind {betrag} eingerechnet. Ohne Pensionskasse sind bis 20 % des Erwerbseinkommens möglich (Abs. 1 Bst. b); mehr als hier angenommen lässt sich in der Steuererklärung abziehen. Hat die Partnerin oder der Partner gar kein eigenes Einkommen, beim Partnereinkommen 0 eintragen; dann zählt nur die eigene Grenze.', // TODO(rm): übersetzen
+    hinweis3aOhnePk: 'Lohn bis zur BVG-Eintrittsschwelle: Ohne Pensionskasse lassen sich höchstens 20\u202f% des Erwerbseinkommens einzahlen und abziehen (BVV 3 Art. 7 Abs. 1 Bst. b), aus dem Hauptlohn gerechnet rund {betrag} je Person. Mit Pensionskasse gilt der Betrag oben; die Kasse dann bei den Versicherungen eintragen.', // TODO(rm): übersetzen
+    hinweis3aPartner: 'Verheiratet oder eingetragen: Die Grenze gilt je erwerbstätige Person (BVV 3 Art. 7 Abs. 2). Für die Partnerin oder den Partner sind {betrag} eingerechnet. Ohne Pensionskasse sind bis 20\u202f% des Erwerbseinkommens möglich (Abs. 1 Bst. b); mehr als hier angenommen lässt sich in der Steuererklärung abziehen. Hat die Partnerin oder der Partner gar kein eigenes Einkommen, beim Partnereinkommen 0 eintragen; dann zählt nur die eigene Grenze.', // TODO(rm): übersetzen
     grenze_education: 'Bei der direkten Bundessteuer höchstens {max}, unter Voraussetzungen (erster Abschluss auf Sekundarstufe II oder ab 20 Jahren). Die Kantone haben eigene Höchstbeträge', // TODO(rm): übersetzen
     gekappt: 'Für die Schätzung auf {max} begrenzt.', // TODO(rm): übersetzen
     calculation: 'Calculaziun',
@@ -5557,7 +5557,7 @@ export default {
     married: 'Maridà/maridada u en partenadi registrà',
     children: 'Uffants',
     elterntarifConfirm: 'Ils uffants vivan en mia chasada, ed jau surpigl la part principala da lur mantegniment.',
-    elterntarifHint: { sie: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF {value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Vossa taglia po lura esser pli bassa che quai che vegn mussà qua.', du: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF {value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Tia taglia po lura esser pli bassa che quai che vegn mussà qua.' },
+    elterntarifHint: { sie: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF\u00a0{value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Vossa taglia po lura esser pli bassa che quai che vegn mussà qua.', du: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF\u00a0{value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Tia taglia po lura esser pli bassa che quai che vegn mussà qua.' },
     childDeduction: 'Reducziun da la taglia per uffant (taglia federala)',
     federalOnly: 'mo taglia federala',
     federalTax: 'Taglia federala',
@@ -5574,7 +5574,7 @@ export default {
     // F8-P1 (05.11.2026): Fassung fürs Blatt ans Amt, ohne Hinweis, wo man es in der App angibt.
     annahmeOhneDreizehntenBlatt: 'Quintà senza 13avla paja (indicaziun manca) — cun ina 13avla paja è la taglia pli auta.',
     // TODO(rm): E37/E38 — provisorisch, von Muttersprachler:in gegenlesen.
-    bandOutside: { sie: "Per Vossa entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per tia entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
+    bandOutside: { sie: "Per Vossa entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF\u00a0{min} fin CHF\u00a0{max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per tia entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF\u00a0{min} fin CHF\u00a0{max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
     bandNotChecked: { sie: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
     bandLinkEstv: "Calculatur da taglia da l'AFT",
     bandLinkKanton: 'Administraziun da taglia {canton}',
@@ -5593,7 +5593,7 @@ export default {
     // TODO(rm): E39 — provisorisch, von Muttersprachler:in gegenlesen.
     taxableIncomeEstimated: 'Entrada taxabla (stimada tenor las deducziuns standard da l\'AFT)',
     // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
-    taxableEstimatedHint: { sie: "Paja netta main las deducziuns standard ch'il calculatur da taglia da l'AFT utilisescha: custs professiunals (3 %, almain CHF 2 000, maximalmain CHF 4 000 — u ils custs professiunals registrads), deducziun per assicuranzas, deducziuns per persunas maridadas e per uffants, ultra da quai las deducziuns registradas. Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.", du: "Paja netta main las deducziuns standard ch'il calculatur da taglia da l'AFT utilisescha: custs professiunals (3 %, almain CHF 2 000, maximalmain CHF 4 000 — u ils custs professiunals registrads), deducziun per assicuranzas, deducziuns per persunas maridadas e per uffants, ultra da quai las deducziuns registradas. Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala." },
+    taxableEstimatedHint: { sie: "Paja netta main las deducziuns standard ch'il calculatur da taglia da l'AFT utilisescha: custs professiunals (3\u202f%, almain CHF\u00a02 000, maximalmain CHF\u00a04 000 — u ils custs professiunals registrads), deducziun per assicuranzas, deducziuns per persunas maridadas e per uffants, ultra da quai las deducziuns registradas. Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.", du: "Paja netta main las deducziuns standard ch'il calculatur da taglia da l'AFT utilisescha: custs professiunals (3\u202f%, almain CHF\u00a02 000, maximalmain CHF\u00a04 000 — u ils custs professiunals registrads), deducziun per assicuranzas, deducziuns per persunas maridadas e per uffants, ultra da quai las deducziuns registradas. Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala." },
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
     taxableEnteredHint: { sie: 'Endatà da Vus (cifra per la taglia federala directa). Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.', du: 'Endatà da tai (cifra per la taglia federala directa). Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.' },
     // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
@@ -5642,7 +5642,7 @@ export default {
     // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
     disclaimer: { sie: 'Questa orientaziun mussa la chargia da taglia stimada (confederaziun, chantun, vischnanca). Valurs chantunals sa basan sin il lieu principal.', du: 'Questa orientaziun mussa la chargia da taglia stimada (confederaziun, chantun, vischnanca). Valurs chantunals sa basan sin il lieu principal.' },
     netIncomeNote: { sie: "Projecziun da Voss salari net × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net × 12. La chargia da taglia effectiva po divergiar." },
-    useImportedTaxable: 'Utilisar l’entrada taxabla uffiziala (CHF {value}/onn). Las deducziuns vegnan alura ignoradas.',
+    useImportedTaxable: 'Utilisar l’entrada taxabla uffiziala (CHF\u00a0{value}/onn). Las deducziuns vegnan alura ignoradas.',
     taxableIncomeDirect: 'Entrada taxabla (facultativ)',
     taxableIncomeDirectPlaceholder: 'p.ex. 65 000',
     taxableIncomeDirectHint: 'Enconuschent da vossa taxaziun? El endatar directamain — la survista dovra lura quel enstagl da stimar dal salari net. I sa tracta da la valur per la taglia federala directa (la taxaziun nomna separadamain Confederaziun e chantun). Per persunas maridadas suppona Maloja ina taxaziun cuminaivla: la valur cuminaivla da omadus conjugals.', // TODO(rm): E38-Zusatz provisorisch
@@ -5655,14 +5655,14 @@ export default {
       gemeinsam: 'Maridà, taxaziun communabla',
       einzeln: 'Maridà, taxaziun individuala',
       active: 'tschernì actualmain',
-      cheaper: 'Maridà ensemen: circa CHF {value} damain che nunmaridà.',
-      dearer: 'Maridà ensemen: circa CHF {value} dapli che nunmaridà.',
+      cheaper: 'Maridà ensemen: circa CHF\u00a0{value} damain che nunmaridà.',
+      dearer: 'Maridà ensemen: circa CHF\u00a0{value} dapli che nunmaridà.',
       similar: 'Tar questa entrada è la differenza pitschna.',
       twoIncomeNote: 'Cun duas entradas en la medema chasada po il maletg sa midar.',
       empty: 'Uschespert ch’ina entrada taxabla è endatada, cumpara qua la cumparaziun.',
       einzelnPending: 'Maridà, taxaziun individuala: acceptada ils 8 da mars 2026, duai entrar en vigur il 2032 (decisiun dal Cussegl federal dals 19 d’avust 2026). Ina cifra documentada cumpara qua uschespert ch’il nov tarif vala.', // TODO(rm): Übersetzung «soll 2032 in Kraft treten» unsicher
       scope: 'Mo l’imposta federala directa (DBG art. 36). Las taxas chantunalas e communalas n’èn betg incluidas qua.',
-      abzuegeNote: "Mintga stadi civil è quintà cun sias atgnas deducziuns — entrada taxabla nubil CHF {ledig}, maridà CHF {verheiratet} (pèr cun ina suletta entrada, cun la deducziun per persunas maridadas e la deducziun d'assicuranza pli auta).", // TODO(rm): provisorisch
+      abzuegeNote: "Mintga stadi civil è quintà cun sias atgnas deducziuns — entrada taxabla nubil CHF\u00a0{ledig}, maridà CHF\u00a0{verheiratet} (pèr cun ina suletta entrada, cun la deducziun per persunas maridadas e la deducziun d'assicuranza pli auta).", // TODO(rm): provisorisch
       nurGeschaetzt: { sie: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Voss stadi civil actual.", du: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Tes stadi civil actual." }, // TODO(rm): provisorisch
       // K62.5: im Konkubinat kein Vergleich mit einem gedachten Alleinverdiener-Ehepaar
       konkubinatPartner: "En il concubinat na mussa Maloja qua nagina cumparegliaziun: suenter ina maridaglia vegnissan las duas entradas sumadas (LTFD art. 9), cun ina atgna deducziun per pèrs cun duas entradas. Mesirà è mo il pèr maridà cun ina suletta entrada. Il calculatur da taglia da l'AFT quinta la cumparegliaziun cun duas entradas.", // TODO(rm): provisorisch
@@ -5824,7 +5824,7 @@ export default {
       salutation: 'Stimadas dunnas, stimads signurs,',
       body1: 'jau sun assicurà en l’assicuranza da basa tar {insurer} ed hai retschavì Voss quint. Cun la verifica hai jau constatà ina incoerenza.',
       body2intro: 'Concret pertutga quai la/las suandanta/s posiziun/s dal quint:',
-      position: 'Quint dals {date} da CHF {amount}',
+      position: 'Quint dals {date} da CHF\u00a0{amount}',
       body2detail: '[supplir p.pl.: tge ch’è betg vegnì quintà u quintà fauss — e la differenza che resulta]',
       reasonsIntro: 'Concretamain contest jau il suandant:',
       reasons: {
@@ -5848,9 +5848,9 @@ export default {
       subject: 'Dumonda da verificar ed adattar mes salari',
       salutation: 'Stimadas dunnas, stimads signurs,',
       body1: 'jau lavur tar {employer}. Cun verificar mes quen da salari hai jau constatà ch’il salari per ura pudess esser sut il salari minimal legal en vigur en il chantun {canton}. Jau part da la premissa ch’i sa tracta d’ina sbagliada e vuless cleritgar quai cun Vus.',
-      figuresLohn: 'Salari per ura actual: CHF {amount}',
-      figuresMindest: 'Salari minimal legal, chantun {canton}{jahr}: CHF {amount}',
-      figuresDiff: 'Differenza per mais: circa CHF {amount}',
+      figuresLohn: 'Salari per ura actual: CHF\u00a0{amount}',
+      figuresMindest: 'Salari minimal legal, chantun {canton}{jahr}: CHF\u00a0{amount}',
+      figuresDiff: 'Differenza per mais: circa CHF\u00a0{amount}',
       body2request: 'Jau Vus prej da verificar mia classificaziun e dad augmentar mes salari — sch’el è memia bass — sin il salari minimal legal, cun il pajament posteriur da la differenza accumulada. Jau m’allegrass d’ina resposta fin ils {frist}; jau stun gugent a disposiziun per in discurs.',
       closing: 'Cordials salids',
       legalNote: 'Basa: obligaziun dal patrun da pajar il salari (OR art. 322) sco er {gesetz} (chantun {canton}). En cas da mancanza d’accord po l’organ cumpetent vegnir contactà: {stelle}. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.',
@@ -5863,8 +5863,8 @@ export default {
       description: 'Recumond curteschi al patrun cur ch’il salari duì na vegn betg pajà.',
       subject: 'Salari pendent — dumonda da versament',
       salutation: 'Stimadas dunnas, stimads signurs,',
-      monthlyHint: '(Mes salari mensil brutt importa CHF {amount}.)', // TODO(rm): Gegenlese
-      body1: 'mes salari per {months}, da l’import brutt da CHF {amount}, n’è betg entrà enfin oz. Jau Vus prej da versar l’import pendent fin ils {frist}. Jau Vus fiss engraztgaivel per ina curta resposta.',
+      monthlyHint: '(Mes salari mensil brutt importa CHF\u00a0{amount}.)', // TODO(rm): Gegenlese
+      body1: 'mes salari per {months}, da l’import brutt da CHF\u00a0{amount}, n’è betg entrà enfin oz. Jau Vus prej da versar l’import pendent fin ils {frist}. Jau Vus fiss engraztgaivel per ina curta resposta.',
       closing: 'Cordials salids',
       // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
       legalNote: "Basa: exigibladad dal salari (OR art. 323). Sch’il pajament na succeda betg, maina la via tras l’autoritad da conciliaziun en chaussas da dretg da lavur resp. il tribunal da lavur al lieu, nua che Vus lavurais per ordinari, u al domicil resp. a la sedia dal patrun (ZPO art. 34 al. 1), eventualmain tras ina scussiun. Ina retenziun da la lavur (OR art. 82) u ina disditga immediata è mo cussegliabla suenter avair consultà in post spezialisà. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.",
@@ -5874,7 +5874,7 @@ export default {
     angaben: {
       title: 'Indicaziuns per quest brev', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       intro: 'Questas indicaziuns stattan mo en il brev e na vegnan betg memorisadas. Champs vids restan marcads en il brev cun «[per plaschair cumplettar]».', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
-      betragErkannt: 'En il brev stat: CHF {amount}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      betragErkannt: 'En il brev stat: CHF\u00a0{amount}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       betragUnklar: 'Quest import na pudain nus betg leger segir — en il brev resta «[per plaschair cumplettar]». Mo cifras, p.ex. 1250.50 u 1\'250.50.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       // TODO(rm): provisorisch — Gegenlese (Deploy-Gate 27.09.2026)
       rmDeutsch: 'Quest brev n’è anc betg vegnì controllà per rumantsch. Il brev sez vegn perquai fatg per tudestg.',
@@ -5989,7 +5989,7 @@ export default {
       salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       body1: 'en la scussiun nr. {number} m’è vegnì consegnà ils {date} in cumond da pajament. Partida che scuda: {creditor}.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       ganz: 'Cun quai fatsch jau opposiziun cunter l’entira pretensiun.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
-      teil: 'Cun quai fatsch jau opposiziun cunter ina part da la pretensiun. Contestà è in import da CHF {amount}.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      teil: 'Cun quai fatsch jau opposiziun cunter ina part da la pretensiun. Contestà è in import da CHF\u00a0{amount}.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       neuesVermoegen: 'Ultra da quai contestesch jau dad esser vegnì/vegnida tar nova facultad (art. 75 al. 2 SchKG).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       bescheinigung: 'Jau As prej da ma confermar ch’jau hai fatg opposiziun (art. 74 al. 3 SchKG).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
@@ -6037,17 +6037,17 @@ export default {
         mahnung: 'Admoniziun — {reason}',
       },
       salutation: 'Bun di,', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
-      body1: 'per {reason} è l’import da CHF {amount} scadì dapi ils {date}. Fin oz n’hai jau retschavì nagin pajament.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
+      body1: 'per {reason} è l’import da CHF\u00a0{amount} scadì dapi ils {date}. Fin oz n’hai jau retschavì nagin pajament.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       frist: { // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
         erinnerung: 'Forsa è il pajament ì en emblida. Jau As prej da transferir l’import fin ils {date}.',
         mahnung: 'Jau As envid da pajar l’import il pli tard fin ils {date}.',
       },
       zahlungsweg: 'Colliaziun da pajament: {text}', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
-      zins: 'Jau ma resalv da pretender tschains da retard da 5 % l’onn (art. 104 al. 1 OR).', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
+      zins: 'Jau ma resalv da pretender tschains da retard da 5\u202f% l’onn (art. 104 al. 1 OR).', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       weitere: 'Sch’il pajament n’arriva betg fin lura, vegn jau ad examinar ulteriurs pass, en spezial la scussiun.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       bereitsBezahlt: 'Sche Voss pajament è s’incruschà cun questa brev, As prej jau da la considerar sco senza object.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
-      legalNote: 'Basa: OR art. 102 e 104. Cun l’admoniziun vegn la persuna en retard, sche la pretensiun è scadida; sch’in di da pajament fix era concordà, gia suenter quel di. A partir dal retard po vegnir pretendì tschains da retard da 5 % l’onn. Quest model è in agid d’orientaziun, betg cussegl giuridic. Recumandà: trametter per posta recumandada.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
+      legalNote: 'Basa: OR art. 102 e 104. Cun l’admoniziun vegn la persuna en retard, sche la pretensiun è scadida; sch’in di da pajament fix era concordà, gia suenter quel di. A partir dal retard po vegnir pretendì tschains da retard da 5\u202f% l’onn. Quest model è in agid d’orientaziun, betg cussegl giuridic. Recumandà: trametter per posta recumandada.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
     },
     // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
     claimDispute: {
@@ -6091,8 +6091,8 @@ export default {
       salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       body1: 'jau hai retschavì Vossa admoniziun concernent il quint nr. {number} dals {date}.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       ganz: 'Jau contest questa pretensiun.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
-      teil: 'Jau contest questa pretensiun en la dimensiun da CHF {amount}.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
-      gebuehrenSatz: 'Jau contest las taxas d’admoniziun resp. d’incasso pretendidas da CHF {amount}.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
+      teil: 'Jau contest questa pretensiun en la dimensiun da CHF\u00a0{amount}.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
+      gebuehrenSatz: 'Jau contest las taxas d’admoniziun resp. d’incasso pretendidas da CHF\u00a0{amount}.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       zahlungForderung: 'La pretensiun sezza inclus il tschains da retard paj jau; mes pajament na pertutga betg las taxas contestadas.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       grund: { // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
         unklar: 'Ella n’è betg chapaivla per mai. Jau As prej da ma trametter ina glista detagliada ed ils documents, sin ils quals la pretensiun sa basa.',
@@ -6132,8 +6132,8 @@ export default {
       },
       subject: 'Dumonda da pajament en ratas — quint nr. {number}', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
-      body1: 'jau hai retschavì Vossa admoniziun concernent il quint nr. {number}. La pretensiun principala da CHF {amount} na poss jau actualmain betg pajar en ina giada.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
-      body2: 'Jau As propon da la pajar en ratas mensilas da CHF {rate}, l’emprima giada ils {date}.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
+      body1: 'jau hai retschavì Vossa admoniziun concernent il quint nr. {number}. La pretensiun principala da CHF\u00a0{amount} na poss jau actualmain betg pajar en ina giada.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
+      body2: 'Jau As propon da la pajar en ratas mensilas da CHF\u00a0{rate}, l’emprima giada ils {date}.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       body3: 'Jau As prej da ma confermar questa proposta en scrit. Uschè ditg che jau paj las ratas sco concordà, As prej jau da renunziar ad ulteriuras admoniziuns e taxas sco er ad ina scussiun.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
       legalNote: 'Ina dumonda da ratas è ina proposta; valaivel è quai ch’il creditur conferma. Mintga pajament parzial vala sco renconuschientscha da la pretensiun (OR art. 135 cifra 1); er la dumonda po vegnir valitada uschia. Quest model è in agid d’orientaziun, betg cussegl giuridic.', // TODO(rm): provisorisch — Gegenlese (Mahnung-Briefe, 28.09.2026)
@@ -6265,34 +6265,34 @@ export default {
     eher: 'Plitost {franchise}',
     passt: 'Va bain',
     // TODO(rm): provisorisch — Gegenlese (F8-R1, 05.11.2026), ganzer Franchise-Block
-    franchiseSub: 'La franchisa auta vala la paina fin var CHF {breakeven} custs da sanadad per onn · ella spargna var CHF {saving}/onn premias · premias {jahr}',
+    franchiseSub: 'La franchisa auta vala la paina fin var CHF\u00a0{breakeven} custs da sanadad per onn · ella spargna var CHF\u00a0{saving}/onn premias · premias {jahr}',
     franchiseOhne: 'Cun cassa e numer postal calculescha l’app fin tar tge custs da sanadad che la franchisa auta vala la paina.',
     wechsel: 'Midar la cassa da malsauns',
     kuendigung: 'Arrivada tar la cassa fin ils {datum}',
     wechselSub: 'Ina franchisa pli auta vala dal cumenzament da l’onn, ina pli bassa cun il medem termin da disditga (OAMal art. 94)',
-    ipvBetrag: 'var CHF {betrag} / mais',
+    ipvBetrag: 'var CHF\u00a0{betrag} / mais',
     ipvKein: 'Probablamain nagin dretg',
     ipvPruefen: 'verifitgar',
     kosten: 'Custs da sanadad (LAMal)',
-    kostenSub: 'Quints medicals {jahr}: pajà CHF {bezahlt} · betg pajà CHF {offen}',
+    kostenSub: 'Quints medicals {jahr}: pajà CHF\u00a0{bezahlt} · betg pajà CHF\u00a0{offen}',
     kostenLeer: 'Anc nagins mussaments registrads',
     kvgSub: 'Prestaziuns, participaziun als custs, franchisa',
     vorsorge: 'Prevenziun per la vegliadetgna',
-    pkGuthaben: 'Avair tenor certificat da la cassa da pensiun CHF {betrag}',
+    pkGuthaben: 'Avair tenor certificat da la cassa da pensiun CHF\u00a0{betrag}',
     vorsorgeSub: 'AVS & cassa da pensiun · tge che vegn en la vegliadetgna',
     zeilenAria: 'Assicuranzas en detagl',
-    breakEven: 'Franchisa auta vala la paina fin var CHF {breakeven} custs da sanadad per onn',
+    breakEven: 'Franchisa auta vala la paina fin var CHF\u00a0{breakeven} custs da sanadad per onn',
     regional: 'Premia regiunala vs. Svizra',
     vergleich: 'Cumparegliaziun da premias e protecziun d’accidents',
     // TODO(rm): provisorisch — Gegenlese (F8-R1, 05.11.2026)
-    referenz: 'Tariffa standard da la cassa CHF {betrag}/mt.',
+    referenz: 'Tariffa standard da la cassa CHF\u00a0{betrag}/mt.',
     kassenZahl: '{n} cassas',
     alleKassen: 'Mussar tut las {n} cassas',
     wenigerKassen: 'Mo las tschintg las pli bunmartgadas',
     zusatzSub: 'Proceder',
     scanner: 'Scannar la carta d’assicuranza',
     schluss: { sie: 'Tut las valurs èn agids d’orientaziun. Per infurmaziuns liantas As drizzai a Vossa assicuranza.', du: 'Tut las valurs èn agids d’orientaziun. Per infurmaziuns liantas drizza ta a tia assicuranza.' },
-    ipvVerfuegt: 'CHF {betrag} / mais tenor decisiun',
+    ipvVerfuegt: 'CHF\u00a0{betrag} / mais tenor decisiun',
     ipvVerfuegtSub: 'Decisiun registrada',
     ipvSchaetzung: 'Stima per {jahr} — il chantun decida.',
     ipvFrist: 'Termin scadì',
@@ -6303,18 +6303,18 @@ export default {
     franchiseChangeWhen: 'Ina franchisa pli auta vala pir a partir dal 1. da schaner; il termin fixescha la cassa en sias condiziuns. Ina franchisa pli bassa è pussaivla mo per la fin da l\'onn, cun ils medems termins sco ina midada da cassa: suenter la communicaziun da la nova prima sto la dumonda entrar tar la cassa fin ils 30 da november. Funtauna: [[LAMal art. 7 al. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]], [[OAMal art. 94 al. 1 e 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_94]].',
     franchiseOptTitle: 'Vala ina franchisa pli auta la paina?',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    franchiseOptSaving: { sie: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnais Vus var CHF {saving}/onn da premias.', du: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnas ti var CHF {saving}/onn da premias.' },
+    franchiseOptSaving: { sie: 'Cun ina franchisa da CHF\u00a0{high} enstagl CHF\u00a0{low} spargnais Vus var CHF\u00a0{saving}/onn da premias.', du: 'Cun ina franchisa da CHF\u00a0{high} enstagl CHF\u00a0{low} spargnas ti var CHF\u00a0{saving}/onn da premias.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    franchiseOptReserve: { sie: 'En picada portais Vus en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Per ina dimora en l’ospital vegnan vitiers CHF 15 per di, senza limita; uffants, giuvens creschids en scolaziun e dunnas en cas da maternitad na pajan betg questa contribuziun (KVG Art. 64 Abs. 5, KVV Art. 104). Quest cussin stuessas Vus pudair metter da maun.', du: 'En picada portas ti en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Per ina dimora en l’ospital vegnan vitiers CHF 15 per di, senza limita; uffants, giuvens creschids en scolaziun e dunnas en cas da maternitad na pajan betg questa contribuziun (KVG Art. 64 Abs. 5, KVV Art. 104). Quest cussin stuessas ti pudair metter da maun.' },
+    franchiseOptReserve: { sie: 'En picada portais Vus en in onn nausch enfin CHF\u00a0{reserve} sez (franchisa + quota-part max. CHF\u00a0{sb}). Per ina dimora en l’ospital vegnan vitiers CHF\u00a015 per di, senza limita; uffants, giuvens creschids en scolaziun e dunnas en cas da maternitad na pajan betg questa contribuziun (KVG Art. 64 Abs. 5, KVV Art. 104). Quest cussin stuessas Vus pudair metter da maun.', du: 'En picada portas ti en in onn nausch enfin CHF\u00a0{reserve} sez (franchisa + quota-part max. CHF\u00a0{sb}). Per ina dimora en l’ospital vegnan vitiers CHF\u00a015 per di, senza limita; uffants, giuvens creschids en scolaziun e dunnas en cas da maternitad na pajan betg questa contribuziun (KVG Art. 64 Abs. 5, KVV Art. 104). Quest cussin stuessas ti pudair metter da maun.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    franchiseOptBreakeven: { sie: 'La franchisa pli auta vala la paina, uschelunga Voss cuosts da sanadad restan sut var CHF {breakeven}/onn.', du: 'La franchisa pli auta vala la paina, uschelunga tes cuosts da sanadad restan sut var CHF {breakeven}/onn.' },
+    franchiseOptBreakeven: { sie: 'La franchisa pli auta vala la paina, uschelunga Voss cuosts da sanadad restan sut var CHF\u00a0{breakeven}/onn.', du: 'La franchisa pli auta vala la paina, uschelunga tes cuosts da sanadad restan sut var CHF\u00a0{breakeven}/onn.' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     tachoBreakeven: 'Punct da midada',
     tachoLegendHigh: 'franchisa auta pli favuraivla',
     tachoLegendLow: 'franchisa bassa pli favuraivla',
     // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
-    tachoReadoutBelow: { sie: 'Fin ussa CHF {costs} quest onn. Sch’ils custs restan sut CHF {be}, è la franchisa auta (CHF {high}) pli favuraivla.', du: 'Fin ussa CHF {costs} quest onn. Sch’ils custs restan sut CHF {be}, è la franchisa auta (CHF {high}) pli favuraivla.' },
-    tachoReadoutAbove: 'Fin ussa CHF {costs} quest onn — dapli che CHF {be}. Quest onn fiss la franchisa bassa (CHF {low}) stada pli favuraivla.',
+    tachoReadoutBelow: { sie: 'Fin ussa CHF\u00a0{costs} quest onn. Sch’ils custs restan sut CHF\u00a0{be}, è la franchisa auta (CHF\u00a0{high}) pli favuraivla.', du: 'Fin ussa CHF\u00a0{costs} quest onn. Sch’ils custs restan sut CHF\u00a0{be}, è la franchisa auta (CHF\u00a0{high}) pli favuraivla.' },
+    tachoReadoutAbove: 'Fin ussa CHF\u00a0{costs} quest onn — dapli che CHF\u00a0{be}. Quest onn fiss la franchisa bassa (CHF\u00a0{low}) stada pli favuraivla.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     tachoOrientation: { sie: 'Uschespert che Vus registrais ils custs da sanadad, mussa la sajetta nua che Vus essas quest onn.', du: 'Uschespert che ti registreschas ils custs da sanadad, mussa la sajetta nua che ti es quest onn.' },
     tachoTrackLink: 'Registrar ils custs da sanadad',
@@ -6330,44 +6330,44 @@ export default {
     kreuzAriaEigen: { sie: 'Vossa franchisa actuala da {franchise} è marcada sco terza lingia.', du: 'Tia franchisa actuala da {franchise} è marcada sco terza lingia.' },
     kreuzBisher: 'fin ussa',
     kreuzHochrechnung: 'Projecziun',
-    kreuzHochrechnungText: 'Projectà sin l’entir onn fissan quai radund CHF {value} — ina stimaziun grossa: custs da sanadad vegnan savens irregularmain.',
+    kreuzHochrechnungText: 'Projectà sin l’entir onn fissan quai radund CHF\u00a0{value} — ina stimaziun grossa: custs da sanadad vegnan savens irregularmain.',
     kreuzOrientation: { sie: 'Uschespert che Vus registrais custs da sanadad, mussa ina strivla, nua che Vus stais en l’onn.', du: 'Uschespert che ti registreschas custs da sanadad, mussa ina strivla, nua che ti stas en l’onn.' },
-    kreuzTooltip: 'Tar CHF {c}: franchisa {low} ≈ CHF {tief} · franchisa {high} ≈ CHF {hoch}',
-    kreuzAria: 'Custs totals per onn per la franchisa {low} e {high}; las lingias sa cruschan tar CHF {be}, sutvart è la franchisa auta pli bunmartgada.',
+    kreuzTooltip: 'Tar CHF\u00a0{c}: franchisa {low} ≈ CHF\u00a0{tief} · franchisa {high} ≈ CHF\u00a0{hoch}',
+    kreuzAria: 'Custs totals per onn per la franchisa {low} e {high}; las lingias sa cruschan tar CHF\u00a0{be}, sutvart è la franchisa auta pli bunmartgada.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    reserveCheck_strong: { sie: 'Vossa reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per Vus.', du: 'Tia reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per tai.' },
+    reserveCheck_strong: { sie: 'Vossa reserva (CHF\u00a0{savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per Vus.', du: 'Tia reserva (CHF\u00a0{savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per tai.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    reserveCheck_ok: { sie: 'Vossa reserva (CHF {savings}) cuvra il cas il pli mal ina giada. In cussin per dus onns (CHF {ideal}) fiss anc pli serain.', du: 'Tia reserva (CHF {savings}) cuvra il cas il pli mal ina giada. In cussin per dus onns (CHF {ideal}) fiss anc pli serain.' },
+    reserveCheck_ok: { sie: 'Vossa reserva (CHF\u00a0{savings}) cuvra il cas il pli mal ina giada. In cussin per dus onns (CHF\u00a0{ideal}) fiss anc pli serain.', du: 'Tia reserva (CHF\u00a0{savings}) cuvra il cas il pli mal ina giada. In cussin per dus onns (CHF\u00a0{ideal}) fiss anc pli serain.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    reserveCheck_low: { sie: "Vossa reserva (CHF {savings}) è sut il cas il pli mal (CHF {need}). Ina franchisa pli bassa As dat dapli segirezza fin ch'il cussin è là.", du: "Tia reserva (CHF {savings}) è sut il cas il pli mal (CHF {need}). Ina franchisa pli bassa ta dat dapli segirezza fin ch'il cussin è là." },
-    reserveCheck_none: { sie: 'Avant che tscherner la franchisa pli auta: mettai sin vart var CHF {need} sco reserva — idealmain il dubel (CHF {ideal}), per pudair purtar il cas il pli mal era dus giadas.', du: 'Avant che tscherner la franchisa pli auta: metta sin vart var CHF {need} sco reserva — idealmain il dubel (CHF {ideal}), per pudair purtar il cas il pli mal era dus giadas.' },
+    reserveCheck_low: { sie: "Vossa reserva (CHF\u00a0{savings}) è sut il cas il pli mal (CHF\u00a0{need}). Ina franchisa pli bassa As dat dapli segirezza fin ch'il cussin è là.", du: "Tia reserva (CHF\u00a0{savings}) è sut il cas il pli mal (CHF\u00a0{need}). Ina franchisa pli bassa ta dat dapli segirezza fin ch'il cussin è là." },
+    reserveCheck_none: { sie: 'Avant che tscherner la franchisa pli auta: mettai sin vart var CHF\u00a0{need} sco reserva — idealmain il dubel (CHF\u00a0{ideal}), per pudair purtar il cas il pli mal era dus giadas.', du: 'Avant che tscherner la franchisa pli auta: metta sin vart var CHF\u00a0{need} sco reserva — idealmain il dubel (CHF\u00a0{ideal}), per pudair purtar il cas il pli mal era dus giadas.' },
     reserveCheckLink: 'Reserva en il chapitel «Finanzas & daners»',
-    franchiseOptSource: 'Funtauna: [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · quota-part 10% / max. CHF 700 (creschids), CHF 350 (uffants).',
+    franchiseOptSource: 'Funtauna: [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · quota-part 10% / max. CHF\u00a0700 (creschids), CHF\u00a0350 (uffants).',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     pickFranchiseHint: { sie: 'Tutgai ina franchisa per cumparegliar las cassas a quel nivel.', du: 'Tutgia ina franchisa per cumparegliar las cassas a quel nivel.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    wunschkasseWaehlen: '{kasse}, {variante}, CHF {betrag}: tscherner sco cassa giavischada',
+    wunschkasseWaehlen: '{kasse}, {variante}, CHF\u00a0{betrag}: tscherner sco cassa giavischada',
     chooseByPrice: { sie: 'Tutgai in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.', du: 'Tutgia in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.' },
     unfallLabel: 'Cuvrida d’accident',
     mitUnfall: 'Cun accident',
     ohneUnfall: 'Senza accident',
-    unfallSaving: 'Senza cuvrida d’accident: CHF {diff}/mais damain. Mo deselecziunar, sch’ina plazza d’almain 8 uras l’emna assicurescha er en il temp liber.',
+    unfallSaving: 'Senza cuvrida d’accident: CHF\u00a0{diff}/mais damain. Mo deselecziunar, sch’ina plazza d’almain 8 uras l’emna assicurescha er en il temp liber.',
     title: 'Survista da las assicuranzas',
     plzLabel: 'Numer postal',
     selectGemeinde: 'Pliras vischnancas — per plaschair tscherner:',
     plzNotFound: 'PLZ betg chattada en il register uffizial.',
     regionTitle: 'Regiun da premias',
     regionInfo: '{gemeinde} ({kanton}) — regiun da premias {region}',
-    avgPremium: 'Premia media {jahr}: Uffants CHF {kinder} · Giuvens CHF {junge} · Creschids CHF {erwachsene}',
+    avgPremium: 'Premia media {jahr}: Uffants CHF\u00a0{kinder} · Giuvens CHF\u00a0{junge} · Creschids CHF\u00a0{erwachsene}',
     noInsurer: 'Nagin assicurader deponì',
     noInsurerHint: { sie: 'Endatai Vossa cassa da malsauns sut «Assicuranzas» per vesair Vossa premia da referenza.', du: 'Endatescha Tia cassa da malsauns sut «Assicuranzas» per vesair Tia premia da referenza.' },
     insurerNotFound: '«{name}» betg enconuschent',
     insurerNotFoundHint: { sie: "Il num n'ha betg pudì vegnir attribuì ad in assicurader autorisà. Controllai la scripziun.", du: "Il num n'ha betg pudì vegnir attribuì ad in assicurader autorisà. Controllescha la scripziun." },
     comparison: 'Cumparegliaziun da premias',
-    yourPremium: { sie: 'Vossa premia: CHF {amount}/mt.', du: 'Tia premia: CHF {amount}/mt.' },
-    refPremium: 'Tariffa standard da la cassa (franschischa {franchise}): CHF {amount}/mt.',
-    premiumAbove: { sie: 'Vossa premia è CHF {diff} sur la referenza. Examinai models alternativs.', du: 'Tia premia è CHF {diff} sur la referenza. Examinescha models alternativs.' },
-    premiumBelow: { sie: 'Vossa premia è CHF {diff} sut la referenza.', du: 'Tia premia è CHF {diff} sut la referenza.' },
+    yourPremium: { sie: 'Vossa premia: CHF\u00a0{amount}/mt.', du: 'Tia premia: CHF\u00a0{amount}/mt.' },
+    refPremium: 'Tariffa standard da la cassa (franschischa {franchise}): CHF\u00a0{amount}/mt.',
+    premiumAbove: { sie: 'Vossa premia è CHF\u00a0{diff} sur la referenza. Examinai models alternativs.', du: 'Tia premia è CHF\u00a0{diff} sur la referenza. Examinescha models alternativs.' },
+    premiumBelow: { sie: 'Vossa premia è CHF\u00a0{diff} sut la referenza.', du: 'Tia premia è CHF\u00a0{diff} sut la referenza.' },
     franchiseTable: 'Premias da referenza {insurer} (model standard)',
     thFranchise: 'Franschischa',
     thPremium: 'Premia/mt.',
@@ -6376,7 +6376,7 @@ export default {
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     allInsurersTitle: 'Alle Kassen vergleichen',
     // TODO(rm): provisorisch — deutscher Rückfall auf aktuellen de-Stand gezogen (vorher veraltet, 16.11.2026)
-    compareFranchiseNote: "Monatsprämien bei Franchise CHF {franchise} — günstigste zuerst. Für Details eine Kasse antippen.",
+    compareFranchiseNote: "Monatsprämien bei Franchise CHF\u00a0{franchise} — günstigste zuerst. Für Details eine Kasse antippen.",
     // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
     wechselzeit: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Für einen Kassenwechsel muss die Kündigung spätestens am {datum} bei der Kasse eingehen.',
     // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
@@ -6399,25 +6399,25 @@ export default {
     disclaimer: { sie: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Voss assicurader.", du: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Tes assicurader." },
     regionalCompare: {
       national: 'Media svizra',
-      nationalVal: 'Media svizra: CHF {amount}',
-      regionalVal: { sie: 'Vossa regiun: CHF {amount}', du: 'Tia regiun: CHF {amount}' },
-      above: 'circa {pct} % sur la media svizra',
-      below: 'circa {pct} % sut la media svizra',
+      nationalVal: 'Media svizra: CHF\u00a0{amount}',
+      regionalVal: { sie: 'Vossa regiun: CHF\u00a0{amount}', du: 'Tia regiun: CHF\u00a0{amount}' },
+      above: 'circa {pct}\u202f% sur la media svizra',
+      below: 'circa {pct}\u202f% sut la media svizra',
       equal: 'circa en la media svizra',
       // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-      regionAbove: { sie: 'Vossa regiun è circa {pct} % sur la media svizra.', du: 'Tia regiun è circa {pct} % sur la media svizra.' },
+      regionAbove: { sie: 'Vossa regiun è circa {pct}\u202f% sur la media svizra.', du: 'Tia regiun è circa {pct}\u202f% sur la media svizra.' },
       // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-      regionBelow: { sie: 'Vossa regiun è circa {pct} % sut la media svizra.', du: 'Tia regiun è circa {pct} % sut la media svizra.' },
+      regionBelow: { sie: 'Vossa regiun è circa {pct}\u202f% sut la media svizra.', du: 'Tia regiun è circa {pct}\u202f% sut la media svizra.' },
       // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
       regionEqual: { sie: 'Vossa regiun è circa en la media svizra.', du: 'Tia regiun è circa en la media svizra.' },
-      aria: { sie: 'Vossa regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.', du: 'Tia regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.' },
+      aria: { sie: 'Vossa regiun: CHF\u00a0{regional} per mais, media svizra: CHF\u00a0{national}. {diff}.', du: 'Tia regiun: CHF\u00a0{regional} per mais, media svizra: CHF\u00a0{national}. {diff}.' },
       premium: {
         title: 'Premia regiunala vs. Svizra',
-        yourVal: { sie: 'Vossa premia: CHF {amount}', du: 'Tia premia: CHF {amount}' },
+        yourVal: { sie: 'Vossa premia: CHF\u00a0{amount}', du: 'Tia premia: CHF\u00a0{amount}' },
         // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-        userAbove: { sie: 'Vossa premia è circa {pct} % sur la media da Vossa regiun.', du: 'Tia premia è circa {pct} % sur la media da tia regiun.' },
+        userAbove: { sie: 'Vossa premia è circa {pct}\u202f% sur la media da Vossa regiun.', du: 'Tia premia è circa {pct}\u202f% sur la media da tia regiun.' },
         // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-        userBelow: { sie: 'Vossa premia è circa {pct} % sut la media da Vossa regiun.', du: 'Tia premia è circa {pct} % sut la media da tia regiun.' },
+        userBelow: { sie: 'Vossa premia è circa {pct}\u202f% sut la media da Vossa regiun.', du: 'Tia premia è circa {pct}\u202f% sut la media da tia regiun.' },
         // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
         userEqual: { sie: 'Vossa premia è circa en la media da Vossa regiun.', du: 'Tia premia è circa en la media da tia regiun.' },
         structural: 'Quai è surtut structural — regiuns cun pli blers medis ed ospitals pli chars han premias pli autas. Midar la cassa permetta da spargnar mo entaifer la regiun.',
@@ -6425,11 +6425,11 @@ export default {
       },
       rent: {
         title: 'Fittanza regiunala vs. Svizra',
-        yourVal: { sie: 'Vossa fittanza: CHF {amount}', du: 'Tia fittanza: CHF {amount}' },
+        yourVal: { sie: 'Vossa fittanza: CHF\u00a0{amount}', du: 'Tia fittanza: CHF\u00a0{amount}' },
         // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-        userAbove: { sie: 'Vossa fittanza è circa {pct} % sur la media da Vossa regiun.', du: 'Tia fittanza è circa {pct} % sur la media da tia regiun.' },
+        userAbove: { sie: 'Vossa fittanza è circa {pct}\u202f% sur la media da Vossa regiun.', du: 'Tia fittanza è circa {pct}\u202f% sur la media da tia regiun.' },
         // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-        userBelow: { sie: 'Vossa fittanza è circa {pct} % sut la media da Vossa regiun.', du: 'Tia fittanza è circa {pct} % sut la media da tia regiun.' },
+        userBelow: { sie: 'Vossa fittanza è circa {pct}\u202f% sut la media da Vossa regiun.', du: 'Tia fittanza è circa {pct}\u202f% sut la media da tia regiun.' },
         // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
         userEqual: { sie: 'Vossa fittanza è circa en la media da Vossa regiun.', du: 'Tia fittanza è circa en la media da tia regiun.' },
         structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
@@ -6495,9 +6495,9 @@ export default {
     art: 'Gener d’entrada',
     netto: 'net',
     brutto: 'brut',
-    nettoGeschaetzt: '≈ net CHF {value} (stimà)',
-    bruttoGeschaetzt: '≈ brut CHF {value} (stimà)',
-    rentenEingerechnet: 'Las rentas dal profil (AVS, AI, cassa da pensiun) èn gia quintadas: CHF {value} per mais. Endatar qua l’entrada principala (paga, daners da di, activitad independenta), senza questas rentas e senza indicaziuns che stattan gia en il profil.', // TODO(rm)
+    nettoGeschaetzt: '≈ net CHF\u00a0{value} (stimà)',
+    bruttoGeschaetzt: '≈ brut CHF\u00a0{value} (stimà)',
+    rentenEingerechnet: 'Las rentas dal profil (AVS, AI, cassa da pensiun) èn gia quintadas: CHF\u00a0{value} per mais. Endatar qua l’entrada principala (paga, daners da di, activitad independenta), senza questas rentas e senza indicaziuns che stattan gia en il profil.', // TODO(rm)
     renteImLohn: 'L’import qua è uschè aut sco ina renta en il profil. Sch’i sa tracta da la medema renta, stizzar qua, uschiglio quinta ella duas giadas.', // TODO(rm)
     knapp: 'Stretg — la stimaziun quinta senza AINP ed senza taglia a la funtauna; controllar cun la paja netta exacta.',
   },
@@ -6538,17 +6538,17 @@ export default {
     wohnform: "Co vegn manada l'economia da chasa?",
     wohnformFamilienaehnlich: 'Communablamain — p.ex. concubinat u famiglia',
     wohnformZweckWg: "Separadamain — mintga persuna maina sia atgna economia da chasa (cuminanza d'abitar)",
-    wohnformHint: "Manada communablamain: basegn da basa sco part da l'entira economia da chasa. Cuminanza d'abitar manada separadamain: basegn da basa da las persunas sustegnidas main 10 %. Per regla quinta il servetsch social cun «communablamain», l'economia separada sto vegnir cumprovada — la pratica è differenta da chantun a chantun.",
+    wohnformHint: "Manada communablamain: basegn da basa sco part da l'entira economia da chasa. Cuminanza d'abitar manada separadamain: basegn da basa da las persunas sustegnidas main 10\u202f%. Per regla quinta il servetsch social cun «communablamain», l'economia separada sto vegnir cumprovada — la pratica è differenta da chantun a chantun.",
     mieteAnteilHint: "En in'economia da chasa partida endatar mo l'atgna part da la pigiun e dals custs accessorics.",
     mieteAnteilProfilHint: "Dal profil: tschains e custs accessorics, repartids en parts eguals sin tut las persunas en il tegnairchasa. Qua libramain adattabel.", // TODO(rm): provisorisch
     gblAnteil: 'part {einheit} da {haushalt} pers.',
-    gblZweckWg: "{einheit} pers., cuminanza d'abitar −10 %",
+    gblZweckWg: "{einheit} pers., cuminanza d'abitar −10\u202f%",
     andereEinkuenfte: 'Autras entradas (CHF)',
     andereEinkuenfteHint: 'Rentas, daners da di, supplements per uffants, pensiun alimentara, stipendis', // TODO(rm)
     vermoegen: 'Facultad (CHF)',
     erwerbstaetig: 'Activ',
     integration: "Mesira d'integraziun",
-    integrationHint: "p.ex. lavur voluntara regulara, programs u stages — supplement CHF 100–300/mais, tenor il giudizi da l'autoritad sociala.",
+    integrationHint: "p.ex. lavur voluntara regulara, programs u stages — supplement CHF\u00a0100–300/mais, tenor il giudizi da l'autoritad sociala.",
     anspruch: "Dretg d'agid social",
     monat: 'Mais',
     keinAnspruch: 'Probablamain nagin dretg',
@@ -6639,7 +6639,7 @@ export default {
     mammografieSynthese: { sie: 'L’assicuranza da basa cuvra quest ritmus. Sche Voss chantun da domicil ha in program organisà cun invit persunal, variescha — guardai sutvart.', du: 'L’assicuranza da basa cuvra quest ritmus. Sche tes chantun da domicil ha in program organisà cun invit persunal, variescha — guarda sutvart.' },
     mammografieQuelle: 'Funtaunas: OMS · UE (ECIBC) · Lia svizra cunter il cancer.',
     mammoGeoTitle: 'Program organisà — tut tenor il chantun',
-    mammoGeoNote: 'Betg dapertut envida il chantun per brev a la mammografia. En in program organisà surpiglia l’assicuranza da basa ils custs senza franchisa — resta mo la participaziun da 10 %. Nua ch’i n’exista nagin program, s’organisescha la prevenziun sez (suenter ina prescripziun medicinala); lura vegn incassada la franchisa.',
+    mammoGeoNote: 'Betg dapertut envida il chantun per brev a la mammografia. En in program organisà surpiglia l’assicuranza da basa ils custs senza franchisa — resta mo la participaziun da 10\u202f%. Nua ch’i n’exista nagin program, s’organisescha la prevenziun sez (suenter ina prescripziun medicinala); lura vegn incassada la franchisa.',
     mammoGeoYourCantonNo: 'En quest chantun ({canton}) n’exista actualmain nagin program organisà.',
     mammoGeoOhne: 'Senza program organisà (stan {stand}):',
     mammoGeoWandel: 'La situaziun sa mida cuntinuadamain — singuls chantuns introduceschan novs programs.',
@@ -6658,7 +6658,7 @@ export default {
     impfBag: "Tenor il plan da vaccinaziun da l'UFSP",
     impfungenDetail1: 'Vaccinaziuns da basa (uffants): difteria, tetanus, tuss chanina, poliomielitis, Hib, hepatitis B, pneumococs, ravglia-uraglias-rubeola, meningococs e varikellas.',
     impfungenDetail2: 'Giuvenils: HPV (11–14 onns, recuperaziun fin 26) e revaccinaziun dTpa. Creschids: revaccinaziuns regularas cunter difteria/tetanus (tuss chanina ina giada cun 25).',
-    impfungenDetail3: "Dapi il 2026 surpiglia l’assicuranza da basa las vaccinaziuns recumandadas senza franchisa; la participaziun da 10 % resta. HPV mo en il program chantunal. Vaccinaziuns da viadi u professiunalas na surpiglia ella betg.",
+    impfungenDetail3: "Dapi il 2026 surpiglia l’assicuranza da basa las vaccinaziuns recumandadas senza franchisa; la participaziun da 10\u202f% resta. HPV mo en il program chantunal. Vaccinaziuns da viadi u professiunalas na surpiglia ella betg.",
     // TODO(rm): provisorisch — Gegenlese (Quelle an de angeglichen, 16.11.2026)
     impfungenDetailQuelle: 'Funtauna: document da referenza «Vaccinaziuns profilacticas» da l’UFSP, versiun dals 1. fanadur 2026 (KLV Art. 12a).',
     checkup: 'Check-up general',
@@ -6685,7 +6685,7 @@ export default {
     nichtSlMedi: 'Medicaments (betg sin SL)',
     nichtSlMediNote: 'Medicaments betg sin la glista SL na vegnan betg rembursads.',
     generika: 'Generica',
-    // KLV Art. 38a (dapi 1.1.2024: 40 % empè da 20 %), funtauna vesair de.js, consultà 15.09.2026
+    // KLV Art. 38a (dapi 1.1.2024: 40\u202f% empè da 20\u202f%), funtauna vesair de.js, consultà 15.09.2026
     generikaNote: 'Cupids, savens cun parteniment pli bass (10% empè da 40%).',
     generikaBonus: 'Parteniment pli bass pussaivel',
     spitalAllg: 'Clinica (secziun generala)',
@@ -6723,15 +6723,15 @@ export default {
     homoeoDurchNote: "Mo tar ina medica u in medi cun furmaziun supplementara tenor il program da qualificaziun da l’ISFM (KLV Art. 4b).",
     aerztlich: 'Mo tras medi FMH',
     brille: 'Egliers / lentillas da contact',
-    brilleNote: 'Uffants fin 18 o.: CHF 180/onn. Creschids: betg cupì dapi 2011.',
+    brilleNote: 'Uffants fin 18 o.: CHF\u00a0180/onn. Creschids: betg cupì dapi 2011.',
     brilleKinder: 'Mo uffants fin 18 o.',
     hoergeraet: 'Apparat acustic',
     hoergeraetNote: 'Contribuziun cun ordinaziun medicinala e garanzia da custs.',
     transport: 'Transport da malsauns',
-    transportNote: '50% dals custs, max. CHF 500/onn.',
-    transport50: '50%, max. CHF 500/onn',
-    transportDetail1: 'Transport medicinal (necessari sche nagin auter med n’è pussaivel): 50% dals custs, fin CHF 500 per onn.',
-    transportDetail2: 'Salvament e recauverta en Svizra: 50% dals custs, fin CHF 5000 per onn.',
+    transportNote: '50% dals custs, max. CHF\u00a0500/onn.',
+    transport50: '50%, max. CHF\u00a0500/onn',
+    transportDetail1: 'Transport medicinal (necessari sche nagin auter med n’è pussaivel): 50% dals custs, fin CHF\u00a0500 per onn.',
+    transportDetail2: 'Salvament e recauverta en Svizra: 50% dals custs, fin CHF\u00a05000 per onn.',
     transportDetail3: 'La part restanta vegn savens cuverta dad ina assicuranza cumplementara u dad ina patrunadi da la Rega.',
     transportDetailQuelle: 'Funtauna: LAMal / OPre art. 26–27.',
     ausland: "Tractament a l'exteriur",
@@ -6748,7 +6748,7 @@ export default {
     spitexNote: 'Prestaziuns da tgira cun ordinaziun medicinala.',
     franchiseTitle: 'Franschisa & parteniment',
     // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
-    franchiseExplain: { sie: "La franschisa pajais Vus per regla mintga onn l’emprim sez. Suenter pajais Vus 10 % dals custs sco parteniment, il pli CHF 700 per onn, per uffants CHF 350 (KVG Art. 64, KVV Art. 103); per tscherts medicaments èn quai 40 % (KLV Art. 38a). Nagin parteniment als custs na datti per exempel per las prestaziuns da maternitad (controllas, naschientscha, cussegliaziun per tettar) e, da la 13. emna da gravidanza fin otg emnas suenter la naschientscha, er betg per autras cuntinuaziuns (KVG Art. 64 al. 7).", du: "La franschisa pajas ti per regla mintga onn l’emprim sez. Suenter pajas ti 10 % dals custs sco parteniment, il pli CHF 700 per onn, per uffants CHF 350 (KVG Art. 64, KVV Art. 103); per tscherts medicaments èn quai 40 % (KLV Art. 38a). Nagin parteniment als custs na datti per exempel per las prestaziuns da maternitad (controllas, naschientscha, cussegliaziun per tettar) e, da la 13. emna da gravidanza fin otg emnas suenter la naschientscha, er betg per autras cuntinuaziuns (KVG Art. 64 al. 7)." },
+    franchiseExplain: { sie: "La franschisa pajais Vus per regla mintga onn l’emprim sez. Suenter pajais Vus 10\u202f% dals custs sco parteniment, il pli CHF\u00a0700 per onn, per uffants CHF\u00a0350 (KVG Art. 64, KVV Art. 103); per tscherts medicaments èn quai 40\u202f% (KLV Art. 38a). Nagin parteniment als custs na datti per exempel per las prestaziuns da maternitad (controllas, naschientscha, cussegliaziun per tettar) e, da la 13. emna da gravidanza fin otg emnas suenter la naschientscha, er betg per autras cuntinuaziuns (KVG Art. 64 al. 7).", du: "La franschisa pajas ti per regla mintga onn l’emprim sez. Suenter pajas ti 10\u202f% dals custs sco parteniment, il pli CHF\u00a0700 per onn, per uffants CHF\u00a0350 (KVG Art. 64, KVV Art. 103); per tscherts medicaments èn quai 40\u202f% (KLV Art. 38a). Nagin parteniment als custs na datti per exempel per las prestaziuns da maternitad (controllas, naschientscha, cussegliaziun per tettar) e, da la 13. emna da gravidanza fin otg emnas suenter la naschientscha, er betg per autras cuntinuaziuns (KVG Art. 64 al. 7)." },
     // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     personLabel: 'Versicherte Person',
     // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
@@ -6767,16 +6767,16 @@ export default {
     kasseZahlt: 'La cassa paja',
     eigenanteil: { sie: 'Vossa part', du: 'Tia part' },
     // TODO(rm): provisorisch — Gegenlese (aus aktuellem de neu übertragen, vorher veraltet, 16.11.2026)
-    selbstbehaltDone: "Parteniment exhaustà — da qua davent paja la cassa ils ulteriurs custs da l’assicuranza da basa, cun excepziun da CHF 15 per di d’ospital (betg per uffants e creschids giuvens en furmaziun, KVV Art. 104).",
-    statusInFranchise: { sie: 'Anc en la franschisa: fin a CHF {offen} dapli pajais Vus tut sez — silsuenter cumenza il parteniment da 10%.', du: 'Anc en la franschisa: fin a CHF {offen} dapli pajas Ti tut sez — silsuenter cumenza il parteniment da 10%.' },
-    statusInSelbstbehalt: { sie: 'Franschisa cuntanschida. Dapi ussa pajais Vus 10% — anc CHF {sbOffen} fin al maximum dal parteniment.', du: 'Franschisa cuntanschida. Dapi ussa pajas Ti 10% — anc CHF {sbOffen} fin al maximum dal parteniment.' },
+    selbstbehaltDone: "Parteniment exhaustà — da qua davent paja la cassa ils ulteriurs custs da l’assicuranza da basa, cun excepziun da CHF\u00a015 per di d’ospital (betg per uffants e creschids giuvens en furmaziun, KVV Art. 104).",
+    statusInFranchise: { sie: 'Anc en la franschisa: fin a CHF\u00a0{offen} dapli pajais Vus tut sez — silsuenter cumenza il parteniment da 10%.', du: 'Anc en la franschisa: fin a CHF\u00a0{offen} dapli pajas Ti tut sez — silsuenter cumenza il parteniment da 10%.' },
+    statusInSelbstbehalt: { sie: 'Franschisa cuntanschida. Dapi ussa pajais Vus 10% — anc CHF\u00a0{sbOffen} fin al maximum dal parteniment.', du: 'Franschisa cuntanschida. Dapi ussa pajas Ti 10% — anc CHF\u00a0{sbOffen} fin al maximum dal parteniment.' },
     verbrauchSaved: 'Memorisà per {year}.',
     belegSection: 'Registrar in quint',
     belegHint: { sie: 'Mintga quint pajà quinta l\'emprim a Vossa franschisa, lura a Voss parteniment.', du: 'Mintga quint pajà quinta l\'emprim a Tia franschisa, lura a Tes parteniment.' },
     belegDatum: 'Data (facultativ)',
     belegBetrag: 'Import (CHF)',
     belegFromTp: 'Calcular dals puncts da tariffa',
-    belegTpResult: '= CHF {betrag}',
+    belegTpResult: '= CHF\u00a0{betrag}',
     belegTpApply: 'Surprender',
     belegAdd: 'Agiuntar quint',
     belegEmpty: { sie: 'Anc nagins quints — agiuntai l\'emprim.', du: 'Anc nagins quints — agiunta l\'emprim.' },
@@ -6887,8 +6887,8 @@ export default {
     },
     versicherungen: {
       insurerSentence: { sie: "Vus essas assicurà/ada tar {insurer} en l'assicuranza da basa.", du: "Ti es assicurà/ada tar {insurer} en l'assicuranza da basa." },
-      insurerAndFranchise: { sie: "Vus essas assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF {franchise}.", du: "Ti es assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF {franchise}." },
-      insurerFranchiseBvg: { sie: "Vus essas assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF {franchise}. Ina cassa da pensiun è deponida.", du: "Ti es assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF {franchise}. Ina cassa da pensiun è deponida." },
+      insurerAndFranchise: { sie: "Vus essas assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF\u00a0{franchise}.", du: "Ti es assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF\u00a0{franchise}." },
+      insurerFranchiseBvg: { sie: "Vus essas assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF\u00a0{franchise}. Ina cassa da pensiun è deponida.", du: "Ti es assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF\u00a0{franchise}. Ina cassa da pensiun è deponida." },
     },
     ausbildung: {
       jobSentence: 'Actualmain activ/a sco {job} tar {employer}.',
@@ -7206,18 +7206,18 @@ export default {
     basisBrutto: { sie: 'Premia da l’assicuranza da basa, messirada vi da Voss salari mensil brut, avant la reducziun da premias', du: 'Premia da l’assicuranza da basa, messirada vi da tes salari mensil brut, avant la reducziun da premias' },
     basisEinkommen: { sie: 'Premia da l’assicuranza da basa, messirada vi da Vossa entrada mensila, avant la reducziun da premias', du: 'Premia da l’assicuranza da basa, messirada vi da tia entrada mensila, avant la reducziun da premias' },
     basisOffen: { sie: 'Premia da l’assicuranza da basa, messirada vi da l’entrada mensila endatada, net u brut betg indicà, avant la reducziun da premias', du: 'Premia da l’assicuranza da basa, messirada vi da l’entrada mensila endatada, net u brut betg indicà, avant la reducziun da premias' },
-    marker: 'Marca da cumparegliaziun 10 %',
+    marker: 'Marca da cumparegliaziun 10\u202f%',
     zusatzkosten: 'Vitiers vegnan franchisa, part da quota e custs betg cuvrids.',
     kanton: 'I na dat nagina part maximala valaivla per tutta la Svizra. Mintga chantun sto la fixar, entaifer quatter onns a partir dal 1.1.2026, uschiglio fa quai il Cussegl federal. Ella sa referescha a l’entrada disponibla, betg a l’entrada endatada qua.',
     markeFrage: 'Tge munta la marca?',
-    markeAntwort: 'Ils 10 % n’èn ni in limit ni ina recumandaziun. L’OMS als numna sco in cunfin per expensas da sanadad or da l’agen satg, messiradas vi dal budget da la chasada. Premias na vegnan betg quintadas. Per l’indicatur 3.8.2 da l’ONU vala ussa in’autra mesira: 40 % dal budget suenter la deducziun d’in cunfin da povradad. La medema cifra steva en l’iniziativa per distgargiar las premias, refusada dal pievel e dals chantuns ils 9 da zercladur 2024. En il dretg federal n’è ella nagin maximum.',
+    markeAntwort: 'Ils 10\u202f% n’èn ni in limit ni ina recumandaziun. L’OMS als numna sco in cunfin per expensas da sanadad or da l’agen satg, messiradas vi dal budget da la chasada. Premias na vegnan betg quintadas. Per l’indicatur 3.8.2 da l’ONU vala ussa in’autra mesira: 40\u202f% dal budget suenter la deducziun d’in cunfin da povradad. La medema cifra steva en l’iniziativa per distgargiar las premias, refusada dal pievel e dals chantuns ils 9 da zercladur 2024. En il dretg federal n’è ella nagin maximum.',
     source: 'Funtaunas: [[OMS, indicatur 4845|https://www.who.int/data/gho/indicator-metadata-registry/imr-details/4845]] · [[ONU, metadatas SDG 3.8.2, versiun 27.03.2026|https://unstats.un.org/sdgs/metadata/files/Metadata-03-08-02.pdf]] · [[LAMal art. 65 al. 1ter e disposiziun transitorica da la midada dals 29.9.2023, versiun 1.7.2026|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_65]] · [[UFSP, iniziativa per distgargiar las premias|https://www.bag.admin.ch/de/volksinitiative-maximal-10-prozent-des-einkommens-fuer-die-krankenkassenpraemien-praemien-entlastungs-initiative]]',
     ipvLink: 'Verifitgar la reducziun da premias (IPV)',
-    ipvRelief: 'Cun la reducziun da premias: −CHF {ipv}/mais → effectivamain {share} % da l\'entrada.',
+    ipvRelief: 'Cun la reducziun da premias: −CHF\u00a0{ipv}/mais → effectivamain {share}\u202f% da l\'entrada.',
     ipvNoClaim: { sie: 'Tenor quest quint approximativ na resulta nagina reducziun da premias. Quai n’è betg ina decisiun: il post cumpetent da Voss chantun quinta cun atgnas cifras. Sche Vossa entrada è sa reducida u sche Vus essas malsegir, dumandai là. Tut tenor chantun vala in termin d’annunzia.', du: 'Tenor quest quint approximativ na resulta nagina reducziun da premias. Quai n’è betg ina decisiun: il post cumpetent da tes chantun quinta cun atgnas cifras. Sche tia entrada è sa reducida u sche ti es malsegir, dumonda là. Tut tenor chantun vala in termin d’annunzia.' },
     spiegelTitel: 'La cassa da malsauns en il budget',
-    spiegelSatz: 'CHF {praemie} da CHF {summe} assicuranzas van a l’assicuranza da basa.',
-    spiegelSatzAllein: 'CHF {praemie} van a l’assicuranza da basa.',
+    spiegelSatz: 'CHF\u00a0{praemie} da CHF\u00a0{summe} assicuranzas van a l’assicuranza da basa.',
+    spiegelSatzAllein: 'CHF\u00a0{praemie} van a l’assicuranza da basa.',
     spiegelLink: 'Context en Assicuranzas',
   },
   uvgHint: {
@@ -7238,15 +7238,15 @@ export default {
   wohnenInternational: {
     titel: 'Abitar ed energia',
     unter: 'Svizra cumparada cun …',
-    teurer: '{name}: en Svizra {pct} % pli char',
-    guenstiger: '{name}: en Svizra {pct} % pli bunmartg',
+    teurer: '{name}: en Svizra {pct}\u202f% pli char',
+    guenstiger: '{name}: en Svizra {pct}\u202f% pli bunmartg',
     namen: { EU: 'media UE', DE: 'Germania', AT: 'Austria', FR: 'Frantscha', IT: 'Italia' },
-    satz: "L'auzada «UE» è derivada: la media svizra al nivel dals pretschs per abitar ed energia da la media UE (electricitad, gas ed aua cumpigliads). I n'èn nagins pretschs mesirads. Pajais vischins: Germania {DE} %, Austria {AT} %, Frantscha {FR} %, Italia {IT} %.",
+    satz: "L'auzada «UE» è derivada: la media svizra al nivel dals pretschs per abitar ed energia da la media UE (electricitad, gas ed aua cumpigliads). I n'èn nagins pretschs mesirads. Pajais vischins: Germania {DE}\u202f%, Austria {AT}\u202f%, Frantscha {FR}\u202f%, Italia {IT}\u202f%.",
     quelle: 'Funtauna: [[Eurostat, nivel dals pretschs abitar ed energia 2025 (prc_ppp_ind_1)|https://ec.europa.eu/eurostat/databrowser/view/prc_ppp_ind_1/default/table]] (verifitgà en november 2026).',
   },
   mietzinsSzene: {
     titel: 'Contribuziuns al fitg',
-    beitragLegende: "puntignà: quai che il chantun pudess surpigliar al maximum, fin CHF {betrag} il mais. L'import effectiv quinta il chantun.",
+    beitragLegende: "puntignà: quai che il chantun pudess surpigliar al maximum, fin CHF\u00a0{betrag} il mais. L'import effectiv quinta il chantun.",
     schild: 'pussaivel',
     cta: 'pussaivel: verifitgar las contribuziuns al fitg',
     ctaStelle: 'pussaivel: al servetsch chantunal',
@@ -7674,7 +7674,7 @@ export default {
     // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
     ausgewiesen: 'Stat la Ferienentschädigung separadamain en il contract e sin il quint da salari?',
     // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
-    ausgewiesenHinweis: 'Per exempel sco atgna lingia «Ferienentschädigung 8,33 %».',
+    ausgewiesenHinweis: 'Per exempel sco atgna lingia «Ferienentschädigung 8,33\u202f%».',
     vertragZuWenig: 'Il contract numna main vacanzas che quai che tutga tar almain. Calculà vegn perquai cun {wochen} emnas (OR art. 329a al. 1).',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     // TODO(rm): provisorisch — Gegenlese (neu 18.10.2026, Folge-PR #492)
@@ -7701,7 +7701,7 @@ export default {
     lesartenHinweis: 'Tge lectura ch’è endretg, stat en il contract u sin il quint da salari. Fin che quai è cler, mussa Maloja omaduas.',
     zeile_grund: 'Salari da basa',
     // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
-    zeile_ferien: 'Ferienentschädigung {prozent} % ({wochen} emnas)',
+    zeile_ferien: 'Ferienentschädigung {prozent}\u202f% ({wochen} emnas)',
     zeile_feiertag: 'Supplement per dis da festa',
     zeile_dreizehnter: 'Part dal 13avel salari mensil',
     zeile_total: 'Total per ura',
@@ -7834,18 +7834,18 @@ export default {
     result_wfgNein: 'A Zug datti contribuziuns da fitg mo per abitaziuns tenor la lescha da promoziun d’abitaziuns — per questa abitaziun pia betg. Autras agids sco la reducziun da premias na dependan betg da quai.', // TODO(rm): provisorisch
     result_municipalLimit: 'Qua na datti nagin limit fix d’entradas: el vegn quintà per chasada (basegn da viver, premia da la cassa da malsauns, fitg, tgira d’uffants) e fixà da la vischnanca da domicil. Sch’i dat in dretg, scleresch la vischnanca.', // TODO(rm): provisorisch
     steuerbarTiefer: 'Il chantun cumpareglia las entradas taxablas da la davosa taxaziun — suenter las deducziuns èn ellas savens pli bassas ch’il salari net. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
-    massgebendTiefer: 'Il chantun quinta cun l’entrada decisiva suenter las deducziuns (plus 10 % da la facultad sur la franchisa) — ella è savens pli bassa ch’il salari. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
-    konkubinatPartner: 'L’entrada da la segunda persuna creschida n’è betg quintada: senza matrimoni quinta ella tenor il chantun pir suenter intgins onns da convivenza u cun uffants cuminaivels. Quintada, fiss l’entrada da la chasada CHF {mit} — sch’ella quinta, scleresch il servetsch chantunal.', // TODO(rm): provisorisch
-    konkubinatPartnerGrenze: 'L’entrada da la segunda persuna creschida n’è betg quintada ed il limit è quintà senza ella: senza matrimoni quinta ella a Basilea-Citad pir cun uffants cuminaivels u suenter tschintg onns da convivenza. Quintada, fiss l’entrada da la chasada CHF {mit} ed il limit var. CHF {grenze} — sch’ella quinta, scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
+    massgebendTiefer: 'Il chantun quinta cun l’entrada decisiva suenter las deducziuns (plus 10\u202f% da la facultad sur la franchisa) — ella è savens pli bassa ch’il salari. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
+    konkubinatPartner: 'L’entrada da la segunda persuna creschida n’è betg quintada: senza matrimoni quinta ella tenor il chantun pir suenter intgins onns da convivenza u cun uffants cuminaivels. Quintada, fiss l’entrada da la chasada CHF\u00a0{mit} — sch’ella quinta, scleresch il servetsch chantunal.', // TODO(rm): provisorisch
+    konkubinatPartnerGrenze: 'L’entrada da la segunda persuna creschida n’è betg quintada ed il limit è quintà senza ella: senza matrimoni quinta ella a Basilea-Citad pir cun uffants cuminaivels u suenter tschintg onns da convivenza. Quintada, fiss l’entrada da la chasada CHF\u00a0{mit} ed il limit var. CHF\u00a0{grenze} — sch’ella quinta, scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
     partnerOffen: 'Quintà senza l’entrada dal consort u da la consorta — l’indicaziun manca anc (chapitel Basa persunala, chasada). Cun ina entrada è l’entrada da la chasada pli auta.', // TODO(rm): provisorisch
     referenzalterBS: 'A partir da la vegliadetgna da referenza AVS na paja Basilea-Citad naginas contribuziuns da fitg pli (lescha da contribuziuns da fitg § 4 al. 2). Tar ina pensiun anticipada po exister in dretg — quai scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
     kindOhneAlter: 'Tar almain in uffant manca la vegliadetgna — quintà sco uffant minoren. A partir da 18 onns quinta el mo en emprima furmaziun; la vegliadetgna sa lascha cumplettar tar la chasada.', // TODO(rm): provisorisch
-    mietbelastungZG: 'Tranter CHF 50’000 e 60’000 dat Zug mo ina contribuziun, sche la fittanza suenter la reducziun surpassa 25 % da l’entrada — qua è ella gia avant sut quai.', // TODO(rm): provisorisch
-    basis: 'Basa: entrada CHF {income}/onn · custs da abitar CHF {rent}/mais · chasada {size} pers.',
+    mietbelastungZG: 'Tranter CHF\u00a050’000 e 60’000 dat Zug mo ina contribuziun, sche la fittanza suenter la reducziun surpassa 25\u202f% da l’entrada — qua è ella gia avant sut quai.', // TODO(rm): provisorisch
+    basis: 'Basa: entrada CHF\u00a0{income}/onn · custs da abitar CHF\u00a0{rent}/mais · chasada {size} pers.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    result_likely: { sie: 'I vala la paina da controllar il dretg: Vossa entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.', du: 'I vala la paina da controllar il dretg: tia entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.' },
+    result_likely: { sie: 'I vala la paina da controllar il dretg: Vossa entrada (CHF\u00a0{income}) è sut la limita indicativa (CHF\u00a0{limit}). Il dretg exact determinescha la posiziun chantunala.', du: 'I vala la paina da controllar il dretg: tia entrada (CHF\u00a0{income}) è sut la limita indicativa (CHF\u00a0{limit}). Il dretg exact determinescha la posiziun chantunala.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    result_incomeHigh: { sie: 'Vossa entrada (CHF {income}) surpassa la limita indicativa (CHF {limit}). In dretg è pli tgunsch improbabel — ma en in cas limit vala igl tuttina la paina da controllar.', du: 'Tia entrada (CHF {income}) surpassa la limita indicativa (CHF {limit}). In dretg è pli tgunsch improbabel — ma en in cas limit vala igl tuttina la paina da controllar.' },
+    result_incomeHigh: { sie: 'Vossa entrada (CHF\u00a0{income}) surpassa la limita indicativa (CHF\u00a0{limit}). In dretg è pli tgunsch improbabel — ma en in cas limit vala igl tuttina la paina da controllar.', du: 'Tia entrada (CHF\u00a0{income}) surpassa la limita indicativa (CHF\u00a0{limit}). In dretg è pli tgunsch improbabel — ma en in cas limit vala igl tuttina la paina da controllar.' },
     result_familiesOnly: 'En quest chantun datti contribuziuns a la fittanza mo per chasadas cun almain in uffant.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     result_effortBased: { sie: "Qua dependa il dretg da Vossa grevezza da fittanza (taux d'effort), betg d'ina limita d'entrada fixa. Controllai las cundiziuns tar la posiziun chantunala.", du: "Qua dependa il dretg da tia grevezza da fittanza (taux d'effort), betg d'ina limita d'entrada fixa. Controllescha las cundiziuns tar la posiziun chantunala." },
@@ -7853,10 +7853,10 @@ export default {
     result_needIncome: { sie: 'Endatai Vossa entrada, lura pudain nus stimar il dretg pli precis.', du: 'Endatescha tia entrada, lura pudain nus stimar il dretg pli precis.' },
     enterIncomeLink: 'Endatar l\'entrada',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    cantonNote_BS: 'Per chasadas cun bassa entrada. Limit per chasada: entrada da basa plus CHF 36’000 — p. ex. 1 persuna fin var. CHF 51’750, pèr fin var. CHF 54’000, pèr cun in uffant fin var. CHF 76’000 (fegl d’infurmaziun 01.2026). Quintà vegn cun l’entrada decisiva inclusiv ina part da la facultad. Almain 2 onns domicil; nagin dretg pli a partir da la vegliadetgna da referenza AVS.', // TODO(rm): provisorisch
+    cantonNote_BS: 'Per chasadas cun bassa entrada. Limit per chasada: entrada da basa plus CHF\u00a036’000 — p. ex. 1 persuna fin var. CHF\u00a051’750, pèr fin var. CHF\u00a054’000, pèr cun in uffant fin var. CHF\u00a076’000 (fegl d’infurmaziun 01.2026). Quintà vegn cun l’entrada decisiva inclusiv ina part da la facultad. Almain 2 onns domicil; nagin dretg pli a partir da la vegliadetgna da referenza AVS.', // TODO(rm): provisorisch
     cantonNote_BL: 'Mo per chasadas cun almain in uffant minoren u en emprima furmaziun. Nagin limit fix d’entradas: la vischnanca da domicil al quinta per chasada e paja or l’agid. Almain 2 onns domicil.', // TODO(rm): provisorisch
-    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza e per onn, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
-    cantonNote_ZG: 'Mo per abitaziuns suttamessas a la lescha chantunala da promoziun d’abitaziuns (dumandar l’administraziun). Entrada tenor la taglia federala directa fin CHF 60’000 (+2’500 per uffant minoren, +20’000 per persuna maiorenna a partir da la terza); tranter 50’000 e 60’000 mo sche la fittanza surpassa 25 % da l’entrada. Facultad netta fin CHF 144’000 (+16’900 per uffant). Almain 3 onns domicil u lieu da lavur en il chantun; la contribuziun va al locatur.', // TODO(rm): provisorisch
+    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF\u00a01’000 per stanza e per onn, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
+    cantonNote_ZG: 'Mo per abitaziuns suttamessas a la lescha chantunala da promoziun d’abitaziuns (dumandar l’administraziun). Entrada tenor la taglia federala directa fin CHF\u00a060’000 (+2’500 per uffant minoren, +20’000 per persuna maiorenna a partir da la terza); tranter 50’000 e 60’000 mo sche la fittanza surpassa 25\u202f% da l’entrada. Facultad netta fin CHF\u00a0144’000 (+16’900 per uffant). Almain 3 onns domicil u lieu da lavur en il chantun; la contribuziun va al locatur.', // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     compareTitle: { sie: 'Nua sa chatta Vossa fittanza?', du: 'Nua sa chatta tia fittanza?' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -7872,9 +7872,9 @@ export default {
     vorausTitel: { sie: 'Weitere Voraussetzungen in Ihrem Kanton', du: 'Weitere Voraussetzungen in deinem Kanton' }, // TODO(rm): übersetzen
     vorausWohnsitz: 'Wohnsitz im Kanton seit mindestens {jahre} Jahren.', // TODO(rm): übersetzen
     vorausWohnsitzGE: 'Wohnsitz im Kanton während mindestens {jahre} Jahren ohne Unterbruch in den letzten fünf Jahren.', // TODO(rm): übersetzen
-    vorausVermoegen: 'Reinvermögen höchstens CHF {betrag}.', // TODO(rm): übersetzen
+    vorausVermoegen: 'Reinvermögen höchstens CHF\u00a0{betrag}.', // TODO(rm): übersetzen
     vorausWohnsitzOderArbeit: 'Wohnsitz oder Arbeitsplatz im Kanton seit mindestens {jahre} Jahren.', // TODO(rm): übersetzen
-    vorausVermoegenJeKind: 'Reinvermögen höchstens CHF {betrag} (CHF {basis} und CHF {jeKind} je Kind).', // TODO(rm): übersetzen
+    vorausVermoegenJeKind: 'Reinvermögen höchstens CHF\u00a0{betrag} (CHF\u00a0{basis} und CHF\u00a0{jeKind} je Kind).', // TODO(rm): übersetzen
     vorausMindestmieteBS: 'Die Miete muss je nach Zimmerzahl eine Mindesthöhe erreichen; darunter gibt es keinen Beitrag. Die Werte stehen im Merkblatt des Kantons.', // TODO(rm): übersetzen
     vorausZimmerZG: 'Die Wohnung hat höchstens zwei Zimmer mehr, als Personen darin wohnen.', // TODO(rm): übersetzen
     vorausZimmerZGZuViel: { sie: 'Ihre Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.', du: 'Deine Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.' }, // TODO(rm): übersetzen
@@ -7970,7 +7970,7 @@ export default {
       doctor: 'Visitas tar il medi èn cuvridas sch’ellas èn medicinalmain necessarias — suenter la franchisa e la part da quota. L’assicuranza da basa na cuvra betg automaticamain in check-up annual fix.',
       dentist: 'Tractaments dentals n’èn per regla betg part da l’assicuranza da basa — ils custs ston per ordinari vegnir purtads sez (cun excepziun da tschertas malsognas). In’assicuranza cumplementara po surpigliar ina part.',
       gyn: 'Assicuranza da basa: la prevenziun ginecologica dal chancer (Pap) vegn per regla pajada mintga 3 onns (suenter dus controls annuals senza disturbis). Pli savens è pussaivel — ils termins supplementars ston lura vegnir pajads sez. Tge ch’è raschunaivel dal puntg da vista medicinal sa decida cun il medi.',
-      vaccinations: "Vaccinaziuns recumandadas da l’UFSP èn per regla cuvridas, dapi il 2026 senza franchisa (participaziun da 10 %). Vaccinaziuns da viadi betg.",
+      vaccinations: "Vaccinaziuns recumandadas da l’UFSP èn per regla cuvridas, dapi il 2026 senza franchisa (participaziun da 10\u202f%). Vaccinaziuns da viadi betg.",
       medication: 'Medicaments prescrits da la glista da spezialitads èn cuvrids — suenter la franchisa e la part da quota. Renovar la recepta a temp per evitar ina lacuna.',
     },
     coverageThisYear: {
@@ -8138,7 +8138,7 @@ export default {
     bereit: 'Pront per l’urgenza',
     bereitSatz: 'Indicaziuns d’urgenza prontas',
     franchise: 'Stadi da la franchisa',
-    franchiseVon: 'da CHF {franchise}',
+    franchiseVon: 'da CHF\u00a0{franchise}',
     franchiseSatz: 'Part da la franchisa cuntanschida l’onn {jahr}, tenor ils mussaments registrads',
     franchiseErreichtSatz: 'Franchisa {jahr} cuntanschida, tenor ils mussaments registrads',
     lohn: { sie: 'Nua stat Voss salari?', du: 'Nua stat tes salari?' },
@@ -8159,7 +8159,7 @@ export default {
     pensum: 'Pensum',
     stunden: 'uras',
     pensumSatz: 'Temp da lavur per emna',
-    pensumAnteil: { sie: '≈ {pct} % mesirà a {basis} uras (basa da la cumparegliaziun da salari, UST). Decisiv è il pensum en Voss contract.', du: '≈ {pct} % mesirà a {basis} uras (basa da la cumparegliaziun da salari, UST). Decisiv è il pensum en tes contract.' },
+    pensumAnteil: { sie: '≈ {pct}\u202f% mesirà a {basis} uras (basa da la cumparegliaziun da salari, UST). Decisiv è il pensum en Voss contract.', du: '≈ {pct}\u202f% mesirà a {basis} uras (basa da la cumparegliaziun da salari, UST). Decisiv è il pensum en tes contract.' },
     dienstProbezeitLaenger: 'Sch’il contract prevesa in temp d’emprova pli lung (fin 3 mais), valan fin lura 7 dis (DO art. 335b).',
     dienstLehre: 'Il contract da giarsunadi ha atgnas reglas: temp d’emprova da 3 mais senza auter accord (DO art. 344a), lura dissoluziun mo senza termin per motivs impurtants (DO art. 346).',
     pensumVollzeit: 'Temp cumplain, mesirà a {basis} uras (basa da la cumparegliaziun da salari, UST).',
@@ -8183,10 +8183,10 @@ export default {
     schildCount: '{covered}/{total} endatadas',
     // TODO(rm): provisorisch — Gegenlese (Steuer-Säulen, 25.09.2026)
     steuer: 'Colonna da taglia',
-    steuerBetrag: 'Taglia federala ≈ CHF {value} / onn',
+    steuerBetrag: 'Taglia federala ≈ CHF\u00a0{value} / onn',
     // TODO(rm): provisorisch — Gegenlese (Steuer-Säule ganz, F7-K5-1, 01.11.2026)
-    steuerGanz: 'Taglia sin il retgav ≈ CHF {total} / onn',
-    steuerDavon: 'Stimaziun grossa per la chapitala, senza taglia da baselgia. Da quai Confederaziun ≈ CHF {bund}.',
+    steuerGanz: 'Taglia sin il retgav ≈ CHF\u00a0{total} / onn',
+    steuerDavon: 'Stimaziun grossa per la chapitala, senza taglia da baselgia. Da quai Confederaziun ≈ CHF\u00a0{bund}.',
     steuerOhne13: 'Calculà senza 13avel salari.',
     steuerAllein: 'Calculà per in pèr cun ina suletta paja.',
     steuerEinzeln: { sie: 'Calculà be per Vus.', du: 'Calculà be per tai.' },
@@ -8229,9 +8229,9 @@ export default {
     intro: 'Tge che la lescha pretenda — e tge che vala la paina dapli.',
     pflichtTitle: 'Obligatoric',
     pflichtNote: 'Prescrit da la lescha.',
-    bvgUnklar: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF {schwelle}. I n’è betg registrada ina paja bruta — il certificat da salari mussa sch’ella vala qua.', // TODO(rm): provisorisch
-    bvgUnklar13: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF {schwelle}. Cun ina 13avla paja fiss la paja sura — l’indicaziun manca anc (chapitel Finanzas & daners).', // TODO(rm): provisorisch
-    bvgNa: "Cassa da pensiun marcada sco «Na concerna betg». Cun ina paja annuala brutta da passa CHF {schwelle} exista per regla in obligatori; i dat excepziuns, per exempel ina plazza limitada fin trais mais (senza prolungaziun). Il meglier è da sclerir cun il patrun.", // Fachprüfung 25.10.2026 — rm ungeprüft
+    bvgUnklar: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF\u00a0{schwelle}. I n’è betg registrada ina paja bruta — il certificat da salari mussa sch’ella vala qua.', // TODO(rm): provisorisch
+    bvgUnklar13: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF\u00a0{schwelle}. Cun ina 13avla paja fiss la paja sura — l’indicaziun manca anc (chapitel Finanzas & daners).', // TODO(rm): provisorisch
+    bvgNa: "Cassa da pensiun marcada sco «Na concerna betg». Cun ina paja annuala brutta da passa CHF\u00a0{schwelle} exista per regla in obligatori; i dat excepziuns, per exempel ina plazza limitada fin trais mais (senza prolungaziun). Il meglier è da sclerir cun il patrun.", // Fachprüfung 25.10.2026 — rm ungeprüft
     empfohlenTitle: 'Recumandà',
     empfohlenNote: 'Facultativ, ma sensà.',
     kk: 'Assicuranza da malsauns',
@@ -8371,14 +8371,14 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
     zukunftIkTitle: { sie: 'Basa AVS: Vossa istorgia da contribuziuns', du: 'Basa AVS: tia istorgia da contribuziuns' },
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
-    zukunftIkAktiv: { sie: 'Questa proiecziun utilisescha Vossa istorgia da contribuziuns (CI) sco fundament AVS — {jahre} onns da contribuziun, medi CHF {eink}.', du: 'Questa proiecziun utilisescha tia istorgia da contribuziuns (CI) sco fundament AVS — {jahre} onns da contribuziun, medi CHF {eink}.' },
+    zukunftIkAktiv: { sie: 'Questa proiecziun utilisescha Vossa istorgia da contribuziuns (CI) sco fundament AVS — {jahre} onns da contribuziun, medi CHF\u00a0{eink}.', du: 'Questa proiecziun utilisescha tia istorgia da contribuziuns (CI) sco fundament AVS — {jahre} onns da contribuziun, medi CHF\u00a0{eink}.' },
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
     zukunftIkInaktiv: { sie: 'La surfatscha AVS en il grafic sa basa anc sin ina stima. Registrai Vossa istorgia da contribuziuns per ina basa pli precisa.', du: 'La surfatscha AVS en il grafic sa basa anc sin ina stima. Registrescha tia istorgia da contribuziuns per ina basa pli precisa.' },
     zukunftIkEdit: 'Modifitgar l’istorgia da contribuziuns',
     zukunftIkHide: 'Zuppentar l’istorgia da contribuziuns',
     zukunftIkJump: 'Avrir en il register AVS',
     rendite: 'Rendita annuala supponida (%)',
-    renditeHint: 'Prudent 1–2 %. Mo ina supposiziun, betg ina garanzia.',
+    renditeHint: 'Prudent 1–2\u202f%. Mo ina supposiziun, betg ina garanzia.',
     s3bGuthaben: 'Pitga 3b oz (CHF)',
     s3aAnnual: 'Contribuziun annuala pitga 3a (CHF)',
     s3aAnnualHint: 'Da «Finanzas», adattabel qua.',
@@ -8413,7 +8413,7 @@ export default {
     achseAlter: 'Vegliadetgna',
     zukunftGraphHinweis: 'Spusta la vegliadetgna da pensiun: tira la marca sin il grafic u cun ←/→ — la renta e il chapital s’adattan immediatamain.',
     zukunft3aSchwelleTitle: 'Repartir il 3a sin plirs contos',
-    zukunft3aSchwelle: 'Sur circa CHF {schwelle} paja blers contos 3a da banca damain tschains. Emplenir plirs contos cun moderaziun gida a mantegnair il tschains preferenzial — e avra pli tard il retratg stafflà che spargna taglias (guarda sutvart).',
+    zukunft3aSchwelle: 'Sur circa CHF\u00a0{schwelle} paja blers contos 3a da banca damain tschains. Emplenir plirs contos cun moderaziun gida a mantegnair il tschains preferenzial — e avra pli tard il retratg stafflà che spargna taglias (guarda sutvart).',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     zukunftSzenarioTitle: { sie: 'Tge che Vossa vegliadetgna da pensiun munta', du: 'Tge che tia vegliadetgna da pensiun munta' },
     zukunftSzenarioFrueh: 'Pensiun anticipada: {dauer} avant la vegliadetgna da referenza ({referenzalter}).',
@@ -8424,7 +8424,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     zukunftSzenarioBridge: { sie: 'Ils onns da {von} fin 63 surpassais Vus senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.', du: 'Ils onns da {von} fin 63 surpassas ti senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.' },
     // TODO(rm): provisorisch — Gegenlese (Bugsuche-Texte 10.11.2026)
-    zukunftIkHochgerechnet: { sie: 'Calculà enfin a la vegliadetgna da referenza: {jahre} onns da contribuziun, medi CHF {eink} — ils onns futurs cun Vossas entradas actualas.', du: 'Calculà enfin a la vegliadetgna da referenza: {jahre} onns da contribuziun, medi CHF {eink} — ils onns futurs cun tias entradas actualas.' },
+    zukunftIkHochgerechnet: { sie: 'Calculà enfin a la vegliadetgna da referenza: {jahre} onns da contribuziun, medi CHF\u00a0{eink} — ils onns futurs cun Vossas entradas actualas.', du: 'Calculà enfin a la vegliadetgna da referenza: {jahre} onns da contribuziun, medi CHF\u00a0{eink} — ils onns futurs cun tias entradas actualas.' },
     // TODO(rm): provisorisch — Gegenlese (Bugsuche-Texte 10.11.2026)
     zukunftAhvAnnahme: { sie: 'Supposiziun: Vus retragais l’AVS uschè baud sco pussaivel e pajais fin a la vegliadetgna da referenza contribuziuns sco persuna senza activitad da gudogn. Questas contribuziuns dependan da la facultad e da las entradas da renta; l’estimaziun quinta simplifitgadamain vinavant cun las entradas da fin ussa.', du: 'Supposiziun: Ti retiras l’AVS uschè baud sco pussaivel e pajas fin a la vegliadetgna da referenza contribuziuns sco persuna senza activitad da gudogn. Questas contribuziuns dependan da la facultad e da las entradas da renta; l’estimaziun quinta simplifitgadamain vinavant cun las entradas da fin ussa.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -8440,7 +8440,7 @@ export default {
     nettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari annual brut per AVS e LPP.",
     // F8-V1 (05.11.2026): geschätztes Brutto als Vorschlag, nie automatisch.
     // TODO(rm): provisorisch — Gegenlese (F8-V1, 05.11.2026)
-    bruttoVorschlag: 'Stimà dal salari net en il profil (CHF {netto} per mais): var CHF {betrag} brut per onn, mo il salari principal. Ina stima — pli exact è il salari obligà a l’AVS sin il quint da salari.',
+    bruttoVorschlag: 'Stimà dal salari net en il profil (CHF\u00a0{netto} per mais): var CHF\u00a0{betrag} brut per onn, mo il salari principal. Ina stima — pli exact è il salari obligà a l’AVS sin il quint da salari.',
     bruttoUebernehmen: 'Surpigliar la stima',
     bruttoVorschlagZulagen: 'Sche supplements da famiglia èn cuntegnids en il salari net, è la stima memia auta.',
     bruttoVorschlagOhneDreizehnten: 'Quintà senza 13avla paja (indicaziun manca).',
@@ -8473,20 +8473,20 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
     beitragsjahreAngenommenVorbezug: 'Supposiziun: contribuziuns senza largia fin a la vegliadetgna da referenza ({referenzalter}) — cun domicil en Svizra vala l’obligaziun da pajar contribuziuns er durant la retschavida anticipada. Fin a la retschavida ({alter}) èn quai {jahre} onns da contribuziun, a partir da la vegliadetgna da referenza {jahreRef}. Cun ils onns da contribuziun effectivs daventa la stima pli precisa.',
     // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
-    renteAbReferenzalter: 'A partir da la vegliadetgna da referenza ({alter}): CHF {betrag}',
+    renteAbReferenzalter: 'A partir da la vegliadetgna da referenza ({alter}): CHF\u00a0{betrag}',
     // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
     vorbezugNeuberechnung: { sie: 'Fin a la vegliadetgna da referenza mancan anc onns da contribuziun, perquai èsi per il solit ina renta parziala. Cun domicil en Svizra stuais Vus durant quest temp anc pajar contribuziuns; tar la vegliadetgna da referenza vegn la renta calculada da nov cun quests onns. La reducziun en francs resta per tut la vita e vegn adattada cun las rentas.', du: 'Fin a la vegliadetgna da referenza mancan anc onns da contribuziun, perquai èsi per il solit ina renta parziala. Cun domicil en Svizra stos ti durant quest temp anc pajar contribuziuns; tar la vegliadetgna da referenza vegn la renta calculada da nov cun quests onns. La reducziun en francs resta per tut la vita e vegn adattada cun las rentas.' },
     // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
-    abAlterKurz: 'a partir da {alter}: CHF {betrag}',
+    abAlterKurz: 'a partir da {alter}: CHF\u00a0{betrag}',
     vorbezug: 'Reducziun (retschavida anticipada)',
     // rm ungeprüft F5
     vorbezugFrauenUebergang: 'Per dunnas da las annadas 1961–1969 valan quotas da reducziun pli bassas che na vegnan betg mussadas qua (fegl d’infurmaziun AVS 3.04). Tgi che retira anticipadamain perda ultra da quai il supplement da renta (art. 34bis LAVS). Per plaschair verifitgar tar la cassa da cumpensaziun.',
     bezugAlterFrueh: { sie: 'L’app quinta l’AVS il pli baud a partir da {frueh}. Cun ina pensiun pli baud finanziais Vus ils onns fin lura cun auters meds.', du: 'L’app quinta l’AVS il pli baud a partir da {frueh}. Cun ina pensiun pli baud finanzieschas ti ils onns fin lura cun auters meds.' },
     bezugAlterUebergang: 'Dunnas da las annadas 1961–1969 pon retrair l’AVS anticipadamain gia a partir da 62 onns. Cun tge quota che vegn reducì, na quinta l’app betg (fegl d’infurmaziun AVS 3.04).',
-    rentenzuschlag: 'Supplement da renta per la generaziun da transiziun: + CHF {betrag} / mais, mo senza retratga anticipada (art. 34bis LAVS). Stimaziun; las tabellas da l’UFAS èn decisivas.',
+    rentenzuschlag: 'Supplement da renta per la generaziun da transiziun: + CHF\u00a0{betrag} / mais, mo senza retratga anticipada (art. 34bis LAVS). Stimaziun; las tabellas da l’UFAS èn decisivas.',
     rentenzuschlagSplitting: 'Per persunas maridadas, divorziadas u vieuas quinta l’entrada partida dals dus conjugals (fegl d’infurmaziun 3.01); il stgalim po perquai esser pli bass.',
-    umwandlungssatzVorReferenzalter: { sie: 'Cun ina pensiun avant {referenzalter} po Vossa cassa da pensiun reducir la quota da conversiun: la lescha fixescha 6,8 % mo per la vegliadetgna da referenza (art. 14 al. 2 LPP). Inditgai la quota da Voss attest.', du: 'Cun ina pensiun avant {referenzalter} po tia cassa da pensiun reducir la quota da conversiun: la lescha fixescha 6,8 % mo per la vegliadetgna da referenza (art. 14 al. 2 LPP). Inditgescha la quota da tes attest.' },
-    saeule3aGekappt: 'Quintà cun il import maximal da CHF {max} per onn; dapli na po betg vegnir deducì en il pilaster 3a (art. 7 OPP 3).',
+    umwandlungssatzVorReferenzalter: { sie: 'Cun ina pensiun avant {referenzalter} po Vossa cassa da pensiun reducir la quota da conversiun: la lescha fixescha 6,8\u202f% mo per la vegliadetgna da referenza (art. 14 al. 2 LPP). Inditgai la quota da Voss attest.', du: 'Cun ina pensiun avant {referenzalter} po tia cassa da pensiun reducir la quota da conversiun: la lescha fixescha 6,8\u202f% mo per la vegliadetgna da referenza (art. 14 al. 2 LPP). Inditgescha la quota da tes attest.' },
+    saeule3aGekappt: 'Quintà cun il import maximal da CHF\u00a0{max} per onn; dapli na po betg vegnir deducì en il pilaster 3a (art. 7 OPP 3).',
     aufschub: 'Supplement (prorogaziun)',
     erziehungsgutschrift: "Bonificaziun d'educaziun / da tgira",
     plafoniert: 'Plafonament pèr da maridads',
@@ -8500,13 +8500,13 @@ export default {
     koordinierterLohn: 'Salari coordinà',
     umwandlungssatz: 'Taux da conversiun',
     umwandlungssatzEigen: { sie: 'Taux da conversiun da Vossa cassa', du: 'Taux da conversiun da Tia cassa' },
-    umwandlungssatzHint: { sie: 'Sin Voss attest da prevenziun · vid = minim 6,8 %', du: 'Sin tes attest da prevenziun · vid = minim 6,8 %' },
+    umwandlungssatzHint: { sie: 'Sin Voss attest da prevenziun · vid = minim 6,8\u202f%', du: 'Sin tes attest da prevenziun · vid = minim 6,8\u202f%' },
     umwandlungssatzEigenMarker: { sie: '(Vossa cassa)', du: '(Tia cassa)' },
     umwandlungssatzMindest: '(minim LPP)',
     mindestzins: 'Tschains minimal LPP',
-    mindestzinsAnnahme: 'Fin {bisJahr} vegn quintà cun las tariffas fixadas dal Cussegl federal, a partir da {abJahr} cun precauziun cun {annahme} %. Il Cussegl federal fixescha il tschains mintga onn da nov.',  // TODO(rm): Gegenlese
+    mindestzinsAnnahme: 'Fin {bisJahr} vegn quintà cun las tariffas fixadas dal Cussegl federal, a partir da {abJahr} cun precauziun cun {annahme}\u202f%. Il Cussegl federal fixescha il tschains mintga onn da nov.',  // TODO(rm): Gegenlese
     bvgNichtVersichert: "Entrada sut la limita d'entrada LPP",
-    bvgSchwelle: '≤ CHF {schwelle}, stadi {jahr}',
+    bvgSchwelle: '≤ CHF\u00a0{schwelle}, stadi {jahr}',
     geburtsdatumFehlt: 'Endatar la data da naschientscha sut «Basa» per la calculaziun LPP.',
     vorbezugVergleich: 'Retschavida anticipada / prorogaziun en cumparegliaziun',
     bezugAlterLabel: 'Vegliadetgna',
@@ -8517,7 +8517,7 @@ export default {
     saeulen: 'Composiziun',
     saeule3a: 'Prognosa pitga 3a',
     saeule3aKapital: 'Chapital 3a stimà tar {alter}',
-    saeule3aDetail: 'Avair CHF {balance} + {years} × CHF {annual}/onn',
+    saeule3aDetail: 'Avair CHF\u00a0{balance} + {years} × CHF\u00a0{annual}/onn',
     saeule3aHint: { sie: 'Endatai Voss avair 3a e la contribuziun annuala sut Finanzas → Prevenziun.', du: 'Endatescha tes avair 3a e la contribuziun annuala sut Finanzas → Prevenziun.' },
     totalMitSaeule3a: 'Total 1. + 2. + 3a pitga',
     einkommenEingeben: { sie: 'Endatai Vossa entrada annaira per stimar la renta.', du: 'Endatescha Tia entrada annaira per stimar la renta.' },
@@ -8571,7 +8571,7 @@ export default {
     kbCanton: 'Chantun',
     kbCantonNone: 'Tscherner il chantun …',
     kbBasisHint: 'Stima al chapoluog chantunal, persuna suletta, senza taglia da baselgia.',
-    kbOnCapital: 'Sin il chapital spetgà da CHF {betrag}',
+    kbOnCapital: 'Sin il chapital spetgà da CHF\u00a0{betrag}',
     kbEffective: '{pct}% effectiv',
     kbExact: 'exact',
     kbFederal: 'Confederaziun',
@@ -8581,7 +8581,7 @@ export default {
     kbPickCanton: 'Tscherner in chantun per la stima cumplessiva — senza chantun vegn mussada mo la part federala.',
     kbStaffelTitle: 'Prelevar en pass',
     kbStaffelYears: 'sur {n} onns da taglia',
-    kbStaffelResult: 'CHF {total} enstagl da CHF {einmal} — spargn da var CHF {ersparnis}.',
+    kbStaffelResult: 'CHF\u00a0{total} enstagl da CHF\u00a0{einmal} — spargn da var CHF\u00a0{ersparnis}.',
     kbStaffelNone: 'Per quest import gida la repartiziun bunamain nagut.',
     kbStaffelHint: 'Perquai che la tariffa è progressiva, reducescha la repartiziun dal prelevament sur plirs onns da taglia la taglia — p. ex. cun plirs contos 3a, u cun prelevar la 2. colonna e la 3a en onns differents. Limitas: per ordinari èn mo paucs contos senmisads, e singuls chantuns quintan ensemen ils prelevaments dal medem onn (er quels dal conjugal).',
     kbEinkaufSperre: { sie: 'Sche Vus avais fatg ina cumpra en la cassa da pensiun, na dastgais Vus betg retrair las prestaziuns che resultan da quai durant ils proxims trais onns sco chapital (art. 79b al. 3 LPP).', du: 'Sche ti has fatg ina cumpra en la cassa da pensiun, na dastgas ti betg retrair las prestaziuns che resultan da quai durant ils proxims trais onns sco chapital (art. 79b al. 3 LPP).' },
@@ -8637,9 +8637,9 @@ export default {
       gleich: 'Pretsch public tenor la glista da specialitads: {chf} per pachet',
       spanne: 'Pretsch public tenor la glista da specialitads: {von} fin {bis}, tenor il pachet',
       // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
-      sb40Alle: 'En la glista da specialitads è notada qua ina part da 40 % empè da 10 %, perquai ch\'i dat preparats pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva expressivamain, per motivs medicinals cumprovabels, in preparat original u da referenza, resta la part da 10 %; il medem vala, sche l’apoteca refusa ina substituziun per motivs medicinals cumprovabels (KLV art. 38a al. 7).',
+      sb40Alle: 'En la glista da specialitads è notada qua ina part da 40\u202f% empè da 10\u202f%, perquai ch\'i dat preparats pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva expressivamain, per motivs medicinals cumprovabels, in preparat original u da referenza, resta la part da 10\u202f%; il medem vala, sche l’apoteca refusa ina substituziun per motivs medicinals cumprovabels (KLV art. 38a al. 7).',
       // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
-      sb40Einige: 'Tenor il preparat ed il pachet è notada en la glista da specialitads ina part da 40 % empè da 10 %, perquai ch\'i dat pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva expressivamain, per motivs medicinals cumprovabels, in preparat original u da referenza, resta la part da 10 %; il medem vala, sche l’apoteca refusa ina substituziun per motivs medicinals cumprovabels (KLV art. 38a al. 7).',
+      sb40Einige: 'Tenor il preparat ed il pachet è notada en la glista da specialitads ina part da 40\u202f% empè da 10\u202f%, perquai ch\'i dat pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva expressivamain, per motivs medicinals cumprovabels, in preparat original u da referenza, resta la part da 10\u202f%; il medem vala, sche l’apoteca refusa ina substituziun per motivs medicinals cumprovabels (KLV art. 38a al. 7).',
       hinweis: { sie: 'Quai che Vus pajais sezs, dependa da la franchisa, da la part e da quai, sche la cassa da malsauns surpiglia il medicament en Voss cas.', du: 'Quai che ti pajas sez, dependa da la franchisa, da la part e da quai, sche la cassa da malsauns surpiglia il medicament en tes cas.' },
       quelle: 'UFSP, glista da specialitads',
       stand: 'Stadi {datum}',
@@ -8817,11 +8817,11 @@ export default {
     intro: { sie: "In'orientaziun che Vus pudessas survegnir sco indemnisaziun dal di en cas da perdita da lavur. Il quint obligatoric vegn fatg dal RAV e da Vossa cassa da dischoccupaziun.", du: "In'orientaziun che ti pudessas survegnir sco indemnisaziun dal di en cas da perdita da lavur. Il quint obligatoric vegn fatg dal RAV e da tia cassa da dischoccupaziun." },
     bruttolohn: "Salari brut mensil fin ussa (CHF)",
     // TODO(rm): provisorisch — Gegenlese (Kapitel 5 nachgeführt, 16.11.2026)
-    bruttolohnHint: { sie: "Voss salari brut mensil suttamess a l’AVS: la media dals ultims 6 mais da contribuziun u, sch’ella è pli auta, dals ultims 12 (AVIV Art. 37). In 13avel salari mensil cunvegnì en il contract fa part dal gudogn assicurà (AVIG Art. 23 al. 1). Co ch’el vegn repartì sin ils mais, fixescha la cassa da dischoccupaziun. Per ina stima pudais Vus quintar in dudeschavel da quel tar il salari mensil. Assicurà è il pli CHF 12’350 per mais.", du: "Tes salari brut mensil suttamess a l’AVS: la media dals ultims 6 mais da contribuziun u, sch’ella è pli auta, dals ultims 12 (AVIV Art. 37). In 13avel salari mensil cunvegnì en il contract fa part dal gudogn assicurà (AVIG Art. 23 al. 1). Co ch’el vegn repartì sin ils mais, fixescha la cassa da dischoccupaziun. Per ina stima pos ti quintar in dudeschavel da quel tar il salari mensil. Assicurà è il pli CHF 12’350 per mais." },
+    bruttolohnHint: { sie: "Voss salari brut mensil suttamess a l’AVS: la media dals ultims 6 mais da contribuziun u, sch’ella è pli auta, dals ultims 12 (AVIV Art. 37). In 13avel salari mensil cunvegnì en il contract fa part dal gudogn assicurà (AVIG Art. 23 al. 1). Co ch’el vegn repartì sin ils mais, fixescha la cassa da dischoccupaziun. Per ina stima pudais Vus quintar in dudeschavel da quel tar il salari mensil. Assicurà è il pli CHF\u00a012’350 per mais.", du: "Tes salari brut mensil suttamess a l’AVS: la media dals ultims 6 mais da contribuziun u, sch’ella è pli auta, dals ultims 12 (AVIV Art. 37). In 13avel salari mensil cunvegnì en il contract fa part dal gudogn assicurà (AVIG Art. 23 al. 1). Co ch’el vegn repartì sin ils mais, fixescha la cassa da dischoccupaziun. Per ina stima pos ti quintar in dudeschavel da quel tar il salari mensil. Assicurà è il pli CHF\u00a012’350 per mais." },
     bruttoNettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari brut per l'AC.",
-    keinLohnHint: "L’entrada en il profil n’è betg registrada sco salari d’ina occupaziun, perquai n’è il champ betg preimplenì. In salari pli baud po vegnir endatà qua. La cassa da dischoccupaziun scleresch, sch’i dat in dretg. Maximum assicurà: CHF 12’350/mais.", // TODO(rm): provisorisch
+    keinLohnHint: "L’entrada en il profil n’è betg registrada sco salari d’ina occupaziun, perquai n’è il champ betg preimplenì. In salari pli baud po vegnir endatà qua. La cassa da dischoccupaziun scleresch, sch’i dat in dretg. Maximum assicurà: CHF\u00a012’350/mais.", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-    bruttoGeschaetzt: { sie: "Stimà a basa da la paja netta en il profil (CHF {netto}). Inditgai la paja brutta, sche Vus la enconuschais — ella ha la prioritad.", du: "Stimà a basa da la paja netta en il profil (CHF {netto}). Inditgescha la paja brutta, sche ti la enconuschas — ella ha la prioritad." },
+    bruttoGeschaetzt: { sie: "Stimà a basa da la paja netta en il profil (CHF\u00a0{netto}). Inditgai la paja brutta, sche Vus la enconuschais — ella ha la prioritad.", du: "Stimà a basa da la paja netta en il profil (CHF\u00a0{netto}). Inditgescha la paja brutta, sche ti la enconuschas — ella ha la prioritad." },
     beitragsmonate: "Mais da contribuziun",
     beitragsmonateHint: { sie: "Quants mais avais Vus lavurà en ils ultims 2 onns? Per ordinari datti in dretg a partir da 12 mais.", du: "Quants mais has ti lavurà en ils ultims 2 onns? Per ordinari datti in dretg a partir da 12 mais." },
     kinder: "Obligaziun da mantegniment per uffants sut 25 onns?",
@@ -8830,7 +8830,7 @@ export default {
     kinderVolljaehrig: "Von 18 bis 24 Jahren nur, solange das Kind in Ausbildung ist (AVIV Art. 33, ZGB Art. 277).",
     ivGrad: "Renta AI cun grad d'invaliditad ≥ 40%?",
     enterBrutto: { sie: "Endatai Voss salari brut fin ussa per vesair l'orientaziun.", du: "Endatescha tes salari brut fin ussa per vesair l'orientaziun." },
-    noAnspruch: "Sut CHF 500 da gudogn assicurà per mais n’datti per ordinari nagin dretg sin indemnisaziun da dischoccupaziun.",
+    noAnspruch: "Sut CHF\u00a0500 da gudogn assicurà per mais n’datti per ordinari nagin dretg sin indemnisaziun da dischoccupaziun.",
     resultTitle: { sie: "Vossa orientaziun", du: "Tia orientaziun" },
     satzLabel: "Tariffa",
     satzValue: "{p}% dal gudogn assicurà",
@@ -8856,9 +8856,9 @@ export default {
     // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026)
     befreiungTitel: "Weniger als 12 Monate gearbeitet?",
     befreiungText: "I dat excepziuns: tgi che sto tschertgar ina plazza pervia d’ina separaziun, d’in divorzi, da l’invaliditad u da la mort dal consort u da la consorta (era en partenadi registrà) ed abitava lura en Svizra po esser liberà dal temp da contribuziun — fin 90 daners dal di, sch’il eveniment è capità avant maximalmain in onn (LACI art. 14 al. 2, art. 27 al. 4). Ulteriuras liberaziuns valan p. ex. suenter ina scolaziun, ina malsogna u la fin d’ina renta AI. La cassa da dischoccupaziun scleriescha quai.",
-    gedeckeltHint: "Gudogns sur CHF {max}/mais vegnan limitads al maximum.",
+    gedeckeltHint: "Gudogns sur CHF\u00a0{max}/mais vegnan limitads al maximum.",
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
-    satz80NichtBelegt: "Il import limit per la tariffa da 80 % (CHF {betrag} per mais) è verifitgà en questa app tenor las funtaunas uffizialas per {jahr}. Sch’il DEFR al ha adattà per {laufend}, n’è anc betg registrà. Liant quinta la cassa da dischoccupaziun.",
+    satz80NichtBelegt: "Il import limit per la tariffa da 80\u202f% (CHF\u00a0{betrag} per mais) è verifitgà en questa app tenor las funtaunas uffizialas per {jahr}. Sch’il DEFR al ha adattà per {laufend}, n’è anc betg registrà. Liant quinta la cassa da dischoccupaziun.",
     disclaimer: { sie: "Orientaziun senza garanzia. Il RAV / la cassa da dischoccupaziun quinta l'import obligatoric, tut tenor Vossa situaziun.", du: "Orientaziun senza garanzia. Il RAV / la cassa da dischoccupaziun quinta l'import obligatoric, tut tenor tia situaziun." },
     ravTitle: { sie: "Nua As annunziar", du: "Nua t'annunziar" },
     ravBody: { sie: "Annunziai Vus al RAV (center regiunal da plazzament) uschè baud sco pussaivel — il meglier l'emprim di da dischoccupaziun. Il dretg na cumenza betg retroactivamain.", du: "Annunzia tai al RAV (center regiunal da plazzament) uschè baud sco pussaivel — il meglier l'emprim di da dischoccupaziun. Il dretg na cumenza betg retroactivamain." },
@@ -8873,7 +8873,7 @@ export default {
     summaryNA: { sie: "na pertucca actualmain betg a Vus — tutga per explorar", du: "na pertucca actualmain betg a Ti — tutga per explorar" },
     summaryActive: "Orientaziun davart il mantegniment dals uffants",
     noFormula: "Il mantegniment dals uffants vegn fixà individualmain — tut tenor l'entrada da omadus geniturs, il dumber e l'età dals uffants sco era la tgira. I na dat nagina formla simpla.",
-    magnitude: "Grossezza approximativa dals pirs custs da l'uffant (basegns directs, BETG la contribuziun da mantegniment): radund CHF 1’200–1’900 per mais ed uffant tut tenor l'età (tabella turitgaisa dals custs dals uffants, l'ultima giada 2025).",
+    magnitude: "Grossezza approximativa dals pirs custs da l'uffant (basegns directs, BETG la contribuziun da mantegniment): radund CHF\u00a01’200–1’900 per mais ed uffant tut tenor l'età (tabella turitgaisa dals custs dals uffants, l'ultima giada 2025).",
     binding: "La contribuziun da mantegniment effectiva dependa da la situaziun concreta. Il tribunal cumpetent, l'APEA u in post spezialisà decidan obligatoricamain.",
     linkLabel: "Quint dal mantegniment declerà (tribunals ZH)",
   },
@@ -8946,7 +8946,7 @@ export default {
     earlierYears: 'Ultra da quai {amount} dals onns precedents. Quels na quintan betg per il maximum {jahr} — mintga onn ha il ses.',
     date: 'Data',
     amount: 'Import (CHF)',
-    selfEmployedNote: 'Maximum {jahr} cun cassa da pensiun: {mit}. Senza cassa da pensiun: fin {satz} % da l’entrada da lavur (al pli {ohne}).',
+    selfEmployedNote: 'Maximum {jahr} cun cassa da pensiun: {mit}. Senza cassa da pensiun: fin {satz}\u202f% da l’entrada da lavur (al pli {ohne}).',
   },
   diseases: {
     add: 'Agiuntar malsogna',
@@ -9056,7 +9056,7 @@ export default {
     title: { sie: 'Insatgi As debita daners', du: 'Insatgi ta debita daners' },
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     step1Title: '1 · Admonir',
-    step1Text: { sie: 'Cun in’admoniziun mettais Vus la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pudais Vus pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenzai amiaivlamain cun ina regurdada da pajament, fixai in termin cler e tramettai l’admoniziun uschia che Vus pudais cumprovar la spediziun.', du: 'Cun in’admoniziun mettas ti la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pos ti pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenza amiaivlamain cun ina regurdada da pajament, fixescha in termin cler e tramette l’admoniziun uschia che ti pos cumprovar la spediziun.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
+    step1Text: { sie: 'Cun in’admoniziun mettais Vus la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pudais Vus pretender tschains da retard da 5\u202f% l’onn (OR art. 104 al. 1). Cumenzai amiaivlamain cun ina regurdada da pajament, fixai in termin cler e tramettai l’admoniziun uschia che Vus pudais cumprovar la spediziun.', du: 'Cun in’admoniziun mettas ti la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pos ti pretender tschains da retard da 5\u202f% l’onn (OR art. 104 al. 1). Cumenza amiaivlamain cun ina regurdada da pajament, fixescha in termin cler e tramette l’admoniziun uschia che ti pos cumprovar la spediziun.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     quelle: 'Funtaunas: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]] (controllà en settember 2026).',
   },
 };

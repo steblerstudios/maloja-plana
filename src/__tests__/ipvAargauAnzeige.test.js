@@ -33,8 +33,8 @@ describe('K31 IPV-Rechner, Kanton Aargau', () => {
   it('1 500/Monat: 18 000 − 8 500 = 9 500 massgebend → 5 830 − 1 662.50 = 4 167.50 → 4 168/Jahr', () => {
     const html = render(profil(1500));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 347');
-    expect(html).toContain('CHF 4’168');
+    expect(html).toContain('CHF\u00a0347');
+    expect(html).toContain('CHF\u00a04’168');
     expect(html).not.toContain('ipv.orientierungOffen');
   });
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PROZENT } from './utils/geld.js';
 import Icons, { aufklappZeichen, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { linkStil } from './components/PrimaryButton.jsx';
@@ -31,7 +32,7 @@ export const GrundordnungFelder = ({ palette, fields, onSelectChapter }) =>
     onMouseLeave: (e) => { e.currentTarget.style.background = 'none'; },
   },
     React.createElement('span', {
-      style: { width: '16px', textAlign: 'center', color: f.done ? palette.sage : palette.soft, fontSize: '13px' }
+      style: { width: '16px', textAlign: 'center', color: f.done ? palette.sage : palette.soft, fontSize: text.xs }
     }, f.na ? '–' : hinweisZeichen(f.done ? 'check' : 'kaestchen', 12)),
     React.createElement('span', {
       style: { color: f.done ? palette.mid : palette.text }
@@ -92,7 +93,7 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
       ),
       React.createElement('span', {
         style: { fontSize: text.xs, color: pct === 100 ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: weight.medium, width: '32px', textAlign: 'right', flexShrink: 0 }
-      }, pct + '%'),
+      }, pct + PROZENT),
     ),
     React.createElement('button', {
       type: 'button',
@@ -157,7 +158,7 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
         t('fortschritt.title')
       ),
       React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } },
-        totalPct + '%'
+        totalPct + PROZENT
       )
     ),
     React.createElement('div', {

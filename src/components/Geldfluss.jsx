@@ -12,12 +12,24 @@ import { bereichsTon, mischeHex } from '../utils/lebensbereichFruechte.js';
 // Beträge stehen nicht im Bild, sondern im Kapitel (Felder, «Jeden Monat bleiben»).
 // Schmal (unter 480 px): das Bild hätte rund 6 px Schrift (im Browser gemessen 24.10.2026,
 // Handy 375 px) — dort ohne Text im Bild, die Namen stehen als Legende darunter.
-const FLUSS = { knoten: 10, luecke: 6, zeile: 15, rand: 8, hoehe: 220 };
+// zeile = kleinster Abstand zweier Namen; seit 23.11.2026 18 statt 15, passend zur Schrift 15 (am Schirm ≥ 14 px).
+const FLUSS = { knoten: 10, luecke: 6, zeile: 18, rand: 8, hoehe: 220 };
 const SPALTEN = {
   breit: { breite: 560, links: 150, mitte: 275, rechts: 400 },
   schmal: { breite: 300, links: 2, mitte: 145, rechts: 288 },
 };
 const SCHMAL_AB = 480;
+const SCHRIFT = 15;
+// Breite Fassung: die Spalten richten sich nach dem längsten Namen je Seite (grob 9 Einheiten je Zeichen
+// bei Schrift 15, gemessen «Monatseinkommen» 138, «Lebensmittel & Haushalt» 178). Vorher standen sie fest
+// bei 150/400, und lange Namen (fr «Pension alimentaire reçue») liefen aus dem Bild. Bleibt für den Fluss
+// zu wenig Platz, zeigt die Grafik die schmale Fassung mit Legende.
+export function breiteSpalten(links, rechts) {
+  const lang = (liste) => Math.max(0, ...liste.map((x) => String(x.label).length)) * 9;
+  const l = Math.max(SPALTEN.breit.links, lang(links) + 12);
+  const r = Math.min(SPALTEN.breit.rechts, SPALTEN.breit.breite - lang(rechts) - FLUSS.knoten - 12);
+  return r - l < 160 ? null : { breite: SPALTEN.breit.breite, links: l, mitte: Math.round((l + FLUSS.knoten + r) / 2 - FLUSS.knoten / 2), rechts: r };
+}
 
 export function geldflussLayout(quellen, ziele) {
   const summe = (liste) => liste.reduce((a, x) => a + x.value, 0);
@@ -76,10 +88,13 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
   if (!lage) return null;
   const { links, rechts, mitte, hoehe } = lage;
   const k = FLUSS.knoten;
-  const s = schmal ? SPALTEN.schmal : SPALTEN.breit;
+  const breit = schmal ? null : breiteSpalten(links, rechts);
+  const eng = schmal || !breit;
+  const s = eng ? SPALTEN.schmal : breit;
   const beschriftung = (knoten, x, anker) => React.createElement('text', {
     key: 't' + knoten.label, x, y: knoten.marke, dy: '0.35em', textAnchor: anker,
-    fontSize: 12, fill: palette.text,
+    // Breite Fassung wird leicht verkleinert gezeigt (gemessen 528 von 560): 15 Einheiten ergeben am Schirm über 14 px.
+    fontSize: SCHRIFT, fill: palette.text,
   }, knoten.label);
 
   return React.createElement('div', { ref: rahmen, style: { padding: space.md, background: palette.up, borderRadius: radius.lg, marginBottom: space.md } },
@@ -88,7 +103,7 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
       viewBox: `0 0 ${s.breite} ${hoehe}`, role: 'img', 'aria-label': beschreibung,
       // Schmal höchstens 340 px breit: bei knapp 480 px Spalte wurde das Bild sonst ~370 px hoch
       // und schob den Lohn weit nach unten (im Kapitel gemessen 24.10.2026).
-      style: { width: '100%', maxWidth: schmal ? '340px' : undefined, height: 'auto', display: 'block', margin: '0 auto' },
+      style: { width: '100%', maxWidth: eng ? '340px' : undefined, height: 'auto', display: 'block', margin: '0 auto' },
     },
       React.createElement('title', null, beschreibung),
       links.map((q) => React.createElement('path', { key: 'bl' + q.label, d: band(s.links + k, q.y, s.mitte, q.mitteY, q.h), fill: q.color, fillOpacity: 0.35 })),
@@ -96,10 +111,10 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
       links.map((q) => React.createElement('rect', { key: 'kl' + q.label, x: s.links, y: q.y, width: k, height: q.h, fill: q.color })),
       React.createElement('rect', { x: s.mitte, y: mitte.y, width: k, height: mitte.h, fill: palette.mid }),
       rechts.map((z) => React.createElement('rect', { key: 'kr' + z.label, x: s.rechts, y: z.y, width: k, height: z.h, fill: z.color })),
-      !schmal && links.map((q) => beschriftung(q, s.links - 8, 'end')),
-      !schmal && rechts.map((z) => beschriftung(z, s.rechts + k + 8, 'start'))
+      !eng && links.map((q) => beschriftung(q, s.links - 8, 'end')),
+      !eng && rechts.map((z) => beschriftung(z, s.rechts + k + 8, 'start'))
     ),
-    schmal && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginTop: space.sm } },
+    eng && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginTop: space.sm } },
       React.createElement(Legende, { ueberschrift: woher, knoten: links, palette }),
       React.createElement(Legende, { ueberschrift: wohin, knoten: rechts, palette })
     ),

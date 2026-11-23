@@ -102,13 +102,13 @@ describe('Altbestand ZH, Verfügung 100: überall 100, nicht 301', () => {
     am(SEPT_2026);
     const d = person('ZH', alteVerfuegung(100));
     const k = ipvKachel(uebersicht(d));
-    expect(k).toContain('CHF 100');
+    expect(k).toContain('CHF\u00a0100');
     expect(k).toContain('finanzUebersicht.ipvVerfuegungOhneJahr');
-    expect(k).not.toContain('CHF 301');
+    expect(k).not.toContain('CHF\u00a0301');
     const zeile = druckZeile(d);
-    expect(zeile).toContain('CHF 100');
+    expect(zeile).toContain('CHF\u00a0100');
     expect(zeile).toContain('finanzUebersicht.ipvVerfuegungOhneJahr');
-    expect(zeile).not.toContain('CHF 301');
+    expect(zeile).not.toContain('CHF\u00a0301');
   });
 });
 

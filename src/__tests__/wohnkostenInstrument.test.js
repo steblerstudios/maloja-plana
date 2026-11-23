@@ -52,7 +52,7 @@ describe('Kapitel Wohnen · Ort im Kapitel', () => {
 });
 
 describe('Kapitel Wohnen · Rechnung aus der einen Monatsrechnung', () => {
-  it('Beispiel Maria: CHF 1’830, 29.5 % von 6’200, frei 2’006 wie im Kapitel Finanzen', () => {
+  it('Beispiel Maria: CHF\u00a01’830, 29.5\u202f% von 6’200, frei 2’006 wie im Kapitel Finanzen', () => {
     const r = wohnkostenRechnung(DEMO_DATA.wohnen, DEMO_DATA);
     expect(r.kosten).toBe(1830);
     expect(r.einkommen).toBe(6200);
@@ -102,7 +102,7 @@ describe('Kapitel Wohnen · Anzeige', () => {
     const unten = render(profil().wohnen, profil());
     expect(unten).toContain('wohnenInstrument.faustregel');
     // Seit 20.11.2026 stehen die Wohnkosten gross im Kopf (wie Finanzen), nicht mehr unter dem Haus.
-    expect(unten).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF 1’830/);
+    expect(unten).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF\u00a01’830/);
     const p = profil({ monthlyIncome: '4000' });
     const oben = render(p.wohnen, p);
     expect(oben).toContain('wohnenInstrument.mehrAlsDrittel');
@@ -198,7 +198,7 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
     expect(r.kosten).toBe(1500);
     const html = render(p.wohnen, p);
     // Seit 21.11.2026 als Bestandteil im Kopf: Name darüber, Betrag darunter.
-    expect(html).toMatch(/data-kopf-teil="hypothek"[\s\S]*?wohnenKopf\.teil\.hypothek[\s\S]*?CHF 1’200/);
+    expect(html).toMatch(/data-kopf-teil="hypothek"[\s\S]*?wohnenKopf\.teil\.hypothek[\s\S]*?CHF\u00a01’200/);
     expect(html).not.toContain('miete-ausprobieren');
     // «Hypothek vorhanden? Nein»: ein stehengebliebener Betrag zählt nicht.
     const nein = profil({}, { mortgageStatus: 'no', mortgagePayment: '1200' });

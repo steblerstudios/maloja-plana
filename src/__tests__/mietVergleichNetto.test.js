@@ -1,5 +1,5 @@
 // Der Miet-Balken vergleicht gegen die BFS-Nettomiete (ohne Nebenkosten, data/mietpreise.js).
-// Bis 28.09.2026 füllte MietVergleich ihn mit Miete + Nebenkosten — «Ihre Miete: CHF 1830»
+// Bis 28.09.2026 füllte MietVergleich ihn mit Miete + Nebenkosten — «Ihre Miete: CHF\u00a01830»
 // unter einer Quelle «Nettomiete». Das Budget (BudgetSync) nahm schon immer nur die Nettomiete.
 // Die Wohnkosten-Zeile darunter heisst «Wohnkosten» und zählt die Nebenkosten weiter mit.
 // Seit 18.11.2026 (Bauplan Wohnen) ist der Balken das Vergleichshaus im Werkzeug (WohnenWerkzeug): Ihr Betrag steht
@@ -21,24 +21,24 @@ const miete = (wohnen) => renderToStaticMarkup(React.createElement(MietVergleich
 describe('MietVergleich: Nettomiete gegen Nettomiete', () => {
   it('das Vergleichshaus zeigt die Nettomiete, nicht Miete + Nebenkosten', () => {
     const html = miete({ rentAmount: '1650', utilities: '180' });
-    expect(html).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.eigen: CHF 1’650</);
-    expect(html).toMatch(/data-teil="wohnkosten-franken"[^>]*>wohnenInstrument\.titel: CHF 1’830</); // Wohnkosten zählen NK mit
+    expect(html).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.eigen: CHF\u00a01’650</);
+    expect(html).toMatch(/data-teil="wohnkosten-franken"[^>]*>wohnenInstrument\.titel: CHF\u00a01’830</); // Wohnkosten zählen NK mit
     // die Lage rechnet ebenfalls mit der Nettomiete
     const { regional } = mieteLage(person({ rentAmount: '1650' })).vergleich;
     const netto = lageWert(lageZurRegion(1650, regional));
     expect(netto).not.toBe(lageWert(lageZurRegion(1830, regional)));
     expect(html).toMatch(new RegExp('data-instrument-zahl="miete"[^>]*>' + netto + '<'));
   });
-  it('die Wohnkosten-Zeile zählt die Nebenkosten weiter mit (1830 / 6200 = 30 %)', () => {
-    expect(miete({ rentAmount: '1650', utilities: '180' })).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>30 %</);
+  it('die Wohnkosten-Zeile zählt die Nebenkosten weiter mit (1830 / 6200 = 30\u202f%)', () => {
+    expect(miete({ rentAmount: '1650', utilities: '180' })).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>30\u202f%</);
   });
   it('nur Nebenkosten, keine Miete (z. B. Eigentum): kein Vergleichshaus, Wohnkosten-Zeile bleibt', () => {
     const html = miete({ rentAmount: '', utilities: '300' });
     expect(html).not.toContain('vergleichs-haus');
     expect(html).not.toContain('strasse-betrag');
-    expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>5 %</);
+    expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>5\u202f%</);
   });
   it('Gegenprobe: ohne Nebenkosten ändert sich nichts', () => {
-    expect(miete({ rentAmount: '1650' })).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.eigen: CHF 1’650</);
+    expect(miete({ rentAmount: '1650' })).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.eigen: CHF\u00a01’650</);
   });
 });

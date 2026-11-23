@@ -30,9 +30,9 @@ describe('K31 IPV-Rechner, Kanton Zürich', () => {
   it('Einkommen 2 000/Monat, Stadt Zürich: 5 376 − 8.8 % × 24 000 = 3 264/Jahr, 272/Monat (Satz nach RRB 980/2026)', () => {
     const html = render(profil(2000));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 272');
+    expect(html).toContain('CHF\u00a0272');
   // Seit 24.09.2026 mit Tausendertrennung aus utils/geld.js — vorher CHF-Beträge ohne ’ bzw. nach Gerätesprache.
-    expect(html).toContain('CHF 3’264');
+    expect(html).toContain('CHF\u00a03’264');
     expect(html).toContain(zahl(61090));
     expect(html).not.toContain('ipv.orientierungOffen');
     expect(html).not.toContain(zahl(54900));

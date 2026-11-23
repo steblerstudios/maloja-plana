@@ -210,7 +210,7 @@ describe('Die Erklärfigur (D)', () => {
   it('lang="de" nicht auf der ganzen Figur, nur auf den deutschen Teilen', () => {
     const html = renderToStaticMarkup(React.createElement(ErklaerFigurKlein, { palette: P, t, figur: 'kostenteil' }));
     expect(html).toMatch(/^<figure data-teil="erklaerfigur-klein" style/);
-    expect(html).toContain(`<p lang="de" style="margin:4px 0 0;font-size:15px;color:${P.text}">${ERKLAERFIGUREN.kostenteil.legende.replace(/'/g, '&#x27;')}</p>`);
+    expect(html).toContain(`<p lang="de" style="margin:4px 0 0;font-size:1rem;color:${P.text}">${ERKLAERFIGUREN.kostenteil.legende.replace(/'/g, '&#x27;')}</p>`);
   });
 });
 

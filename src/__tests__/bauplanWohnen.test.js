@@ -63,12 +63,12 @@ describe('Bauplan Wohnen · jedes Bild einmal je Seite', () => {
   it('Kopf wie Finanzen: Wohnkosten gross, Monat oder Jahr, darunter Bestandteile und Adresse', () => {
     const html = kapitel(DEMO_DATA);
     expect(html.indexOf('data-teil="wohnen-kopf"')).toBeLessThan(html.indexOf('data-teil="wohnen-strasse"'));
-    expect(html).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF 1’830/);
+    expect(html).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF\u00a01’830/);
     expect(html).toMatch(/aria-pressed="true"[^>]*>Monat</);
     // Seit 21.11.2026 (Kombination A+B+C): Balken der Anteile, Miete + Nebenkosten als kleine Zahlen, Zimmer daneben;
     // die Adresse steht beim Kalenderblatt. Drittel und Viertel als Fahnen im Haus, keine Legende darunter.
     const teile = html.slice(html.indexOf('data-teil="wohnkosten-teile"'), html.indexOf('data-teil="wohnen-strasse"'));
-    expect(teile).toMatch(/data-kopf-teil="miete"[\s\S]*Miete[\s\S]*CHF 1’650[\s\S]*\+[\s\S]*data-kopf-teil="nebenkosten"[\s\S]*CHF 180[\s\S]*data-kopf-teil="zimmer"[\s\S]*2\.5/);
+    expect(teile).toMatch(/data-kopf-teil="miete"[\s\S]*Miete[\s\S]*CHF\u00a01’650[\s\S]*\+[\s\S]*data-kopf-teil="nebenkosten"[\s\S]*CHF\u00a0180[\s\S]*data-kopf-teil="zimmer"[\s\S]*2\.5/);
     expect(teile).not.toContain('Langstrasse');
     expect(html).toMatch(/data-teil="rand-adresse"[^>]*>Langstrasse 42, 8004 Zürich</);
     expect(html).toContain('data-teil="fahne-drittel"');

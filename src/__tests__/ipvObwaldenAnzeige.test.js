@@ -44,14 +44,14 @@ describe('K31 IPV-Rechner, Kanton Obwalden', () => {
   it('zeigt den Betrag: 20 000 im Jahr → 3 280/Jahr, 273/Monat', () => {
     const html = render(profil(20000 / 12));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 3’280');
-    expect(html).toContain('CHF 273');
+    expect(html).toContain('CHF\u00a03’280');
+    expect(html).toContain('CHF\u00a0273');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(20000 / 12, { kkPremium: null }));
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 3’280');
+    expect(html).not.toContain('CHF\u00a03’280');
   });
 
   it('die publizierte Grenze (anrechenbares Einkommen), keine Musterwerte', () => {

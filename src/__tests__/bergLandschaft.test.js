@@ -329,7 +329,7 @@ describe('Berge · Fortschritts-Kreise zeigen den Stand', () => {
   it('knapp begonnen (1 %): der Prozent-Kreis steht schon — keine 10-%-Schwelle mehr', () => {
     const html = rendern({ begonnen: 1, abgeschlossen: 0, gesamt: 7 }, 1);
     expect(html).toContain('berg-prozent');
-    expect(html).toContain('1%');
+    expect(html).toContain('1\u202f%');
   });
   it('begonnen, noch keins fertig: nur «begonnen» 7/7 und der Prozent-Kreis', () => {
     const html = rendern({ begonnen: 7, abgeschlossen: 0, gesamt: 7 }, 63);

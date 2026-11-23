@@ -1,5 +1,5 @@
 // Gesundheit bekommt zwei Instrumente in der Kapitelzeile (Stebler Studios 10.11.2026, «Gesundheit (I + J)»):
-// Bereit für den Ernstfall (Ring · «19/20») und Franchise-Stand (Balken · «CHF 420 von CHF 2’500»).
+// Bereit für den Ernstfall (Ring · «19/20») und Franchise-Stand (Balken · «CHF\u00a0420 von CHF\u00a02’500»).
 // Dieselben Rechnungen wie das Kapitel Notfall (bereitschaft) und die KVG-Seite (berechneFranchise).
 import { describe, it, expect } from 'vitest';
 import React from 'react';
@@ -36,7 +36,7 @@ describe('Kachel-Regeln', () => {
   });
   it('Beträge über betrag(), «von CHF …» über i18n — beides greift beim Sichtschutz', () => {
     expect(panel).toMatch(/wert: chfBetrag\(frStand\.franchiseVerbraucht\)/);
-    expect(quelle('../../i18n/de.js')).toMatch(/franchiseVon: 'von CHF \{franchise\}'/);
+    expect(quelle('../../i18n/de.js')).toMatch(/franchiseVon: 'von CHF\\u00a0\{franchise\}'/) // Quelltext: «CHF» mit geschütztem Leerzeichen als Escape (23.11.2026);
   });
   it('Klick führt auf den Reiter Franchise der KVG-Seite', () => {
     expect(panel).toMatch(/onNavigate\('kvg', undefined, 'franchise'\)/);

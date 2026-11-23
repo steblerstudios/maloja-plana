@@ -41,14 +41,14 @@ describe('K31 IPV-Rechner, Kanton Wallis', () => {
     const html = render(profil(20000 / 12));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 4’712');
-    expect(html).toContain('CHF 393');
+    expect(html).toContain('CHF\u00a04’712');
+    expect(html).toContain('CHF\u00a0393');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(20000 / 12, { kkPremium: null }));
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 4’712');
+    expect(html).not.toContain('CHF\u00a04’712');
   });
 
   it('nennt die oberste Grenze aus der Tabelle — nicht bei einem Kind, nie die Musterwerte', () => {

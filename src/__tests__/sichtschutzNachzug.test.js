@@ -1,6 +1,6 @@
 // Nachzug Sichtschutz «Beträge verbergen» (#826/#875, live 14.11.2026), 16.11.2026.
 // 1. Kein Bildschirm-Code baut «CHF » selbst vor eine Zahl — sonst sieht man den Betrag trotz Sichtschutz.
-// 2. betragText: sichtbar «CHF ···», der Bildschirmleser hört «Betrag verborgen».
+// 2. betragText: sichtbar «CHF\u00a0···», der Bildschirmleser hört «Betrag verborgen».
 // 3. Schalter-Zustand nicht nur über Tönung: eingeschaltet ein durchgestrichenes Auge.
 // 4. Notfallkarte läuft in mitEchtenBetraegen. 5. Brief-Vorschau liegt unscharf, bis man sie antippt.
 import { describe, it, expect, afterEach } from 'vitest';
@@ -43,12 +43,12 @@ describe('Sichtschutz: kein selbst gebautes «CHF »', () => {
   });
 });
 
-describe('betragText — sichtbar «CHF ···», vorgelesen «Betrag verborgen»', () => {
+describe('betragText — sichtbar «CHF\u00a0···», vorgelesen «Betrag verborgen»', () => {
   const t = (k) => (k === 'common.betragVerborgen' ? 'Betrag verborgen' : k);
   const text = (knoten) => typeof knoten === 'string' ? knoten
     : [].concat(knoten.props.children).filter((c) => c !== '' && c != null).map(text).join('|');
   it('ohne Sichtschutz: ein schlichter Text mit Zusätzen', () => {
-    expect(betragText(t, 1234, {}, '≈ ', ' / Monat')).toBe('≈ CHF 1’234 / Monat');
+    expect(betragText(t, 1234, {}, '≈ ', ' / Monat')).toBe('≈ CHF\u00a01’234 / Monat');
   });
   it('mit Sichtschutz: Maske für die Augen verborgen, Wort für den Bildschirmleser', () => {
     document.documentElement.dataset.betraege = 'aus';
@@ -65,7 +65,7 @@ describe('betragText — sichtbar «CHF ···», vorgelesen «Betrag verborgen�
     expect(text(k)).not.toMatch(/\d/);
   });
   it('Spanne: «CHF a – b» wie bisher, mit Sichtschutz beide Enden verdeckt', () => {
-    expect(betragText(t, [1260, 2520], {}, '', ' / Monat')).toBe('CHF 1’260 – 2’520 / Monat');
+    expect(betragText(t, [1260, 2520], {}, '', ' / Monat')).toBe('CHF\u00a01’260 – 2’520 / Monat');
     document.documentElement.dataset.betraege = 'aus';
     expect(text(betragText(t, [1260, 2520]))).not.toMatch(/\d/);
   });

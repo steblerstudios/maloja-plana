@@ -45,15 +45,15 @@ describe('K31 IPV-Rechner, Kanton Schwyz', () => {
     const html = render(profil(25000 / 12, { finanzen: { savingsAccount: 35000 } }));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 2’724');
-    expect(html).toContain('CHF 227');
+    expect(html).toContain('CHF\u00a02’724');
+    expect(html).toContain('CHF\u00a0227');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(25000 / 12, { kkPremium: null }));
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 2’724');
+    expect(html).not.toContain('CHF\u00a02’724');
   });
 
   it('nennt keine Einkommensgrenze — weder das minimale Höchsteinkommen noch die Musterwerte', () => {

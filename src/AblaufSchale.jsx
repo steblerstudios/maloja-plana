@@ -462,6 +462,8 @@ export const EreignisFrist = ({ palette, t, art, id, labelKey, hinweisKey, vorbe
 // die aktuelle etwas grösser. Reine Grafik (aria-hidden) — wo man steht, sagt «Schritt n von N».
 // `flach` (Handy, Kapitel 1 Befund B, 09.11.2026): 22 statt 40 px je Kehre. Bei 5 Schritten 124 statt 196 px
 // hoch, so steht «Schritt 1» auf dem Handy im ersten Bild. 22 − 12 (Fahrbahn) lässt 10 px zwischen den Kehren.
+// Schriftskala 23.11.2026: Nummern und Namen 15 Einheiten (die Karte wird bei 375 px auf ~98 % gezeigt → ~15 px).
+const PASS_SCHRIFT = '15px';
 export const passHoehe = (n, flach = false) => (flach ? Math.max(84, 36 + (n - 1) * 22) : Math.max(150, 36 + (n - 1) * 40));
 export const passPunkte = (n, flach = false) => {
   const H = passHoehe(n, flach);
@@ -497,13 +499,13 @@ export const AblaufPass = ({ palette, name, total, aktuell, fertig, namen }) => 
       const erledigt = fertig || i < aktuell;
       const jetzt = !fertig && i === aktuell;
       return React.createElement('g', { key: i },
-        React.createElement('circle', { cx: p.x, cy: p.y, r: jetzt ? 11 : 9, fill: erledigt ? farbe : palette.bg, stroke: erledigt || jetzt ? farbe : palette.border, strokeWidth: 3 }),
+        React.createElement('circle', { cx: p.x, cy: p.y, r: jetzt ? 13 : 11, fill: erledigt ? farbe : palette.bg, stroke: erledigt || jetzt ? farbe : palette.border, strokeWidth: 3 }),
         erledigt
           ? React.createElement('path', { d: `M${p.x - 4} ${p.y} l3 3 5-6`, stroke: palette.bg, strokeWidth: 2.2, fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round' })
-          : React.createElement('text', { x: p.x, y: p.y + 4, textAnchor: 'middle', style: { fontSize: '11px', fontWeight: 600, fill: jetzt ? farbe : palette.soft } }, String(i + 1)),
+          : React.createElement('text', { x: p.x, y: p.y + 5, textAnchor: 'middle', style: { fontSize: PASS_SCHRIFT, fontWeight: 600, fill: jetzt ? farbe : palette.soft } }, String(i + 1)),
         namen && namen[i] && React.createElement('text', {
-          x: p.x + (p.x < 170 ? 16 : -16), y: p.y + 4, textAnchor: p.x < 170 ? 'start' : 'end',
-          style: { fontSize: '11px', fill: palette.mid, paintOrder: 'stroke', stroke: palette.bg, strokeWidth: '4px', strokeLinejoin: 'round' },
+          x: p.x + (p.x < 170 ? 19 : -19), y: p.y + 5, textAnchor: p.x < 170 ? 'start' : 'end',
+          style: { fontSize: PASS_SCHRIFT, fill: palette.mid, paintOrder: 'stroke', stroke: palette.bg, strokeWidth: '4px', strokeLinejoin: 'round' },
         }, namen[i]));
     })
   );

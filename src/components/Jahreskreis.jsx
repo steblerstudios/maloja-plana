@@ -159,7 +159,7 @@ export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMona
             onClick: waehle(m), onKeyDown: waehle(m), style: { cursor: 'pointer', outlineOffset: '2px' },
           },
             React.createElement('path', { d: b.d, fill: aktiv ? palette.sand + '55' : palette.surface, stroke: aktiv ? palette.sand : palette.border, strokeWidth: 1 }),
-            React.createElement('text', { x: lx, y: ly, dy: '0.35em', textAnchor: 'middle', fontSize: 12, fill: aktiv ? palette.text : palette.mid, fontWeight: aktiv ? 600 : 400, style: { pointerEvents: 'none' } }, monName(m))
+            React.createElement('text', { x: lx, y: ly, dy: '0.35em', textAnchor: 'middle', fontSize: 14, fill: aktiv ? palette.text : palette.mid, fontWeight: aktiv ? 600 : 400, style: { pointerEvents: 'none' } }, monName(m))
           );
         }),
         heuteWinkel !== null && (() => {
@@ -171,7 +171,7 @@ export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMona
         React.createElement('g', { 'aria-hidden': 'true', style: { pointerEvents: 'none' } }, ...boegen),
         React.createElement('g', { 'aria-hidden': 'true', style: { pointerEvents: 'none' } }, punkte.map((p) => React.createElement(Marke, { key: p.key, p, palette }))),
         React.createElement('text', { x: MITTE, y: MITTE - 6, textAnchor: 'middle', fontSize: 18, fontWeight: 600, fill: palette.text, 'aria-hidden': 'true' }, String(jahr)),
-        React.createElement('text', { x: MITTE, y: MITTE + 12, textAnchor: 'middle', fontSize: 10, fill: palette.mid, 'aria-hidden': 'true' },
+        React.createElement('text', { x: MITTE, y: MITTE + 15, textAnchor: 'middle', fontSize: 14, fill: palette.mid, 'aria-hidden': 'true' },
           t('calendar.jahreskreis.count', { count: punkte.length }))
       ),
       React.createElement('div', { style: { flex: '1 1 220px', minWidth: 0 } },

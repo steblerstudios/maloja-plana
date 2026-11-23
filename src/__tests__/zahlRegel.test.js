@@ -26,7 +26,7 @@ describe('Regel «Zahl» · Kapitel Wohnen (gross)', () => {
     const zahl = html.indexOf('data-instrument-zahl="wohnkosten"');
     expect(haus).toBeGreaterThan(-1);
     expect(zahl).toBeGreaterThan(haus);
-    expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>\d+ %</);
+    expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>\d+\u202f%</);
   });
   it('Franken klein darunter, über betrag()', () => {
     const html = kapitel(profil());
@@ -36,12 +36,12 @@ describe('Regel «Zahl» · Kapitel Wohnen (gross)', () => {
     // Seit 21.11.2026: unter dem Haus was die Zahl heisst, darunter die zwei Beträge (über betrag()).
     expect(html).toMatch(/data-teil="wohnkosten-bezug"[^>]*>wohnenKopf\.bezug\.netto</);
     expect(html).toMatch(/data-teil="wohnkosten-franken"[^>]*>wohnenKopf\.vonBetrag\(CHF\u00a01’830\|CHF\u00a06’000\)</);
-    expect(html).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF 1’830/);
+    expect(html).toMatch(/data-instrument-zahl="wohnkosten-kopf"[^>]*>CHF\u00a01’830/);
   });
   it('ohne Einkommen kein Anteil: dann bleiben die Franken die Hauptzahl', () => {
     const html = kapitel(profil({}));
     expect(html).not.toContain('data-instrument-zahl="wohnkosten"');
-    expect(html).toContain('CHF 1’830');
+    expect(html).toContain('CHF\u00a01’830');
   });
 });
 
@@ -49,7 +49,7 @@ describe('Regel «Zahl» · Werkzeug Mietzins (mittel)', () => {
   it('dieselbe Hauptzahl gross wie Kachel und Kapitel', () => {
     const d = { basis: { canton: 'ZH' }, finanzen: { monthlyIncome: '6200' }, wohnen: { rentAmount: '1650', utilities: '180' } };
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: d }));
-    expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>30 %</);
+    expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>30\u202f%</);
   });
   // Überholt 18.11.2026 (Bauplan Wohnen): «der Anteil erst beim Wohnkosten-Satz» — im Werkzeug steht jetzt dieselbe
   // Strasse wie im Kapitel, also jede Hauptzahl unter ihrem Haus: Anteil unter dem Drittel-Haus, Lage unter dem
@@ -67,9 +67,9 @@ describe('Regel «Zahl» · Werkzeug Mietzins (mittel)', () => {
     expect(lage).toBeGreaterThan(bild);
     expect(lage).toBeLessThan(html.indexOf('data-teil="miete-saetze"'));
     expect(lage).toBeLessThan(html.indexOf('data-teil="wohnkosten-satz"'));
-    expect(html).toMatch(/data-instrument-zahl="miete"[^>]*>[−+≈][^<]* %</);
+    expect(html).toMatch(/data-instrument-zahl="miete"[^>]*>[−+≈][^<]*\u202f%</);
     // derselbe Satz wie Kachel und Kapitel, die Zahl nicht doppelt, Einkommen über betrag()
-    expect(html).toContain('instrumente.wohnkostenSatz (CHF 6’200)');
+    expect(html).toContain('instrumente.wohnkostenSatz (CHF\u00a06’200)');
     expect(html).not.toContain('mietzinsView.rentShare(');
   });
 });
@@ -101,9 +101,9 @@ describe('Regel «Zahl» · Lohn und Bereit', () => {
   const quelle = (f) => fs.readFileSync(path.resolve(__dirname, f), 'utf8');
   it('Lohn: eine Schreibweise für Kachel und Kapitel, im Kapitel gross nach dem Barometer', async () => {
     const { lohnLageWert } = await import('../components/LohnEinordnung.jsx');
-    expect(lohnLageWert({ rel: 'below', delta: -900, pct: 13 })).toBe('−13 %');
-    expect(lohnLageWert({ rel: 'near', delta: 50, pct: 1 })).toBe('≈ +1 %');
-    expect(lohnLageWert({ rel: 'near', delta: 0, pct: 0 })).toBe('≈ 0 %');
+    expect(lohnLageWert({ rel: 'below', delta: -900, pct: 13 })).toBe('−13\u202f%');
+    expect(lohnLageWert({ rel: 'near', delta: 50, pct: 1 })).toBe('≈ +1\u202f%');
+    expect(lohnLageWert({ rel: 'near', delta: 0, pct: 0 })).toBe('≈ 0\u202f%');
     expect(quelle('../components/InstrumentePanel.jsx')).toContain('zahl: { wert: lohnLageWert(ls), einheit');
     const q = quelle('../components/LohnEinordnung.jsx');
     const bild = q.indexOf('React.createElement(Barometer, {');

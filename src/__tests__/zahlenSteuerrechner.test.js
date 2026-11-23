@@ -38,7 +38,7 @@ describe('Franken und Stundenlöhne über utils/geld.js', () => {
     const t = createT({ de }, 'de');
     const r = calculateSozialhilfe({ basis: { canton: 'ZH' }, wohnen: { rentAmount: 2400 }, versicherungen: { kkPremium: 500 } });
     expect(typeof r.noteParams.value).toBe('number');
-    expect(t(r.noteKey, r.noteParams)).toMatch(/CHF \d’\d{3}\/Monat/);
+    expect(t(r.noteKey, r.noteParams)).toMatch(/CHF\u00a0\d’\d{3}\/Monat/);
   });
   it('kein toFixed mehr an den gemeldeten Stellen', () => {
     expect(ohneKommentare(quelle('config/cantonalData.js'))).not.toMatch(/deficit\.toFixed/);

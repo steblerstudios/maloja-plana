@@ -38,7 +38,7 @@ describe('Texte', () => {
     expect(s.orientation.ahvBeitrag.sie && s.orientation.ahvBeitrag.du).toBeTruthy();
   });
   it('Schwelle «mehr als» wie BVG Art. 2 und 7 (Code: >)', () => {
-    expect(de.schutzschild.bvgNa).toContain('mehr als CHF {schwelle}');
+    expect(de.schutzschild.bvgNa).toContain('mehr als CHF\u00a0{schwelle}');
     expect(rm.schutzschild.bvgNa).toContain('«Na concerna betg»');
   });
   it('Abschnitt Vorsorge im Notfall: ein neutraler Titel je Sprache', () => {

@@ -46,14 +46,14 @@ describe('K31 IPV-Rechner, Kanton Uri', () => {
     const html = render(profil(20000 / 12));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 2’668');
-    expect(html).toContain('CHF 222');
+    expect(html).toContain('CHF\u00a02’668');
+    expect(html).toContain('CHF\u00a0222');
   });
 
   it('ohne erfasste Prämie trotzdem ein Betrag (kein Deckel im Reglement), und der Vorbehalt sagt es', () => {
     const html = render(profil(20000 / 12, { kkPremium: null }));
     expect(html).not.toContain('ipv.offenGrund.praemie');
-    expect(html).toContain('CHF 2’668');
+    expect(html).toContain('CHF\u00a02’668');
     expect(html).toContain('ipv.vorbehaltUR');
   });
 

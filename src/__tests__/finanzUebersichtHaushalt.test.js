@@ -10,7 +10,7 @@ import { DEMO_DATA } from '../config/demoData.js';
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
 const seite = (d) => renderToStaticMarkup(React.createElement(FinanzUebersicht, { palette, t, data: d, onNavigate: () => {} }));
-const chf = (html, n) => html.includes('CHF ' + n.toLocaleString('de-CH').replace(/[’']/g, '’')) || html.includes('CHF ' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '’'));
+const chf = (html, n) => html.includes('CHF\u00a0' + n.toLocaleString('de-CH').replace(/[’']/g, '’')) || html.includes('CHF\u00a0' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '’'));
 
 const paar = (finanzen = {}) => ({
   basis: { canton: 'ZH', maritalStatus: 'married', household: { adultsList: [{ name: 'P' }], partnerIncome: '3200' } },

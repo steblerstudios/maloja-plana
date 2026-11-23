@@ -37,7 +37,7 @@ describe('FranchiseThermometer · ein Bauteil, drei Grössen', () => {
     expect(html).toContain('data-lage="stehend"');
     expect(html).toContain('height:128px');
     expect(html).toContain('data-teil="selbstbehalt"');
-    // 1300 − 300 = 1000 über der Franchise → 10 % = 100 von 700
+    // 1300 − 300 = 1000 über der Franchise → 10\u202f% = 100 von 700
     expect(zahl(html, 'data-selbstbehalt-anteil')).toBeCloseTo(100 / 700, 3);
   });
 
@@ -91,7 +91,7 @@ describe('KVG-Reiter Franchise (mittel 128): Thermometer, darunter die Hauptzahl
     const z = html.indexOf('data-instrument-zahl="franchise"');
     expect(b).toBeGreaterThan(-1);
     expect(z).toBeGreaterThan(b);
-    expect(html).toMatch(/data-instrument-zahl="franchise"[^>]*>CHF 420</);
+    expect(html).toMatch(/data-instrument-zahl="franchise"[^>]*>CHF\u00a0420</);
   });
 
   it('keine zwei Balken mehr', () => {

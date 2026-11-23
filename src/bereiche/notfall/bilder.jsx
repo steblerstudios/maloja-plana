@@ -1,5 +1,5 @@
 import React from 'react';
-import { INSTRUMENT_GROESSE } from '../../config/tokens.js';
+import { INSTRUMENT_GROESSE, text } from '../../config/tokens.js';
 import { DARK_PALETTE } from '../../config/constants.js';
 import { bereichFillColor } from '../../data/lebensbereiche.js';
 import { betrag, zahl } from '../../utils/geld.js';
@@ -42,12 +42,12 @@ export const FranchiseThermometer = ({ palette, stand, groesse = 'klein', t, fue
     h('line', { key: 'l', 'data-teil': 'franchise-strich', x1: x - 6, y1: fStrich, x2: x + w + 6, y2: fStrich, stroke: strich, strokeWidth: groesse === 'klein' ? 3 : 2 }),
   ];
   if (groesse === 'gross' && t) {
-    // viewBox in echten Pixeln (160 × 256): die Zeichnung mit 1.6 skaliert, die Ablesewörter ausserhalb, 13 px (Regel H).
+    // viewBox in echten Pixeln (160 × 256): die Zeichnung mit 1.6 skaliert, die Ablesewörter ausserhalb, 14 px (Regel H, seit 23.11.2026 Schriftskala: Untergrenze 14).
     const k = 1.6;
     return h('svg', { viewBox: '0 0 160 256', width: '100%', ...daten, style: { maxWidth: '160px', height: 'auto', display: 'block', overflow: 'visible' } },
       h('g', { transform: 'scale(' + k + ')' }, ...zeichnung),
-      t && h('text', { 'data-teil': 'ablese-franchise', x: (x + w + 12) * k, y: fStrich * k + 5, fontSize: 13, fill: strich }, t('thermometer.franchise')),
-      t && h('text', { 'data-teil': 'ablese-selbstbehalt', x: (x + w + 12) * k, y: (oben + 10) * k, fontSize: 13, fill: palette.mid }, t('thermometer.selbstbehalt')));
+      t && h('text', { 'data-teil': 'ablese-franchise', x: (x + w + 12) * k, y: fStrich * k + 5, fontSize: 14, fill: strich }, t('thermometer.franchise')),
+      t && h('text', { 'data-teil': 'ablese-selbstbehalt', x: (x + w + 12) * k, y: (oben + 10) * k, fontSize: 14, fill: palette.mid }, t('thermometer.selbstbehalt')));
   }
   return h('svg', { viewBox: '0 0 40 160', height: px, ...daten, style: { height: px + 'px', width: 'auto', display: 'block', overflow: 'visible' } }, ...zeichnung);
 };
@@ -67,7 +67,7 @@ export const FranchiseAblesung = ({ palette, t, stand, groesse = 'mittel', fuell
   const yOffen = yStrich + zeile;
   const yFuell = Math.round((128 - 76 * a) * k - zeile / 2);
   const yErreicht = Math.min(Math.round(128 * k), Math.max(yOffen + zeile + 2, yFuell));
-  const marke = (teil, top, inhalt, stark) => h('div', { key: teil, 'data-teil': teil, style: { position: 'absolute', left: 0, top: top + 'px', whiteSpace: 'nowrap', fontSize: '13px', lineHeight: zeile + 'px', color: stark ? palette.text : palette.mid, fontWeight: stark ? 600 : 400 } }, ...inhalt); // gespreizt: als Liste fehlte der key (Konsole, 20.11.2026)
+  const marke = (teil, top, inhalt, stark) => h('div', { key: teil, 'data-teil': teil, style: { position: 'absolute', left: 0, top: top + 'px', whiteSpace: 'nowrap', fontSize: text.xs, lineHeight: zeile + 'px', color: stark ? palette.text : palette.mid, fontWeight: stark ? 600 : 400 } }, ...inhalt); // gespreizt: als Liste fehlte der key (Konsole, 20.11.2026)
   const wert = (n) => h('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } }, betrag(n, { hoechstens: 2 }));
   return h('div', { 'data-teil': 'franchise-ablesung', 'data-groesse': groesse, style: { display: 'flex', gap: '10px', alignItems: 'flex-start' } },
     h(FranchiseThermometer, { palette, stand, groesse, fuell }),
@@ -109,7 +109,7 @@ export const HerzPuls = ({ palette, lagen = [], groesse = 'klein', t }) => {
       cx: SCHLAG_X[i], cy: PULS_Y, r: 0, fill: 'none' })));
   if (groesse !== 'gross' || !t) return svg;
   return h('div', { style: { maxWidth: px + 'px' } }, svg,
-    h('div', { 'aria-hidden': true, style: { display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', fontSize: '13px', color: palette.mid, textAlign: 'center', marginTop: '2px', gap: '4px' } },
+    h('div', { 'aria-hidden': true, style: { display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', fontSize: text.xs, color: palette.mid, textAlign: 'center', marginTop: '2px', gap: '4px' } },
       lagen.map((l) => h('span', { key: l.key, 'data-teil': 'lage-name', style: { color: l.voll ? palette.text : palette.mid, overflowWrap: 'anywhere', hyphens: 'auto', WebkitHyphens: 'auto', lineHeight: 1.3 } }, t('notfallEinstieg.' + l.key + '.title')))));
 };
 
@@ -147,7 +147,7 @@ export const Karteikasten = ({ palette, reiter = [], anzahl = 0, groesse = 'mitt
 // Medikamente zu dieser Zeit an diesem Tag eingetragen sind (höchstens drei gezeichnet). Leere Mulde = nichts.
 // `raster` aus wochenblister(data). Die Ablesewörter (Tage, Zeiten) sind übersetzt und stehen am Rand, nicht in den
 // Mulden; die Zahl steht UNTER dem Bild (Regel «Zahl»). Ruhig: eine Farbe, kein «heute», nichts zum Abhaken.
-// viewBox in echten Pixeln (256 breit), Schrift 13 px wie die Ablesung am Thermometer.
+// viewBox in echten Pixeln (256 breit), Schrift 14 px wie die Ablesung am Thermometer (Schriftskala 23.11.2026).
 export const BLISTER_TABLETTEN_MAX = 3;
 export const Blisterpackung = ({ palette, t, raster = [], groesse = 'gross' }) => {
   const h = React.createElement;
@@ -155,7 +155,7 @@ export const Blisterpackung = ({ palette, t, raster = [], groesse = 'gross' }) =
   const px = INSTRUMENT_GROESSE[groesse] || INSTRUMENT_GROESSE.gross;
   const links = 56, oben = 20, zelle = 28, mulde = 23; // Zeiten ausgeschrieben («Morgen»): kein «Mo» wie Montag
   const breite = links + 7 * zelle, hoehe = oben + 4 * zelle + 4;
-  const beschriftung = (key, x, y, inhalt, anker) => h('text', { key, x, y, fontSize: 13, fill: palette.mid, textAnchor: anker }, inhalt);
+  const beschriftung = (key, x, y, inhalt, anker) => h('text', { key, x, y, fontSize: 14, fill: palette.mid, textAnchor: anker }, inhalt);
   const mulden = [];
   for (let tag = 0; tag < 7; tag++) {
     for (let z = 0; z < 4; z++) {
@@ -205,6 +205,6 @@ export const Fieberkurve = ({ palette, t, tage = [], groesse = 'gross' }) => {
     ...tage.map((d, i) => d.hoechste != null && h('circle', { key: 'p' + i, 'data-teil': 'messpunkt', 'data-temp': d.hoechste, cx: xVon(i), cy: yVon(d.hoechste), r: 4.5, fill: farbe })),
     h('rect', { 'data-teil': 'kalenderstreifen', x: links, y: yStreifen, width: 7 * zelle, height: streifen, rx: 6, fill: 'none', stroke: farbe, strokeWidth: 2 }),
     ...tage.slice(1).map((_, i) => h('line', { key: 's' + i, x1: links + (i + 1) * zelle, y1: yStreifen, x2: links + (i + 1) * zelle, y2: yStreifen + streifen, stroke: palette.border, strokeWidth: 1 })),
-    ...(t ? tage.map((d, i) => h('text', { key: 't' + i, x: xVon(i), y: yStreifen + streifen / 2 + 4.5, fontSize: 13, fill: palette.mid, textAnchor: 'middle' }, t('blister.tageKurz.' + d.wochentag))) : []),
+    ...(t ? tage.map((d, i) => h('text', { key: 't' + i, x: xVon(i), y: yStreifen + streifen / 2 + 4.5, fontSize: 14, fill: palette.mid, textAnchor: 'middle' }, t('blister.tageKurz.' + d.wochentag))) : []),
     ...tage.map((d, i) => d.symptome && h('line', { key: 'y' + i, 'data-teil': 'symptomstrich', x1: xVon(i) - 8, y1: yStreifen + streifen + 7, x2: xVon(i) + 8, y2: yStreifen + streifen + 7, stroke: farbe, strokeWidth: 3, strokeLinecap: 'round' })));
 };

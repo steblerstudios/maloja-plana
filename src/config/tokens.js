@@ -23,14 +23,15 @@ export const space = {
 };
 
 // ─── Typography scale ───────────────────────────────────────
+// Probe 23.11.2026 (Sophie, Rundgang Grössen/Weissraum E1–E3): Untergrenze 14, eine
+// Lese-Grösse 16 (sm und body fallen zusammen), Seitentitel 30 und Grosszahl 44 als Stufen.
+// `sm` bleibt als Name stehen, damit die 863 Aufrufe nicht auf einen Schlag wandern.
+// Schriftstufen in rem (E6, Sophie 23.11.2026), damit die Schriftgrösse des Systems greift.
+// 14 · 16 · 16 · 19 · 23 · 28 · 30 · 36 · 44 px bei 16-px-Grundschrift. Die Zahlen zum Rechnen und
+// für SVG-Zeichenflächen liefert config/textPx.js — getrennt, damit das Startbündel (65 kB) sie nicht trägt.
 export const text = {
-  xs:   13,
-  sm:   15,
-  body: 16,
-  lg:   19,
-  xl:   23,
-  '2xl': 28,
-  '3xl': 36,
+  xs: '0.875rem', sm: '1rem', body: '1rem', lg: '1.1875rem', xl: '1.4375rem',
+  '2xl': '1.75rem', titel: '1.875rem', '3xl': '2.25rem', zahlGross: '2.75rem',
 };
 
 // ─── Font weights ───────────────────────────────────────────

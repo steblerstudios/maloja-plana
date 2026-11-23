@@ -6,7 +6,7 @@ import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
 import { grundbedarfFuerHaushalt } from './data/sozialhilfeRechner.js';
 import { haushaltsEinnahmen } from './data/haushaltsEinnahmen.js';
 import { monatsAusgaben, zahltBeitraegeSelbst } from './utils/monatsrechnung.js';
-import { mitEchtenBetraegen } from './utils/geld.js';
+import { mitEchtenBetraegen, PROZENT } from './utils/geld.js';
 
 // Budget Light V1 — Grouped expense structure
 // See docs/product/budget-light-v1.md for product definition
@@ -322,7 +322,7 @@ const createBudgetReportRoh = (data, t) => {
       savings: {
         monthly: budget.remaining,
         annual: budget.remaining * 12,
-        rate: budget.savingsRate + '%'
+        rate: budget.savingsRate + PROZENT
       }
     }
   };

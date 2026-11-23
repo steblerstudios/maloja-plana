@@ -35,7 +35,7 @@ afterAll(() => musterZurueck());
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
 const render = (C, props) => renderToStaticMarkup(React.createElement(C, { palette, t, onNavigate: () => {}, ...props }));
-const fmt = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
+const fmt = (n) => 'CHF\u00a0' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
 
 // GE, Einperson, 2000/Monat: nach dem (unbelegten) Muster klar unter der Grenze.
 // (Bis 23.09.2026 stand hier LU, bis 28.09.2026 BS; beide — und VD — rechnen seither nach eigenem Modell.)
@@ -105,7 +105,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     expect(html).not.toContain('premium.maxIncome');
     expect(html).not.toContain('premium.compareCantons');
     expect(html).not.toContain('ipvStatus.geschaetztLead');
-    expect(html).not.toContain('CHF ' + musterBetrag.amount);
+    expect(html).not.toContain('CHF\u00a0' + musterBetrag.amount);
   });
 
   it('IPV-Rechner bei hohem Einkommen: auch kein «nicht berechtigt» und keine Grenze', () => {
@@ -217,7 +217,7 @@ describe('E9 · belegter Kanton (simuliert): Betrag wie bisher', () => {
     const html = render(PremiumSubsidy, { data: profil(), onUpdateData: () => {} });
     expect(html).toContain('premium.eligible');
     expect(html).toContain('premium.monthlySubsidy');
-    expect(html).toContain('CHF ' + r.amount);
+    expect(html).toContain('CHF\u00a0' + r.amount);
     expect(html).toContain('premium.maxIncome');
     expect(html).toContain('premium.compareCantons');
     expect(html).not.toContain('ipv.orientierungOffen');

@@ -22,18 +22,18 @@ beforeAll(() => { preloadPLZ(); });
 describe('Steuer-Karte nennt die eigene Angabe neben der Schätzung', () => {
   it('mit Kantonsschätzung: Monatswert der Schätzung und eigene Angabe', () => {
     const html = seite(person());
-    expect(html).toMatch(/finanzUebersicht\.taxMonthlyCompare\(CHF [\d’']+\|CHF 850\)/);
+    expect(html).toMatch(/finanzUebersicht\.taxMonthlyCompare\(CHF\u00a0[\d’']+\|CHF\u00a0850\)/);
   });
   it('Schätzung ÷ 12, gerundet — derselbe Jahreswert wie im Status', () => {
     const html = seite(person());
-    const jahr = Number(html.match(/~ CHF ([\d’']+) common\.perYear/)[1].replace(/[’']/g, ''));
-    const monat = Number(html.match(/taxMonthlyCompare\(CHF ([\d’']+)\|/)[1].replace(/[’']/g, ''));
+    const jahr = Number(html.match(/~ CHF\u00a0([\d’']+) common\.perYear/)[1].replace(/[’']/g, ''));
+    const monat = Number(html.match(/taxMonthlyCompare\(CHF\u00a0([\d’']+)\|/)[1].replace(/[’']/g, ''));
     expect(monat).toBe(Math.round(jahr / 12));
   });
   it('nur Bundessteuer (kein Kanton): nur die eigene Angabe, kein Monatswert der Teilschätzung', () => {
     const html = seite(person({ canton: '' }));
     expect(html).toContain('tax.federalOnly');
-    expect(html).toContain('finanzUebersicht.taxOwnFigure(CHF 850)');
+    expect(html).toContain('finanzUebersicht.taxOwnFigure(CHF\u00a0850)');
     expect(html).not.toContain('taxMonthlyCompare');
   });
   it('ohne eigene Angabe: kein Vergleich', () => {

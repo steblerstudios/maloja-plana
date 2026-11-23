@@ -33,8 +33,8 @@ describe('Familienzulage nennt die geltenden Mindestansätze', () => {
   for (const [lang, dict] of SPRACHEN) {
     it(`${lang}: 215 statt 200`, () => {
       const text = dict.orientation.familienzulagen;
-      expect(text).toMatch(/CHF 215\b/);
-      expect(text).not.toMatch(/CHF 200\b/);
+      expect(text).toMatch(/CHF\u00a0215\b/);
+      expect(text).not.toMatch(/CHF\u00a0200\b/);
     });
   }
 });

@@ -76,7 +76,7 @@ describe('paymentReminder — selbst mahnen (OR Art. 102, 104)', () => {
   const a = { grund: 'Darlehen vom 3. März 2026', betrag: "1'250", faellig: '2026-06-30', frist: '20' };
   it('Erinnerung: freundlich, OHNE Zins und OHNE Betreibung', () => {
     const k = koerper(generateLetter('paymentReminder', person, t, { angaben: a }));
-    expect(k).toContain('CHF 1’250');
+    expect(k).toContain('CHF\u00a01’250');
     expect(k).toContain('30.06.2026');
     expect(k).not.toMatch(/Verzugszins|5 %/);
     expect(k).not.toContain('Betreibung');
@@ -84,11 +84,11 @@ describe('paymentReminder — selbst mahnen (OR Art. 102, 104)', () => {
   it('Mahnung: Zins nur VORBEHALTEN (kein berechneter Betrag), Betreibung als geprüfter Schritt', () => {
     const html = generateLetter('paymentReminder', person, t, { angaben: { ...a, stufe: 'mahnung' } });
     const k = koerper(html);
-    expect(k).toContain('Ich behalte mir vor, Verzugszins von 5 % pro Jahr zu verlangen (Art. 104 Abs. 1 OR).');
+    expect(k).toContain('Ich behalte mir vor, Verzugszins von 5 % pro Jahr zu verlangen (Art. 104 Abs. 1 OR).');
     expect(k).toContain('Betreibung');
     expect(betreff(html)).toMatch(/^Mahnung/);
     // Kein aufgelaufener Zinsbetrag: die App kennt weder Verzugsbeginn noch Verfalltag.
-    expect(k.match(/CHF [\d’.]+/g)).toEqual(['CHF 1’250']);
+    expect(k.match(/CHF\u00a0[\d’.]+/g)).toEqual(['CHF\u00a01’250']);
   });
   it('Frist ab heute nach Wahl, ungültige Wahl → Vorgabe 20 Tage', () => {
     expect(mahnFrist('10', '2026-09-27')).toBe('2026-10-07');
@@ -117,7 +117,7 @@ describe('claimDispute — bestreiten, nichts anerkennen', () => {
   });
   it('Teilbestreitung nennt den Betrag genau — und sagt ausdrücklich: keine Anerkennung des Rests', () => {
     const k = koerper(generateLetter('claimDispute', person, t, { angaben: { umfang: 'teil', teilbetrag: '80.50' } }));
-    expect(k).toContain('im Umfang von CHF 80.50');
+    expect(k).toContain('im Umfang von CHF\u00a080.50');
     expect(k).toContain('eine Anerkennung ist damit nicht verbunden');
     expect(k).not.toMatch(/anerkenne|begleiche|bezahle ich|zahle ich/i);
     // ganze Bestreitung braucht den Rest-Satz nicht
@@ -125,7 +125,7 @@ describe('claimDispute — bestreiten, nichts anerkennen', () => {
   });
   it('mehrdeutiger Betrag → Platzhalter statt falscher Zahl', () => {
     const k = koerper(generateLetter('claimDispute', person, t, { angaben: { umfang: 'teil', teilbetrag: '1.234,50' } }));
-    expect(k).toContain('CHF ' + FILL);
+    expect(k).toContain('CHF\u00a0' + FILL);
   });
   it('«bereits bezahlt» nur auf Wahl der Person; Einschätzung nur als solche', () => {
     const ohne = koerper(generateLetter('claimDispute', person, t, { angaben: {} }));
@@ -143,14 +143,14 @@ describe('claimDispute — bestreiten, nichts anerkennen', () => {
 describe('installmentRequest — Vorschlag, Anerkennungs-Falle vorne', () => {
   it('Raten und Beginn im Brief, um Bestätigung gebeten', () => {
     const k = koerper(generateLetter('installmentRequest', person, t, { angaben: { rechnungsnummer: 'R-9', betrag: '900', rate: '150', ab: '2026-10-31' } }));
-    expect(k).toContain('CHF 900');
-    expect(k).toContain('Raten von CHF 150');
+    expect(k).toContain('CHF\u00a0900');
+    expect(k).toContain('Raten von CHF\u00a0150');
     expect(k).toContain('31.10.2026');
     expect(k).toContain('schriftlich');
   });
   it('betrifft nur die Hauptforderung — Gebühren werden erfragt, nicht mit anerkannt', () => {
     const k = koerper(generateLetter('installmentRequest', person, t, { angaben: { betrag: '900', rate: '150' } }));
-    expect(k).toContain('Die Hauptforderung von CHF 900');
+    expect(k).toContain('Die Hauptforderung von CHF\u00a0900');
     expect(k).toContain('bitte ich Sie um deren Grundlage');
     expect(k).toContain('diesen Vorschlag');
     expect(k).not.toContain('Vereinbarung schriftlich');
@@ -234,7 +234,7 @@ describe('Ablauf «Mahnung erhalten»', () => {
     // Auch wenn noch «ganz»/«teil» aus einer früheren Wahl übrig ist: bei «nur Gebühren» zählt es nicht.
     for (const umfang of ['ganz', 'teil']) {
       const k = koerper(generateLetter('claimDispute', person, t, { angaben: { umfang, teilbetrag: '999', grund: 'gebuehren', gebuehrenbetrag: '30' } }));
-      expect(k).toContain('Mahn- bzw. Inkassogebühren von CHF 30');
+      expect(k).toContain('Mahn- bzw. Inkassogebühren von CHF\u00a030');
       expect(k).not.toContain('Ich bestreite diese Forderung');
       expect(k).not.toContain('übrigen Betrag');
       expect(k).not.toContain('999');

@@ -69,7 +69,7 @@ describe('Frage B · Vergleichshaus (Stebler Studios 11.11.2026: Kanton, Schweiz
     expect(tag(h, 'stock-schweiz')).toContain('stroke-dasharray="4 3"');
     expect(tag(h, 'vergleich-fuellung')).toContain('fill="#7a5"');      // Füllung = Ihre Nettomiete, Wohnen-Farbe
   });
-  it('Lage-Farbe mit ±2 %-Schwelle: darunter salbei, etwa gleich neutral', () => {
+  it('Lage-Farbe mit ±2\u202f%-Schwelle: darunter salbei, etwa gleich neutral', () => {
     expect(tag(haus({ lage: lage(1500) }), 'stock-kanton')).toContain('stroke="#6a6"');
     expect(tag(haus({ lage: lage(1760) }), 'stock-kanton')).toContain('stroke="#555"');
   });
@@ -106,7 +106,7 @@ describe('Frage B · Vergleichshaus (Stebler Studios 11.11.2026: Kanton, Schweiz
     const mitEu = lage(1900, { ausland: { eu: { hoehe: 679, pct: -53 } } });
     const h = haus({ lage: mitEu });
     expect(tag(h, 'stock-eu')).toContain('stroke="#357"');
-    expect(h).toMatch(/data-teil="fahne-eu"[^>]*>EU −53 %</);
+    expect(h).toMatch(/data-teil="fahne-eu"[^>]*>EU −53\u202f%</);
     const yN = Number(tag(h, 'stock-schweiz').match(/y1="([\d.]+)"/)[1]);
     const yE = Number(tag(h, 'stock-eu').match(/y1="([\d.]+)"/)[1]);
     expect(yE).toBeGreaterThan(yN);
@@ -135,18 +135,18 @@ describe('Die Strasse: Hauptzahlen unter dem Haus, Wegweiser auf dem Boden', () 
     expect(strasse({ hilfe: { programm: false, fass: null, moeglich: false } })).not.toContain('wegweiser-in-strasse');
   });
   it('Regel «Zahl» (Matrix §10): keine Fahne «Sie» im Haus, die Lage steht gross unter dem Vergleichshaus', () => {
-    const h = strasse({ ml: lage(1500) });                 // 1500 gegen 1732 → −13 %
+    const h = strasse({ ml: lage(1500) });                 // 1500 gegen 1732 → −13\u202f%
     expect(h).not.toContain('fahne-abstand');
     expect(h).not.toMatch(/>Sie [−+≈]/);
-    expect(h).toMatch(/data-instrument-zahl="miete"[^>]*font-size:[^;"]+[^>]*>−13 %</);
-    expect(strasse({ ml: lage(1740) })).toMatch(/data-instrument-zahl="miete"[^>]*>≈ 0 %</);
-    expect(strasse({ ml: lage(1900) })).toMatch(/data-instrument-zahl="miete"[^>]*>\+10 %</);
+    expect(h).toMatch(/data-instrument-zahl="miete"[^>]*font-size:[^;"]+[^>]*>−13\u202f%</);
+    expect(strasse({ ml: lage(1740) })).toMatch(/data-instrument-zahl="miete"[^>]*>≈ 0\u202f%</);
+    expect(strasse({ ml: lage(1900) })).toMatch(/data-instrument-zahl="miete"[^>]*>\+10\u202f%</);
   });
   it('unter dem Vergleichshaus klein Ihr Betrag über betrag(), unter dem Drittel-Haus die Wohnkosten', () => {
     const h = strasse();
-    expect(h).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.eigen: CHF 1’900</);
-    expect(h).toMatch(/data-teil="wohnkosten-franken"[^>]*>wohnenInstrument\.titel: CHF 1’830</);
-    expect(strasse({ ausprobiert: true })).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.ausprobiert: CHF 1’900</);
+    expect(h).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.eigen: CHF\u00a01’900</);
+    expect(h).toMatch(/data-teil="wohnkosten-franken"[^>]*>wohnenInstrument\.titel: CHF\u00a01’830</);
+    expect(strasse({ ausprobiert: true })).toMatch(/data-teil="strasse-betrag"[^>]*>strasse\.ausprobiert: CHF\u00a01’900</);
   });
 });
 

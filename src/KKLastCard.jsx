@@ -6,7 +6,7 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
-import { zahl } from './utils/geld.js';
+import { zahl, PROZENT } from './utils/geld.js';
 import { einkommenIstKeinLohn, monatsAusgaben, versicherungenSumme } from './utils/monatsrechnung.js';
 import { linkStil } from './components/PrimaryButton.jsx';
 import { CHAPTER_KEYS } from './config/constants.js';
@@ -110,7 +110,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
       React.createElement(Icon, { name: 'health', size: 16 }),
       React.createElement('span', { style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text } }, t('kkLast.title'))
     ),
-    React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, zahl(share, { hoechstens: 1 }) + ' %'),
+    React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, zahl(share, { hoechstens: 1 }) + PROZENT),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm, lineHeight: leading.normal } }, t(kkLastBasisKey(data))),
     // Ruhiger Balken mit Vergleichsmarke, immer dieselbe Farbe
     React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '8px', background: palette.border, borderRadius: radius.xs, marginBottom: '4px' } },
@@ -140,7 +140,7 @@ export const KKLastSpiegel = ({ palette, t, data, onNavigate }) => {
     React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
       t(allein ? 'kkLast.spiegelSatzAllein' : 'kkLast.spiegelSatz', { praemie: Number.isInteger(premium) ? zahl(premium) : zahl(premium, { stellen: 2 }), summe: zahl(summe) })),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginTop: space.xs } },
-      zahl(last.anteil, { hoechstens: 1 }) + ' %: ' + t(kkLastBasisKey(data))),
+      zahl(last.anteil, { hoechstens: 1 }) + PROZENT + ': ' + t(kkLastBasisKey(data))),
     onNavigate && React.createElement('button', {
       type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')),
       style: { ...linkStil(palette), marginTop: space.sm + 'px', minHeight: '44px', fontSize: text.sm },

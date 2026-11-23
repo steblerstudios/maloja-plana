@@ -51,8 +51,8 @@ describe('K31 IPV-Rechner, Kanton St.Gallen', () => {
     expect(html).not.toContain('ipv.orientierungOffen');
     // 18 000 massgebend → 12,16 + (18 000 − 18 700 < 0) → 12,16 %
     // 6 285.60 − 2 188.80 = 4 096.80 → 4 097/Jahr, 341/Monat
-    expect(html).toContain('CHF 4’097');
-    expect(html).toContain('CHF 341');
+    expect(html).toContain('CHF\u00a04’097');
+    expect(html).toContain('CHF\u00a0341');
   });
 
   it('eine erfasste Prämie ändert den Betrag nicht — sie geht in die Rechnung nicht ein', () => {
@@ -60,9 +60,9 @@ describe('K31 IPV-Rechner, Kanton St.Gallen', () => {
     const tief = render(profil(1500, { kkPremium: 150 }));
     const hoch = render(profil(1500, { kkPremium: 900 }));
     for (const html of [tief, hoch]) {
-      expect(html).toContain('CHF 4’097');
+      expect(html).toContain('CHF\u00a04’097');
     }
-    expect(ohne).toContain('CHF 4’097');
+    expect(ohne).toContain('CHF\u00a04’097');
   });
 
   it('der Vorbehalt sagt, dass die Referenzprämie die Grundlage ist — nicht die eigene Prämie', () => {

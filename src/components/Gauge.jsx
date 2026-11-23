@@ -62,7 +62,7 @@ export const Gauge = ({ palette, value, min = 0, max = 100, zones = [], markers 
     els.push(h('line', { key: 'mk' + i, x1, y1, x2, y2, stroke: m.color || palette.mid, strokeWidth: 2 }));
     if (m.label) {
       const [lx, ly] = polar(f, R + 19);
-      els.push(h('text', { key: 'ml' + i, x: lx, y: ly, textAnchor: 'middle', style: { fontSize: '11px', fill: m.color || palette.mid, fontWeight: weight.medium } }, m.label));
+      els.push(h('text', { key: 'ml' + i, x: lx, y: ly, textAnchor: 'middle', style: { fontSize: '12px', fill: m.color || palette.mid, fontWeight: weight.medium } }, m.label));
     }
   });
 
@@ -74,8 +74,8 @@ export const Gauge = ({ palette, value, min = 0, max = 100, zones = [], markers 
   els.push(h('circle', { key: 'hub', cx: CX, cy: CY, r: 5.5, fill: palette.surface, stroke: nColor, strokeWidth: 2.5 }));
 
   if (endLabels) {
-    els.push(h('text', { key: 'el', x: CX - R, y: CY + 15, textAnchor: 'middle', style: { fontSize: '11px', fill: palette.mid } }, endLabels.left));
-    els.push(h('text', { key: 'er', x: CX + R, y: CY + 15, textAnchor: 'middle', style: { fontSize: '11px', fill: palette.mid } }, endLabels.right));
+    els.push(h('text', { key: 'el', x: CX - R, y: CY + 15, textAnchor: 'middle', style: { fontSize: '12px', fill: palette.mid } }, endLabels.left));
+    els.push(h('text', { key: 'er', x: CX + R, y: CY + 15, textAnchor: 'middle', style: { fontSize: '12px', fill: palette.mid } }, endLabels.right));
   }
 
   return h('svg', {

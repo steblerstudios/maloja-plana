@@ -72,7 +72,7 @@ describe.each(FAELLE)('Uhr $uhr: Texte zeigen die Werte $jahr', (f) => {
       basis: { canton: 'BS', dateOfBirth: '1985-01-01', maritalStatus: 'single', household: { adults: 1, children: [] } },
       finanzen: { monthlyIncome: 6000, incomeType: 'brutto', dreizehnter: 'no' },
     } });
-    expect(html).toContain(esc(`${de.vr.minMax}: CHF ${f.minRente} – ${f.maxRente} / ${de.vr.monat} (Stand ${f.jahr})`));
+    expect(html).toContain(esc(`${de.vr.minMax}: CHF\u00a0${f.minRente} – ${f.maxRente} / ${de.vr.monat} (Stand ${f.jahr})`));
     // Quellenzeile darunter: dasselbe Jahr (swiss-precision-pruefer 23.10.2026)
     expect(html).toContain(`Keine rechtsverbindliche Auskunft. Stand ${f.jahr}.`);
     expect(html).not.toMatch(/\{jahr\}/);
@@ -86,7 +86,7 @@ describe.each(FAELLE)('Uhr $uhr: Texte zeigen die Werte $jahr', (f) => {
       basis: { canton: 'BS', dateOfBirth: '2008-01-01', maritalStatus: 'single', household: { adults: 1, children: [] } },
       finanzen: { monthlyIncome: 1500, incomeType: 'brutto', dreizehnter: 'no' },
     } });
-    expect(html).toContain(esc(`Jahreslohn nicht über der BVG-Eintrittsschwelle (CHF ${f.schwelle}, Stand ${f.jahr})`));
+    expect(html).toContain(esc(`Jahreslohn nicht über der BVG-Eintrittsschwelle (CHF\u00a0${f.schwelle}, Stand ${f.jahr})`));
     expect(html).not.toContain(esc('(< CHF'));
   });
 });

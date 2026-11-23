@@ -29,13 +29,13 @@ describe('Lebensmappe · alle sieben Kapitel', () => {
   });
 });
 
-// F7-S6: Behörden-Dossier und Lebensmappe ohne doppelte Währung («Monatliches Einkommen CHF · CHF 6’200»).
+// F7-S6: Behörden-Dossier und Lebensmappe ohne doppelte Währung («Monatliches Einkommen CHF\u00a0· CHF\u00a06’200»).
 import { getBehoerdenDossierPreview } from '../dossierGenerator.js';
 describe('Dossiers · Feldnamen ohne «CHF»', () => {
   it('Behörden-Dossier: kein Feldname endet auf CHF, Franchise mit CHF im Wert', () => {
     const v = getBehoerdenDossierPreview(DEMO_DATA, chapters, t, {});
     const rows = v.sections.flatMap((s) => s.rows || []);
     expect(rows.filter((r) => /CHF\s*$|CHF\//.test(r.label || ''))).toEqual([]);
-    expect(rows.find((r) => /^Franchise/.test(r.label)).value).toBe('CHF 1’500');
+    expect(rows.find((r) => /^Franchise/.test(r.label)).value).toBe('CHF\u00a01’500');
   });
 });

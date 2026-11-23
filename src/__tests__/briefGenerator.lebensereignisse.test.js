@@ -196,28 +196,28 @@ describe('debtObjection — SchKG Art. 74', () => {
   it('Teilrechtsvorschlag nennt den Betrag genau (Abs. 2)', () => {
     const k = koerper(generateLetter('debtObjection', person, t, { angaben: { ...angaben, umfang: 'teil', teilbetrag: '1250.5' } }));
     expect(k).toContain('Teil der Forderung');
-    expect(k).toMatch(/CHF 1.250\.50/);
+    expect(k).toMatch(/CHF\u00a01.250\.50/);
   });
   it('Teilrechtsvorschlag ohne Betrag: Platzhalter statt geratener Zahl', () => {
     const k = koerper(generateLetter('debtObjection', person, t, { angaben: { ...angaben, umfang: 'teil' } }));
-    expect(k).toContain(`CHF ${FILL}`);
+    expect(k).toContain(`CHF\u00a0${FILL}`);
   });
-  // Fach-Prüfer 26.09.2026 (Blocker): parseFloat("1'234.50") ergab 1 → «CHF 1» bestritten.
+  // Fach-Prüfer 26.09.2026 (Blocker): parseFloat("1'234.50") ergab 1 → «CHF\u00a01» bestritten.
   it('🛑 Betrag: Schweizer Schreibweisen werden richtig gelesen, Mehrdeutiges nie geraten', () => {
     expect(leseBetrag("1'234.50")).toBe(1234.5);
     expect(leseBetrag('1’234.50')).toBe(1234.5);
     expect(leseBetrag('1 234,50')).toBe(1234.5);
-    expect(leseBetrag('CHF 500.-')).toBe(500);
+    expect(leseBetrag('CHF\u00a0500.-')).toBe(500);
     expect(leseBetrag('Fr. 80.–')).toBe(80);
     expect(leseBetrag('250')).toBe(250);
     for (const unklar of ['1.234,50', '1,234.50', '12.345', 'zwei', '', '-50', '0', '1.2.3']) {
       expect(leseBetrag(unklar), unklar).toBe(0);
     }
   });
-  it('🛑 Betrag im Brief: «1\'234.50» wird CHF 1’234.50, nicht CHF 1', () => {
+  it('🛑 Betrag im Brief: «1\'234.50» wird CHF\u00a01’234.50, nicht CHF\u00a01', () => {
     const k = koerper(generateLetter('debtObjection', person, t, { angaben: { ...angaben, umfang: 'teil', teilbetrag: "1'234.50" } }));
-    expect(k).toMatch(/CHF 1.234\.50/);
-    expect(k).not.toMatch(/CHF 1\./);
+    expect(k).toMatch(/CHF\u00a01.234\.50/);
+    expect(k).not.toMatch(/CHF\u00a01\./);
   });
   it('SchKG Art. 75 Abs. 2: Einrede «kein neues Vermögen» nur auf Wunsch im Brief', () => {
     expect(koerper(generateLetter('debtObjection', person, t, { angaben }))).not.toContain('neuem Vermögen');

@@ -106,7 +106,7 @@ describe('K-F4: Nebenkosten-Schätzung mit ’', () => {
     const z = quelle('ChapterView.jsx').split('\n').find((l) => l.includes("t('wohnen.nkEstimate'"));
     expect(z).toMatch(/monthly: zahl\(/);
     expect(z).toMatch(/annual: zahl\(/);
-    expect(t('wohnen.nkEstimate', { monthly: '180', annual: '2’160' })).toContain('ca. CHF 2’160/Jahr');
+    expect(t('wohnen.nkEstimate', { monthly: '180', annual: '2’160' })).toContain('ca. CHF\u00a02’160/Jahr');
   });
 });
 

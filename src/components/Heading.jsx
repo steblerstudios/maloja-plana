@@ -19,7 +19,7 @@ const titelText = (children) => React.createElement('span', { style: { minWidth:
 // der Display-Schrift»), Markenhandbuch §3 «Editoriale Headlines: Hanken». Vorher trugen
 // Kapitel, Abläufe und «Was ansteht» das Rezept als Überschreibung, Rechner eine eigene Grösse
 // und rund zwanzig Seiten Lexend 28 px. Wächter: kopfTitelGleich.test.js.
-export const SEITENTITEL_STIL = { fontFamily: fontFamilyDisplay, fontSize: '30px', lineHeight: 1.1, letterSpacing: '-0.015em', fontWeight: weight.bold };
+export const SEITENTITEL_STIL = { fontFamily: fontFamilyDisplay, fontSize: text.titel, lineHeight: 1.1, letterSpacing: '-0.015em', fontWeight: weight.bold };
 export const PageTitle = ({ palette, children, icon, style, ...rest }) =>
   React.createElement('h2', {
     style: {

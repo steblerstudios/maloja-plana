@@ -32,7 +32,18 @@ export function zahl(n, { stellen, hoechstens } = {}) {
   return (negativ ? MINUS : '') + gruppieren(ganz) + (rest ? '.' + rest : '');
 }
 
-// betragEcht(-1234)                 → "− CHF 1’234"
+// Prozent mit schmalem, nicht umbrechendem Leerzeichen (U+202F), Schweizer Satz «12 %».
+// Entscheid Sophie 23.11.2026 (Rundgang Grössen/Weissraum, E5): vorher stand ein normales
+// Leerzeichen oder keines («75%»), und «12» konnte am Zeilenende stehen bleiben, «%» darunter.
+// Lexend und Hanken führen U+202F (unicode-range U+2000-206F in tokens.css).
+// prozent(12.34, { hoechstens: 1 }) → "12.3 %"; mit Vorzeichen bauen die Aufrufer selbst und hängen PROZENT an.
+export const PROZENT = ' %';
+export function prozent(n, optionen) {
+  const z = zahl(n, optionen);
+  return z === '–' ? z : z + PROZENT;
+}
+
+// betragEcht(-1234)                 → "− CHF 1’234" (Leerzeichen geschützt, U+00A0)
 // betragEcht(12.5, { stellen: 2 })  → "CHF 12.50"
 // Immer der wahre Betrag — für alles, was die App verlässt (Export, Dossier).
 export function betragEcht(n, optionen = {}) {
@@ -40,7 +51,8 @@ export function betragEcht(n, optionen = {}) {
   if (n === null || n === undefined || !Number.isFinite(x)) return '–';
   const z = zahl(Math.abs(x), optionen);
   const negativ = x < 0 && z !== '0' && !/^0(\.0+)?$/.test(z);
-  return (negativ ? MINUS + ' ' : '') + 'CHF ' + z;
+  // Geschützte Leerzeichen (U+00A0, Sophie 23.11.2026 E5): «CHF» und Betrag, Minus und «CHF» trennen nie am Zeilenende.
+  return (negativ ? MINUS + '\u00a0' : '') + 'CHF\u00a0' + z;
 }
 
 // Sichtschutz «Beträge verbergen» (Kopfzeile, seit 10.11.2026, Idee aus dem Nessie-Abgleich):
@@ -67,7 +79,7 @@ export const betraegeVerborgen = () => echteBetraegeTiefe === 0 && typeof docume
 
 // Die eine Maske — t() und betrag() setzen genau diesen Text. BetragText.jsx erkennt ihn daran
 // und gibt dem Bildschirmleser statt der drei Punkte «Betrag verborgen».
-export const VERBORGEN = 'CHF ···';
+export const VERBORGEN = 'CHF\u00a0···';
 
 export function betrag(n, optionen) {
   const echt = betragEcht(n, optionen);

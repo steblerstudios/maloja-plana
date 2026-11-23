@@ -48,15 +48,15 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
     const html = render(profil(2000));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 4’176');
-    expect(html).toContain('CHF 348');
+    expect(html).toContain('CHF\u00a04’176');
+    expect(html).toContain('CHF\u00a0348');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(2000, { kkPremium: null }));
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 4’176');
+    expect(html).not.toContain('CHF\u00a04’176');
   });
 
   it('nennt die amtliche Einkommensgrenze — 50 000 allein, 121 000 (Erwachsene) mit einem Kind — und keine Musterwerte', () => {
@@ -108,7 +108,7 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
   it('über Gruppe 8 mit Kind: nur der Kinderbeitrag, mit dem Gruppe-9-Hinweis', () => {
     const html = render(profil(10500, { children: [{ age: 5 }] }));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 67');
+    expect(html).toContain('CHF\u00a067');
     expect(html).toContain('ipv.geNurKinder(' + geldZahl(151000) + ')');
   });
 
@@ -148,14 +148,14 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
     expect(render(profil(2000, { children: [{ age: 0 }] }))).toContain('ipv.orientierungOffen');
     const vermoegen = render(profil(2000, { finanzen: { savingsAccount: 300000 } }));
     expect(vermoegen).toContain('ipv.offenGrund.vermoegenAntragGE');
-    expect(vermoegen).not.toContain('CHF 4’176');
+    expect(vermoegen).not.toContain('CHF\u00a04’176');
   });
 
   it('Wohneigentum: keine Zahl, eigener Grund mit Antrag (W2)', () => {
     const html = render({ ...profil(2000), wohnen: { postalCode: '1204', city: 'Genève', propertyValue: 900000 } });
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.offenGrund.wohneigentumGE');
-    expect(html).not.toContain('CHF 4’176');
+    expect(html).not.toContain('CHF\u00a04’176');
   });
 });
 
@@ -207,7 +207,7 @@ describe('K31 GE — Weg-Satz, Tausendertrennung, kein noteAutoSam (fünf Sprach
     de: { tief: /15 000 Franken allein/, heute: /heutige Einkommen/, frist: /vor dem 30\. November des Anspruchsjahres/ },
     fr: { tief: /15 000 francs pour une personne seule/, heute: /revenu actuel/, frist: /avant le 30 novembre de l’année du droit/ },
     it: { tief: /15 000 franchi per una persona sola/, heute: /reddito attuale/, frist: /prima del 30 novembre dell’anno di diritto/ },
-    en: { tief: /CHF 15,000 for a single person/, heute: /current income/, frist: /before 30 November of the entitlement year/ },
+    en: { tief: /CHF\u00a015,000 for a single person/, heute: /current income/, frist: /before 30 November of the entitlement year/ },
     rm: { tief: /15 000 francs per ina persuna suletta/, heute: /entrada dad oz/, frist: /avant ils 30 da november da l’onn da dretg/ },
   };
   it('geWegAutomatisch nennt das tiefe RDU des Bemessungsjahres, das heutige Einkommen und die Frist', async () => {

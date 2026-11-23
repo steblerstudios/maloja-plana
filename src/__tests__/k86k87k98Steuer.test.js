@@ -120,7 +120,7 @@ describe('K86 · effektiver Satz bei verheiratet + direkt eingetragenem gemeinsa
     expect(s.gemeinsamDirekt).toBe(false);
     expect(s.bund.effektiverSatz).toBeGreaterThan(0);
     const r = steuerrechner(p);
-    expect(satzZeile(r.alle).props.children.join('')).toMatch(/~\d+(\.\d+)?%/);
+    expect(satzZeile(r.alle).props.children.join('')).toMatch(/~\d+(\.\d+)?\u202f%/);
     expect(r.text).not.toContain('tax.gemeinsamDirektHinweis');
     expect(hatNettoeinkommen(r.alle)).toBe(true);
   });

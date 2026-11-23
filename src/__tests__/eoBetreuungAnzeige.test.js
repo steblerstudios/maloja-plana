@@ -20,7 +20,7 @@ describe('EO-Rechner — Betreuungsentschädigung als Höchstwert mit 98 Taggeld
 
   it('zeigt «bis 98 Taggelder» und ein Total mit «höchstens»', () => {
     expect(html).toContain('bis 98 Taggelder');
-    expect(html).toMatch(/höchstens CHF 21.560/); // 220 × 98
+    expect(html).toMatch(/höchstens CHF\u00a021.560/); // 220 × 98
   });
 
   it('der Hinweis nennt 98, 18 Monate und die hälftige Aufteilung', () => {

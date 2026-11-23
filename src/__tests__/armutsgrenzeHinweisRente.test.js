@@ -35,7 +35,7 @@ describe('povertyBruttoHint: eigene Fassung im Rentenalter', () => {
     const html = seite(knapp('1950-03-01', 'employed'));
     expect(html).toContain('finanzUebersicht.belowPoverty');
     expect(html).toContain('finanzUebersicht.povertyBruttoHintRente(');
-    expect(html).toMatch(/povertyBruttoHintRente\([^)]*\|CHF 1.400\)/);
+    expect(html).toMatch(/povertyBruttoHintRente\([^)]*\|CHF\u00a01.400\)/);
   });
 
   it('vor dem Referenzalter: bisherige Fassung', () => {

@@ -48,8 +48,8 @@ describe('Vorsorge-Rechner: leere Beitragsjahre = Beiträge bis zum Bezug (B9)',
     expect(rente(20)).toBeLessThan(rente(44) * 0.5);        // der Fehler war gross, nicht kosmetisch
     expect(html).toContain('(44/44 ' + t('vr.jahre') + ')');
     expect(html).not.toContain('(20/44 ' + t('vr.jahre') + ')');
-    expect(html).toContain('CHF ' + esc(zahl(rente(44))) + ' / ' + t('vr.monat'));
-    expect(html).not.toContain('CHF ' + esc(zahl(rente(20))) + ' / ');
+    expect(html).toContain('CHF\u00a0' + esc(zahl(rente(44))) + ' / ' + t('vr.monat'));
+    expect(html).not.toContain('CHF\u00a0' + esc(zahl(rente(20))) + ' / ');
     expect(html).toContain(annahme);
   });
 
@@ -57,7 +57,7 @@ describe('Vorsorge-Rechner: leere Beitragsjahre = Beiträge bis zum Bezug (B9)',
     reiter = 'vergleich';
     const html = zeichne(profil);
     expect(html).toContain(t('vr.totalRente'));
-    expect(html).toContain('AHV CHF ' + esc(zahl(rente(44))) + ' + BVG CHF ');
+    expect(html).toContain('AHV CHF\u00a0' + esc(zahl(rente(44))) + ' + BVG CHF\u00a0');
     expect(html).toContain(annahme);
   });
 
@@ -103,8 +103,8 @@ describe('Vergleich-Reiter: Tabellenzeile = AHV-Block für dasselbe Bezugsalter 
     const z63 = vergleicheVorbezugAufschub(80000, 42, undefined, geburtsjahr).find(z => z.bezugAlter === 63);
     const z65 = vergleicheVorbezugAufschub(80000, 44, undefined, geburtsjahr).find(z => z.bezugAlter === 65);
     const z63alt = vergleicheVorbezugAufschub(80000, 44, undefined, geburtsjahr).find(z => z.bezugAlter === 63);
-    expect(html).toContain('CHF ' + esc(zahl(z63.monatsrente)));
-    expect(html).toContain('CHF ' + esc(zahl(z65.monatsrente)));
-    expect(html).not.toContain('CHF ' + esc(zahl(z63alt.monatsrente)));
+    expect(html).toContain('CHF\u00a0' + esc(zahl(z63.monatsrente)));
+    expect(html).toContain('CHF\u00a0' + esc(zahl(z65.monatsrente)));
+    expect(html).not.toContain('CHF\u00a0' + esc(zahl(z63alt.monatsrente)));
   });
 });

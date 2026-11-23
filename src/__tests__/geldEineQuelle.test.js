@@ -3,7 +3,7 @@
 // Bis 24.09.2026: rund zwanzig Stellen mit toLocaleString('de-CH') — Chromium liefert
 // dort den geraden Apostroph ', chf() und drei Kopien den typografischen ’. Auf einer Seite
 // standen zwei Trennzeichen. Und wo toFixed(2) stand (Schulden, Budget-Import, KVG),
-// fehlte die Trennung ganz: «CHF 12345.00».
+// fehlte die Trennung ganz: «CHF\u00a012345.00».
 import { describe, it, expect, beforeAll } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -38,11 +38,11 @@ describe('zahl', () => {
 
 describe('betrag', () => {
   it('Franken wie die bisherigen formatCHF-Kopien', () => {
-    expect(betrag(0)).toBe('CHF 0');
-    expect(betrag(12345.6)).toBe('CHF 12’346');
-    expect(betrag(-1234)).toBe('− CHF 1’234');
-    expect(betrag(12345, { stellen: 2 })).toBe('CHF 12’345.00');
-    expect(betrag(-0.001, { stellen: 2 })).toBe('CHF 0.00');
+    expect(betrag(0)).toBe('CHF\u00a00');
+    expect(betrag(12345.6)).toBe('CHF\u00a012’346');
+    expect(betrag(-1234)).toBe('−\u00a0CHF\u00a01’234');
+    expect(betrag(12345, { stellen: 2 })).toBe('CHF\u00a012’345.00');
+    expect(betrag(-0.001, { stellen: 2 })).toBe('CHF\u00a00.00');
   });
 });
 
@@ -74,9 +74,9 @@ describe('eine Quelle', () => {
     const treffer = zeilen().filter(([o, z]) => /\(\?=\(\\d\{3\}\)\+/.test(z) && !o.startsWith('utils/geld.js')).map(([o]) => o);
     expect(treffer).toEqual([]);
   });
-  // Jeder Text, der auf «CHF » endet ('CHF ', '~ CHF ', ': CHF ', 'Max: CHF ' …) und mit einem
+  // Jeder Text, der auf «CHF » endet ('CHF\u00a0', '~ CHF\u00a0', ': CHF\u00a0', 'Max: CHF\u00a0' …) und mit einem
   // Ausdruck verbunden wird, der nicht durch einen Formatierer läuft — auch in Vorlagen
-  // (`CHF ${…}`). Die Ausnahme für den Text-Export ist seit 25.09.2026 weg: er formatiert jetzt.
+  // (`CHF\u00a0${…}`). Die Ausnahme für den Text-Export ist seit 25.09.2026 weg: er formatiert jetzt.
   it('kein «CHF » vor einer rohen Zahl', () => {
     const FORMATIERER = /^(betrag|chfBetrag|zahl|fmt|fmtCHF|formatCHF|fmtAmount|formatAmount|num|num1|chf|t|wahl|geld)\(/; // wahl: Beschriftung aus dem Wörterbuch (Franchise «2’500»)
     const treffer = zeilen().filter(([o, z]) => {

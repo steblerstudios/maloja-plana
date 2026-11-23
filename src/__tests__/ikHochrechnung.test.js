@@ -110,7 +110,7 @@ describe('kuenftigeIkJahre', () => {
 describe('Vorsorge-Rechner mit IK-Auszug', () => {
   it('IK mit demselben Einkommen wie heute: dieselbe Rente ab 65 wie ohne IK', () => {
     const html = zeichne(mitIk());
-    expect(html).toContain('CHF ' + esc(zahl(vollrente)) + ' / ' + t('vr.monat'));
+    expect(html).toContain('CHF\u00a0' + esc(zahl(vollrente)) + ' / ' + t('vr.monat'));
     expect(html).not.toContain(esc(t('vr.fehlendeBeitragsjahre')));
   });
 
@@ -119,9 +119,9 @@ describe('Vorsorge-Rechner mit IK-Auszug', () => {
     const html = zeichne(mitIk(40000));
     reiter = 'ahv';
     const ahvBlock = zeichne(mitIk(40000));
-    const betrag = (ahvBlock.match(/CHF ([0-9’'&#x27;]+) \/ Monat/) || [])[1];
+    const betrag = (ahvBlock.match(/CHF\u00a0([0-9’'&#x27;]+) \/ Monat/) || [])[1];
     // Genau die Tabellenzeile 65 lesen — «Zusammensetzung: AHV CHF …» steht sonst auch da.
-    const zeile65 = (html.match(/<td[^>]*>65<\/td><td[^>]*>CHF ([^<]*)</) || [])[1];
+    const zeile65 = (html.match(/<td[^>]*>65<\/td><td[^>]*>CHF\u00a0([^<]*)</) || [])[1];
     expect(betrag).toBeTruthy();
     expect(zeile65).toBe(betrag);
   });

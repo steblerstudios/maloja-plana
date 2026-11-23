@@ -69,7 +69,7 @@ const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
 const tausender = (n) => { const r = Math.round(n); return r >= 1000 ? r.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’') : String(r); };
 const imRahmen = (wert, soll) => Math.abs(wert - soll) <= Math.max(0.03 * soll, 50);
-// Bundessteuer: die ESTV weist ganze Franken aus; #184 belegt höchstens CHF 0.50 Abstand.
+// Bundessteuer: die ESTV weist ganze Franken aus; #184 belegt höchstens CHF\u00a00.50 Abstand.
 const bundWieEstv = (wert, soll) => Math.abs(wert - soll) <= 0.5;
 
 // partnerIncome: nicht gesetzt = nie beantwortet (so legt ChapterView das Feld an)
@@ -120,7 +120,7 @@ const steuerrechner = (data) => {
   const text = texte(alle);
   // Seit 24.09.2026 mit Tausender-’ (utils/geld.js). Ohne diese Anpassung erkennte der Leser
   // KEINEN Betrag mehr — und die «keine Zahl»-Prüfungen (toEqual([])) wären leer grün.
-  const betraege = text.split('\n').filter((z) => /^~ CHF [\d’]+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6).replace(/’/g, '')));
+  const betraege = text.split('\n').filter((z) => /^~ CHF\u00a0[\d’]+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6).replace(/’/g, '')));
   const steuerbar = alle.find((k) => k.props['data-testid'] === 'steuerbares-einkommen');
   return { alle, text, betraege, steuerbar: steuerbar ? texte(knoten(steuerbar.props.children)) : null, gespeichert, render };
 };
@@ -194,7 +194,7 @@ describe('R4-1 · 13. Monatslohn', () => {
     expect(steuerrechner(p).text).toContain('tax.annahmeOhneDreizehnten');
     expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).not.toContain('tax.annahmeOhneDreizehnten');
     expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('tax.netIncomeNote13');
-    expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('CHF 65’000');
+    expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('CHF\u00a065’000');
     const json = generateBehoerdenJSON(p, dossierRechnung(p)).calculations.tax;
     // E40: Kennung statt deutschem Klartext (ohne t nur die Kennung)
     expect(json.assumptions).toContainEqual({ code: 'ohne_13_monatslohn' });
@@ -364,7 +364,7 @@ describe('K62.4 · verheiratet mit eingetragenem steuerbarem Einkommen', () => {
     expect(fu).not.toContain('tax.ohneZahlPartnerOffen');
     // Dossier: Bundessteuer, «keine Schätzung» nur bei der Kantonssteuer
     const bd = statisch(BehoerdenDossier, p);
-    expect(bd).toContain('CHF ' + tausender(s.bund.steuer) + 'common.perYear');
+    expect(bd).toContain('CHF\u00a0' + tausender(s.bund.steuer) + 'common.perYear');
     expect(bd).toContain('tax.noCantonalFigure');
     expect(bd).not.toContain('tax.ohneZahlPartnerOffen');
   });
@@ -388,7 +388,7 @@ describe('K62.4 · verheiratet mit eingetragenem steuerbarem Einkommen', () => {
     const vorher = regel(p);
     // mit dem Zivilstand aus dem Profil: dieselben Zahlen wie Finanzübersicht und Dossier
     expect(r.betraege).toEqual([Math.round(vorher.bund.steuer), vorher.kanton.kantonal.kantonalUndGemeinde, vorher.kanton.kantonal.total]);
-    expect(statisch(FinanzUebersicht, p)).toContain('tax.federalTax: CHF ' + tausender(vorher.bund.steuer) + ' +');
+    expect(statisch(FinanzUebersicht, p)).toContain('tax.federalTax: CHF\u00a0' + tausender(vorher.bund.steuer) + ' +');
     marriedBox(r, false).props.onChange({ target: { checked: true } });
     const nach = texte(r.render());
     expect(kurz(nach)).toEqual([]);
@@ -456,18 +456,18 @@ describe('R4-4 · eine Zahl überall (Häkchen «eingetragenen Wert verwenden»)
     const steuerbar = quelle === 'direkt' ? 40000 : 72000 - 2160 - 1800;
     expect(s.steuerbar).toBe(steuerbar);
     // Steuerrechner
-    expect(r.steuerbar).toContain('CHF ' + tausender(steuerbar)); // seit 24.09.2026 mit ’
+    expect(r.steuerbar).toContain('CHF\u00a0' + tausender(steuerbar)); // seit 24.09.2026 mit ’
     expect(r.betraege[0]).toBe(Math.round(s.bund.steuer));
     expect(r.betraege[1]).toBe(s.kanton.kantonal.kantonalUndGemeinde);
     // Finanzübersicht
-    expect(fu).toContain('tax.federalTax: CHF ' + tausender(s.bund.steuer) + ' +');
-    expect(fu).toContain('CHF ' + tausender(s.kanton.kantonal.kantonalUndGemeinde));
+    expect(fu).toContain('tax.federalTax: CHF\u00a0' + tausender(s.bund.steuer) + ' +');
+    expect(fu).toContain('CHF\u00a0' + tausender(s.kanton.kantonal.kantonalUndGemeinde));
     // Dossier
-    expect(bd).toContain('CHF ' + tausender(steuerbar) + '<');
-    expect(bd).toContain('CHF ' + tausender(s.bund.steuer) + 'common.perYear');
-    expect(bd).toContain('CHF ' + tausender(s.kanton.kantonal.kantonalUndGemeinde));
+    expect(bd).toContain('CHF\u00a0' + tausender(steuerbar) + '<');
+    expect(bd).toContain('CHF\u00a0' + tausender(s.bund.steuer) + 'common.perYear');
+    expect(bd).toContain('CHF\u00a0' + tausender(s.kanton.kantonal.kantonalUndGemeinde));
     const preview = getBehoerdenDossierPreview(p, [], t, dossierRechnung(p));
-    expect(preview.sections.find((x) => x.key === 'steuern').rows.map((x) => x.value)).toContain('CHF ' + tausender(steuerbar));
+    expect(preview.sections.find((x) => x.key === 'steuern').rows.map((x) => x.value)).toContain('CHF\u00a0' + tausender(steuerbar));
   });
 
   it('der Steuerrechner speichert das Häkchen mit', () => {

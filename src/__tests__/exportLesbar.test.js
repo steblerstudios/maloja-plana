@@ -1,7 +1,7 @@
 // Der Text-Export (MANIFEST.txt) ist lesbar und behauptet nichts, was nicht erfasst ist.
 //
 // Bis 25.09.2026: Auswahlfelder als Rohschlüssel («CHF f2500», «handwritten», «yes»),
-// Beträge ohne Tausendertrennung, ein LEERES Betragsfeld als «CHF 0» und ein leeres
+// Beträge ohne Tausendertrennung, ein LEERES Betragsfeld als «CHF\u00a00» und ein leeres
 // Testament-Feld als «Nein». «Nicht erfasst» ist weder null noch nein.
 import { describe, it, expect } from 'vitest';
 import { prepareDownloadFiles } from '../zipExport.js';
@@ -38,15 +38,15 @@ describe('Text-Export', () => {
   });
 
   it('Beträge mit Schweizer Trennung, Rappen bleiben', () => {
-    expect(voll).toContain('CHF 1’850');
-    expect(voll).toContain('CHF 6’500.5');
-    expect(voll).toContain('CHF 7’258');
-    expect(voll).toContain('CHF 412.35');
+    expect(voll).toContain('CHF\u00a01’850');
+    expect(voll).toContain('CHF\u00a06’500.5');
+    expect(voll).toContain('CHF\u00a07’258');
+    expect(voll).toContain('CHF\u00a0412.35');
   });
 
-  it('leer ist «—», nicht «CHF 0» und nicht «Nein»', () => {
+  it('leer ist «—», nicht «CHF\u00a00» und nicht «Nein»', () => {
     const leer = text({});
-    expect(leer).not.toMatch(/CHF 0\b/);
+    expect(leer).not.toMatch(/CHF\u00a00\b/);
     expect(zeile(voll, t('zipExport.manifest.utilities'))).toBe('—');
     expect(zeile(leer, t('zipExport.manifest.rent'))).toBe('—');
     expect(zeile(leer, t('zipExport.manifest.franchise'))).toBe('—');

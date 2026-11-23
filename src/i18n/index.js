@@ -111,6 +111,7 @@ export function createT(translations, lang, anrede, unvollstaendig = false) {
         if (v === undefined) return (chf || '') + '{' + k + '}';
         // Sichtschutz «Beträge verbergen» (utils/geld.js): ein Platzhalter hinter «CHF» ist ein Betrag.
         if (chf && v !== '' && v !== null && betraegeVerborgen()) return VERBORGEN;
+        // Das geschützte Leerzeichen nach «CHF» steht in den Übersetzungen selbst (Wächter prozentSatz.test.js).
         if (chf && typeof v === 'number' && Number.isFinite(v)) {
           return chf + zahl(v, Number.isInteger(v) ? {} : { stellen: 2 });
         }

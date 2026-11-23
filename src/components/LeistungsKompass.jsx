@@ -47,8 +47,8 @@ export const LeistungsKompass = ({ palette, t, kompass, topLabel }) => {
     h('circle', { cx: CX, cy: CY, r: R, fill: 'none', stroke: palette.border, strokeWidth: 2 }),
     [0, 45, 90, 135, 180, 225, 270, 315].map(d => tick(d, d % 90 === 0 ? 12 : 7)),
     // Peilungs-Beschriftung: Norden = Leistungen, Süden = weitere Wege
-    h('text', { x: CX, y: CY - R - 8, textAnchor: 'middle', style: { fontSize: '12px', fill: state === 'found' ? palette.sage : palette.mid, fontWeight: weight.medium } }, t('schnellcheck.kompassLeistungen')),
-    h('text', { x: CX, y: CY + R + 18, textAnchor: 'middle', style: { fontSize: '12px', fill: state === 'none' ? palette.skyDeep : palette.mid, fontWeight: weight.medium } }, t('schnellcheck.kompassWege')),
+    h('text', { x: CX, y: CY - R - 8, textAnchor: 'middle', style: { fontSize: '13px', fill: state === 'found' ? palette.sage : palette.mid, fontWeight: weight.medium } }, t('schnellcheck.kompassLeistungen')),
+    h('text', { x: CX, y: CY + R + 18, textAnchor: 'middle', style: { fontSize: '13px', fill: state === 'none' ? palette.skyDeep : palette.mid, fontWeight: weight.medium } }, t('schnellcheck.kompassWege')),
     // Nadel: farbige Spitze (Peilung) + gedämpftes Gegenende, um bearing gedreht
     h('g', { transform: 'rotate(' + bearing + ' ' + CX + ' ' + CY + ')' },
       h('polygon', { points: CX + ',' + (CY - R + 16) + ' ' + (CX + 7) + ',' + CY + ' ' + (CX - 7) + ',' + CY, fill: northColor, opacity: northOpacity }),

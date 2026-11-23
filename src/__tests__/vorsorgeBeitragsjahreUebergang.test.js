@@ -49,8 +49,8 @@ const esc = (x) => String(x).replace(/&/g, '&amp;').replace(/'/g, '&#x27;');
 // Skala (x/y Jahre), Kürzung in CHF, Rente ab Referenzalter — eindeutige Stellen im AHV-Block
 const werte = (html) => [
   (html.match(/\((\d+\/\d+) Jahre\)/) || [])[1],
-  (html.match(/Kürzung \(Vorbezug\): [^<]*= CHF ([^ <]+) \//) || [])[1],
-  (html.match(/Ab dem Referenzalter \([^)]*\): CHF ([^ <]+) \//) || [])[1],
+  (html.match(/Kürzung \(Vorbezug\): [^<]*= CHF\u00a0([^ <]+) \//) || [])[1],
+  (html.match(/Ab dem Referenzalter \([^)]*\): CHF\u00a0([^ <]+) \//) || [])[1],
 ];
 
 afterEach(() => { bezugAlter = '63'; beitragsjahre = ''; });
@@ -71,6 +71,6 @@ describe('JG 1962: eingetippte 44 = leeres Feld, je Geburtsmonat und Bezugsalter
     beitragsjahre = '44';
     const html = zeichne('1962-09-15');
     expect(werte(html)).toEqual(['42/44', '232', esc(zahl(2147))]);
-    expect(html).toContain('CHF ' + esc(zahl(2039)) + ' / ' + t('vr.monat'));
+    expect(html).toContain('CHF\u00a0' + esc(zahl(2039)) + ' / ' + t('vr.monat'));
   });
 });

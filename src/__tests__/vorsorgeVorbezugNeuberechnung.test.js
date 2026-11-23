@@ -44,7 +44,7 @@ const profil = {
   basis: { canton: 'BS', dateOfBirth: geburtsjahr + '-01-01', maritalStatus: 'single', household: { adults: 1, children: [] } },
   finanzen: { monthlyIncome: 6153.85, incomeType: 'brutto', dreizehnter: 'yes' },
 };
-const chf = (v) => 'CHF ' + esc(zahl(v));
+const chf = (v) => 'CHF\u00a0' + esc(zahl(v));
 const ab65 = esc(t('vr.renteAbReferenzalter', { alter: '65 ' + t('vr.jahre'), betrag: zahl(2070) })) + ' / ' + t('vr.monat');
 
 afterEach(() => { reiter = 'ahv'; bezugAlter = '63'; beitragsjahre = ''; });
@@ -55,7 +55,7 @@ describe('Vorsorge-Rechner: Vorbezug wird im Referenzalter neu berechnet (Merkbl
     expect(html).toContain(chf(1962) + ' / ' + t('vr.monat'));
     expect(html).toContain(ab65);
     expect(html).toContain(esc(t('vr.vorbezugNeuberechnung')));
-    expect(html).toContain(t('vr.vorbezug') + ': 13.6% = ' + chf(309) + ' / ' + t('vr.monat'));
+    expect(html).toContain(t('vr.vorbezug') + ': 13.6\u202f% = ' + chf(309) + ' / ' + t('vr.monat'));
     expect(html).toContain(esc(t('vr.beitragsjahreAngenommenVorbezug', { referenzalter: '65 ' + t('vr.jahre'), alter: '63 ' + t('vr.jahre'), jahre: 42, jahreRef: 44 })));
     expect(html).not.toContain(t('vr.fehlendeBeitragsjahre'));
   });

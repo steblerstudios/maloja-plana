@@ -23,7 +23,7 @@ import { partnerErwartet, partnerEinkommenRoh } from './utils/partnereinkommen.j
 import { chf, annahmenTexte } from './utils/steuerTexte.js';
 import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { betrag } from './utils/geld.js';
+import { betrag, PROZENT } from './utils/geld.js';
 import { beitragsNotizKey } from './utils/monatsrechnung.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
@@ -450,12 +450,12 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
             t('tax.federalTax'),
             // K86: kein Satz, wenn das steuerbare Einkommen der gemeinsame Wert ist (effektiverSatz null).
-            taxResult.effektiverSatz != null ? ' ~' + taxResult.effektiverSatz + '%' : ''
+            taxResult.effektiverSatz != null ? ' ~' + taxResult.effektiverSatz + PROZENT : ''
           ),
           React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ ' + betrag(estimatedTax)),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('tax.tariff') + ': ' + (taxResult?.tarif === 'eltern' ? t('tax.parentTariff') : verheiratet ? t('tax.marriedTariff') : t('tax.singleTariff')),
-            ' · ' + t('tax.marginalRate') + ': ' + grenzsteuersatz(taxableIncome, verheiratet || taxResult?.tarif === 'eltern').toFixed(2) + '%'
+            ' · ' + t('tax.marginalRate') + ': ' + grenzsteuersatz(taxableIncome, verheiratet || taxResult?.tarif === 'eltern').toFixed(2) + PROZENT
           ),
           // K86: warum hier kein Satz und unten kein Nettoeinkommen steht.
           steuern.gemeinsamDirekt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.gemeinsamDirektHinweis')))

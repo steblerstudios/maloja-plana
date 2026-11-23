@@ -43,16 +43,16 @@ describe('18 · Datum in der Zeile lesbar (sm, Schriftfarbe); Jahr/Heute bleiben
   it('Verjährung', () => {
     const h = renderToStaticMarkup(React.createElement(VerlustscheinZeitachse, { palette, t, eintraege: [{ id: 1, creditor: 'A', date: '2021-03-15' }], heute: '2026-10-13' }));
     const st = datum(h, 'schulden.verlustschein.verjaehrt');
-    expect(st).toContain('font-size:' + text.sm + 'px');
+    expect(st).toContain('font-size:' + text.sm);
     expect(st).toContain('color:' + palette.text);
-    expect(h).toContain('font-size:' + text.xs + 'px;color:' + palette.mid + ';margin-top:4px">schulden.verlustschein.zeitachse.heute');
+    expect(h).toContain('font-size:' + text.xs + ';color:' + palette.mid + ';margin-top:4px">schulden.verlustschein.zeitachse.heute');
   });
   it('Eingetragen', () => {
     const h = renderToStaticMarkup(React.createElement(BetreibungZeitleiste, { palette, t, eintraege: [{ id: 1, creditor: 'A', registerDate: '2022-03-15' }], heute: '2026-10-13' }));
     const st = datum(h, 'schulden.betreibung.zeitleiste.eingetragen');
-    expect(st).toContain('font-size:' + text.sm + 'px');
+    expect(st).toContain('font-size:' + text.sm);
     expect(st).toContain('color:' + palette.text);
-    expect(h).toContain('font-size:' + text.xs + 'px;color:' + palette.mid + ';margin-top:4px">schulden.betreibung.zeitleiste.heute');
+    expect(h).toContain('font-size:' + text.xs + ';color:' + palette.mid + ';margin-top:4px">schulden.betreibung.zeitleiste.heute');
   });
 });
 
@@ -62,7 +62,7 @@ describe('19 · Luft vor der Kartenliste (space.lg)', () => {
   }));
   it('Verlustscheine: Zeitachse schliesst mit space.lg', () => {
     const h = rendern('verlustscheine', { verlustscheine: [{ id: 1, creditor: 'A', amount: 1, date: '2021-03-15', rolle: 'schulde' }] });
-    expect(h).toContain('margin:' + space.md + 'px 0 ' + space.lg + 'px"><div style="font-weight:600;font-size:15px;color:#24262A;margin-bottom:4px">schulden.verlustschein.zeitachse.titel');
+    expect(h).toContain('margin:' + space.md + 'px 0 ' + space.lg + 'px"><div style="font-weight:600;font-size:' + text.sm + ';color:#24262A;margin-bottom:4px">schulden.verlustschein.zeitachse.titel');
   });
   it('Betreibung: Regeltext schliesst mit space.lg', () => {
     const h = rendern('betreibung', { betreibung: [{ id: 1, creditor: 'A', amount: 1, registerDate: '2022-03-15', status: 'open' }] });

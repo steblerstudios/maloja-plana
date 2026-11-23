@@ -50,6 +50,6 @@ describe('Sozialhilfe: brutto im Profil wird wie auf dem Dashboard umgerechnet',
     const netto = bruttoZuNettoRichtwert(2700, 40, false);
     expect(html).toContain('einkommensfeld.nettoGeschaetzt(' + zahl(netto) + ')');
     // derselbe Betrag wie die Sozialhilfe-Rechnung — bei doppelter Umrechnung wäre er grösser
-    expect(html).toContain('≈ CHF ' + zahl(calculateSozialhilfe(p).deficit, { hoechstens: 2 }) + ' / schnellcheck.monat');
+    expect(html).toContain('≈ CHF\u00a0' + zahl(calculateSozialhilfe(p).deficit, { hoechstens: 2 }) + ' / schnellcheck.monat');
   });
 });

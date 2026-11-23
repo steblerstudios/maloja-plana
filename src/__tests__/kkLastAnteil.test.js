@@ -32,8 +32,8 @@ describe('kkLastAnteil — eine Rechnung für die KK-Last', () => {
 
   it('alle drei Orte zeigen dieselbe Zahl', () => {
     const data = { versicherungen: { kkPremium: '487.35' }, finanzen: { monthlyIncome: '5730', incomeType: 'netto' } };
-    const erwartet = zahl(kkLastAnteil(data).anteil, { hoechstens: 1 }) + ' %';
-    expect(erwartet).toBe('8.5 %');
+    const erwartet = zahl(kkLastAnteil(data).anteil, { hoechstens: 1 }) + '\u202f%';
+    expect(erwartet).toBe('8.5\u202f%');
     const props = { palette: LIGHT_PALETTE, t, data, onNavigate: () => {} };
     expect(renderToStaticMarkup(React.createElement(KKLastCard, props))).toContain(erwartet);
     expect(renderToStaticMarkup(React.createElement(KKLastSpiegel, props))).toContain(erwartet);

@@ -27,7 +27,7 @@ import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise, kreuzState, kvgWechselfrist } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
-import { zahl, betrag as chfBetrag } from '../utils/geld.js';
+import { zahl, betrag as chfBetrag, PROZENT } from '../utils/geld.js';
 import { PanelTitle } from './Heading.jsx';
 import { text, weight, space, radius, leading, duration, ease, INSTRUMENT_GROESSE } from '../config/tokens.js';
 
@@ -487,7 +487,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     {
       key: 'wohnkosten', name: t('instrumente.wohnkosten'),
       ...(wohnR.anteil != null ? {
-        zahl: { wert: zahl(wohnR.anteil, { hoechstens: wohnR.ueberDrittel && Math.round(wohnR.anteil) === 33 ? 1 : 0 }) + ' %', einheit: '' },
+        zahl: { wert: zahl(wohnR.anteil, { hoechstens: wohnR.ueberDrittel && Math.round(wohnR.anteil) === 33 ? 1 : 0 }) + PROZENT, einheit: '' },
         satz: t(wohnkostenSatzKey(wohnR)),
         mehr: [t('instrumente.wohnkostenDrittel')],
       } : {}),
@@ -498,7 +498,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     {
       key: 'miete', name: t('instrumente.miete'),
       ...(mietLage ? {
-        zahl: { wert: mietLage.richtung === 'Equal' ? '≈ 0 %' : (mietLage.pct > 0 ? '+' : '−') + Math.abs(mietLage.pct) + ' %', einheit: '' },
+        zahl: { wert: mietLage.richtung === 'Equal' ? '≈ 0' + PROZENT : (mietLage.pct > 0 ? '+' : '−') + Math.abs(mietLage.pct) + PROZENT, einheit: '' },
         satz: t('instrumente.mieteSatz', { year: mietVergleich.year }),
         mehr: mietHinweise,
       } : {}),

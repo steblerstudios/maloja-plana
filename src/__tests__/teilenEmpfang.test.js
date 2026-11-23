@@ -218,7 +218,7 @@ describe('Teilen-Empfang · Eingang in der Ablage', () => {
 
   it('ohne Datei: leere Status-Region und «Datei hinzufügen» (PDF und Bilder, mehrere)', () => {
     const html = renderToStaticMarkup(React.createElement(GeteiltEingang, { palette, t, chapters, onAblegen: async () => {}, laden: async () => [] }));
-    expect(html).toContain('<div role="status" style="color:#777777;font-size:15px"></div>');
+    expect(html).toContain('<div role="status" style="color:#777777;font-size:1rem"></div>');
     expect(html).not.toContain('data-geteilt-eingang="offen"');
     expect(html).toMatch(/<label data-weg="datei-hinzufuegen"[^>]*>.*Datei hinzufügen<input type="file" multiple="" accept="application\/pdf,\.pdf,image\/\*"/);
   });
@@ -238,8 +238,8 @@ describe('Teilen-Empfang · Eingang in der Ablage', () => {
 
   it('die Ablage zeigt den Eingang nur, wenn main.jsx den Ablege-Weg mitgibt', () => {
     const basis = { palette, t, documents: [], chapters, onDownload: () => {}, onDelete: () => {}, onUpdateExpiry: () => {} };
-    expect(renderToStaticMarkup(React.createElement(DocumentTresor, basis))).not.toContain('role="status" style="color:#777777;font-size:15px"></div>');
-    expect(renderToStaticMarkup(React.createElement(DocumentTresor, { ...basis, onAddShared: async () => {} }))).toContain('<div role="status" style="color:#777777;font-size:15px"></div>');
+    expect(renderToStaticMarkup(React.createElement(DocumentTresor, basis))).not.toContain('role="status" style="color:#777777;font-size:1rem"></div>');
+    expect(renderToStaticMarkup(React.createElement(DocumentTresor, { ...basis, onAddShared: async () => {} }))).toContain('<div role="status" style="color:#777777;font-size:1rem"></div>');
     expect(readFileSync(new URL('../main.jsx', import.meta.url), 'utf8')).toContain('onAddShared: handleAddSharedDocument');
   });
 });

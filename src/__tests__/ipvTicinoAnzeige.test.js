@@ -42,14 +42,14 @@ describe('K31 IPV-Rechner, Kanton Tessin', () => {
   it('zeigt den Betrag: 3 000 netto/Monat → 3 341/Jahr, 278/Monat', () => {
     const html = render(profil(3000));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 3’341');
-    expect(html).toContain('CHF 278');
+    expect(html).toContain('CHF\u00a03’341');
+    expect(html).toContain('CHF\u00a0278');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(3000, { kkPremium: null }));
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 3’341');
+    expect(html).not.toContain('CHF\u00a03’341');
   });
 
   it('keine Grenze, keine Musterwerte, nicht die abgeleitete RDM', () => {
@@ -79,7 +79,7 @@ describe('K31 IPV-Rechner, Kanton Tessin', () => {
     leer.finanzen = { monthlyIncome: 3000 };
     const html = render(leer);
     expect(html).toContain('ipv.vorbehaltTIangestellt');
-    expect(html).toContain('CHF 2’332');
+    expect(html).toContain('CHF\u00a02’332');
     expect(render(profil(3000))).not.toContain('ipv.vorbehaltTIangestellt');
   });
 

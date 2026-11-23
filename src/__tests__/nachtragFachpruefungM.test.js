@@ -82,6 +82,6 @@ describe('«trifft nicht zu» und «/ Jahr»', () => {
       palette: LIGHT_PALETTE, t, chapter: kapitel('versicherungen'), data, allData: { ...DEMO_DATA, versicherungen: data },
       onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {},
     }));
-    expect(html).toMatch(/AHV-Beitrag<\/dt><dd[^>]*>CHF 4’200\u00a0\/ Jahr</);
+    expect(html).toMatch(/AHV-Beitrag<\/dt><dd[^>]*>CHF\u00a04’200\u00a0\/ Jahr</);
   });
 });

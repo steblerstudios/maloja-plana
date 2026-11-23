@@ -42,8 +42,8 @@ describe('K31 IPV-Rechner, Kanton Zug', () => {
     const html = render(profil(2500));
     // Gesuch Pflicht (§ 11 IPVG): «Möglicher Betrag — nur auf Antrag» statt «Berechtigt» mit Häkchen
     expect(html).toContain('premium.eligibleAntrag');
-    expect(html).toContain('CHF 2’585');
-    expect(html).toContain('CHF 215');
+    expect(html).toContain('CHF\u00a02’585');
+    expect(html).toContain('CHF\u00a0215');
     expect(html).not.toContain('premium.maxIncome');
     for (const z of [60000, 3600, 62310]) {
       expect(html).not.toContain(String(z));

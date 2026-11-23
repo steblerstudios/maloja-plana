@@ -45,15 +45,15 @@ describe('K31 IPV-Rechner, Kanton Basel-Stadt', () => {
     const html = render(profil(3000));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 118');
-    expect(html).toContain('CHF 1’416');
+    expect(html).toContain('CHF\u00a0118');
+    expect(html).toContain('CHF\u00a01’416');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(3000, { kkPremium: null }));
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 1’416');
+    expect(html).not.toContain('CHF\u00a01’416');
   });
 
   it('nennt die amtliche Leistungsgrenze der Haushaltsgrösse — nicht die Musterwerte', () => {
@@ -93,7 +93,7 @@ describe('K31 IPV-Rechner, Kanton Basel-Stadt', () => {
     const html = render(profil(800));
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.offenGrund.bsHypothetisch');
-    expect(html).not.toContain('CHF 444');
+    expect(html).not.toContain('CHF\u00a0444');
   });
 
   it('kein roher Schlüssel bleibt stehen: alle BS-Texte in allen fünf Sprachen', async () => {
@@ -121,12 +121,12 @@ describe('K31 IPV-Rechner, Kanton Basel-Stadt', () => {
     expect(render(profil(3000))).toContain('ipv.bsPensumAngenommen');
     const mitStunden = render({ ...profil(2500), ausbildung: { workHoursPerWeek: '21' } });
     expect(mitStunden).toContain('ipv.bsHypothetischGerechnet');
-    expect(mitStunden).toContain('CHF 37');
+    expect(mitStunden).toContain('CHF\u00a037');
   });
 
   it('Hausarzt-Modell: Hauptzahl mit Zuschlag, eigener Hinweis (W4)', () => {
     const html = render({ ...profil(3000), versicherungen: { kkPremium: 500, kkModel: 'hausarzt' } });
-    expect(html).toContain('CHF 148');
+    expect(html).toContain('CHF\u00a0148');
     expect(html).toContain('ipv.bsAntragAvm(118|148)');
   });
 

@@ -37,10 +37,10 @@ describe('K31 IPV-Rechner, Kanton Neuenburg', () => {
     await new Promise((r) => setTimeout(r, 0));
   });
 
-  it('2 000/Monat → S3 → CHF 515/Monat, Grenze 50 600, Weg OCAB', () => {
+  it('2 000/Monat → S3 → CHF\u00a0515/Monat, Grenze 50 600, Weg OCAB', () => {
     const html = render(profil(2000));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 515');
+    expect(html).toContain('CHF\u00a0515');
     expect(html).toContain('premium.maxIncome(' + geldZahl(50600) + ')');
     expect(html).toContain('ipv.noteAutoOcab');
     expect(html).not.toContain('ipv.orientierungOffen');

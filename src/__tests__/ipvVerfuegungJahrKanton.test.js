@@ -144,33 +144,33 @@ describe('Finanzübersicht zeigt den Verfügungsbetrag, wo die anderen ihn abzie
     const i = html.indexOf('finanzUebersicht.ipv<');
     return i < 0 ? '' : html.slice(i, i + 1200);
   };
-  it('ZH, Verfügung 200: Kachel sagt CHF 200 laut Verfügung, nicht die Schätzung', () => {
+  it('ZH, Verfügung 200: Kachel sagt CHF\u00a0200 laut Verfügung, nicht die Schätzung', () => {
     am(SEPT_2026);
     const schaetzung = calculateIPV(person('ZH')).amount;
     expect(schaetzung).not.toBe(200);
     const k = ipvKachel(uebersicht(person('ZH', verfuegung(200, 'ZH', 2026))));
-    expect(k).toContain('CHF 200');
+    expect(k).toContain('CHF\u00a0200');
     expect(k).toContain('finanzUebersicht.ipvLautVerfuegung');
-    expect(k).not.toContain('CHF ' + schaetzung + ' ');
+    expect(k).not.toContain('CHF\u00a0' + schaetzung + ' ');
   });
   it('hohes Einkommen mit Verfügung: nicht «Kein Anspruch»', () => {
     am(SEPT_2026);
     const k = ipvKachel(uebersicht(person('ZH', verfuegung(90, 'ZH', 2026), 150000)));
     expect(k).not.toContain('finanzUebersicht.notEligible');
-    expect(k).toContain('CHF 90');
+    expect(k).toContain('CHF\u00a090');
   });
   it('BS mit Verfügung: nicht «offen»', () => {
     am(SEPT_2026);
     const k = ipvKachel(uebersicht(person('BS', verfuegung(150, 'BS', 2026))));
     expect(k).not.toContain('ipv.statusOffen');
-    expect(k).toContain('CHF 150');
+    expect(k).toContain('CHF\u00a0150');
   });
   it('Druckfassung: dieselbe Zeile', () => {
     am(SEPT_2026);
     const d = person('ZH', verfuegung(200, 'ZH', 2026));
     const w = { income: 1667, canton: 'ZH', ipv: calculateIPV(d), ipvAbzug: ipvAbzug(d), sozialhilfe: {}, el: {} };
     const zeile = druckAbschnitte(t, w).flatMap((a) => a.zeilen).find((z) => z.label === 'finanzUebersicht.ipv').html;
-    expect(zeile).toContain('CHF 200');
+    expect(zeile).toContain('CHF\u00a0200');
     expect(zeile).toContain('finanzUebersicht.ipvLautVerfuegung');
   });
   it('Gegenprobe ZH ohne Verfügung: Kachel und Druck unverändert mit der Schätzung', () => {
@@ -178,11 +178,11 @@ describe('Finanzübersicht zeigt den Verfügungsbetrag, wo die anderen ihn abzie
     const d = person('ZH');
     const ipv = calculateIPV(d);
     const k = ipvKachel(uebersicht(d));
-    expect(k).toContain('CHF ' + ipv.amount);
+    expect(k).toContain('CHF\u00a0' + ipv.amount);
     expect(k).not.toContain('finanzUebersicht.ipvLautVerfuegung');
     const w = { income: 1667, canton: 'ZH', ipv, ipvAbzug: ipvAbzug(d), sozialhilfe: {}, el: {} };
     const zeile = druckAbschnitte(t, w).flatMap((a) => a.zeilen).find((z) => z.label === 'finanzUebersicht.ipv').html;
-    expect(zeile).toContain('✓ CHF ' + ipv.amount);
+    expect(zeile).toContain('✓ CHF\u00a0' + ipv.amount);
   });
   it('der Schlüssel existiert in allen fünf Sprachen', () => {
     for (const s of [de, en, fr, itSprache, rm]) expect(typeof s.finanzUebersicht.ipvLautVerfuegung).toBe('string');
