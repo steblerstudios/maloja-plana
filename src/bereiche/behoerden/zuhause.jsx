@@ -9,7 +9,8 @@ import { useEinkommen } from '../../components/EinkommenFeld.jsx';
 import { ladeIPVModelle } from '../../config/cantonalData.js';
 import { getCantonName } from '../../config/kantonPLZ.js';
 import { Icon } from '../../IconSystem.jsx';
-import { steuerfristLage, gaengeLage, leistungenLage, WEG_NAME } from './rechnung.js';
+import { steuerfristLage, gaengeLage, leistungenLage, WEG_NAME, gemeindeLage, sichereWebsite } from './rechnung.js';
+import { CHAPTER_KEYS } from '../../config/constants.js';
 import { Anschlagbrett, Gemeindehaus, Wegweiser } from './bilder.jsx';
 import { Kachelkarte } from '../wohnen/bilder.jsx';
 import { Belege } from '../../components/Belege.jsx';
@@ -67,7 +68,8 @@ const gangName = (t, g) => (g.jahr != null ? t('behoerdenInstrument.steuererklae
 // Erklärung zum Aufklappen (`unterFrist`, `unterLeistungen`, je ein <details> wie «Warum ein Drittel? ›»).
 // Der Wegweiser bekommt eine Zahl nur bei gefundenen Wegen: eine grosse «0» läse sich als «Nein» (anspruchWege.js: nie
 // ein Nein-Verdikt). Ohne Weg trägt der Bezug den Satz und das Detail den Hinweis auf weitere Wege.
-export const BehoerdenStrasse = ({ palette, t, frist, gaenge, leistungen, isDarkMode, lang = 'de', aktiv = null, onWaehle = null, unterFrist = null, unterLeistungen = null }) => {
+// `tuer`: { name, onTuer, aktiv, label } für die Tür im Gemeindehaus (die eigene Gemeinde), oder null.
+export const BehoerdenStrasse = ({ palette, t, frist, gaenge, leistungen, isDarkMode, lang = 'de', aktiv = null, onWaehle = null, unterFrist = null, unterLeistungen = null, tuer = null }) => {
   const h = React.createElement;
   const farbe = bereichFillColor('behoerden', isDarkMode) || palette.mid;
   const loc = SPRACHE[lang] || 'de-CH';
@@ -101,7 +103,8 @@ export const BehoerdenStrasse = ({ palette, t, frist, gaenge, leistungen, isDark
     // gleich darunter, das angetippte Fenster und sein Gang bleiben zusammen im Blick.
     h('div', spalte('strasse-gemeindehaus'),
       h('div', { style: boden }, h('div', { style: { width: '100%' } },
-        h(Gemeindehaus, { palette, fenster, aktiv, onWaehle, farbe, label: t('behoerdenZuhause.hausAria') }))),
+        h(Gemeindehaus, { palette, fenster, aktiv, onWaehle, farbe, label: t('behoerdenZuhause.hausAria'),
+          ...(tuer ? { gemeinde: tuer.name, onTuer: tuer.onTuer, tuerAktiv: tuer.aktiv, tuerLabel: tuer.label } : {}) }))),
       zahlDiv('gaenge', gaenge.erledigt + '/' + gaenge.total),
       bezug(t('instrumente.gaengeSatz'), 'gaenge-unter'),
       detail(offeneGaenge.length ? t('behoerdenZuhause.offenListe', { liste: offeneGaenge.join(' · ') }) : t('behoerdenZuhause.alleErledigt'), 'gaenge-detail'))
@@ -214,6 +217,20 @@ const BehoerdenKapitel = ({ palette, t, behoerden, allData, onNavigate, checked 
   }, []);
   // Anfangs gewählt: der erste Gang, wie in der Skizze (die Steuererklärung mit ihrem Jahr und dem Vorschlag).
   const [gangIndex, setGangIndex] = useState(0);
+  // Tür im Gemeindehaus (23.11.2026): angetippt zeigt die Karte darunter die Gemeinde statt eines Gangs. Das Verzeichnis
+  // der Postleitzahlen (167 kB) kommt nachgeladen wie beim Umzug; bis es da ist und bei einem Ladefehler steht kein Name.
+  const [tuerOffen, setTuerOffen] = useState(false);
+  const [plz, setPlz] = useState(null);
+  useEffect(() => {
+    let lebt = true;
+    import('../../data/plzGemeinde.js').then((m) => { if (lebt) setPlz(m); }).catch(() => {});
+    return () => { lebt = false; };
+  }, []);
+  const wohnen = allData?.wohnen || {};
+  const plzWert = String(wohnen.postalCode || '').trim();
+  const gemeinde = !plzWert ? { state: 'keinePlz' } : plz ? gemeindeLage(plz.lookupPLZ(plzWert), wohnen.city) : { state: 'laden' };
+  const gemeindeName = gemeinde.state === 'eindeutig' ? gemeinde.gemeinde : null;
+  const waehleGang = (i) => { setGangIndex(i); setTuerOffen(false); };
   const profil = { ...allData, finanzen: { ...allData?.finanzen, monthlyIncome: e.nettoMonat, incomeType: 'netto' } };
   const leistungen = { ...leistungenLage(profil, { fertig }), artOffen: e.offen };
   const loc = SPRACHE[lang] || 'de-CH';
@@ -338,12 +355,36 @@ const BehoerdenKapitel = ({ palette, t, behoerden, allData, onNavigate, checked 
       zeile(weg(t('behoerdenInstrument.vorsorgeImNotfall'), () => onNavigate('notfallvorsorge'), 'vorsorge'))),
   ];
 
+  // Gemeinde-Karte (Tür angetippt): Name (aus data/plzGemeinde.js, swisstopo), ein belegter Satz, der eigene Link oder «Website ergänzen ›», das Formular hier.
+  // Ohne PLZ bei Wohnen ein Weg dorthin; bei mehreren Gemeinden für die PLZ ein Satz, warum kein Name steht.
+  const website = sichereWebsite(d.gemeindeWebsite);
+  const wohnenName = t('chapters.wohnen.short');
+  const gemeindeKarte = h('div', { 'data-teil': 'gemeinde-karte', 'data-gemeinde': gemeinde.state, 'aria-live': 'polite', style: { marginTop: space.sm + 'px', border: '1px solid ' + palette.border, borderRadius: radius.lg + 'px', padding: space.sm + 'px ' + space.md + 'px' } },
+    h('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } },
+      gemeindeName ? t('behoerdenZuhause.gemeinde.titel', { name: gemeindeName }) : t('behoerdenZuhause.gemeinde.titelOhne')),
+    gemeinde.state === 'keinePlz' && h('p', { style: { ...klein, margin: '2px 0 0' } }, t('behoerdenZuhause.gemeinde.plzFehlt', { wohnen: wohnenName })),
+    gemeinde.state === 'mehrdeutig' && h('p', { style: { ...klein, margin: '2px 0 0' } }, t('behoerdenZuhause.gemeinde.mehrdeutig', { wohnen: wohnenName })),
+    h('p', { 'data-teil': 'gemeinde-satz', style: { ...satz, margin: space.xs + 'px 0 0' } }, t('behoerdenZuhause.gemeinde.satz')),
+    h('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', alignItems: 'center' } },
+      website && h('a', { href: website, target: '_blank', rel: 'noopener noreferrer', className: 'mp-link', 'data-weg': 'gemeinde-website',
+        style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', minHeight: '44px', fontSize: text.sm } },
+        t('behoerdenZuhause.gemeinde.website') + ' ›', h('span', { style: { position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap' } }, ' (' + t('behoerdenZuhause.gemeinde.neuesFenster') + ')')),
+      angaben && !angaben.offen('gemeindeWebsite') && h('button', {
+        type: 'button', className: 'mp-link', 'data-aendern': 'gemeindeWebsite', onClick: () => angaben.umschalten('gemeindeWebsite'),
+        style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, fontWeight: weight.semi, color: palette.sandDeep || palette.goldDeep, textDecoration: 'none' },
+      }, (website ? t('wohnenKopf.aendern') : t('behoerdenZuhause.gemeinde.websiteErgaenzen')) + ' ›'),
+      gemeinde.state === 'keinePlz' && onNavigate && weg(wohnenName, () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')), 'zu-wohnen')),
+    formular('gemeindeWebsite'),
+    h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('behoerdenZuhause.fensterTipp')));
+
   return h('div', { 'data-teil': 'behoerden-instrument', style: { marginBottom: space.lg + 'px' } },
     kopf,
     fristVorbeiHinweis,
-    h(BehoerdenStrasse, { palette, t, frist, gaenge, leistungen, isDarkMode, lang, aktiv: gangIndex, onWaehle: setGangIndex,
-      unterFrist: erklaerungFrist, unterLeistungen: erklaerungLeistungen }),
-    gangKarte,
+    h(BehoerdenStrasse, { palette, t, frist, gaenge, leistungen, isDarkMode, lang, aktiv: tuerOffen ? null : gangIndex, onWaehle: waehleGang,
+      unterFrist: erklaerungFrist, unterLeistungen: erklaerungLeistungen,
+      tuer: { name: gemeindeName, onTuer: () => setTuerOffen(true), aktiv: tuerOffen,
+        label: gemeindeName ? t('behoerdenZuhause.gemeinde.tuerAria', { name: gemeindeName }) : t('behoerdenZuhause.gemeinde.tuerAriaOhne') } }),
+    tuerOffen ? gemeindeKarte : gangKarte,
     // Dritte Runde: der Kanton im Vergleich, wie «Mietbeiträge und Wohnungsmarkt» bei Wohnen.
     h('div', { 'data-teil': 'behoerden-vergleich', style: { marginTop: space.md + 'px' } },
       // Keine Überschrift (Kapitel 6 B: keine Überschriften unter der Kapitelüberschrift), nur die Zeile im selben Stil.

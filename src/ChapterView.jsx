@@ -194,7 +194,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const wohnSzeneJetzt = (chapter.key === 'wohnen' && !!allData
     && nWohn(data.rentAmount) + nWohn(data.utilities) + nWohn(data.buildingsInsurance) + (data.mortgageStatus === 'no' ? 0 : nWohn(data.mortgagePayment)) > 0)
     || (chapter.key === 'behoerden' && !!allData);
-  const WOHN_SZENE_ABSCHNITTE = { wohnen: ['address', 'rentAmount', 'landlord', 'mortgageStatus'], behoerden: ['cantoneOfTaxation', 'registryOffice', 'legalRepresentative'] }[chapter.key] || [];
+  const WOHN_SZENE_ABSCHNITTE = { wohnen: ['address', 'rentAmount', 'landlord', 'mortgageStatus'], behoerden: ['cantoneOfTaxation', 'registryOffice', 'legalRepresentative', 'gemeindeWebsite'] }[chapter.key] || [];
   // Umschalten zwischen Liste und Szene erst, wenn keiner der vier Abschnitte offen ist: sonst spränge das Formular
   // mitten im Tippen (erste Miete eingetragen → Szene) nach oben und der Cursor ginge verloren.
   const wohnSzeneStand = useRef({ kapitel: null, wert: false });
@@ -801,6 +801,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           onBlur: (e) => handleFieldBlur(field.k, e.target.value),
           placeholder: field.placeholder || '',
           autoComplete: field.autoComplete || 'off',
+          ...(field.inputMode ? { inputMode: field.inputMode } : {}),
           ...errAria(fieldId, field.hint ? fieldId + '-hint' : null),
           style: inputStyle
         }),

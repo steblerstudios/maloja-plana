@@ -1739,7 +1739,7 @@ export default {
     finanzen: { income: 'Entrada', budgetLight: 'Expensas mensialas', obligations: 'Obligaziuns', savings: 'Spargn', assets: 'Facultad e investiziuns', credit: 'Credit', provision: 'Prevenziun', expenses: 'Expensas', budget: 'Budget' },
     versicherungen: { basic: 'Assicuranza da basa', occupational: 'Prevenziun professiunala', additional: 'Ulteriuras assicuranzas', property: 'Assicuranzas da chaussas & da viadi', mobility: 'Mobilitad', social: 'Assicuranza sociala', health: 'Assicuranza da malsognas', pension: 'Prevenziun', other: 'Autras assicuranzas' },
     ausbildung: { education: 'Furmaziun', work: 'Lavur', languages: 'Linguas', job: 'Professiun', employer: 'Patrun' },
-    behoerden: { taxes: 'Taglia', legal: 'Dretgira', representation: 'Represchentanza', tax: 'Taglia', debt: 'Debits' },
+    behoerden: { taxes: 'Taglia', legal: 'Dretgira', representation: 'Represchentanza', tax: 'Taglia', debt: 'Debits', gemeinde: "Vischnanca" },
     notfall: { contact: "Contact d'urgenza", medical: 'Medical', care: 'Tractament medical', provision: 'Prevenziun', contacts: "Contacts d'urgenza", documents: 'Documents' },
   },
 
@@ -2756,6 +2756,7 @@ export default {
         legalRepresentative: 'Assistenza giuridica',
         representativePhone: "Telefon da l'assistenza giuridica",
         willMade: { label: 'Testament scrit?', options: { yes: 'Gea', no: 'Na', planned: 'Planisà', handwritten: 'Gea olografic', public: 'Gea public', inProgress: 'En elavuraziun' } },
+        gemeindeWebsite: "Pagina d’internet da la vischnanca",
         vorsorgeauftrag: { label: 'Mandat da prevenziun scrit?', options: { yes: 'Gea', no: 'Na', planned: 'Planisà' } },
         patientenverfuegung: { label: 'Disposiziun dal pazient scritta?', options: { yes: 'Gea', no: 'Na', planned: 'Planisà' } },
       },
@@ -5129,6 +5130,19 @@ export default {
     fensterTipp: { sie: "Tutgai ina fanestra da la chasa per vesair la fatschenta.", du: "Tutga ina fanestra da la chasa per vesair la fatschenta." },
     gangWaehlen: "Tscherner ina fatschenta",
     kurz: { steuererklaerung: "Taglias", betreibungsauszug: "Scussiun", ausweisRenewal: "Document", wohnsitzbestaetigung: "Domicil", strafregisterauszug: "Register penal" },
+    // TODO(rm): provisorisch — Gegenlese (Tür im Gemeindehaus, 23.11.2026).
+    gemeinde: {
+      titel: "Vischnanca {name}",
+      titelOhne: { sie: "Vossa vischnanca", du: "Tia vischnanca" },
+      satz: "L’attestaziun da domicil dat la vischnanca (controlla d’abitants). Tge auters fatgs che vegnan fatgs là, è different da chantun a chantun.",
+      website: "Pagina d’internet da la vischnanca",
+      websiteErgaenzen: "Agiuntar la pagina d’internet",
+      plzFehlt: { sie: "Vossa vischnanca cumpara uschespert ch’il numer postal stat sut {wohnen}.", du: "Tia vischnanca cumpara uschespert ch’il numer postal stat sut {wohnen}." },
+      mehrdeutig: "Tar quest numer postal tutgan pliras vischnancas. Il lieu sut {wohnen} la fa evidenta.",
+      tuerAria: "Porta: vischnanca {name}",
+      tuerAriaOhne: "Porta: vischnanca",
+      neuesFenster: "s’avra en ina nova fanestra",
+    },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {

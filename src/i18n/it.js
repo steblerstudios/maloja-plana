@@ -1361,7 +1361,7 @@ export default {
     finanzen: { income: 'Reddito', budgetLight: 'Spese mensili', obligations: 'Obblighi', savings: 'Risparmio', assets: 'Patrimonio e titoli', credit: 'Credito', provision: 'Previdenza' },
     versicherungen: { basic: 'Assicurazione di base', occupational: 'Previdenza professionale', additional: 'Assicurazioni complementari', property: 'Assicurazioni beni & viaggio', mobility: 'Mobilità', social: 'Assicurazione sociale' },
     ausbildung: { education: 'Formazione', work: 'Impiego', languages: 'Lingue' },
-    behoerden: { taxes: 'Imposte', legal: 'Diritto', representation: 'Rappresentanza' },
+    behoerden: { taxes: 'Imposte', legal: 'Diritto', representation: 'Rappresentanza', gemeinde: "Comune" },
     notfall: { contact: 'Contatto d\'emergenza', medical: 'Medico', care: 'Assistenza medica', provision: 'Disposizioni personali' },
   },
   sectionIntros: {
@@ -2671,6 +2671,7 @@ export default {
         legalRepresentative: 'Rappresentante legale',
         representativePhone: 'Telefono rappresentante legale',
         willMade: { label: 'Testamento redatto?', options: { no: 'No', handwritten: 'Sì, olografo', public: 'Sì, pubblico', inProgress: 'In corso' } },
+        gemeindeWebsite: "Sito web del comune",
       },
       docs: {
         betreibungsauszug: 'Estratto del registro esecuzioni',
@@ -2836,6 +2837,18 @@ export default {
     fensterTipp: { sie: "Tocchi una finestra della casa per vedere la pratica.", du: "Tocca una finestra della casa per vedere la pratica." },
     gangWaehlen: "Scegliere una pratica",
     kurz: { steuererklaerung: "Imposte", betreibungsauszug: "Esecuzioni", ausweisRenewal: "Documento", wohnsitzbestaetigung: "Domicilio", strafregisterauszug: "Casellario" },
+    gemeinde: {
+      titel: "Comune di {name}",
+      titelOhne: { sie: "Il suo comune", du: "Il tuo comune" },
+      satz: "Il certificato di domicilio è rilasciato dal comune (controllo abitanti). Quali altre pratiche si svolgono lì varia da cantone a cantone.",
+      website: "Sito web del comune",
+      websiteErgaenzen: "Aggiungere il sito web",
+      plzFehlt: { sie: "Il suo comune appare non appena sotto {wohnen} c’è il numero postale.", du: "Il tuo comune appare non appena sotto {wohnen} c’è il numero postale." },
+      mehrdeutig: "A questo numero postale appartengono più comuni. La località sotto {wohnen} lo rende univoco.",
+      tuerAria: "Porta: comune di {name}",
+      tuerAriaOhne: "Porta: comune",
+      neuesFenster: "si apre in una nuova finestra",
+    },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {

@@ -31,7 +31,10 @@ export const Anschlagbrett = ({ palette, iso, locale, vorbei, pfosten = 60, klei
 //   im Kapitel (Stebler Studios 23.11.2026, zweite Runde «Ja, so bauen»): `fenster` = je Gang { an, label }; jedes Fenster
 //   gehört zu seinem Gang und lässt sich antippen (`onWaehle`), das gewählte (`aktiv`) ist dick umrandet.
 const FENSTER = [[30, 72], [72, 72], [114, 72], [30, 112], [114, 112]];
-export const Gemeindehaus = ({ palette, erledigt = 0, total = 5, farbe, groesse = 'gross', fenster = null, aktiv = null, onWaehle = null, label = '' }) => {
+//   Tür (Stebler Studios 23.11.2026, «3 klingt gut»): die eigene Gemeinde. `gemeinde` = Name über der Tür (nur eindeutig,
+//   sonst null), `onTuer` macht die Tür antippbar, `tuerAktiv` umrandet sie, `tuerLabel` ist ihr Vorlesename.
+//   Der Name schrumpft bei langen Namen, damit er zwischen die Fensterreihen passt (128 Einheiten Platz).
+export const Gemeindehaus = ({ palette, erledigt = 0, total = 5, farbe, groesse = 'gross', fenster = null, aktiv = null, onWaehle = null, label = '', gemeinde = null, onTuer = null, tuerAktiv = false, tuerLabel = '' }) => {
   const h = React.createElement;
   const klein = groesse === 'klein';
   const strich = klein ? 3 : 1.5;
@@ -74,7 +77,18 @@ export const Gemeindehaus = ({ palette, erledigt = 0, total = 5, farbe, groesse 
         onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onWaehle(i); } },
       })];
     }),
-    h('path', { 'data-teil': 'gemeindehaus-tuer', d: 'M73 160 L73 124 Q85 110 97 124 L97 160 Z', fill: tuer }));
+    h('path', { 'data-teil': 'gemeindehaus-tuer', d: 'M73 160 L73 124 Q85 110 97 124 L97 160 Z', fill: tuer,
+      ...(tuerAktiv ? { stroke: palette.text, strokeWidth: 3, ...linie } : {}) }),
+    !klein && gemeinde && h('text', {
+      'data-teil': 'gemeinde-name', 'aria-hidden': 'true', x: 85, y: 107, textAnchor: 'middle', fill: palette.text,
+      fontSize: Math.min(10, Math.floor(128 / (String(gemeinde).length * 0.58) * 10) / 10), fontWeight: 600,
+    }, gemeinde),
+    !klein && onTuer && h('rect', {
+      'data-teil': 'tuer-treffer', x: 66, y: 110, width: 38, height: 50, rx: 4, fill: 'transparent', stroke: 'none', pointerEvents: 'all',
+      role: 'button', tabIndex: 0, 'aria-label': tuerLabel, 'aria-pressed': tuerAktiv ? 'true' : 'false', style: { cursor: 'pointer' },
+      onClick: () => onTuer(),
+      onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onTuer(); } },
+    }));
 };
 
 // ── Wegweiser mit Kompass ───────────────────────────────────────────────────────────────────────────────────────────

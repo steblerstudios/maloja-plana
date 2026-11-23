@@ -12,7 +12,8 @@ import { LIGHT_PALETTE } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { ladeIPVModelle } from '../config/cantonalData.js';
 import { QuickCheck } from '../components/Leistungsliste.jsx';
-import { BehoerdenZuhause, steuerfristLage, gaengeLage, leistungenLage } from '../bereiche/behoerden/behoerden.js';
+import { BehoerdenZuhause, steuerfristLage, gaengeLage, leistungenLage, gemeindeLage, sichereWebsite, Gemeindehaus } from '../bereiche/behoerden/behoerden.js';
+import { lookupPLZ } from '../data/plzGemeinde.js';
 import { Kachelkarte } from '../bereiche/wohnen/wohnen.js';
 
 const t = createT({ de }, 'de', 'sie');
@@ -206,6 +207,44 @@ describe('Bauplan Behörden · Formen im Vergleich', () => {
     const q = lies('bereiche/behoerden/zuhause.jsx');
     expect(q).toMatch(/FORM = \{ steuer: 'muenze', sozialhilfe: 'schirm', el: 'puzzle' \}/);
     expect((q.match(/form: FORM\[key\]/g) || []).length).toBe(2);
+  });
+});
+
+// Tür im Gemeindehaus (Stebler Studios 23.11.2026, «3 klingt gut»): die eigene Gemeinde.
+describe('Bauplan Behörden · Tür = Gemeinde', () => {
+  it('Gemeinde aus der PLZ nur eindeutig: eine Gemeinde, oder der Ort passt zu genau einer', () => {
+    expect(gemeindeLage(lookupPLZ('8004'), 'Zürich')).toMatchObject({ state: 'eindeutig', gemeinde: 'Zürich', kanton: 'ZH' });
+    expect(gemeindeLage(lookupPLZ('1008'), '').state).toBe('mehrdeutig');
+    expect(gemeindeLage(lookupPLZ('1008'), 'Jouxtens-Mezery')).toMatchObject({ state: 'eindeutig', gemeinde: 'Jouxtens-Mézery' });
+    expect(gemeindeLage(lookupPLZ('1015'), 'Ecublens')).toMatchObject({ gemeinde: 'Ecublens (VD)' });
+    expect(gemeindeLage(lookupPLZ('0000'), 'X').state).toBe('ohne');
+  });
+  it('Website nur http(s): kein javascript:, data:, ftp:, keine Leerzeichen; www.… bekommt https://', () => {
+    expect(sichereWebsite('www.musterhausen.ch')).toBe('https://www.musterhausen.ch/');
+    expect(sichereWebsite('https://www.zuerich.ch/a?b=1')).toBe('https://www.zuerich.ch/a?b=1');
+    for (const boese of ['javascript:alert(1)', 'JaVaScRiPt://x.ch', 'data:text/html,x', 'ftp://a.ch', 'https://a.ch" onclick', 'http://x', 'zürich', '', null]) {
+      expect(sichereWebsite(boese), String(boese)).toBeNull();
+    }
+  });
+  it('Gemeindehaus: Name über der Tür, Tür als Knopf mit Namen; lange Namen schrumpfen; klein ohne Name', () => {
+    const haus = (p) => renderToStaticMarkup(React.createElement(Gemeindehaus, { palette: LIGHT_PALETTE, ...p }));
+    const html = haus({ gemeinde: 'Zürich', onTuer: () => {}, tuerLabel: 'Tür: Gemeinde Zürich' });
+    expect(html).toMatch(/data-teil="gemeinde-name"[^>]*font-size="10"[^>]*>Zürich</);
+    expect(html).toMatch(/data-teil="tuer-treffer"[^>]*role="button"[^>]*aria-label="Tür: Gemeinde Zürich"/);
+    const lang = haus({ gemeinde: 'Saint-Légier-La Chiésaz', onTuer: () => {} }).match(/data-teil="gemeinde-name"[^>]*font-size="([\d.]+)"/)[1];
+    expect(Number(lang)).toBeLessThan(10);
+    expect(haus({ gemeinde: 'Zürich', groesse: 'klein' })).not.toContain('gemeinde-name');
+    expect(haus({})).not.toContain('tuer-treffer');
+  });
+  it('im Kapitel ist die Tür ein Knopf, auch bevor der Name geladen ist', () => {
+    expect(kapitel()).toMatch(/data-teil="tuer-treffer"[^>]*aria-label="Tür: Gemeinde"/);
+  });
+  it('Gemeinde-Karte: Link nur über sichereWebsite, neues Fenster mit noopener; Satz ohne Behauptung über Kantonsgänge', () => {
+    const q = lies('bereiche/behoerden/zuhause.jsx');
+    expect(q).toContain('const website = sichereWebsite(d.gemeindeWebsite);');
+    expect(q).toMatch(/href: website, target: '_blank', rel: 'noopener noreferrer'/);
+    expect(q).not.toMatch(/href: d\.gemeindeWebsite/);
+    expect(t('behoerdenZuhause.gemeinde.satz')).toContain('je nach Kanton verschieden');
   });
 });
 
