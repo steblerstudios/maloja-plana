@@ -4516,6 +4516,7 @@ export default {
       gruppeKrankenkasse: 'Krankenkasse & Leistungen',
       // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
       gruppePassiert: 'Wenn es passiert',
+      // TODO(rm): provisorisch — Gegenlese (Behörden «Passend» in zwei Gruppen, 23.11.2026).
       gruppeUnterwegs: "Documents d’identitad e viadis",
       gruppeSchreiben: "Daners, brevs, dossier",
       steuerfrist: "Termin & decleraziun da taglia",
@@ -5080,12 +5081,14 @@ export default {
     fallSatz: { sie: "Voss testament tutga qua. Mandat da precauziun e disposiziun da pazient èn en il chapitel Urgenza.", du: "Tes testament tutga qua. Mandat da precauziun e disposiziun da pazient èn en il chapitel Urgenza." },
     nichtErfasst: "betg endatà",
     steuererklaerungJahr: "Decleraziun da taglia {jahr} inoltrada",
-    vorschlag: "Marcà, perquai che nagina decleraziun n’è averta",
+    // TODO(rm): provisorisch — Gegenlese (Satz neu 23.11.2026).
+    vorschlag: "Proponì, perquai che 0 decleraziuns avertas èn registradas. Confermar per plaschair.",
     vorsorgeWegSub: "Tgi che agescha, tge che vala medicalmain",
     // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
     vorsorgeImNotfall: "Prevenziun en il chapitel Urgenza",
   },
   // Chapitel Autoritads tenor plan (21.11.2026, scena «chasa communala»). rm ungeprüft.
+  // TODO(rm): provisorisch — Gegenlese behoerdenZuhause.* (Kapitel Behörden nach Bauplan, Runden 1–3 und Vergleich, 21.–23.11.2026).
   behoerdenZuhause: {
     leistungen: "Prestaziuns",
     wegEins: { sie: "Ina via pussaivla tenor Vossas indicaziuns: {name}. Examinai per plaschair tar il post cumpetent.", du: "Ina via pussaivla tenor tias indicaziuns: {name}. Examinescha per plaschair tar il post cumpetent." },
@@ -5094,23 +5097,27 @@ export default {
     anspruchSub: "Tut las prestaziuns e co dumandar ellas",
     kanton: "Chantun {kanton}",
     kantonOffen: "Chantun da taxaziun anc vid",
-    // Dritte Runde (23.11.2026 abends): Detail unter dem Gemeindehaus, Rand, Kanton im Vergleich. rm ungeprüft.
+    // Dritte Runde (23.11.2026 abends): Detail unter dem Gemeindehaus, Rand, Kanton im Vergleich. TODO(rm): provisorisch — Gegenlese.
     offenListe: "Avert: {liste}",
     alleErledigt: "Tut las vias fatgas",
     auszugBestellen: "Empustar l’extract",
     vergleich: {
       titel: "Taglias e sustegn en cumparegliaziun",
-      einstieg: "{kanton} en cumparegliaziun: taglias sin ina paja da 80’000 francs, quantas persunas retschaivan agid social e quantas persunas cun renta da vegliadetgna prestaziuns supplementaras.",
+      einstieg: "{kanton} en cumparegliaziun: las taglias d’ina persuna nubila sin ina paja bruta da 80’000 francs, quantas persunas retschaivan agid social e quantas persunas cun renta da vegliadetgna prestaziuns cumplementaras.",
       einstiegOhne: "Ils chantuns en cumparegliaziun: taglias sin ina paja da 80’000 francs, agid social e prestaziuns supplementaras.",
       fehler: "La cumparegliaziun na po betg vegnir chargiada ussa.",
       aria: "{titel} tenor chantun, {kanton}: {wert}",
       steuer: "Taglias sin 80’000 paja",
       sozialhilfe: "Agid social",
-      el: "PS tar l’AVS",
+      el: "PC tar la renta da vegliadetgna",
       steuerSatz: "da la paja bruta, en il chaumanoir",
       steuerLegende: "Taglias a la Confederaziun, al chantun ed a la vischnanca en il chaumanoir per ina paja bruta da 80’000 francs, nubil, senza uffants e senza confessiun, onn fiscal 2026.",
       sozialhilfeLegende: "Part da la populaziun che ha retschavì il 2025 agid social economic, q.v.d. daners dal servetsch social.",
-      elLegende: "Part da las persunas cun renta da vegliadetgna che han retschavì en december 2025 prestaziuns supplementaras (PS).",
+      elLegende: "Part da las persunas cun renta da vegliadetgna che han retschavì en december 2025 prestaziuns cumplementaras (PC).",
+      tiefer: "{n} da {von} chantuns èn pli bass.",
+      tieferEins: "In chantun da {von} è pli bass.",
+      tiefster: "Nagin chantun n’è pli bass.",
+      schweizWert: "Svizra {ch}",
     },
     offen: "Decleraziuns averts",
     eingereicht: "Ultima inoltrada",

@@ -171,6 +171,8 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
 // Seit 20.11.2026 auch für andere Werte (Dreier-Set im Kapitel Wohnen): `farbe(k)` gibt je Kanton
 // { fill, deck, hellSchrift } oder null (leer). `mini`: ohne Kürzel, für die Kachel. `teil`/`aria` je Verwendung.
 const KACHEL = { b: 26, h: 18, dach: 7, abstand: 3 };
+// Grösse je Stufe für die Formen ausser dem Haus (Stufe 4 = volle Zelle).
+const STUFEN_MASS = { 1: 0.7, 2: 0.8, 3: 0.9, 4: 1 };
 // `form` (Stebler Studios 23.11.2026, Behörden «Kanton im Vergleich»): jede Ebene ihre eigene Gestalt statt Häuser —
 // 'haus' (Standard, Wohnen) · 'muenze' (Steuern, Goldmünze) · 'schirm' (Sozialhilfe) · 'puzzle' (EL, «ergänzt, was fehlt»).
 // Alle stehen in derselben Zelle (26 × 25 Einheiten), damit Lage und Kürzel gleich bleiben. `f.rand`: eigene Randfarbe
@@ -207,12 +209,20 @@ export const Kachelkarte = ({ palette, t, kanton, gefuellt = [], isDarkMode, far
       const randFarbe = ihr ? palette.text : voll ? (f.rand || f.fill) : palette.border;
       const rand = { stroke: randFarbe, strokeWidth: ihr ? 2.5 : 1, strokeLinejoin: 'round' };
       const g = kachelForm(form, x, oben);
-      return h('g', { key: k, 'data-kanton': k, 'data-programm': !farbe ? (voll ? 'ja' : 'nein') : undefined, ...(ihr ? { 'data-ihr': 'ja' } : {}), 'aria-hidden': 'true' },
-        h('path', { 'data-form': form, d: g.d, fill: voll ? f.fill : 'none', fillOpacity: voll ? (f.deck ?? 1) : 0, ...rand }),
-        g.ring && h('circle', { ...g.ring, fill: 'none', stroke: randFarbe, strokeWidth: 0.75, opacity: 0.7 }),
-        g.griff && h('path', { d: g.griff, fill: 'none', stroke: voll ? (f.rand || palette.mid) : palette.border, strokeWidth: 1.5, strokeLinecap: 'round' }),
+      // Wert auch in der Grösse (Stebler Studios 23.11.2026, «Wert in der Form zeigen»): bei den Formen ausser dem Haus
+      // wächst die Gestalt mit der Stufe `f.s` (1–4), damit sie ohne Farbe und Legende lesbar ist (WCAG 1.4.1).
+      // Das Kürzel bleibt gleich gross; ist die Gestalt kleiner, steht es in Textfarbe auf dem Grund.
+      const mass = form !== 'haus' && voll && f.s ? STUFEN_MASS[f.s] || 1 : 1;
+      const cx = x + KACHEL.b / 2, cy = oben + (KACHEL.h - KACHEL.dach) / 2;
+      const zoom = mass < 1 ? { transform: 'translate(' + cx + ' ' + cy + ') scale(' + mass + ') translate(' + (-cx) + ' ' + (-cy) + ')' } : {};
+      const klein = mass < 0.8;
+      return h('g', { key: k, 'data-kanton': k, 'data-programm': !farbe ? (voll ? 'ja' : 'nein') : undefined, ...(ihr ? { 'data-ihr': 'ja' } : {}), ...(voll && f.s ? { 'data-stufe': f.s } : {}), 'aria-hidden': 'true' },
+        h('g', zoom,
+          h('path', { 'data-form': form, d: g.d, fill: voll ? f.fill : 'none', fillOpacity: voll ? (f.deck ?? 1) : 0, ...rand, ...(mass < 1 ? { vectorEffect: 'non-scaling-stroke' } : {}) }),
+          g.ring && h('circle', { ...g.ring, fill: 'none', stroke: randFarbe, strokeWidth: 0.75, opacity: 0.7 }),
+          g.griff && h('path', { d: g.griff, fill: 'none', stroke: voll ? (f.rand || palette.mid) : palette.border, strokeWidth: 1.5, strokeLinecap: 'round' })),
         !mini && h('text', { x: g.textX ?? x + KACHEL.b / 2, y: g.textY + schrift * 0.35, textAnchor: 'middle', fontSize: schrift,
-          fill: voll && f.hellSchrift ? palette.surface : voll || ihr ? palette.text : palette.mid }, k));
+          fill: voll && f.hellSchrift && !klein ? palette.surface : voll || ihr ? palette.text : palette.mid }, k));
     }));
 };
 

@@ -117,7 +117,7 @@ describe('Bauplan Behörden · jedes Bild einmal, die Zahl darunter', () => {
     expect((html.match(/data-fenster="\d" data-an="(ja|nein)"[^>]*role="button"/g) || []).length).toBe(5);
     expect(html).toContain('aria-label="Steuererklärung 2025 eingereicht, erledigt"');
     expect(html).toContain('aria-label="Betreibungsauszug bestellt, offen"');
-    expect(html).toMatch(/data-teil="gang-karte" data-gang="steuererklaerung"[\s\S]*Haken gesetzt, weil keine Steuererklärung offen ist/);
+    expect(html).toMatch(/data-teil="gang-karte" data-gang="steuererklaerung"[\s\S]*Vorgeschlagen, weil 0 offene Steuererklärungen erfasst sind/);
     expect((html.match(/data-gang-knopf=/g) || []).length).toBe(5);
   });
   // Dritte Runde (23.11.2026 abends, wie «Warum ein Drittel? ›» bei Wohnen): je unter ihrem Bild ein <details>, zu.
@@ -136,7 +136,10 @@ describe('Bauplan Behörden · jedes Bild einmal, die Zahl darunter', () => {
     const html = kapitel();
     expect(html).toMatch(/data-teil="frist-detail"[^>]*>\d{1,2}\. [A-Za-zä]+ \d{4}</);
     expect(html).toMatch(/data-teil="gaenge-detail"[^>]*>Offen: Betreibung · Ausweis · Wohnsitz · Strafregister</);
-    expect(html).toMatch(/data-teil="kompass-detail"[^>]*>Über das Einkommen nichts Direktes/);
+    // Ohne Weg kein Doppel: «weitere Wege» unter dem Wegweiser, der ganze Satz nur in «Warum ›».
+    expect(html).not.toMatch(/data-teil="kompass-detail"/);
+    expect(html).toMatch(/data-teil="leistungen-satz"[^>]*>Über das Einkommen nichts Direktes/);
+    expect((html.match(/weitere Wege/g) || []).length).toBe(2);
     const alle = kapitel(DEMO_DATA.behoerden, { betreibungsauszug: true, ausweisRenewal: true, wohnsitzbestaetigung: true, strafregisterauszug: true });
     expect(alle).toMatch(/data-teil="gaenge-detail"[^>]*>Alle Gänge erledigt</);
   });
@@ -189,7 +192,15 @@ describe('Bauplan Behörden · Formen im Vergleich', () => {
     });
   }
   it('Münzen tragen den Goldrand aus `rand`', () => {
-    expect(karte('muenze')).toMatch(/data-kanton="BE"[^>]*><path data-form="muenze"[^>]*stroke="#7A5C10"/);
+    expect(karte('muenze')).toMatch(/data-kanton="BE"[^>]*><g><path data-form="muenze"[^>]*stroke="#7A5C10"/);
+  });
+  // «Wert in der Form zeigen» (23.11.2026): die Gestalt wächst mit der Stufe, das Haus nie.
+  it('Grösse je Stufe: Stufe 1 klein, Stufe 4 voll; das Haus bleibt gleich', () => {
+    const mit = (form, s) => renderToStaticMarkup(React.createElement(Kachelkarte, { palette: LIGHT_PALETTE, t, kanton: 'ZH', isDarkMode: false, farbe: () => ({ fill: '#B8912C', s }), form }));
+    expect(mit('muenze', 1)).toMatch(/data-stufe="1"[^>]*><g transform="[^"]*scale\(0\.7\)/);
+    expect(mit('schirm', 3)).toMatch(/scale\(0\.9\)/);
+    expect(mit('puzzle', 4)).not.toContain('scale(');
+    expect(mit('haus', 1)).not.toContain('scale(');
   });
   it('der Vergleich nennt je Ebene ihre Form', () => {
     const q = lies('bereiche/behoerden/zuhause.jsx');

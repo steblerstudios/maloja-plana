@@ -147,6 +147,13 @@ describe('Nachprüfung: Steuerjahr und leere Werte', () => {
     expect(erledigtesSteuerjahr({ pendingTaxReturns: '0' }, heute)).toBeNull();
     expect(erledigtesSteuerjahr({ taxFilingDeadline: '2027-03-31', pendingTaxReturns: '1' }, heute)).toBeNull();
   });
+  // Fachprüfung 23.11.2026: eine alte Frist (mehr als ein Jahr zurück) gibt keinen Vorschlag mehr.
+  it('alte Frist: kein Vorschlag aus «0 offen»', () => {
+    const heute = new Date(2026, 10, 23);
+    expect(erledigtesSteuerjahr({ taxFilingDeadline: '2024-03-31', pendingTaxReturns: '0' }, heute)).toBeNull();
+    expect(erledigtesSteuerjahr({ taxFilingDeadline: '2025-03-31', pendingTaxReturns: '0' }, heute)).toBe(2024);
+    expect(erledigtesSteuerjahr({ taxFilingDeadline: '2027-03-31', pendingTaxReturns: '0' }, heute)).toBe(2025);
+  });
   it('leer, null und Leerzeichen heissen «nicht erfasst»', () => {
     expect(offeneErklaerungen({ pendingTaxReturns: null })).toBeNull();
     expect(offeneErklaerungen({ pendingTaxReturns: ' ' })).toBeNull();
@@ -156,6 +163,6 @@ describe('Nachprüfung: Steuerjahr und leere Werte', () => {
   it('Maria: «Steuererklärung 2025 eingereicht» mit Hinweis auf den Vorschlag', () => {
     const text = instrument();
     expect(text).toContain('Steuererklärung 2025 eingereicht');
-    expect(text).toContain('Haken gesetzt, weil keine Steuererklärung offen ist');
+    expect(text).toContain('Vorgeschlagen, weil 0 offene Steuererklärungen erfasst sind');
   });
 });

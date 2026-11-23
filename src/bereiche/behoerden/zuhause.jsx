@@ -92,10 +92,10 @@ export const BehoerdenStrasse = ({ palette, t, frist, gaenge, leistungen, isDark
     h('div', spalte('strasse-wegweiser'),
       h('div', { style: boden }, h(Wegweiser, { palette, kompass: leistungen, farbe, breite: 120 })),
       leistungen.state === 'found' && zahlDiv('leistungen', String(leistungen.anzahl)),
-      // Der Bezug wie in der Übersicht (Wächter bauplanBehoerden: Kapitel und Übersicht zeigen dasselbe). Ohne Weg sagt das
-      // Detail den ganzen Satz wie im Schnellcheck; die Erklärung darunter wiederholt ihn nicht.
+      // Der Bezug wie in der Übersicht (Wächter bauplanBehoerden: Kapitel und Übersicht zeigen dasselbe). Ohne Weg steht
+      // der ganze Satz nicht mehr darunter («weitere Wege» stand sonst zweimal), sondern in «Warum ›».
       bezug(kompassUnter(t, leistungen), 'kompass-unter'),
-      detail(leistungen.state === 'found' ? t('behoerdenZuhause.hinweis') : leistungen.state === 'none' ? t('schnellcheck.kompassNone') : '', 'kompass-detail'),
+      detail(leistungen.state === 'found' ? t('behoerdenZuhause.hinweis') : '', 'kompass-detail'),
       unterLeistungen),
     // Frage B · Gemeindehaus, die Fenster sind die Gänge. Zuletzt (dritte Runde): auf dem Telefon steht so die Gang-Karte
     // gleich darunter, das angetippte Fenster und sein Gang bleiben zusammen im Blick.
@@ -144,16 +144,24 @@ export const KantonsVergleich = ({ palette, t, kanton, isDarkMode }) => {
     if (!k) return null;
     const gold = key === 'steuer' ? GOLD[isDarkMode ? 'dunkel' : 'hell'] : null;
     const stufen = gold || daten.STUFEN_FARBEN[k.frucht]?.[isDarkMode ? 'dunkel' : 'hell'] || {};
-    const farbe = (c) => { const x = k.werte[c]; return x ? { fill: stufen[x.s], hellSchrift: x.s >= (gold ? gold.hellAb : 3), rand: gold ? gold.rand : null } : null; };
+    const farbe = (c) => { const x = k.werte[c]; return x ? { fill: stufen[x.s], s: x.s, hellSchrift: x.s >= (gold ? gold.hellAb : 3), rand: gold ? gold.rand : null } : null; };
     const ihr = kanton && k.werte[kanton] ? k.werte[kanton].text : null;
     const titel = t('behoerdenZuhause.vergleich.' + key);
+    // Ihr Kanton deutlicher (Stebler Studios 23.11.2026): wie viele Kantone tiefer liegen, ohne Wertung «gut/schlecht».
+    const zahlVon = (v) => Number(String(v ?? '').replace(/[’'\s%]/g, '').replace(',', '.'));
+    const alle = Object.values(k.werte).map((v) => zahlVon(v.text)).filter(Number.isFinite);
+    const tiefer = ihr ? alle.filter((n) => n < zahlVon(ihr)).length : null;
+    const rangSatz = tiefer == null ? null : tiefer === 0 ? t('behoerdenZuhause.vergleich.tiefster')
+      : t(tiefer === 1 ? 'behoerdenZuhause.vergleich.tieferEins' : 'behoerdenZuhause.vergleich.tiefer', { n: tiefer, von: alle.length });
     return {
       key, titel, quellen: k.quellen || [],
       mini: h(Kachelkarte, { palette, kanton, isDarkMode, farbe, mini: true, teil: 'vergleich-mini', form: FORM[key] }),
       zahl: ihr || (k.ch ? 'CH ' + k.ch : '–'),
-      // Mit Schweizer Wert «Schweiz Ø …»; die Steuer-Ebene hat keinen (Atlas: ch null), dort sagt der Satz, wovon.
-      satz: k.ch ? t('wohnenKarten.mieteSatz', { ch: k.ch }) : t('behoerdenZuhause.vergleich.' + key + 'Satz'),
+      // Mit Schweizer Wert «Schweiz 2,9 %» (Gesamtwert der Schweiz, kein Mittel der Kantone, Fachprüfung 23.11.2026); die Steuer-Ebene hat keinen (Atlas: ch null), dort sagt der Satz, wovon.
+      satz: k.ch ? t('behoerdenZuhause.vergleich.schweizWert', { ch: k.ch }) : t('behoerdenZuhause.vergleich.' + key + 'Satz'),
       gross: h(React.Fragment, null,
+        ihr && h('p', { 'data-teil': 'vergleich-ihr', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+          h('span', { style: { fontWeight: weight.semi } }, name + ': ' + ihr + '.'), ' ' + rangSatz),
         h(Kachelkarte, { palette, t, kanton, isDarkMode, farbe, form: FORM[key], teil: 'vergleich-' + key, aria: t('behoerdenZuhause.vergleich.aria', { titel, kanton: name || '–', wert: ihr || '–' }) }),
         h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.sm + 'px', marginTop: space.xs + 'px' } },
           (k.spannen || []).map((sp) => h('span', { key: sp.s, style: { ...klein, display: 'inline-flex', alignItems: 'center', gap: '4px' } },
@@ -269,9 +277,10 @@ const BehoerdenKapitel = ({ palette, t, behoerden, allData, onNavigate, checked 
         ? t('instrumente.steuerGanz', { total: zahl(steuerJahr) }) + ' · ' + t('tax.roughEstimateBadge') + ' · ' + t('behoerdenInstrument.zuFinanzenSub')
         : t('behoerdenInstrument.zuFinanzenSub'), () => onNavigate('chapter', 2))));
   const fristVorbeiHinweis = frist && frist.vorbei && h('p', { role: 'note', 'data-teil': 'frist-vorbei', style: { ...satz, margin: space.sm + 'px 0', lineHeight: leading.relaxed } }, t('behördenStatus.pastHint'));
-  // Ohne Weg steht der Satz schon unter dem Wegweiser; hier nur, was mehr sagt (die gefundenen Wege, «Einkommen fehlt»).
+  // Ohne Weg sagt die Erklärung den ganzen Satz wie im Schnellcheck («Über das Einkommen nichts Direktes — aber es gibt
+  // weitere Wege.»); unter dem Wegweiser steht nur das kurze «weitere Wege» wie in der Übersicht.
   const erklaerungLeistungen = erklaerung('leistungen', t('behoerdenZuhause.leistungenMehr'),
-    leistungen.state !== 'none' && h('p', { 'data-teil': 'leistungen-satz', style: satz }, leistungenSatz(t, leistungen)),
+    h('p', { 'data-teil': 'leistungen-satz', style: satz }, leistungenSatz(t, leistungen)),
     onNavigate && h('div', { style: { marginTop: space.sm + 'px' } },
       zeilenKnopf('situationen', t('dashboard.anspruchTitle'), t('behoerdenZuhause.anspruchSub'), () => onNavigate('situationen')),
       zeilenKnopf('sozialhilfe', t('nav.sozialhilfe'), t('behoerdenInstrument.zuFinanzenSub'), () => onNavigate('sozialhilfe'))));

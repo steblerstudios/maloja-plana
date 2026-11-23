@@ -28,6 +28,9 @@ export const erledigtesSteuerjahr = (behoerden, heute = new Date()) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(behoerden?.taxFilingDeadline || ''));
   if (!m || offeneErklaerungen(behoerden) !== 0) return null;
   const fristJahr = Number(m[1]);
+  // Fachprüfung 23.11.2026: eine alte Frist (mehr als ein Jahr zurück) sagt nichts mehr über das laufende Steuerjahr —
+  // «0 offen» kann dann veraltet sein. Kein Vorschlag, die Person setzt den Haken selbst.
+  if (heute.getFullYear() - fristJahr > 1) return null;
   return heute.getFullYear() >= fristJahr ? fristJahr - 1 : fristJahr - 2;
 };
 
