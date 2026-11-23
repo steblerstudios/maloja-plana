@@ -18,7 +18,7 @@ import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
 import { belegeImJahr } from './data/franchiseTacho.js';
 import { FranchiseAblesung, naechsteVorsorge } from './bereiche/notfall/notfall.js';
-import { bereichTextColor } from './data/lebensbereiche.js';
+import { bereichTextColor } from './data/bereichSchrift.js';
 import { DARK_PALETTE } from './config/constants.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
@@ -422,7 +422,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       // Regel «Zahl» (§10): das Bild, darunter EINE Hauptzahl gross (verbrauchte Franchise), Franken klein darunter.
       // Ersetzt die zwei 8-px-Balken (Franchise sand, Selbstbehalt sage).
       React.createElement('div', { 'data-teil': 'franchise-thermometer', style: { marginBottom: '16px' } },
-        // Ablesung am Thermometer (Sophie 18.11.2026, «A»): Werte auf der Höhe, die sie meinen; ersetzt die Textzeilen.
+        // Ablesung am Thermometer (Stebler Studios 18.11.2026, «A»): Werte auf der Höhe, die sie meinen; ersetzt die Textzeilen.
         React.createElement(FranchiseAblesung, { palette, t, stand: result, groesse: 'mittel' }),
         React.createElement('div', { 'data-instrument-zahl': 'franchise', 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums', marginTop: space.xs } },
           betrag(result.franchiseVerbraucht, { hoechstens: 2 }))
@@ -438,7 +438,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.eigenanteil')),
         React.createElement('span', {
           // Was Sie selbst zahlen = Farbe Gesundheit (Hagebutte), was die Kasse zahlt = Farbe Versicherungen
-          // (Sophie 18.11.2026). Schrifttöne aus bereichTextColor (4.5:1).
+          // (Stebler Studios 18.11.2026). Schrifttöne aus bereichTextColor (4.5:1).
           'data-teil': 'eigenanteil', style: { fontWeight: weight.semi, color: bereichTextColor('gesundheit', palette.bg === DARK_PALETTE.bg) || palette.text }
         }, betrag(result.eigenanteil))
       ),

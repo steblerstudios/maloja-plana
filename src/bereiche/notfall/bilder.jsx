@@ -6,7 +6,7 @@ import { betrag, zahl } from '../../utils/geld.js';
 
 // Franchise-Stand als Fieberthermometer (Stebler Studios 11.11.2026). Koffer-Logik Gesundheit: ein Gegenstand aus dem
 // Arztkoffer. Das Thermometer trägt nur diese Bedeutung; das geplante Fach für Fieber heisst darum «Fiebertagebuch».
-// Seit 18.11.2026 nach dem Wohnen-Konzept (Sophie: «warum ist der termometer nicht orange und hoch und nicht liegend»):
+// Seit 18.11.2026 nach dem Wohnen-Konzept (Stebler Studios: «warum ist der termometer nicht orange und hoch und nicht liegend»):
 // EINE Gestalt in allen Grössen, immer stehend, in der Farbe des Lebensbereichs Gesundheit (Hagebutte) — wie das
 // Drittel-Haus, das überall gleich dasteht. Nur die Grösse wechselt (Brand Book §7b):
 //   klein 64   — Kachel. Nur die Franchise, Strich oben. Keine Wörter.
@@ -52,7 +52,7 @@ export const FranchiseThermometer = ({ palette, stand, groesse = 'klein', t, fue
   return h('svg', { viewBox: '0 0 40 160', height: px, ...daten, style: { height: px + 'px', width: 'auto', display: 'block', overflow: 'visible' } }, ...zeichnung);
 };
 
-// Ablesung am Thermometer (Sophie 18.11.2026, Auswahl «A · Skala am Thermometer»): die Werte stehen auf der Höhe, die
+// Ablesung am Thermometer (Stebler Studios 18.11.2026, Auswahl «A · Skala am Thermometer»): die Werte stehen auf der Höhe, die
 // sie im Thermometer meinen — Selbstbehalt oben, Franchise am Strich, darunter was noch offen ist, unten was erreicht
 // ist. Ersetzt die Textzeile «Franchise verbraucht · Franchise offen … Selbstbehalt … Maximum» unter dem Bild.
 // Nur mittel 128 (KVG-Reiter) und gross 256 (Arztkoffer); die Kachel bleibt ohne Wörter. Beträge über betrag(),
@@ -113,7 +113,7 @@ export const HerzPuls = ({ palette, lagen = [], groesse = 'klein', t }) => {
       lagen.map((l) => h('span', { key: l.key, 'data-teil': 'lage-name', style: { color: l.voll ? palette.text : palette.mid, overflowWrap: 'anywhere', hyphens: 'auto', WebkitHyphens: 'auto', lineHeight: 1.3 } }, t('notfallEinstieg.' + l.key + '.title')))));
 };
 
-// Wer behandelt mich? als Karteikasten (Sophie 19.11.2026, Auswahl «B · Karteikasten»). Ein Gegenstand aus dem
+// Wer behandelt mich? als Karteikasten (Stebler Studios 19.11.2026, Auswahl «B · Karteikasten»). Ein Gegenstand aus dem
 // Arztkoffer, in der Farbe Gesundheit. Je Fachrichtung ein Reiter (`reiter` aus karteikarten(data), höchstens fünf
 // gezeichnet, je als stehende Karte). Ohne Karten: der leere Kasten. Keine Wörter im Bild:
 // die Zahl und die Fachrichtungen stehen darunter (Regel «Zahl»). Ruhig: eine Farbe, die Hausärztin (erster Reiter,
@@ -142,7 +142,7 @@ export const Karteikasten = ({ palette, reiter = [], anzahl = 0, groesse = 'mitt
     h('rect', { 'data-teil': 'griff', x: 66, y: 86, width: 28, height: 8, rx: 4, fill: 'none', stroke: farbe, strokeWidth: 2 }));
 };
 
-// Was nehme ich wann? als Blisterpackung (Sophie 20.11.2026, Auswahl «A · Wochenblister»). Ein Gegenstand aus dem
+// Was nehme ich wann? als Blisterpackung (Stebler Studios 20.11.2026, Auswahl «A · Wochenblister»). Ein Gegenstand aus dem
 // Arztkoffer, in der Farbe Gesundheit: 7 Tage (Spalten) × 4 Zeiten (Zeilen). Je Mulde so viele Tabletten, wie
 // Medikamente zu dieser Zeit an diesem Tag eingetragen sind (höchstens drei gezeichnet). Leere Mulde = nichts.
 // `raster` aus wochenblister(data). Die Ablesewörter (Tage, Zeiten) sind übersetzt und stehen am Rand, nicht in den
@@ -175,7 +175,7 @@ export const Blisterpackung = ({ palette, t, raster = [], groesse = 'gross' }) =
     ...mulden);
 };
 
-// Wie ging es mir die letzten Tage? als Fieberkurve auf einem Kalenderstreifen (Sophie 20.11.2026, Auswahl «A · Kurve
+// Wie ging es mir die letzten Tage? als Fieberkurve auf einem Kalenderstreifen (Stebler Studios 20.11.2026, Auswahl «A · Kurve
 // auf Kalender»). KEIN Thermometer: das bedeutet in der App nur die Franchise (11.11.2026). Unten 7 Tage als Streifen
 // (Wochentage übersetzt, im Feld), darüber je Tag die höchste eingetragene Temperatur als Punkt; Punkte benachbarter
 // Tage mit einer Linie verbunden, ein Tag ohne Messung unterbricht die Linie (nichts erfinden). Unter dem Streifen ein

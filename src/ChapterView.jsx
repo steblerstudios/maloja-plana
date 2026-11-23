@@ -738,7 +738,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('doctors.hint')),
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
           React.createElement(React.Suspense, { fallback: null },
-          // Seite in drei Teilen (Sophie 19.11.2026, «Doppeltes fällt weg»): die Ärzteliste wird im Fach Karteikarten
+          // Seite in drei Teilen (Stebler Studios 19.11.2026, «Doppeltes fällt weg»): die Ärzteliste wird im Fach Karteikarten
           // bearbeitet; hier stehen nur die Namen und der Weg dorthin. Ohne onNavigate (Tests, Einbettung) bleibt die Eingabe.
           onNavigate
             ? React.createElement('div', { 'data-teil': 'aerzte-in-kartei' },
@@ -1070,7 +1070,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         renderLabel(chapter.key + '-' + field.k, field.label, field.hint, true),
         !onNavigate && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('medications.hint')),
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
-          // Sophie 20.11.2026 («Nur im Fach»): wie Ärzte und Diagnosen werden die Medikamente im Fach Wochenblister
+          // Stebler Studios 20.11.2026 («Nur im Fach»): wie Ärzte und Diagnosen werden die Medikamente im Fach Wochenblister
           // bearbeitet; hier stehen nur die Namen und der Weg dorthin. Ohne onNavigate (Tests, Einbettung) bleibt die Eingabe.
           onNavigate
             ? React.createElement('div', { 'data-teil': 'medikamente-im-blister' },
@@ -1134,7 +1134,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         renderLabel(chapter.key + '-' + field.k, field.label, field.hint, true),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('diseases.hint')),
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
-          // Sophie 19.11.2026 («Ja, nur Verweis»): wie die Ärzte werden die Diagnosen im Fach Karteikarten bearbeitet;
+          // Stebler Studios 19.11.2026 («Ja, nur Verweis»): wie die Ärzte werden die Diagnosen im Fach Karteikarten bearbeitet;
           // hier stehen nur die Namen und der Weg dorthin. Ohne onNavigate (Tests, Einbettung) bleibt die Eingabe.
           onNavigate
             ? React.createElement('div', { 'data-teil': 'diagnosen-in-kartei' },
@@ -2226,7 +2226,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // und Pflege hingen nur am Arztkoffer, der seinerseits nicht zum Kapitel führte. Jetzt stehen sie hier, in
       // zwei Gruppen wie die Familie im Kapitel Basis. Die Erklärseite Krankenkasse bleibt bei Versicherungen
       // (Organigramm 07.11.2026, ZUM_VERSTEHEN); hier stehen nur Ziele in der App.
-      // Seite in drei Teilen (Sophie 19.11.2026): was oben schon einen Weg hat, steht hier nicht noch einmal —
+      // Seite in drei Teilen (Stebler Studios 19.11.2026): was oben schon einen Weg hat, steht hier nicht noch einmal —
       // KVG-Leistungen und Beleg-Ordner (Fächer im Arztkoffer ②). Der Ablauf Vorsorgeauftrag bleibt: die Kachel in ③
       // führt nur hin, solange er nicht geregelt ist.
       case 'notfall': return [

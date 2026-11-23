@@ -41,7 +41,7 @@ describe('Bauplan Notfall & Gesundheit · jedes Bild einmal je Seite', () => {
     expect(zaehle(html, /data-instrument-zahl="faellig"/g)).toBe(1);
     expect(html.indexOf('data-instrument-zahl="franchise"')).toBeGreaterThan(html.indexOf('data-franchise="mittel"'));
     expect(html.indexOf('data-instrument-zahl="faellig"')).toBeGreaterThan(html.indexOf('data-teil="kalenderblatt"'));
-    // Seit 20.11.2026 «wie Wohnen» (Sophie: «Ja, A fertig machen»): zuerst der Koffer wie die Strasse — im Deckel Herz,
+    // Seit 20.11.2026 «wie Wohnen» (Stebler Studios: «Ja, A fertig machen»): zuerst der Koffer wie die Strasse — im Deckel Herz,
     // Thermometer, Kalenderblatt nebeneinander, im Boden die Fächer —, dann Anrufen/Krise, was für «Bereit» fehlt,
     // Unterlagen, Vorsorge. Die Krise steht damit unter dem Koffer (vorher ganz oben, Lebenslagen C1+C2).
     const reihe = ['data-teil="teil-koffer"', 'data-teil="gesundheit-koffer"', 'data-teil="gesundheit-bereit"', 'data-teil="gesundheit-franchise"',
@@ -80,7 +80,7 @@ describe('Bauplan Notfall & Gesundheit · jedes Bild einmal je Seite', () => {
   });
 });
 
-describe('Ablesung am Thermometer (Sophie 18.11.2026, «A · Skala am Thermometer»)', () => {
+describe('Ablesung am Thermometer (Stebler Studios 18.11.2026, «A · Skala am Thermometer»)', () => {
   // Seit 20.11.2026 («B · Zahlen oben, Fächer unten», Thermometer klein, Text daneben) steht im Koffer das Thermometer
   // mittel ohne Ablesewörter; die Ablesung bleibt im KVG-Reiter. Ihre Reihenfolge prüft der Wächter am Bauteil.
   it('Ablesung: Selbstbehalt, Franchise, noch offen, erreicht stehen am Thermometer, in dieser Reihenfolge von oben', () => {
@@ -101,8 +101,8 @@ describe('Ablesung am Thermometer (Sophie 18.11.2026, «A · Skala am Thermomete
   });
 });
 
-describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)', () => {
-  // Die drei nummerierten Teile (19.11.2026) sind seit 20.11.2026 weg (Sophie: «gleiches Konzept wie beim Wohnen»,
+describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Stebler Studios 18.11.2026)', () => {
+  // Die drei nummerierten Teile (19.11.2026) sind seit 20.11.2026 weg (Stebler Studios: «gleiches Konzept wie beim Wohnen»,
   // «Ja, A fertig machen»): wie Wohnen ohne Nummern, der Koffer zuerst.
   it('wie Wohnen: keine Nummern, der Koffer steht zuerst, der Ernstfall-Knopf bleibt davor angeheftet', () => {
     const html = kapitel(DEMO_DATA);
@@ -118,7 +118,7 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
   it('Ärzte nicht doppelt: im Formular nur Namen und der Weg zu den Karteikarten', () => {
     const cv = lies('ChapterView.jsx');
     expect(cv).toMatch(/'data-teil': 'aerzte-in-kartei'/);
-    expect(cv).toMatch(/'data-teil': 'diagnosen-in-kartei'/); // Sophie 19.11.2026: Diagnosen ebenso nur Verweis
+    expect(cv).toMatch(/'data-teil': 'diagnosen-in-kartei'/); // Stebler Studios 19.11.2026: Diagnosen ebenso nur Verweis
     expect(cv.match(/onNavigate\('karteikarten'\)/g)).toHaveLength(2);
     expect(cv).toMatch(/onNavigate\('karteikarten'\)/);
   });
@@ -129,7 +129,7 @@ describe('Kapitel Gesundheit und Arztkoffer sind eine Seite (Sophie 18.11.2026)'
     expect(zaehle(html, /data-bald="ja"/g)).toBe(0); // seit dem Fiebertagebuch (20.11.2026) alle Fächer fertig
     expect(zaehle(html, /data-kachel="notfallkarte"/g)).toBe(1);
   });
-  // Sophie 20.11.2026, «B · Zahlen oben, Fächer unten» («alle drei Etappen im Koffer»): Franchise und Als Nächstes
+  // Stebler Studios 20.11.2026, «B · Zahlen oben, Fächer unten» («alle drei Etappen im Koffer»): Franchise und Als Nächstes
   // fällig im Deckel, die Fächer im Boden, darunter nichts. Das Fach heisst nur «Leistungen» (Doppeltes fällt weg).
   it('alles im Koffer: Franchise und fällig im Deckel, die Fächer im Boden, darunter nichts', () => {
     const html = kapitel(MIT_BELEG);
@@ -225,7 +225,7 @@ describe('Bauplan Notfall & Gesundheit · Ordnung im Code', () => {
   });
 });
 
-// Fach Impfausweis (Sophie 19.11.2026, «A · Liste + fällig», «Ja, mitzählen»). Regel: Schweizerischer Impfplan 2026
+// Fach Impfausweis (Stebler Studios 19.11.2026, «A · Liste + fällig», «Ja, mitzählen»). Regel: Schweizerischer Impfplan 2026
 // (BAG/EKIF, Stand Februar 2026), Tabelle 1 Fussnote 13, Kap. 1.4/1.5 a) (dT) und Kap. 3 a) (FSME).
 describe('Fach Impfausweis · Welche Impfung ist fällig?', () => {
   const mitImpfungen = (impfungen, geburt = '1980-06-15') => {
@@ -286,12 +286,15 @@ describe('Fach Impfausweis · Welche Impfung ist fällig?', () => {
   it('das Fach steht im Koffer, ist eine Seite mit Adresse und wird lazy über den Eingang geladen', () => {
     expect(KOFFER_FAECHER.find((f) => f.key === 'impfausweis').view).toBe('impfausweis');
     expect(lies('utils/hashRouter.js')).toMatch(/'impfausweis'/);
-    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Impfausweis \}\)\)\)/);
+    // Seit 23.11.2026 ein Baustein für alle vier Fächer (Startbündel): lazy über den Eingang, Ansicht → Fach in fach.jsx.
+    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.NotfallFach \}\)\)\)/);
+    expect(lies('main.jsx')).toMatch(/\['impfausweis', 'karteikarten', 'blister', 'fieber'\]\.includes\(view\) && React\.createElement\(NotfallFach, \{ fach: view/);
+    expect(lies('bereiche/notfall/fach.jsx')).toMatch(/impfausweis: Impfausweis\b/);
     expect(lies('bereiche/notfall/impfausweis.jsx')).not.toMatch(/setFullYear|setMonth/); // rechnet nicht selbst
   });
 });
 
-// Impfcheck und Kosten (Sophie 19.11.2026: «Ja, nach Alter», Preise «alle drei», abwählbar). Quelle: Referenzdokument
+// Impfcheck und Kosten (Stebler Studios 19.11.2026: «Ja, nach Alter», Preise «alle drei», abwählbar). Quelle: Referenzdokument
 // zu Art. 12a KLV vom 1. Juli 2026, Kap. 2 (seit 1.1.2026 ohne Franchise, Selbstbehalt bleibt) und Kap. 4.
 describe('Impfausweis · Impfcheck nach Alter und Kosten', () => {
   const mit = (impfungen, geburt, extra = {}) => ({ basis: { dateOfBirth: geburt, canton: extra.canton || 'ZH' },
@@ -391,7 +394,7 @@ describe('Impfausweis · Impfcheck nach Alter und Kosten', () => {
   });
 });
 
-// Fach Karteikarten (Sophie 19.11.2026: «B · Karteikasten», alle vier Inhalte, «Eine Liste, zwei Orte»).
+// Fach Karteikarten (Stebler Studios 19.11.2026: «B · Karteikasten», alle vier Inhalte, «Eine Liste, zwei Orte»).
 // Analyse §9 in stebler-studios/analysen/2026-11-18-notfall-gesundheit-bauplan.md.
 describe('Fach Karteikarten · Wer behandelt mich?', () => {
   const kartei = (notfall, extra = {}) => renderToStaticMarkup(React.createElement(Karteikarten, { palette: LIGHT_PALETTE, t, onUpdateData: () => {},
@@ -465,13 +468,15 @@ describe('Fach Karteikarten · Wer behandelt mich?', () => {
   it('das Fach steht im Koffer, ist eine Seite mit Adresse und wird lazy über den Eingang geladen', () => {
     expect(KOFFER_FAECHER.find((f) => f.key === 'karteikarten')).toMatchObject({ view: 'karteikarten', icon: 'contacts' });
     expect(lies('utils/hashRouter.js')).toMatch(/'karteikarten'/);
-    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Karteikarten \}\)\)\)/);
-    expect(lies('main.jsx')).toMatch(/view === 'karteikarten' && React\.createElement\(Karteikarten/);
+    // Seit 23.11.2026 ein Baustein für alle vier Fächer (Startbündel): lazy über den Eingang, Ansicht → Fach in fach.jsx.
+    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.NotfallFach \}\)\)\)/);
+    expect(lies('main.jsx')).toMatch(/\['impfausweis', 'karteikarten', 'blister', 'fieber'\]\.includes\(view\) && React\.createElement\(NotfallFach, \{ fach: view/);
+    expect(lies('bereiche/notfall/fach.jsx')).toMatch(/karteikarten: Karteikarten\b/);
     expect(lies('bereiche/notfall/karteikarten.jsx')).not.toMatch(/\.sort\(|doctorsList\)\.filter/); // rechnet nicht selbst
   });
 });
 
-// Fach Wochenblister (Sophie 20.11.2026: «A · Wochenblister», «Nur im Fach», Wochentage wählbar).
+// Fach Wochenblister (Stebler Studios 20.11.2026: «A · Wochenblister», «Nur im Fach», Wochentage wählbar).
 // Analyse §11 in stebler-studios/analysen/2026-11-18-notfall-gesundheit-bauplan.md.
 describe('Fach Wochenblister · Was nehme ich wann?', () => {
   const blister = (notfall, extra = {}) => renderToStaticMarkup(React.createElement(Wochenblister, { palette: LIGHT_PALETTE, t, onUpdateData: () => {},
@@ -550,13 +555,15 @@ describe('Fach Wochenblister · Was nehme ich wann?', () => {
   it('das Fach steht im Koffer, ist eine Seite mit Adresse und wird lazy über den Eingang geladen', () => {
     expect(KOFFER_FAECHER.find((f) => f.key === 'blister')).toMatchObject({ view: 'blister', icon: 'blister' });
     expect(lies('utils/hashRouter.js')).toMatch(/'blister'/);
-    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Wochenblister \}\)\)\)/);
-    expect(lies('main.jsx')).toMatch(/view === 'blister' && React\.createElement\(Wochenblister/);
+    // Seit 23.11.2026 ein Baustein für alle vier Fächer (Startbündel): lazy über den Eingang, Ansicht → Fach in fach.jsx.
+    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.NotfallFach \}\)\)\)/);
+    expect(lies('main.jsx')).toMatch(/\['impfausweis', 'karteikarten', 'blister', 'fieber'\]\.includes\(view\) && React\.createElement\(NotfallFach, \{ fach: view/);
+    expect(lies('bereiche/notfall/fach.jsx')).toMatch(/blister: Wochenblister\b/);
     expect(lies('bereiche/notfall/wochenblister.jsx')).not.toMatch(/medicationsList\)\.filter|\.reduce\(/); // rechnet nicht selbst
   });
 });
 
-// Fach Fiebertagebuch (Sophie 20.11.2026: «A · Kurve auf Kalender», Eintrag mit allem, «Für wen» frei, 30 Tage).
+// Fach Fiebertagebuch (Stebler Studios 20.11.2026: «A · Kurve auf Kalender», Eintrag mit allem, «Für wen» frei, 30 Tage).
 // Analyse §12 in stebler-studios/analysen/2026-11-18-notfall-gesundheit-bauplan.md.
 describe('Fach Fiebertagebuch · Wie ging es mir die letzten Tage?', () => {
   const JETZT = new Date('2026-11-20T09:00:00'); // Freitag
@@ -655,8 +662,10 @@ describe('Fach Fiebertagebuch · Wie ging es mir die letzten Tage?', () => {
     expect(lies('IconSystem.jsx')).toMatch(/fieberkurve: _fieberkurve,/);
     expect(lies('config/iconInventar.js')).toMatch(/fieberkurve: "/);
     expect(lies('utils/hashRouter.js')).toMatch(/'blister', 'fieber',/);
-    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.Fiebertagebuch \}\)\)\)/);
-    expect(lies('main.jsx')).toMatch(/view === 'fieber' && React\.createElement\(Fiebertagebuch/);
+    // Seit 23.11.2026 ein Baustein für alle vier Fächer (Startbündel): lazy über den Eingang, Ansicht → Fach in fach.jsx.
+    expect(lies('main.jsx')).toMatch(/lazyMitTexten\(\(\) => import\('\.\/bereiche\/notfall\/notfall\.js'\)\.then\(\(m\) => \(\{ default: m\.NotfallFach \}\)\)\)/);
+    expect(lies('main.jsx')).toMatch(/\['impfausweis', 'karteikarten', 'blister', 'fieber'\]\.includes\(view\) && React\.createElement\(NotfallFach, \{ fach: view/);
+    expect(lies('bereiche/notfall/fach.jsx')).toMatch(/fieber: Fiebertagebuch\b/);
     expect(lies('bereiche/notfall/fiebertagebuch.jsx')).not.toMatch(/\.reduce\(|Math\.max/); // rechnet nicht selbst
   });
 });

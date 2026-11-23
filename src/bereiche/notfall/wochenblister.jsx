@@ -6,7 +6,7 @@ import { Icon } from '../../IconSystem.jsx';
 import { wochenblister, BLISTER_ZEITEN } from './rechnung.js';
 import { Blisterpackung, gesundheitFarbe } from './bilder.jsx';
 
-// Fach Wochenblister im Arztkoffer (Sophie 20.11.2026: «A · Wochenblister», «Nur im Fach», Wochentage wählbar).
+// Fach Wochenblister im Arztkoffer (Stebler Studios 20.11.2026: «A · Wochenblister», «Nur im Fach», Wochentage wählbar).
 // Eine Frage (rechnung.js 8):
 //   Was nehme ich wann?   wochenblister → Blisterpackung (einmal je Seite) → «2 Einnahmen am Tag» → Medikamente je Zeit
 // Keine eigene Datenhaltung: bearbeitet wird data.notfall.medicationsList (MedicationManager, nachgeladen). Das ist

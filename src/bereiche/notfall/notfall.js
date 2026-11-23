@@ -7,3 +7,4 @@ export * from './impfausweis.jsx';
 export * from './karteikarten.jsx';
 export * from './wochenblister.jsx';
 export * from './fiebertagebuch.jsx';
+export * from './fach.jsx';

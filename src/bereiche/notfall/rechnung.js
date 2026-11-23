@@ -146,7 +146,7 @@ export const naechstesFaellig = (data, letzteBesuche = {}, heute = new Date()) =
   ], heute);
 };
 
-// ─── 4 · Welche Impfung ist fällig? (Fach Impfausweis, Sophie 19.11.2026: «A · Liste + fällig») ────────────
+// ─── 4 · Welche Impfung ist fällig? (Fach Impfausweis, Stebler Studios 19.11.2026: «A · Liste + fällig») ────────────
 // Die Impfungen stehen in data.notfall.impfungen = [{ id, art, name?, datum: 'YYYY-MM-DD' }] (lokal, wie alles).
 // Gerechnet wird NUR, wo der Impfplan eine klare Regel hat; sonst keine Frist, Satz «bei der Ärztin prüfen».
 // Quelle: Schweizerischer Impfplan 2026, BAG und EKIF, Stand Februar 2026 (am Original-PDF geprüft 19.11.2026):
@@ -216,7 +216,7 @@ export const naechsteImpfungen = (data) => {
 // Die früheste fällige Auffrischung (mit `vorbei`), oder null.
 export const naechsteImpfung = (data, heute = new Date()) => frueheste(naechsteImpfungen(data), heute);
 
-// ─── 5 · Impfcheck: Was empfiehlt der Impfplan für mein Alter? (Sophie 19.11.2026, «Ja, nach Alter», abwählbar) ─────
+// ─── 5 · Impfcheck: Was empfiehlt der Impfplan für mein Alter? (Stebler Studios 19.11.2026, «Ja, nach Alter», abwählbar) ─────
 // Nur Impfungen «bei allen Personen oder in einem bestimmten Alter» für Erwachsene, aus Art. 12a KLV, Referenzdokument
 // «Prophylaktische Impfungen» vom 1. Juli 2026, Kap. 4 (deckungsgleich mit Impfplan 2026, Kap. 1). Risikogruppen, Beruf,
 // Reise und Schwangerschaft nicht: dafür steht im Fach «in der Arztpraxis prüfen». Unter 16 gilt der Kinder-Impfplan.
@@ -272,7 +272,7 @@ export const impfcheck = (data, heute = new Date()) => {
     tessin: data?.basis?.canton === 'TI' };
 };
 
-// ─── 6 · Was kosten mich die Impfungen? (Sophie 19.11.2026, Preise auf alle drei Arten, abwählbar) ───────────────
+// ─── 6 · Was kosten mich die Impfungen? (Stebler Studios 19.11.2026, Preise auf alle drei Arten, abwählbar) ───────────────
 // Referenzdokument zu Art. 12a KLV vom 1. Juli 2026, Kap. 2: «Seit dem 1. Januar 2026 sind die Impfungen nach
 // Artikel 12a KLV und die dazugehörige Beratung von der Franchise befreit. Der Selbstbehalt für die Versicherten bleibt
 // unverändert.» Selbstbehalt 10 % (SELBSTBEHALT_RATE, KVG Art. 64 Abs. 2 Bst. b). «Bei beruflichen und
@@ -344,7 +344,7 @@ export const impfKostenJahr = (data, jahr) => impfungenListe(data)
 // Für den Satz im Fach: Starrkrampf eingetragen, aber ohne Geburtsdatum nicht rechenbar.
 export const impfungOhneAlter = (data) => !datumVon(data?.basis?.dateOfBirth) &&impfungenListe(data).some((e) => e.art === 'dt');
 
-// ─── 7 · Wer behandelt mich? (Fach Karteikarten, Sophie 19.11.2026: «B · Karteikasten», «Eine Liste, zwei Orte») ───
+// ─── 7 · Wer behandelt mich? (Fach Karteikarten, Stebler Studios 19.11.2026: «B · Karteikasten», «Eine Liste, zwei Orte») ───
 // Keine eigene Datenhaltung: die Karten SIND die Ärzteliste des Kapitels Notfall (data.notfall.doctorsList,
 // DoctorManager: { name, specialty, phone, adresse?, notes? }). Therapien und Kontakte sind Karten derselben Liste mit
 // eigener Fachrichtung. Die Karte Hausärztin ist die Notfall-Angabe (utils/hausarzt.js, zählt bei «Bereit» mit).
@@ -387,7 +387,7 @@ export const diagnosenListe = (data) => (Array.isArray(data?.notfall?.chronicDis
   .map((x) => ({ name: textVon(x?.name), code: textVon(x?.code), notes: textVon(x?.notes) }))
   .filter((x) => x.name);
 
-// ─── 8 · Was nehme ich wann? (Fach Wochenblister, Sophie 20.11.2026: «A · Wochenblister», «Nur im Fach», Wochentage) ─
+// ─── 8 · Was nehme ich wann? (Fach Wochenblister, Stebler Studios 20.11.2026: «A · Wochenblister», «Nur im Fach», Wochentage) ─
 // Keine eigene Datenhaltung: der Blister IST die Medikamentenliste des Kapitels Notfall (data.notfall.medicationsList,
 // MedicationManager: { name, dose, unit, frequency: ['morgens'|'mittags'|'abends'|'nachts'|'beiB'], tage?: [1..7], notes }).
 // `tage` = Wochentage nach ISO (1 Montag … 7 Sonntag); fehlt oder leer = jeden Tag. Keine Dosierung, keine Empfehlung:
@@ -419,10 +419,10 @@ export const wochenblister = (data) => {
     einnahmenMin: Math.min(...proTag), einnahmenMax: Math.max(...proTag) };
 };
 
-// ─── 9 · Wie ging es mir die letzten Tage? (Fach Fiebertagebuch, Sophie 20.11.2026: «A · Kurve auf Kalender») ─────
+// ─── 9 · Wie ging es mir die letzten Tage? (Fach Fiebertagebuch, Stebler Studios 20.11.2026: «A · Kurve auf Kalender») ─────
 // Eigene Datenhaltung, lokal: data.notfall.fiebertagebuch = [{ id, zeit: 'YYYY-MM-DDTHH:MM', temp, symptome: [key…],
 // anderes, medikament, notiz, fuer }]. `fuer` frei (ohne Namen = ich), je Person ein eigener Verlauf. Einträge bleiben
-// FIEBER_AUFBEWAHREN_TAGE Tage (Sophie: «30 Tage, dann weg»). Keine Grenze «ab wann Fieber», keine Beurteilung, keine
+// FIEBER_AUFBEWAHREN_TAGE Tage (Stebler Studios: «30 Tage, dann weg»). Keine Grenze «ab wann Fieber», keine Beurteilung, keine
 // Dosierung: gezählt und gezeigt wird nur, was eingetragen ist. Die Temperatur gilt nur von 34 bis 43 °C (Tippfehler).
 export const FIEBER_SYMPTOME = ['husten', 'halsweh', 'kopfweh', 'schnupfen', 'uebelkeit', 'durchfall', 'glieder', 'muede'];
 export const FIEBER_AUFBEWAHREN_TAGE = 30;

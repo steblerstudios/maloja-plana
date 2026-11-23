@@ -4749,7 +4749,7 @@ export default {
     backup: 'Backup & export',
   },
   // Bauplan Notfall & Gesundheit (18.11.2026): Arztkoffer-Seite, Fragen Franchise und «Als Nächstes fällig».
-  // Fach Impfausweis (Sophie 19.11.2026, «A · Liste + fällig»). Fachregel: Schweizerischer Impfplan 2026 (BAG/EKIF).
+  // Fach Impfausweis (Stebler Studios 19.11.2026, «A · Liste + fällig»). Fachregel: Schweizerischer Impfplan 2026 (BAG/EKIF).
   impfausweis: {
     frage: "Tge vaccinaziun è scadenta?",
     faelligSatz25: "Renovaziun cun 25 onns, ensemen cun la tuss chanina (dTpa)",

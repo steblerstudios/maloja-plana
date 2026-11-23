@@ -3,7 +3,7 @@ import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { knopfStil } from './components/PrimaryButton.jsx';
 
-// Fachrichtungen in drei Gruppen (Fach Karteikarten, Sophie 19.11.2026: Therapien und Kontakte sind Karten derselben
+// Fachrichtungen in drei Gruppen (Fach Karteikarten, Stebler Studios 19.11.2026: Therapien und Kontakte sind Karten derselben
 // Liste). Muss mit KARTEI_GRUPPEN in bereiche/notfall/rechnung.js übereinstimmen (Wächter bauplanNotfall.test.js);
 // hier eigens, damit die Eingabe die Rechnungen des Bereichs nicht mitlädt.
 export const SPECIALTY_GRUPPEN = {

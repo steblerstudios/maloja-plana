@@ -293,7 +293,7 @@ const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate,
       )
     ),
 
-    // Wochentage (Fach Wochenblister, Sophie 20.11.2026: «Ja, Wochentage wählbar»). Ohne Auswahl = jeden Tag.
+    // Wochentage (Fach Wochenblister, Stebler Studios 20.11.2026: «Ja, Wochentage wählbar»). Ohne Auswahl = jeden Tag.
     // Gespeichert als `tage: [1..7]` (ISO, 1 Montag); die Rechnung liest es mit blisterTage().
     React.createElement('div', { style: { marginBottom: space.sm } },
       React.createElement('div', { id: 'medi-tage-' + idx, style: labelStyle }, t('medications.tage')),

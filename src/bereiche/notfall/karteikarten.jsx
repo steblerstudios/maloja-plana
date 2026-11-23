@@ -6,7 +6,7 @@ import { Icon } from '../../IconSystem.jsx';
 import { karteikarten, diagnosenListe } from './rechnung.js';
 import { Karteikasten, gesundheitFarbe } from './bilder.jsx';
 
-// Fach Karteikarten im Arztkoffer (Sophie 19.11.2026: «B · Karteikasten», alle vier Inhalte, «Eine Liste, zwei Orte»).
+// Fach Karteikarten im Arztkoffer (Stebler Studios 19.11.2026: «B · Karteikasten», alle vier Inhalte, «Eine Liste, zwei Orte»).
 // Zwei Fragen (rechnung.js 7):
 //   1 Wer behandelt mich?     karteikarten → Karteikasten (einmal je Seite) → «4 Karten» → Fachrichtungen
 //   2 Was ist festgestellt?   diagnosenListe → Liste ohne Bild (Präzedenz Verfügungen)

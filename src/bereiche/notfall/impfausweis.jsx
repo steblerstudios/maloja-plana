@@ -15,9 +15,9 @@ import { monatJahr } from './zuhause.jsx';
 import { gesundheitFarbe } from './bilder.jsx';
 
 // Fach Impfausweis im Arztkoffer. Drei Fragen, je Rechnung → Zahl → Satz (rechnung.js 4–6):
-//   1 Welche Impfung ist fällig?   Kalenderblatt (einmal je Seite) → Monat und Jahr      (Sophie 19.11.2026, «A»)
-//   2 Bin ich nach Plan geimpft?   Liste mit Abständen → «3 von 4»                      (Sophie 19.11.2026, «Impfcheck»)
-//   3 Was kosten mich die Impfungen? → Eigenanteil im Jahr; wer zahlt, Preise           (Sophie 19.11.2026, «alle drei»)
+//   1 Welche Impfung ist fällig?   Kalenderblatt (einmal je Seite) → Monat und Jahr      (Stebler Studios 19.11.2026, «A»)
+//   2 Bin ich nach Plan geimpft?   Liste mit Abständen → «3 von 4»                      (Stebler Studios 19.11.2026, «Impfcheck»)
+//   3 Was kosten mich die Impfungen? → Eigenanteil im Jahr; wer zahlt, Preise           (Stebler Studios 19.11.2026, «alle drei»)
 // Abwählbar: jede Zeile im Impfcheck («trifft für mich nicht zu») und die Kosten als Ganzes. Kein Foto.
 // Daten lokal in data.notfall: impfungen · impfcheckAus · impfKostenAus.
 

@@ -21,7 +21,7 @@ const zahl = (html, attr) => Number((html.match(new RegExp(attr + '="([0-9.]+)"'
 describe('FranchiseThermometer · ein Bauteil, drei Grössen', () => {
   const stand = berechneFranchise(1500, 420);
 
-  it('klein: stehend wie gross (eine Gestalt, Sophie 18.11.2026), Säule bis zum Anteil, Strich oben', () => {
+  it('klein: stehend wie gross (eine Gestalt, Stebler Studios 18.11.2026), Säule bis zum Anteil, Strich oben', () => {
     const html = bild(stand, 'klein');
     expect(html).toContain('data-franchise="klein"');
     expect(html).toContain('data-lage="stehend"');

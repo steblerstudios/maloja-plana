@@ -31,11 +31,11 @@ export const monatJahr = (iso, locale) => {
   try { return d.toLocaleDateString(locale, { month: 'long', year: 'numeric' }); } catch { return iso.slice(5, 7) + '.' + iso.slice(0, 4); }
 };
 
-// teil: 'franchise' | 'faellig' | (ohne = beide). imKoffer: beide Fragen stehen im Deckel des Koffers (Sophie 20.11.2026,
+// teil: 'franchise' | 'faellig' | (ohne = beide). imKoffer: beide Fragen stehen im Deckel des Koffers (Stebler Studios 20.11.2026,
 // «B · Zahlen oben, Fächer unten», nach «A · Thermometer im Koffer-Boden» am selben Tag): ohne eigene Karten, der Koffer
 // ist der Rahmen; das Thermometer klein (mittel 128, ohne Ablesewörter), Zahl und Satz daneben; nebeneinander, auf dem
 // Handy untereinander.
-// mitBereit (Probe 20.11.2026, Sophie: «zeig mal A», «gleiches Konzept wie beim Wohnen»): wie die Strasse bei Wohnen
+// mitBereit (Probe 20.11.2026, Stebler Studios: «zeig mal A», «gleiches Konzept wie beim Wohnen»): wie die Strasse bei Wohnen
 // stehen alle drei Fragen als Gegenstände nebeneinander — Herz · Thermometer · Kalenderblatt —, jedes Bild auf
 // einer gemeinsamen Höhe, die Zahl darunter. zuBereit: Weg zu dem, was für «Bereit» noch fehlt.
 export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche, heute = new Date(), teil, imKoffer = false, mitBereit = false, zuBereit }) => {
@@ -108,7 +108,7 @@ export const GesundheitZuhause = ({ palette, t, data, onNavigate, letzteBesuche,
   return h('div', { 'data-teil': 'gesundheit-zuhause', style: { marginBottom: space.lg + 'px' } }, franchise, naechstes);
 };
 
-// ─── Die drei Teile der Seite Gesundheit (Sophie 19.11.2026, «A · Drei Teile»): ① Im Notfall · ② Arztkoffer ·
+// ─── Die drei Teile der Seite Gesundheit (Stebler Studios 19.11.2026, «A · Drei Teile»): ① Im Notfall · ② Arztkoffer ·
 // ③ Vorsorge und Angaben. Ein Titel je Teil, mit Nummer, über einer Linie (ausser dem ersten). Die Nummer ist eine
 // Ziffer in einem gezeichneten Kreis (CSS), kein Schriftzeichen ①. Ebene h3 wie die Abschnitte darin (Wächter halten
 // die Abschnitte als h3); der Teil unterscheidet sich durch Grösse und Linie.
@@ -124,7 +124,7 @@ export const TeilTitel = ({ palette, nr, id, children, tabIndex }) => {
     h('span', { style: { color: palette.text } }, children));
 };
 
-// ─── Der offene Arztkoffer (Sophie 18.11.2026: «einen kompletten arzt koffer gezeichnet», «wollen wir die seiten
+// ─── Der offene Arztkoffer (Stebler Studios 18.11.2026: «einen kompletten arzt koffer gezeichnet», «wollen wir die seiten
 // vereinen?» → Kapitel Gesundheit und Arztkoffer sind eine Seite). Zeichen der Gesundheit (Brand Book §5), in der
 // Farbe Gesundheit. Im Deckel die fertigen Fächer als Knöpfe (antippen = Werkzeug), unten die geplanten gestrichelt,
 // «bald». Gezeichnet aus HTML statt SVG: echte Knöpfe (Tastatur, Vorlesen, 44 px), Schrift wächst nicht klein.
@@ -133,19 +133,19 @@ export const TeilTitel = ({ palette, nr, id, children, tabIndex }) => {
 export const KOFFER_FAECHER = [
   { key: 'kvg', view: 'kvg', icon: 'insurance' },
   { key: 'kkbeleg', view: 'kk', icon: 'documents' },
-  // Fach Impfausweis (Sophie 19.11.2026, «A · Liste + fällig»): eigene Seite, Rechnung naechsteImpfung.
+  // Fach Impfausweis (Stebler Studios 19.11.2026, «A · Liste + fällig»): eigene Seite, Rechnung naechsteImpfung.
   { key: 'impfausweis', view: 'impfausweis', icon: 'health' },
-  // Fach Karteikarten (Sophie 19.11.2026, «B · Karteikasten»): eigene Seite, Rechnung karteikarten.
+  // Fach Karteikarten (Stebler Studios 19.11.2026, «B · Karteikasten»): eigene Seite, Rechnung karteikarten.
   { key: 'karteikarten', view: 'karteikarten', icon: 'contacts' },
-  // Fach Wochenblister (Sophie 20.11.2026, «A · Wochenblister»): eigene Seite, Rechnung wochenblister.
+  // Fach Wochenblister (Stebler Studios 20.11.2026, «A · Wochenblister»): eigene Seite, Rechnung wochenblister.
   { key: 'blister', view: 'blister', icon: 'blister' },
-  // Fach Fiebertagebuch (Sophie 20.11.2026, «A · Kurve auf Kalender»): eigene Seite, Rechnung fiebertagebuch. Der Schlüssel
+  // Fach Fiebertagebuch (Stebler Studios 20.11.2026, «A · Kurve auf Kalender»): eigene Seite, Rechnung fiebertagebuch. Der Schlüssel
   // bleibt «thermometer» (Text arztkoffer.faecher.thermometer), das Bild ist die Fieberkurve, nicht das Thermometer.
   { key: 'thermometer', view: 'fieber', icon: 'fieberkurve' },
 ];
 export const KOFFER_ANKER = 'mp-gesundheit-koffer';
 
-// stand: was im Deckel steht. Sophie 20.11.2026, «B · Zahlen oben, Fächer unten» («alle drei Etappen im Koffer»):
+// stand: was im Deckel steht. Stebler Studios 20.11.2026, «B · Zahlen oben, Fächer unten» («alle drei Etappen im Koffer»):
 // Franchise und Als Nächstes fällig (GesundheitZuhause imKoffer) im Deckel, die Fächer im Boden — zuerst der Stand,
 // dann die Wege (Bauplan: Bild → Zahl → Satz → Weg). Ohne stand: die Fächer im Deckel. Geplante Fächer (gestrichelt)
 // stehen immer im Boden, nach den fertigen.

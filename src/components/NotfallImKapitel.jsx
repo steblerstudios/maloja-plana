@@ -95,7 +95,7 @@ export const NotfallErnstfallKnopf = ({ palette, t, onNavigate }) => {
       h('span', { 'aria-hidden': 'true', style: { color: '#fff', fontSize: text.lg } }, '›')));
 };
 
-// Die Teile ① ② ③ (19.11.2026) sind seit 20.11.2026 weg (Sophie, Probe «wie Wohnen» → «Ja, A fertig machen»): keine
+// Die Teile ① ② ③ (19.11.2026) sind seit 20.11.2026 weg (Stebler Studios, Probe «wie Wohnen» → «Ja, A fertig machen»): keine
 // Nummern mehr, der Koffer steht oben wie die Strasse bei Wohnen.
 
 export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpdate, demoMode, zumFeld, onKarteDrucken, karteMoeglich, karteVorschau }) => {
@@ -313,13 +313,13 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
       nf.patientenverfuegung === 'yes' && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...wegLink, marginTop: space.xs + 'px' } }, t('nav.crosslink.pvHint') + ' ›'))
   );
 
-  // Kapitel Gesundheit und Arztkoffer sind seit 18.11.2026 eine Seite (Sophie: «wollen wir die seiten vereinen?»).
-  // Seit 19.11.2026 in drei Teilen (Sophie, «A · Drei Teile»): ① Im Notfall — Anrufen, Krise, Bereit, Unterlagen ·
+  // Kapitel Gesundheit und Arztkoffer sind seit 18.11.2026 eine Seite (Stebler Studios: «wollen wir die seiten vereinen?»).
+  // Seit 19.11.2026 in drei Teilen (Stebler Studios, «A · Drei Teile»): ① Im Notfall — Anrufen, Krise, Bereit, Unterlagen ·
   // ② Arztkoffer — Fächer, Franchise, Als Nächstes fällig · ③ Vorsorge und Angaben — Vorsorge, darunter das Formular.
   // Die Krise bleibt vor «Bereit» (Lebenslagen C1+C2): sie soll ohne Scrollen erreichbar sein.
-  // Sophie 20.11.2026, «B · Zahlen oben, Fächer unten»: alles im Koffer — Franchise und Als Nächstes fällig im Deckel,
+  // Stebler Studios 20.11.2026, «B · Zahlen oben, Fächer unten»: alles im Koffer — Franchise und Als Nächstes fällig im Deckel,
   // die Fächer im Boden, darunter nichts mehr.
-  // Probe «wie Wohnen» (Sophie 20.11.2026, «zeig mal A»): wie die Strasse bei Wohnen steht der Koffer ganz oben, mit allen
+  // Probe «wie Wohnen» (Stebler Studios 20.11.2026, «zeig mal A»): wie die Strasse bei Wohnen steht der Koffer ganz oben, mit allen
   // drei Fragen im Deckel (Herz · Thermometer · Kalenderblatt), die Fächer im Boden. Danach Anrufen und Krise, was für
   // «Bereit» fehlt, Unterlagen, Vorsorge. Keine Nummern. Der Ernstfall-Knopf bleibt oben angeheftet (ChapterView).
   const koffer = h(GesundheitKoffer, { palette, t, onNavigate, nr: null,

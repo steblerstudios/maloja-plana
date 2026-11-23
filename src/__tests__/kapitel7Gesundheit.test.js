@@ -174,7 +174,7 @@ describe('Organspende · Mindestalter 16 (TxG Art. 8 Abs. 7)', () => {
 describe('Gestaltung A · Gesundheits-Seiten auf der Kapitelseite', () => {
   const quelle = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
   const fall = quelle.slice(quelle.indexOf("case 'notfall': return ["), quelle.indexOf('default: return [', quelle.indexOf("case 'notfall': return [")));
-  // Seite in drei Teilen (Sophie 19.11.2026, «Doppeltes fällt weg»): KVG-Leistungen und Beleg-Ordner sind Fächer im
+  // Seite in drei Teilen (Stebler Studios 19.11.2026, «Doppeltes fällt weg»): KVG-Leistungen und Beleg-Ordner sind Fächer im
   // Arztkoffer oben; «Passend» nennt sie nicht noch einmal.
   it('«Passend» nennt Unfall, IV und Pflege; KVG-Leistungen und Belege stehen nur im Arztkoffer', () => {
     for (const v of ['unfallkrankheit', 'iv', 'pflege', 'vorsorgeauftrag', 'organ']) expect(fall, v).toContain("weg('" + v + "'");

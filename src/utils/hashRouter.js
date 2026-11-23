@@ -81,7 +81,7 @@ export const UMLEITUNGEN = {
   charts: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   aussteuerung: { view: 'stelleverloren', chapterIndex: null, anker: 'mp-aussteuerung' },
   notfalleinstieg: { view: 'chapter', chapterIndex: 6, anker: 'mp-notfall-ernstfall' },
-  // 18.11.2026: die Arztkoffer-Seite ist Teil des Kapitels Gesundheit (Sophie: «wollen wir die seiten vereinen?»).
+  // 18.11.2026: die Arztkoffer-Seite ist Teil des Kapitels Gesundheit (Stebler Studios: «wollen wir die seiten vereinen?»).
   // Suche, Werkzeug-Register und alte Links rufen weiter `gesundheit` auf und landen beim Koffer im Kapitel.
   gesundheit: { view: 'chapter', chapterIndex: CHAPTER_KEYS.indexOf('notfall'), anker: 'mp-gesundheit-koffer' },
   unterlagen: { view: 'tresor', chapterIndex: null, anker: 'mp-unterlagen' },

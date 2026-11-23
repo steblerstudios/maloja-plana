@@ -8,7 +8,7 @@ import { Icon } from '../../IconSystem.jsx';
 import { fiebertagebuch, fieberBehalten, fieberTemp, FIEBER_SYMPTOME, FIEBER_AUFBEWAHREN_TAGE, wochenblister } from './rechnung.js';
 import { Fieberkurve, gesundheitFarbe } from './bilder.jsx';
 
-// Fach Fiebertagebuch im Arztkoffer (Sophie 20.11.2026: «A · Kurve auf Kalender», Eintrag mit Temperatur, Symptomen,
+// Fach Fiebertagebuch im Arztkoffer (Stebler Studios 20.11.2026: «A · Kurve auf Kalender», Eintrag mit Temperatur, Symptomen,
 // Medikament und Notiz, «Für wen» frei, «30 Tage, dann weg»). Eine Frage (rechnung.js 9):
 //   Wie ging es mir die letzten Tage?   fiebertagebuch → Fieberkurve (einmal je Seite) → «Tag 3» → «zuletzt 38,2 °C · Husten»
 // Daten lokal in data.notfall.fiebertagebuch. Ältere Einträge als FIEBER_AUFBEWAHREN_TAGE werden beim Öffnen still
