@@ -534,7 +534,7 @@ export default {
     intro: 'Tgira che vegn prestada en silenzi resta savens senza attenziun — malgrà che quai dat dretgs che blers na dumondan mai. Ina survista: bonificaziun da renta, indemnisaziun, sgravi.',
     step1Title: '1 · Bonificaziun d’assistenza da l’AVS',
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step1Text: 'Eine Betreuungsgutschrift erhält, wer Verwandte betreut, die eine Hilflosenentschädigung (AHV, IV, Unfall- oder Militärversicherung) beziehen und leicht erreichbar sind — in der Regel höchstens 30 km oder eine Stunde entfernt. Verwandte sind die auf- und absteigende Linie, etwa Eltern, Grosseltern, Kinder und Enkel, sowie Geschwister; gleichgestellt sind Ehefrau oder Ehemann, eingetragene Partnerin oder eingetragener Partner, Schwiegereltern, Stiefkinder und eine Lebenspartnerin oder ein Lebenspartner nach fünf Jahren ununterbrochen im gemeinsamen Haushalt (ATSG Art. 13a). Die Gutschrift erhöht die spätere AHV-Rente, gleich hoch wie die Erziehungsgutschrift (AHVG Art. 29septies, AHVV Art. 52g). Jedes Jahr bei der Ausgleichskasse am Wohnsitz der betreuten Person anmelden; nach fünf Jahren verfällt der Anspruch für das betreffende Jahr.',
+    step1Text: 'Eine Betreuungsgutschrift erhält, wer Verwandte betreut, die eine Hilflosenentschädigung (AHV, IV, Unfall- oder Militärversicherung) beziehen und leicht erreichbar sind — in der Regel höchstens 30 km oder eine Stunde entfernt. Verwandte sind die auf- und absteigende Linie, etwa Eltern, Grosseltern, Kinder und Enkel, sowie Geschwister; gleichgestellt sind Ehefrau oder Ehemann, eingetragene Partnerin oder eingetragener Partner, Schwiegereltern, Stiefkinder und eine Lebenspartnerin oder ein Lebenspartner nach fünf Jahren ununterbrochen im gemeinsamen Haushalt (AHVG Art. 29septies Abs. 1, ATSG Art. 13a). Die Gutschrift erhöht die spätere AHV-Rente, gleich hoch wie die Erziehungsgutschrift (AHVG Art. 29septies, AHVV Art. 52g). Jedes Jahr bei der Ausgleichskasse am Wohnsitz der betreuten Person anmelden; nach fünf Jahren verfällt der Anspruch für das betreffende Jahr.',
     step1Link: 'Endatar en il calculatur da prevenziun',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     stepLohnTitle: { sie: '2 · Laschar indemnisar Voss stgaffiment', du: '2 · Laschar indemnisar tes stgaffiment' },
@@ -567,6 +567,7 @@ export default {
       monat: "mais",
       jahr: "onn d’assistenza",
       heute: "oz",
+      angerechnet: "messa a quint, betg pajada ora",
       anDich: { sie: "Per Vus: salari per la tgira", du: "Per tai: salari per la tgira" },
       anDichSub: "Grondezza dal pass 2, mo sch’ina organisaziun emploia.",
       anGepflegte: "Per la persuna tgirada: indemnisaziun d’impotenza",

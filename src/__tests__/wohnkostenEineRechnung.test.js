@@ -46,6 +46,21 @@ describe('Wohnkosten · eine Rechnung', () => {
     expect(drittelGrenzeMiete(r)).toBeCloseTo(4000 / 3 - 1200, 6);
   });
 
+  it('Nebenkosten allein schon über einem Drittel: die Marke bleibt, jede Miete liegt darüber (Predeploy 23.11.2026)', () => {
+    // Vorher gab die Grenze hier 0 zurück, und 0 heisst im Barometer «keine Marke». Damit fiel die
+    // Warnung genau bei den Haushalten weg, die am deutlichsten über dem Drittel liegen.
+    const p = profil({ monthlyIncome: '1500' }, { rentAmount: '1200', utilities: '500' });
+    const r = wohnkostenRechnung(p.wohnen, p);
+    expect(r.ueberDrittel).toBe(true);
+    const grenze = drittelGrenzeMiete(r);
+    expect(grenze).toBeGreaterThan(0);
+    expect(r.netto > grenze).toBe(true);
+    for (const miete of [1, 50, 1200, 3000]) {
+      const rm = wohnkostenRechnung(p.wohnen, p, miete);
+      expect(miete > drittelGrenzeMiete(rm)).toBe(rm.ueberDrittel);
+    }
+  });
+
   it('mit Partner/in kein Urteil: die Miete gilt für den Haushalt, gerechnet ist das eigene Einkommen', () => {
     const p = profil({}, {}, { maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '5000' } });
     const r = wohnkostenRechnung(p.wohnen, p);

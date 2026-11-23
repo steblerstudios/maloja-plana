@@ -42,7 +42,12 @@ export function wohnkostenRechnung(wohnen, allData, miete) {
 // Die «!»-Marke auf dem Miet-Balken (RegionalBarometer zeigt die NETTOMIETE): die Nettomiete, ab der
 // die Wohnkosten mehr als einen Drittel des Einkommens ausmachen. Miete > Grenze ⇔ `ueberDrittel`.
 // 0 heisst «keine Marke»: ohne Einkommen (nie geraten) und mit Partner/in (kein Urteil, siehe oben).
+// Liegen die übrigen Wohnkosten (NK, Hypothek, Gebäudeversicherung) allein schon über einem Drittel,
+// wäre die Grenze ≤ 0. Dann gilt GRENZE_MINIMAL: jede Miete liegt darüber, die Marke und das «!»
+// bleiben (Predeploy 23.11.2026; vorher fiel die Warnung genau in diesen Fällen weg, weil 0 im
+// Barometer «keine Marke» heisst). Der Warnsatz nennt keinen Betrag, darum zeigt das nie «CHF 0.01».
+const GRENZE_MINIMAL = 0.01;
 export function drittelGrenzeMiete(r) {
   if (!r || r.mitPartner || !(r.einkommen > 0)) return 0;
-  return Math.max(0, r.einkommen / 3 - (r.kosten - r.netto));
+  return Math.max(GRENZE_MINIMAL, r.einkommen / 3 - (r.kosten - r.netto));
 }
