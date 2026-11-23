@@ -30,7 +30,16 @@ const ALTE_KNOEPFE = ['Feedback senden', 'Send feedback', 'Envoyer le feedback',
 const NEUE_SCHLUESSEL = ['submit', 'submitHint', 'previewTitle', 'to', 'copy', 'copied', 'copyFailed', 'noMailApp', 'reopen', 'thanks', 'thanksDetail', 'thanksLater'];
 
 const dashboard = fs.readFileSync(path.resolve(__dirname, '..', 'Dashboard.jsx'), 'utf8');
-const komponente = dashboard.slice(dashboard.indexOf('const BetaFeedback'), dashboard.indexOf('// Merged status surface'));
+// Seit 23.11.2026 eine eigene, nachgeladene Datei (Startbündel-Luft): das Feedback steht ganz unten.
+const komponente = fs.readFileSync(path.resolve(__dirname, '..', 'components', 'BetaFeedback.jsx'), 'utf8');
+
+describe('Das Feedback liegt nicht im Startbündel', () => {
+  it('Dashboard lädt es nach und importiert den Mail-Baustein nicht fest', () => {
+    expect(dashboard).not.toMatch(/import .*betaFeedbackMail/);
+    expect(dashboard).not.toContain('const BetaFeedback = (');
+    expect(dashboard).toMatch(/lazyMitTexten\(\(\) => import\('\.\/components\/BetaFeedback\.jsx'\)\)/);
+  });
+});
 
 describe('Der Knopf verspricht kein Senden mehr', () => {
   for (const [lang, texte] of Object.entries(SPRACHEN)) {

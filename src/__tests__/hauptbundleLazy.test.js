@@ -123,8 +123,12 @@ describe('Startbündel: keine ganzen Fach-Dateien für eine kleine Hilfsfunktion
   const dashboard = readFileSync(new URL('../Dashboard.jsx', import.meta.url), 'utf8');
   it('Dashboard holt die Zwischenablage aus utils/zwischenablage.js, nicht aus notfallpass.js', () => {
     // Seit #655 erst beim Klick per import() geladen; beide Formen zeigen auf die kleine Datei.
-    expect(dashboard).toMatch(/(from |import\()'\.\/utils\/zwischenablage\.js'/);
-    expect(dashboard).not.toMatch(/(from |import\()'\.\/utils\/notfallpass\.js'/);
+    // Seit 23.11.2026 sitzt der Kopieren-Knopf im nachgeladenen components/BetaFeedback.jsx.
+    const feedback = readFileSync(new URL('../components/BetaFeedback.jsx', import.meta.url), 'utf8');
+    expect(feedback).toMatch(/(from |import\()'\.\.\/utils\/zwischenablage\.js'/);
+    for (const quelle of [dashboard, feedback]) {
+      expect(quelle).not.toMatch(/(from |import\()'\.\.?\/utils\/notfallpass\.js'/);
+    }
   });
   it('main.jsx importiert utils/fristen.js nicht', () => {
     expect(mainJsx).not.toMatch(/from '\.\/utils\/fristen\.js'/);
