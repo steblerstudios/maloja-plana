@@ -15,7 +15,8 @@ const STELLEN = [
   ['AsylView.jsx', 'disclaimer: {', 'Asyl: Hinweis «Orientierung, keine Rechtsberatung»'],
   ['AsylView.jsx', 'fristen: {', 'Asyl: Kasten Beschwerdefristen'],
   ['AblaufSchale.jsx', 'const kartenStil', 'Frist-Karte in allen Abläufen'],
-  ['components/MietVergleich.jsx', "padding: '12px', background: palette.up", 'Mietzins: «Wo steht Ihre Miete?»'],
+  // Überholt 18.11.2026 (Bauplan Wohnen): der Kasten «Wo steht Ihre Miete?» (components/MietVergleich.jsx) ist weg; im
+  // Werkzeug steht die Strasse Wohnen ohne eigenen Kasten (bereiche/wohnen/zuhause.jsx, WohnenWerkzeug).
   ['NotfallVorlesekarte.jsx', 'readCard: {', 'Notfallkarte: Abschnitte'],
   ['NotfallpassBlatt.jsx', 'hinweis: {', 'Notfallpass: Hinweis'],
   ['NotfallpassBlatt.jsx', 'liste: {', 'Notfallpass: Listen'],

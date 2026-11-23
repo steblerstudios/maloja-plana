@@ -3,7 +3,7 @@ import { springeZuAnker } from '../utils/hashRouter.js';
 import { ExternerLink } from './ExternerLink.jsx';
 import { knopfStil, linkStil } from './PrimaryButton.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
-import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
+import { text, weight, leading, space, radius, visuallyHiddenStyle, INSTRUMENT_GROESSE } from '../config/tokens.js';
 import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 
@@ -87,6 +87,17 @@ export const bereitschaft = (data) => {
     .filter((f) => !angabeBereit(d, f))
     .map((f) => ({ ...f, lagen: SCENARIOS.filter((s) => s.fields.some((x) => x.chapter === f.chapter && x.k === f.k)).map((s) => s.key) }));
   return { erledigt: NOTFALL_ANGABEN.length - fehlend.length, gesamt: NOTFALL_ANGABEN.length, fehlend };
+};
+
+// Die Bereitschaft klein (64 px, Brand Book §7b «Spiegel Startseite», 10.11.2026): ein Ring, der sich nach
+// erledigt/gesamt füllt, in der Notfall-Farbe wie der Balken im Kapitel. Nur das Bild; «19/20» steht daneben.
+export const BereitRingKlein = ({ palette, erledigt, gesamt }) => {
+  const h = React.createElement;
+  const r = 14, u = 2 * Math.PI * r, anteil = gesamt > 0 ? Math.min(1, erledigt / gesamt) : 0;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-bereit': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('circle', { cx: 30, cy: 20, r, fill: 'none', stroke: palette.border, strokeWidth: 5 }),
+    anteil > 0 && h('circle', { cx: 30, cy: 20, r, fill: 'none', stroke: palette.roseDeep || palette.rose, strokeWidth: 5, strokeLinecap: 'round',
+      strokeDasharray: (anteil * u).toFixed(2) + ' ' + u.toFixed(2), transform: 'rotate(-90 30 20)' }));
 };
 
 // Vorsorge: geregelt ist, was entschieden ist. Organspende: jede Wahl ausser «Noch nicht entschieden»;
@@ -297,11 +308,13 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   });
   const bereit = h('section', { 'data-teil': 'notfall-bereit', 'aria-labelledby': 'mp-notfall-bereit' },
     h('h3', { id: 'mp-notfall-bereit', style: kapH }, t('notfallKapitel.bereitTitel')),
-    h('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm + 'px', flexWrap: 'wrap' } },
-      h('span', { style: { fontSize: '28px', fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, t('notfallKapitel.vonN', { n: stand.erledigt, total: stand.gesamt })),
-      h('span', { style: klein }, t('notfallKapitel.bereitSatz'))),
-    h('div', { 'aria-hidden': 'true', style: { height: '6px', background: palette.up, borderRadius: radius.hair, overflow: 'hidden', margin: space.xs + 'px 0 ' + space.sm + 'px' } },
+    // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): erst das Bild, darunter die Zahl gross. Das Bild selbst
+    // (Balken, Ring oder Koffer) ist noch nicht entschieden (B-F1) — hier rückt nur die Zahl unter den Balken.
+    h('div', { 'aria-hidden': 'true', style: { height: '6px', background: palette.up, borderRadius: radius.hair, overflow: 'hidden', margin: space.xs + 'px 0 ' + space.xs + 'px' } },
       h('div', { style: { width: pct + '%', height: '100%', background: notfallRot } })),
+    h('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px' } },
+      h('span', { 'data-instrument-zahl': 'bereit', style: { fontSize: '28px', fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, t('notfallKapitel.vonN', { n: stand.erledigt, total: stand.gesamt })),
+      h('span', { style: klein }, t('notfallKapitel.bereitSatz'))),
     stand.fehlend.length === 0
       ? h('p', { style: { fontSize: text.sm, color: palette.sageDeep || palette.text, margin: '0 0 ' + space.sm + 'px' } }, t('notfallEinstieg.allDone'))
       : stand.fehlend.map(fehlZeile),

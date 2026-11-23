@@ -7,6 +7,7 @@
 // Premium = 0 in den Daten heisst: Franchise/Tarif nicht angeboten → hier null.
 
 import { DETAIL, NAMEN, DETAIL_QUELLEN } from './praemienDetailDaten.js';
+import { PRAEMIEN_VEROEFFENTLICHT } from './franchiseTacho.js';
 
 const ERW_FRA = [300, 500, 1000, 1500, 2000, 2500];
 const KIN_FRA = [0, 100, 200, 300, 400, 500, 600];
@@ -25,7 +26,8 @@ export function detailJahr(stichtag = new Date()) {
 // darum schon mit dem Folgejahr — was man heute bezahlt (Barometer, Budget, eigene Prämie), bleibt beim Kalenderjahr.
 // Datum je Jahr: BAG-Medienmitteilung (2027: 29.09.2026, «Krankenkassenprämien steigen durchschnittlich um 5,0 Prozent»,
 // https://www.bag.admin.ch/de/newnsb/BfuGvedj0OOX — im Browser gelesen 25.10.2026, siehe praemienRegionen.js).
-export const DETAIL_VEROEFFENTLICHT = Object.freeze({ 2027: '2026-09-29' });
+// Eine Quelle seit 11.11.2026: data/franchiseTacho.js (PRAEMIEN_VEROEFFENTLICHT), dort auch die Wechselfrist.
+export const DETAIL_VEROEFFENTLICHT = PRAEMIEN_VEROEFFENTLICHT;
 
 // Stichtag für Vergleiche: in der Wechselzeit der 1. Januar des Folgejahres, sonst der Tag selbst.
 export function vergleichsStichtag(heute = new Date()) {

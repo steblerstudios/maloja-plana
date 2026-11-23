@@ -3,6 +3,14 @@ import { text, weight, space, leading, radius } from '../config/tokens.js';
 import { renderSource } from '../utils/renderSource.js';
 import { zahl } from '../utils/geld.js';
 import { LegendenMarke } from './LegendenMarke.jsx';
+import { lageZurRegion } from '../utils/lage.js';
+
+// Rechnung der Lage: utils/lage.js (eine Quelle für Barometer, Wohnen und Kacheln, seit 18.11.2026).
+// Die Häuser der Miete (Häuserzeile, Vergleichshaus) liegen seit 18.11.2026 in bereiche/wohnen/bilder.jsx.
+export { lageZurRegion };
+
+// Skala wie im grossen Barometer: etwas Luft nach oben, auf 50 gerundet.
+const skala = (regional, national, userValue) => Math.ceil((Math.max(regional, national, userValue > 0 ? userValue : 0) * 1.15) / 50) * 50 || 50;
 
 // Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Stebler Studios):
 //   • Füllung  = eigener Wert (deine Prämie/Miete) — wie bei KK-Last die eigene Last
@@ -32,16 +40,17 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // `imKapitel` (optional): ruhige Fassung fürs Kapitel Wohnen (Abnahme F6, Stebler Studios 25.10.2026 «Barometer
 // ruhiger»). Ohne die strukturelle Erklärung, und der Zimmer-Hinweis zeigt auf das Feld unten im
 // Kapitel statt «im Kapitel Wohnen» — man ist ja schon dort.
+// Die Häuser der Miete (form 'haeuser', drittel, tuer, ausland, lageGross) gibt es seit 18.11.2026 hier nicht mehr:
+// Wohnen zeichnet sie selbst (bereiche/wohnen/bilder.jsx, Vergleichshaus). Dieses Bauteil ist der Balken.
 export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel }) => {
   if (!comparison) return null;
-  const { regional, national, diffPct, year, roomKey, zimmerAngenommen, ohneWertFuerGroesse, wenigeAntworten } = comparison;
+  const { regional, national, diffPct, year } = comparison;
   const ns = 'po.regionalCompare.';
   const k = ns + kind + '.';
 
   const hasUser = userValue != null && userValue > 0;
   // Skala mit etwas Luft nach oben, gerundet — Schweizer Schnitt sitzt als Marke darauf.
-  const maxVal = Math.max(regional, national, hasUser ? userValue : 0);
-  const scaleMax = Math.ceil((maxVal * 1.15) / 50) * 50 || 50;
+  const scaleMax = skala(regional, national, hasUser ? userValue : 0);
   const pct = (v) => Math.max(0, Math.min(100, (v / scaleMax) * 100));
   const nationalPct = pct(national);
   const regionalPct = pct(regional);
@@ -97,10 +106,14 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     regional: regional.toFixed(0), national: national.toFixed(0), diff: diffText,
   });
   const userText = hasUser ? (userLabel || t(k + 'yourVal', { amount: zahl(userValue) })) : null;
+  // Strasse gross (Kapitel Wohnen, 256): Kürzel in den Häusern, Beträge direkt darunter statt der Legenden-Zeilen
+  // (Stebler Studios 11.11.2026, Skizze B). In mittel (Mietzins, Budget) wären Kürzel und Beträge unter 13 px bzw.
+  // zu eng — dort bleiben die Legenden-Zeilen.
   if (hasUser) ariaLabel += ' ' + userText;
   // Eigener Wert gegen Region, gleiche Schwelle (±2 %) wie die Farbe des Regions-Punkts.
-  const userPct = hasUser && regional > 0 ? Math.round((userValue / regional - 1) * 100) : 0;
-  const userDir = !hasUser ? null : userValue > regional * 1.02 ? 'Above' : userValue < regional * 0.98 ? 'Below' : 'Equal';
+  const lage = hasUser ? lageZurRegion(userValue, regional) : null;
+  const userPct = lage ? lage.pct : 0;
+  const userDir = lage ? lage.richtung : null;
   const userDiffText = userDir ? t(k + 'user' + userDir, { pct: Math.abs(userPct) }) : null;
   if (userDiffText) ariaLabel += ' ' + userDiffText;
   // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (a11y-Prüfer): Die Schwellen-Überschreitung stand
@@ -232,26 +245,12 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, t(k + 'structural')),
 
-    // Miete: womit verglichen wird (Zimmerzahl, angenommen oder erfasst) und ob der BFS-Wert unsicher
-    // ist (weniger als 50 Beobachtungen). Fachprüfung 25.10.2026: vorher unsichtbar — wer allein in
-    // 1½ Zimmern wohnt, wurde still mit 3-Zimmer-Wohnungen verglichen.
-    kind === 'rent' && roomKey && React.createElement('div', {
-      'data-teil': 'miete-vergleich-groesse',
-      style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
-    },
-      ohneWertFuerGroesse ? t(k + 'ohneWertFuerGroesse') + ' ' : '',
-      roomKey === 'total' ? t(k + 'vergleichAlle')
-        : roomKey === 'r6' ? t(k + 'vergleichAb6')
-        : t(k + 'vergleichZimmer', { n: roomKey.slice(1) }),
-      zimmerAngenommen ? ' ' + t(k + (imKapitel ? 'zimmerAngenommenHier' : 'zimmerAngenommen')) : '',
-      wenigeAntworten ? ' ' + t(k + 'wenigeAntworten') : ''
-    ),
-
     // Quelle
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', fontStyle: 'italic' },
     }, renderSource(t(k + 'source', { year }), null, t)),
   );
 };
+
 
 export default RegionalBarometer;

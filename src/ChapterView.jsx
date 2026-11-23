@@ -75,11 +75,14 @@ const JobManager = React.lazy(() => import('./JobManager.jsx'));
 const Monatsring = React.lazy(() => import('./components/Monatsring.jsx').then((m) => ({ default: m.Monatsring })));
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
-const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
+const WohnkostenInstrument = React.lazy(() => import('./bereiche/wohnen/wohnen.js').then((m) => ({ default: m.WohnenZuhause })));
 const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
 // «Lohnt sich die Karte?» — seit 20.11.2026 ein aufklappbarer Teil im Kapitel Finanzen statt eigener Seite.
 const KreditkarteRechner = React.lazy(() => import('./Kreditkarte.jsx'));
 const LohnImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.LohnImKapitel })));
+// Arbeit im Kapitel (10.11.2026, Stebler Studios «… und auch wo wir sehen mit dem Lohn-Barometer»): Dienstjahre,
+// Ferien und Pensum direkt unter dem Barometer — dieselben Kacheln wie in der Übersicht.
+const ArbeitInstrumente = React.lazy(() => import('./components/InstrumentePanel.jsx').then((m) => ({ default: m.InstrumentePanel })));
 const LebenslaufVorschau = React.lazy(() => import('./components/LebenslaufVorschau.jsx').then((m) => ({ default: m.LebenslaufVorschau })));
 const VersicherungenInstrument = React.lazy(() => import('./components/VersicherungenInstrument.jsx').then((m) => ({ default: m.VersicherungenInstrument })));
 
@@ -181,6 +184,21 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     return offen;
   };
   const [offeneAbschnitte, setOffeneAbschnitte] = useState(abschnitteAnfang);
+  // Kapitel Wohnen (Stebler Studios 20.11.2026, «A, am Bild»): sind Wohnkosten erfasst, stehen Adresse, Kosten,
+  // Vermieterschaft und Eigentum oben bei ihren Bildern und öffnen dort ihr Formular. Unten bleibt «Alle Angaben».
+  const nWohn = (v) => Number(v) || 0;
+  const wohnSzeneJetzt = chapter.key === 'wohnen' && !!allData
+    && nWohn(data.rentAmount) + nWohn(data.utilities) + nWohn(data.buildingsInsurance) + (data.mortgageStatus === 'no' ? 0 : nWohn(data.mortgagePayment)) > 0;
+  const WOHN_SZENE_ABSCHNITTE = ['address', 'rentAmount', 'landlord', 'mortgageStatus'];
+  // Umschalten zwischen Liste und Szene erst, wenn keiner der vier Abschnitte offen ist: sonst spränge das Formular
+  // mitten im Tippen (erste Miete eingetragen → Szene) nach oben und der Cursor ginge verloren.
+  const wohnSzeneStand = useRef({ kapitel: null, wert: false });
+  if (wohnSzeneStand.current.kapitel !== chapter.key || !WOHN_SZENE_ABSCHNITTE.some((k) => offeneAbschnitte[k])) {
+    wohnSzeneStand.current = { kapitel: chapter.key, wert: wohnSzeneJetzt };
+  }
+  const wohnSzene = wohnSzeneStand.current.wert;
+  // `anfangsOffen: 'liste'` (Tests der Liste) oder 'alle' klappt «Alle Angaben» schon auf.
+  const [alleAngaben, setAlleAngaben] = useState(anfangsOffen === 'alle' || anfangsOffen === 'liste');
   // Der Kreditkarten-Rechner lädt erst, wenn sein Teil aufgeht (auch über die Sprungmarke `mp-kreditkarte`).
   const [kreditkarteOffen, setKreditkarteOffen] = useState(false);
   // Kapitelwechsel ohne Neuaufbau: die Regel gilt fürs neue Kapitel neu.
@@ -1877,8 +1895,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // Publikumspreis aus der Spezialitätenliste, nachgeladen (F7-K6-2)
       z.k === 'medications' && chapter.key === 'notfall' && Array.isArray(data.medicationsList) && data.medicationsList.some((m) => m && m.name) &&
         React.createElement(React.Suspense, { fallback: null }, React.createElement(MedikamentPreisKurz, { palette, t: tr, lang, medications: data.medicationsList }))));
-  const abschnittsliste = () => {
-    const gruppen = abschnittGruppen(chapter.fields, chapter.title);
+  // `nur`: genau ein Abschnitt (für die Szene im Kapitel Wohnen); `ohne`: diese Abschnitte nicht in der Liste.
+  const abschnittsliste = ({ nur = null, ohne = [] } = {}) => {
+    const gruppen = abschnittGruppen(chapter.fields, chapter.title).filter((g) => nur || !ohne.includes(g.key));
     const abschnitt = (g) => {
       const felder = g.felder.filter(feldSichtbar);
       if (felder.length === 0) return null;
@@ -1886,7 +1905,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const fehlend = felder.filter((f) => !abschnittGefuellt(f) && feldZaehlt(f));
       const zaehlend = felder.filter(feldZaehlt);
       const offen = !!offeneAbschnitte[g.key];
-      const umschalten = () => setOffeneAbschnitte((o) => ({ ...o, [g.key]: !o[g.key] }));
+      const umschalten = () => {
+        setOffeneAbschnitte((o) => ({ ...o, [g.key]: !o[g.key] }));
+        // In der Wohnen-Szene öffnet das Formular oben am Bild: dorthin mitgehen.
+        if (wohnSzene && !offeneAbschnitte[g.key] && WOHN_SZENE_ABSCHNITTE.includes(g.key)) {
+          setTimeout(() => document.getElementById('mp-section-' + g.key)?.scrollIntoView({ block: 'start' }), 0);
+        }
+      };
       // Finanzen · Nebenerwerb (Entscheid 23.10.2026): die fünf Felder erst mit Nebenerwerb.
       // Es gibt kein eigenes Ja/Nein-Feld — angegeben ist ein Nebenerwerb, sobald eines der
       // fünf Felder einen Wert trägt (oder «trifft nicht zu»). Dann steht die Zeile offen;
@@ -1960,6 +1985,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             )
       );
     };
+    if (nur) { const g = gruppen.find((x) => x.key === nur); return g ? abschnitt(g) : null; }
     // M3: Abschnitte ohne jede Angabe in EINER Zeile; «ergänzen ›» öffnet sie alle.
     const leereZeile = (liste) => {
       const zu = liste.filter((g) => !offeneAbschnitte[g.key] && g.felder.filter(feldSichtbar).length > 0);
@@ -2300,7 +2326,24 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Regional-Barometer und «Ausprobieren: andere Miete». Einkommen und «Frei verfügbar» aus der
     // einen Monatsrechnung; der Regler verändert das Profil nie.
     chapter.key === 'wohnen' && allData && React.createElement(React.Suspense, { key: 'wohnkosten', fallback: null },
-      React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode })
+      React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode, onNavigate,
+        angaben: wohnSzene ? {
+          offen: (k) => !!offeneAbschnitte[k],
+          umschalten: (k) => {
+            const g = abschnittGruppen(chapter.fields, chapter.title).find((x) => x.key === k);
+            if (g && g.sek && !showSecondary && !offeneAbschnitte[k]) toggleSecondary();
+            setOffeneAbschnitte((o) => ({ ...o, [k]: !o[k] }));
+            // Der Link am Bild verschwindet beim Öffnen: der Fokus geht auf «fertig» des Formulars (sonst fiele er auf
+            // den Seitenanfang), das Formular rückt ins Bild.
+            setTimeout(() => {
+              const ab = document.getElementById('mp-section-' + k);
+              if (!ab) return;
+              ab.scrollIntoView({ block: 'nearest' });
+              ab.querySelector('button[aria-expanded]')?.focus({ preventScroll: true });
+            }, 50);
+          },
+          formular: (k) => abschnittsliste({ nur: k }),
+        } : null })
     ),
 
     // Fassung 6 · Kapitel Behörden (Runde 9, Entwurf AD): Steuerfrist als Kalenderblatt, Behördengänge offen,
@@ -2323,6 +2366,20 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     chapter.key === 'ausbildung' && allData && React.createElement(React.Suspense, { key: 'ausbildung-oben', fallback: null },
       React.createElement('div', { 'data-teil': 'ausbildung-lohn', style: { marginBottom: space.lg + 'px' } },
         React.createElement(LohnImKapitel, { palette, t: tr, data: { ...allData, ausbildung: data }, isDarkMode, onNavigate })
+      ),
+      React.createElement('div', { 'data-teil': 'ausbildung-instrumente', style: { marginBottom: space.lg + 'px' } },
+        React.createElement(ArbeitInstrumente, { palette, t: tr, data: { ...allData, ausbildung: data }, onNavigate: (ziel, idx) => {
+          // Im eigenen Kapitel führt die Kachel zum Bereich Arbeit im Formular (Stellenantritt, darunter Wochenstunden
+          // und Ferien) — kein Klick ins Leere. Alle drei Kacheln zeigen dorthin.
+          if (ziel === 'chapter') {
+            // Formular: das Eingabefeld; im schreibgeschützten Beispiel stehen die Angaben als Liste (angaben-liste).
+            const feld = document.getElementById('ausbildung-employmentStart');
+            if (feld) { feld.scrollIntoView({ block: 'center' }); feld.focus({ preventScroll: true }); return; }
+            document.querySelector('[data-teil="angaben-liste"]')?.scrollIntoView({ block: 'start' });
+            return;
+          }
+          onNavigate && onNavigate(ziel, idx);
+        }, nur: ['dienst', 'ferien', 'pensum'], zuhause: true })
       ),
       React.createElement(LebenslaufVorschau, { palette, t: tr, ausbildung: data, allData, onNavigate })
     ),
@@ -2363,7 +2420,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Wohnen: der Kasten «Wohnkosten / Einkommen / Anteil» und der MietVergleich standen bis
     // 24.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf Z) ersetzt sie das Wohnkosten-Instrument
-    // oben unter der Zusammenfassung (components/WohnkostenInstrument.jsx).
+    // oben unter der Zusammenfassung (bereiche/wohnen/zuhause.jsx).
 
     // Versicherungs-Schutzschild (Instrument #4): seit 25.10.2026 klein im Versicherungen-Instrument
     // oben (components/VersicherungenInstrument.jsx), nicht mehr gross an dieser Stelle.
@@ -2390,10 +2447,32 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // (finanzen-fusion.md §3, Entscheid 2 «nach den Angaben»; damit überholt).
     istFinanzen && renderAuswertung('oben'),
 
+    // Wohnen mit Szene (Stebler Studios 21.11.2026, «wohnen-aufraeumen.html» Teil 6): statt der zwei Reiter zwei ruhige
+    // Zeilen mit Bild wie am Rand — «Alle Angaben» (die Abschnitte stehen oben am Bild) und «Dokumente».
+    wohnSzene && (() => {
+      const reihe = (teil, icon, titel, unter, label, an, onClick) => React.createElement('div', {
+        'data-teil': teil, style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: space.sm + 'px 0', borderTop: '1px solid ' + palette.border + '88' },
+      },
+        React.createElement('span', { 'aria-hidden': 'true', style: { flex: '0 0 auto', display: 'flex', color: palette.text } }, React.createElement(Icon, { name: icon, size: 28 })),
+        React.createElement('div', { style: { flex: '1 1 auto', minWidth: 0 } },
+          React.createElement('h3', { style: { margin: 0, fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, titel),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, unter)),
+        React.createElement('button', { type: 'button', className: 'mp-link', 'aria-expanded': an, onClick, style: linkKnopf }, label + (an ? '' : ' ›')));
+      const angabenOffen = expandedSection === 'fields' && alleAngaben;
+      const dokumenteOffen = expandedSection === 'documents';
+      return React.createElement('div', { 'data-teil': 'wohnen-angaben-dokumente', style: { marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border + '88' } },
+        reihe('alle-angaben', 'document', tr('wohnenKopf.alleAngaben'), abschnittGruppen(chapter.fields, chapter.title).map((g) => g.titel).join(' · '),
+          tr(angabenOffen ? 'wohnenKopf.ausblenden' : 'wohnenKopf.anzeigen'), angabenOffen,
+          () => { if (angabenOffen) setAlleAngaben(false); else { setExpandedSection('fields'); setAlleAngaben(true); } }),
+        chapter.docs && reihe('dokumente', 'ordner', tr('chapterView.documents'), chapter.docs.map((d) => d.label).join(', '),
+          tr(dokumenteOffen ? 'wohnenKopf.ausblenden' : 'wohnenKopf.ablegen'), dokumenteOffen,
+          () => setExpandedSection(dokumenteOffen ? 'fields' : 'documents')));
+    })(),
+
     // Tabs
     // marginBottom klein halten: der Sektions-Reiter darunter soll als Unter-Ebene
     // von „Angaben" gelesen werden, nicht losgelöst tief darunter schweben.
-    React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
+    !wohnSzene && React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
       React.createElement('button', {
         onClick: () => setExpandedSection('fields'),
         'aria-pressed': expandedSection === 'fields',
@@ -2440,7 +2519,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       ),
       // Versicherungen: das Spinnennetz stand hier bis 27.10.2026; seither zeigt das Netz-Schild oben
       // (components/NetzSchild.jsx, F7-K3-6), was gedeckt ist.
-      abschnittsliste()
+      // Wohnen mit Szene: die Abschnitte stehen oben am Bild; hier eine Zeile «Alle Angaben», die die Übersicht
+      // aufklappt (ohne die Abschnitte, die oben gerade offen sind — kein Formular doppelt).
+      // Wohnen mit Szene: die Zeile «Alle Angaben» steht oben bei «Dokumente»; hier nur die aufgeklappte Übersicht
+      // (ohne die Abschnitte, die oben gerade offen sind — kein Formular doppelt).
+      wohnSzene
+        ? alleAngaben && abschnittsliste({ ohne: WOHN_SZENE_ABSCHNITTE.filter((k) => offeneAbschnitte[k]) })
+        : abschnittsliste()
     ),
 
     // Documents Tab

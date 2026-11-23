@@ -75,7 +75,7 @@ describe('Netz-Schild ist das eine Schild', () => {
     const html = renderToStaticMarkup(h(PraemienOrientierung, { palette: LIGHT_PALETTE, t, data: DEMO_DATA, onNavigate: () => {} }));
     expect(html).toContain('data-schild="netz"');
     expect(breiteDesSchilds(html)).toBe(INSTRUMENT_GROESSE.mittel);
-    // Nur das alte Schild «Pflicht / Empfohlen» (components/Schutzschild.jsx) zeichnet diese beiden Clip-Pfade.
+    // Nur das alte Schild «Pflicht / Empfohlen» (components/_archiv/Schutzschild.jsx) zeichnet diese beiden Clip-Pfade.
     expect(html).not.toContain('schild-pflicht');
     expect(html).not.toContain('schild-empfohlen');
   });

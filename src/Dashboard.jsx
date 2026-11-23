@@ -18,7 +18,7 @@ import { auswahlLabel } from './utils/auswahlLabel.js';
 import { lohnIstNetto } from './utils/jahreslohnAusProfil.js';
 import { sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
-import { GAENGE, gangErledigt } from './utils/behoerdenGaenge.js';
+import { GAENGE, gangErledigt, gespeicherteHaken } from './utils/behoerdenGaenge.js';
 import { kalenderdatum, zeitpunktDatum } from './utils/datumAnzeige.js';
 import { betaFeedbackText, betaFeedbackHref } from './utils/betaFeedbackMail.js';
 import { version as APP_VERSION } from '../package.json';
@@ -37,7 +37,7 @@ const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'bre
 // Die Fortschritts-Karte (Kapitel + Grundordnung) — siehe BergDetail.jsx.
 const BergDetail = lazyMitTexten(() => import('./BergDetail.jsx'));
 // Welches Instrument in welcher Kapitel-Zeile steht (F7-D10). Das Franchise-Kreuz bleibt, solange F7-K3-2 zurückgestellt ist.
-const INSTRUMENTE_JE_KAPITEL = { finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho'] };
+const INSTRUMENTE_JE_KAPITEL = { basis: ['ausweis', 'referenz', 'grundordnung'], wohnen: ['wohnkosten', 'miete'], ausbildung: ['lohn', 'dienst', 'ferien', 'pensum'], finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho', 'wechselfrist'], behoerden: ['steuerfrist', 'gaenge'], notfall: ['bereit', 'franchise'] };
 // Lazy: die Leistungsliste («Was steht mir zu?») mit IPV-/Sozialhilfe-Rechnung und Kompass
 // liegt in eigenem Chunk — das Hauptpaket stand am 25.09.2026 bei 65,17 / 65 kB.
 const QuickCheck = lazyMitTexten(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
@@ -102,9 +102,7 @@ export function buildSnippet(chapterKey, chData, allData, t, lang) {
     if (chData.taxFilingDeadline) parts.push(t('synthesis.taxDeadline', { date: kalenderdatum(chData.taxFilingDeadline, lang) }));
     // Dieselben Gänge und dieselbe Erledigt-Regel wie im Kapitel (utils/behoerdenGaenge.js) — nicht alle Haken im
     // Speicher und nicht gegen eine feste Zahl.
-    let cl = {};
-    try { cl = JSON.parse(localStorage.getItem('or5_behoerden_checklist') || '{}') || {}; } catch { /* Storage blockiert */ }
-    const done = GAENGE.filter((g) => gangErledigt(g.id, cl, chData)).length;
+    const done = GAENGE.filter((g) => gangErledigt(g.id, gespeicherteHaken(), chData)).length;
     if (done > 0) parts.push(t('synthesis.checklistDone', { n: done, total: GAENGE.length }));
     return parts.join(' · ') + '.';
   }
@@ -322,7 +320,7 @@ const bergKleben = (el) => {
   return () => { ro.disconnect(); window.removeEventListener('resize', setzen); };
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte, hatDokumente = false }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte, hatDokumente = false, dokumente }) => {
   const { lang } = useT(); // K18: für hyphens/lang an den Mini-Beschriftungen (Baum/Berg/Status).
 
   // E17: «trifft nicht zu» zählt als erledigt — eine Quelle (utils/vollstaendigkeit.js).
@@ -576,7 +574,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         ],
         zusammenfassung: (key) => buildSnippet(key, data[key] || {}, data, t, lang),
         instrumentFuer: (key) => INSTRUMENTE_JE_KAPITEL[key] && React.createElement(React.Suspense, { fallback: null },
-          React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: INSTRUMENTE_JE_KAPITEL[key] })),
+          React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: INSTRUMENTE_JE_KAPITEL[key], dokumente, grundordnungStand: mvo })),
       })
     ),
     // Zugang zum Lebens-Obstgarten — ruhige, sichtbare Einladung direkt unter dem
