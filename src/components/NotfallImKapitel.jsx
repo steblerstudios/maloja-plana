@@ -3,9 +3,10 @@ import { springeZuAnker } from '../utils/hashRouter.js';
 import { ExternerLink } from './ExternerLink.jsx';
 import { knopfStil, linkStil } from './PrimaryButton.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
-import { text, weight, leading, space, radius, visuallyHiddenStyle, INSTRUMENT_GROESSE } from '../config/tokens.js';
-import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
+import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
+import { NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
+import { SCENARIOS, bereitschaft, angabeBereit, VORSORGE, vorsorgeEintragGeregelt, GesundheitKoffer, GesundheitZuhause } from '../bereiche/notfall/notfall.js';
 
 // Kapitel Notfall · «ein Ort» (Fassung 6, Runde 9, Entwurf AE, Entscheid Stebler Studios 24.10.2026; gebaut Abnahme
 // 25.10.2026). Das Kapitel ist der eine Notfall-Ort; der frühere Einstieg (#/notfalleinstieg) leitet hierher.
@@ -23,105 +24,8 @@ export const NOTFALL_ANKER = 'mp-notfall-ernstfall';
 // Lebenslagen C1+C2 (07.11.2026): Hilfe bei seelischer Krise und Gewalt — dieselben Einträge wie in «Offizielle Links».
 export const HILFE_IN_DER_KRISE = ['help1', 'help2', 'help3', 'help4'];
 
-export const SCENARIOS = [
-  {
-    key: 'unfall',
-    fields: [
-      { chapter: 'notfall', k: 'emergencyContact' },
-      { chapter: 'notfall', k: 'emergencyPhone' },
-      { chapter: 'notfall', k: 'bloodType' },
-      { chapter: 'notfall', k: 'allergies' },
-      { chapter: 'notfall', k: 'medications' },
-      { chapter: 'notfall', k: 'doctor' },
-      { chapter: 'notfall', k: 'doctorPhone' },
-      { chapter: 'versicherungen', k: 'kkInsurer' },
-      { chapter: 'versicherungen', k: 'kkCardNumber' },
-    ],
-  },
-  {
-    key: 'spital',
-    fields: [
-      { chapter: 'basis', k: 'firstName' },
-      { chapter: 'basis', k: 'lastName' },
-      { chapter: 'basis', k: 'dateOfBirth' },
-      { chapter: 'basis', k: 'ahv' },
-      { chapter: 'versicherungen', k: 'kkInsurer' },
-      { chapter: 'versicherungen', k: 'kkCardNumber' },
-      { chapter: 'versicherungen', k: 'franchise' },
-      { chapter: 'notfall', k: 'emergencyContact' },
-      { chapter: 'notfall', k: 'emergencyPhone' },
-      { chapter: 'notfall', k: 'patientenverfuegung' },
-    ],
-  },
-  {
-    key: 'behoerde',
-    fields: [
-      { chapter: 'basis', k: 'firstName' },
-      { chapter: 'basis', k: 'lastName' },
-      { chapter: 'basis', k: 'dateOfBirth' },
-      { chapter: 'basis', k: 'canton' },
-      { chapter: 'wohnen', k: 'address' },
-      { chapter: 'wohnen', k: 'postalCode' },
-      { chapter: 'wohnen', k: 'city' },
-      { chapter: 'basis', k: 'ahv' },
-      { chapter: 'behoerden', k: 'cantoneOfTaxation' },
-    ],
-  },
-];
-
-// Die verschiedenen Angaben der drei Szenarien, ohne Doppelte (20), in der Reihenfolge des ersten Auftretens.
-export const NOTFALL_ANGABEN = SCENARIOS.flatMap((s) => s.fields)
-  .filter((f, i, alle) => alle.findIndex((x) => x.chapter === f.chapter && x.k === f.k) === i);
-
-// Eine Angabe ist bereit, wenn sie einen Wert hat oder «trifft nicht zu» trägt. Ausnahme Patientenverfügung: erst
-// bei «Ja» — «Noch nicht» ist zwar eine Antwort, im Spital fehlt aber die Verfügung (Stebler Studios 25.10.2026, nach der
-// Fachprüfung; sonst zählte «Bereit» sie als erledigt und «Vorsorge» darunter als nicht geregelt).
-export const angabeBereit = (data, f) => (f.chapter === 'notfall' && f.k === 'patientenverfuegung'
-  ? vorsorgeGeregelt((data || {}).notfall, 'patientenverfuegung')
-  : feldErledigt((data || {})[f.chapter], f.k));
-
-// Wie bereit: erledigt, gesamt, und das Fehlende mit den Szenarien, für die es fehlt.
-export const bereitschaft = (data) => {
-  const d = data || {};
-  const fehlend = NOTFALL_ANGABEN
-    .filter((f) => !angabeBereit(d, f))
-    .map((f) => ({ ...f, lagen: SCENARIOS.filter((s) => s.fields.some((x) => x.chapter === f.chapter && x.k === f.k)).map((s) => s.key) }));
-  return { erledigt: NOTFALL_ANGABEN.length - fehlend.length, gesamt: NOTFALL_ANGABEN.length, fehlend };
-};
-
-// Die Bereitschaft klein (64 px, Brand Book §7b «Spiegel Startseite», 10.11.2026): ein Ring, der sich nach
-// erledigt/gesamt füllt, in der Notfall-Farbe wie der Balken im Kapitel. Nur das Bild; «19/20» steht daneben.
-export const BereitRingKlein = ({ palette, erledigt, gesamt }) => {
-  const h = React.createElement;
-  const r = 14, u = 2 * Math.PI * r, anteil = gesamt > 0 ? Math.min(1, erledigt / gesamt) : 0;
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-bereit': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('circle', { cx: 30, cy: 20, r, fill: 'none', stroke: palette.border, strokeWidth: 5 }),
-    anteil > 0 && h('circle', { cx: 30, cy: 20, r, fill: 'none', stroke: palette.roseDeep || palette.rose, strokeWidth: 5, strokeLinecap: 'round',
-      strokeDasharray: (anteil * u).toFixed(2) + ' ' + u.toFixed(2), transform: 'rotate(-90 30 20)' }));
-};
-
-// Vorsorge: geregelt ist, was entschieden ist. Organspende: jede Wahl ausser «Noch nicht entschieden»;
-// die drei anderen: «Ja».
-export const VORSORGE = [
-  { k: 'organDonor', weg: null },
-  { k: 'patientenverfuegung', weg: 'patientenverfuegung', wegKey: 'notfallKapitel.erstellen' },
-  { k: 'vorsorgeauftrag', weg: 'vorsorgeauftrag', wegKey: 'notfallKapitel.erstellen' },
-  { k: 'bestattungswuensche', weg: 'bestattung', wegKey: 'notfallKapitel.festhalten' },
-  // Lebenslagen C3 (Entscheid Stebler Studios 07.11.2026, «Ja, A bauen»): das Testament gehört zum Vorausverfügen.
-  // Das Feld bleibt, wo es gespeichert ist (Kapitel Behörden) — keine Datenmigration; Export, Dossier und Rucksack
-  // lesen es dort weiter. Der Weg führt zu Schritt 6 im Ablauf «Vorsorgeauftrag und Patientenverfügung».
-  { k: 'willMade', kapitel: 'behoerden', weg: 'testament', wegKey: 'notfallKapitel.nachlesen' },
-];
-// Testament: geregelt, wenn eines errichtet ist (eigenhändig oder öffentlich), nicht bei «Nein» oder «In Bearbeitung».
-const TESTAMENT_ERRICHTET = ['handwritten', 'public'];
-export const vorsorgeGeregelt = (nf, k) => {
-  const v = (nf || {})[k];
-  if (!v) return false;
-  if (k === 'willMade') return TESTAMENT_ERRICHTET.includes(v);
-  return k === 'organDonor' ? v !== 'undecided' : v === 'yes';
-};
-// Dasselbe für einen Eintrag aus VORSORGE, mit allen Daten: liest das Kapitel, in dem das Feld gespeichert ist.
-export const vorsorgeEintragGeregelt = (alle, v) => vorsorgeGeregelt((alle || {})[v.kapitel || 'notfall'], v.k);
+// Rechnung (SCENARIOS, NOTFALL_ANGABEN, bereitschaft, VORSORGE …) und Bild «Bereit» (Herz mit Puls) liegen seit
+// 18.11.2026 in bereiche/notfall/ (Bauplan Lebensbereich). Dieses Bauteil ordnet nur das Kapitel.
 
 // Felder, die oben direkt ausgefüllt werden (Text, Telefon). Auswahlfelder führen zum Feld im Formular.
 const EINGABE = { emergencyContact: 'text', emergencyPhone: 'tel', allergies: 'text', medications: 'text', doctor: 'text', doctorPhone: 'tel' };
@@ -191,6 +95,9 @@ export const NotfallErnstfallKnopf = ({ palette, t, onNavigate }) => {
       h('span', { 'aria-hidden': 'true', style: { color: '#fff', fontSize: text.lg } }, '›')));
 };
 
+// Die Teile ① ② ③ (19.11.2026) sind seit 20.11.2026 weg (Stebler Studios, Probe «wie Wohnen» → «Ja, A fertig machen»): keine
+// Nummern mehr, der Koffer steht oben wie die Strasse bei Wohnen.
+
 export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpdate, demoMode, zumFeld, onKarteDrucken, karteMoeglich, karteVorschau }) => {
   const [eingaben, setEingaben] = useState({});
   const [szenOffen, setSzenOffen] = useState(false);
@@ -247,7 +154,6 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
 
   // 2. Bereit für den Ernstfall
   const stand = bereitschaft(alle);
-  const pct = Math.round((stand.erledigt / stand.gesamt) * 100);
   const lagenName = (keys) => keys.map((k) => '«' + t('notfallEinstieg.' + k + '.title') + '»').join(', ');
   const speichern = (f) => {
     const wert = String(eingaben[f.k] || '').trim();
@@ -308,13 +214,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   });
   const bereit = h('section', { 'data-teil': 'notfall-bereit', 'aria-labelledby': 'mp-notfall-bereit' },
     h('h3', { id: 'mp-notfall-bereit', style: kapH }, t('notfallKapitel.bereitTitel')),
-    // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): erst das Bild, darunter die Zahl gross. Das Bild selbst
-    // (Balken, Ring oder Koffer) ist noch nicht entschieden (B-F1) — hier rückt nur die Zahl unter den Balken.
-    h('div', { 'aria-hidden': 'true', style: { height: '6px', background: palette.up, borderRadius: radius.hair, overflow: 'hidden', margin: space.xs + 'px 0 ' + space.xs + 'px' } },
-      h('div', { style: { width: pct + '%', height: '100%', background: notfallRot } })),
-    h('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px' } },
-      h('span', { 'data-instrument-zahl': 'bereit', style: { fontSize: '28px', fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, t('notfallKapitel.vonN', { n: stand.erledigt, total: stand.gesamt })),
-      h('span', { style: klein }, t('notfallKapitel.bereitSatz'))),
+    // Probe «wie Wohnen» (20.11.2026): Herz und Zahl stehen im Koffer (Strasse); hier nur, was fehlt.
     stand.fehlend.length === 0
       ? h('p', { style: { fontSize: text.sm, color: palette.sageDeep || palette.text, margin: '0 0 ' + space.sm + 'px' } }, t('notfallEinstieg.allDone'))
       : stand.fehlend.map(fehlZeile),
@@ -360,8 +260,15 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     if (!v) return t('notfallKapitel.nichtErfasst');
     return t('chapters.' + kapitel + '.fields.' + k + '.options.' + v) || v;
   };
+  // Gestalt wie TeilTitel (bereiche/notfall/zuhause.jsx); hier ausgeschrieben, weil der Wächter vorsorgeRueckweg die
+  // Überschrift als h('h3', { id: 'mp-notfall-vorsorge' … }) im Quelltext verlangt.
+  const teil3Stil = { display: 'flex', alignItems: 'center', gap: space.sm + 'px', margin: space.xl + 'px 0 ' + space.sm + 'px', paddingTop: space.lg + 'px',
+    borderTop: '1px solid ' + palette.border, fontSize: text.lg, fontWeight: weight.semi, color: palette.text, scrollMarginTop: 'var(--mp-sprungabstand)' };
   const vorsorge = h('section', { 'data-teil': 'notfall-vorsorge', 'aria-labelledby': 'mp-notfall-vorsorge' },
-    h('h3', { id: 'mp-notfall-vorsorge', tabIndex: -1, style: kapH }, t('notfallKapitel.vorsorgeTitel')),
+    // Teil ③ «Vorsorge und Angaben»: die Überschrift der Vorsorge ist der Titel des Teils; die Angaben (Formular des
+    // Kapitels) folgen gleich darunter. Gleiche Gestalt wie TeilTitel, als h3 mit dieser id (Sprungmarke).
+    h('h3', { id: 'mp-notfall-vorsorge', tabIndex: -1, style: teil3Stil },
+      h('span', { style: { color: palette.text } }, t('notfallKapitel.teilVorsorge'))),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('notfallKapitel.vorsorgeSatz'), ' ',
       h('span', { style: { color: palette.text } }, t('notfallKapitel.geregelt', { n: geregelt, total: VORSORGE.length }))),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
@@ -406,7 +313,21 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
       nf.patientenverfuegung === 'yes' && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...wegLink, marginTop: space.xs + 'px' } }, t('nav.crosslink.pvHint') + ' ›'))
   );
 
-  return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } }, ernstfall, bereit, unterlagen, vorsorge);
+  // Kapitel Gesundheit und Arztkoffer sind seit 18.11.2026 eine Seite (Stebler Studios: «wollen wir die seiten vereinen?»).
+  // Seit 19.11.2026 in drei Teilen (Stebler Studios, «A · Drei Teile»): ① Im Notfall — Anrufen, Krise, Bereit, Unterlagen ·
+  // ② Arztkoffer — Fächer, Franchise, Als Nächstes fällig · ③ Vorsorge und Angaben — Vorsorge, darunter das Formular.
+  // Die Krise bleibt vor «Bereit» (Lebenslagen C1+C2): sie soll ohne Scrollen erreichbar sein.
+  // Stebler Studios 20.11.2026, «B · Zahlen oben, Fächer unten»: alles im Koffer — Franchise und Als Nächstes fällig im Deckel,
+  // die Fächer im Boden, darunter nichts mehr.
+  // Probe «wie Wohnen» (Stebler Studios 20.11.2026, «zeig mal A»): wie die Strasse bei Wohnen steht der Koffer ganz oben, mit allen
+  // drei Fragen im Deckel (Herz · Thermometer · Kalenderblatt), die Fächer im Boden. Danach Anrufen und Krise, was für
+  // «Bereit» fehlt, Unterlagen, Vorsorge. Keine Nummern. Der Ernstfall-Knopf bleibt oben angeheftet (ChapterView).
+  const koffer = h(GesundheitKoffer, { palette, t, onNavigate, nr: null,
+    stand: h(GesundheitZuhause, { palette, t, data: alle, onNavigate, imKoffer: true, mitBereit: true, zuBereit: () => springeZuAnker('mp-notfall-bereit') }) });
+  return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } },
+    h('section', { 'data-teil': 'teil-koffer', 'aria-labelledby': 'mp-gesundheit-koffer-titel' }, koffer),
+    h('section', { 'data-teil': 'teil-notfall', 'aria-labelledby': 'mp-notfall-bereit' }, ernstfall, bereit, unterlagen),
+    vorsorge);
 };
 
 export default NotfallImKapitel;

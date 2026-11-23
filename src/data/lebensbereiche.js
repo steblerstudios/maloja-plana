@@ -93,6 +93,8 @@ export function bereichColor(key, isDark) {
 // Im Dunkelmodus ist `dark` bereits stark genug (4.83:1 / 4.33:1), darum nur hell ein
 // eigener Ton. Ohne `lightDeep` fällt der Bereich auf `light` zurück und verfehlt 1.4.11
 // still — deshalb der Hinweis im Dev-Build statt eines stummen Durchfallens.
+// Schrift in der Farbe eines Bereichs: data/bereichSchrift.js (aus dem Startbündel genommen, 23.11.2026).
+
 export function bereichFillColor(key, isDark) {
   const b = BY_KEY[key];
   if (!b) return null;

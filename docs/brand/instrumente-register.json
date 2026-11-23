@@ -21,13 +21,15 @@
     ],
     "anteil": [
       "drittel-haus",
-      "uhr"
+      "uhr",
+      "herz-puls"
     ],
     "dauer": [
       "jahresringe"
     ],
     "verbrauch": [
-      "sonne"
+      "sonne",
+      "thermometer"
     ],
     "lage": [
       "haeuserzeile",
@@ -154,16 +156,16 @@
     "bereit": {
       "kapitel": "notfall",
       "frage": "anteil",
-      "form": "ring",
-      "rechnung": "src/components/NotfallImKapitel.jsx#bereitschaft",
+      "form": "herz-puls",
+      "rechnung": "src/bereiche/notfall/rechnung.js#bereitschaft",
       "zuhause": "notfall"
     },
     "franchise": {
       "kapitel": "notfall",
       "frage": "verbrauch",
-      "form": "balken-endstrich",
-      "rechnung": "src/data/kvgLeistungen.js#berechneFranchise",
-      "zuhause": null
+      "form": "thermometer",
+      "rechnung": "src/bereiche/notfall/rechnung.js#franchiseStand",
+      "zuhause": "notfall"
     }
   },
   "_offen": "Sperrklinke: diese Listen dürfen nur kürzer werden. Wer eine Abweichung behebt, streicht sie hier; der Wächter wird rot, wenn eine neue dazukommt.",
@@ -173,16 +175,13 @@
       "tacho": "B-F5: Mini-Kreuz ohne Daten; Spiegel soll ein Barometer «Ihre Kosten» werden"
     },
     "ohneRechnung": {},
-    "zuhauseAnderesBild": {
-      "bereit": "B-F1: Kachel Ring, Kapitel Notfall Balken"
-    },
+    "zuhauseAnderesBild": {},
     "ohneZuhause": {
       "ausweis": "Zuhause Basis fehlt (Matrix §4c)",
       "referenz": "Zuhause Basis fehlt",
       "grundordnung": "Zuhause Basis fehlt",
       "steuer": "Kapitel Finanzen: nur Text-Karte (Steuer-Bild in Arbeit)",
-      "gaenge": "Zuhause Behörden-Gänge fehlt",
-      "franchise": "Franchise-Stand ohne Zuhause"
+      "gaenge": "Zuhause Behörden-Gänge fehlt"
     }
   }
 }

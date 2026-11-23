@@ -21,6 +21,7 @@ let _slPreise = null;
 const getPreise = () => (_slPreise ||= import('./data/medikamentPreise.js'));
 
 const FREQ_OPTIONS = ['morgens', 'mittags', 'abends', 'nachts', 'beiB'];
+const WOCHENTAGE = [1, 2, 3, 4, 5, 6, 7];
 
 // Kurzfassung für die Lese-Ansicht des Kapitels («Regelmässige Medikamente  Euthyrox 50 µg»): eine leise Zeile
 // je Medikament mit Preis. Erklärung, Selbstbehalt und Quelle stehen in der Bearbeitung (MedCard).
@@ -278,7 +279,7 @@ const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate,
         FREQ_OPTIONS.map(freq => {
           const active = (med.frequency || []).includes(freq);
           return React.createElement('button', {
-            key: freq,
+            key: freq, type: 'button', 'aria-pressed': active ? 'true' : 'false',
             onClick: () => toggleFreq(freq),
             style: {
               padding: '4px 12px', fontSize: text.xs, fontFamily,
@@ -290,6 +291,30 @@ const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate,
           }, t('medications.freq.' + freq));
         })
       )
+    ),
+
+    // Wochentage (Fach Wochenblister, Stebler Studios 20.11.2026: «Ja, Wochentage wählbar»). Ohne Auswahl = jeden Tag.
+    // Gespeichert als `tage: [1..7]` (ISO, 1 Montag); die Rechnung liest es mit blisterTage().
+    React.createElement('div', { style: { marginBottom: space.sm } },
+      React.createElement('div', { id: 'medi-tage-' + idx, style: labelStyle }, t('medications.tage')),
+      React.createElement('div', { role: 'group', 'aria-labelledby': 'medi-tage-' + idx, style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+        WOCHENTAGE.map((tag) => {
+          const active = (med.tage || []).includes(tag);
+          return React.createElement('button', {
+            key: tag, type: 'button', 'aria-pressed': active ? 'true' : 'false', 'aria-label': t('blister.tageLang.' + tag),
+            onClick: () => onUpdate({ tage: active ? (med.tage || []).filter((x) => x !== tag) : [...(med.tage || []), tag].sort() }),
+            style: {
+              minWidth: '40px', minHeight: '36px', padding: '4px 8px', fontSize: text.xs, fontFamily,
+              borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontWeight: weight.medium,
+              border: active ? '1px solid ' + palette.sand : '1px solid ' + palette.border,
+              background: active ? palette.sand + '22' : 'transparent',
+              color: active ? palette.text : palette.mid,
+            }
+          }, t('blister.tageKurz.' + tag));
+        })
+      ),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px' } },
+        t((med.tage || []).length ? 'medications.tageGewaehlt' : 'medications.tageJeden'))
     ),
 
     // Notes
