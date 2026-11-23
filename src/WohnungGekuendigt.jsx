@@ -14,6 +14,7 @@ import { plusTage } from './utils/fristen.js';
 
 export const WohnungGekuendigt = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
+  const absatz = (key) => React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t(key));
   return React.createElement(AblaufContainer, {
     palette, t, onNavigate, ablauf: 'wohnunggekuendigt', icon: 'ereignisWohnunggekuendigt',
     title: t('wohnungGekuendigt.title'),
@@ -37,8 +38,20 @@ export const WohnungGekuendigt = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('wohnungGekuendigt.step3Text')),
       React.createElement(AblaufWarnung, { palette }, t('wohnungGekuendigt.step3Warn'))
     ),
+    // Schritt 4 nach Fachprüfung 23.11.2026: Form des Gesuchs und der Weg NACH der Schlichtung fehlten —
+    // ohne Klage innert 30 Tagen (ZPO 209 Abs. 1 Bst. b, Abs. 4) bleibt die Kündigung in der Regel bestehen.
+    // Die Sätze, die auch für «Die Miete steigt» gelten, stehen einmal unter schlichtungMiete.
     React.createElement(AblaufStep, { palette, title: t('wohnungGekuendigt.step4Title') },
-      React.createElement('p', { style: s.stepText }, t('wohnungGekuendigt.step4Text'))
+      React.createElement('p', { style: s.stepText }, t('wohnungGekuendigt.step4Text')),
+      absatz('schlichtungMiete.form'),
+      absatz('schlichtungMiete.kosten'),
+      absatz('wohnungGekuendigt.step4Anwalt'),
+      absatz('schlichtungMiete.saeumnis'),
+      // Entscheidvorschlag VOR dem Warnkasten (Schlussprüfung 23.11.2026): sonst stünde zuerst die absolute
+      // Regel «Sie erhalten die Klagebewilligung», obwohl sie beim Vorschlag an die ablehnende Partei geht (ZPO 211 Abs. 2 Bst. a).
+      absatz('schlichtungMiete.vorschlag'),
+      React.createElement(AblaufWarnung, { palette }, t('wohnungGekuendigt.step4Danach')),
+      absatz('wohnungGekuendigt.step4Gericht')
     ),
     React.createElement(AblaufStep, { palette, title: t('wohnungGekuendigt.step5Title') },
       React.createElement('p', { style: s.stepText }, t('wohnungGekuendigt.step5Text')),

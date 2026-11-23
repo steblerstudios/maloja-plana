@@ -59,7 +59,12 @@ export const MieteSteigt = ({ palette, t, onNavigate }) => {
     ),
     React.createElement(AblaufStep, { palette, title: t('mieteSteigt.step4Title') },
       React.createElement('p', { style: s.stepText }, t('mieteSteigt.step4Text')),
+      // Gemeinsam mit «Wohnung gekündigt» (schlichtungMiete, 23.11.2026): Form, Kosten, Säumnis, Entscheidvorschlag.
+      absatz('schlichtungMiete.form'),
+      absatz('schlichtungMiete.kosten'),
+      absatz('schlichtungMiete.saeumnis'),
       absatz('mieteSteigt.step4Verfahren'),
+      absatz('schlichtungMiete.vorschlag'),
       absatz('mieteSteigt.step4Schutz'),
       absatz('mieteSteigt.step4SchutzFrist'),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('nav.wohnunggekuendigt'), onClick: () => onNavigate('wohnunggekuendigt') })
