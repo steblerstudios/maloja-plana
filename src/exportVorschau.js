@@ -24,7 +24,10 @@ export const KAPITEL = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbil
 // Felder mit Gesundheitsangaben — in der Vorschau eigens genannt, weil sie besonders
 // heikel sind. Nur Namen von Feldern, keine Werte.
 const GESUNDHEIT = {
-  notfall: ['bloodType', 'allergies', 'medications', 'chronicDiseases'],
+  // Listen der Karteikarten (19.11.2026) und des Wochenblisters (20.11.2026): Diagnosen, Behandelnde und Medikamente
+  // verraten Gesundheit wie die Felder daneben.
+  // Das Fiebertagebuch (20.11.2026) hält Temperaturen und Symptome fest: ebenso eine Gesundheitsangabe.
+  notfall: ['bloodType', 'allergies', 'medications', 'chronicDiseases', 'impfungen', 'chronicDiseasesList', 'doctorsList', 'medicationsList', 'fiebertagebuch'],
   // Ein IV-Rentenbetrag verrät den IV-Bezug wie das Feld daneben.
   finanzen: ['ivBezug', 'ivRente'],
   versicherungen: ['kkBelege'],

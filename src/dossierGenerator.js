@@ -36,7 +36,8 @@ const saeule3aOhneGeburtsdatum = (data, sozialhilfe) => !vermoegensFelder(data.f
   && !!(sozialhilfe.eligible || sozialhilfe.efbEntscheidet || sozialhilfe.anspruchOffen);
 import { organListe } from './utils/organspende.js';
 import { rentenMonat } from './utils/unterstuetzungseinheit.js';
-import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
+import { hausarztName, hausarztTelefon } from './utils/hausarzt.js';
+import { weitereAerzteAusListe } from './utils/weitereAerzte.js';
 import { htmlSprache } from './utils/htmlSprache.js';
 import { mitEchtenBetraegen } from './utils/geld.js';
 

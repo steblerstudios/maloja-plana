@@ -2,14 +2,14 @@
 // «A · Franchise»: das Thermometer trägt nur diese eine Bedeutung). Koffer-Logik Gesundheit: Gegenstand aus dem
 // Arztkoffer, weil die Frage «wie viel der Franchise ist erreicht?» gesundheitstypisch ist.
 // Drei Grössen aus EINEM Bauteil (Brand Book §7b): klein 64 liegend (Kachel), mittel 128 liegend mit Selbstbehalt
-// (KVG-Reiter), gross 256 stehend (Zuhause — Ort noch offen, darum hier nur das Bauteil).
+// (KVG-Reiter), gross 256 stehend (Zuhause Arztkoffer seit 18.11.2026, Wächter bauplanNotfall.test.js).
 // Regel «Zahl» (§10, #861): Hauptzahl gross UNTER dem Bild, Franken über betrag().
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { FranchiseThermometer } from '../components/FranchiseThermometer.jsx';
+import { FranchiseThermometer } from '../bereiche/notfall/notfall.js';
 import { KVGLeistungen } from '../KVGLeistungen.jsx';
 import { berechneFranchise } from '../data/kvgLeistungen.js';
 
@@ -21,10 +21,11 @@ const zahl = (html, attr) => Number((html.match(new RegExp(attr + '="([0-9.]+)"'
 describe('FranchiseThermometer · ein Bauteil, drei Grössen', () => {
   const stand = berechneFranchise(1500, 420);
 
-  it('klein: liegend, Säule bis zum Anteil, Strich am Ende der Franchise', () => {
+  it('klein: stehend wie gross (eine Gestalt, Sophie 18.11.2026), Säule bis zum Anteil, Strich oben', () => {
     const html = bild(stand, 'klein');
     expect(html).toContain('data-franchise="klein"');
-    expect(html).toContain('data-lage="liegend"');
+    expect(html).toContain('data-lage="stehend"');
+    expect(html).toContain('height:64px');
     expect(zahl(html, 'data-anteil')).toBeCloseTo(0.28, 2);
     expect(html).toContain('data-teil="franchise-strich"');
     expect(html).not.toContain('data-teil="selbstbehalt"');
@@ -33,6 +34,8 @@ describe('FranchiseThermometer · ein Bauteil, drei Grössen', () => {
   it('mittel: dazu der Selbstbehalt als zweite Strecke hinter dem Strich', () => {
     const html = bild(berechneFranchise(300, 1300), 'mittel');
     expect(html).toContain('data-franchise="mittel"');
+    expect(html).toContain('data-lage="stehend"');
+    expect(html).toContain('height:128px');
     expect(html).toContain('data-teil="selbstbehalt"');
     // 1300 − 300 = 1000 über der Franchise → 10 % = 100 von 700
     expect(zahl(html, 'data-selbstbehalt-anteil')).toBeCloseTo(100 / 700, 3);
@@ -55,6 +58,13 @@ describe('FranchiseThermometer · ein Bauteil, drei Grössen', () => {
 
   it('Franchise erreicht: Säule voll bis zum Strich', () => {
     expect(zahl(bild(berechneFranchise(300, 900), 'klein'), 'data-anteil')).toBe(1);
+  });
+
+  it('in der Farbe des Lebensbereichs Gesundheit (Hagebutte), wie das Drittel-Haus in der Wohnen-Farbe', () => {
+    const p = { sky: '#111111', border: '#222222', text: '#333333', mid: '#444444', bg: '#FAFAF8' };
+    const html = renderToStaticMarkup(React.createElement(FranchiseThermometer, { palette: p, stand: berechneFranchise(1500, 420), groesse: 'klein' }));
+    expect(html).toContain('#C67A4A');
+    expect(html).not.toContain('#111111');
   });
 
   it('ruhig: keine Ampel, Säule in einer Farbe', () => {

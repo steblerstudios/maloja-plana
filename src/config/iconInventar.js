@@ -59,6 +59,8 @@ export const ICON_INVENTAR = {
     leaf: "Blatt — Natur, ruhiges Detail",
     mobility: "Mobilität — Fahrzeug",
     contacts: "Kontakte, Personen",
+    blister: "Medikamente, Wochenblister — Tablettenstreifen",
+    fieberkurve: "Fiebertagebuch — Kurve über einem Kalenderstreifen (kein Thermometer: das ist die Franchise)",
     paw: "Haustier — Pfote",
     palette: "Gestaltung, Darstellung",
     cowbell: "Erinnerungen und Benachrichtigungen — Kuhglocke als Strich (Punkt 1, A)",

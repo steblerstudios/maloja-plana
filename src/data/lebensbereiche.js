@@ -45,8 +45,8 @@ export const LEBENSBEREICHE = [
   { key: 'person',         chapterKey: 'basis',          fruit: 'apfel',      light: '#5A7868', dark: '#7E9F8C' },
   // lightDeep seit dem Muster M8 (25.10.2026): die Krankenkasse im Kuchen und Balken des Kapitels Finanzen ist
   // eine Fläche auf palette.up — #6E90B0 hatte dort 2.8:1, #6787A5 hat 3.2:1 (WCAG 1.4.11).
-  { key: 'versicherungen', chapterKey: 'versicherungen', fruit: 'heidelbeere',light: '#6E90B0', lightDeep: '#6787A5', dark: '#86A6C2' },
-  { key: 'gesundheit',     chapterKey: 'notfall',             fruit: 'hagebutte',  light: '#C67A4A', dark: '#D98F5C' },
+  { key: 'versicherungen', chapterKey: 'versicherungen', fruit: 'heidelbeere',light: '#6E90B0', lightDeep: '#6787A5', lightText: '#54789A', dark: '#86A6C2' },
+  { key: 'gesundheit',     chapterKey: 'notfall',             fruit: 'hagebutte',  light: '#C67A4A', lightText: '#AA6336', dark: '#D98F5C' },
   { key: 'arbeit',         chapterKey: null,             fruit: 'haselnuss',  light: '#A8895E', lightDeep: '#947750', dark: '#C0A277' },
   { key: 'familie',        chapterKey: null,             fruit: 'kirsche',    light: '#B96470', dark: '#CE8088' },
   { key: 'vorsorge',       chapterKey: null,             fruit: 'traube',     light: '#7E6E93', dark: '#9788AC' },
@@ -93,6 +93,17 @@ export function bereichColor(key, isDark) {
 // Im Dunkelmodus ist `dark` bereits stark genug (4.83:1 / 4.33:1), darum nur hell ein
 // eigener Ton. Ohne `lightDeep` fällt der Bereich auf `light` zurück und verfehlt 1.4.11
 // still — deshalb der Hinweis im Dev-Build statt eines stummen Durchfallens.
+// Schrift in der Farbe eines Bereichs (18.11.2026, Eigenanteil orange, Kasse blau): Text braucht 4.5:1 (WCAG 1.4.3),
+// die Identitätsfarben erreichen auf #FAFAF8 nur 3.2:1. `lightText` = derselbe Farbton, dunkler (gemessen:
+// Hagebutte #AA6336 4.62:1, Heidelbeere #54789A 4.64:1 auf Weiss). Im Dunkelmodus trägt `dark` schon (über 5:1).
+// Ohne `lightText` gibt es keine Bereichsschrift: null, der Aufrufer nimmt seine ruhige Grundfarbe.
+export function bereichTextColor(key, isDark) {
+  const b = BY_KEY[key];
+  if (!b) return null;
+  if (isDark) return b.dark;
+  return b.lightText || null;
+}
+
 export function bereichFillColor(key, isDark) {
   const b = BY_KEY[key];
   if (!b) return null;

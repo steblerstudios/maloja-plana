@@ -14,7 +14,6 @@ export const PFADE = Object.freeze({
   notfallkarte:     { eltern: 'notfalleinstieg', titel: 'notfallkarte.title' },
   // Kapitel 7, Gestaltung A (10.11.2026): der Arztkoffer unter dem Kapitel Gesundheit — vorher «Übersicht › Arztkoffer»
   // ohne Weg ins Kapitel.
-  gesundheit:       { eltern: 'notfalleinstieg', titel: 'nav.arztkoffer' },
   // F7-S10 (27.10.2026): die drei Vorsorge-Formulare unter Notfall — die Stufe führt zum Block «Vorsorge».
   patientenverfuegung: { eltern: 'notfallvorsorge', titel: 'pv.ui.title' },
   bestattung:       { eltern: 'notfallvorsorge', titel: 'bw.ui.title' },

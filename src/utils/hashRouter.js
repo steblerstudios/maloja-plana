@@ -26,6 +26,7 @@ export const VALID_VIEWS = new Set([
   'digitaleordnung', 'notfalleinstieg', 'notfallkarte', 'notfallpass', 'gesundheit', 'briefe', 'stipendien', 'schnellcheck', 'situationen', 'alv', 'asyl', 'kvg', 'mahnung', 'selbstmahnen', 'kvgwechsel', 'zusatzwechsel', 'umzug', 'unfallkrankheit', 'neuerjob', 'stelleverloren', 'kkerst', 'pensionierung', 'betreibung', 'selbstaendigkeit', 'heirat', 'kind', 'trennung', 'bewilligung', 'todesfall', 'iv', 'pflege', 'flyer', 'merkliste', 'search', 'obstgarten', 'gepaeck', 'ansprueche', 'anspruchcheck', 'fuehrerausweis', 'dienst', 'volljaehrig', 'lehre', 'betreibungsauszug', 'ausweis', 'wegzug', 'adoption', 'zusammenziehen', 'ergaenzungsleistungen', 'vorsorgeauftrag', 'patientenverfuegung', 'bestattung', 'einbuergerung', 'zuzug', 'aussteuerung', 'quellensteuer', 'wohnunggekuendigt',
   'settings', 'taxImport', 'legal', 'installApp',
   'versicherungskapitel', 'notfallvorsorge', 'testament',
+  'impfausweis', 'karteikarten', 'blister', 'fieber',
 ]);
 // Nur Design-Vorschau (Tresor 2b-UI): der Eintrag existiert ausschliesslich in DEV,
 // damit der Prod-Build byte-neutral bleibt (der Render-Branch in main.jsx ist ebenso DEV-gated).
@@ -80,6 +81,9 @@ export const UMLEITUNGEN = {
   charts: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   aussteuerung: { view: 'stelleverloren', chapterIndex: null, anker: 'mp-aussteuerung' },
   notfalleinstieg: { view: 'chapter', chapterIndex: 6, anker: 'mp-notfall-ernstfall' },
+  // 18.11.2026: die Arztkoffer-Seite ist Teil des Kapitels Gesundheit (Sophie: «wollen wir die seiten vereinen?»).
+  // Suche, Werkzeug-Register und alte Links rufen weiter `gesundheit` auf und landen beim Koffer im Kapitel.
+  gesundheit: { view: 'chapter', chapterIndex: CHAPTER_KEYS.indexOf('notfall'), anker: 'mp-gesundheit-koffer' },
   unterlagen: { view: 'tresor', chapterIndex: null, anker: 'mp-unterlagen' },
   versicherungskapitel: { view: 'chapter', chapterIndex: 3, anker: null },
   schnellcheck: { view: 'situationen', chapterIndex: null, anker: 'mp-mit-angaben' },
