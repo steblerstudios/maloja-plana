@@ -115,6 +115,15 @@ export const BehoerdenStrasse = ({ palette, t, frist, gaenge, leistungen, isDark
 // 80'000 Franken Lohn (ESTV), Sozialhilfequote (BFS), EL zur AHV (BSV). Eine Steuerfrist je Kanton gibt es dort nicht;
 // sie wird nicht erfunden. Die Quellen stehen darunter in einer Zeile wie bei Wohnen, mit Text und Link aus dem Atlas.
 const VERGLEICH = ['steuer', 'sozialhilfe', 'el'];
+// Je Ebene eine eigene Gestalt (Stebler Studios 23.11.2026: «steuern könnten münzen sein gold», Sozialhilfe «Schirm»,
+// EL «Puzzlestück ist ein cooler Anfang»). Steuern in einer eigenen Goldskala; Kürzel je Stufe in der Farbe, die
+// mindestens 4,5:1 hält (gerechnet 23.11.2026: hell 1–3 dunkle Schrift 5,1–11,9:1, 4 helle 6,0:1; dunkel 1–2 helle
+// 6,5–10,2:1, 3–4 dunkle 6,2–9,9:1). Goldrand an allen Münzen. Sozialhilfe und EL behalten die Atlasstufen.
+const FORM = { steuer: 'muenze', sozialhilfe: 'schirm', el: 'puzzle' };
+const GOLD = {
+  hell: { 1: '#F3E3B3', 2: '#E2C46E', 3: '#B8912C', 4: '#7A5C10', rand: '#B8912C', hellAb: 4 },
+  dunkel: { 1: '#3A3014', 2: '#5E4C18', 3: '#C9A64A', 4: '#EBD49A', rand: '#C9A64A', hellAb: 3 },
+};
 export const KantonsVergleich = ({ palette, t, kanton, isDarkMode }) => {
   const h = React.createElement;
   const [aktiv, setAktiv] = useState(VERGLEICH[0]);
@@ -133,18 +142,19 @@ export const KantonsVergleich = ({ palette, t, kanton, isDarkMode }) => {
   const set = VERGLEICH.map((key) => {
     const k = daten.KARTEN[key];
     if (!k) return null;
-    const stufen = daten.STUFEN_FARBEN[k.frucht]?.[isDarkMode ? 'dunkel' : 'hell'] || {};
-    const farbe = (c) => { const x = k.werte[c]; return x ? { fill: stufen[x.s], hellSchrift: x.s >= 3 } : null; };
+    const gold = key === 'steuer' ? GOLD[isDarkMode ? 'dunkel' : 'hell'] : null;
+    const stufen = gold || daten.STUFEN_FARBEN[k.frucht]?.[isDarkMode ? 'dunkel' : 'hell'] || {};
+    const farbe = (c) => { const x = k.werte[c]; return x ? { fill: stufen[x.s], hellSchrift: x.s >= (gold ? gold.hellAb : 3), rand: gold ? gold.rand : null } : null; };
     const ihr = kanton && k.werte[kanton] ? k.werte[kanton].text : null;
     const titel = t('behoerdenZuhause.vergleich.' + key);
     return {
       key, titel, quellen: k.quellen || [],
-      mini: h(Kachelkarte, { palette, kanton, isDarkMode, farbe, mini: true, teil: 'vergleich-mini' }),
+      mini: h(Kachelkarte, { palette, kanton, isDarkMode, farbe, mini: true, teil: 'vergleich-mini', form: FORM[key] }),
       zahl: ihr || (k.ch ? 'CH ' + k.ch : '–'),
       // Mit Schweizer Wert «Schweiz Ø …»; die Steuer-Ebene hat keinen (Atlas: ch null), dort sagt der Satz, wovon.
       satz: k.ch ? t('wohnenKarten.mieteSatz', { ch: k.ch }) : t('behoerdenZuhause.vergleich.' + key + 'Satz'),
       gross: h(React.Fragment, null,
-        h(Kachelkarte, { palette, t, kanton, isDarkMode, farbe, teil: 'vergleich-' + key, aria: t('behoerdenZuhause.vergleich.aria', { titel, kanton: name || '–', wert: ihr || '–' }) }),
+        h(Kachelkarte, { palette, t, kanton, isDarkMode, farbe, form: FORM[key], teil: 'vergleich-' + key, aria: t('behoerdenZuhause.vergleich.aria', { titel, kanton: name || '–', wert: ihr || '–' }) }),
         h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.sm + 'px', marginTop: space.xs + 'px' } },
           (k.spannen || []).map((sp) => h('span', { key: sp.s, style: { ...klein, display: 'inline-flex', alignItems: 'center', gap: '4px' } },
             h('span', { 'aria-hidden': 'true', style: { width: '12px', height: '10px', borderRadius: radius.hair + 'px', background: stufen[sp.s], display: 'inline-block' } }), String(sp.text).replace(/'/g, '’')))),

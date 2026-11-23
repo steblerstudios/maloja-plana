@@ -13,6 +13,7 @@ import { DEMO_DATA } from '../config/demoData.js';
 import { ladeIPVModelle } from '../config/cantonalData.js';
 import { QuickCheck } from '../components/Leistungsliste.jsx';
 import { BehoerdenZuhause, steuerfristLage, gaengeLage, leistungenLage } from '../bereiche/behoerden/behoerden.js';
+import { Kachelkarte } from '../bereiche/wohnen/wohnen.js';
 
 const t = createT({ de }, 'de', 'sie');
 const SRC = path.resolve(__dirname, '..');
@@ -169,6 +170,31 @@ describe('Bauplan Behörden · jedes Bild einmal, die Zahl darunter', () => {
     expect(html).toContain('data-kompass="idle"');
     expect(html).not.toContain('data-instrument-zahl="leistungen"');
     expect(zaehle(html, 'gemeindehaus')).toBe(1);
+  });
+});
+
+// Kanton im Vergleich (Stebler Studios 23.11.2026): je Ebene eine eigene Gestalt — Münze, Schirm, Puzzlestück; Wohnen
+// bleibt bei Häusern. Alle 26 Kantone in jeder Form, das Kürzel steht in jeder.
+describe('Bauplan Behörden · Formen im Vergleich', () => {
+  const karte = (form) => renderToStaticMarkup(React.createElement(Kachelkarte, { palette: LIGHT_PALETTE, t, kanton: 'ZH', isDarkMode: false, farbe: () => ({ fill: '#B8912C', rand: '#7A5C10' }), ...(form ? { form } : {}) }));
+  it('Standard bleibt das Haus (Wohnen unverändert)', () => {
+    expect((karte().match(/data-form="haus"/g) || []).length).toBe(26);
+  });
+  for (const form of ['muenze', 'schirm', 'puzzle']) {
+    it(form + ': 26 Kantone, je mit Kürzel', () => {
+      const html = karte(form);
+      expect((html.match(new RegExp('data-form="' + form + '"', 'g')) || []).length).toBe(26);
+      expect(html).not.toContain('data-form="haus"');
+      expect((html.match(/<text /g) || []).length).toBe(26);
+    });
+  }
+  it('Münzen tragen den Goldrand aus `rand`', () => {
+    expect(karte('muenze')).toMatch(/data-kanton="BE"[^>]*><path data-form="muenze"[^>]*stroke="#7A5C10"/);
+  });
+  it('der Vergleich nennt je Ebene ihre Form', () => {
+    const q = lies('bereiche/behoerden/zuhause.jsx');
+    expect(q).toMatch(/FORM = \{ steuer: 'muenze', sozialhilfe: 'schirm', el: 'puzzle' \}/);
+    expect((q.match(/form: FORM\[key\]/g) || []).length).toBe(2);
   });
 });
 

@@ -171,7 +171,22 @@ export const Vergleichshaus = ({ palette, lage: ml, fuell, tuer, groesse = 'gros
 // Seit 20.11.2026 auch für andere Werte (Dreier-Set im Kapitel Wohnen): `farbe(k)` gibt je Kanton
 // { fill, deck, hellSchrift } oder null (leer). `mini`: ohne Kürzel, für die Kachel. `teil`/`aria` je Verwendung.
 const KACHEL = { b: 26, h: 18, dach: 7, abstand: 3 };
-export const Kachelkarte = ({ palette, t, kanton, gefuellt = [], isDarkMode, farbe = null, mini = false, teil = 'kachelkarte', aria = null }) => {
+// `form` (Stebler Studios 23.11.2026, Behörden «Kanton im Vergleich»): jede Ebene ihre eigene Gestalt statt Häuser —
+// 'haus' (Standard, Wohnen) · 'muenze' (Steuern, Goldmünze) · 'schirm' (Sozialhilfe) · 'puzzle' (EL, «ergänzt, was fehlt»).
+// Alle stehen in derselben Zelle (26 × 25 Einheiten), damit Lage und Kürzel gleich bleiben. `f.rand`: eigene Randfarbe
+// (Goldrand der Münzen), sonst die Füllfarbe wie bisher.
+const kachelForm = (form, x, oben) => {
+  const y0 = oben - KACHEL.dach, y1 = oben + KACHEL.h, mx = x + KACHEL.b / 2;
+  if (form === 'muenze') return { d: 'M' + mx + ' ' + y0 + 'a12.5 12.5 0 1 0 0.01 0Z', textY: (y0 + y1) / 2, ring: { cx: mx, cy: (y0 + y1) / 2, r: 10 } };
+  if (form === 'schirm') return { d: 'M' + x + ' ' + (y0 + 15) + 'Q' + x + ' ' + y0 + ' ' + mx + ' ' + y0 + 'Q' + (x + KACHEL.b) + ' ' + y0 + ' ' + (x + KACHEL.b) + ' ' + (y0 + 15) + 'Z',
+    textY: y0 + 12, griff: 'M' + mx + ' ' + (y0 + 15) + 'V' + (y1 - 2) + 'Q' + mx + ' ' + y1 + ' ' + (mx - 3) + ' ' + y1 };
+  if (form === 'puzzle') {
+    const r = x + 21, oy = y0 + 5, my = (oy + y1) / 2;
+    return { d: 'M' + x + ' ' + oy + 'H' + (x + 7) + 'a3.5 3.5 0 0 1 7 0H' + r + 'V' + (my - 3.5) + 'a3.5 3.5 0 0 1 0 7V' + y1 + 'H' + x + 'Z', textY: my, textX: x + 10.5 };
+  }
+  return { d: 'M' + x + ' ' + y1 + 'V' + oben + 'L' + mx + ' ' + y0 + 'L' + (x + KACHEL.b) + ' ' + oben + 'V' + y1 + 'Z', textY: oben + KACHEL.h / 2 };
+};
+export const Kachelkarte = ({ palette, t, kanton, gefuellt = [], isDarkMode, farbe = null, mini = false, teil = 'kachelkarte', aria = null, form = 'haus' }) => {
   const h = React.createElement;
   const zelleB = KACHEL.b + KACHEL.abstand, zelleH = KACHEL.h + KACHEL.dach + KACHEL.abstand;
   const breite = 8 * zelleB;
@@ -189,11 +204,14 @@ export const Kachelkarte = ({ palette, t, kanton, gefuellt = [], isDarkMode, far
       const voll = !!f;
       const ihr = k === kanton;
       const x = spalte * zelleB + 1, oben = zeile * zelleH + KACHEL.dach + 1;
-      const rand = { stroke: ihr ? palette.text : voll ? f.fill : palette.border, strokeWidth: ihr ? 2.5 : 1, strokeLinejoin: 'round' };
+      const randFarbe = ihr ? palette.text : voll ? (f.rand || f.fill) : palette.border;
+      const rand = { stroke: randFarbe, strokeWidth: ihr ? 2.5 : 1, strokeLinejoin: 'round' };
+      const g = kachelForm(form, x, oben);
       return h('g', { key: k, 'data-kanton': k, 'data-programm': !farbe ? (voll ? 'ja' : 'nein') : undefined, ...(ihr ? { 'data-ihr': 'ja' } : {}), 'aria-hidden': 'true' },
-        h('path', { 'data-form': 'haus', d: 'M' + x + ' ' + (oben + KACHEL.h) + 'V' + oben + 'L' + (x + KACHEL.b / 2) + ' ' + (oben - KACHEL.dach) + 'L' + (x + KACHEL.b) + ' ' + oben + 'V' + (oben + KACHEL.h) + 'Z',
-          fill: voll ? f.fill : 'none', fillOpacity: voll ? (f.deck ?? 1) : 0, ...rand }),
-        !mini && h('text', { x: x + KACHEL.b / 2, y: oben + KACHEL.h / 2 + schrift * 0.35, textAnchor: 'middle', fontSize: schrift,
+        h('path', { 'data-form': form, d: g.d, fill: voll ? f.fill : 'none', fillOpacity: voll ? (f.deck ?? 1) : 0, ...rand }),
+        g.ring && h('circle', { ...g.ring, fill: 'none', stroke: randFarbe, strokeWidth: 0.75, opacity: 0.7 }),
+        g.griff && h('path', { d: g.griff, fill: 'none', stroke: voll ? (f.rand || palette.mid) : palette.border, strokeWidth: 1.5, strokeLinecap: 'round' }),
+        !mini && h('text', { x: g.textX ?? x + KACHEL.b / 2, y: g.textY + schrift * 0.35, textAnchor: 'middle', fontSize: schrift,
           fill: voll && f.hellSchrift ? palette.surface : voll || ihr ? palette.text : palette.mid }, k));
     }));
 };
