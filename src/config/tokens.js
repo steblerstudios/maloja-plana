@@ -23,14 +23,19 @@ export const space = {
 };
 
 // ─── Typography scale ───────────────────────────────────────
+// Probe 23.11.2026 (Sophie, Rundgang Grössen/Weissraum E1–E3): Untergrenze 14, eine
+// Lese-Grösse 16 (sm und body fallen zusammen), Seitentitel 30 und Grosszahl 44 als Stufen.
+// `sm` bleibt als Name stehen, damit die 863 Aufrufe nicht auf einen Schlag wandern.
 export const text = {
-  xs:   13,
-  sm:   15,
+  xs:   14,
+  sm:   16,
   body: 16,
   lg:   19,
   xl:   23,
   '2xl': 28,
+  titel: 30,
   '3xl': 36,
+  zahlGross: 44,
 };
 
 // ─── Font weights ───────────────────────────────────────────

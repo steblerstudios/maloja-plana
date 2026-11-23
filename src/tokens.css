@@ -57,13 +57,17 @@
   --mp-space-3xl: 64px;
 
   /* ─── Typography scale ────────────────────────────────── */
-  --mp-text-xs:   13px;
-  --mp-text-sm:   15px;
-  --mp-text-body: 16px;
-  --mp-text-lg:   19px;
-  --mp-text-xl:   23px;
-  --mp-text-2xl:  28px;
-  --mp-text-3xl:  36px;
+  /* Probe 23.11.2026: Untergrenze 14, Lese-Grösse 16, Titel 30, Grosszahl 44 — in rem,
+     damit die Schriftgrösse des Systems greift (E6). 1rem = 16px Browser-Vorgabe. */
+  --mp-text-xs:   0.875rem;  /* 14 */
+  --mp-text-sm:   1rem;      /* 16, fällt mit body zusammen */
+  --mp-text-body: 1rem;      /* 16 */
+  --mp-text-lg:   1.1875rem; /* 19 */
+  --mp-text-xl:   1.4375rem; /* 23 */
+  --mp-text-2xl:  1.75rem;   /* 28 */
+  --mp-text-titel: 1.875rem; /* 30 */
+  --mp-text-3xl:  2.25rem;   /* 36 */
+  --mp-text-zahl-gross: 2.75rem; /* 44 */
 
   /* ─── Line heights ────────────────────────────────────── */
   --mp-leading-tight:  1.2;

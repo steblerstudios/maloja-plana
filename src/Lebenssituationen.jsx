@@ -20,6 +20,7 @@ import { ExternerLink } from './components/ExternerLink.jsx';
 import { Belege } from './components/Belege.jsx';
 import { NichtbezugHuerden, ZhRestpraemie } from './components/Nichtbezug.jsx';
 import { linkStil, auswahlStil } from './components/PrimaryButton.jsx';
+import { SEITENTITEL_STIL } from './components/Heading.jsx';
 import { hatAusweisFNS, sozHinweisSchluessel } from './data/ausweis.js';
 
 // ─── Lebenslagen (Auswahl) ─────────────────────────────────
@@ -344,7 +345,8 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
 
   return h('div', { style: { maxWidth: '640px' } },
     // Kopf links (Fassung 5): Titel und ein Satz für beides.
-    h('h2', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.3px' } }, t('dashboard.anspruchTitle')),
+    // Probe 23.11.2026: das eine Seitentitel-Rezept (F9-A1) statt eigener 23 px.
+    h('h2', { style: { ...SEITENTITEL_STIL, color: palette.text, margin: '0 0 ' + space.sm + 'px 0' } }, t('dashboard.anspruchTitle')),
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, t('wasStehtMirZu.intro')),
 
     // (1) Mit Ihren Angaben
