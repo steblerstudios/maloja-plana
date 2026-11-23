@@ -67,13 +67,19 @@ export const PflegeUebersicht = ({ palette, t, lohn, he }) => {
   if (r.anGepflegte?.monat != null) heWert = betrag(r.anGepflegte.monat) + monat;
   else if (r.anGepflegte?.spanne) heWert = betragSpanne(r.anGepflegte.spanne.min, r.anGepflegte.spanne.max) + monat;
   else if (he && he.anspruch === false) heWert = t('pflege.uebersicht.keineHe');
-  const zeileGepflegt = zeile('gepflegt', t('pflege.uebersicht.anGepflegte'), heWert,
-    r.anGepflegte?.spanne && t('pflege.uebersicht.gradOffen'));
+  // Sind die Beträge des Jahres nur aus dem Gesetz gerechnet (keine amtliche Tabelle), sagt die Übersicht
+  // das wie der Rechner selbst (Predeploy 23.11.2026, swiss-precision: der Hinweis fehlte hier).
+  const heSub = [
+    r.anGepflegte?.spanne && t('pflege.uebersicht.gradOffen'),
+    r.anGepflegte && he?.gerechnet && t('hilflos.gerechnetNote', { jahr: he.jahr }),
+  ].filter(Boolean).join(' ');
+  const zeileGepflegt = zeile('gepflegt', t('pflege.uebersicht.anGepflegte'), heWert, heSub || null);
 
-  // Zeile 3 — später in der Rente (Betreuungsgutschrift)
+  // Zeile 3 — später in der Rente (Betreuungsgutschrift). «angerechnet, kein Geld» steht in der grossen
+  // Zeile selbst: der Betrag ist Einkommen auf dem AHV-Konto, nicht Rente (Predeploy 23.11.2026).
   const gWert = g.status === GUTSCHRIFT_STATUS.NEIN
     ? t('pflege.uebersicht.gutschriftNein')
-    : t('pflege.uebersicht.heute') + ' ' + betrag(g.betragJahr) + ' / ' + t('pflege.uebersicht.jahr');
+    : t('pflege.uebersicht.heute') + ' ' + betrag(g.betragJahr) + ' / ' + t('pflege.uebersicht.jahr') + ' · ' + t('pflege.uebersicht.angerechnet');
   const gSub = [
     g.status !== GUTSCHRIFT_STATUS.NEIN && t('pflege.uebersicht.betragHinweis'),
     t('pflege.uebersicht.grund.' + (g.grund || 'ja')),
