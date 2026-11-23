@@ -17,7 +17,9 @@ const LEER = {};
 
 // Rechner-Form X (F7-A2, 27.10.2026): das Ergebnis je Karte (E, mit den Balken D) zuerst, die Angaben A–C
 // darunter. Die Balken bleiben das Instrument dieses Rechners (F7-R3). Rechnung unverändert.
-export const Kreditkarte = ({ palette, t, data, onUpdateData, onNavigate }) => {
+// Seit 20.11.2026 keine eigene Seite: der Rechner steht aufklappbar im Kapitel Finanzen (`eingebettet`,
+// ChapterView.jsx `mp-kreditkarte`); `#/kreditkarte` ist eine Umleitung dorthin (utils/hashRouter.js).
+export const Kreditkarte = ({ palette, t, data, onUpdateData, onNavigate, eingebettet }) => {
   const gespeichert = Array.isArray(data?.finanzen?.kreditkarten) ? data.finanzen.kreditkarten : [];
   // Leerzustand: eine leere Karte zum Ausfüllen — gespeichert wird erst beim ersten Eintrag.
   const karten = gespeichert.length ? gespeichert : [LEER];
@@ -131,7 +133,7 @@ export const Kreditkarte = ({ palette, t, data, onUpdateData, onNavigate }) => {
   const erfasst = karten.reduce((n, k) => n + pflicht.filter((f) => String(k[f] ?? '').trim() !== '').length, 0);
 
   return React.createElement(RechnerForm, {
-    palette, t, view: 'kreditkarte', onNavigate,
+    palette, t, view: 'kreditkarte', onNavigate, ohneKopf: eingebettet,
     titel: t('kreditkarteView.title'), satz: t('kreditkarteView.intro'),
     ergebnis, ohneErgebnis: t('kreditkarteView.ergebnis_brauchtAusgaben'),
     vorbehalt: saldo > 0 && React.createElement('p', { style: { ...hinweisStil, marginTop: space.sm + 'px' } },

@@ -256,6 +256,9 @@ export const CANTONAL_LINKS = {
     steuererklaerung: 'https://www.steuerverwaltung.bs.ch/',
     sozialdienst: 'https://www.bs.ch/wsu/sozialhilfe',
     ipv: 'https://www.bs.ch/themen/finanzielle-hilfe/leistungen/praemienverbilligung',
+    // Nichtbezug, Brücke 5 (18.11.2026): Leistungsrechner des Kantons für Prämienverbilligung, Mietbeiträge,
+    // Alimentenhilfe und Sozialhilfe, dazu ein Kurztest (curl 200, Seite gelesen 18.11.2026).
+    leistungsrechner: 'https://www.bs.ch/themen/finanzielle-hilfe/leistungsrechner',
   },
   GE: {
     steuererklaerung: 'https://www.ge.ch/remplir-ma-declaration-impot-tant-que-particulier',
@@ -334,6 +337,9 @@ export const CANTONAL_LINKS = {
     steuererklaerung: 'https://www.ne.ch/themes/Pages/impots.aspx',
     sozialdienst: 'https://www.ne.ch/autorites/decs/saso',
     ipv: 'https://www.ne.ch/themes/social/assurance-maladie/subsides-assurance-maladie-lamal',
+    // Nichtbezug, Brücke 5 (18.11.2026): Guichets sociaux régionaux, «point d'entrée unique» mit «formulaire
+    // unique» für Alimentenbevorschussung, Prämienverbilligung, Stipendien und Sozialhilfe (curl 200, gelesen 18.11.2026).
+    anlaufstelle: 'https://www.ne.ch/themes/social/guichets-sociaux-regionaux',
   },
   VS: {
     steuererklaerung: 'https://www.vs.ch/de/web/scc',
@@ -355,6 +361,9 @@ export const CANTONAL_LINKS = {
     // gibt es nicht (404). Die Bereichsseite ohne Jahr leitet auf die aktuelle Seite weiter und führt
     // im Menü alle Seiten zur RPI (gemessen 09.11.2026).
     ipv: 'https://www.ecasjura.ch/fr/Assurances/Assurance-maladie.html',
+    // Nichtbezug, Brücke 5 (18.11.2026): JU-lien, «plateforme d'information sociale jurassienne»; Kontakt
+    // Service de l'action sociale, «L'entretien est gratuit, confidentiel et n'engage à rien» (curl 200, gelesen 18.11.2026).
+    orientierung: 'https://ju-lien.org/',
   },
   UR: {
     steuererklaerung: 'https://www.ur.ch/finanzen/1570', // «Natürliche Personen» mit eTax.UR (geprüft 21.10.2026); vorher 3040 = Organisation von Anlässen
@@ -417,6 +426,37 @@ export const CANTONAL_LINKS_GEPRUEFT = {
   VS: { ipv: G, sozialdienst: G },
   NE: { ipv: G, sozialdienst: G }, GE: { ipv: G, sozialdienst: G }, JU: { ipv: G, sozialdienst: G },
 };
+// Brücke 5 (18.11.2026): die Anlaufstellen-Felder, je mit curl (200) und gelesener Seite.
+CANTONAL_LINKS_GEPRUEFT.BS.leistungsrechner = '2026-11-18';
+CANTONAL_LINKS_GEPRUEFT.NE.anlaufstelle = '2026-11-18';
+CANTONAL_LINKS_GEPRUEFT.JU.orientierung = '2026-11-18';
+
+// Brücke 6 (19.11.2026): «Hallo»-Plattformen der Kantone, Erstinformation in vielen Sprachen, darunter ein Teil
+// «Soziale Sicherheit» mit Sozialhilfe, Krankheit, Familie, Alter. Gegen die Hürde «Zeit, Kraft und Sprache»
+// (Maloja hat fünf Sprachen, die Plattformen 15 bis 19, gemessen an hreflang 19.11.2026). Herausgeber laut Impressum je der Kanton; Basel-Stadt
+// nach dem Vorbild «Hallo Aargau» (Medienmitteilung BS 06.11.2023). Je curl 200, Titel «Hallo …», Seite
+// /de/soziale-sicherheit vorhanden, Impressum gelesen (19.11.2026). St. Gallen (hallo.sg.ch) ist anders
+// gebaut und ohne Teil «Soziale Sicherheit»: bewusst nicht dabei.
+const H = '2026-11-19';
+for (const [k, url] of Object.entries({
+  BS: 'https://www.hallo-baselstadt.ch/', AG: 'https://www.hallo-aargau.ch/', BL: 'https://www.hallo-baselland.ch/',
+  BE: 'https://www.hallo-bern.ch/', GL: 'https://www.hallo-glarus.ch/',
+})) {
+  CANTONAL_LINKS[k].mehrsprachig = url;
+  CANTONAL_LINKS_GEPRUEFT[k].mehrsprachig = H;
+}
+export const kantonMehrsprachig = (canton) => CANTONAL_LINKS[canton]?.mehrsprachig || null;
+
+// Kantonale Angebote gegen den Nichtbezug (Brücke 5, 18.11.2026): ein Feld je Kanton, das über die
+// einzelne Leistung hinausgeht. Reihenfolge = Vorrang. Prüfdatum in CANTONAL_LINKS_GEPRUEFT.
+export const ANLAUFSTELLE_FELDER = ['orientierung', 'anlaufstelle', 'leistungsrechner'];
+
+export function kantonsAnlaufstelle(canton) {
+  const links = CANTONAL_LINKS[canton];
+  if (!links) return null;
+  const key = ANLAUFSTELLE_FELDER.find((f) => links[f]);
+  return key ? { key, url: links[key] } : null;
+}
 
 export function getCantonalLinks(canton) {
   return CANTONAL_LINKS[canton] || null;

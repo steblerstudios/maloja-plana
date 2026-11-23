@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
@@ -15,7 +15,9 @@ import { auswahlStil, linkStil } from './components/PrimaryButton.jsx';
 
 const PERSON = ['iv', 'ahv', 'kind'];
 
-export const HilflosenRechner = ({ palette, t }) => {
+// `onErgebnis` (optional): meldet das Ergebnis samt `person` nach oben — für die Übersicht im
+// Pflege-Ablauf. Ohne das Prop (z. B. in IvVerfahren) verhält sich der Rechner wie bisher.
+export const HilflosenRechner = ({ palette, t, onErgebnis }) => {
   const [person, setPerson] = useState('iv');
   const [wohnen, setWohnen] = useState('zuhause');
   const [grad, setGrad] = useState(null);
@@ -25,6 +27,10 @@ export const HilflosenRechner = ({ palette, t }) => {
   const minderjaehrig = person === 'kind';
   const traeger = person === 'ahv' ? 'ahv' : 'iv';
   const r = berechneHilflosenentschaedigung({ traeger, grad, wohnen, minderjaehrig, besitzstandIV, intensivStunden });
+  // Abhängig von den Eingaben, nicht von `r` (das ist bei jedem Rendern ein neues Objekt).
+  useEffect(() => {
+    if (onErgebnis) onErgebnis({ ...berechneHilflosenentschaedigung({ traeger, grad, wohnen, minderjaehrig, besitzstandIV, intensivStunden }), person });
+  }, [onErgebnis, person, traeger, grad, wohnen, minderjaehrig, besitzstandIV, intensivStunden]);
   const chf = (v) => betrag(v); // utils/geld.js: verbirgt mit dem Sichtschutz
 
   const s = {

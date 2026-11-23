@@ -108,7 +108,8 @@ describe('F7-K5-1: Behörden nennt dieselbe Steuerzahl wie Finanzen', () => {
   const zeile = (allData) => nurText(renderToStaticMarkup(React.createElement(BehoerdenInstrument, { palette: PALETTE_K51, t: (k, p) => k + (p ? JSON.stringify(p) : ''), behoerden: DEMO_DATA.behoerden, onNavigate: () => {}, allData })));
   it('Beispiel Maria: Gesamtbetrag mit Schätzung', () => {
     expect(zeile(DEMO_DATA)).toContain('instrumente.steuerGanz');
-    expect(zeile(DEMO_DATA)).toContain('8’431');
+    // 19.11.2026: 8’431 → 9’635, weil Maria jetzt einen 13. Monatslohn hat (dreizehnter: 'yes').
+    expect(zeile(DEMO_DATA)).toContain('9’635');
     expect(zeile(DEMO_DATA)).toContain('tax.roughEstimateBadge');
   });
   it('mögliche Quellensteuer und ohne Profil: keine Zahl', () => {
