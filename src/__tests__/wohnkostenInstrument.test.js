@@ -33,7 +33,9 @@ describe('Kapitel Wohnen · Ort im Kapitel', () => {
   it('erst bei Bedarf geladen und nur im Kapitel Wohnen, mit dem ganzen Profil', () => {
     expect(QUELLE).toMatch(/const WohnkostenInstrument = React\.lazy\(\(\) => import\('\.\/bereiche\/wohnen\/wohnen\.js'\)\.then\(\(m\) => \(\{ default: m\.WohnenZuhause \}\)\)\)/);
     expect(QUELLE).toMatch(/chapter\.key === 'wohnen' && allData && React\.createElement\(React\.Suspense, \{ key: 'wohnkosten'/);
-    expect(QUELLE).toMatch(/React\.createElement\(WohnkostenInstrument, \{ palette, t: tr, wohnen: data, allData, isDarkMode, onNavigate,\s*angaben: wohnSzene \?/);
+    expect(QUELLE).toMatch(/React\.createElement\(WohnkostenInstrument, \{ palette, t: tr, wohnen: data, allData, isDarkMode, onNavigate,\s*angaben: angabenAmBild \}\)/);
+    // Seit 23.11.2026 auch Behörden (zweite Runde): das Objekt steht einmal, beide Orte bekommen es nur mit Szene.
+    expect(QUELLE).toMatch(/const angabenAmBild = wohnSzene \? \{/);
   });
 
   it('oben, gleich nach der ruhigen Zusammenfassung', () => {

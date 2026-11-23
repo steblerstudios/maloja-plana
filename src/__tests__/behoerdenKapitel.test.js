@@ -40,9 +40,17 @@ describe('Kapitel Behörden', () => {
   });
   // Seit dem Muster M2 (25.10.2026) gilt das für jedes Kapitel: leere Felder stehen leise in «Nicht erfasst: …»
   // (vorher eine eigene Zeile nur für die Vertretung).
-  it('Vertretung leer: «Nicht erfasst: Rechtsbeistand …»', () => {
-    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
-    expect(kapitel('behoerden', { ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).not.toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
+  // Seit der zweiten Runde (23.11.2026) steht Behörden mit Szene: der Rechtsbeistand am Rand («noch leer»), die Liste mit
+  // «Nicht erfasst: …» erst unter «Alle Angaben».
+  it('Vertretung leer: am Rand «Rechtsbeistand noch leer», in «Alle Angaben» «Nicht erfasst: Rechtsbeistand …»', () => {
+    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toMatch(/Rechtsbeistand noch leer/);
+    expect(kapitel('behoerden', { ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).toMatch(/Rechtsbeistand: Anwältin X/);
+    const liste = (b) => nurText(renderToStaticMarkup(React.createElement(ChapterViewComplete, {
+      palette: LIGHT_PALETTE, t, chapter: chapters.find((c) => c.key === 'behoerden'), data: b, allData: { ...DEMO_DATA, behoerden: b },
+      onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, anfangsOffen: 'liste',
+    })));
+    expect(liste(DEMO_DATA.behoerden)).toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
+    expect(liste({ ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).not.toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
   });
 });
 
@@ -67,10 +75,11 @@ describe('Instrument oben', () => {
     expect(gangErledigt('steuererklaerung', {}, { pendingTaxReturns: '1' })).toBe(false);
     expect(instrument()).toContain('1 von 5 erledigt.');
   });
+  // Seit der zweiten Runde am Rand, mit dem Satz «Ihr Testament gehört hierher …».
   it('«Für den Fall der Fälle»: nur das Testament, die Vorsorge steht im Notfall (F7-K5-2)', () => {
     const text = instrument();
-    expect(text).toContain('Für den Fall der Fälle');
-    expect(text).toMatch(/Testament Nein/);
+    expect(text).toContain('Ihr Testament gehört hierher.');
+    expect(text).toMatch(/Testament: Nein/);
     expect(text).toContain('Vorsorge im Kapitel Notfall');
     expect(text).not.toMatch(/Vorsorgeauftrag Noch nicht/);
     expect(text).not.toMatch(/Patientenverfügung Noch nicht/);

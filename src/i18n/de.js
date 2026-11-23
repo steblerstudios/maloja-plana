@@ -2552,6 +2552,20 @@ export default {
     wege: { sie: "{n} mögliche Wege aus Ihren Angaben: {liste}. Bitte bei den zuständigen Stellen prüfen.", du: "{n} mögliche Wege aus deinen Angaben: {liste}. Bitte bei den zuständigen Stellen prüfen." },
     hinweis: "Eine Orientierung, kein Entscheid über einen Anspruch.",
     anspruchSub: "Alle Leistungen und wie man sie beantragt",
+    // Zweite Runde (23.11.2026): Kopf, Fenster, Erklärungen am Bild.
+    kanton: "Kanton {kanton}",
+    kantonOffen: "Steuerkanton noch leer",
+    kopfZusatz: "Steuern",
+    offen: "Offene Erklärungen",
+    eingereicht: "Zuletzt eingereicht",
+    fristMehr: "Frist",
+    leistungenMehr: "Warum",
+    hausAria: "Gemeindehaus, ein Fenster je Behördengang",
+    erledigt: "erledigt",
+    offenWort: "offen",
+    fensterTipp: "Ein Fenster im Haus antippen zeigt den Gang.",
+    gangWaehlen: "Behördengang wählen",
+    kurz: { steuererklaerung: "Steuern", betreibungsauszug: "Betreibung", ausweisRenewal: "Ausweis", wohnsitzbestaetigung: "Wohnsitz", strafregisterauszug: "Strafregister" },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {

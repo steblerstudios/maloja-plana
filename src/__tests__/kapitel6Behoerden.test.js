@@ -181,11 +181,11 @@ describe('Kapitelseite', () => {
     expect(nurText(kapitel({ ...DEMO_DATA.basis, dateOfBirth: (jahr - 20) + '-05-01' }))).toContain(t('nav.dienst'));
     expect(nurText(kapitel({ ...DEMO_DATA.basis, dateOfBirth: (jahr - 50) + '-05-01' }))).not.toContain(t('nav.dienst'));
   });
-  // Seit dem Bauplan Behörden (21.11.2026) dazu «Leistungen» (Frage C); «Für den Fall der Fälle» steht unter «Mehr dazu».
-  it('B: Steuerfrist, Behördengänge, Leistungen, Fall der Fälle auf Stufe 3', () => {
+  // Seit der zweiten Runde Behörden (23.11.2026) ohne eigene Überschriften wie Wohnen: Kopf, Szene, Gang-Karte, Rand.
+  it('B: Kopf, Szene, Gang-Karte und Rand, keine Überschriften unter der Kapitelüberschrift', () => {
     const h = renderToStaticMarkup(React.createElement(BehoerdenInstrument, { palette: LIGHT_PALETTE, t, behoerden: DEMO_DATA.behoerden, onNavigate: () => {}, onToggle: () => {} }));
-    expect(h).not.toContain('<h4');
-    expect((h.match(/<h3 /g) || []).length).toBe(4);
+    expect(h).not.toMatch(/<h[34]/);
+    for (const teil of ['behoerden-kopf', 'behoerden-strasse', 'gang-karte', 'behoerden-rand']) expect(h, teil).toContain('data-teil="' + teil + '"');
   });
   it('C: kein Intro mehr, das «Ansprechpersonen» verspricht', () => {
     expect(nurText(kapitel())).not.toContain('Ansprechpersonen');

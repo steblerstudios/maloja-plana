@@ -186,9 +186,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Kapitel Wohnen (Stebler Studios 20.11.2026, «A, am Bild»): sind Wohnkosten erfasst, stehen Adresse, Kosten,
   // Vermieterschaft und Eigentum oben bei ihren Bildern und öffnen dort ihr Formular. Unten bleibt «Alle Angaben».
   const nWohn = (v) => Number(v) || 0;
-  const wohnSzeneJetzt = chapter.key === 'wohnen' && !!allData
-    && nWohn(data.rentAmount) + nWohn(data.utilities) + nWohn(data.buildingsInsurance) + (data.mortgageStatus === 'no' ? 0 : nWohn(data.mortgagePayment)) > 0;
-  const WOHN_SZENE_ABSCHNITTE = ['address', 'rentAmount', 'landlord', 'mortgageStatus'];
+  // Behörden (Stebler Studios 23.11.2026, zweite Runde «Ja, so bauen»): Steuern, Recht und Vertretung öffnen ihr Formular
+  // ebenso am Bild (Kopf und Rand im Gemeindehaus-Kapitel), immer — das Kapitel hat keine Bedingung wie die Wohnkosten.
+  const wohnSzeneJetzt = (chapter.key === 'wohnen' && !!allData
+    && nWohn(data.rentAmount) + nWohn(data.utilities) + nWohn(data.buildingsInsurance) + (data.mortgageStatus === 'no' ? 0 : nWohn(data.mortgagePayment)) > 0)
+    || (chapter.key === 'behoerden' && !!allData);
+  const WOHN_SZENE_ABSCHNITTE = { wohnen: ['address', 'rentAmount', 'landlord', 'mortgageStatus'], behoerden: ['cantoneOfTaxation', 'registryOffice', 'legalRepresentative'] }[chapter.key] || [];
   // Umschalten zwischen Liste und Szene erst, wenn keiner der vier Abschnitte offen ist: sonst spränge das Formular
   // mitten im Tippen (erste Miete eingetragen → Szene) nach oben und der Cursor ginge verloren.
   const wohnSzeneStand = useRef({ kapitel: null, wert: false });
@@ -2171,6 +2174,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
         weg('selbstmahnen'),
         weg('briefe', { sub: P('briefeSub') }),
+        // Das Behörden-Dossier stand bis 23.11.2026 unter «Mehr dazu» im Kapitel; seit der zweiten Runde hier bei den Wegen.
+        { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'legal' },
         ablage('chapterView.passend.ablageDokumente'),
       ];
       }
@@ -2247,6 +2252,25 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // dahinter getönt; Entscheid 27.09.2026). Das Band reicht bis an den Rand (main: 20 px seitlich) —
   // genau 20, nicht die Voreinstellung −24 px: sonst ist die Seite 379 px breit (Quer Q1, 11.11.2026).
   const kachelGrund = bereichsfarbe ? bereichsfarbe.grund : palette.up;
+  // «Angaben am Bild» (Wohnen 20.11.2026, Behörden 23.11.2026): der Ort öffnet das Formular eines Abschnitts an seinem Bild.
+  const angabenAmBild = wohnSzene ? {
+    offen: (k) => !!offeneAbschnitte[k],
+    umschalten: (k) => {
+      const g = abschnittGruppen(chapter.fields, chapter.title).find((x) => x.key === k);
+      if (g && g.sek && !showSecondary && !offeneAbschnitte[k]) toggleSecondary();
+      setOffeneAbschnitte((o) => ({ ...o, [k]: !o[k] }));
+      // Der Link am Bild verschwindet beim Öffnen: der Fokus geht auf «fertig» des Formulars (sonst fiele er auf
+      // den Seitenanfang), das Formular rückt ins Bild.
+      setTimeout(() => {
+        const ab = document.getElementById('mp-section-' + k);
+        if (!ab) return;
+        ab.scrollIntoView({ block: 'nearest' });
+        ab.querySelector('button[aria-expanded]')?.focus({ preventScroll: true });
+      }, 50);
+    },
+    formular: (k) => abschnittsliste({ nur: k }),
+  } : null;
+
   return React.createElement('div', { 'data-kapitel': chapter.key },
     React.createElement('div', { 'data-kapitelkopf': 'band', style: { textAlign: 'left', marginBottom: space.lg + 'px' } },
       React.createElement(Landschaftsband, { palette, grund: kachelGrund, margin: '0 -20px' }),
@@ -2308,23 +2332,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // einen Monatsrechnung; der Regler verändert das Profil nie.
     chapter.key === 'wohnen' && allData && React.createElement(React.Suspense, { key: 'wohnkosten', fallback: null },
       React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode, onNavigate,
-        angaben: wohnSzene ? {
-          offen: (k) => !!offeneAbschnitte[k],
-          umschalten: (k) => {
-            const g = abschnittGruppen(chapter.fields, chapter.title).find((x) => x.key === k);
-            if (g && g.sek && !showSecondary && !offeneAbschnitte[k]) toggleSecondary();
-            setOffeneAbschnitte((o) => ({ ...o, [k]: !o[k] }));
-            // Der Link am Bild verschwindet beim Öffnen: der Fokus geht auf «fertig» des Formulars (sonst fiele er auf
-            // den Seitenanfang), das Formular rückt ins Bild.
-            setTimeout(() => {
-              const ab = document.getElementById('mp-section-' + k);
-              if (!ab) return;
-              ab.scrollIntoView({ block: 'nearest' });
-              ab.querySelector('button[aria-expanded]')?.focus({ preventScroll: true });
-            }, 50);
-          },
-          formular: (k) => abschnittsliste({ nur: k }),
-        } : null })
+        angaben: angabenAmBild })
     ),
 
     // Kapitel Behörden nach Bauplan (21.11.2026): Gemeindehaus mit Anschlagbrett (Steuerfrist) und Wegweiser (Leistungen),
@@ -2332,7 +2340,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     chapter.key === 'behoerden' && React.createElement(React.Suspense, { key: 'behoerden-instrument', fallback: null },
       React.createElement(BehoerdenInstrument, {
         allData,
-        palette, t: tr, behoerden: data, onNavigate, lang, checked: checklistChecked, isDarkMode,
+        palette, t: tr, behoerden: data, onNavigate, lang, checked: checklistChecked, isDarkMode, angaben: angabenAmBild,
         onToggle: (id, wert) => {
           const next = { ...checklistChecked, [id]: wert };
           setChecklistChecked(next);

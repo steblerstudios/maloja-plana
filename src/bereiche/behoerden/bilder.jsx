@@ -25,17 +25,24 @@ export const Anschlagbrett = ({ palette, iso, locale, vorbei, pfosten = 60 }) =>
 
 // ── Gemeindehaus ────────────────────────────────────────────────────────────────────────────────────────────────────
 // Satteldach mit Türmchen und Uhr, Tür in der Behörden-Farbe. Fenster: drei oben, darunter links und rechts der Tür je eines.
-// Erledigte Gänge füllen die Fenster der Reihe nach (wie die Kästchen der früheren Kachel), Sand wie dort.
+// Erledigte Gänge sind hell (Sand, wie die Kästchen der früheren Kachel).
+//   klein (Kachel): `erledigt` füllt die Fenster der Reihe nach, reines Bild.
+//   im Kapitel (Stebler Studios 23.11.2026, zweite Runde «Ja, so bauen»): `fenster` = je Gang { an, label }; jedes Fenster
+//   gehört zu seinem Gang und lässt sich antippen (`onWaehle`), das gewählte (`aktiv`) ist dick umrandet.
 const FENSTER = [[30, 72], [72, 72], [114, 72], [30, 112], [114, 112]];
-export const Gemeindehaus = ({ palette, erledigt = 0, total = 5, farbe, groesse = 'gross' }) => {
+export const Gemeindehaus = ({ palette, erledigt = 0, total = 5, farbe, groesse = 'gross', fenster = null, aktiv = null, onWaehle = null, label = '' }) => {
   const h = React.createElement;
   const klein = groesse === 'klein';
   const strich = klein ? 3 : 1.5;
   const tuer = farbe || palette.mid;
   const licht = palette.sand || palette.gold;
-  const plaetze = FENSTER.slice(0, Math.max(0, Math.min(total, FENSTER.length)));
+  const n = fenster ? fenster.length : total;
+  const plaetze = FENSTER.slice(0, Math.max(0, Math.min(n, FENSTER.length)));
+  const tippbar = !!(fenster && onWaehle);
+  const an = (i) => (fenster ? !!fenster[i]?.an : i < erledigt);
   return h('svg', {
-    viewBox: '0 -10 170 172', width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-teil': 'gemeindehaus', 'data-erledigt': erledigt,
+    viewBox: '0 -10 170 172', width: '100%', focusable: 'false', 'data-teil': 'gemeindehaus', 'data-erledigt': fenster ? fenster.filter((f) => f.an).length : erledigt,
+    ...(tippbar ? { role: 'group', 'aria-label': label } : { 'aria-hidden': 'true' }),
     style: { display: 'block', maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto', overflow: 'visible' },
   },
     // Türmchen mit Uhr
@@ -46,8 +53,16 @@ export const Gemeindehaus = ({ palette, erledigt = 0, total = 5, farbe, groesse 
     h('path', { d: 'M8 58 L85 22 L162 58 Z', fill: palette.surface, stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
     h('rect', { x: 16, y: 58, width: 138, height: 102, fill: 'none', stroke: palette.text, strokeWidth: strich, ...linie }),
     ...plaetze.map(([x, y], i) => h('rect', {
-      key: 'f' + i, 'data-fenster': i, 'data-an': i < erledigt ? 'ja' : 'nein', x, y, width: 26, height: 24, rx: 2,
-      fill: i < erledigt ? licht : palette.surface, stroke: i < erledigt ? licht : palette.mid, strokeWidth: klein ? 2.5 : 1.5, ...linie,
+      key: 'f' + i, 'data-fenster': i, 'data-an': an(i) ? 'ja' : 'nein', x, y, width: 26, height: 24, rx: 2,
+      fill: an(i) ? licht : palette.surface,
+      stroke: aktiv === i ? palette.text : an(i) ? licht : palette.mid,
+      strokeWidth: aktiv === i ? 3 : klein ? 2.5 : 1.5, ...linie,
+      ...(tippbar ? {
+        role: 'button', tabIndex: 0, 'aria-label': fenster[i].label, 'aria-pressed': aktiv === i ? 'true' : 'false',
+        style: { cursor: 'pointer' },
+        onClick: () => onWaehle(i),
+        onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onWaehle(i); } },
+      } : {}),
     })),
     h('path', { 'data-teil': 'gemeindehaus-tuer', d: 'M73 160 L73 124 Q85 110 97 124 L97 160 Z', fill: tuer }));
 };

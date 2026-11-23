@@ -89,15 +89,42 @@ describe('Bauplan Behörden · jedes Bild einmal, die Zahl darunter', () => {
       expect(html.indexOf('data-instrument-zahl="' + zahl + '"'), zahl).toBeGreaterThan(html.indexOf('data-teil="' + bild + '"'));
     }
   });
-  it('die Szene steht vor den Abschnitten, «Mehr dazu» zuletzt mit Testament, Dossier und Sozialhilfe', () => {
+  // Zweite Runde (Stebler Studios 23.11.2026, «Ja, so bauen», Skizze behoerden-kapitel-2.html).
+  it('Aufbau wie Wohnen: Kopf, Szene, Erklärungen am Bild, Gang-Karte, Rand; kein «Mehr dazu»', () => {
     const html = kapitel();
-    const reihe = ['behoerden-strasse', 'steuerfrist', 'behoerdengaenge', 'leistungen', 'behoerden-mehr'].map((x) => html.indexOf('data-teil="' + x + '"'));
+    const reihe = ['behoerden-kopf', 'behoerden-strasse', 'steuerfrist', 'leistungen', 'behoerdengaenge', 'behoerden-rand'].map((x) => html.indexOf('data-teil="' + x + '"'));
     expect(reihe.every((x) => x >= 0)).toBe(true);
     expect([...reihe].sort((a, b) => a - b)).toEqual(reihe);
-    const mehr = html.slice(html.indexOf('data-teil="behoerden-mehr"'));
-    expect(mehr).toContain('data-teil="fall-der-faelle"');
-    expect(mehr).toContain('data-weg="dossier"');
-    expect(mehr).toContain('data-weg="sozialhilfe"');
+    expect(html).not.toContain('behoerden-mehr');
+    const rand = html.slice(html.indexOf('data-teil="behoerden-rand"'));
+    for (const r of ['betreibung', 'rechtsbeistand', 'fall-der-faelle']) expect(rand, r).toContain('data-rand="' + r + '"');
+    // Kein Text-Schlüssel auf der Seite (gesehen 23.11.2026: «nav.ankerSatz.betreibungsauszug ›»).
+    expect(html).not.toMatch(/>[a-zA-Z]+\.[a-zA-Z.]+ ›</);
+    expect(rand).toContain('Betreibungsauszug bestellen ›');
+    expect(html.slice(html.indexOf('id="mp-erkl-leistungen"'))).toContain('data-weg="sozialhilfe"');
+  });
+  it('Kopf: Kanton gross, Steuernummer, offene Erklärungen und eingereichtes Jahr klein', () => {
+    const html = kapitel();
+    expect(html).toMatch(/data-teil="kopf-kanton"[^>]*>Kanton Zürich/);
+    expect(html).toMatch(/data-kopf-teil="steuernummer"[\s\S]*ZH-2024-123456[\s\S]*data-kopf-teil="offen"[\s\S]*>0<[\s\S]*data-kopf-teil="eingereicht"[\s\S]*>2025</);
+    const leer = kapitel({ ...DEMO_DATA.behoerden, cantoneOfTaxation: '', taxId: '' }, {}, { ...DEMO_DATA, basis: { ...DEMO_DATA.basis, canton: '' } });
+    expect(leer).toContain('Steuerkanton noch leer');
+    expect(leer).not.toContain('data-kopf-teil="steuernummer"');
+  });
+  it('Fenster sind Knöpfe je Gang, mit Name und Stand; die Karte zeigt den gewählten Gang', () => {
+    const html = kapitel();
+    expect((html.match(/data-fenster="\d" data-an="(ja|nein)"[^>]*role="button"/g) || []).length).toBe(5);
+    expect(html).toContain('aria-label="Steuererklärung 2025 eingereicht, erledigt"');
+    expect(html).toContain('aria-label="Betreibungsauszug bestellt, offen"');
+    expect(html).toMatch(/data-teil="gang-karte" data-gang="steuererklaerung"[\s\S]*Vorschlag aus/);
+    expect((html.match(/data-gang-knopf=/g) || []).length).toBe(5);
+  });
+  it('Erklärungen: zu, aber im Dokument; eine verpasste Frist steht offen da', () => {
+    const html = kapitel();
+    expect(html).toMatch(/id="mp-erkl-frist"[^>]*hidden=""/);
+    expect(html).toMatch(/data-erkl="frist" aria-expanded="false" aria-controls="mp-erkl-frist"/);
+    const vorbei = kapitel({ ...DEMO_DATA.behoerden, taxFilingDeadline: '2020-03-31', pendingTaxReturns: '1' });
+    expect(vorbei).toMatch(/data-teil="frist-vorbei"[^>]*>Die erfasste Frist ist vorbei/);
   });
   it('die Haken schalten die Fenster: so viele hell, wie Gänge erledigt sind', () => {
     const fenster = (checked) => (kapitel(DEMO_DATA.behoerden, checked).match(/data-an="ja"/g) || []).length;
@@ -105,7 +132,7 @@ describe('Bauplan Behörden · jedes Bild einmal, die Zahl darunter', () => {
     expect(fenster({ betreibungsauszug: true, ausweisRenewal: true })).toBe(3);
     expect(fenster({ steuererklaerung: false })).toBe(0);
   });
-  it('Leistungen: ein Hinweis, kein Anspruch, mit Weg zu «Was steht mir zu?»', () => {
+  it('Leistungen: ein Hinweis, kein Anspruch, mit Weg zu «Was steht mir zu?» (in der Erklärung)', () => {
     const html = kapitel(TIEF.behoerden, {}, TIEF);
     expect(html).toMatch(/data-teil="leistungen-satz"[^>]*>[^<]*(mögliche Wege|möglicher Weg) aus Ihren Angaben: /);
     expect(html).toContain('kein Entscheid über einen Anspruch');
