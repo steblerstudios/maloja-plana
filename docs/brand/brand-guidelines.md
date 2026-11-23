@@ -319,7 +319,8 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   - **«alles andere»** (D) steht im obersten Stock.
   - Das **Partner-Haus ist geteilt** (E): ein feiner Strich nach den Netto-Einnahmen, darunter «Sie | Partner/in».
   - Nach Grösse: **gross** A–E, **mittel** A + B + C, **klein** A + B. Schrift im Bild nur gross, bei 256 px genau
-    13 px (Regel H). Wächter: `drittelHausAusbau.test.js`.
+    13 px (Regel H). ⟨Seit 23.11.2026 14 px: Schriftskala, Sophie «Untergrenze 14 px», gilt für alle Bilder.⟩
+    Wächter: `drittelHausAusbau.test.js`, `querschnittGestaltung.test.js`.
   **Mietbeiträge als Szene** (11.11.2026, Stebler Studios: «im Haus weiter füllen, gestrichelt, Behörden-Farbe» und
   «Ja, so bauen»):
   - Im Drittel-Haus steht der mögliche Beitrag **oben in der Füllung, schraffiert und gestrichelt in Zwetschge**

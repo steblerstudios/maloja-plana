@@ -11,14 +11,15 @@ import React from 'react';
 import fs from 'node:fs';
 import path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { LIGHT_PALETTE } from '../config/constants.js';
+import { LIGHT_PALETTE, CHAPTER_KEYS } from '../config/constants.js';
+import { UMLEITUNGEN } from '../utils/hashRouter.js';
 import { vorlageHtml } from '../data/vorsorgeauftrag.js';
 import { KVGLeistungen } from '../KVGLeistungen.jsx';
 import { IvVerfahren } from '../IvVerfahren.jsx';
 import { NotfallImKapitel } from '../components/NotfallImKapitel.jsx';
 import { PflegeAblauf } from '../PflegeAblauf.jsx';
 import { UnfallKrankheit } from '../UnfallKrankheit.jsx';
-import { stufen, ELTERN_TITEL } from '../config/brotkrumePfade.js';
+import { ELTERN_TITEL } from '../config/brotkrumePfade.js';
 
 beforeEach(() => { globalThis.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} }; });
 const t = createT({ de }, 'de', 'sie');
@@ -93,13 +94,15 @@ describe('L10 · Franchise-Rechner kennt Kinder (KVG Art. 64 Abs. 4, KVV Art. 10
     const h = rechne('600');
     expect(h).toMatch(/<option value="kind" selected="">/);
     expect(h).toMatch(/<option value="600" selected="">/);
-    expect(h).toContain('Selbstbehalt-Maximum: CHF\u00a0350');
+    // seit 18.11.2026 an der Skala des Thermometers: «Selbstbehalt CHF … von CHF\u00a0350»
+    expect(h).toMatch(/data-teil="ablese-selbstbehalt"[^<]*>[^<]*<span[^>]*>[^<]*<\/span> von CHF\u00a0350</);
     expect(h).toContain('CHF\u00a0950'); // 600 Franchise + 350 Selbstbehalt bei 5000 Franken Kosten
   });
   it('Erwachsene rechnen weiter mit 700', () => {
     const h = rechne('2500');
     expect(h).toMatch(/<option value="erwachsen" selected="">/);
-    expect(h).toContain('Selbstbehalt-Maximum: CHF\u00a0700');
+    // seit 18.11.2026 an der Skala des Thermometers: «Selbstbehalt CHF … von CHF\u00a0700»
+    expect(h).toMatch(/data-teil="ablese-selbstbehalt"[^<]*>[^<]*<span[^>]*>[^<]*<\/span> von CHF\u00a0700</);
     expect(h).toContain('CHF\u00a02’750'); // 2500 + 250
   });
   it('ein unbekannter Wert wird genannt, nicht still zu 300', () => {
@@ -171,13 +174,16 @@ describe('Organspende · Mindestalter 16 (TxG Art. 8 Abs. 7)', () => {
 describe('Gestaltung A · Gesundheits-Seiten auf der Kapitelseite', () => {
   const quelle = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
   const fall = quelle.slice(quelle.indexOf("case 'notfall': return ["), quelle.indexOf('default: return [', quelle.indexOf("case 'notfall': return [")));
-  it('«Passend» nennt KVG-Leistungen, Scanner, Arztkoffer, Unfall, IV und Pflege in zwei Gruppen', () => {
-    for (const v of ['kvg', 'kk', 'gesundheit', 'unfallkrankheit', 'iv', 'pflege']) expect(fall, v).toContain("weg('" + v + "')");
-    expect(fall).toContain("P('gruppeKrankenkasse')");
+  // Seite in drei Teilen (Stebler Studios 19.11.2026, «Doppeltes fällt weg»): KVG-Leistungen und Beleg-Ordner sind Fächer im
+  // Arztkoffer oben; «Passend» nennt sie nicht noch einmal.
+  it('«Passend» nennt Unfall, IV und Pflege; KVG-Leistungen und Belege stehen nur im Arztkoffer', () => {
+    for (const v of ['unfallkrankheit', 'iv', 'pflege', 'vorsorgeauftrag', 'organ']) expect(fall, v).toContain("weg('" + v + "'");
+    for (const v of ['kvg', 'kk', 'gesundheit']) expect(fall, v).not.toContain("weg('" + v + "')");
+    expect(fall).not.toContain("P('gruppeKrankenkasse')");
     expect(fall).toContain("P('gruppePassiert')");
   });
-  it('der Arztkoffer hängt in der Brotkrume unter «Gesundheit»', () => {
-    expect(stufen('gesundheit').map((x) => x.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
+  it('der Arztkoffer ist Teil des Kapitels «Gesundheit» (18.11.2026): alte Links führen zum Koffer im Kapitel', () => {
+    expect(UMLEITUNGEN.gesundheit).toEqual({ view: 'chapter', chapterIndex: CHAPTER_KEYS.indexOf('notfall'), anker: 'mp-gesundheit-koffer' });
     expect(t(ELTERN_TITEL.notfalleinstieg)).toBe('Gesundheit');
   });
 });

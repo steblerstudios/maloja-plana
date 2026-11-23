@@ -43,7 +43,7 @@ describe('Beträge verbergen', () => {
 });
 
 describe('Dokumente verlassen die App mit echten Beträgen (Vortor 13.11.2026)', () => {
-  const t = createT({ de: { brief: 'brutto CHF {amount}' } }, 'de', 'sie');
+  const t = createT({ de: { brief: 'brutto CHF\u00a0{amount}' } }, 'de', 'sie');
   it('mitEchtenBetraegen: betrag() und t() zeigen den wahren Betrag, danach wieder verborgen', () => {
     document.documentElement.dataset.betraege = 'aus';
     expect(mitEchtenBetraegen(() => betrag(1234))).toBe('CHF\u00a01’234');
@@ -81,7 +81,7 @@ describe('Dokumente verlassen die App mit echten Beträgen (Vortor 13.11.2026)',
 });
 
 describe('Beträge verbergen in Texten mit «CHF {x}»', () => {
-  const t = createT({ de: { a: 'Davon Bund ≈ CHF {bund}.', b: 'Im Jahr {jahr} sind es {n} Fälle.' } }, 'de', 'sie');
+  const t = createT({ de: { a: 'Davon Bund ≈ CHF\u00a0{bund}.', b: 'Im Jahr {jahr} sind es {n} Fälle.' } }, 'de', 'sie');
   it('ohne Sichtschutz: Zahl wie bisher', () => {
     expect(t('a', { bund: 977 })).toBe('Davon Bund ≈ CHF\u00a0977.');
   });

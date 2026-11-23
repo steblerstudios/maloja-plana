@@ -112,9 +112,10 @@ describe('Regel «Zahl» · Lohn und Bereit', () => {
     expect(zahl).toBeGreaterThan(bild);
     expect(zahl).toBeLessThan(q.indexOf("t('lohnEinordnung.median') + ': ' + betrag(median)"));
   });
-  it('Bereit im Kapitel Notfall: erst der Balken, darunter «x von y»', () => {
-    const q = quelle('../components/NotfallImKapitel.jsx');
-    const abschnitt = q.slice(q.indexOf("const bereit = h('section'"));
-    expect(abschnitt.indexOf("background: notfallRot")).toBeLessThan(abschnitt.indexOf("'data-instrument-zahl': 'bereit'"));
+  it('Bereit im Kapitel Notfall: erst das Herz mit Puls, darunter «x von y» (Bauplan 18.11.2026)', () => {
+    const q = quelle('../bereiche/notfall/zuhause.jsx');
+    const abschnitt = q.slice(q.indexOf('export const BereitZuhause'));
+    expect(abschnitt.indexOf('h(HerzPuls,')).toBeGreaterThan(-1);
+    expect(abschnitt.indexOf('h(HerzPuls,')).toBeLessThan(abschnitt.indexOf("'data-instrument-zahl': 'bereit'"));
   });
 });

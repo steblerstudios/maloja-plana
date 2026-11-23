@@ -25,7 +25,8 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 // Nicht lazy: «oben» ist der Knopf für den Ernstfall — er soll ohne Nachladen dastehen.
-import { NotfallImKapitel, NotfallErnstfallKnopf, NOTFALL_ANGABEN } from './components/NotfallImKapitel.jsx';
+import { NotfallImKapitel, NotfallErnstfallKnopf } from './components/NotfallImKapitel.jsx';
+import { NOTFALL_ANGABEN } from './bereiche/notfall/notfall.js';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
@@ -737,10 +738,19 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('doctors.hint')),
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
           React.createElement(React.Suspense, { fallback: null },
-          React.createElement(DoctorManager, {
-            palette, t: tr, doctors: docList,
-            onChange: (list) => onUpdate('doctorsList', list),
-          })
+          // Seite in drei Teilen (Stebler Studios 19.11.2026, «Doppeltes fällt weg»): die Ärzteliste wird im Fach Karteikarten
+          // bearbeitet; hier stehen nur die Namen und der Weg dorthin. Ohne onNavigate (Tests, Einbettung) bleibt die Eingabe.
+          onNavigate
+            ? React.createElement('div', { 'data-teil': 'aerzte-in-kartei' },
+                docList.filter((d) => d && d.name && String(d.name).trim()).map((d, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.text } },
+                  String(d.name).trim(), React.createElement('span', { style: { color: palette.mid } }, ' · ' + tr('doctors.specialties.' + (d.specialty || 'hausarzt'))))),
+                React.createElement('button', { type: 'button', className: 'mp-link',
+                  onClick: () => onNavigate('karteikarten'),
+                  style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, color: palette.skyDeep || palette.text } }, tr('doctors.zurKartei') + ' ›'))
+            : React.createElement(DoctorManager, {
+                palette, t: tr, doctors: docList,
+                onChange: (list) => onUpdate('doctorsList', list),
+              })
         )
         ),
         oldDoctor && !docList.length && React.createElement('div', {
@@ -1058,14 +1068,22 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const oldText = typeof data.medications === 'string' ? data.medications : '';
       return React.createElement('div', { key: field.k, style: baseStyle },
         renderLabel(chapter.key + '-' + field.k, field.label, field.hint, true),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('medications.hint')),
+        !onNavigate && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('medications.hint')),
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
-          React.createElement(React.Suspense, { fallback: null },
-          React.createElement(MedicationManager, {
-            palette, t: tr, lang, medications: medList,
-            onChange: (list) => onUpdate('medicationsList', list),
-          })
-        )
+          // Stebler Studios 20.11.2026 («Nur im Fach»): wie Ärzte und Diagnosen werden die Medikamente im Fach Wochenblister
+          // bearbeitet; hier stehen nur die Namen und der Weg dorthin. Ohne onNavigate (Tests, Einbettung) bleibt die Eingabe.
+          onNavigate
+            ? React.createElement('div', { 'data-teil': 'medikamente-im-blister' },
+                medList.filter((m) => m && m.name && String(m.name).trim()).map((m, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.text } },
+                  String(m.name).trim() + (m.dose ? ' ' + String(m.dose).trim() + (m.unit ? ' ' + m.unit : '') : ''))),
+                React.createElement('button', { type: 'button', className: 'mp-link',
+                  onClick: () => onNavigate('blister'),
+                  style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, color: palette.skyDeep || palette.text } }, tr('medications.zumBlister') + ' ›'))
+            : React.createElement(React.Suspense, { fallback: null },
+                React.createElement(MedicationManager, {
+                  palette, t: tr, lang, medications: medList,
+                  onChange: (list) => onUpdate('medicationsList', list),
+                }))
         ),
         oldText && !medList.length && React.createElement('div', {
           style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.sky + '18', borderRadius: radius.md, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
@@ -1116,12 +1134,20 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         renderLabel(chapter.key + '-' + field.k, field.label, field.hint, true),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('diseases.hint')),
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
-          React.createElement(React.Suspense, { fallback: null },
-          React.createElement(DiseaseManager, {
-            palette, t: tr, diseases: dList,
-            onChange: (list) => onUpdate('chronicDiseasesList', list),
-          })
-        )
+          // Stebler Studios 19.11.2026 («Ja, nur Verweis»): wie die Ärzte werden die Diagnosen im Fach Karteikarten bearbeitet;
+          // hier stehen nur die Namen und der Weg dorthin. Ohne onNavigate (Tests, Einbettung) bleibt die Eingabe.
+          onNavigate
+            ? React.createElement('div', { 'data-teil': 'diagnosen-in-kartei' },
+                dList.filter((d) => d && d.name && String(d.name).trim()).map((d, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.text } },
+                  String(d.name).trim() + (d.code ? ' (' + String(d.code).trim() + ')' : ''))),
+                React.createElement('button', { type: 'button', className: 'mp-link',
+                  onClick: () => onNavigate('karteikarten'),
+                  style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, color: palette.skyDeep || palette.text } }, tr('doctors.zurKartei') + ' ›'))
+            : React.createElement(React.Suspense, { fallback: null },
+                React.createElement(DiseaseManager, {
+                  palette, t: tr, diseases: dList,
+                  onChange: (list) => onUpdate('chronicDiseasesList', list),
+                }))
         ),
         oldText && !dList.length && React.createElement('div', {
           style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.sky + '18', borderRadius: radius.md, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
@@ -2200,11 +2226,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // und Pflege hingen nur am Arztkoffer, der seinerseits nicht zum Kapitel führte. Jetzt stehen sie hier, in
       // zwei Gruppen wie die Familie im Kapitel Basis. Die Erklärseite Krankenkasse bleibt bei Versicherungen
       // (Organigramm 07.11.2026, ZUM_VERSTEHEN); hier stehen nur Ziele in der App.
+      // Seite in drei Teilen (Stebler Studios 19.11.2026): was oben schon einen Weg hat, steht hier nicht noch einmal —
+      // KVG-Leistungen und Beleg-Ordner (Fächer im Arztkoffer ②). Der Ablauf Vorsorgeauftrag bleibt: die Kachel in ③
+      // führt nur hin, solange er nicht geregelt ist.
       case 'notfall': return [
         weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('organ'),
         ablage('chapterView.passend.ablageDokumente'),
-        { key: 'gruppe-krankenkasse', ueberschrift: P('gruppeKrankenkasse') },
-        weg('kvg'), weg('kk'), weg('gesundheit'),
         { key: 'gruppe-passiert', ueberschrift: P('gruppePassiert') },
         weg('unfallkrankheit'), weg('iv'), weg('pflege'),
       ];
@@ -2397,6 +2424,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Ernstfall, «Bereit für den Ernstfall», die vier Unterlagen und Vorsorge. Die Portemonnaie-Karte
     // (früher «Notfallkarte drucken») ist eine der vier Kacheln; ihre Vorschau (K20, Feldnamen, nie
     // Werte) steht zugeklappt darunter, bis die Kachel sie öffnet.
+    // Seite in drei Teilen (19.11.2026): der Titel von Teil ① steht vor dem stehenden Ernstfall-Knopf.
     isNotfall && React.createElement(NotfallErnstfallKnopf, { palette, t: tr, onNavigate }),
     isNotfall && React.createElement(NotfallImKapitel, {
       palette, t: tr, data: allData || { notfall: data }, chapters: chapters || [], onNavigate,

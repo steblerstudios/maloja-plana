@@ -5,7 +5,7 @@ import de from '../i18n/de.js';
 // Seitenrundgang 27.09.2026: rohe Zahlen in «CHF {…}»-Texten — «Einkommen über Grenze
 // (CHF\u00a064000)», «ca. CHF\u00a02160/Jahr». t() formatiert Zahlen hinter «CHF» jetzt selbst.
 describe('t() formatiert Geld-Platzhalter', () => {
-  const t = createT({ de: { a: 'CHF {x}', b: 'ca. CHF {x}/Jahr', c: 'Jahr {x}', d: 'CHF {x} und {y} %', e: 'CHF {x}' } }, 'de', 'sie');
+  const t = createT({ de: { a: 'CHF\u00a0{x}', b: 'ca. CHF\u00a0{x}/Jahr', c: 'Jahr {x}', d: 'CHF\u00a0{x} und {y} %', e: 'CHF\u00a0{x}' } }, 'de', 'sie');
 
   it('ganze Zahl mit Apostroph, ohne Nachkommastellen', () => {
     expect(t('a', { x: 64000 })).toBe('CHF\u00a064’000');
@@ -24,7 +24,7 @@ describe('t() formatiert Geld-Platzhalter', () => {
     expect(t('d', { x: 1000, y: 1000 })).toBe('CHF\u00a01’000 und 1000 %');
   });
   it('fehlender Wert bleibt als Platzhalter stehen', () => {
-    expect(t('a', {})).toBe('CHF {x}');
+    expect(t('a', {})).toBe('CHF\u00a0{x}');
   });
   it('echte Texte: IPV-Grenze und Nebenkosten', () => {
     const td = createT({ de }, 'de', 'sie');

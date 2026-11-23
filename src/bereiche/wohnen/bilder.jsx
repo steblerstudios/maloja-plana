@@ -1,5 +1,6 @@
 import React from 'react';
-import { text, weight, space, leading, duration, ease, INSTRUMENT_GROESSE, textPx } from '../../config/tokens.js';
+import { text, weight, space, leading, duration, ease, INSTRUMENT_GROESSE } from '../../config/tokens.js';
+import { textPx } from '../../config/textPx.js';
 import { bereichFillColor } from '../../data/lebensbereiche.js';
 import { zahl, PROZENT } from '../../utils/geld.js';
 import { Icon } from '../../IconSystem.jsx';

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Icons from './IconSystem.jsx';
-import { text, weight, space, radius, shadow, ease, duration, fontFamilyDisplay, textPx, rem } from './config/tokens.js';
+import { text, weight, space, radius, shadow, ease, duration, fontFamilyDisplay } from './config/tokens.js';
 import { groupSettingsControls, alsSchalter, zeilenLabelKey } from './settingsGroups.js';
 import { Schalter } from './components/Schalter.jsx';
 import { useFocusTrap } from './hooks/useFocusTrap.js';

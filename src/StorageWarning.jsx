@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getStorageStatus } from './utils/storageMonitor.js';
-import { space, text, radius, leading, weight, textPx, rem } from './config/tokens.js';
+import { space, text, radius, leading, weight } from './config/tokens.js';
 import { Icon, hinweisZeichen } from './IconKern.jsx';
 
 // ─── Storage Warning Banner ─────────────────────────────────

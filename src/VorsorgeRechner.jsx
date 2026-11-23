@@ -5,7 +5,8 @@ import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, p
 import { hinweisZeichen, aufklappZeichen, Icons } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
-import { text, weight, space, radius, ease, textPx } from './config/tokens.js';
+import { text, weight, space, radius, ease } from './config/tokens.js';
+import { textPx } from './config/textPx.js';
 import { renderSource } from './utils/renderSource.js';
 import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';

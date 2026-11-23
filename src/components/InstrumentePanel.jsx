@@ -8,13 +8,12 @@ import { wohnkostenRechnung, DrittelHaus, wohnkostenSatzKey, Vergleichshaus, lag
 import { Kalenderblatt } from './Kalenderblatt.jsx';
 import { GaengeKlein } from './BehoerdenInstrument.jsx';
 import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaenge.js';
-import { bereitschaft, BereitRingKlein } from './NotfallImKapitel.jsx';
+import { bereitschaft, lagenStand, franchiseStand, FranchiseThermometer, HerzPuls } from '../bereiche/notfall/notfall.js';
 import { lohnLage, LohnKlein, lohnLageWert } from './LohnEinordnung.jsx';
 import { LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { dienstLage, ferienLage, pensumLage } from '../utils/arbeitsverhaeltnis.js';
 import { bisReferenzalter } from '../utils/referenzalterAbstand.js';
 import { istLernend } from '../utils/anstellung.js';
-import { berechneFranchise } from '../data/kvgLeistungen.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
@@ -27,7 +26,6 @@ import { heuteIso } from '../utils/fristen.js';
 import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise, kreuzState, kvgWechselfrist } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
-import { FranchiseThermometer } from './FranchiseThermometer.jsx';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { zahl, betrag as chfBetrag, PROZENT } from '../utils/geld.js';
 import { PanelTitle } from './Heading.jsx';
@@ -277,9 +275,8 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
 
   // Gesundheit (10.11.2026): Bereitschaft wie das Kapitel Notfall, Franchise-Stand wie die KVG-Seite (Reiter Franchise).
   const bereit = bereitschaft(data);
-  const eigeneFr = parseFranchise(data?.versicherungen?.franchise);
   const frJahr = new Date().getFullYear();
-  const frStand = eigeneFr != null ? berechneFranchise(eigeneFr, gesundheitskostenBisher(data)) : null;
+  const frStand = franchiseStand(data);
 
   // Arbeit (10.11.2026): dieselbe Lage wie das Lohn-Barometer (lohnLage) — Zahl nur, wenn auch der Balken eine Lage zeigt.
   const lohn = lohnLage(data);
@@ -355,7 +352,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       zahl: { wert: bereit.erledigt + '/' + bereit.gesamt, einheit: '' },
       satz: t('instrumente.bereitSatz'),
       sub: setup,
-      glyph: h(BereitRingKlein, { palette, erledigt: bereit.erledigt, gesamt: bereit.gesamt }),
+      glyph: h(HerzPuls, { palette, lagen: lagenStand(data), groesse: 'klein' }),
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('notfall')),
     },
     {

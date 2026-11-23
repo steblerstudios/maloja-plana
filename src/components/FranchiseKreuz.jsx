@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { kreuzState } from '../data/franchiseTacho.js';
-import { text, weight, leading, space, radius, textPx } from '../config/tokens.js';
+import { text, weight, leading, space, radius } from '../config/tokens.js';
+import { textPx } from '../config/textPx.js';
 import { zahl } from '../utils/geld.js';
 import { linkStil } from './PrimaryButton.jsx';
 
