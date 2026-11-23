@@ -28,6 +28,8 @@ import { ExternerLink } from '../../components/ExternerLink.jsx';
 // Ersetzt components/BehoerdenInstrument.jsx (Fassung 6, Runde 9 AD). Dessen Texte und Regeln bleiben: Frist mit
 // Kalenderblatt und belegtem Hinweis bei verpasster Frist, Gänge mit Steuerjahr-Vorschlag, Testament mit Weg zur Vorsorge.
 
+// Icon je Gang im Fenster des Gemeindehauses (Stebler Studios 23.11.2026, «vlt die icons in den fenstern»), aus dem Register.
+const GANG_IKON = { steuererklaerung: 'steuern', betreibungsauszug: 'quittung', ausweisRenewal: 'contacts', wohnsitzbestaetigung: 'home', strafregisterauszug: 'legal' };
 const SPRACHE = { de: 'de-CH', fr: 'fr-CH', it: 'it-CH', en: 'en-GB', rm: 'de-CH' };
 const zahlStil = { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, fontVariantNumeric: 'tabular-nums' };
 // Bildhöhe und Spaltenbreite wie Wohnen gross (bereiche/wohnen/zuhause.jsx, BILDHOEHE.gross).
@@ -79,7 +81,7 @@ export const BehoerdenStrasse = ({ palette, t, frist, gaenge, leistungen, isDark
   const zahlDiv = (key, wert) => h('div', { 'data-instrument-zahl': key, 'aria-live': 'polite', style: { ...zahlStil, color: palette.text, marginTop: space.xs + 'px', overflowWrap: 'anywhere' } }, wert);
   const bezug = (s, teil) => h('div', { 'data-teil': teil, style: { fontSize: text.sm, color: palette.text, marginTop: '2px', lineHeight: leading.tight } }, s);
   const detail = (s, teil) => s && h('div', { 'data-teil': teil, style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.normal } }, s);
-  const fenster = gaenge.liste.map((g) => ({ an: g.erledigt, label: gangName(t, g) + ', ' + t(g.erledigt ? 'behoerdenZuhause.erledigt' : 'behoerdenZuhause.offenWort') }));
+  const fenster = gaenge.liste.map((g) => ({ an: g.erledigt, ikon: GANG_IKON[g.id], label: gangName(t, g) + ', ' + t(g.erledigt ? 'behoerdenZuhause.erledigt' : 'behoerdenZuhause.offenWort') }));
   const offeneGaenge = gaenge.liste.filter((g) => !g.erledigt).map((g) => t('behoerdenZuhause.kurz.' + g.id));
   const fristDatum = frist && new Date(frist.iso + 'T12:00:00').toLocaleDateString(loc, { day: 'numeric', month: 'long', year: 'numeric' });
   return h('div', { 'data-teil': 'behoerden-strasse', style: { display: 'flex', alignItems: 'flex-start', gap: '0 ' + space.lg + 'px', flexWrap: 'wrap', margin: '0 0 ' + space.xs + 'px' } },

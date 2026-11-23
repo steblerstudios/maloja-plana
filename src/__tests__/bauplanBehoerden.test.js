@@ -12,7 +12,7 @@ import { LIGHT_PALETTE } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { ladeIPVModelle } from '../config/cantonalData.js';
 import { QuickCheck } from '../components/Leistungsliste.jsx';
-import { BehoerdenZuhause, steuerfristLage, gaengeLage, leistungenLage, gemeindeLage, sichereWebsite, Gemeindehaus } from '../bereiche/behoerden/behoerden.js';
+import { BehoerdenZuhause, steuerfristLage, gaengeLage, leistungenLage, gemeindeLage, sichereWebsite, Gemeindehaus, namenZeilen } from '../bereiche/behoerden/behoerden.js';
 import { lookupPLZ } from '../data/plzGemeinde.js';
 import { Kachelkarte } from '../bereiche/wohnen/wohnen.js';
 
@@ -226,15 +226,37 @@ describe('Bauplan Behörden · Tür = Gemeinde', () => {
       expect(sichereWebsite(boese), String(boese)).toBeNull();
     }
   });
-  it('Gemeindehaus: Name über der Tür, Tür als Knopf mit Namen; lange Namen schrumpfen; klein ohne Name', () => {
+  // «der Name der Gemeinde in der Tür» (23.11.2026): eine Zeile wenn möglich, sonst zwei an Bindestrich/Leerzeichen,
+  // unter Schrift 6 kein Name in der Tür (er steht in der Karte und im Vorlesenamen).
+  it('Name in der Tür: kurze Namen ja, nie unter Schrift 6; zu lange passen nicht (dann über der Tür)', () => {
+    expect(namenZeilen('Zürich')).toEqual({ zeilen: ['Zürich'], groesse: 9.1 });
+    expect(namenZeilen('Lausanne').groesse).toBeGreaterThanOrEqual(6);
+    expect(namenZeilen('Bad Ragaz').zeilen).toEqual(['Bad', 'Ragaz']);
+    for (const n of ['Schaffhausen', 'Rapperswil-Jona', 'Saint-Légier-La Chiésaz']) expect(namenZeilen(n), n).toBeNull();
+    expect(namenZeilen('')).toBeNull();
+    const ueber = renderToStaticMarkup(React.createElement(Gemeindehaus, { palette: LIGHT_PALETTE, gemeinde: 'Saint-Légier-La Chiésaz', onTuer: () => {} }));
+    expect(ueber).toMatch(/data-teil="gemeinde-name" data-ort="ueber"/);
+  });
+  it('Gemeindehaus: Name in der Tür, Tür als Knopf mit Namen; klein ohne Name und schmale Tür', () => {
     const haus = (p) => renderToStaticMarkup(React.createElement(Gemeindehaus, { palette: LIGHT_PALETTE, ...p }));
-    const html = haus({ gemeinde: 'Zürich', onTuer: () => {}, tuerLabel: 'Tür: Gemeinde Zürich' });
-    expect(html).toMatch(/data-teil="gemeinde-name"[^>]*font-size="10"[^>]*>Zürich</);
+    const html = haus({ gemeinde: 'Zürich', onTuer: () => {}, tuerLabel: 'Tür: Gemeinde Zürich', farbe: '#5a6472' });
+    expect(html).toMatch(/data-teil="gemeinde-name"[^>]*fill="#FFFFFF"[^>]*><tspan[^>]*>Zürich</);
+    expect(html).toMatch(/d="M66 160 L66 128/);
     expect(html).toMatch(/data-teil="tuer-treffer"[^>]*role="button"[^>]*aria-label="Tür: Gemeinde Zürich"/);
-    const lang = haus({ gemeinde: 'Saint-Légier-La Chiésaz', onTuer: () => {} }).match(/data-teil="gemeinde-name"[^>]*font-size="([\d.]+)"/)[1];
-    expect(Number(lang)).toBeLessThan(10);
     expect(haus({ gemeinde: 'Zürich', groesse: 'klein' })).not.toContain('gemeinde-name');
+    expect(haus({ groesse: 'klein' })).toMatch(/d="M73 160 L73 124/);
     expect(haus({})).not.toContain('tuer-treffer');
+  });
+  it('Icons in den Fenstern: je Gang sein Zeichen, Farbe nach Stand; die Kachel ohne Icons', () => {
+    const fenster = [{ an: true, label: 'a', ikon: 'steuern' }, { an: false, label: 'b', ikon: 'quittung' }];
+    const html = renderToStaticMarkup(React.createElement(Gemeindehaus, { palette: LIGHT_PALETTE, fenster, onWaehle: () => {} }));
+    expect(html).toMatch(/data-fenster-ikon="steuern"[^>]*color="#24262A"/);
+    expect(html).toMatch(/data-fenster-ikon="quittung"[^>]*color="#5E6167"/);
+    expect(renderToStaticMarkup(React.createElement(Gemeindehaus, { palette: LIGHT_PALETTE, erledigt: 2, groesse: 'klein' }))).not.toContain('data-fenster-ikon');
+  });
+  it('im Kapitel trägt jedes Fenster das Icon seines Gangs', () => {
+    const html = kapitel();
+    for (const ikon of ['steuern', 'quittung', 'contacts', 'home', 'legal']) expect(html, ikon).toContain('data-fenster-ikon="' + ikon + '"');
   });
   it('im Kapitel ist die Tür ein Knopf, auch bevor der Name geladen ist', () => {
     expect(kapitel()).toMatch(/data-teil="tuer-treffer"[^>]*aria-label="Tür: Gemeinde"/);
