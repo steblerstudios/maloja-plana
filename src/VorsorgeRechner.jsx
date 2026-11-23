@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useCallback } from 'react';
 import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, referenzalterMonate, volleBeitragsdauer, AHV_PARAMS, ahvWerte, lohnWerte, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
@@ -85,7 +85,18 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [erziehungsjahre, setErziehungsjahre] = useState('');
   const [betreuungsjahre, setBetreuungsjahre] = useState('');
   const [bezugAlter, setBezugAlter] = useState(() => String(refAlterJahre));
-  const [ruecktrittDragging, setRuecktrittDragging] = useState(false);  // Zukunft-Graph: Handle wird gerade gezogen → Live-Tooltip
+  const [ruecktrittDragging, setRuecktrittDragging] = useState(false);
+  // Zukunft-Graph: Zeichenfläche = echte Breite (Schriftskala 23.11.2026). Vorher fest 680 Einheiten,
+  // am Handy auf ~44 % geschrumpft: Achsenzahlen 9 Einheiten ≈ 4 px. Jetzt 260–680, Schrift 14.
+  const [zukunftBreite, setZukunftBreite] = useState(680);
+  const zukunftBeobachter = useRef(null);
+  const zukunftMessen = useCallback((el) => {
+    if (zukunftBeobachter.current) { zukunftBeobachter.current.disconnect(); zukunftBeobachter.current = null; }
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(([e]) => setZukunftBreite(Math.max(260, Math.min(680, Math.round(e.contentRect.width)))));
+    ro.observe(el);
+    zukunftBeobachter.current = ro;
+  }, []);  // Zukunft-Graph: Handle wird gerade gezogen → Live-Tooltip
   const [verheiratet, setVerheiratet] = useState(giltAlsVerheiratet(data.basis?.maritalStatus));
   // Splitting und Plafonierung rechnen mit dem Bruttolohn (massgebender Lohn nach AHVG). Im Profil
   // steht nur der NETTOlohn der Partnerin/des Partners — der wäre die falsche Basis (rund 12–17 %
@@ -634,7 +645,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const rawMax = (end.total + ahvCapRet) * 1.1;
         const step = rawMax > 400000 ? 100000 : 50000;
         const maxY = Math.max(step, Math.ceil(rawMax / step) * step);
-        const VBW = 680, VBH = 340, x0 = 54, x1 = 628, y0 = 26, yB = 280;
+        const VBW = zukunftBreite, eng = VBW < 480;
+        const VBH = eng ? 300 : 340, x0 = 54, x1 = VBW - (eng ? 16 : 52), y0 = 30, yB = VBH - 60;
+        const FS = text.xs; // 14: Zeichenfläche = Bildschirm-Pixel, also echte 14 px
         const xA = (a) => x0 + (a - START) / (AXIS_END - START) * (x1 - x0);
         const yV = (v) => yB - v / maxY * (yB - y0);
         // Flächen als kumulierte Höhen pro Alter (AHV zuunterst als Fundament).
@@ -711,7 +724,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteHinweis'))
             );
           })(),
-          React.createElement('svg', { viewBox: '0 0 ' + VBW + ' ' + VBH, width: '100%', role: 'group', 'aria-label': t('vr.tabZukunft'), style: { display: 'block', marginBottom: space.sm + 'px', touchAction: 'none' } },
+          React.createElement('svg', { ref: zukunftMessen, viewBox: '0 0 ' + VBW + ' ' + VBH, width: '100%', role: 'group', 'aria-label': t('vr.tabZukunft'), style: { display: 'block', marginBottom: space.sm + 'px', touchAction: 'none' } },
             // Lebensphasen-Hintergrund
             React.createElement('rect', { x: x0, y: y0, width: Math.max(0, xret - x0), height: yB - y0, fill: palette.sage, opacity: 0.05 }),
             React.createElement('rect', { x: xret, y: y0, width: Math.max(0, x1 - xret), height: yB - y0, fill: palette.sky, opacity: 0.05 }),
@@ -725,31 +738,33 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             // y-Gitter + Ticks (CHF)
             ...yticks.map((v, i) => React.createElement('g', { key: 'y' + i },
               React.createElement('line', { x1: x0, y1: yV(v), x2: x1, y2: yV(v), stroke: palette.border, strokeWidth: 0.5, opacity: 0.6 }),
-              React.createElement('text', { x: x0 - 6, y: yV(v) + 3, fill: palette.mid, fontSize: 9, fontFamily: 'inherit', textAnchor: 'end' }, v >= 1000 ? Math.round(v / 1000) + 'k' : Math.round(v)))),
+              React.createElement('text', { x: x0 - 6, y: yV(v) + 5, fill: palette.mid, fontSize: FS, fontFamily: 'inherit', textAnchor: 'end' }, v >= 1000 ? Math.round(v / 1000) + 'k' : Math.round(v)))),
             // Achsen
             React.createElement('line', { x1: x0, y1: yB, x2: x1, y2: yB, stroke: palette.mid, strokeWidth: 1 }),
             React.createElement('line', { x1: x0, y1: y0, x2: x0, y2: yB, stroke: palette.mid, strokeWidth: 1 }),
             // x-Ticks (Alter)
             ...xticks.map((a, i) => React.createElement('g', { key: 'x' + i },
               React.createElement('line', { x1: xA(a), y1: yB, x2: xA(a), y2: yB + 4, stroke: palette.mid, strokeWidth: 1 }),
-              React.createElement('text', { x: xA(a), y: yB + 16, fill: palette.mid, fontSize: 9, fontFamily: 'inherit', textAnchor: 'middle' }, String(a)))),
+              React.createElement('text', { x: xA(a), y: yB + 18, fill: palette.mid, fontSize: FS, fontFamily: 'inherit', textAnchor: 'middle' }, String(a)))),
             // Achsentitel (Bedeutung!)
-            React.createElement('text', { x: x0 - 44, y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.semi, fontFamily: 'inherit' }, 'CHF'),
-            React.createElement('text', { x: x1, y: yB + 30, fill: palette.text, fontSize: 11, fontWeight: weight.semi, fontFamily: 'inherit', textAnchor: 'end' }, t('vr.achseAlter')),
+            React.createElement('text', { x: x0 - 48, y: y0 - 12, fill: palette.text, fontSize: FS, fontWeight: weight.semi, fontFamily: 'inherit' }, 'CHF'),
+            // Achsentitel links unter der Achse, unter den CHF-Zahlen: rechts stiess er an «Pension».
+            React.createElement('text', { x: x0 - 6, y: yB + 26, fill: palette.text, fontSize: FS, fontWeight: weight.semi, fontFamily: 'inherit', textAnchor: 'end' }, t('vr.achseAlter')),
             // Lebensphasen-Beschriftung
-            React.createElement('text', { x: (x0 + xret) / 2, y: yB + 30, fill: palette.mid, fontSize: 10, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phaseErwerb')),
-            React.createElement('text', { x: (xret + x1) / 2, y: yB + 30, fill: palette.mid, fontSize: 10, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phasePension')),
+            React.createElement('text', { x: (x0 + xret) / 2, y: yB + 46, fill: palette.mid, fontSize: FS, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phaseErwerb')),
+            React.createElement('text', { x: (xret + x1) / 2, y: yB + 46, fill: palette.mid, fontSize: FS, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phasePension')),
             // Renten-Readout IN der Pensionsphase — macht die AHV im Graph sichtbar (Rente ≠ Kapital, darum Beschriftung statt Fläche)
-            (ahvMonat + bvgMonat) > 0 && (x1 - xret) > 130 && React.createElement('g', { key: 'pensRente' },
-              React.createElement('rect', { x: Math.min(x1 - 152, (xret + x1) / 2 - 74), y: y0 + 16, width: 148, height: 34, rx: 6, fill: palette.surface, stroke: palette.border, strokeWidth: 1 }),
-              React.createElement('text', { x: Math.min(x1 - 78, (xret + x1) / 2), y: y0 + 29, fill: palette.mid, fontSize: 8.5, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.zukunftRente')),
-              React.createElement('text', { x: Math.min(x1 - 78, (xret + x1) / 2), y: y0 + 43, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' },
+            // Beim Ziehen zeigt der Zieh-Hinweis dieselbe Rente; das Kästchen tritt zurück, sonst lägen beide übereinander.
+            !ruecktrittDragging && (ahvMonat + bvgMonat) > 0 && (x1 - xret) > 210 && React.createElement('g', { key: 'pensRente' },
+              React.createElement('rect', { x: Math.min(x1 - 204, (xret + x1) / 2 - 100), y: y0 + 14, width: 200, height: 46, rx: 6, fill: palette.surface, stroke: palette.border, strokeWidth: 1 }),
+              React.createElement('text', { x: Math.min(x1 - 104, (xret + x1) / 2), y: y0 + 32, fill: palette.mid, fontSize: FS, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.zukunftRente')),
+              React.createElement('text', { x: Math.min(x1 - 104, (xret + x1) / 2), y: y0 + 51, fill: palette.text, fontSize: FS, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' },
                 // Nur die tatsächlich vorhandenen Säulen benennen (wie die Legende) —
                 // sonst stünde „AHV 0", wenn kein Einkommen erfasst ist, aber BVG versichert.
                 [ahvMonat > 0 ? 'AHV ' + betragsZahl(ahvMonat) : null, bvgMonat > 0 ? 'BVG ' + betragsZahl(bvgMonat) : null].filter(Boolean).join(' + '))),
             // Rücktritts-Linie + Marke
             React.createElement('line', { x1: xret, y1: y0 - 4, x2: xret, y2: yB, stroke: palette.text, strokeWidth: 1.5 }),
-            React.createElement('text', { x: Math.min(x1 - 40, Math.max(x0 + 40, xret)), y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
+            React.createElement('text', { x: Math.min(x1 - 50, Math.max(x0 + 50, xret)), y: y0 - 12, fill: palette.text, fontSize: FS, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
             // Snap-Marken an den Bedeutungs-Altern (63/64/65/70): kleine Kerben an der
             // Achse, damit die einrastenden Alter sichtbar sind. Das aktive Alter in Gold.
             ...SNAP_AGES.map((a) => React.createElement('g', { key: 'snap' + a },
@@ -766,12 +781,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             ruecktrittDragging && (() => {
               const totMonatChart = ahvMonat + bvgMonat + s3aMonat + s3bMonat;
               const hasRente = totMonatChart > 0;
-              const tw = hasRente ? 122 : 66, th = hasRente ? 40 : 24;
+              const tw = hasRente ? 160 : 84, th = hasRente ? 48 : 28;
               const tx = Math.min(x1 - tw / 2, Math.max(x0 + tw / 2, xret));
               return React.createElement('g', { key: 'dragTip', style: { pointerEvents: 'none' } },
                 React.createElement('rect', { x: tx - tw / 2, y: y0 + 4, width: tw, height: th, rx: 6, fill: palette.text, opacity: 0.94 }),
-                React.createElement('text', { x: tx, y: y0 + (hasRente ? 18 : 20), fill: palette.surface, fontSize: 12, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
-                hasRente ? React.createElement('text', { x: tx, y: y0 + 33, fill: palette.surface, fontSize: 11, fontFamily: 'inherit', textAnchor: 'middle', opacity: 0.9 }, betrag(totMonatChart) + ' / ' + t('vr.monat')) : null);
+                React.createElement('text', { x: tx, y: y0 + (hasRente ? 22 : 23), fill: palette.surface, fontSize: FS, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
+                hasRente ? React.createElement('text', { x: tx, y: y0 + 41, fill: palette.surface, fontSize: FS, fontFamily: 'inherit', textAnchor: 'middle', opacity: 0.9 }, betrag(totMonatChart) + ' / ' + t('vr.monat')) : null);
             })(),
             // Ziehbarer Handle mit Tastatur + Fokus (barrierefrei) — beim Ziehen grösser
             React.createElement('circle', { cx: xret, cy: y0 - 4, r: ruecktrittDragging ? 10 : 8, fill: palette.text, stroke: palette.surface, strokeWidth: 2,

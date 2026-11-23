@@ -91,15 +91,21 @@ describe('B · Mindestschrift', () => {
   });
 
   // Grafiken (SVG-Beschriftungen, Etiketten in Bildern) und Deko-Zeichen (Aufklapp-Pfeile der Auswahlfelder):
-  // Bestand vom 09.11.2026, am 23.11.2026 bei 14 px nachgezählt (Baum3D, BergLandschaft, LohnEinordnung auf 0).
-  // Eine Zahl darf nur sinken. Grafiken werden einzeln am Bild bei 375 px gemessen.
+  // Bestand vom 09.11.2026. Am 23.11.2026 bei 14 px Grafik für Grafik am Bild gemessen (375 und 320 px, Prüfseite
+  // mit Testdaten): FranchiseKreuz, Pegel (Legende statt Text im Glas), VorsorgeRechner (Zeichenfläche = Breite),
+  // AblaufSchale, Jahreskreis, Geldfluss, Baum3D, LohnEinordnung auf 0. Was bleibt, ist begründet.
+  // Eine Zahl darf nur sinken. Neue Grafiken werden am Bild bei 375 px gemessen, nicht an der Zahl im Code.
   const BESTAND = {
-    'AblaufSchale.jsx': 2, 'ChapterView.jsx': 1, 'SozialhilfeRechner.jsx': 1, 'VorsorgeRechner.jsx': 11,
-    'components/FranchiseKreuz.jsx': 13, 'components/Gauge.jsx': 3,
-    'components/Geldfluss.jsx': 1, 'components/Jahreskreis.jsx': 2, 'components/LebenslaufVorschau.jsx': 1,
-    'components/LeistungsKompass.jsx': 2, 'components/Pegel.jsx': 3,
+    // Zeichenfläche wird vergrössert gezeigt (220 → 272–280 px): 12 Einheiten ≈ 14.8 px, 13 ≈ 14.3 px.
+    'components/Gauge.jsx': 3, 'components/LeistungsKompass.jsx': 2,
+    // Zahl im Fortschrittskreis (38/42 px): «100 %» passt in 14 px nicht in den Kreis.
+    'components/BergLandschaft.jsx': 1,
+    // Dokument-Vorschau, als verkleinertes Blatt gezeigt.
+    'components/LebenslaufVorschau.jsx': 1,
+    // Aufklapp-Pfeil eines Auswahlfelds (Zeichen, kein Text), Aufruf eine Zeile tiefer.
+    'ChapterView.jsx': 1, 'SozialhilfeRechner.jsx': 1,
   };
-  const KLEIN = /fontSize:\s*(?:'(\d+(?:\.\d+)?)px'|(\d+(?:\.\d+)?)\b(?!\s*[-+*/])|text\.xs\s*-\s*\d+)/g;
+  const KLEIN = /fontSize:\s*(?:'(\d+(?:\.\d+)?)px'|(\d+(?:\.\d+)?)\b(?!\s*[-+*/])|text\.xs\s*-\s*\d+|[^,}?]*\?\s*'?(\d+(?:\.\d+)?)(?:px')?\s*:\s*'?(\d+(?:\.\d+)?))/g;
   const zaehle = (s) => {
     const z = s.split('\n');
     let n = 0;
@@ -107,6 +113,7 @@ describe('B · Mindestschrift', () => {
       // Deko-Zeichen: Aufklapp-Pfeil (auch eine Zeile tiefer) und das kleine «a» im Schriftgrössen-Knopf.
       if (/aufklappZeichen/.test(zeile + (z[i + 1] || '')) || zeile.includes("'a')")) return;
       for (const m of zeile.matchAll(KLEIN)) {
+        if (m[3] !== undefined) { if (Math.min(Number(m[3]), Number(m[4])) < 14) n++; continue; }
         const v = m[1] ?? m[2];
         if (v === undefined || Number(v) < 14) n++;
       }

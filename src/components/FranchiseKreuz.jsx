@@ -20,9 +20,10 @@ import { linkStil } from './PrimaryButton.jsx';
 //   • Hover: Fadenkreuz mit beiden Gesamtkosten an der Stelle.
 // Breite = echte Breite (300–560 px): die Zeichenfläche wird nie skaliert, Schrift bleibt ≥ 11 px.
 // Unter 420 px (Handy): Namen der Linien über den Enden statt rechts daneben (R schrumpft).
-const W_MAX = 560, W_MIN = 240, H_GROSS = 236, T = 22, B = 34;
+// Schriftskala 23.11.2026: Beschriftungen 14 px (text.xs), dafür oben, unten und links mehr Rand.
+const W_MAX = 560, W_MIN = 240, H_GROSS = 244, T = 26, B = 40;
 // `klein` (Kapitel Versicherungen, Fassung 6 Runde 9 AA): dieselbe Rechnung, niedrigere Zeichenfläche.
-const H_KLEIN = 176;
+const H_KLEIN = 184;
 
 // `eigeneFranchise` (F7-K3-3): die heutige Franchise als dritte, graphitfarbene Linie mit Raute am Ende.
 export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, heute, klein, eigeneFranchise }) => {
@@ -43,17 +44,23 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
   const num = (n) => zahl(Math.round(n || 0));
 
   const schmal = W < 420;
-  const L = schmal ? 36 : 44, R = schmal ? 14 : 104;
+  const L = schmal ? 46 : 52, R = schmal ? 14 : 112;
+  const fs = text.xs;
+  // Hof in Kartenfarbe: Beschriftungen bleiben lesbar, wo sie über einer Linie liegen.
+  const hof = { paintOrder: 'stroke', stroke: palette.surface, strokeWidth: 3, strokeLinejoin: 'round' };
   const x = (c) => L + (c / st.scaleMax) * (W - L - R);
   const y = (v) => T + (1 - (v - st.yMin) / (st.yMax - st.yMin)) * (H - T - B);
   const linie = (key) => st.kurve.map((p) => x(p.c).toFixed(1) + ',' + y(p[key]).toFixed(1)).join(' ');
   const ende = st.kurve[st.kurve.length - 1];
   const farbeHoch = palette.sky, farbeTief = palette.sand;
-  // Namen am Linienende mindestens 16 px auseinander, damit sie sich nicht überdecken (mit eigener Linie: drei).
+  // Grundlinien der Namen am Linienende, gemeinsam verteilt: mindestens 17 px auseinander (14-px-Schrift),
+  // damit sie sich nicht überdecken (mit eigener Linie: drei). Schmal stehen sie links vom Ende:
+  // «hoch» über, «tief» unter dem Punkt, «eigen» auf Höhe. Vorher getrennt versetzt, «1’500» lag auf «300».
   const labelY = (() => {
     const keys = st.eigeneFra ? ['tief', 'hoch', 'eigen'] : ['tief', 'hoch'];
-    const pos = keys.map((k) => ({ k, v: y(ende[k]) })).sort((p, q) => p.v - q.v);
-    for (let i = 1; i < pos.length; i++) if (pos[i].v - pos[i - 1].v < 16) pos[i].v = pos[i - 1].v + 16;
+    const versatz = schmal ? { hoch: -10, tief: 19, eigen: 5 } : { hoch: 5, tief: 5, eigen: 5 };
+    const pos = keys.map((k) => ({ k, v: y(ende[k]) + versatz[k] })).sort((p, q) => p.v - q.v);
+    for (let i = 1; i < pos.length; i++) if (pos[i].v - pos[i - 1].v < 17) pos[i].v = pos[i - 1].v + 17;
     return Object.fromEntries(pos.map((p) => [p.k, p.v]));
   })();
   const farbeEigen = palette.text;
@@ -64,9 +71,16 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
     : t('po.tachoReadoutAbove', { costs: num(st.costs), be: num(st.breakEven), low: num(st.low) });
   const readoutColor = st.mode === 'below' ? (palette.sageDeep || palette.sage) : st.mode === 'above' ? palette.sandDeep : palette.mid;
 
-  const senkrecht = (key, c, farbe, strich, label, oben) => c != null && c <= st.scaleMax && h('g', { key },
-    h('line', { x1: x(c), x2: x(c), y1: T, y2: H - B, stroke: farbe, strokeWidth: strich ? 1.5 : 2, strokeDasharray: strich || undefined }),
-    h('text', { x: x(c) + 4, y: oben, fontSize: 11, fill: palette.text }, label));
+  // Reicht der Platz rechts der Linie nicht (Breite grob 0.56 × Schrift je Zeichen), steht die Beschriftung links davon.
+  const senkrecht = (key, c, farbe, strich, label, oben) => {
+    if (c == null || c > st.scaleMax) return false;
+    // Passt keine Seite (schmal, 320 px), beginnt sie in der Fläche nach der Achse und läuft mit Hof über die Linie.
+    const breite = String(label).length * fs * 0.56;
+    const tx = x(c) + 4 + breite <= W ? x(c) + 4 : x(c) - 4 - breite >= L ? x(c) - 4 - breite : Math.max(L + 4, W - breite);
+    return h('g', { key },
+      h('line', { x1: x(c), x2: x(c), y1: T, y2: H - B, stroke: farbe, strokeWidth: strich ? 1.5 : 2, strokeDasharray: strich || undefined }),
+      h('text', { x: tx, y: oben, fontSize: fs, fill: palette.text, ...hof }, label));
+  };
 
   // Hover: Stelle unter der Maus → Gesamtkosten beider Franchisen dort.
   const onMove = (e) => {
@@ -96,12 +110,12 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
       h('rect', { x: x(st.breakEven), y: T, width: x(st.scaleMax) - x(st.breakEven), height: H - T - B, fill: farbeTief, opacity: 0.08 }),
       // Achsen: Grundlinie, Enden beschriftet
       h('line', { x1: L, x2: x(st.scaleMax), y1: H - B + 0.5, y2: H - B + 0.5, stroke: palette.border }),
-      h('text', { x: L, y: H - B + 16, fontSize: 11, fill: palette.mid }, '0'),
-      h('text', { x: x(st.scaleMax), y: H - B + 16, fontSize: 11, fill: palette.mid, textAnchor: 'end' }, num(st.scaleMax)),
-      h('text', { x: (L + x(st.scaleMax)) / 2, y: H - 4, fontSize: 11, fill: palette.mid, textAnchor: 'middle' }, t('po.kreuzAchse') + ' (CHF)'),
-      h('text', { x: L - 6, y: T + 4, fontSize: 11, fill: palette.mid, textAnchor: 'end' }, num(st.yMax)),
-      h('text', { x: L - 6, y: H - B, fontSize: 11, fill: palette.mid, textAnchor: 'end' }, num(st.yMin)),
-      h('text', { x: L, y: T - 8, fontSize: 11, fill: palette.mid }, t('po.kreuzKosten')),
+      h('text', { x: L, y: H - B + 18, fontSize: fs, fill: palette.mid }, '0'),
+      h('text', { x: x(st.scaleMax), y: H - B + 18, fontSize: fs, fill: palette.mid, textAnchor: 'end' }, num(st.scaleMax)),
+      h('text', { x: (L + x(st.scaleMax)) / 2, y: H - 3, fontSize: fs, fill: palette.mid, textAnchor: 'middle' }, t('po.kreuzAchse') + ' (CHF)'),
+      h('text', { x: L - 6, y: T + 5, fontSize: fs, fill: palette.mid, textAnchor: 'end' }, num(st.yMax)),
+      h('text', { x: L - 6, y: H - B, fontSize: fs, fill: palette.mid, textAnchor: 'end' }, num(st.yMin)),
+      h('text', { x: L, y: T - 9, fontSize: fs, fill: palette.mid }, t('po.kreuzKosten')),
       // Break-even
       // Break-even: Beschriftung unten im Feld, damit sie keine Linie überdeckt
       senkrecht('be', st.breakEven, palette.mid, '4 4', t('po.tachoBreakeven') + ' ≈ ' + num(st.breakEven), H - B - 8),
@@ -111,19 +125,19 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
       st.eigeneFra && h('polyline', { points: linie('eigen'), fill: 'none', stroke: farbeEigen, strokeWidth: 1.5, strokeLinejoin: 'round' }),
       st.eigeneFra && h('rect', { x: x(ende.c) - 4, y: y(ende.eigen) - 4, width: 8, height: 8, fill: farbeEigen, stroke: palette.surface, strokeWidth: 2, transform: 'rotate(45 ' + x(ende.c) + ' ' + y(ende.eigen) + ')' }),
       st.eigeneFra && (schmal
-        ? h('text', { x: x(ende.c) - 8, y: labelY.eigen + 4, fontSize: 11, fill: palette.text, textAnchor: 'end' }, num(st.eigeneFra))
-        : h('text', { x: x(ende.c) + 10, y: labelY.eigen + 4, fontSize: 12, fill: palette.text }, t('po.kreuzLinieEigen', { franchise: num(st.eigeneFra) }))),
+        ? h('text', { x: x(ende.c) - 8, y: labelY.eigen, fontSize: fs, fill: palette.text, textAnchor: 'end', ...hof }, num(st.eigeneFra))
+        : h('text', { x: x(ende.c) + 10, y: labelY.eigen, fontSize: fs, fill: palette.text }, t('po.kreuzLinieEigen', { franchise: num(st.eigeneFra) }))),
       h('rect', { x: x(ende.c) - 4, y: y(ende.tief) - 4, width: 8, height: 8, fill: farbeTief, stroke: palette.surface, strokeWidth: 2 }),
       h('circle', { cx: x(ende.c), cy: y(ende.hoch), r: 4.5, fill: farbeHoch, stroke: palette.surface, strokeWidth: 2 }),
       schmal
-        ? h('text', { x: x(ende.c) - 8, y: labelY.tief + 16, fontSize: 11, fill: palette.text, textAnchor: 'end' }, num(st.low))
-        : h('text', { x: x(ende.c) + 10, y: labelY.tief + 4, fontSize: 12, fill: palette.text }, t('po.kreuzLinie', { franchise: num(st.low) })),
+        ? h('text', { x: x(ende.c) - 8, y: labelY.tief, fontSize: fs, fill: palette.text, textAnchor: 'end', ...hof }, num(st.low))
+        : h('text', { x: x(ende.c) + 10, y: labelY.tief, fontSize: fs, fill: palette.text }, t('po.kreuzLinie', { franchise: num(st.low) })),
       schmal
-        ? h('text', { x: x(ende.c) - 8, y: labelY.hoch - 8, fontSize: 11, fill: palette.text, textAnchor: 'end' }, num(st.high))
-        : h('text', { x: x(ende.c) + 10, y: labelY.hoch + 4, fontSize: 12, fill: palette.text }, t('po.kreuzLinie', { franchise: num(st.high) })),
+        ? h('text', { x: x(ende.c) - 8, y: labelY.hoch, fontSize: fs, fill: palette.text, textAnchor: 'end', ...hof }, num(st.high))
+        : h('text', { x: x(ende.c) + 10, y: labelY.hoch, fontSize: fs, fill: palette.text }, t('po.kreuzLinie', { franchise: num(st.high) })),
       // eigene Kosten: bisher (durchgezogen) · Hochrechnung (gestrichelt, Schätzung)
-      st.costs > 0 && senkrecht('bisher', Math.min(st.costs, st.scaleMax), palette.text, null, t('po.kreuzBisher') + ' ' + num(st.costs), T + 12),
-      st.hochrechnung && senkrecht('hoch', st.hochrechnung, palette.text, '2 3', t('po.kreuzHochrechnung') + ' ≈ ' + num(st.hochrechnung), T + 26),
+      st.costs > 0 && senkrecht('bisher', Math.min(st.costs, st.scaleMax), palette.text, null, t('po.kreuzBisher') + ' ' + num(st.costs), T + 15),
+      st.hochrechnung && senkrecht('hoch', st.hochrechnung, palette.text, '2 3', t('po.kreuzHochrechnung') + ' ≈ ' + num(st.hochrechnung), T + 32),
       // Hover-Fadenkreuz
       hv && h('g', { pointerEvents: 'none' },
         h('line', { x1: x(hoverC), x2: x(hoverC), y1: T, y2: H - B, stroke: palette.mid, strokeWidth: 1 }),
