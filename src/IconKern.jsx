@@ -263,9 +263,6 @@ const _check = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
 );
 
 // Leeres Kästchen — Merkpunkte und nächste Schritte.
-const _kaestchen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('rect', { x: '4', y: '4', width: '16', height: '16', rx: '2' })
-);
 
 // Kreuz — Entfernen/Löschen, so leicht wie die frühere ✕-Glyphe (kein Abfalleimer-Gewicht).
 const _kreuz = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
@@ -326,11 +323,6 @@ const _search = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
   React.createElement('path', { d: 'M 21 21 L 15 15' })
 );
 
-const _home = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('path', { d: 'M 3 12 L 12 3 L 21 12' }),
-  React.createElement('path', { d: 'M 5 12 L 5 20 Q 5 21 6 21 L 18 21 Q 19 21 19 20 L 19 12' }),
-  React.createElement('rect', { x: '10', y: '14', width: '4', height: '7' })
-);
 
 // Thema Versicherung: dasselbe Edelweiss-Schild wie der Lebensbereich (Rechts-Prüfung 07.11.2026:
 // ein Kreuz im Dreieckschild ist die Form des Schweizerwappens, WSchG Art. 2 und 8).
@@ -416,9 +408,6 @@ const _leaf = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'cu
 );
 
 // Herz — ruhige Kontur für Lebensereignisse wie Heirat (Granit-Linienstil wie die Kapitel-Icons).
-const _heart = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none' },
-  React.createElement('path', { d: 'M 12 20 C 12 20 4 14.5 4 8.8 C 4 6.1 6.1 4 8.6 4 C 10.2 4 11.4 4.9 12 6 C 12.6 4.9 13.8 4 15.4 4 C 17.9 4 20 6.1 20 8.8 C 20 14.5 12 20 12 20 Z', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }),
-);
 
 // Die Zeichen des Boden-Ankers und des Menüs (Icon-Plan November 2026, Schritt 3). Bis
 // dahin zeichneten main.jsx (`bottomIcon`) und MobileNav (`linie`) sie je selbst. Dieselben
@@ -517,7 +506,6 @@ const _iconFactories = {
   download: _download,
   sicherung: _sicherung,
   check: _check,
-  kaestchen: _kaestchen,
   kreuz: _kreuz,
   warning: _warning,
   money: _money,
@@ -529,12 +517,10 @@ const _iconFactories = {
   search: _search,
 
   // Semantic icons
-  home: _home,
   insurance: _insurance,
   documents: _documents,
   budget: _budget,
   family: _family,
-  heart: _heart,
   info: _info,
   external: _external,
   pfeil: _pfeil,
