@@ -25,7 +25,9 @@ const chapters = getChapters(t);
 const kapitel = (k) => chapters.find((c) => c.key === k);
 const render = (key, data = DEMO_DATA[key], extra = {}) => renderToStaticMarkup(React.createElement(ChapterViewComplete, {
   palette: LIGHT_PALETTE, t, chapter: kapitel(key), data, allData: { ...DEMO_DATA, [key]: data },
-  onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, ...extra,
+  // Seit 20.11.2026 steht die Liste im Kapitel Wohnen hinter «Alle Angaben» (die Abschnitte öffnen oben am Bild):
+  // für die Regeln der Liste hier aufgeklappt.
+  onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, anfangsOffen: 'liste', ...extra,
 }));
 const nurText = (html) => html.replace(/\u00AD/g, '').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/[ \t\n]+/g, ' '); // geschützte Leerzeichen bleiben
 const QUELLE = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
@@ -49,7 +51,7 @@ describe('M1 · Feldnamen ohne das, was der Wert schon sagt', () => {
     const tt = createT({ [lang]: texte }, lang, 'sie');
     const html = renderToStaticMarkup(React.createElement(ChapterViewComplete, {
       palette: LIGHT_PALETTE, t: tt, chapter: getChapters(tt).find((c) => c.key === 'wohnen'), data: { ...DEMO_DATA.wohnen, rooms: '' },
-      allData: DEMO_DATA, onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {},
+      allData: DEMO_DATA, onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, anfangsOffen: 'liste',
     }));
     return nurText(html);
   };
@@ -149,10 +151,13 @@ describe('M7 · Passend wie im Entwurf', () => {
     const passend = nurText(render('ausbildung').split('data-teil="passend"')[1]);
     for (const s of ['Lebenslauf erstellen Aus Ihren Angaben · als PDF', 'Neue Stelle Ablauf · 5 Schritte', 'Stundenlohn & Mindestlohn']) expect(passend, s).toContain(s);
   });
-  it('Behörden: Steuern und Briefvorlagen wie im Entwurf', () => {
+  // Seit der dritten Runde Behörden (23.11.2026 abends): Steuern hat seinen Weg in der Erklärung unter dem Kalenderblatt
+  // («Alles zu Ihren Steuern»), darum nicht noch einmal unter «Passend». Briefvorlagen bleiben dort.
+  it('Behörden: Briefvorlagen unter «Passend», Steuern bei der Frist statt doppelt', () => {
+    // Der Weg «Alles zu Ihren Steuern» in der Szene ist nachgeladen; geprüft in behoerdenKapitel.test.js.
     const passend = nurText(render('behoerden').split('data-teil="passend"')[1]);
-    expect(passend).toContain('Steuern schätzen, Abzüge, Frist verlängern');
     expect(passend).toContain('Fristverlängerung, Wohnungskündigung, Krankenkassenwechsel');
+    expect(passend).not.toContain('Steuern schätzen, Abzüge, Frist verlängern');
   });
   it('Symbole in einer Kachel (36 px)', () => {
     expect(render('wohnen').split('data-teil="passend"')[1]).toMatch(/width:36px;height:36px;border-radius:10px/);

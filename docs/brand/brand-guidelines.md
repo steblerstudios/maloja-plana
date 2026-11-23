@@ -270,6 +270,9 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
     liest Bedarf und Einkommen aus dem Glas (`sozialhilfePegelState`, B-R6). Wächter:
     `src/__tests__/leistungenEineRechnung.test.js`.
 - Wächter: `src/__tests__/instrumenteZuhauseSpiegel.test.js`.
+- **Reserve-Tank seit 10.11.2026 wie das Schild:** ein Bauteil mit `groesse` (`klein` 64 ohne Wörter,
+  `gross` 256 mit Ablesesatz); die eigene Kleinzeichnung `miniGauge` ist aufgelöst.
+- Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Netz-Schild auf
 - **Gesundheitsbelege: eine Rechnung, zwei Namen** *(11.11.2026, Instrumente-Matrix B-R3)*. `belegeImJahr` in
   `src/data/franchiseTacho.js` zählt die KK-Belege eines Jahres für alle Orte. **An die Franchise** (Betrag,
   bezahlt und offen): Kachel Franchise-Stand, Kreuz, KVG-Reiter, Prämien-Übersicht. **Bezahlte Gesundheitskosten**
@@ -277,7 +280,123 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   auch Nicht-Gedecktes zählt. Wächter: `src/__tests__/gesundheitsbelegeEineRechnung.test.js`. Bild für den
   Franchise-Stand: **Fieberthermometer** (entschieden, Bau folgt).
 - Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Reserve-Tank 280 → 256, Netz-Schild auf
+  Franchise-Stand: **Fieberthermometer** (Stebler Studios 11.11.2026, «Ja, Thermometer + Rechnung A»;
+  «A · Franchise»: das Thermometer trägt nur diese Bedeutung, das geplante Fieber-Fach im Arztkoffer heisst später
+  «Fiebertagebuch»). Ein Bauteil `components/FranchiseThermometer.jsx`: **klein 64** liegend (Kachel), **mittel 128**
+  liegend mit Selbstbehalt als gestrichelter zweiter Strecke (KVG-Reiter, ersetzt die zwei 8-px-Balken), **gross 256**
+  stehend mit Ablesewörtern (Zuhause noch nicht entschieden, darum noch nirgends eingesetzt). Eine Farbe, keine Ampel.
+  Regel «Zahl»: darunter gross die verbrauchte Franchise. Wächter: `src/__tests__/franchiseThermometer.test.js`.
+- Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Netz-Schild auf
   KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
+- **Wohnen: Drittel-Haus + Häuserzeile** *(11.11.2026, Stebler Studios nach Skizze A–C: «ja a und b kombiniert»)*.
+  Ein Bild aus dem Lebensbereich, wo die Frage typisch für den Bereich ist (wie das Netz-Schild):
+  **A Drittel-Haus** für «Wie viel vom Einkommen geht ans Wohnen?» — das Haus ist das Einkommen, drei gleiche
+  Stockwerke, die feste Linie über dem Erdgeschoss ist **ein Drittel**; die Wohnkosten füllen es von unten (Birne,
+  über einem Drittel Sand; mit Partner/in siehe «Partner-Haus» unten). **B Häuserzeile** für «Wo steht meine Miete?» —
+  dieselben Marken wie das Barometer als Häuser: Ihr Haus gefüllt (= Füllung), Region mit Dach in der Farbe des
+  Punkts (= Ihre Lage), Schweiz gestrichelt (= Strich), das Drittel als Linie quer über die Strasse mit «!» (= Schwelle,
+  nur wo A fehlt: Mietzins, Budget). Kapitel Wohnen: A + B gross 256; Mietzins und Budget: B mittel 128; Übersicht:
+  beide klein 64. Lohn und Prämie bleiben Balken. Eine Rechnung: `data/wohnkosten.js`. Bauteile:
+  `DrittelHaus` (`WohnkostenInstrument.jsx`), `RegionalBarometer` mit `form: 'haeuser'`. Wächter: `wohnenHaus.test.js`.
+  **Budget** (11.11.2026): Gruppe «Wohnen» aufgeklappt mit Drittel-Haus mittel (nur ohne Partner/in, dann gleich der
+  Gruppen-Prozentzahl) und dem BFS-Richtwert als zwei Häuser klein (`HaeuserVergleich`: Sie gefüllt, vergleichbarer
+  Haushalt mit Dach in der Farbe Ihrer Lage); der Wohn-Hinweis folgt dem Drittel. Wächter: `budgetWohnenHaus.test.js`.
+  **Partner-Haus** (11.11.2026, Stebler Studios «Partner-Haus», Fachprüfung swiss-precision-pruefer): Ist der Nettolohn
+  der zweiten Person erfasst, sind es genau zwei Erwachsene und ist kein Lohn brutto erfasst, ist das Haus das
+  **Netto-Einkommen des Haushalts** (`haushaltsEinnahmen`, dieselbe Summe wie im Budget). Das Drittel-Urteil gilt dann
+  wie allein. Ohne Urteil (Birne) bleibt es bei weiteren Erwachsenen, bei Bruttolohn und, neu, bei leerem Feld der
+  zweiten Person. Bis dahin stand dort die Haushaltsmiete gegen das eigene Einkommen. «0» heisst: kein Einkommen der
+  zweiten Person. Wächter: `wohnenPartnerHaus.test.js`.
+  **Ausgebaut nach Grösse** (11.11.2026, Stebler Studios nach Skizze A–E: «Ja, so bauen»):
+  - Das **«!» an der Drittel-Linie** (A) ist graphit und wird Rosé (`roseDeep`), sobald die Füllung über einem
+    Drittel liegt. **Die Füllung bleibt immer grün** (Birne): Stebler Studios 11.11.2026, «darf grün gefüllt werden und
+    nicht golden». Die Warnung tragen Linie und «!», nicht die Fläche. Linie und Legenden-Strich färben mit. Ohne Urteil gibt es kein «!». Damit hat auch das
+    Kapitel sein «!» wieder.
+  - Die **Füllung steigt** (B) beim Erscheinen in `duration.slow` (`mp-steigen`, abbremsend) und folgt dem
+    Regler (`scaleY`). «Weniger Bewegung» stellt beides still, mit beiden Schaltern.
+  - Der **Viertel-Strich** (C) ist eine feine Punktlinie: Budgetberatung Schweiz, «nicht mehr als ein Viertel der
+    Nettoeinnahmen», geprüft 11.11.2026. Er steht nur netto und mit Urteil, und im Kapitel mit Legende und Quelle.
+  - **«alles andere»** (D) steht im obersten Stock.
+  - Das **Partner-Haus ist geteilt** (E): ein feiner Strich nach den Netto-Einnahmen, darunter «Sie | Partner/in».
+  - Nach Grösse: **gross** A–E, **mittel** A + B + C, **klein** A + B. Schrift im Bild nur gross, bei 256 px genau
+    13 px (Regel H). Wächter: `drittelHausAusbau.test.js`.
+  **Mietbeiträge als Szene** (11.11.2026, Stebler Studios: «im Haus weiter füllen, gestrichelt, Behörden-Farbe» und
+  «Ja, so bauen»):
+  - Im Drittel-Haus steht der mögliche Beitrag **oben in der Füllung, schraffiert und gestrichelt in Zwetschge**
+    (Behörden). Er gilt immer als «bis zu», gross und mittel. Gerechnet wird eine Obergrenze **für diesen Haushalt**,
+    nicht der kantonale Deckel. Heute gibt es sie nur für BS (Merkblatt 01.2026, Ziff. 7/11/13); eine Person mit
+    2 Zimmern kommt auf 929, nicht auf 1'060. GE (Jahreswert, keine Grenze), ZG und BL: keine Zahl im Haus.
+  - Daneben das **Glas der IPV** (`Pegel`, `nurGlas`) für Einkommen gegen Grenze, nur wo die Grenze eine Zahl ist.
+    Dieselbe Frage bekommt dieselbe Form, also kein neues Haus.
+  - Die **Tonne ist grau gefüllt** (Behörden-Zwetschge, `Pegel` mit `fuellFarbe`). Stebler Studios: «grau gefüllt».
+  - **«möglich» ist ein Wegweiser, der ganz der Knopf ist**: Pfosten und Pfeil-Schild in `skyDeep` (Blau =
+    informieren), darauf das Zeichen des Werkzeugs «Mietzins» und «möglich: Mietbeiträge prüfen». Stebler Studios
+    11.11.2026: «die Kombo von dem jetzt und dem vorher». Das Schild ist ein Bild hinter einem rechteckigen Knopf,
+    damit der Fokusring sichtbar bleibt. Er steht **rechts neben der Tonne** auf demselben Boden, der Text bricht im Schild um. Im Kapitel führt er ins
+    Werkzeug, im Werkzeug zur kantonalen Stelle. Er steht nur, wenn das Einkommen unter der Grenze liegt, und sagt nie
+    «Anspruch».
+  - Darunter die **Kachelkarte** der 26 Kantone, **jeder Kanton ein kleines Haus** (Matrix §5, C3; Stebler Studios:
+    «einzelne kleine Häuser»). Gefüllt heisst Programm erfasst, leer heisst unklar, nie «gibt es nicht».
+  - Eine Rechnung: `mietzinsEinschaetzung`. Kapitel Wohnen gross, Werkzeug «Mietzins» mittel. Wächter:
+    `wohnenMietzinsSzene.test.js`.
+  **Ihr Haus in der Strasse** (11.11.2026, Stebler Studios «dieses Haus in die Stadt … das was heute Ihre Miete ist
+  ersetzen», «ja genau»): In der Häuserzeile ist Ihr Haus das **Drittel-Haus klein**. Die Höhe ist Ihre Miete gegen
+  Region und Schweiz, darin die Füllung (Anteil am Einkommen) und die Drittel-Linie, Rosé darüber, ohne «!». Die
+  Drittel-Linie quer über die Strasse entfällt; Satz und aria-Label bleiben. Ohne Einkommen bleibt Ihr Haus gefüllt
+  wie bisher. Gilt in Kapitel, Mietzins, Budget und Kachel (`drittel` = `wohnkostenRechnung`). Wächter:
+  `wohnenStrasse.test.js`.
+  **Die Nachbarn** (11.11.2026, Skizze B «A + Beträge»): Gross (Kapitel, 256) ist das Regionshaus das Haus Ihres
+  Kantons von der Mietbeiträge-Karte, hellgrün mit Kürzel. Das Dach behält die Lage-Farbe. Das Schweizer Haus trägt
+  gestrichelt «CH». Die Beträge stehen direkt unter den Häusern («erst sehen, dann lesen»), die Legenden-Zeilen
+  entfallen dort. Mittel (Mietzins, Budget) bleibt bei den Legenden-Zeilen, weil Kürzel und Beträge dort unter 13 px
+  bzw. zu eng wären.
+  **Das Vergleichshaus, gross** (11.11.2026, Stebler Studios: «Kantonshaus, Schweizer Haus und das internationale zu
+  einem vereinen, mit Farben und Linien, Fahnen in jeden Stock, die Tür darf die Tonne selbst sein»; Abnahme «ja»).
+  Es ersetzt das Kantonshaus mit Fahne/Tür (ebenfalls 11.11.) und das Schweizer Haus:
+  - **Ein Haus neben Ihrem.** Jeder Vergleich ist ein Stock auf derselben Franken-Skala: Kanton durchgezogen in der
+    Lage-Farbe, Schweiz gestrichelt grau. Die Fahne steht am Stock («ZG 1'875», «CH Ø 1'446»).
+  - **Die Tür ist die Tonne:** eine Tür mit Rundbogen, grau (Behörden) gefüllt nach Einkommen gegen Grenze, die Grenze
+    als blaue Strichlinie. Ohne Programm ist es eine schlichte Tür. Im Kapitel gibt es danach keine eigene Tonne mehr.
+  - **Der Wegweiser «möglich»** steht unter der Tür, der Pfosten zeigt hinauf.
+  - **Unter den Häusern** steht nur noch Ihr Betrag.
+  - **EU als Stock** (gepunktet blau, Fahne «EU −53 %»): abgeleitet aus dem Schweizer Schnitt und dem Eurostat-
+    Preisniveau für Wohnen und Energie (prc_ppp_ind_1, A0104, 2025; `data/wohnenInternational.js`). Die Fahne zeigt
+    Prozent, nie Franken. Der Satz unter der Strasse sagt «abgeleitet, keine gemessenen Wohnungspreise» und nennt die
+    Nachbarländer.
+  - **Fahne am Kanton-Stock** («Sie −20 %», aus `lageZurRegion`, Rand in der Lage-Farbe), aussen rechts. Läge sie im
+    Weg des Wegweisers, rückt sie ins Haus.
+  - **Der Wegweiser «möglich ›» steht in der Strasse** rechts vom Vergleichshaus, Pfosten auf dem Boden, auch auf dem
+    Handy; der ganze Satz steht im Vorlesetext. Die Tür sitzt rechts im Haus.
+  - Die Strasse gross ist 170 Einheiten breit (330 px), die Schrift 7 Einheiten: 13 px auch bei 375 px Bildschirm.
+  - Mittel (Mietzins, Budget) bleibt bei drei kleinen Häusern.
+  **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
+  klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
+  trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.
+
+**Bilder in den Arbeit-Rechnern** *(11.11.2026, Skizzen A–H; Stebler Studios «wie lang b stundenlohn b», «noten sind ein
+cooler anfang … lohn barometer», «Haselnuss reicht»)*. Bauteile in `components/RechnerForm.jsx`, die alle drei Rechner
+schon laden, also kein neuer Baustein. Farbe überall Arbeit/Haselnuss (`bereichFillColor('arbeit')`). Wächter:
+`src/__tests__/arbeitRechnerBilder.test.js`.
+
+| Frage | Bild | Rechnung | Ort |
+|---|---|---|---|
+| Wie viel vom Lohn? | **Ersatz-Balken** im Stil des Lohn-Barometers: der Ersatz füllt bis zu seiner Stelle, der Rest «fällt weg» hell, gestrichelter Strich = bisheriger Lohn | `alvErsatzAnteil`, `eoErsatzAnteil` (über dem Höchstbetrag unter dem Satz) | ALV, EO (Mutterschaft) |
+| Wie lange? | **Kalenderblätter**, eines je Monat, das letzte teilweise; höchstens 24 | `alvBezugMonate` (Taggelder ÷ 21,7, AVIV Art. 40a); ohne Alter nur die Spanne, **kein Bild** | ALV |
+| Reicht mein Stundenlohn? | **Münzstapel** Stundenlohn gegen Mindestlohn, stetig hoch (nicht auf ganze Münzen gerundet), Strich auf Höhe des Mindestlohns | `stundenlohnRechnen` (`befunde[…].mindestStunde`) | Stundenlohn, nur mit belegtem Mindestlohn |
+
+Der Ersatz-Balken zeigt bewusst **keinen Median**: Der Lohn im Rechner ist nicht auf Vollzeit umgerechnet und wäre
+dort nicht vergleichbar. Die Uhr ist für den Stundenlohn **nicht** frei, sie steht fürs Pensum (ein Bild, eine Bedeutung).
+- **Versicherungen, 11.11.2026 — erst die Rechnung:** die KK-Last (Prämie ÷ Monatseinkommen) rechnet nur
+  `kkLastAnteil` (`src/KKLastCard.jsx`); Karte, Spiegel in Finanzen und Kapitel rufen sie (B-R4, Wächter
+  `kkLastAnteil.test.js`). Der Weg ins Kapitel folgt `CHAPTER_KEYS`, nie einer festen Zahl. Das alte Schild liegt
+  in `components/_archiv/` mit `_WAS-IST-DAS.md`; `data/schutzschild.js` rechnet weiter.
+- **Franchise-Kreuz klein, 11.11.2026 (B-F5):** die Kachel zeichnet das Kreuz aus `kreuzState` — dieselben zwei
+  Linien wie das Werkzeug, Strich «bisher» bei den eigenen Kosten (`KreuzKlein`). Ohne geladene Prämien kein Bild,
+  nur Name und Satz. Das Kreuz bleibt Diagramm; die Kachel ist sein Spiegel mit echter Zahl (Franchise in CHF).
+- **Wechselfrist Krankenkasse, 11.11.2026:** gemeinsame Form «Termin» = Kalenderblatt, an Kachel, Kapitel und
+  Werkzeug KVG-Wechsel (Schritt 4). Eine Rechnung `kvgWechselfrist` (30.11., Werktag davor, KVG Art. 7 Abs. 2).
+  **Nur in der Wechselzeit** (ab BAG-Publikation der neuen Prämien bis und mit Frist), sonst fehlt die Kachel ganz.
+  Hauptzahl: die Tage bis zur Frist, gross unter dem Blatt.
 
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
 «Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
@@ -444,6 +563,59 @@ Dieselben Werte wie die Startseite, damit niemand zwei Produkte sieht.
 | **404 und Wartung (A)** | aus dem Generator (`RAHMEN_SEITEN`), nicht mehr von Hand: Kopf mit Marke, Text frei auf dem Papier statt in der Karte, ein Knopf im Gold («Zur Startseite» / «Seite neu laden»), darunter fr/it/en je mit `lang`, Fuss mit Rechtlichem. Dunkelmodus wie alle Seiten. 🛑 `wartung.html` nach dem Deploy ins Infomaniak-Panel kopieren (RELEASE.md) |
 | **Wächter** | `gruppeERahmen.test.js` (A–D) · `seitenStilA11y.test.js` prüft seither auch 404 und Wartung (Hover-Kontrast, Unterstreichung) |
 
+### 7f. Formenlehre — die Frage wählt die Form *(11.11.2026)*
+
+Stebler Studios 11.11.2026 («und die instrumenten logik»), aus der Matrix vom 10.11.
+(`stebler-studios/analysen/2026-11-10-instrumente-matrix-konzept.md` §6). Gilt für alle Instrumente.
+
+1. **Zwei Familien.** Ein **Instrument** zeigt einen Stand: eine Zahl und ihre Lage. Es gibt es in drei Grössen
+   (64 / 128 / 256, §7b). Ein **Diagramm** zeigt einen Zusammenhang. Es steht in voller Breite, und sein Spiegel
+   ist ein Instrument aus derselben Rechnung.
+2. **Die Frage wählt die Form, der Ort nur die Grösse.**
+
+   | Frage-Art | Form |
+   |---|---|
+   | Teile | Teile-Bild |
+   | Anteil | Ring |
+   | Vorrat | Gefäss |
+   | Verbrauch bis Grenze | Balken mit Endstrich |
+   | Lage | Barometer |
+   | Termin | Kalenderblatt |
+   | Dauer | Weg mit Marke |
+   | Zusammensetzung | gestapelter Balken |
+   | Entscheid | Kreuz |
+   | Richtung | Kompass |
+   | Ort | Karte |
+
+3. **Ein Bild aus dem Lebensbereich**, wo die Frage typisch für den Bereich ist; **die gemeinsame Form**, wo die
+   Frage überall gleich ist. Beispiele für Bereichsbilder: Netz-Schild (Teile), Drittel-Haus (Anteil),
+   Häuserzeile (Lage, mit denselben Marken wie das Barometer), Tank (Vorrat), und für Arbeit (11.11.) Jahresringe
+   (Dauer), Sonne (Verbrauch), Uhr (Anteil). Ein Bereichsbild muss die Zahl **tragen**, nicht nur zeigen: die Ringe
+   zählen die Jahre und machen die Fristwechsel sichtbar, die Strahlen zählen den Bezug, die Uhr füllt die Stunden.
+4. **Ein Bild, eine Bedeutung.** Eine Form trägt nie zwei Frage-Arten.
+5. **Eine Rechnung je Wahrheit.** Jedes Instrument nennt eine Rechenfunktion, und Kachel, Kapitel und Werkzeug
+   rufen sie auf.
+6. **Jedes Instrument hat ein Zuhause:** das eigene Kapitel, gross.
+7. **Ruhig.** Keine Ampel. Die Farbe ist die des Lebensbereichs, Rosé gibt es nur für das «!» an einer harten
+   Schwelle.
+
+**Register und Wächter.** `docs/brand/instrumente-register.json` nennt für jedes Instrument der Kapitelzeile:
+Frage-Art, Form, Rechnung und Zuhause. Der Wächter `src/__tests__/instrumenteFormenlehre.test.js` liest
+`INSTRUMENTE_JE_KAPITEL` aus dem Code. Er wird rot,
+- wenn ein Instrument keinen Eintrag hat,
+- wenn eine Form nicht zur Frage passt,
+- wenn eine Form zwei Frage-Arten trägt,
+- wenn eine genannte Rechnung fehlt oder die Kachel sie nicht aufruft.
+
+Bekannte Abweichungen stehen im Register unter `offen`, mit einer **Sperrklinke**: Die Listen dürfen nur kürzer
+werden. Stand 11.11.:
+- ~~5~~ 2 Formen weichen ab: Steuer-Säule (B-F4), Mini-Kreuz (B-F5). Dienstjahre, Ferien, Pensum seit 11.11. als
+  Bereichsbilder, die messen.
+- ~~2 Instrumente rechnen noch inline: Ferien, Pensum.~~ Seit 11.11. keines mehr: `ferienLage` und `pensumLage`
+  in `src/utils/arbeitsverhaeltnis.js`, mit Test (Sperrklinke `ohneRechnung` auf 0).
+- 1 Zuhause zeigt ein anderes Bild als die Kachel: Bereit (B-F1).
+- ~~9~~ 6 Instrumente haben kein Zuhause (Arbeit seit 11.11. gross im Kapitel).
+
 ## 8. Calm-UX-Prinzipien
 
 - **Entschlacken via Disclosure/Dropdown — nie löschen.** Die Bergketten-Landkarte ist Identität;
@@ -459,6 +631,50 @@ Dieselben Werte wie die Startseite, damit niemand zwei Produkte sieht.
 - **Bedingte Sektionen** statt leerer Zahlen-Rechner (z.B. Alimente klappt ohne Kinder ein,
   bleibt aber erkundbar) — ehrliche Orientierung vor Schein-Präzision.
 - **Wert vor der Hürde zeigen:** Trust/Nutzen vor dem Gate (BetaGate-Intro, Demo-Modus).
+- **Die Monate gross beim Reserve-Tank** *(10.11.2026, Idee aus dem Abgleich mit Nessie; Stebler Studios:
+  «gleiches System wie das Netz-Schild» und «soll lieber runter zur Tankanzeige»)*. In der Kapitelzeile
+  Finanzen steht unter dem kleinen Tank die Zahl gross (`2xl`): so viele Monate deckt der liquide
+  Notgroschen die Ausgaben. **Keine eigene Karte zuoberst** — ein Zwischenstand mit Karte über «Was ist
+  jetzt dran?» ist wieder entfernt; die Zahl gehört zu ihrem Instrument. Keine Ampelfarbe; bei leerem
+  Notgroschen keine grosse «0». Dieselbe Rechnung wie die Tankanzeige (`data/reserveTank.js`).
+- **Alle Instrumente: Bild · grosse Zahl · ein Satz** *(10.11.2026, Skizze; Stebler Studios «ja super genau so»)*.
+  In der Kapitelzeile zeigt jedes Instrument unter dem Bild seine Zahl gross (`2xl`) und darunter einen Satz,
+  was sie bedeutet. Der Name tritt dann zurück (bleibt im `title` und im `aria-label`). Steuer-Säule
+  «≈ CHF 8’431» · «So viel Einkommenssteuer im Jahr, grob geschätzt», ihre Hinweise (Bund, Annahmen, Frist)
+  bleiben klein darunter; Reserve-Tank «4.7 Monate» · «So lange reicht Ihr Notgroschen»; Netz-Schild
+  «8/8» · «So viel Ihrer Absicherung ist eingetragen»; Franchise-Kreuz «CHF 2’500» · «Eher diese Franchise».
+  Beträge laufen über `betrag()`, damit der Sichtschutz greift. Ohne Zahl (nicht eingerichtet, Quellensteuer,
+  leerer Notgroschen) bleibt die Kachel wie bisher: Name und kleiner Satz.
+- **Zwei Instrumente je Lebensbereich** *(10.11.2026, Stebler Studios; Landkarte in
+  `stebler-studios/_handoffs/2026-11-10-konkurrenz-faula-ahead-nessie.md`)*. Begonnen mit **Wohnen**:
+  Wohnkosten-Anteil (kleiner Drittel-Balken · «30 %» · wessen Einkommen gemeint ist · «Strich: ein Drittel —
+  eine Faustregel») und Miete im Vergleich (kleines Barometer · «−5 %» · «… Schnitt Ihrer Region (BFS 2024)»
+  · Zimmerzahl und Unsicherheiten wie im Kapitel). Dieselben Rechnungen wie gross im Kapitel Wohnen
+  (`wohnkostenRechnung`, `lageZurRegion`, `mietVorbehalte`). Bei Wohneigentum kein Mietvergleich.
+  **Behörden:** Steuerfrist (Kalenderblatt, das feste Zeichen für Fristen, schon 64 px · «5 Monate» ·
+  «So lange bis zur Steuerfrist»; verpasst und noch offen: rotes Blatt, «… vorbei»; eingereicht und vorbei:
+  keine Zahl) und Behördengänge (ein Kästchen je Gang · «1/5» · «So viele Behördengänge sind erledigt»).
+  Dieselben Regeln wie im Kapitel (`fristAbstand`, `steuerfristVorbei`, `gangErledigt`).
+  **Gesundheit:** Bereit für den Ernstfall (Ring in der Notfall-Farbe · «19/20» · «So viele Notfall-Angaben sind
+  bereit», Rechnung `bereitschaft` wie im Kapitel) und Franchise-Stand (Fieberthermometer klein, seit 11.11. statt Balken · «CHF 420» «von
+  CHF 1’500» · «So viel der Franchise ist 2026 erreicht, nach erfassten Belegen», Rechnung `berechneFranchise` wie
+  der Franchise-Tracker; Klick öffnet dessen Reiter). Ohne erfasste Franchise keine Zahl.
+  **Arbeit** (vier statt zwei, Stebler Studios «brauchen wir ja eh alles»): Lohn (kleines Lohn-Barometer · «−8 %» ·
+  «… im Vergleich zum Schweizer Median (BFS, Vollzeit, brutto)», Zahl nur, wenn auch der grosse Balken eine Lage
+  zeigt: `lohnLage`), Dienstjahre (Jahresringe: ein Ring je volles Dienstjahr, höchstens 10, dick nach dem 1. und 9.
+  Dienstjahr, wo die Frist wechselt; noch nicht erreicht gestrichelt · «7 Jahre» · gesetzliche Kündigungsfrist nach OR 335c, Probezeit 335b,
+  Lehrvertrag 344a/346 — am Fedlex-Volltext geprüft), Ferien (Sonne mit 12 Strahlen, bezogene grau; ohne erfassten Bezug keiner grau · «12 Tage» offen · Mindestanspruch OR 329a; neue
+  Felder `ferienTageJahr`, `ferienTageBezogen`) und Pensum (Uhr mit vier Stundenstrichen · «42 Std.» · gemessen an 40 Std., der Rechenbasis
+  des Lohnvergleichs, ab 40 «Vollzeit»). Rechnungen: `dienstLage`, `ferienLage`, `pensumLage`
+  (`src/utils/arbeitsverhaeltnis.js`), nie inline in der Anzeige. Im **Kapitel Arbeit** stehen Dienstjahre, Ferien und Pensum direkt unter dem
+  Lohn-Barometer, als **Zuhause gross 256**, je eine Zeile (`zuhause: true`). Ringe, Sonne und Uhr tragen wie das
+  Lohn-Barometer die Farbe des Lebensbereichs Arbeit (Haselnuss, `bereichFillColor('arbeit')`), nicht Sand; ein Klick dort springt zum Formular statt ins eigene Kapitel.
+  **Basis** (drei, Stebler Studios «alle drei»): Ausweis (Kalenderblatt des frühesten Ablaufdatums der Ausweis-
+  Dokumente im Lebensordner · «4 Jahre» · «So lange ist Ihr Ausweis noch gültig»; abgelaufen rot), Referenzalter
+  (Lebensweg · «30 Jahre» · «So lange bis zum AHV-Referenzalter (65)», Regel `referenzalterMonate`, AHV 21; ohne
+  Geschlecht Hinweis auf 65) und Grundordnung (Grundmauer · «15/15», dieselbe Zahl wie die Fortschritts-Karte).
+  **Damit haben alle sieben Lebensbereiche ihre Instrumente.**
+  Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 - **Sichtschutz: Beträge verbergen** *(10.11.2026, Idee aus dem Abgleich mit Nessie)*. Das Auge
   (`auge`, Gruppe Z) blendet am Bildschirm jeden Betrag als «CHF ···» aus, wenn jemand mitliest.
   Eingabefelder für Beträge werden nur unscharf und beim Antippen wieder lesbar. **Nur die Anzeige:**

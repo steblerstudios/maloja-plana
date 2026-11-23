@@ -9,7 +9,7 @@ import { getCantonName } from './config/cantonalData.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { Lebensbaum } from './Lebensbaum.jsx';
 import { astFarben, bereichsFruechte } from './utils/lebensbereichFruechte.js';
-import { MietVergleich } from './components/MietVergleich.jsx';
+import { WohnenWerkzeug } from './bereiche/wohnen/wohnen.js';
 import { ReserveTank } from './components/ReserveTank.jsx';
 import { finanzWerte, formatCHF, LohnStandort, auswertungsKarten, UebersichtDrucken, auswertungsHinweis } from './components/FinanzAuswertung.jsx';
 
@@ -105,7 +105,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
     // beantworten sie die zwei Fragen, die den Monat bestimmen: was kommt rein, was geht
     // fürs Wohnen raus. Erscheint nur mit Kanton + erfasster Miete (sonst return null).
     hasData && React.createElement('div', { key: 'miet-vergleich', style: { marginBottom: '16px' } },
-      React.createElement(MietVergleich, { palette, t, data, isDarkMode })
+      React.createElement(WohnenWerkzeug, { palette, t, data, isDarkMode })
     ),
 
     hasData && auswertungsKarten({ palette, t, data, onNavigate, w }),

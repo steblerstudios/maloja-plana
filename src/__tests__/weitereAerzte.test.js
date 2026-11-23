@@ -3,7 +3,7 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { getChapters } from '../config/constants.js';
 import { getNotfallDossierPreview, notfallQrAbschnitte, generateNotfallDossier, NOTFALL_QR_FELDER } from '../dossierGenerator.js';
-import { weitereAerzteAusListe } from '../utils/hausarzt.js';
+import { weitereAerzteAusListe } from '../utils/weitereAerzte.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';

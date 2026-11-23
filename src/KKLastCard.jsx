@@ -9,6 +9,7 @@ import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
 import { zahl } from './utils/geld.js';
 import { einkommenIstKeinLohn, monatsAusgaben, versicherungenSumme } from './utils/monatsrechnung.js';
 import { linkStil } from './components/PrimaryButton.jsx';
+import { CHAPTER_KEYS } from './config/constants.js';
 
 // Die 10 % sind nur noch eine offene Vergleichsmarke: kein Grenzwert, keine Empfehlung, keine Warnfarbe.
 // WHO 4845 führt 10 % oder 25 % für Zahlungen aus der eigenen Tasche und schliesst Prämien aus;
@@ -27,6 +28,15 @@ export const kkLastBasisKey = (data) => {
   if (f.incomeType === 'netto') return 'kkLast.basisNetto';
   if (f.incomeType === 'brutto') return 'kkLast.basisBrutto';
   return 'kkLast.basisOffen';
+};
+
+// B-R4 (Instrumente-Matrix 10.11.2026): die eine Rechnung der KK-Last. KKLastCard, KKLastSpiegel und das
+// Kapitel Versicherungen rufen nur sie. Ohne Prämie oder ohne Einkommen: null (keine Karte, keine leere 0).
+export const kkLastAnteil = (data) => {
+  const praemie = Number(data?.versicherungen?.kkPremium) || 0;
+  const einkommen = Number(data?.finanzen?.monthlyIncome) || 0;
+  if (!(praemie > 0) || !(einkommen > 0)) return null;
+  return { praemie, einkommen, anteil: (praemie / einkommen) * 100 };
 };
 
 // Prämienverbilligung für beide Karten. Was abgezogen werden darf, entscheidet allein data/ipvAbzug.js
@@ -80,11 +90,9 @@ export const KKLastEinordnung = ({ palette, t, onNavigate, stand }) => {
 // Zeigt die Grundversicherungs-Prämie als % des Einkommens mit der Vergleichsmarke.
 // Rendert nichts, wenn Prämie oder Einkommen fehlen (kein Druck, calm UX).
 export const KKLastCard = ({ palette, t, data, onNavigate }) => {
-  const premium = Number(data?.versicherungen?.kkPremium) || 0;
-  const income = Number(data?.finanzen?.monthlyIncome) || 0;
-  if (premium <= 0 || income <= 0) return null;
-
-  const share = (premium / income) * 100;
+  const last = kkLastAnteil(data);
+  if (!last) return null;
+  const { praemie: premium, einkommen: income, anteil: share } = last;
   const scaleMax = Math.max(20, Math.ceil(share / 5) * 5);
   const fillPct = Math.min(100, (share / scaleMax) * 100);
   const markerPct = (VERGLEICHSMARKE / scaleMax) * 100;
@@ -119,9 +127,9 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
 // Spiegel im Kapitel Finanzen: dieselbe Zahl mit dem Blick aufs Budget. Die Einordnung und die Marke
 // wohnen in Versicherungen (Regel Zuhause, Spiegel, Wegweiser, Stebler Studios 01.11.2026).
 export const KKLastSpiegel = ({ palette, t, data, onNavigate }) => {
-  const premium = Number(data?.versicherungen?.kkPremium) || 0;
-  const income = Number(data?.finanzen?.monthlyIncome) || 0;
-  if (premium <= 0 || income <= 0) return null;
+  const last = kkLastAnteil(data);
+  if (!last) return null;
+  const premium = last.praemie;
   const summe = Math.round(versicherungenSumme(monatsAusgaben(data)));
   const allein = summe <= Math.round(premium);
   return React.createElement('div', {
@@ -132,9 +140,9 @@ export const KKLastSpiegel = ({ palette, t, data, onNavigate }) => {
     React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
       t(allein ? 'kkLast.spiegelSatzAllein' : 'kkLast.spiegelSatz', { praemie: Number.isInteger(premium) ? zahl(premium) : zahl(premium, { stellen: 2 }), summe: zahl(summe) })),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginTop: space.xs } },
-      zahl((premium / income) * 100, { hoechstens: 1 }) + ' %: ' + t(kkLastBasisKey(data))),
+      zahl(last.anteil, { hoechstens: 1 }) + ' %: ' + t(kkLastBasisKey(data))),
     onNavigate && React.createElement('button', {
-      type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', 3),
+      type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')),
       style: { ...linkStil(palette), marginTop: space.sm + 'px', minHeight: '44px', fontSize: text.sm },
     }, t('kkLast.spiegelLink') + ' ›')
   );

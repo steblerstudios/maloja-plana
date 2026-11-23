@@ -1,14 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { I18nContext } from '../i18n/index.js';
 import { schildOptionen } from '../data/schutzschild.js';
 import { netzSchildTeile } from '../data/netzSchild.js';
 import { NetzSchild } from './NetzSchild.jsx';
+import { ReserveTank } from './ReserveTank.jsx';
+import { wohnkostenRechnung, DrittelHaus, wohnkostenSatzKey, Vergleichshaus, lageZurRegion, mietVorbehalte } from '../bereiche/wohnen/wohnen.js';
+import { Gemeindehaus } from '../bereiche/behoerden/behoerden.js';
+import { Kalenderblatt } from './Kalenderblatt.jsx';
+import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaenge.js';
+import { bereitschaft, lagenStand, franchiseStand, FranchiseThermometer, HerzPuls } from '../bereiche/notfall/notfall.js';
+import { lohnLage, LohnKlein, lohnLageWert } from './LohnEinordnung.jsx';
+import { LOHN_REFERENZ } from '../data/lohnEinordnung.js';
+import { dienstLage, ferienLage, pensumLage } from '../utils/arbeitsverhaeltnis.js';
+import { bisReferenzalter } from '../utils/referenzalterAbstand.js';
+import { istLernend } from '../utils/anstellung.js';
+import { getRentComparison } from '../data/mietpreise.js';
+import { getHouseholdInfo } from '../config/cantonalData.js';
+import { bereichFillColor } from '../data/lebensbereiche.js';
 import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
 import { steuerfristVorbei } from '../utils/steuerfrist.js';
+import { fristAbstand } from '../utils/fristAbstand.js';
 import { heuteIso } from '../utils/fristen.js';
-import { CHAPTER_KEYS } from '../config/constants.js';
-import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
+import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
+import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise, kreuzState, kvgWechselfrist } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { zahl, betrag as chfBetrag } from '../utils/geld.js';
@@ -18,32 +34,97 @@ import { text, weight, space, radius, leading, duration, ease, INSTRUMENT_GROESS
 // Dashboard-Spiegel der vier „Instrumente": eine kompakte Reihe, die jedes
 // Instrument als Mini-Glyph + Peilung + Ort zeigt und in die Detailansicht führt.
 // Live wo es günstig/robust ist (Schild, Tankanzeige, Steuer-Säule — reine Zustands-
-// Funktionen). Das Franchise-Kreuz braucht die Prämien-Pipeline → hier bewusst nur
-// Einstieg statt eines erfundenen Standes (Ehrlichkeit). Seit 25.09.2026 hat jedes
+// Funktionen). Das Franchise-Kreuz braucht die Prämien-Pipeline (im Hintergrund geladen); bis sie da
+// ist, kein Bild statt eines erfundenen Standes (Ehrlichkeit, seit 11.11.2026 mit echten Kurven). Seit 25.09.2026 hat jedes
 // Instrument eine eigene Form: Kreuz · Säule · Tacho (Reserve) · Schild.
 
 // ── Mini-Glyphen (ohne Text, damit sie klein lesbar bleiben) ──
-const gp = (f, r, cx, cy) => { const a = Math.PI * (1 - Math.max(0, Math.min(1, f))); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
-const garc = (f1, f2, r, cx, cy) => { const [x1, y1] = gp(f1, r, cx, cy); const [x2, y2] = gp(f2, r, cx, cy); return 'M ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r + ' ' + r + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1); };
 
-const miniGauge = (palette, { split = 0.5, left, right, needle }) => {
+// Franchise-Stand klein: seit 11.11.2026 das Fieberthermometer (components/FranchiseThermometer.jsx), ein Bauteil
+// für 64 / 128 / 256 — keine eigene Kleinzeichnung mehr.
+
+// Bilder Arbeit (Stebler Studios 11.11.2026, Skizzen A–C: Ringe, Sonne und Uhr aus B). Alle drei sind Bilder aus dem
+// Lebensbereich und tragen die Zahl: klein (Kachel 64) und gross (Zuhause im Kapitel 256), dasselbe Bild.
+const arbeitSvg = (key, groesse, kinder, extra = {}) => React.createElement('svg', {
+  viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, ['data-' + key]: groesse, ...extra,
+  style: { maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto', display: 'block', overflow: 'visible' },
+}, ...kinder);
+
+// Dienstjahre: ein Ring je volles Dienstjahr um einen Kern, höchstens 10 (die Zahl daneben trägt mehr). Dick die zwei
+// Ringe, nach denen die gesetzliche Kündigungsfrist wechselt (OR 335c: nach dem 1. und dem 9. Dienstjahr). Noch nicht
+// erreicht: nur gestrichelt als Hinweis, wo der Wechsel kommt.
+const ARBEIT_GROSS = ['dienst', 'ferien', 'pensum'];
+const DIENST_RINGE_HOECHSTENS = 10;
+const DIENST_FRISTWECHSEL = [1, 9];
+const miniJahresringe = (palette, jahre, groesse = 'klein', fill = palette.sand) => {
   const h = React.createElement;
-  const cx = 30, cy = 30, r = 24;
-  const els = [
-    h('path', { key: 't', d: garc(0, 1, r, cx, cy), fill: 'none', stroke: palette.border, strokeWidth: 6, strokeLinecap: 'round' }),
-    h('path', { key: 'l', d: garc(0, split, r, cx, cy), fill: 'none', stroke: left, strokeWidth: 6 }),
-    h('path', { key: 'rr', d: garc(split, 1, r, cx, cy), fill: 'none', stroke: right, strokeWidth: 6 }),
-  ];
-  if (needle != null) {
-    const [nx, ny] = gp(needle, r - 5, cx, cy);
-    els.push(h('line', { key: 'n', x1: cx, y1: cy, x2: nx, y2: ny, stroke: palette.text, strokeWidth: 2.5, strokeLinecap: 'round' }));
-  } else {
-    const [mx1, my1] = gp(split, r - 4, cx, cy); const [mx2, my2] = gp(split, r + 3, cx, cy);
-    els.push(h('line', { key: 'm', x1: mx1, y1: my1, x2: mx2, y2: my2, stroke: palette.mid, strokeWidth: 2 }));
-  }
-  els.push(h('circle', { key: 'h', cx, cy, r: 4, fill: palette.surface, stroke: palette.text, strokeWidth: 2 }));
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', style: { overflow: 'visible', height: 'auto', display: 'block' }, 'aria-hidden': true }, els);
+  const n = Math.max(0, Math.min(DIENST_RINGE_HOECHSTENS, jahre));
+  const r = (i) => 1.8 + i * 1.65;
+  const ringe = Array.from({ length: n }, (_, k) => {
+    const i = k + 1, wechsel = DIENST_FRISTWECHSEL.includes(i);
+    return h('circle', { key: 'r' + i, 'data-ring': i, ...(wechsel ? { 'data-fristwechsel': i, 'data-erreicht': 'ja' } : {}), cx: 30, cy: 20, r: r(i), fill: 'none', stroke: fill, strokeWidth: wechsel ? 2.2 : 0.9 });
+  });
+  const hinweise = DIENST_FRISTWECHSEL.filter((i) => i > n).map((i) =>
+    h('circle', { key: 'h' + i, 'data-fristwechsel': i, 'data-erreicht': 'nein', cx: 30, cy: 20, r: r(i), fill: 'none', stroke: palette.border, strokeWidth: 1.2, strokeDasharray: '1.6 1.6' }));
+  return arbeitSvg('dienst', groesse, [...hinweise, h('circle', { key: 'kern', cx: 30, cy: 20, r: 1.8, fill: fill }), ...ringe]);
 };
+
+// Pensum: Uhr mit vier Stundenstrichen, gefüllt im Verhältnis zur Vollzeit-Basis des Lohnvergleichs (pensumLage).
+const miniPensum = (palette, anteil, groesse = 'klein', fill = palette.sand) => {
+  const h = React.createElement;
+  const a = Math.max(0, Math.min(1, anteil));
+  const w = a * 2 * Math.PI, x = 30 + 15 * Math.sin(w), y = 20 - 15 * Math.cos(w);
+  const striche = [0, 1, 2, 3].map((q) => {
+    const c = Math.cos(q * Math.PI / 2), sn = Math.sin(q * Math.PI / 2);
+    return h('line', { key: 'st' + q, 'data-stundenstrich': q, x1: 30 + 16.5 * sn, y1: 20 - 16.5 * c, x2: 30 + 19 * sn, y2: 20 - 19 * c, stroke: palette.text, strokeWidth: 1.4, strokeLinecap: 'round' });
+  });
+  return arbeitSvg('pensum', groesse, [
+    h('circle', { key: 'blatt', cx: 30, cy: 20, r: 15, fill: palette.border }),
+    a >= 1 ? h('circle', { key: 'voll', cx: 30, cy: 20, r: 15, fill: fill })
+      : a > 0 && h('path', { key: 'teil', d: 'M30 20 L30 5 A15 15 0 ' + (a > 0.5 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Z', fill: fill }),
+    ...striche,
+  ], { 'data-pensum-anteil': String(Math.round(a * 100) / 100) });
+};
+
+// Ferien: Sonne mit 12 Strahlen. Bezogene Tage färben die Strahlen grau, von oben im Uhrzeigersinn (ferienLage).
+// Ohne erfassten Bezug bleiben alle Strahlen hell — kein erfundener Stand.
+const FERIEN_STRAHLEN = 12;
+const miniFerien = (palette, anteilBezogen, groesse = 'klein', fill = palette.sand) => {
+  const h = React.createElement;
+  const grau = anteilBezogen == null ? 0 : Math.round(Math.max(0, Math.min(1, anteilBezogen)) * FERIEN_STRAHLEN);
+  const strahlen = Array.from({ length: FERIEN_STRAHLEN }, (_, i) => {
+    const w = -Math.PI / 2 + i * 2 * Math.PI / FERIEN_STRAHLEN, c = Math.cos(w), sn = Math.sin(w), bezogen = i < grau;
+    return h('line', { key: 's' + i, 'data-strahl': i, 'data-bezogen': bezogen ? 'ja' : 'nein', x1: 30 + 11 * c, y1: 20 + 11 * sn, x2: 30 + 17 * c, y2: 20 + 17 * sn, stroke: bezogen ? palette.border : fill, strokeWidth: 2, strokeLinecap: 'round' });
+  });
+  return arbeitSvg('ferien', groesse, [...strahlen, h('circle', { key: 'kern', cx: 30, cy: 20, r: 8, fill: fill })]);
+};
+
+// Referenzalter klein (10.11.2026): ein Lebensweg von der Geburt bis zum Referenzalter, Punkt = heute, Fahne am Ziel.
+const miniLebensweg = (palette, anteil) => {
+  const h = React.createElement;
+  const x = 5 + Math.max(0, Math.min(1, anteil)) * 44;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-referenz': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('line', { x1: 5, y1: 27, x2: 49, y2: 27, stroke: palette.border, strokeWidth: 9, strokeLinecap: 'round' }),
+    h('line', { x1: 5, y1: 27, x2: x, y2: 27, stroke: palette.sand, strokeWidth: 9, strokeLinecap: 'round' }),
+    h('line', { x1: 54, y1: 33, x2: 54, y2: 4, stroke: palette.text, strokeWidth: 2.2 }),
+    h('path', { d: 'M54 4 L60 8 L54 12 Z', fill: palette.text }),
+    h('circle', { cx: x, cy: 27, r: 6, fill: palette.surface, stroke: palette.text, strokeWidth: 2.5 }));
+};
+
+// Grundordnung klein (10.11.2026): eine Grundmauer, ein Stein je Grundordnungs-Angabe, gesetzte gefüllt. Nur das Bild.
+const miniGrundmauer = (palette, gesetzt, gesamt) => {
+  const h = React.createElement;
+  const proReihe = 5, reihen = Math.max(1, Math.ceil(gesamt / proReihe)), w = 9.6, hoch = 9, gap = 2;
+  const y0 = 20 - (reihen * hoch + (reihen - 1) * gap) / 2;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-grundordnung': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    Array.from({ length: gesamt }, (_, i) => {
+      const r = reihen - 1 - Math.floor(i / proReihe), c = i % proReihe, versatz = r % 2 ? w / 2 : 0;
+      return h('rect', { key: i, x: 2 + versatz + c * (w + gap) - (r % 2 ? w / 4 : 0), y: y0 + r * (hoch + gap), width: w, height: hoch, rx: 1,
+        fill: i < gesetzt ? palette.sand : palette.surface, stroke: i < gesetzt ? palette.sand : palette.mid, strokeWidth: 1 });
+    }));
+};
+
+// Der kleine Tank stand bis 10.11.2026 hier als eigene Zeichnung (miniGauge) — jetzt ReserveTank groesse 'klein'.
 
 // Steuer-Säule im Kleinen — Spiegel der EINEN Säule aus SteuerSaeulen.jsx, die die Person
 // betrifft (Wunsch 25.09.2026): ihr Zivilstand, in Sand wie «aktuell gewählt» im Rechner,
@@ -70,17 +151,21 @@ const miniSaeule = (palette, t, { betragJahr, verheiratet, bundAnteil, titelText
   );
 };
 
-// Mini-Kreuz — Spiegel des Franchise-Kreuzes (PraemienOrientierung): zwei Linien, die sich
-// kreuzen (hohe Franchise sky, tiefe sand, wie dort). Bewusst ohne Strich für die eigenen
-// Kosten — die Prämien-Pipeline läuft hier nicht, also kein erfundener Stand.
-const miniKreuz = (palette) => {
+// Franchise-Kreuz klein (B-F5, Stebler Studios 11.11.2026: «kreuz sollte kachel mit daten sein»): dieselbe Rechnung
+// wie das Kreuz im Werkzeug (kreuzState) — tiefe Franchise sand, hohe sky, wie dort; der Strich «bisher» steht bei
+// den eigenen Kosten. Ohne geladene Prämien (st.show false) kein Bild: kein erfundener Stand. Nur das Bild, ohne Wörter.
+export const KreuzKlein = ({ palette, st }) => {
+  if (!st || !st.show || !st.kurve || st.kurve.length < 2) return null;
   const h = React.createElement;
-  return h('svg', { viewBox: '0 0 64 44', width: '100%', style: { height: 'auto', display: 'block' }, 'aria-hidden': true },
-    h('line', { x1: 4, x2: 60, y1: 40.5, y2: 40.5, stroke: palette.border, strokeWidth: 1 }),
-    h('polyline', { points: '6,28 34,15 58,15', fill: 'none', stroke: palette.sand, strokeWidth: 2.5, strokeLinejoin: 'round' }),
-    h('polyline', { points: '6,35 40,11 58,7', fill: 'none', stroke: palette.sky, strokeWidth: 2.5, strokeLinejoin: 'round' }),
-    h('rect', { x: 55, y: 12, width: 6, height: 6, fill: palette.sand }),
-    h('circle', { cx: 58, cy: 7, r: 3, fill: palette.sky })
+  const x = (c) => 4 + (Math.min(c, st.scaleMax) / st.scaleMax) * 52;
+  const span = st.yMax - st.yMin || 1;
+  const y = (v) => 36 - ((v - st.yMin) / span) * 32;
+  const linie = (k) => st.kurve.map((p) => x(p.c).toFixed(1) + ',' + y(p[k]).toFixed(1)).join(' ');
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-kreuz': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('line', { x1: 4, x2: 56, y1: 38.5, y2: 38.5, stroke: palette.border, strokeWidth: 1 }),
+    h('polyline', { 'data-linie': 'tief', points: linie('tief'), fill: 'none', stroke: palette.sand, strokeWidth: 3, strokeLinejoin: 'round', strokeLinecap: 'round' }),
+    h('polyline', { 'data-linie': 'hoch', points: linie('hoch'), fill: 'none', stroke: palette.sky, strokeWidth: 3, strokeLinejoin: 'round', strokeLinecap: 'round' }),
+    st.costs > 0 && h('line', { 'data-teil': 'kreuz-bisher', x1: x(st.costs).toFixed(1), x2: x(st.costs).toFixed(1), y1: 1, y2: 39, stroke: palette.text, strokeWidth: 2.5 })
   );
 };
 
@@ -89,7 +174,12 @@ const miniKreuz = (palette) => {
 
 // eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
 // Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
-export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null }) => {
+// `jetzt`: nur für Tests (Wechselzeit); sonst heute.
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, zuhause = false, dokumente = [], grundordnungStand = null, jetzt = null }) => {
+  // Zuhause (Kapitel Arbeit, 11.11.2026): die Arbeit-Bilder gross 256, je eine ganze Zeile. Nur diese drei kennen die Grösse.
+  const arbeitGroesse = zuhause ? 'gross' : 'klein';
+  // Farbe = Lebensbereich Arbeit (Haselnuss), wie das Lohn-Barometer; vorher Sand (Stebler Studios 11.11.: «andere farb»).
+  const arbeitFarbe = bereichFillColor('arbeit', palette.bg === DARK_PALETTE.bg) || palette.sand;
   const h = React.createElement;
   const v = data?.versicherungen || {};
   // Dieselbe Rechnung wie das Netz-Schild im Kapitel: eingetragen = Summe der gefüllten Stufen über alle Teile.
@@ -137,6 +227,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     eigeneFranchise: parseFranchise(data?.versicherungen?.franchise),
     ersparnisse: data?.finanzen?.savingsAccount,
   }) : { art: 'offen' };
+  // Das Bild der Kachel aus derselben Rechnung wie das Kreuz im Werkzeug (B-F5).
+  const kreuzKleinSt = franchiseOpt ? kreuzState(franchiseOpt, gesundheitskostenBisher(data), new Date(), parseFranchise(data?.versicherungen?.franchise)) : null;
+  const kreuzKlein = kreuzKleinSt && kreuzKleinSt.show ? kreuzKleinSt : null;
   // Immer als Schätzung und mit dem Prämienjahr (Rechts-Prüfung 25.09.2026). Seit 26.10.2026 ist das in der
   // Wechselzeit (Ende September bis 31.12.) das Folgejahr — franchiseLaden.js rechnet dann mit dessen Prämien.
   const kreuzSub = vorschlag.art === 'passt' ? t(vorschlag.polster ? 'instrumente.kreuzPasstPolster' : 'instrumente.kreuzPasst')
@@ -155,15 +248,224 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     ...(fristGilt ? [t('instrumente.steuerFrist', { datum: frist.split('-').reverse().join('.') })] : []),
   ] : [];
 
+  // Wohnen (10.11.2026, «zwei Instrumente je Lebensbereich»): dieselben Rechnungen wie im Kapitel Wohnen.
+  const wohnR = wohnkostenRechnung(data?.wohnen, data, null);
+  const wohnFarbe = bereichFillColor('wohnen', palette.bg === DARK_PALETTE.bg) || palette.sage;
+  const kantonW = data?.basis?.canton || '';
+  const mietVergleich = kantonW && wohnR.netto > 0 && !wohnR.eigentum
+    ? getRentComparison(kantonW, { rooms: data?.wohnen?.rooms, householdSize: (getHouseholdInfo(data) || {}).householdSize || 1 }) : null;
+  const mietLage = mietVergleich ? lageZurRegion(wohnR.netto, mietVergleich.regional) : null;
+  const mietHinweise = mietVergleich ? mietVorbehalte(t, mietVergleich) : [];
+
+  // Sprache fürs Kalenderblatt (Monatsname) wie im Kapitel Behörden. useContext statt useT: Tests rendern ohne Provider.
+  const lang = useContext(I18nContext)?.lang || 'de';
+  const blattLocale = { de: 'de-CH', fr: 'fr-CH', it: 'it-CH', en: 'en-GB', rm: 'de-CH' }[lang] || 'de-CH';
+  // Behörden (10.11.2026): dieselben Regeln wie das Kapitel (BehoerdenInstrument, utils/behoerdenGaenge.js).
+  const bh = data?.behoerden || {};
+  const fristIso = bh.taxFilingDeadline ? String(bh.taxFilingDeadline).slice(0, 10) : null;
+  const fristVorbei = !!fristIso && steuerfristVorbei(bh, heute);
+  const fristAb = fristIso ? fristAbstand(fristIso) : null;
+  // Versicherungen (11.11.2026): Wechselfrist der Krankenkasse als Kalenderblatt, nur in der Wechselzeit (kvgWechselfrist).
+  const wechsel = kvgWechselfrist(jetzt || new Date());
+  const wechselAb = wechsel.zeigen ? fristAbstand(wechsel.iso, (jetzt || new Date()).getTime()) : null;
+  // Zahl nur, wenn die Frist noch kommt oder verpasst ist und noch etwas offen sein kann — eine erledigte alte Frist ist Geschichte.
+  const fristZeigen = fristAb && (!fristAb.vorbei || fristVorbei);
+  const erledigteGaenge = GAENGE.filter((g) => gangErledigt(g.id, gespeicherteHaken(), bh)).length;
+  const gaengeBegonnen = Object.keys(bh).length > 0;
+
+  // Gesundheit (10.11.2026): Bereitschaft wie das Kapitel Notfall, Franchise-Stand wie die KVG-Seite (Reiter Franchise).
+  const bereit = bereitschaft(data);
+  const frJahr = new Date().getFullYear();
+  const frStand = franchiseStand(data);
+
+  // Arbeit (10.11.2026): dieselbe Lage wie das Lohn-Barometer (lohnLage) — Zahl nur, wenn auch der Balken eine Lage zeigt.
+  const lohn = lohnLage(data);
+  const ls = lohn.state;
+  const lohnHinweise = lohn.vergleichbar ? [
+    ls.geschaetzt ? t('instrumente.lohnGeschaetzt') : null,
+    ls.partTime ? t('lohnEinordnung.fulltimeNote') : null,
+    ls.mlBreached ? t('instrumente.lohnUnterMindestlohn') : null,
+  ].filter(Boolean) : [];
+
+  // Arbeit — Dienstjahre (OR 335b/335c, utils/arbeitsverhaeltnis.js) und Pensum (Wochenstunden wie das Lohn-Barometer).
+  const arbeit = data?.ausbildung || {};
+  const dienst = dienstLage(arbeit.employmentStart);
+  // Pensum und Ferien (neue Felder 10.11.2026): je eine Rechnung in utils/arbeitsverhaeltnis.js (11.11.2026).
+  const pensum = pensumLage(arbeit.workHoursPerWeek);
+  const ferien = ferienLage(arbeit.ferienTageJahr, arbeit.ferienTageBezogen);
+
+  // Basis (10.11.2026, Stebler Studios «alle drei»): Ausweis aus dem Lebensordner (Dokument type 'id' mit Ablaufdatum),
+  // Referenzalter aus dem Geburtsdatum (referenzalterMonate, AHV 21), Grundordnung wie die Fortschritts-Karte (grundordnung).
+  const ausweise = (Array.isArray(dokumente) ? dokumente : []).filter((d) => d && d.type === 'id' && /^\d{4}-\d{2}-\d{2}/.test(String(d.expiryDate || '')));
+  const ausweis = ausweise.map((d) => String(d.expiryDate).slice(0, 10)).sort()[0] || null;
+  const ausweisAb = ausweis ? fristAbstand(ausweis) : null;
+  const referenz = bisReferenzalter(data?.basis);
+  const refAlter = referenz ? (referenz.referenzMonate % 12
+    ? t('instrumente.referenzAlterMonate', { jahre: Math.floor(referenz.referenzMonate / 12), monate: referenz.referenzMonate % 12 })
+    : String(referenz.referenzMonate / 12)) : '';
+
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
-      glyph: miniKreuz(palette),
+      // Gemeinsames System (10.11.2026): Bild · grosse Zahl · ein Satz. Betrag über betrag() → Sichtschutz greift.
+      ...(vorschlag.art === 'passt' || vorschlag.art === 'wechsel' ? {
+        zahl: { wert: chfBetrag(vorschlag.franchise), einheit: '' },
+        satz: vorschlag.art === 'passt' ? kreuzSub
+          : t(vorschlag.polster ? 'instrumente.kreuzWechselPolsterKurz' : 'instrumente.kreuzWechselKurz', { jahr: franchiseOpt?.praemienJahr || '' }),
+      } : {}),
+      glyph: kreuzKlein ? h(KreuzKlein, { palette, st: kreuzKlein }) : null,
       onClick: () => onNavigate('praemien'),
+    },
+    // Nur in der Wechselzeit eine Kachel; sonst fehlt sie ganz (kein Druck ohne Anlass).
+    ...(wechselAb ? [{
+      key: 'wechselfrist', name: t('instrumente.wechselfrist'),
+      zahl: wechselAb.tage === 0 ? { wert: t('behördenStatus.today'), einheit: '' }
+        : { wert: String(wechselAb.n), einheit: t('instrumente.' + wechselAb.einheit + (wechselAb.n === 1 ? 'Eins' : '')) },
+      satz: t('instrumente.wechselfristSatz'),
+      sub: t('instrumente.wechselfristSatz'),
+      glyph: h(Kalenderblatt, { iso: wechsel.iso, palette, locale: blattLocale }),
+      onClick: () => onNavigate('kvgwechsel'),
+    }] : []),
+    {
+      key: 'steuerfrist', name: t('instrumente.steuerfrist'),
+      ...(fristZeigen ? {
+        zahl: fristAb.tage === 0 ? { wert: t('behördenStatus.today'), einheit: '' }
+          : { wert: String(fristAb.n), einheit: t('instrumente.' + fristAb.einheit + (fristAb.n === 1 ? 'Eins' : '')) },
+        satz: t(fristVorbei ? 'instrumente.steuerfristVorbeiSatz' : 'instrumente.steuerfristSatz'),
+      } : {}),
+      sub: fristIso ? t('dashboard.glanceNoDeadline') : setup,
+      glyph: fristZeigen ? h(Kalenderblatt, { iso: fristIso, palette, locale: blattLocale, vorbei: fristVorbei }) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')),
+    },
+    {
+      key: 'gaenge', name: t('instrumente.gaenge'),
+      ...(gaengeBegonnen ? {
+        zahl: { wert: erledigteGaenge + '/' + GAENGE.length, einheit: '' },
+        satz: t('instrumente.gaengeSatz'),
+      } : {}),
+      sub: setup,
+      // Dasselbe Gemeindehaus wie im Kapitel, klein 64 (Bauplan Behörden 21.11.2026; vorher ein Kästchen je Gang).
+      glyph: h(Gemeindehaus, { palette, erledigt: erledigteGaenge, total: GAENGE.length, farbe: bereichFillColor('behoerden', palette.bg === DARK_PALETTE.bg) || palette.mid, groesse: 'klein' }),
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')),
+    },
+    {
+      key: 'bereit', name: t('instrumente.bereit'),
+      zahl: { wert: bereit.erledigt + '/' + bereit.gesamt, einheit: '' },
+      satz: t('instrumente.bereitSatz'),
+      sub: setup,
+      glyph: h(HerzPuls, { palette, lagen: lagenStand(data), groesse: 'klein' }),
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('notfall')),
+    },
+    {
+      key: 'franchise', name: t('instrumente.franchise'),
+      ...(frStand ? {
+        zahl: frStand.franchiseOffen > 0
+          ? { wert: chfBetrag(frStand.franchiseVerbraucht), einheit: t('instrumente.franchiseVon', { franchise: zahl(frStand.franchise) }) }
+          : { wert: chfBetrag(frStand.franchise), einheit: '' },
+        satz: t(frStand.franchiseOffen > 0 ? 'instrumente.franchiseSatz' : 'instrumente.franchiseErreichtSatz', { jahr: frJahr }),
+      } : {}),
+      sub: setup,
+      glyph: frStand ? h(FranchiseThermometer, { palette, stand: frStand, groesse: 'klein' }) : null,
+      onClick: () => onNavigate('kvg', undefined, 'franchise'),
+    },
+    {
+      key: 'lohn', name: t('instrumente.lohn'),
+      ...(lohn.vergleichbar ? {
+        zahl: { wert: lohnLageWert(ls), einheit: '' },
+        satz: t('instrumente.lohnSatz', { jahr: LOHN_REFERENZ.jahr }),
+        mehr: lohnHinweise,
+      } : {}),
+      sub: lohn.sperre ? t('instrumente.lohnKeinVergleich') : setup,
+      glyph: lohn.vergleichbar ? h(LohnKlein, { palette, state: ls, fillColor: bereichFillColor('arbeit', palette.bg === DARK_PALETTE.bg) || palette.sand }) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+    },
+    {
+      key: 'dienst', name: t('instrumente.dienst'),
+      ...(dienst ? {
+        zahl: dienst.jahre >= 1
+          ? { wert: String(dienst.jahre), einheit: t(dienst.jahre === 1 ? 'instrumente.jahrEins' : 'instrumente.jahre') }
+          : { wert: String(dienst.monate), einheit: t('instrumente.' + (dienst.monate === 1 ? 'monateEins' : 'monate')) },
+        satz: arbeit.employer ? t('instrumente.dienstSatzBei', { employer: String(arbeit.employer) }) : t('instrumente.dienstSatz'),
+        // Fachprüfung 10.11.2026: Lehrvertrag hat eigene Regeln (OR 344a, 346); eine vertraglich längere Probezeit
+        // (bis 3 Monate, OR 335b Abs. 2) braucht in Monat 2 und 3 einen Hinweis.
+        mehr: istLernend(data?.finanzen) ? [t('instrumente.dienstLehre')]
+          : dienst.inProbezeit ? [t('instrumente.dienstProbezeit')]
+          : [t(dienst.kuendigungsfristMonate === 1 ? 'instrumente.dienstFristEins' : 'instrumente.dienstFrist', { n: dienst.kuendigungsfristMonate }),
+            ...(dienst.monate < 3 ? [t('instrumente.dienstProbezeitLaenger')] : [])],
+      } : {}),
+      sub: setup,
+      glyph: dienst ? miniJahresringe(palette, dienst.jahre, arbeitGroesse, arbeitFarbe) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+    },
+    {
+      key: 'pensum', name: t('instrumente.pensum'),
+      ...(pensum ? {
+        zahl: { wert: zahl(pensum.stunden, { hoechstens: 1 }), einheit: t('instrumente.stunden') },
+        satz: t('instrumente.pensumSatz'),
+        // Fachprüfung 10.11.2026: 40 Std. ist die Rechenbasis des Lohnvergleichs (BFS), nicht «die» Vollzeit — ab 100 % «Vollzeit».
+        mehr: [pensum.vollzeit
+          ? t('instrumente.pensumVollzeit', { basis: pensum.basis })
+          : t('instrumente.pensumAnteil', { pct: pensum.prozent, basis: pensum.basis })],
+      } : {}),
+      sub: setup,
+      glyph: pensum ? miniPensum(palette, pensum.anteil, arbeitGroesse, arbeitFarbe) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+    },
+    {
+      key: 'ferien', name: t('instrumente.ferien'),
+      ...(ferien ? {
+        zahl: ferien.offen != null
+          ? { wert: zahl(ferien.offen, { hoechstens: 1 }), einheit: t(ferien.offen === 1 ? 'instrumente.tageEins' : 'instrumente.tage') }
+          : { wert: zahl(ferien.jahr, { hoechstens: 1 }), einheit: t('instrumente.tage') },
+        satz: t(ferien.offen != null ? 'instrumente.ferienOffenSatz' : 'instrumente.ferienJahrSatz'),
+        mehr: [t('instrumente.ferienMinimum')],
+      } : {}),
+      sub: setup,
+      glyph: ferien ? miniFerien(palette, ferien.anteilBezogen, arbeitGroesse, arbeitFarbe) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+    },
+    {
+      key: 'ausweis', name: t('instrumente.ausweis'),
+      ...(ausweisAb ? {
+        zahl: ausweisAb.tage === 0 ? { wert: t('behördenStatus.today'), einheit: '' }
+          : { wert: String(ausweisAb.n), einheit: t('instrumente.' + ausweisAb.einheit + (ausweisAb.n === 1 ? 'Eins' : '')) },
+        satz: t(ausweisAb.vorbei ? 'instrumente.ausweisAbgelaufenSatz' : 'instrumente.ausweisSatz'),
+      } : {}),
+      sub: setup,
+      glyph: ausweisAb ? h(Kalenderblatt, { iso: ausweis, palette, locale: blattLocale, vorbei: ausweisAb.vorbei }) : null,
+      onClick: () => onNavigate('tresor'),
+    },
+    {
+      key: 'referenz', name: t('instrumente.referenz'),
+      ...(referenz && !referenz.erreicht ? {
+        zahl: referenz.jahre >= 1
+          ? { wert: String(referenz.jahre), einheit: t(referenz.jahre === 1 ? 'instrumente.jahrEins' : 'instrumente.jahre') }
+          : { wert: String(referenz.restMonate), einheit: t('instrumente.' + (referenz.restMonate === 1 ? 'monateEins' : 'monate')) },
+        satz: t('instrumente.referenzSatz', { alter: refAlter }),
+        mehr: data?.basis?.gender ? [] : [t('instrumente.referenzOhneGeschlecht')],
+      } : {}),
+      sub: referenz?.erreicht ? t('instrumente.referenzErreicht') : setup,
+      glyph: referenz && !referenz.erreicht ? miniLebensweg(palette, 1 - referenz.monate / referenz.referenzMonate) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('basis')),
+    },
+    {
+      key: 'grundordnung', name: t('instrumente.grundordnung'),
+      ...(grundordnungStand && grundordnungStand.total > 0 ? {
+        zahl: { wert: grundordnungStand.filled + '/' + grundordnungStand.total, einheit: '' },
+        satz: t('instrumente.grundordnungSatz'),
+      } : {}),
+      sub: setup,
+      glyph: grundordnungStand && grundordnungStand.total > 0 ? miniGrundmauer(palette, grundordnungStand.filled, grundordnungStand.total) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('basis')),
     },
     {
       // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.
       key: 'steuer', name: t('instrumente.steuer'),
+      ...(steuerGanz && !quellensteuer ? {
+        zahl: { wert: '≈ ' + chfBetrag(steuerGanz.total), einheit: '' },
+        satz: t('instrumente.steuerSatz'),
+        mehr: steuerSaetze.slice(1),
+      } : {}),
       sub: quellensteuer ? t('instrumente.steuerQuelle')
         : steuerGanz ? steuerSaetze.map((z, i) => h('span', { key: i, style: { display: 'block', marginTop: i ? '2px' : 0, color: i ? palette.soft : palette.mid } }, z))
           : bundessteuer != null ? t('instrumente.steuerBetrag', { value: zahl(bundessteuer) }) : setup,
@@ -175,15 +477,45 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     },
     {
       key: 'tank', name: t('instrumente.tank'),
+      // Seit 10.11.2026 die Monate gross (wie zuoberst auf der Übersicht), statt «4.7 Monate Reserve» klein.
+      zahl: tank.mode === 'months' && tank.level !== 'empty'
+        ? { wert: zahl(tank.months, { hoechstens: 1 }), einheit: t(tank.months === 1 ? 'instrumente.tankMonat' : 'instrumente.tankMonate') } : null,
+      satz: t('instrumente.tankSatz'),
       sub: tank.mode === 'months' ? t('instrumente.tankMonths', { months: tank.months }) : setup,
-      glyph: miniGauge(palette, { split: 0.5, left: palette.sandDeep, right: palette.sage, needle: tank.mode === 'months' ? tank.needle / tank.fullMonths : null }),
+      glyph: h(ReserveTank, { palette, t, savings: tank.savings, monthlyExpenses: tank.monthlyExpenses || 0, groesse: 'klein' }),
       onClick: () => onNavigate('finanzuebersicht'),
     },
     {
+      key: 'wohnkosten', name: t('instrumente.wohnkosten'),
+      ...(wohnR.anteil != null ? {
+        zahl: { wert: zahl(wohnR.anteil, { hoechstens: wohnR.ueberDrittel && Math.round(wohnR.anteil) === 33 ? 1 : 0 }) + ' %', einheit: '' },
+        satz: t(wohnkostenSatzKey(wohnR)),
+        mehr: [t('instrumente.wohnkostenDrittel')],
+      } : {}),
+      sub: wohnR.kosten > 0 ? t('instrumente.wohnkostenOhneEinkommen') : setup,
+      glyph: wohnR.kosten > 0 ? h(DrittelHaus, { palette, anteil: wohnR.anteil, ueberDrittel: wohnR.ueberDrittel, mitPartner: wohnR.mitPartner, fuell: wohnFarbe, groesse: 'klein' }) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')),
+    },
+    {
+      key: 'miete', name: t('instrumente.miete'),
+      ...(mietLage ? {
+        zahl: { wert: mietLage.richtung === 'Equal' ? '≈ 0 %' : (mietLage.pct > 0 ? '+' : '−') + Math.abs(mietLage.pct) + ' %', einheit: '' },
+        satz: t('instrumente.mieteSatz', { year: mietVergleich.year }),
+        mehr: mietHinweise,
+      } : {}),
+      sub: wohnR.eigentum ? t('instrumente.mieteEigentum') : setup,
+      glyph: mietVergleich ? h(Vergleichshaus, { palette, lage: { netto: wohnR.netto, vergleich: mietVergleich, lage: mietLage }, fuell: wohnFarbe, groesse: 'klein' }) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')),
+    },
+    {
       key: 'schild', name: t('instrumente.schild'),
+      ...(netz.st.touched && netzZahl.total > 0 ? {
+        zahl: { wert: netzZahl.covered + '/' + netzZahl.total, einheit: '' },
+        satz: t('instrumente.schildSatz'),
+      } : {}),
       sub: netz.st.touched ? t('instrumente.schildCount', { covered: netzZahl.covered, total: netzZahl.total }) : setup,
       glyph: netz.st.touched ? h(NetzSchild, { palette, t, versicherungen: v, ...netzOpts, groesse: 'klein' }) : null,
-      onClick: () => onNavigate('chapter', 3),
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')),
     },
   ];
 
@@ -206,9 +538,10 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       kacheln.map(tile => h('button', {
         key: tile.key,
         onClick: tile.onClick,
+        ...(tile.zahl ? { 'aria-label': tile.name + ': ' + tile.zahl.wert + (tile.zahl.einheit ? ' ' + tile.zahl.einheit : '') + '. ' + tile.satz + (tile.mehr && tile.mehr.length ? '. ' + tile.mehr.join(' ') : ''), title: tile.name } : {}),
         style: {
           // Die Säule trägt mehrere Sätze: In der Finanzen-Zeile hat jede Kachel die ganze Breite, sonst brechen sie auf dem Handy in viele kurze Zeilen.
-          ...(nur?.includes('steuer') ? { gridColumn: '1 / -1' } : {}),
+          ...(nur?.includes('steuer') || (zuhause && ARBEIT_GROSS.includes(tile.key)) ? { gridColumn: '1 / -1' } : {}),
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
           padding: space.md + 'px', background: 'transparent', color: palette.text,
           border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
@@ -219,9 +552,22 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
       },
         // Spiegel Startseite: ein Behälter, eine Breite für alle Instrumente (INSTRUMENT_GROESSE.klein, Brand Book «Instrumente»).
-        h('div', { 'data-instrument-glyph': tile.key, style: { width: INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
-        h('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, tile.name),
-        h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub)
+        h('div', { 'data-instrument-glyph': tile.key, style: zuhause && ARBEIT_GROSS.includes(tile.key)
+          ? { width: '100%', maxWidth: INSTRUMENT_GROESSE.gross + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          : { width: INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
+        // Grosse Zahl (10.11.2026, zuerst beim Tank): eine Stufe unter der Karte zuoberst (2xl statt 3xl),
+        // damit dort die lauteste Stelle bleibt. Mit Zahl entfällt der kleine Satz — er sagte dasselbe.
+        tile.zahl && h('div', { 'data-instrument-zahl': tile.key, style: { display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: space.xs + 'px', flexWrap: 'wrap' } },
+          h('span', { style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, tile.zahl.wert),
+          tile.zahl.einheit && h('span', { style: { fontSize: text.sm, color: palette.mid } }, tile.zahl.einheit)),
+        // Mit Zahl: ein Satz, was sie bedeutet, statt des Namens (Skizze 10.11.2026, «ja super genau so»).
+        // Der Name bleibt im aria-label/title, damit das Instrument benannt ist.
+        tile.zahl
+          ? h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, tile.satz)
+          : h('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, tile.name),
+        tile.zahl && tile.mehr && tile.mehr.length > 0 && h('div', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal } },
+          tile.mehr.map((z, i) => h('span', { key: i, style: { display: 'block', marginTop: i ? '2px' : 0 } }, z))),
+        !tile.zahl && h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub)
       ))
     )
   );

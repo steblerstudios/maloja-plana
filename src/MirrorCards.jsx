@@ -104,7 +104,7 @@ function formatCHF(value) {
   return betrag(num, { hoechstens: 2 });
 }
 
-function calcDuration(moveInDate, t) {
+export function calcDuration(moveInDate, t) {
   if (!moveInDate) return null;
   try {
     const start = new Date(moveInDate);
@@ -129,7 +129,7 @@ function calcDuration(moveInDate, t) {
   }
 }
 
-function addressLine(data) {
+export function addressLine(data) {
   const parts = [];
   if (data.address) parts.push(data.address);
   const plzCity = [(data.postalCode || ''), (data.city || '')].filter(Boolean).join(' ');
@@ -138,6 +138,10 @@ function addressLine(data) {
 }
 
 function buildWohnenSentence(data, t) {
+  // Sind Wohnkosten erfasst, trägt die Szene (bereiche/wohnen/zuhause.jsx) Adresse, Kosten, Wohndauer und
+  // Vermieterschaft selbst (Stebler Studios 20.11.2026, «wie die Finanzen»): der Satz wäre doppelt.
+  const n = (v) => Number(v) || 0;
+  if (n(data.rentAmount) + n(data.utilities) + n(data.buildingsInsurance) + (data.mortgageStatus === 'no' ? 0 : n(data.mortgagePayment)) > 0) return null;
   const addr = addressLine(data);
   if (!addr) return null;
 
@@ -220,8 +224,12 @@ function selectLabel(t, chapterKey, fieldKey, value) {
 
 // ─── Behörden ─────────────────────────────────────────────
 
-function buildBehoerdenSentence(data, t) {
+function buildBehoerdenSentence(data, allData, t) {
   if (!data.cantoneOfTaxation) return null;
+  // Dritte Runde (Stebler Studios 23.11.2026 abends, wie Wohnen): mit `allData` zeigt das Kapitel die Szene
+  // (ChapterView: Szene bei Behörden, sobald allData da ist), und die trägt Kanton, offene Erklärungen und
+  // Betreibungsregister selbst — Kopf und Rand. Der Satz wäre doppelt. Ohne Szene bleibt er.
+  if (allData) return null;
 
   const canton = getCantonName(data.cantoneOfTaxation, t);
   const satz = data.legalRepresentative
@@ -352,7 +360,7 @@ function buildLifeSentence(chapterKey, data, allData, t) {
   if (chapterKey === 'basis') return buildBasisSentence(data, t);
   if (chapterKey === 'wohnen') return buildWohnenSentence(data, t);
   if (chapterKey === 'finanzen') return buildFinanzenSentence(data, allData, t);
-  if (chapterKey === 'behoerden') return buildBehoerdenSentence(data, t);
+  if (chapterKey === 'behoerden') return buildBehoerdenSentence(data, allData, t);
   if (chapterKey === 'notfall') return buildNotfallSentence(data, t);
   if (chapterKey === 'versicherungen') return buildVersicherungenSentence(data, t);
   if (chapterKey === 'ausbildung') return buildAusbildungSentence(data, t);

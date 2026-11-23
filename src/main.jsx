@@ -75,7 +75,7 @@ const SozialhilfeView = lazyMitTexten(() => import('./SozialhilfeView.jsx'));
 const CalendarReminders = lazyMitTexten(() => import('./CalendarReminders.jsx'));
 // NotificationSettings: seit 05.11.2026 keine eigene Seite — Abschnitt in SettingsView (UMLEITUNGEN, Seitenlandkarte Z2).
 // NotfallEinstieg: seit 24.10.2026 keine eigene Seite — im Kapitel Notfall (UMLEITUNGEN, components/NotfallImKapitel.jsx).
-const ArztkofferView = lazyMitTexten(() => import('./ArztkofferView.jsx'));
+// ArztkofferView entfiel am 18.11.2026: der Koffer steht im Kapitel Gesundheit (UMLEITUNGEN.gesundheit).
 const NotfallVorlesekarte = lazyMitTexten(() => import('./NotfallVorlesekarte.jsx'));
 const NotfallpassBlatt = lazyMitTexten(() => import('./NotfallpassBlatt.jsx'));
 const PraemienOrientierung = lazyMitTexten(() => import('./PraemienOrientierung.jsx'));
@@ -137,6 +137,9 @@ const EOrechner = lazyMitTexten(() => import('./EOrechner.jsx'));
 // FinanzUebersicht: seit 24.10.2026 keine eigene Seite — #/finanzuebersicht führt ins Kapitel Finanzen (UMLEITUNGEN).
 const DirektLinks = lazyMitTexten(() => import('./DirektLinks.jsx'));
 const KVGLeistungen = lazyMitTexten(() => import('./KVGLeistungen.jsx'));
+// Fach Impfausweis (19.11.2026): über den Eingang des Bereichs, eigener Baustein.
+// Die vier Fächer (Impfausweis, Karteikarten, Blister, Fiebertagebuch) als EIN nachgeladener Baustein (23.11.2026).
+const NotfallFach = lazyMitTexten(() => import('./bereiche/notfall/notfall.js').then((m) => ({ default: m.NotfallFach })));
 const FlyerView = lazyMitTexten(() => import('./FlyerView.jsx'));
 // MerklisteView: seit 27.10.2026 keine eigene Seite — Reiter in «Was ansteht» (UMLEITUNGEN, CalendarReminders.jsx).
 const SearchView = lazyMitTexten(() => import('./SearchView.jsx'));
@@ -1563,6 +1566,7 @@ const AppInner = ({ demo }) => {
           // Hauptbundle hat kaum Luft. Begründung in InstallHinweis.jsx.
           // Als Funktion: die Landschaft sagt, ob sie im schmalen (Handy-)Ausschnitt steht.
           hatDokumente: (docs || []).length > 0,
+          dokumente: docs,
           // Gruppe A D (11.11.2026): erst der Rundgang, dann die Karte — nie beide zugleich auf dem Bild.
           installKarte: !tourOpen && ((klein) => React.createElement(React.Suspense, { fallback: null },
             React.createElement(InstallHinweis, {
@@ -1737,10 +1741,10 @@ const AppInner = ({ demo }) => {
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
+        ['impfausweis', 'karteikarten', 'blister', 'fieber'].includes(view) && React.createElement(NotfallFach, { fach: view, palette, t, lang, data: activeData, onUpdateData: updateData }),
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
         view === 'drucken' && React.createElement(UnterlagenDrucken, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate, wahl, onWahl: waehle }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),
-        view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'notfallpass' && React.createElement(NotfallpassBlatt, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),

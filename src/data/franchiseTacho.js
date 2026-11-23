@@ -115,6 +115,24 @@ export function kvgFristVorbei(heute = new Date()) {
   return heuteIso > werktagAmOderDavor(`${heute.getFullYear()}-11-30`);
 }
 
+// BAG-Publikation der Prämien des Folgejahres (= Beginn der Wechselzeit). Eine Quelle, praemienDetail.js liest sie
+// als DETAIL_VEROEFFENTLICHT. 2027: 29.09.2026, BAG-Medienmitteilung «Krankenkassenprämien steigen durchschnittlich um
+// 5,0 Prozent», https://www.bag.admin.ch/de/newnsb/BfuGvedj0OOX — im Browser gelesen 25.10.2026.
+// Liegt hier leicht (ohne die Prämientabellen), damit die Kachel das Datum ohne das grosse Datenmodul kennt.
+export const PRAEMIEN_VEROEFFENTLICHT = Object.freeze({ 2027: '2026-09-29' });
+
+// Wechselfrist der Krankenkasse als Kalenderblatt (Stebler Studios 11.11.2026, Matrix §9): die eine Rechnung für
+// Kachel, Kapitel und Werkzeug. Datum = Eingang bis 30. November, am Wochenende der Werktag davor (KVG Art. 7 Abs. 2,
+// BAG) — dasselbe wie nextNov30 im Werkzeug KVG-Wechsel. `zeigen` nur in der Wechselzeit: ab der Publikation der
+// neuen Prämien bis und mit Frist. Ohne belegtes Publikationsdatum für das Folgejahr keine Behauptung (zeigen false).
+export function kvgWechselfrist(heute = new Date()) {
+  const p = (n) => String(n).padStart(2, '0');
+  const heuteIso = `${heute.getFullYear()}-${p(heute.getMonth() + 1)}-${p(heute.getDate())}`;
+  const iso = werktagAmOderDavor(`${heute.getFullYear()}-11-30`);
+  const ab = PRAEMIEN_VEROEFFENTLICHT[heute.getFullYear() + 1];
+  return { iso, zeigen: !!ab && heuteIso >= ab && heuteIso <= iso };
+}
+
 export function parseFranchise(val) {
   if (!val) return null;
   const s = String(val).replace(/[^0-9]/g, '');

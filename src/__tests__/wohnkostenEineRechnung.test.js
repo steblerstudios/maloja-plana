@@ -3,9 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { wohnkostenRechnung, drittelGrenzeMiete } from '../data/wohnkosten.js';
-import { wohnkostenRechnung as ausDemBauteil } from '../components/WohnkostenInstrument.jsx';
-import { MietVergleich } from '../components/MietVergleich.jsx';
+import { wohnkostenRechnung, drittelGrenzeMiete } from '../bereiche/wohnen/rechnung.js';
+import { wohnkostenRechnung as ausDemBauteil } from '../bereiche/wohnen/wohnen.js';
+import { WohnenWerkzeug as MietVergleich } from '../bereiche/wohnen/wohnen.js';
 
 // Wohnkosten-Anteil und «Drittel»: EINE Rechnung für Kapitel Wohnen, Mietzins-Werkzeug und Budget
 // (Stebler Studios 11.11.2026, «am liebsten alle drei vereint»; Befund B-R1 in
@@ -46,9 +46,11 @@ describe('Wohnkosten · eine Rechnung', () => {
     expect(drittelGrenzeMiete(r)).toBeCloseTo(4000 / 3 - 1200, 6);
   });
 
+  // Seit 11.11.2026 (Partner-Haus): mit genau zwei Erwachsenen rechnet das Drittel mit dem Haushalt
+  // (wohnenPartnerHaus.test.js). Ohne Urteil bleibt es, wo die Summe nicht trägt — z. B. drei Erwachsene.
   it('Nebenkosten allein schon über einem Drittel: die Marke bleibt, jede Miete liegt darüber (Predeploy 23.11.2026)', () => {
     // Vorher gab die Grenze hier 0 zurück, und 0 heisst im Barometer «keine Marke». Damit fiel die
-    // Warnung genau bei den Haushalten weg, die am deutlichsten über dem Drittel liegen.
+    // Warnung genau bei den Haushalten weg, die am deutlichsten über dem Drittel liegen (#919).
     const p = profil({ monthlyIncome: '1500' }, { rentAmount: '1200', utilities: '500' });
     const r = wohnkostenRechnung(p.wohnen, p);
     expect(r.ueberDrittel).toBe(true);
@@ -61,8 +63,8 @@ describe('Wohnkosten · eine Rechnung', () => {
     }
   });
 
-  it('mit Partner/in kein Urteil: die Miete gilt für den Haushalt, gerechnet ist das eigene Einkommen', () => {
-    const p = profil({}, {}, { maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '5000' } });
+  it('Partner/in und weitere Erwachsene: kein Urteil, die Miete gilt für den ganzen Haushalt', () => {
+    const p = profil({}, {}, { maritalStatus: 'married', household: { adults: 3, children: [], partnerIncome: '5000' } });
     const r = wohnkostenRechnung(p.wohnen, p);
     expect(r.mitPartner).toBe(true);
     expect(drittelGrenzeMiete(r)).toBe(0);
@@ -83,12 +85,13 @@ describe('Wohnkosten · Mietzins-Werkzeug zeigt dieselbe Zahl wie das Kapitel', 
     const p = profil({ sideIncome: '1500', sideIncomeType: 'netto' });
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: p, isDarkMode: false }));
     const r = wohnkostenRechnung(p.wohnen, p);
-    expect(html).toContain('mietzinsView.rentShare(' + Math.round(r.anteil) + ')');
+    expect(html).toContain('data-instrument-zahl="wohnkosten"');
+    expect(html).toContain('>' + Math.round(r.anteil) + ' %<');
     expect(Math.round(r.anteil)).toBe(33); // 1830 ÷ 5500; vorher 1830 ÷ 4000 = 46 %
   });
 
-  it('mit Partner/in der Satz aus dem Kapitel statt der Faustregel', () => {
-    const p = profil({}, {}, { maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '5000' } });
+  it('ohne Urteil (Partner/in und weitere Erwachsene) der Satz aus dem Kapitel statt der Faustregel', () => {
+    const p = profil({}, {}, { maritalStatus: 'married', household: { adults: 3, children: [], partnerIncome: '5000' } });
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: p, isDarkMode: false }));
     expect(html).toContain('wohnenInstrument.mitPartner');
     expect(html).not.toContain('mietzinsView.rentShareGuide');
@@ -106,19 +109,20 @@ describe('Wohnkosten · Wächter: keine zweite Drittel-Rechnung', () => {
   };
   sammle(SRC);
 
-  it('«Einkommen ÷ 3» steht nur in data/wohnkosten.js', () => {
+  it('«Einkommen ÷ 3» steht nur in bereiche/wohnen/rechnung.js', () => {
     const muster = /(income|einkommen)\b[^;\n]{0,12}\/\s*3\b/i;
     const treffer = dateien.filter((f) => muster.test(fs.readFileSync(f, 'utf8'))).map((f) => path.relative(SRC, f));
-    expect(treffer).toEqual(['data/wohnkosten.js']);
+    expect(treffer).toEqual(['bereiche/wohnen/rechnung.js']);
   });
 
-  it('Mietzins-Werkzeug und Budget holen die Grenze aus der einen Rechnung', () => {
-    for (const f of ['components/MietVergleich.jsx', 'BudgetSync.jsx']) {
-      const q = lies(f);
-      // Über das Bauteil des Kapitels (re-export aus data/wohnkosten.js), damit kein eigener Baustein
-      // entsteht, dessen Name im Startbündel stünde.
-      expect(q).toMatch(/import \{ wohnkostenRechnung, drittelGrenzeMiete \} from '\.\.?\/(components\/)?WohnkostenInstrument\.jsx'/);
-      expect(q).toMatch(/thresholdValue: drittelGrenzeMiete\(/);
-    }
+  // Bis 18.11.2026 hiess das Werkzeug MietVergleich und setzte das «!» als thresholdValue auf den Miet-Balken.
+  // Überholt 18.11.2026 (Bauplan Wohnen): das Drittel trägt nur das Drittel-Haus; die Absicht «eine Rechnung» bleibt.
+  it('Mietzins-Werkzeug, Kapitel und Budget holen den Anteil aus der einen Rechnung', () => {
+    expect(lies('bereiche/wohnen/zuhause.jsx')).toMatch(/import \{ wohnkostenRechnung,[^}]*\} from '\.\/rechnung\.js'/);
+    const budget = lies('BudgetSync.jsx');
+    // Über den einen Eingang des Bereichs, damit kein eigener Baustein entsteht, dessen Name im Startbündel stünde.
+    expect(budget).toMatch(/import \{ wohnkostenRechnung,[^}]*\} from '\.\/bereiche\/wohnen\/wohnen\.js'/);
+    expect(budget).toMatch(/calculateMonthlyBudget\(data, t, \{ ueberDrittel: wohn\.ueberDrittel && !wohn\.mitPartner \}\)/);
+    expect(lies('MietzinsOrientierung.jsx')).toMatch(/import \{ WohnenWerkzeug \} from '\.\/bereiche\/wohnen\/wohnen\.js'/);
   });
 });
