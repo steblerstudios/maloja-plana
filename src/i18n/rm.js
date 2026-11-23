@@ -5134,14 +5134,13 @@ export default {
     gemeinde: {
       titel: "Vischnanca {name}",
       titelOhne: { sie: "Vossa vischnanca", du: "Tia vischnanca" },
-      satz: "L’attestaziun da domicil dat la vischnanca (controlla d’abitants). Tge auters fatgs che vegnan fatgs là, è different da chantun a chantun.",
+      satz: "L’attestaziun da domicil dat il post che maina il register d’abitants – per il solit la vischnanca. Tge auters fatgs che vegnan fatgs tar la vischnanca, è different tenor chantun e vischnanca.",
       website: "Pagina d’internet da la vischnanca",
       websiteErgaenzen: "Agiuntar la pagina d’internet",
       plzFehlt: { sie: "Vossa vischnanca cumpara uschespert ch’il numer postal stat sut {wohnen}.", du: "Tia vischnanca cumpara uschespert ch’il numer postal stat sut {wohnen}." },
-      mehrdeutig: "Tar quest numer postal tutgan pliras vischnancas. Il lieu sut {wohnen} la fa evidenta.",
+      mehrdeutig: "Tar quest numer postal tutgan pliras vischnancas, perquai na stat qua nagin num.",
       tuerAria: "Porta: vischnanca {name}",
       tuerAriaOhne: "Porta: vischnanca",
-      neuesFenster: "s’avra en ina nova fanestra",
     },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.

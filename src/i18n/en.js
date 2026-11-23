@@ -2840,14 +2840,13 @@ export default {
     gemeinde: {
       titel: "Municipality of {name}",
       titelOhne: { sie: "Your municipality", du: "Your municipality" },
-      satz: "The municipality issues the confirmation of residence (residents’ registration office). Which other errands are handled there differs from canton to canton.",
+      satz: "The confirmation of residence is issued by the office that keeps the residents’ register – usually the municipality. Which other errands are handled by the municipality varies by canton and municipality.",
       website: "Municipality website",
       websiteErgaenzen: "Add website",
       plzFehlt: { sie: "Your municipality appears once the postcode is entered under {wohnen}.", du: "Your municipality appears once the postcode is entered under {wohnen}." },
-      mehrdeutig: "This postcode covers several municipalities. The town under {wohnen} makes it clear.",
+      mehrdeutig: "This postcode covers several municipalities, so no name is shown here.",
       tuerAria: "Door: municipality of {name}",
       tuerAriaOhne: "Door: municipality",
-      neuesFenster: "opens in a new window",
     },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.

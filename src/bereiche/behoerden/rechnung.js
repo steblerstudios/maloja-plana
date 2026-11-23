@@ -55,16 +55,13 @@ export const WEG_NAME = { ipv: 'dashboard.quickCheckIpv', soz: 'nav.sozialhilfe'
 
 // ── Tür im Gemeindehaus (Stebler Studios 23.11.2026, «3 klingt gut»: die Tür ist die eigene Gemeinde) ─────────────────
 // Die Gemeinde kommt aus der Postleitzahl bei Wohnen (data/plzGemeinde.js, swisstopo, Amtliches Ortschaftenverzeichnis).
-// Nur eindeutig: eine Gemeinde für die PLZ, oder der erfasste Ort passt zu genau einer. Sonst kein Name — lieber keine
-// als die falsche Gemeinde über der Tür. `treffer`: lookupPLZ(plz) → [{ gemeinde, bfsNr, kanton }].
-const ortNorm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s*\([A-Z]{2}\)\s*$/, '').trim().toLowerCase();
-export const gemeindeLage = (treffer, ort) => {
+// Nur eindeutig: die PLZ gehört zu genau einer Gemeinde. Kein Abgleich mit dem Ort (Fachprüfung 23.11.2026, Blocker):
+// der Ort bei Wohnen ist der Postort, nicht die Gemeinde — «1032 Romanel-sur-Lausanne» liegt zu 19 % in Lausanne,
+// 638 solche Paare. Lieber kein Name als die falsche Gemeinde über der Tür. `treffer`: lookupPLZ(plz).
+export const gemeindeLage = (treffer) => {
   const liste = Array.isArray(treffer) ? treffer : [];
   if (liste.length === 0) return { state: 'ohne' };
-  if (liste.length === 1) return { state: 'eindeutig', ...liste[0] };
-  const o = ortNorm(ort);
-  const passend = o ? liste.filter((g) => ortNorm(g.gemeinde) === o) : [];
-  return passend.length === 1 ? { state: 'eindeutig', ...passend[0] } : { state: 'mehrdeutig' };
+  return liste.length === 1 ? { state: 'eindeutig', ...liste[0] } : { state: 'mehrdeutig' };
 };
 
 // Der Link, den die Person selbst eingetragen hat — nur http(s), sonst keiner (kein «javascript:», keine Leerzeichen).
@@ -76,6 +73,8 @@ export const sichereWebsite = (roh) => {
   if (!mitSchema) return null;
   try {
     const u = new URL(mitSchema);
+    // Sicherheitsprüfung 23.11.2026: keine Zugangsdaten in der Adresse (https://name:pw@…).
+    if (u.username || u.password) return null;
     return (u.protocol === 'https:' || u.protocol === 'http:') && u.hostname.includes('.') ? u.href : null;
   } catch { return null; }
 };

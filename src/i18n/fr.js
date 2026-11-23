@@ -2839,14 +2839,13 @@ export default {
     gemeinde: {
       titel: "Commune de {name}",
       titelOhne: { sie: "Votre commune", du: "Ta commune" },
-      satz: "L’attestation de domicile est délivrée par la commune (contrôle des habitants). Les autres démarches qui s’y font varient d’un canton à l’autre.",
+      satz: "L’attestation de domicile est délivrée par le service qui tient le registre des habitants – en général la commune. Les autres démarches qui se font à la commune varient selon le canton et la commune.",
       website: "Site web de la commune",
       websiteErgaenzen: "Ajouter le site web",
       plzFehlt: { sie: "Votre commune apparaît dès que le numéro postal figure sous {wohnen}.", du: "Ta commune apparaît dès que le numéro postal figure sous {wohnen}." },
-      mehrdeutig: "Ce numéro postal couvre plusieurs communes. La localité sous {wohnen} permet de la préciser.",
+      mehrdeutig: "Ce numéro postal couvre plusieurs communes, c’est pourquoi aucun nom n’apparaît ici.",
       tuerAria: "Porte : commune de {name}",
       tuerAriaOhne: "Porte : commune",
-      neuesFenster: "s’ouvre dans une nouvelle fenêtre",
     },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.

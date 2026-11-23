@@ -2840,14 +2840,13 @@ export default {
     gemeinde: {
       titel: "Comune di {name}",
       titelOhne: { sie: "Il suo comune", du: "Il tuo comune" },
-      satz: "Il certificato di domicilio è rilasciato dal comune (controllo abitanti). Quali altre pratiche si svolgono lì varia da cantone a cantone.",
+      satz: "Il certificato di domicilio è rilasciato dall’ufficio che tiene il registro degli abitanti – di solito il comune. Quali altre pratiche si svolgono presso il comune varia secondo il cantone e il comune.",
       website: "Sito web del comune",
       websiteErgaenzen: "Aggiungere il sito web",
       plzFehlt: { sie: "Il suo comune appare non appena sotto {wohnen} c’è il numero postale.", du: "Il tuo comune appare non appena sotto {wohnen} c’è il numero postale." },
-      mehrdeutig: "A questo numero postale appartengono più comuni. La località sotto {wohnen} lo rende univoco.",
+      mehrdeutig: "A questo numero postale appartengono più comuni, per questo qui non c’è un nome.",
       tuerAria: "Porta: comune di {name}",
       tuerAriaOhne: "Porta: comune",
-      neuesFenster: "si apre in una nuova finestra",
     },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.

@@ -212,17 +212,17 @@ describe('Bauplan Behörden · Formen im Vergleich', () => {
 
 // Tür im Gemeindehaus (Stebler Studios 23.11.2026, «3 klingt gut»): die eigene Gemeinde.
 describe('Bauplan Behörden · Tür = Gemeinde', () => {
-  it('Gemeinde aus der PLZ nur eindeutig: eine Gemeinde, oder der Ort passt zu genau einer', () => {
-    expect(gemeindeLage(lookupPLZ('8004'), 'Zürich')).toMatchObject({ state: 'eindeutig', gemeinde: 'Zürich', kanton: 'ZH' });
-    expect(gemeindeLage(lookupPLZ('1008'), '').state).toBe('mehrdeutig');
-    expect(gemeindeLage(lookupPLZ('1008'), 'Jouxtens-Mezery')).toMatchObject({ state: 'eindeutig', gemeinde: 'Jouxtens-Mézery' });
-    expect(gemeindeLage(lookupPLZ('1015'), 'Ecublens')).toMatchObject({ gemeinde: 'Ecublens (VD)' });
-    expect(gemeindeLage(lookupPLZ('0000'), 'X').state).toBe('ohne');
+  // Fachprüfung 23.11.2026 (Blocker): der Ort bei Wohnen ist der Postort, nicht die Gemeinde — kein Abgleich mit ihm.
+  it('Gemeinde aus der PLZ nur, wenn die PLZ zu genau einer Gemeinde gehört', () => {
+    expect(gemeindeLage(lookupPLZ('8004'))).toMatchObject({ state: 'eindeutig', gemeinde: 'Zürich', kanton: 'ZH' });
+    for (const plz of ['1008', '1015', '1032', '1700', '8152']) expect(gemeindeLage(lookupPLZ(plz)).state, plz).toBe('mehrdeutig');
+    expect(gemeindeLage(lookupPLZ('0000')).state).toBe('ohne');
+    expect(lies('bereiche/behoerden/zuhause.jsx')).toContain('gemeindeLage(plz.lookupPLZ(plzWert))');
   });
   it('Website nur http(s): kein javascript:, data:, ftp:, keine Leerzeichen; www.… bekommt https://', () => {
     expect(sichereWebsite('www.musterhausen.ch')).toBe('https://www.musterhausen.ch/');
     expect(sichereWebsite('https://www.zuerich.ch/a?b=1')).toBe('https://www.zuerich.ch/a?b=1');
-    for (const boese of ['javascript:alert(1)', 'JaVaScRiPt://x.ch', 'data:text/html,x', 'ftp://a.ch', 'https://a.ch" onclick', 'http://x', 'zürich', '', null]) {
+    for (const boese of ['javascript:alert(1)', 'JaVaScRiPt://x.ch', 'data:text/html,x', 'ftp://a.ch', 'https://a.ch" onclick', 'http://x', 'zürich', '', null, 'https://name:pw@evil.ch', 'https://name@evil.ch']) {
       expect(sichereWebsite(boese), String(boese)).toBeNull();
     }
   });
@@ -242,9 +242,11 @@ describe('Bauplan Behörden · Tür = Gemeinde', () => {
   it('Gemeinde-Karte: Link nur über sichereWebsite, neues Fenster mit noopener; Satz ohne Behauptung über Kantonsgänge', () => {
     const q = lies('bereiche/behoerden/zuhause.jsx');
     expect(q).toContain('const website = sichereWebsite(d.gemeindeWebsite);');
-    expect(q).toMatch(/href: website, target: '_blank', rel: 'noopener noreferrer'/);
+    expect(q).toContain('h(ExternerLink, { t, href: website,');
+    expect(q).toContain("new URL(website).hostname");
     expect(q).not.toMatch(/href: d\.gemeindeWebsite/);
-    expect(t('behoerdenZuhause.gemeinde.satz')).toContain('je nach Kanton verschieden');
+    // Fachprüfung 23.11.2026: nicht überall die Gemeinde (BS, GE) — «meist», und kein Versprechen über andere Gänge.
+    expect(t('behoerdenZuhause.gemeinde.satz')).toMatch(/meist die Gemeinde[\s\S]*je nach Kanton und Gemeinde verschieden/);
   });
 });
 

@@ -14,6 +14,7 @@ import { CHAPTER_KEYS } from '../../config/constants.js';
 import { Anschlagbrett, Gemeindehaus, Wegweiser } from './bilder.jsx';
 import { Kachelkarte } from '../wohnen/bilder.jsx';
 import { Belege } from '../../components/Belege.jsx';
+import { ExternerLink } from '../../components/ExternerLink.jsx';
 
 // Lebensbereich Behörden · der Ort (Bauplan Lebensbereich, Stebler Studios 18.11.2026; Behörden 21.11.2026).
 // Erste Runde: Skizze _werkbank/entwuerfe/behoerden-kapitel.html, PR #916. Zweite Runde (23.11.2026, «hmm ja guter anfang»
@@ -228,7 +229,7 @@ const BehoerdenKapitel = ({ palette, t, behoerden, allData, onNavigate, checked 
   }, []);
   const wohnen = allData?.wohnen || {};
   const plzWert = String(wohnen.postalCode || '').trim();
-  const gemeinde = !plzWert ? { state: 'keinePlz' } : plz ? gemeindeLage(plz.lookupPLZ(plzWert), wohnen.city) : { state: 'laden' };
+  const gemeinde = !plzWert ? { state: 'keinePlz' } : plz ? gemeindeLage(plz.lookupPLZ(plzWert)) : { state: 'laden' };
   const gemeindeName = gemeinde.state === 'eindeutig' ? gemeinde.gemeinde : null;
   const waehleGang = (i) => { setGangIndex(i); setTuerOffen(false); };
   const profil = { ...allData, finanzen: { ...allData?.finanzen, monthlyIncome: e.nettoMonat, incomeType: 'netto' } };
@@ -366,9 +367,11 @@ const BehoerdenKapitel = ({ palette, t, behoerden, allData, onNavigate, checked 
     gemeinde.state === 'mehrdeutig' && h('p', { style: { ...klein, margin: '2px 0 0' } }, t('behoerdenZuhause.gemeinde.mehrdeutig', { wohnen: wohnenName })),
     h('p', { 'data-teil': 'gemeinde-satz', style: { ...satz, margin: space.xs + 'px 0 0' } }, t('behoerdenZuhause.gemeinde.satz')),
     h('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', alignItems: 'center' } },
-      website && h('a', { href: website, target: '_blank', rel: 'noopener noreferrer', className: 'mp-link', 'data-weg': 'gemeinde-website',
-        style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', minHeight: '44px', fontSize: text.sm } },
-        t('behoerdenZuhause.gemeinde.website') + ' ›', h('span', { style: { position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap' } }, ' (' + t('behoerdenZuhause.gemeinde.neuesFenster') + ')')),
+      // Projektbauteil für externe Links (rel immer gesetzt, Zeichen und Ankündigung «neuer Tab»); der Hostname steht
+      // dabei, damit sichtbar ist, wohin der Link führt (Sicherheitsprüfung 23.11.2026).
+      website && h(ExternerLink, { t, href: website, className: 'mp-link', 'data-weg': 'gemeinde-website',
+        style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', gap: '4px', minHeight: '44px', fontSize: text.sm } },
+        t('behoerdenZuhause.gemeinde.website') + ' · ' + new URL(website).hostname),
       angaben && !angaben.offen('gemeindeWebsite') && h('button', {
         type: 'button', className: 'mp-link', 'data-aendern': 'gemeindeWebsite', onClick: () => angaben.umschalten('gemeindeWebsite'),
         style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, padding: 0, fontWeight: weight.semi, color: palette.sandDeep || palette.goldDeep, textDecoration: 'none' },

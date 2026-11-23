@@ -2859,14 +2859,13 @@ export default {
     gemeinde: {
       titel: "Gemeinde {name}",
       titelOhne: { sie: "Ihre Gemeinde", du: "Deine Gemeinde" },
-      satz: "Die Wohnsitzbestätigung stellt die Gemeinde aus (Einwohnerkontrolle). Welche Gänge sonst dort laufen, ist je nach Kanton verschieden.",
+      satz: "Die Wohnsitzbestätigung stellt die Stelle aus, die das Einwohnerregister führt – meist die Gemeinde. Welche Gänge sonst bei der Gemeinde laufen, ist je nach Kanton und Gemeinde verschieden.",
       website: "Website der Gemeinde",
       websiteErgaenzen: "Website ergänzen",
       plzFehlt: { sie: "Ihre Gemeinde erscheint, sobald bei {wohnen} die Postleitzahl steht.", du: "Deine Gemeinde erscheint, sobald bei {wohnen} die Postleitzahl steht." },
-      mehrdeutig: "Zu dieser Postleitzahl gehören mehrere Gemeinden. Mit dem Ort bei {wohnen} wird sie eindeutig.",
+      mehrdeutig: "Zu dieser Postleitzahl gehören mehrere Gemeinden, darum steht hier kein Name.",
       tuerAria: "Tür: Gemeinde {name}",
       tuerAriaOhne: "Tür: Gemeinde",
-      neuesFenster: "öffnet in neuem Fenster",
     },
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
