@@ -1,7 +1,7 @@
 // Wächter · Bauplan Lebensbereich, Behörden (Stebler Studios 21.11.2026: «gleich aufbauen wie wohnen», Szene
 // «Gemeindehaus», Skizze _werkbank/entwuerfe/behoerden-kapitel.html «Ja, so bauen»).
 // Analyse: stebler-studios/analysen/2026-11-21-behoerden-bauplan.md
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
@@ -10,6 +10,8 @@ import de from '../i18n/de.js';
 import { createT } from '../i18n/index.js';
 import { LIGHT_PALETTE } from '../config/constants.js';
 import { DEMO_DATA } from '../config/demoData.js';
+import { ladeIPVModelle } from '../config/cantonalData.js';
+import { QuickCheck } from '../components/Leistungsliste.jsx';
 import { BehoerdenZuhause, steuerfristLage, gaengeLage, leistungenLage } from '../bereiche/behoerden/behoerden.js';
 
 const t = createT({ de }, 'de', 'sie');
@@ -19,10 +21,23 @@ const zaehle = (html, teil) => (html.match(new RegExp('data-teil="' + teil + '"'
 const kapitel = (behoerden = DEMO_DATA.behoerden, checked = {}, allData = DEMO_DATA) => renderToStaticMarkup(React.createElement(BehoerdenZuhause, {
   palette: LIGHT_PALETTE, t, behoerden, allData, checked, onToggle: () => {}, onNavigate: () => {}, isDarkMode: false,
 }));
+const mitLohn = (lohn, incomeType = 'netto') => ({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, monthlyIncome: String(lohn), incomeType } });
 // Fester Tag, damit die Zahlen nicht mit dem Kalender wandern: 21.11.2026 mittags.
 const HEUTE = new Date(2026, 10, 21, 12);
 
+// Muss vor dem ersten ladeIPVModelle stehen: die Modelle bleiben danach für die ganze Datei geladen.
+describe('Bauplan Behörden · solange das Kantonsmodell lädt', () => {
+  it('keine Zahl und kein Weg, nur «Laden»; nach einem Ladefehler die Orientierung «prüfen»', () => {
+    const html = kapitel();
+    expect(html).toContain('data-kompass="laden"');
+    expect(html).not.toContain('data-instrument-zahl="leistungen"');
+    expect(html).not.toContain('Ein möglicher Weg');
+    expect(leistungenLage(DEMO_DATA, { fertig: true }).wege.map((w) => w.key)).toEqual(['ipv']);
+  });
+});
+
 describe('Bauplan Behörden · drei Fragen, je eine Rechnung', () => {
+  beforeAll(() => ladeIPVModelle(), 30000);
   it('A Steuerfrist: Maria, 31.03.2027 → 4 Monate, nicht vorbei', () => {
     const f = steuerfristLage(DEMO_DATA.behoerden, HEUTE);
     expect(f.iso).toBe('2027-03-31');
@@ -36,22 +51,39 @@ describe('Bauplan Behörden · drei Fragen, je eine Rechnung', () => {
     expect(g.liste[0]).toMatchObject({ id: 'steuererklaerung', erledigt: true, jahr: 2025, vorschlag: true });
     expect(gaengeLage({ betreibungsauszug: true, steuererklaerung: false }, DEMO_DATA.behoerden, HEUTE).erledigt).toBe(1);
   });
-  it('C Leistungen: dieselbe Peilung wie die Übersicht, Maria (ZH) ein Weg, die Prämienverbilligung', () => {
+  it('C Leistungen: Maria (ZH) liegt über der IPV-Grenze, kein direkter Weg', () => {
     const l = leistungenLage(DEMO_DATA);
-    expect(l.state).toBe('found');
-    expect(l.anzahl).toBe(1);
-    expect(l.wege.map((w) => w.key)).toEqual(['ipv']);
+    expect(l.state).toBe('none');
+    expect(l.anzahl).toBe(0);
     expect(leistungenLage({}).state).toBe('idle');
+  });
+  it('Kapitel und Übersicht zeigen dasselbe, netto, brutto und mit offener Einkommensart', () => {
+    const gesehen = new Set();
+    for (const incomeType of ['netto', 'brutto', '']) {
+      for (let lohn = 1500; lohn <= 8000; lohn += 250) {
+        const d = mitLohn(lohn, incomeType);
+        const uebersicht = renderToStaticMarkup(React.createElement(QuickCheck, { palette: LIGHT_PALETTE, t, data: d, onNavigate: () => {} }))
+          .match(/>Leistungs-Kompass<\/span><span[^>]*>([^<]*)</)[1];
+        const html = kapitel(d.behoerden, {}, d);
+        const hier = html.match(/data-teil="kompass-unter"[^>]*>([^<]*)</)[1];
+        const idle = html.includes('data-kompass="idle"');
+        expect(idle ? t('instrumente.setup') : hier, lohn + ' ' + incomeType).toBe(uebersicht);
+        gesehen.add(html.match(/data-kompass="([^"]*)"/)[1]);
+      }
+    }
+    expect([...gesehen].sort()).toEqual(['found', 'idle', 'none']);
   });
 });
 
 describe('Bauplan Behörden · jedes Bild einmal, die Zahl darunter', () => {
+  beforeAll(() => ladeIPVModelle(), 30000);
+  const TIEF = mitLohn(2000);
   it('ein Anschlagbrett, ein Gemeindehaus, ein Wegweiser, ein Kalenderblatt', () => {
     const html = kapitel();
     for (const teil of ['anschlagbrett', 'gemeindehaus', 'wegweiser', 'kalenderblatt']) expect(zaehle(html, teil), teil).toBe(1);
   });
   it('je eine Hauptzahl, jede unter ihrem Bild', () => {
-    const html = kapitel();
+    const html = kapitel(TIEF.behoerden, {}, TIEF);
     for (const [zahl, bild] of [['steuerfrist', 'anschlagbrett'], ['gaenge', 'gemeindehaus'], ['leistungen', 'wegweiser']]) {
       expect((html.match(new RegExp('data-instrument-zahl="' + zahl + '"', 'g')) || []).length, zahl).toBe(1);
       expect(html.indexOf('data-instrument-zahl="' + zahl + '"'), zahl).toBeGreaterThan(html.indexOf('data-teil="' + bild + '"'));
@@ -74,10 +106,15 @@ describe('Bauplan Behörden · jedes Bild einmal, die Zahl darunter', () => {
     expect(fenster({ steuererklaerung: false })).toBe(0);
   });
   it('Leistungen: ein Hinweis, kein Anspruch, mit Weg zu «Was steht mir zu?»', () => {
-    const html = kapitel();
-    expect(html).toMatch(/data-teil="leistungen-satz"[^>]*>Ein möglicher Weg aus Ihren Angaben: Prämienverbilligung/);
+    const html = kapitel(TIEF.behoerden, {}, TIEF);
+    expect(html).toMatch(/data-teil="leistungen-satz"[^>]*>[^<]*(mögliche Wege|möglicher Weg) aus Ihren Angaben: /);
     expect(html).toContain('kein Entscheid über einen Anspruch');
     expect(html).toContain('data-weg="situationen"');
+  });
+  it('nichts Direktes: weitere Wege, keine grosse «0»', () => {
+    const html = kapitel();
+    expect(html).toContain('data-kompass="none"');
+    expect(html).not.toContain('data-instrument-zahl="leistungen"');
   });
   it('ohne Frist kein Brett, ohne Einkommen ruht der Kompass ohne Zahl', () => {
     const html = kapitel({ ...DEMO_DATA.behoerden, taxFilingDeadline: '' }, {}, { ...DEMO_DATA, finanzen: {} });

@@ -1,4 +1,4 @@
-// Die Behördengänge im Kapitel Behörden — EINE Liste für das Kapitel (components/BehoerdenInstrument.jsx)
+// Die Behördengänge im Kapitel Behörden — EINE Liste für das Kapitel (bereiche/behoerden/)
 // und die Bereichszeile auf dem Dashboard. Seitenrundgang 26.10.2026: das Dashboard zählte die Haken
 // selbst und gegen «/6», obwohl es fünf Gänge gibt; ein alter Haken (Patientenverfügung, seit #578 nicht
 // mehr hier) zählte mit, der Vorschlag aus «0 offen» nicht. Eigenes Blatt, damit das Dashboard die Liste

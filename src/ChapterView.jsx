@@ -2397,7 +2397,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Behörden: der Kasten «Folgende Stände und Fristen sind erfasst» und die zugeklappte «Behörden-Checkliste»
     // standen bis 25.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf AD) ersetzt sie das Behörden-Instrument oben
-    // (components/BehoerdenInstrument.jsx): Kalenderblatt, Behördengänge offen, «Für den Fall der Fälle».
+    // (heute bereiche/behoerden/): Kalenderblatt, Behördengänge offen, «Für den Fall der Fälle».
 
     // Wohnen: der Kasten «Wohnkosten / Einkommen / Anteil» und der MietVergleich standen bis
     // 24.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf Z) ersetzt sie das Wohnkosten-Instrument

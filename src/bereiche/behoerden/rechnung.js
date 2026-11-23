@@ -10,6 +10,8 @@ import { fristAbstand } from '../../utils/fristAbstand.js';
 import { steuerfristVorbei } from '../../utils/steuerfrist.js';
 import { GAENGE, offeneErklaerungen, erledigtesSteuerjahr, gangErledigt } from '../../utils/behoerdenGaenge.js';
 import { wegeAusProbe, leistungsKompass } from '../../data/anspruchWege.js';
+import { calculateIPV } from '../../config/cantonalData.js';
+import { einnahmenErfasst } from '../../utils/unterstuetzungseinheit.js';
 
 export { GAENGE, offeneErklaerungen, erledigtesSteuerjahr, gangErledigt };
 
@@ -36,8 +38,15 @@ export const gaengeLage = (checked = {}, behoerden = {}, heute = new Date()) => 
 };
 
 // C · Leistungen: dieselbe Peilung wie Übersicht und Schnellcheck, dazu die Wege (für den Satz).
-export const leistungenLage = (profil) => {
-  const { wege } = wegeAusProbe(profil || {});
+// `profil` trägt das Netto wie dort (useEinkommen). Solange das Kantonsmodell der IPV lädt, keine Aussage: calculateIPV
+// meldet bis dahin «prüfen», bei Maria (ZH) wurde daraus ein Weg, den es mit geladenem Modell nicht gibt (22.11.2026).
+// `fertig`: das Laden ist zu Ende, auch mit Fehler — dann gilt die Orientierung «prüfen» wie in der Übersicht.
+export const leistungenLage = (profil, { fertig = false } = {}) => {
+  const p = profil || {};
+  if (!fertig && p.basis?.canton && einnahmenErfasst(p.finanzen) && calculateIPV(p).offen === 'laden') {
+    return { state: 'laden', bearing: 0, anzahl: 0, wege: [] };
+  }
+  const { wege } = wegeAusProbe(p);
   return { ...leistungsKompass(profil || {}, wege), wege };
 };
 

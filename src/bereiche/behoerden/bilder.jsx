@@ -68,7 +68,7 @@ export const Wegweiser = ({ palette, kompass, farbe }) => {
     h('path', { d: 'M6 62 L62 62 L76 74 L62 86 L6 86 Z', fill: schild }),
     h('circle', { cx: 40, cy: 26, r: 22, fill: palette.surface, stroke: palette.text, strokeWidth: 1.5, ...linie }),
     h('g', { 'data-teil': 'kompass-nadel', transform: 'rotate(' + bearing + ' 40 26)' },
-      h('path', { d: 'M40 8 L45 26 L35 26 Z', fill: spitze, opacity: state === 'idle' ? 0.5 : 1 }),
+      h('path', { d: 'M40 8 L45 26 L35 26 Z', fill: spitze, opacity: state === 'idle' || state === 'laden' ? 0.5 : 1 }),
       h('path', { d: 'M40 44 L45 26 L35 26 Z', fill: palette.mid, opacity: 0.4 })),
     h('circle', { cx: 40, cy: 26, r: 3, fill: palette.surface, stroke: palette.mid, strokeWidth: 1.5 }));
 };

@@ -17,7 +17,7 @@ const jeKapitel = Function('return ' + zeile[1])();
 const imCode = Object.entries(jeKapitel).flatMap(([kapitel, keys]) => keys.map((key) => [key, kapitel]));
 
 // Sperrklinke: die Zahl der offenen Punkte darf nur sinken. Wer einen behebt, senkt die Zahl hier.
-const HOECHSTENS = { formAbweichung: 2, ohneRechnung: 0, zuhauseAnderesBild: 1, ohneZuhause: 6 };
+const HOECHSTENS = { formAbweichung: 2, ohneRechnung: 0, zuhauseAnderesBild: 1, ohneZuhause: 5 };
 
 describe('Formenlehre: jedes Instrument steht im Register', () => {
   it('jedes Instrument der Kapitelzeile hat einen Eintrag, im richtigen Kapitel', () => {

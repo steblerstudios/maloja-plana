@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { text, weight, space, leading, radius, duration, ease } from '../../config/tokens.js';
 import { bereichFillColor } from '../../data/lebensbereiche.js';
 import { auswahlLabel } from '../../utils/auswahlLabel.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../../data/kantonaleSteuerdaten.js';
 import { zahl } from '../../utils/geld.js';
 import { linkStil } from '../../components/PrimaryButton.jsx';
+import { useEinkommen } from '../../components/EinkommenFeld.jsx';
+import { ladeIPVModelle } from '../../config/cantonalData.js';
 import { steuerfristLage, gaengeLage, leistungenLage, WEG_NAME } from './rechnung.js';
 import { Anschlagbrett, Gemeindehaus, Wegweiser } from './bilder.jsx';
 
@@ -27,14 +29,19 @@ const relativ = (t, ab) => {
   const k = ab.vorbei ? (ab.einheit === 'tage' ? 'behördenStatus.agoDays' : 'behördenStatus.ago') : (ab.einheit === 'tage' ? 'behördenStatus.inDays' : 'behördenStatus.inMonths');
   return t(k).replace('{n}', ab.n);
 };
-// Die Zahl unter dem Brett wie auf der Kachel: «4 Monate», «12 Tage», «heute».
-const fristZahl = (t, ab) => ab.tage === 0 ? t('behördenStatus.today') : ab.n + ' ' + t('instrumente.' + ab.einheit + (ab.n === 1 ? 'Eins' : ''));
+// Die Zahl unter dem Brett wie auf der Kachel: Zahl gross, Einheit klein («4 Monate», «12 Tage»), oder «heute».
+// Einheit kleiner, damit sie in der schmalen Spalte unter dem Brett bleibt (gesehen 23.11.2026: «4 Monate» lief in «1/5»).
+const fristZahl = (t, ab) => ab.tage === 0 ? t('behördenStatus.today') : [String(ab.n), React.createElement('span', {
+  key: 'e', style: { fontSize: text.sm, fontWeight: weight.normal },
+}, '\u00a0' + t('instrumente.' + ab.einheit + (ab.n === 1 ? 'Eins' : '')))];
 
 // Der Satz unter dem Kompass und im Abschnitt Leistungen.
 const kompassUnter = (t, k) => k.state === 'found' ? t(k.anzahl === 1 ? 'instrumente.kompassFoundOne' : 'instrumente.kompassFound', { n: k.anzahl })
   : k.state === 'none' ? t('instrumente.kompassNone') : t('instrumente.kompass');
 const leistungenSatz = (t, k) => {
-  if (k.state === 'idle') return t('schnellcheck.kompassIdle');
+  if (k.state === 'laden') return t('common.loading');
+  // Betrag da, aber brutto oder netto offen: derselbe Hinweis wie am Einkommensfeld der Übersicht.
+  if (k.state === 'idle') return t(k.artOffen ? 'einkommensart.offenNetto' : 'schnellcheck.kompassIdle');
   if (k.state !== 'found') return t('schnellcheck.kompassNone');
   const namen = k.wege.map((w) => t(WEG_NAME[w.key] || w.key));
   return k.anzahl === 1 ? t('behoerdenZuhause.wegEins', { name: namen[0] }) : t('behoerdenZuhause.wege', { n: k.anzahl, liste: namen.join(', ') });
@@ -46,39 +53,51 @@ export const BehoerdenStrasse = ({ palette, t, frist, gaenge, leistungen, isDark
   const boden = { height: BODEN + 'px', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', borderBottom: '1px solid ' + palette.mid };
   const spalte = (breite, teil) => ({ 'data-teil': teil, style: { flex: '0 1 ' + breite + 'px', minWidth: 0, display: 'flex', flexDirection: 'column' } });
   const unter = (s, teil) => h('div', { 'data-teil': teil, style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.tight } }, s);
-  const zahlDiv = (key, wert) => h('div', { 'data-instrument-zahl': key, 'aria-live': 'polite', style: { ...zahlStil, color: palette.text, marginTop: space.xs + 'px' } }, wert);
+  const zahlDiv = (key, wert) => h('div', { 'data-instrument-zahl': key, 'aria-live': 'polite', style: { ...zahlStil, color: palette.text, marginTop: space.xs + 'px', overflowWrap: 'anywhere' } }, wert);
   return h('div', { 'data-teil': 'behoerden-strasse', style: { display: 'flex', alignItems: 'flex-start', gap: '0 ' + space.md + 'px', flexWrap: 'wrap', margin: '0 0 ' + space.sm + 'px' } },
     // Frage A · Anschlagbrett
-    frist && h('div', spalte(72, 'strasse-frist'),
+    frist && h('div', spalte(84, 'strasse-frist'),
       h('div', { style: boden }, h(Anschlagbrett, { palette, iso: frist.iso, locale: SPRACHE[lang] || 'de-CH', vorbei: frist.vorbei, pfosten: 72 })),
       frist.zeigen && zahlDiv('steuerfrist', fristZahl(t, frist.abstand)),
       frist.zeigen && unter(t(frist.vorbei ? 'instrumente.steuerfristVorbeiSatz' : 'instrumente.steuerfristSatz'), 'frist-unter')),
     // Frage B · Gemeindehaus
-    h('div', spalte(170, 'strasse-gemeindehaus'),
+    h('div', spalte(130, 'strasse-gemeindehaus'),
       h('div', { style: boden }, h('div', { style: { width: '100%' } }, h(Gemeindehaus, { palette, erledigt: gaenge.erledigt, total: gaenge.total, farbe }))),
       zahlDiv('gaenge', gaenge.erledigt + '/' + gaenge.total),
       unter(t('instrumente.gaengeSatz'), 'gaenge-unter')),
     // Frage C · Wegweiser mit Kompass, führt zu «Was steht mir zu?»
-    h('div', spalte(96, 'strasse-wegweiser'),
+    h('div', spalte(84, 'strasse-wegweiser'),
       h('div', { style: boden },
         onNavigate
           ? h('button', { type: 'button', className: 'mp-link', 'data-teil': 'wegweiser-knopf', onClick: () => onNavigate('situationen'), 'aria-label': t('dashboard.anspruchTitle'),
             style: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: palette.text, display: 'flex', alignItems: 'flex-end' } },
           h(Wegweiser, { palette, kompass: leistungen, farbe }))
           : h(Wegweiser, { palette, kompass: leistungen, farbe })),
-      leistungen.state !== 'idle' && zahlDiv('leistungen', String(leistungen.anzahl)),
+      // Eine Zahl nur bei gefundenen Wegen: eine grosse «0» läse sich als «Nein» (anspruchWege.js: nie ein Nein-Verdikt).
+      leistungen.state === 'found' && zahlDiv('leistungen', String(leistungen.anzahl)),
       unter(kompassUnter(t, leistungen), 'kompass-unter')),
   );
 };
 
 // ── Kapitel Behörden (Zuhause, gross) ───────────────────────────────────────────────────────────────────────────────
-export const BehoerdenZuhause = ({ palette, t, behoerden, allData, onNavigate, checked = {}, onToggle, lang = 'de', isDarkMode }) => {
+const BehoerdenKapitel = ({ palette, t, behoerden, allData, onNavigate, checked = {}, onToggle, lang = 'de', isDarkMode }) => {
   const h = React.createElement;
   const d = behoerden || {};
   const heute = new Date();
   const frist = steuerfristLage(d, heute);
   const gaenge = gaengeLage(checked, d, heute);
-  const leistungen = leistungenLage(allData || {});
+  // Netto wie Übersicht und Schnellcheck (useEinkommen); nach dem Laden der IPV-Modelle einmal neu zeichnen.
+  const e = useEinkommen(allData);
+  const [fertig, setFertig] = useState(false);
+  useEffect(() => {
+    let aktiv = true;
+    const ende = () => { if (aktiv) setFertig(true); };
+    ladeIPVModelle().then(ende, ende);
+    return () => { aktiv = false; };
+  }, []);
+  const [mehrOffen, setMehrOffen] = useState(false);
+  const profil = { ...allData, finanzen: { ...allData?.finanzen, monthlyIncome: e.nettoMonat, incomeType: 'netto' } };
+  const leistungen = { ...leistungenLage(profil, { fertig }), artOffen: e.offen };
   const loc = SPRACHE[lang] || 'de-CH';
   const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
@@ -134,10 +153,10 @@ export const BehoerdenZuhause = ({ palette, t, behoerden, allData, onNavigate, c
 
   // Mehr dazu: Testament (Für den Fall der Fälle), Behörden-Dossier, Sozialhilfe (zu Hause in Finanzen).
   const testament = auswahlLabel('behoerden', 'willMade', d.willMade, t) || t('behoerdenInstrument.nichtErfasst');
-  const mehr = h('details', { 'data-teil': 'behoerden-mehr', style: { marginTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88', paddingTop: space.sm + 'px' } },
+  const mehr = h('details', { 'data-teil': 'behoerden-mehr', onToggle: (ev) => setMehrOffen(ev.currentTarget.open), style: { marginTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88', paddingTop: space.sm + 'px' } },
     h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, listStyle: 'none' } },
       h('span', null, t('wohnenInstrument.mehrDazu')),
-      h('span', { 'aria-hidden': 'true', style: { fontSize: text.lg, lineHeight: 1, color: palette.mid, transition: 'transform ' + duration.fast + 'ms ' + ease } }, '›')),
+      h('span', { 'aria-hidden': 'true', style: { fontSize: text.lg, lineHeight: 1, color: palette.mid, transform: mehrOffen ? 'rotate(90deg)' : 'none', transition: 'transform ' + duration.fast + 'ms ' + ease } }, '›')),
     h('section', { 'data-teil': 'fall-der-faelle', 'aria-labelledby': 'mp-fall-der-faelle' },
       h('h3', { id: 'mp-fall-der-faelle', style: { ...kapH, marginTop: space.xs + 'px' } }, t('behoerdenInstrument.fallTitel')),
       h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('behoerdenInstrument.fallSatz')),
@@ -153,4 +172,10 @@ export const BehoerdenZuhause = ({ palette, t, behoerden, allData, onNavigate, c
   return h('div', { 'data-teil': 'behoerden-instrument', style: { marginBottom: space.lg + 'px' } },
     h(BehoerdenStrasse, { palette, t, frist, gaenge, leistungen, isDarkMode, onNavigate, lang }),
     abschnittFrist, abschnittGaenge, abschnittLeistungen, mehr);
+};
+
+// useEinkommen liest das Profil nur beim ersten Zeichnen: ändert sich das Einkommen (auch Beispiel an/aus), neu beginnen.
+export const BehoerdenZuhause = (props) => {
+  const f = props.allData?.finanzen;
+  return React.createElement(BehoerdenKapitel, { ...props, key: [f?.monthlyIncome, f?.incomeType].join('|') });
 };

@@ -17,7 +17,7 @@
     "teile": [
       "netz-schild",
       "grundmauer",
-      "akten"
+      "gemeindehaus"
     ],
     "anteil": [
       "drittel-haus",
@@ -147,9 +147,9 @@
     "gaenge": {
       "kapitel": "behoerden",
       "frage": "teile",
-      "form": "akten",
+      "form": "gemeindehaus",
       "rechnung": "src/utils/behoerdenGaenge.js#gangErledigt",
-      "zuhause": null
+      "zuhause": "behoerden"
     },
     "bereit": {
       "kapitel": "notfall",
@@ -181,7 +181,6 @@
       "referenz": "Zuhause Basis fehlt",
       "grundordnung": "Zuhause Basis fehlt",
       "steuer": "Kapitel Finanzen: nur Text-Karte (Steuer-Bild in Arbeit)",
-      "gaenge": "Zuhause Behörden-Gänge fehlt",
       "franchise": "Franchise-Stand ohne Zuhause"
     }
   }
