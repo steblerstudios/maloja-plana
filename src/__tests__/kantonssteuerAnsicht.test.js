@@ -5,7 +5,7 @@ import { zahl } from '../utils/geld.js';
 // E37 / E38 · Der Steuerrechner zeigt die Kantons-/Gemeindesteuer aus der ESTV-Tabelle —
 // nur dort, wo sie trägt.
 // E39 · Bundessteuer und Kantonstabelle nutzen dasselbe steuerbare Einkommen; die Seite zeigt
-// genau eines (auch auf dem Nettolohn-Weg trifft die Bundessteuer die ESTV auf CHF 1).
+// genau eines (auch auf dem Nettolohn-Weg trifft die Bundessteuer die ESTV auf CHF\u00a01).
 //
 // Kein DOM im Repo: wie in steuerkanton.test.js ersetzt ein kleiner Speicher die
 // React-Hooks. useEffect wird gesammelt und nach dem ersten Aufruf ausgeführt, damit
@@ -85,7 +85,7 @@ const zeige = (steuerbar, { canton = 'ZH', kinder = 0, verheiratet = false, elte
   const text = texte(alle);
   // Beträge in Anzeige-Reihenfolge: Bundessteuer, Kantons-/Gemeindesteuer, Gesamt.
   // Seit 24.09.2026 mit Tausender-’ (utils/geld.js) — vor dem Umwandeln entfernen.
-  const betraege = text.split('\n').filter((z) => /^~ CHF [\d’]+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6).replace(/’/g, '')));
+  const betraege = text.split('\n').filter((z) => /^~ CHF\u00a0[\d’]+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6).replace(/’/g, '')));
   return { alle, text, betraege, orientierung: alle.find((k) => k.props['data-testid'] === 'kantonssteuer-orientierung') };
 };
 
@@ -100,7 +100,7 @@ const zeigtZahl = (v, estvBund, estvKG) => {
   expect(v.text).not.toContain('tax.netIncomeFederalOnly');
   expect(v.betraege).toHaveLength(3);
   const [bund, kantonal, total] = v.betraege;
-  // ESTV rundet auf ganze Franken, die App auf 5 Rappen (Form. 58c) → höchstens CHF 1 daneben.
+  // ESTV rundet auf ganze Franken, die App auf 5 Rappen (Form. 58c) → höchstens CHF\u00a01 daneben.
   expect(Math.abs(bund - estvBund)).toBeLessThanOrEqual(1);
   expect(imRahmen(kantonal, estvKG)).toBe(true);
   expect(total).toBe(Math.round(bund) + kantonal);
@@ -120,7 +120,7 @@ const einSteuerbares = (v, wert, label) => {
   const boxen = v.alle.filter((k) => k.props['data-testid'] === 'steuerbares-einkommen');
   expect(boxen).toHaveLength(1);
   const inhalt = texte(knoten(boxen[0].props.children));
-  expect(inhalt).toContain(label + '\nCHF ' + zahl(wert) + '\n'); // seit 24.09.2026 mit ’ (utils/geld.js)
+  expect(inhalt).toContain(label + '\nCHF\u00a0' + zahl(wert) + '\n'); // seit 24.09.2026 mit ’ (utils/geld.js)
   expect(inhalt).toContain(label === 'tax.taxableIncomeEstimated' ? 'tax.taxableEstimatedHint' : 'tax.taxableEnteredHint');
   expect(v.text).not.toContain('cantonalTaxableBasis');
 };

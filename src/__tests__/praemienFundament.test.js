@@ -58,8 +58,8 @@ describe('Beispiel Maria', () => {
   it('Kapitel Versicherungen: Jahresprämien mit «/ Jahr»', () => {
     const text = render('versicherungen', DEMO_DATA.versicherungen);
     // geschütztes Leerzeichen vor «/ Jahr»
-    expect(text).toContain('CHF 240 / Jahr');
-    expect(text).toContain('CHF 120 / Jahr');
+    expect(text).toContain('CHF\u00a0240 / Jahr');
+    expect(text).toContain('CHF\u00a0120 / Jahr');
   });
 });
 

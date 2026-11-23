@@ -42,7 +42,7 @@ describe('Saldo-Block: Minus, ohne eigenen Lohn, Benennung', () => {
     const html = render(d);
     expect(html).toContain('data-teil="monat-bleiben"');
     const text = nurText(html);
-    expect(text).toContain('Jeden Monat fehlenCHF 500');
+    expect(text).toContain('Jeden Monat fehlenCHF\u00a0500');
     expect(text).not.toContain('−');
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
@@ -51,16 +51,16 @@ describe('Saldo-Block: Minus, ohne eigenen Lohn, Benennung', () => {
     const d = mitPartner(basis(), 1500);
     d.finanzen = { ...d.finanzen, monthlyIncome: 2000 };
     const text = nurText(render(d));
-    expect(text).toContain('Mit dem eigenen Einkommen fehlen jeden MonatCHF 500');
-    expect(text).toContain('Mit dem ganzen Haushalt bleiben CHF 1’000');
+    expect(text).toContain('Mit dem eigenen Einkommen fehlen jeden MonatCHF\u00a0500');
+    expect(text).toContain('Mit dem ganzen Haushalt bleiben CHF\u00a01’000');
   });
 
   it('ohne eigenes Einkommen, aber mit Partner/in: Block mit beiden Zeilen', () => {
     const d = mitPartner(basis(), 3000);
     d.finanzen = { incomeType: 'netto', groceries: 600 };
     const text = nurText(render(d));
-    expect(text).toContain('Mit dem eigenen Einkommen fehlen jeden MonatCHF 2’500');
-    expect(text).toContain('Mit dem ganzen Haushalt bleiben CHF 500');
+    expect(text).toContain('Mit dem eigenen Einkommen fehlen jeden MonatCHF\u00a02’500');
+    expect(text).toContain('Mit dem ganzen Haushalt bleiben CHF\u00a0500');
     // «von 0 Einkommen» wäre leer — die Zeile fällt weg.
     expect(text).not.toContain('von 0');
   });
@@ -73,7 +73,7 @@ describe('Saldo-Block: Minus, ohne eigenen Lohn, Benennung', () => {
 
   it('ohne Haushalts-Zeile bleibt die obere Zeile «Jeden Monat bleiben»', () => {
     const text = nurText(render(basis()));
-    expect(text).toContain('Jeden Monat bleibenCHF 2’500');
+    expect(text).toContain('Jeden Monat bleibenCHF\u00a02’500');
     expect(text).not.toContain('eigenen Einkommen');
   });
 });
@@ -83,7 +83,7 @@ describe('Saldo des Haushalts unter «Jeden Monat bleiben»', () => {
     const d = basis();
     expect(haushaltsSaldo(d, 2500)).toBeNull();
     const html = render(d);
-    expect(nurText(html)).toContain('Jeden Monat bleibenCHF 2’500');
+    expect(nurText(html)).toContain('Jeden Monat bleibenCHF\u00a02’500');
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
 
@@ -95,7 +95,7 @@ describe('Saldo des Haushalts unter «Jeden Monat bleiben»', () => {
     expect(calculateMonthlyBudget(d).remaining).toBe(3500);
     expect(haushaltsSaldo(d, 3500)).toBeNull();
     const html = render(d);
-    expect(nurText(html)).toContain('Jeden Monat bleibenCHF 3’500');
+    expect(nurText(html)).toContain('Jeden Monat bleibenCHF\u00a03’500');
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
 
@@ -105,8 +105,8 @@ describe('Saldo des Haushalts unter «Jeden Monat bleiben»', () => {
     const html = render(d);
     expect(html).toContain('data-teil="monat-haushalt"');
     const text = nurText(html);
-    expect(text).toContain('Mit dem eigenen Einkommen bleiben jeden MonatCHF 2’500');
-    expect(text).toContain('Mit dem ganzen Haushalt bleiben CHF 3’500');
+    expect(text).toContain('Mit dem eigenen Einkommen bleiben jeden MonatCHF\u00a02’500');
+    expect(text).toContain('Mit dem ganzen Haushalt bleiben CHF\u00a03’500');
     expect(text).toContain('wie auf der Budget-Seite');
   });
 
@@ -116,7 +116,7 @@ describe('Saldo des Haushalts unter «Jeden Monat bleiben»', () => {
     d.wohnen = { ...d.wohnen, mortgagePayment: 3000 };
     const html = render(d);
     const text = nurText(html);
-    expect(text).toContain('Jeden Monat fehlenCHF 500');
+    expect(text).toContain('Jeden Monat fehlenCHF\u00a0500');
     expect(text).not.toContain('−');
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
@@ -125,7 +125,7 @@ describe('Saldo des Haushalts unter «Jeden Monat bleiben»', () => {
     const d = mitPartner(basis(), 500);
     d.wohnen = { ...d.wohnen, mortgagePayment: 3500 };
     const text = nurText(render(d));
-    expect(text).toContain('Mit dem ganzen Haushalt fehlen CHF 500');
+    expect(text).toContain('Mit dem ganzen Haushalt fehlen CHF\u00a0500');
     expect(text).not.toContain('−');
   });
 
@@ -139,7 +139,7 @@ describe('Saldo des Haushalts unter «Jeden Monat bleiben»', () => {
     expect(html).not.toContain('data-teil="monat-haushalt"');
     const text = nurText(html).split('Monatliches Einkommen')[0];
     expect(text).toContain('Ein Lohn ist als Bruttolohn erfasst');
-    expect(text).not.toContain('CHF 3’500');
+    expect(text).not.toContain('CHF\u00a03’500');
   });
 
   it('eigener Lohn brutto: keine zweite Zeile, auch mit Hypothek (die Zahl darüber ist selbst brutto)', () => {
@@ -175,13 +175,13 @@ describe('Monatsrechnung: Befunde der Fachprüfung', () => {
   it('«Hypothek vorhanden? Nein»: ein stehengebliebener Betrag zählt nicht', () => {
     const d = basis();
     d.wohnen = { ...d.wohnen, mortgageStatus: 'no', mortgagePayment: 3000 };
-    expect(nurText(render(d))).toContain('Jeden Monat bleibenCHF 2’500');
+    expect(nurText(render(d))).toContain('Jeden Monat bleibenCHF\u00a02’500');
     expect(calculateMonthlyBudget(d).remaining).toBe(2500);
   });
 
   it('negativer Eintrag verkleinert die Ausgaben nicht', () => {
     const d = basis();
     d.finanzen = { ...d.finanzen, mobility: -400 };
-    expect(nurText(render(d))).toContain('Jeden Monat bleibenCHF 2’500');
+    expect(nurText(render(d))).toContain('Jeden Monat bleibenCHF\u00a02’500');
   });
 });

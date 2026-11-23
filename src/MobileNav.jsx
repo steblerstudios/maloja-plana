@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Icons from './IconSystem.jsx';
-import { text, weight, space, radius, shadow, ease, duration, fontFamilyDisplay } from './config/tokens.js';
+import { text, weight, space, radius, shadow, ease, duration, fontFamilyDisplay, textPx, rem } from './config/tokens.js';
 import { groupSettingsControls, alsSchalter, zeilenLabelKey } from './settingsGroups.js';
 import { Schalter } from './components/Schalter.jsx';
 import { useFocusTrap } from './hooks/useFocusTrap.js';
@@ -69,7 +69,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         onClick: (e) => e.stopPropagation(),
       },
         React.createElement('div', { style: { padding: '24px 24px 16px 24px', borderBottom: '1px solid ' + palette.border, display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
-          React.createElement('div', { style: { fontSize: text.body + 1, fontWeight: weight.semi, letterSpacing: '0.3px' } }, settingsLabel || t('nav.settings')),
+          React.createElement('div', { style: { fontSize: rem(textPx.body + 1), fontWeight: weight.semi, letterSpacing: '0.3px' } }, settingsLabel || t('nav.settings')),
           React.createElement('button', { onClick: onClose, 'aria-label': t('common.close'), style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: '18px', lineHeight: 1, padding: '2px 8px', minWidth: '44px', minHeight: '44px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' } }, '×')
         ),
         // Beschriftete, gruppierte Zeilen (Anzeige & Sprache / Barrierefreiheit) statt
@@ -214,7 +214,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       },
     }, renderIcon(icon, '24px')),
     React.createElement('span', { style: { minWidth: 0, display: 'flex', flexDirection: 'column', gap: '2px' } },
-      React.createElement('span', { style: { fontFamily: fontFamilyDisplay, fontSize: text.body + 1, fontWeight: weight.bold, color: palette.text, lineHeight: 1.25 } }, label),
+      React.createElement('span', { style: { fontFamily: fontFamilyDisplay, fontSize: rem(textPx.body + 1), fontWeight: weight.bold, color: palette.text, lineHeight: 1.25 } }, label),
       satz ? React.createElement('span', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.35 } }, satz) : null
     )
   );

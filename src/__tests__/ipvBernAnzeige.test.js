@@ -30,9 +30,9 @@ describe('K31 IPV-Rechner, Kanton Bern', () => {
   it('1 500/Monat, Stadt Bern (Region 1): 18 000 − 2 200 = 15 800 → Stufe bis 17 000 → 147/Monat', () => {
     const html = render(profil(1500));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 147');
+    expect(html).toContain('CHF\u00a0147');
   // Seit 24.09.2026 mit Tausendertrennung aus utils/geld.js — vorher CHF-Beträge ohne ’ bzw. nach Gerätesprache.
-    expect(html).toContain('CHF 1’764');
+    expect(html).toContain('CHF\u00a01’764');
     expect(html).toContain(zahl(35000));
     expect(html).not.toContain('ipv.orientierungOffen');
     expect(html).not.toContain(zahl(45000));

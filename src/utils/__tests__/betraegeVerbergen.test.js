@@ -1,4 +1,4 @@
-// Sichtschutz «Beträge verbergen» (10.11.2026): Bildschirm zeigt «CHF ···»,
+// Sichtschutz «Beträge verbergen» (10.11.2026): Bildschirm zeigt «CHF\u00a0···»,
 // Exporte (zipExport, dossierGenerator) bleiben beim wahren Betrag.
 import { describe, it, expect, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
@@ -16,12 +16,12 @@ afterEach(() => { delete document.documentElement.dataset.betraege; });
 describe('Beträge verbergen', () => {
   it('ohne Attribut: betrag zeigt den Betrag', () => {
     expect(betraegeVerborgen()).toBe(false);
-    expect(betrag(1234)).toBe('CHF 1’234');
+    expect(betrag(1234)).toBe('CHF\u00a01’234');
   });
-  it('mit data-betraege="aus": betrag zeigt CHF ···, auch bei Minus', () => {
+  it('mit data-betraege="aus": betrag zeigt CHF\u00a0···, auch bei Minus', () => {
     document.documentElement.dataset.betraege = 'aus';
-    expect(betrag(1234)).toBe('CHF ···');
-    expect(betrag(-50, { stellen: 2 })).toBe('CHF ···');
+    expect(betrag(1234)).toBe('CHF\u00a0···');
+    expect(betrag(-50, { stellen: 2 })).toBe('CHF\u00a0···');
   });
   it('Leeres bleibt «–», damit kein Betrag vorgetäuscht wird', () => {
     document.documentElement.dataset.betraege = 'aus';
@@ -30,7 +30,7 @@ describe('Beträge verbergen', () => {
   });
   it('betragEcht verbirgt nie', () => {
     document.documentElement.dataset.betraege = 'aus';
-    expect(betragEcht(1234)).toBe('CHF 1’234');
+    expect(betragEcht(1234)).toBe('CHF\u00a01’234');
   });
   it('Exporte nehmen betragEcht, nicht betrag', () => {
     for (const f of ['../../zipExport.js', '../../dossierGenerator.js']) {
@@ -46,18 +46,18 @@ describe('Dokumente verlassen die App mit echten Beträgen (Vortor 13.11.2026)',
   const t = createT({ de: { brief: 'brutto CHF {amount}' } }, 'de', 'sie');
   it('mitEchtenBetraegen: betrag() und t() zeigen den wahren Betrag, danach wieder verborgen', () => {
     document.documentElement.dataset.betraege = 'aus';
-    expect(mitEchtenBetraegen(() => betrag(1234))).toBe('CHF 1’234');
-    expect(mitEchtenBetraegen(() => t('brief', { amount: 5000 }))).toBe('brutto CHF 5’000');
-    expect(betrag(1234)).toBe('CHF ···');
-    expect(t('brief', { amount: 5000 })).toBe('brutto CHF ···');
+    expect(mitEchtenBetraegen(() => betrag(1234))).toBe('CHF\u00a01’234');
+    expect(mitEchtenBetraegen(() => t('brief', { amount: 5000 }))).toBe('brutto CHF\u00a05’000');
+    expect(betrag(1234)).toBe('CHF\u00a0···');
+    expect(t('brief', { amount: 5000 })).toBe('brutto CHF\u00a0···');
   });
   it('auch wenn der Erzeuger wirft, ist der Sichtschutz danach wieder an', () => {
     document.documentElement.dataset.betraege = 'aus';
     expect(() => mitEchtenBetraegen(() => { throw new Error('x'); })).toThrow('x');
-    expect(betrag(1)).toBe('CHF ···');
+    expect(betrag(1)).toBe('CHF\u00a0···');
   });
   // Liste der Erzeuger, deren Ergebnis die App verlässt (Druck, Brief, Dossier, Download).
-  // Ein neuer Erzeuger gehört hier dazu — sonst druckt er bei eingeschaltetem Sichtschutz «CHF ···».
+  // Ein neuer Erzeuger gehört hier dazu — sonst druckt er bei eingeschaltetem Sichtschutz «CHF\u00a0···».
   it('jeder Dokument-Erzeuger läuft in mitEchtenBetraegen', () => {
     const erzeuger = {
       '../../briefGenerator.js': ['generateLetter'],
@@ -83,12 +83,12 @@ describe('Dokumente verlassen die App mit echten Beträgen (Vortor 13.11.2026)',
 describe('Beträge verbergen in Texten mit «CHF {x}»', () => {
   const t = createT({ de: { a: 'Davon Bund ≈ CHF {bund}.', b: 'Im Jahr {jahr} sind es {n} Fälle.' } }, 'de', 'sie');
   it('ohne Sichtschutz: Zahl wie bisher', () => {
-    expect(t('a', { bund: 977 })).toBe('Davon Bund ≈ CHF 977.');
+    expect(t('a', { bund: 977 })).toBe('Davon Bund ≈ CHF\u00a0977.');
   });
-  it('mit Sichtschutz: CHF ···, auch wenn schon formatiert übergeben', () => {
+  it('mit Sichtschutz: CHF\u00a0···, auch wenn schon formatiert übergeben', () => {
     document.documentElement.dataset.betraege = 'aus';
-    expect(t('a', { bund: 977 })).toBe('Davon Bund ≈ CHF ···.');
-    expect(t('a', { bund: '1’500' })).toBe('Davon Bund ≈ CHF ···.');
+    expect(t('a', { bund: 977 })).toBe('Davon Bund ≈ CHF\u00a0···.');
+    expect(t('a', { bund: '1’500' })).toBe('Davon Bund ≈ CHF\u00a0···.');
   });
   it('Platzhalter ohne CHF (Jahre, Anzahlen) bleiben sichtbar', () => {
     document.documentElement.dataset.betraege = 'aus';

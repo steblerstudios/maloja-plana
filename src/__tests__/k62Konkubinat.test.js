@@ -10,8 +10,8 @@ import { readFileSync } from 'node:fs';
 //      (VS nur bis Brutto 45 000) rechnen Konkubinat anders → dort weiter keine Kantonszahl.
 //   5. Zivilstand-Vergleich: im Konkubinat mit Partnereinkommen (oder ohne Angabe) kein Vergleich mit
 //      einem gedachten Alleinverdiener-Ehepaar. Vorher (ZH, Nettolohn 71 883, Partner 5 000/Mt.):
-//      «verheiratet CHF 452, rund 454 weniger als ledig» — die ESTV rechnet das Ehepaar mit beiden
-//      Einkommen (80 000 + 60 000 brutto) mit CHF 1 881 Bundessteuer, einzeln zusammen 1 317.
+//      «verheiratet CHF\u00a0452, rund 454 weniger als ledig» — die ESTV rechnet das Ehepaar mit beiden
+//      Einkommen (80 000 + 60 000 brutto) mit CHF\u00a01 881 Bundessteuer, einzeln zusammen 1 317.
 //
 // Erwartungen aus den Messdateien des ESTV-Steuerrechners 2026, nicht aus dem eigenen Code:
 //   docs/sources/konkubinat-kantonssteuer-2026.messpunkte.json   Konkubinat gegen ledig, 26 Kantone
@@ -193,12 +193,12 @@ describe('K62.1 · Konkubinat ohne Kinder bekommt eine Kantonszahl', () => {
     expect(orientierungsText(t, s.kanton, 2026)).toBe('tax.bandKonkubinat');
     const v = steuerrechner(profil({ canton: 'BE', partnerIncome: '4000' }));
     expect(v.text).toContain('tax.bandKonkubinat');
-    expect(v.text).toContain('~ CHF ' + s.bund.steuer);
+    expect(v.text).toContain('~ CHF\u00a0' + s.bund.steuer);
   });
 });
 
 describe('K62.5 · Zivilstand-Vergleich im Konkubinat', () => {
-  it('mit Partnereinkommen: kein Vergleich (vorher: gedachtes Alleinverdiener-Ehepaar, CHF 454 «günstiger»)', () => {
+  it('mit Partnereinkommen: kein Vergleich (vorher: gedachtes Alleinverdiener-Ehepaar, CHF\u00a0454 «günstiger»)', () => {
     const e = steuerEingabenAusDaten(profil({ partnerIncome: '5000' }));
     expect(tarifvergleichFuerProfil(e)).toBeNull();
     expect(tarifvergleichGrund(e)).toBe('konkubinatPartner');

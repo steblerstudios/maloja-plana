@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getStorageStatus } from './utils/storageMonitor.js';
-import { space, text, radius, leading, weight } from './config/tokens.js';
+import { space, text, radius, leading, weight, textPx, rem } from './config/tokens.js';
 import { Icon, hinweisZeichen } from './IconKern.jsx';
 
 // ─── Storage Warning Banner ─────────────────────────────────
@@ -44,12 +44,12 @@ export const StorageWarning = ({ palette, t }) => {
       display: 'flex',
       alignItems: 'start',
       gap: space.ms,
-      fontSize: text.sm - 1,
+      fontSize: rem(textPx.sm - 1),
       lineHeight: leading.normal,
     }
   },
     React.createElement('span', {
-      style: { fontSize: text.sm + 1, flexShrink: 0, marginTop: '1px' }
+      style: { fontSize: rem(textPx.sm + 1), flexShrink: 0, marginTop: '1px' }
     }, hinweisZeichen(isCritical ? 'warning' : 'info', 12)),
 
     React.createElement('div', { style: { flex: 1 } },
@@ -79,7 +79,7 @@ export const StorageWarning = ({ palette, t }) => {
         border: 'none',
         color: palette.mid,
         cursor: 'pointer',
-        fontSize: text.sm + 1,
+        fontSize: rem(textPx.sm + 1),
         padding: '0 ' + space.xs + 'px',
         flexShrink: 0,
       }

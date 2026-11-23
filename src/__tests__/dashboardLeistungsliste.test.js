@@ -28,7 +28,7 @@ const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
 const render = (props) => renderToStaticMarkup(React.createElement(QuickCheck, { palette, t, onNavigate: () => {}, ...props }));
 // Dieselbe Formatierung wie die Anzeige (Schweizer Tausender-Apostroph ’).
-const betrag = (n) => '≈ CHF ' + zahl(n, { hoechstens: 2 });
+const betrag = (n) => '≈ CHF\u00a0' + zahl(n, { hoechstens: 2 });
 
 const profil = (monthlyIncome) => ({
   basis: { canton: 'GE', household: { adults: 1, children: [] } }, // (BS und VD seit 28.09.2026 mit eigenem Modell, darum GE — noch ohne Modul; Musterwerte 60 000 / 3 600 / 7 200 / 1 800)

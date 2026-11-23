@@ -215,7 +215,7 @@ describe('① AusserdemOffen / ② OffenePosten', () => {
     const html = render(OffenePosten, posten);
     expect(html).toMatch(/schulden\.posten\.summe<\/span>\s*<span[^>]*>[^<]*CHF/);
     const summe = html.slice(html.indexOf('schulden.posten.summe'));
-    expect(summe.slice(0, summe.indexOf('CHF'))).toContain('font-size:16px');
+    expect(summe.slice(0, summe.indexOf('CHF'))).toContain('font-size:1rem');
     expect(summe.slice(0, summe.indexOf('CHF'))).not.toContain('font-size:19px');
   });
   it('① Betrag in «Ausserdem offen» bricht nicht um', () => {

@@ -43,15 +43,15 @@ describe('K31 IPV-Rechner, Kanton Appenzell Ausserrhoden', () => {
     const html = render(profil(2000));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 4’493');
-    expect(html).toContain('CHF 374');
+    expect(html).toContain('CHF\u00a04’493');
+    expect(html).toContain('CHF\u00a0374');
   });
 
   it('ohne erfasste Prämie oder mit einer Prämie unter dem Betrag: keine Zahl, sondern der Grund', () => {
     expect(render(profil(2000, { kkPremium: null }))).toContain('ipv.offenGrund.praemie');
     const tief = render(profil(2000, { kkPremium: 300 }));
     expect(tief).toContain('ipv.offenGrund.praemieFranchise');
-    expect(tief).not.toContain('CHF 4’493');
+    expect(tief).not.toContain('CHF\u00a04’493');
   });
 
   it('nennt die publizierte Obergrenze 35 000, nicht die Musterwerte', () => {

@@ -102,7 +102,7 @@ describe('F8-R1 · keine Fachwörter Break-even und KVG-Tracker', () => {
   }
   it('Referenz heisst jetzt, was es ist: der Tarif der eigenen Kasse', () => {
     // Fachprüfung 05.11.2026: es ist der Standardtarif (Grundmodell) der eigenen Kasse, nicht der eigene Tarif.
-    expect(de.vu.referenz).toBe('Standardtarif der Kasse CHF {betrag}/Mt.');
+    expect(de.vu.referenz).toBe('Standardtarif der Kasse CHF\u00a0{betrag}/Mt.');
     expect(de.po.refPremium).toContain('Standardtarif der Kasse');
   });
 });
@@ -115,10 +115,10 @@ describe('F8-V1 · Vorsorge-Rechner schlägt das geschätzte Brutto vor, überni
     const html = render({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, monthlyIncome: LOHN, incomeType: 'netto' } });
     expect(html).toContain('data-vr-vorschlag');
     expect(html).toContain('Schätzung übernehmen');
-    expect(html).toContain('Geschätzt aus dem Nettolohn im Profil (CHF 5’137 im Monat)');
+    expect(html).toContain('Geschätzt aus dem Nettolohn im Profil (CHF\u00a05’137 im Monat)');
     expect(html).toContain('nur der Hauptlohn');
     // nichts automatisch im Feld: kein value mit dem Vorschlag
-    const betrag = /rund CHF ([\d’]+) brutto im Jahr/.exec(html)[1].replace(/’/g, '');
+    const betrag = /rund CHF\u00a0([\d’]+) brutto im Jahr/.exec(html)[1].replace(/’/g, '');
     expect(Number(betrag)).toBeGreaterThan(LOHN * 12);
     expect(html).not.toContain(`value="${betrag}"`);
   });
@@ -130,7 +130,7 @@ describe('F8-V1 · Vorsorge-Rechner schlägt das geschätzte Brutto vor, überni
     const nein = render({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, monthlyIncome: LOHN, incomeType: 'netto', dreizehnter: 'no' } });
     expect(nein).not.toContain('Angabe fehlt');
     const ja = render({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, monthlyIncome: LOHN, incomeType: 'netto', dreizehnter: 'yes' } });
-    const jahr = (h) => Number(/rund CHF ([\d’]+) brutto im Jahr/.exec(h)[1].replace(/’/g, ''));
+    const jahr = (h) => Number(/rund CHF\u00a0([\d’]+) brutto im Jahr/.exec(h)[1].replace(/’/g, ''));
     expect(jahr(ja) / jahr(nein)).toBeCloseTo(13 / 12, 2);
   });
 

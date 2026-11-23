@@ -44,14 +44,14 @@ describe('K31 IPV-Rechner, Kanton Glarus', () => {
   it('zeigt den Betrag: 24 000 im Jahr → 3 287/Jahr, 274/Monat', () => {
     const html = render(profil(2000));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 3’287');
-    expect(html).toContain('CHF 274');
+    expect(html).toContain('CHF\u00a03’287');
+    expect(html).toContain('CHF\u00a0274');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(2000, { kkPremium: null }));
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 3’287');
+    expect(html).not.toContain('CHF\u00a03’287');
   });
 
   it('keine Einkommensgrenze, keine Musterwerte; Weg = Antrag', () => {

@@ -57,7 +57,7 @@ describe('IPV: brutto im Profil wird auf netto umgerechnet', () => {
   it('die Anzeige (IPV-Rechner) zeigt den Betrag aus netto', () => {
     const alsNetto = calculateIPV(profil({ monthlyIncome: netto(1500), incomeType: 'netto' }));
     const html = render(profil({ monthlyIncome: 1500, incomeType: 'brutto' }));
-    expect(html).toContain('CHF ' + zahl(alsNetto.annual));
+    expect(html).toContain('CHF\u00a0' + zahl(alsNetto.annual));
   });
 
   it('Muster-Weg und Pegel: ipvJahreseinkommen rechnet mit netto, auch für den Nebenerwerb', () => {
@@ -139,14 +139,14 @@ describe('IPV-Rechner: Netto aus dem Schnellcheck bei einem Profil auf brutto', 
   it('rechnet die übergebene Zahl als netto, nicht nochmals umgerechnet', () => {
     const erwartet = calculateIPV(profil({ monthlyIncome: 1400, incomeType: 'netto' }));
     const { html } = renderMitProps({ data: brutto, schnellcheckZahlen: { monthlyIncome: 1400 }, onUpdateData: () => {} });
-    expect(html).toContain('CHF ' + zahl(erwartet.annual));
+    expect(html).toContain('CHF\u00a0' + zahl(erwartet.annual));
   });
 
   it('gleicher Betrag wie das Brutto im Profil: trotzdem als netto übergeben und angezeigt', () => {
     const erwartet = calculateIPV(profil({ monthlyIncome: 1500, incomeType: 'netto' }));
     const { html } = renderMitProps({ data: brutto, schnellcheckZahlen: { monthlyIncome: 1500 }, onUpdateData: () => {} });
     expect(html).toContain('premium.schnellcheckGerechnet');
-    expect(html).toContain('CHF ' + zahl(erwartet.annual));
+    expect(html).toContain('CHF\u00a0' + zahl(erwartet.annual));
   });
 
   it('«Ins Profil übernehmen» schreibt die Art netto mit', () => {

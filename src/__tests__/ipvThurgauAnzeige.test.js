@@ -61,7 +61,7 @@ describe('K31 IPV-Rechner, Kanton Thurgau', () => {
       for (const z of ['3 408', '2 556', '1 704', '1 236', '1 600', '100 000', '200 000', '30', 'Krankenkassenkontrollstelle']) expect(g, `${sprache}: ${z}`).toContain(z);
       // Mit Kontext gepinnt (Prüfung #474, 💡 2): «600» steckt sonst schon in «1 600», «31» fast überall.
       const kontext = {
-        de: ['Fr. 400 ', 'Fr. 600 ', 'Fr. 800 ', '31. Dezember'], en: ['CHF 400,', 'CHF 600,', 'CHF 800,', '31 December'],
+        de: ['Fr. 400 ', 'Fr. 600 ', 'Fr. 800 ', '31. Dezember'], en: ['CHF\u00a0400,', 'CHF\u00a0600,', 'CHF\u00a0800,', '31 December'],
         fr: ['400 francs', ' 600 francs, 2', '800 francs', '31 décembre'], it: ['400 franchi', ' 600 franchi, 2', '800 franchi', '31 dicembre'],
         rm: ['fr. 400 ', 'fr. 600 ', 'fr. 800 ', '31 da december'],
       }[sprache];

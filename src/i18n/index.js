@@ -111,10 +111,12 @@ export function createT(translations, lang, anrede, unvollstaendig = false) {
         if (v === undefined) return (chf || '') + '{' + k + '}';
         // Sichtschutz «Beträge verbergen» (utils/geld.js): ein Platzhalter hinter «CHF» ist ein Betrag.
         if (chf && v !== '' && v !== null && betraegeVerborgen()) return VERBORGEN;
+        // «CHF» und Betrag mit geschütztem Leerzeichen (U+00A0), gleich wie betrag() — Sophie 23.11.2026, E5.
+        const vor = chf ? 'CHF\u00a0' : '';
         if (chf && typeof v === 'number' && Number.isFinite(v)) {
-          return chf + zahl(v, Number.isInteger(v) ? {} : { stellen: 2 });
+          return vor + zahl(v, Number.isInteger(v) ? {} : { stellen: 2 });
         }
-        return (chf || '') + v;
+        return vor + v;
       });
     }
     return val;

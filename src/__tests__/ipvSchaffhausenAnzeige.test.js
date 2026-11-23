@@ -45,15 +45,15 @@ describe('K31 IPV-Rechner, Kanton Schaffhausen', () => {
     const html = render(profil(3000));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 1’222');
-    expect(html).toContain('CHF 102');
+    expect(html).toContain('CHF\u00a01’222');
+    expect(html).toContain('CHF\u00a0102');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(3000, { kkPremium: null }));
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 1’222');
+    expect(html).not.toContain('CHF\u00a01’222');
   });
 
   it('nennt keine Einkommensgrenze — weder die Versand-Grenzwerte noch die alten Musterwerte', () => {

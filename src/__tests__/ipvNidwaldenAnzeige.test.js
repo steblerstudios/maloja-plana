@@ -46,14 +46,14 @@ describe('K31 IPV-Rechner, Kanton Nidwalden', () => {
   it('zeigt den Betrag: 20 000 im Jahr → 3 400/Jahr, 283/Monat', () => {
     const html = render(profil(20000 / 12));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 3’400');
-    expect(html).toContain('CHF 283');
+    expect(html).toContain('CHF\u00a03’400');
+    expect(html).toContain('CHF\u00a0283');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(20000 / 12, { kkPremium: null }));
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 3’400');
+    expect(html).not.toContain('CHF\u00a03’400');
   });
 
   it('keine Einkommensgrenze, keine Musterwerte', () => {

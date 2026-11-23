@@ -26,7 +26,10 @@ export const space = {
 // Probe 23.11.2026 (Sophie, Rundgang Grössen/Weissraum E1–E3): Untergrenze 14, eine
 // Lese-Grösse 16 (sm und body fallen zusammen), Seitentitel 30 und Grosszahl 44 als Stufen.
 // `sm` bleibt als Name stehen, damit die 863 Aufrufe nicht auf einen Schlag wandern.
-export const text = {
+// `textPx`: die Stufen als Zahl (px bei 16-px-Grundschrift) — zum Rechnen und für SVG-Zeichenflächen.
+// `text`: dieselben Stufen in rem (E6, Sophie 23.11.2026), damit die Schriftgrösse des Systems greift.
+// In Stilen immer `text.*`; wer rechnet, nimmt `textPx.*` und gibt das Ergebnis mit rem() zurück.
+export const textPx = {
   xs:   14,
   sm:   16,
   body: 16,
@@ -37,6 +40,8 @@ export const text = {
   '3xl': 36,
   zahlGross: 44,
 };
+export const rem = (px) => px / 16 + 'rem';
+export const text = Object.fromEntries(Object.entries(textPx).map(([k, v]) => [k, rem(v)]));
 
 // ─── Font weights ───────────────────────────────────────────
 export const weight = {

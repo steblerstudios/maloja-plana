@@ -35,7 +35,7 @@ const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length
 // zu `&#x27;`. Ein Test, der eines davon fest verdrahtet, bricht beim nächsten Node — ohne
 // dass an der App etwas falsch wäre.
 // Seit 24.09.2026 kommt die Trennung aus utils/geld.js (fest ’, nicht mehr aus der ICU-Fassung).
-const chf = (v) => 'CHF ' + zahl(v);
+const chf = (v) => 'CHF\u00a0' + zahl(v);
 const render = (props) => renderToStaticMarkup(
   React.createElement(Saeule3aTracker, { palette, t, onChange: () => {}, ...props }))
   .replace(/&#x27;/g, "'").replace(/&quot;/g, '"');
@@ -144,7 +144,7 @@ describe('Saeule3aTracker: der Balken misst EIN Jahr', () => {
   ];
 
   // 🛑 DER RÜCKFALL-WÄCHTER. Fällt der Tracker je auf die Summe über alle Zeilen zurück,
-  // steht hier CHF 21'000 statt 7'000 — und «Maximum erreicht» statt «noch 258 offen».
+  // steht hier CHF\u00a021'000 statt 7'000 — und «Maximum erreicht» statt «noch 258 offen».
   it('zeigt nur das laufende Jahr, nicht die Summe aller Jahre', () => {
     const html = render({ deposits: dreiJahre, jahr: 2026 });
     expect(html).toContain(chf(7000));

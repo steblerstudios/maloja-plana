@@ -47,15 +47,15 @@ describe('K31 IPV-Rechner, Kanton Luzern', () => {
     const html = render(profil(20000 / 12));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 3’388');
-    expect(html).toContain('CHF 282');
+    expect(html).toContain('CHF\u00a03’388');
+    expect(html).toContain('CHF\u00a0282');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(20000 / 12, { kkPremium: null }));
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 3’388');
+    expect(html).not.toContain('CHF\u00a03’388');
   });
 
   it('nennt keine Einkommensgrenze — weder die Kinder-Grenze noch die alten Musterwerte', () => {

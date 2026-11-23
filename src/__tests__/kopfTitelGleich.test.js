@@ -35,7 +35,7 @@ const titelAufrufe = (src) => {
 describe('Seitentitel: ein Rezept für alle Seiten', () => {
   it('PageTitle trägt Hanken 30 px', () => {
     expect(SEITENTITEL_STIL.fontFamily).toMatch(/Hanken Grotesk/);
-    expect(SEITENTITEL_STIL.fontSize).toBe('30px');
+    expect(SEITENTITEL_STIL.fontSize).toBe('1.875rem'); // 30 px in rem (Schriftskala 23.11.2026)
   });
 
   it('keine Seite überschreibt Schrift, Grösse, Zeilenhöhe oder Laufweite', () => {

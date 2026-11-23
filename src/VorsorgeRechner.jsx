@@ -5,7 +5,7 @@ import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, p
 import { hinweisZeichen, aufklappZeichen, Icons } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
-import { text, weight, space, radius, ease } from './config/tokens.js';
+import { text, weight, space, radius, ease, textPx } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
@@ -647,7 +647,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const maxY = Math.max(step, Math.ceil(rawMax / step) * step);
         const VBW = zukunftBreite, eng = VBW < 480;
         const VBH = eng ? 300 : 340, x0 = 54, x1 = VBW - (eng ? 16 : 52), y0 = 30, yB = VBH - 60;
-        const FS = text.xs; // 14: Zeichenfläche = Bildschirm-Pixel, also echte 14 px
+        const FS = textPx.xs; // 14: Zeichenfläche = Bildschirm-Pixel, also echte 14 px
         const xA = (a) => x0 + (a - START) / (AXIS_END - START) * (x1 - x0);
         const yV = (v) => yB - v / maxY * (yB - y0);
         // Flächen als kumulierte Höhen pro Alter (AHV zuunterst als Fundament).

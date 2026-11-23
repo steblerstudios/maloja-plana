@@ -43,3 +43,27 @@ describe('kein normales Leerzeichen vor %', () => {
     expect(funde).toEqual([]);
   });
 });
+
+// CHF und Betrag (Sophie 23.11.2026, E5): geschütztes Leerzeichen U+00A0, nie Umbruch zwischen «CHF» und Zahl.
+// Ausnahme: die Text-Sicherung (zipExport.js) setzt «CHF » selbst — eine Datei, in der man suchen können soll.
+import { betrag, betragEcht, VERBORGEN } from '../utils/geld.js';
+import { createT } from '../i18n/index.js';
+
+describe('CHF mit geschütztem Leerzeichen', () => {
+  it('betrag(), Minus und Sichtschutz', () => {
+    expect(betragEcht(1234)).toBe('CHF 1’234');
+    expect(betragEcht(-50)).toBe('− CHF 50');
+    expect(betrag(7)).toBe('CHF 7');
+    expect(VERBORGEN).toBe('CHF ···');
+  });
+  it('t() setzt «CHF {x}» immer mit U+00A0', () => {
+    const t = createT({ de: { a: 'ca. CHF {x}/Jahr', b: 'CHF {x}' } }, 'de', 'sie');
+    expect(t('a', { x: 2160 })).toBe('ca. CHF 2’160/Jahr');
+    expect(t('b', { x: '1’500' })).toBe('CHF 1’500');
+  });
+  it.each(['de', 'fr', 'it', 'rm', 'en'])('Übersetzung %s: kein «CHF » vor Zahl oder Platzhalter', (lang) => {
+    const s = readFileSync(join(SRC, 'i18n', lang + '.js'), 'utf8');
+    const funde = s.split('\n').map((z, i) => (/CHF [0-9{]|\d CHF\b/.test(z) ? lang + '.js:' + (i + 1) : null)).filter(Boolean);
+    expect(funde).toEqual([]);
+  });
+});

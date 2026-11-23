@@ -46,14 +46,14 @@ describe('K31 IPV-Rechner, Kanton Graubünden', () => {
     const html = render(profil(2500));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 3’516');
-    expect(html).toContain('CHF 293');
+    expect(html).toContain('CHF\u00a03’516');
+    expect(html).toContain('CHF\u00a0293');
   });
 
   it('auch ohne erfasste Prämie ein Betrag — kein Deckel in GR', () => {
     const html = render(profil(2500, { kkPremium: null }));
     expect(html).not.toContain('ipv.offenGrund.praemie');
-    expect(html).toContain('CHF 3’516');
+    expect(html).toContain('CHF\u00a03’516');
   });
 
   it('nennt keine Einkommensgrenze — weder die Kinder-Grenzen noch die alten Musterwerte', () => {

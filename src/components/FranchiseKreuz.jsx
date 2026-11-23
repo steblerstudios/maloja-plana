@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { kreuzState } from '../data/franchiseTacho.js';
-import { text, weight, leading, space, radius } from '../config/tokens.js';
+import { text, weight, leading, space, radius, textPx } from '../config/tokens.js';
 import { zahl } from '../utils/geld.js';
 import { linkStil } from './PrimaryButton.jsx';
 
@@ -45,7 +45,7 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
 
   const schmal = W < 420;
   const L = schmal ? 46 : 52, R = schmal ? 14 : 112;
-  const fs = text.xs;
+  const fs = textPx.xs;
   // Hof in Kartenfarbe: Beschriftungen bleiben lesbar, wo sie über einer Linie liegen.
   const hof = { paintOrder: 'stroke', stroke: palette.surface, strokeWidth: 3, strokeLinejoin: 'round' };
   const x = (c) => L + (c / st.scaleMax) * (W - L - R);

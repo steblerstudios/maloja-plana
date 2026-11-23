@@ -76,13 +76,13 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
       const kg = tausender(e.kantonal.kantonalUndGemeinde);
       const total = tausender(e.kantonal.total);
       // Finanzübersicht: Gesamt + Aufteilung, gekennzeichnet, mit Hauptort-Hinweis; keine Orientierung.
-      expect(fu).toContain('~ CHF ' + total);
-      expect(fu).toContain('tax.cantonalAndMunicipal (tax.roughEstimateBadge): CHF ' + kg);
+      expect(fu).toContain('~ CHF\u00a0' + total);
+      expect(fu).toContain('tax.cantonalAndMunicipal (tax.roughEstimateBadge): CHF\u00a0' + kg);
       expect(fu).toContain('tax.basedOnHauptort(2026)');
       expect(fu).not.toContain('kantonssteuer-orientierung');
       // Dossier (Ansicht, Vorschau, JSON): dieselben Zahlen.
-      expect(bd).toContain('CHF ' + kg);
-      expect(bd).toContain('CHF ' + total);
+      expect(bd).toContain('CHF\u00a0' + kg);
+      expect(bd).toContain('CHF\u00a0' + total);
       expect(bd).toContain('tax.roughEstimateBadge');
       expect(steuern.rows.map((r) => r.value)).toContain('tax.basedOnHauptort(2026)');
       expect(json.cantonalAndMunicipal).toBe(e.kantonal.kantonalUndGemeinde);
@@ -121,10 +121,10 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
     // E39: steuerbar nach den ESTV-Standardabzügen, nicht der Nettolohn × 12
     expect(e.bund.steuerBaresEinkommen).toBe(108000 - 3240 - 3700 - 1400 - 2800 - 13600);
     expect(render(BehoerdenDossier, { data: p })).toContain('tax.taxableIncomeEstimated');
-    expect(render(BehoerdenDossier, { data: p })).toContain('CHF ' + tausender(e.bund.steuerBaresEinkommen));
+    expect(render(BehoerdenDossier, { data: p })).toContain('CHF\u00a0' + tausender(e.bund.steuerBaresEinkommen));
     expect(e.bund.kinderabzug).toBe(2 * 263);
-    expect(render(BehoerdenDossier, { data: p })).toContain('CHF ' + tausender(e.bund.steuer));
-    expect(render(FinanzUebersicht, { data: p })).toContain('tax.federalTax: CHF ' + tausender(e.bund.steuer));
+    expect(render(BehoerdenDossier, { data: p })).toContain('CHF\u00a0' + tausender(e.bund.steuer));
+    expect(render(FinanzUebersicht, { data: p })).toContain('tax.federalTax: CHF\u00a0' + tausender(e.bund.steuer));
   });
 
   // Der echte Eingabeweg: Nettolohn laut ESTV (docs/sources/nettolohn-abzuege-2026.messpunkte.json)
@@ -140,8 +140,8 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
     const e = erwartet(p);
     expect(e.lage).toBe('innerhalb');
     expect(Math.abs(e.kantonal.kantonalUndGemeinde - estv)).toBeLessThanOrEqual(Math.max(0.03 * estv, 50));
-    expect(render(FinanzUebersicht, { data: p })).toContain('CHF ' + tausender(e.kantonal.kantonalUndGemeinde));
-    expect(render(BehoerdenDossier, { data: p })).toContain('CHF ' + tausender(e.kantonal.kantonalUndGemeinde));
+    expect(render(FinanzUebersicht, { data: p })).toContain('CHF\u00a0' + tausender(e.kantonal.kantonalUndGemeinde));
+    expect(render(BehoerdenDossier, { data: p })).toContain('CHF\u00a0' + tausender(e.kantonal.kantonalUndGemeinde));
   });
 
   // E39: dieselbe Bundessteuer wie im Steuerrechner (kantonssteuerAnsicht.test.js zeigt dort 906 / 114 / 551)
@@ -157,10 +157,10 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
     expect(e.bund.steuerBaresEinkommen).toBe(steuerbar);
     const fu = render(FinanzUebersicht, { data: p });
     const bd = render(BehoerdenDossier, { data: p });
-    expect(fu).toContain('tax.federalTax: CHF ' + tausender(estv) + ' +');
-    expect(bd).toContain('CHF ' + tausender(estv) + 'common.perYear');
+    expect(fu).toContain('tax.federalTax: CHF\u00a0' + tausender(estv) + ' +');
+    expect(bd).toContain('CHF\u00a0' + tausender(estv) + 'common.perYear');
     expect(bd).toContain('tax.taxableIncomeEstimated');
-    expect(bd).toContain('CHF ' + tausender(steuerbar) + '<');
+    expect(bd).toContain('CHF\u00a0' + tausender(steuerbar) + '<');
     const json = generateBehoerdenJSON(p, dossierDaten(p), t).calculations.tax;
     expect(json).toMatchObject({ taxableIncome: steuerbar, federalTax: estv });
     expect(json.taxableIncomeBasis).toEqual({ code: 'estv_standardabzuege', text: 'behoerdenDossier.jsonTexte.basisEstv(2026)', dataVersion: '2026' });

@@ -64,7 +64,7 @@ describe('L4, L5, L8, L9 · KVG-Sätze am Volltext', () => {
   });
   it('L5 Franchise und Selbstbehalt sind zwei Teile, Kinder 350 (KVG Art. 64)', () => {
     expect(t('kvg.franchiseExplain')).not.toContain('Franchise ist Ihr jährlicher Selbstbehalt');
-    expect(t('kvg.franchiseExplain')).toContain('für Kinder CHF 350');
+    expect(t('kvg.franchiseExplain')).toContain('für Kinder CHF\u00a0350');
   });
   it('L8 Mutterschaftsleistungen während der ganzen Schwangerschaft ohne Kostenbeteiligung (Art. 64 Abs. 7)', () => {
     expect(t('kvg.schwangerschaftDetail2')).toContain('während der ganzen Schwangerschaft ohne Franchise und Selbstbehalt');
@@ -73,7 +73,7 @@ describe('L4, L5, L8, L9 · KVG-Sätze am Volltext', () => {
   });
   it('L9 nach dem Höchstbetrag nicht «100 %»', () => {
     expect(t('kvg.selbstbehaltDone')).not.toContain('100');
-    expect(t('kvg.selbstbehaltDone')).toContain('CHF 15 je Spitaltag');
+    expect(t('kvg.selbstbehaltDone')).toContain('CHF\u00a015 je Spitaltag');
     expect(t('kvg.selbstbehaltDone')).toContain('nicht für Kinder');
     expect(t('kvg.selbstbehaltDone')).not.toContain('Medikamenten');
   });
@@ -93,14 +93,14 @@ describe('L10 · Franchise-Rechner kennt Kinder (KVG Art. 64 Abs. 4, KVV Art. 10
     const h = rechne('600');
     expect(h).toMatch(/<option value="kind" selected="">/);
     expect(h).toMatch(/<option value="600" selected="">/);
-    expect(h).toContain('Selbstbehalt-Maximum: CHF 350');
-    expect(h).toContain('CHF 950'); // 600 Franchise + 350 Selbstbehalt bei 5000 Franken Kosten
+    expect(h).toContain('Selbstbehalt-Maximum: CHF\u00a0350');
+    expect(h).toContain('CHF\u00a0950'); // 600 Franchise + 350 Selbstbehalt bei 5000 Franken Kosten
   });
   it('Erwachsene rechnen weiter mit 700', () => {
     const h = rechne('2500');
     expect(h).toMatch(/<option value="erwachsen" selected="">/);
-    expect(h).toContain('Selbstbehalt-Maximum: CHF 700');
-    expect(h).toContain('CHF 2’750'); // 2500 + 250
+    expect(h).toContain('Selbstbehalt-Maximum: CHF\u00a0700');
+    expect(h).toContain('CHF\u00a02’750'); // 2500 + 250
   });
   it('ein unbekannter Wert wird genannt, nicht still zu 300', () => {
     expect(rechne('750')).toContain('Die gespeicherte Franchise (750) passt zu keiner Stufe.');

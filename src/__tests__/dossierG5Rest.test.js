@@ -76,7 +76,7 @@ describe('F8-G5-Rest: Dossier', () => {
     // 0.5 + 0.5 + 0.5: jede Zeile rundet auf 1, die Rohsumme 1.5 auf 2.
     const { sicht, datei } = blatt(profil({}, { savingsAccount: 100000.5, securitiesValue: 0.5, otherAssets: 0.5 }));
     expect(datei.vermoegen).toBe(100003);
-    expect(sicht).toContain('CHF 100’003');
+    expect(sicht).toContain('CHF\u00a0100’003');
     // Auch der Entscheid über die Grenze rechnet mit dieser Summe.
     const grenze = calculateSozialhilfe(profil({}, { savingsAccount: 3000.3, securitiesValue: 3000.3 }));
     expect(grenze.vermoegen).toBe(6000);

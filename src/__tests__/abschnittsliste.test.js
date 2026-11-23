@@ -21,7 +21,7 @@ describe('Abschnittsliste', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     expect(html).toContain('Einkommen');
     expect(html).toContain('ändern ›');
-    expect(html).toMatch(/<dd[^>]*>CHF 6’200<\/dd>/);
+    expect(html).toMatch(/<dd[^>]*>CHF\u00a06’200<\/dd>/);
     expect(html).not.toMatch(/<input[^>]*type="number"/);
   });
 

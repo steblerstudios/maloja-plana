@@ -9,7 +9,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DARK_PALETTE, LIGHT_PALETTE } from '../config/constants.js';
-import { text } from '../config/tokens.js';
+import { text, textPx } from '../config/tokens.js';
 
 const SRC = fileURLToPath(new URL('..', import.meta.url));
 const dateien = (dir = SRC) => readdirSync(dir).flatMap((n) => {
@@ -87,7 +87,8 @@ describe('A · kein Milchglas', () => {
 describe('B · Mindestschrift', () => {
   it('der kleinste Schritt der Skala ist 14 px', () => {
     // Sophie 23.11.2026 (Rundgang Grössen/Weissraum, E2): Untergrenze 14, Lesetext 16.
-    expect(text.xs).toBe(14);
+    expect(textPx.xs).toBe(14);
+    expect(text.xs).toBe('0.875rem');
   });
 
   // Grafiken (SVG-Beschriftungen, Etiketten in Bildern) und Deko-Zeichen (Aufklapp-Pfeile der Auswahlfelder):

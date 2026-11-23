@@ -42,8 +42,8 @@ describe('K31 IPV-Rechner, Kanton Waadt', () => {
   it('2 000/Monat, Lausanne: 24 000 − 2 200 = 21 800 → 300/Monat, 3 600/Jahr', () => {
     const html = render(profil(2000));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 300');
-    expect(html).toContain('CHF ' + geldZahl(3600));
+    expect(html).toContain('CHF\u00a0300');
+    expect(html).toContain('CHF\u00a0' + geldZahl(3600));
     expect(html).toContain('premium.maxIncome(' + geldZahl(50000) + ')');
     expect(html).not.toContain('ipv.orientierungOffen');
     expect(html).not.toContain(geldZahl(54000));
