@@ -1,7 +1,7 @@
 // Querschnitt 1 Gestaltung (Gesamtbefund 09.11.2026, Stebler Studios: «c finde ich gut», «Ja, A und B»).
 // Regel: Material statt Effekt. Was man bedienen kann, muss man sehen können. Nichts kleiner als die Skala.
 //  A · kein Milchglas (backdropFilter) in der App
-//  B · keine Schrift unter text.xs (13 px) im HTML; Grafiken stehen als Bestand mit Sperrklinke
+//  B · keine Schrift unter text.xs (14 px seit Schriftskala 23.11.2026, vorher 13) im HTML; Grafiken stehen als Bestand mit Sperrklinke
 //  C · Eingabefelder tragen palette.feldrand (≥ 3:1, WCAG 1.4.11), nicht die Schmuck-Haarlinie border
 // Geprüft wird der Quelltext, weil die Stile inline in createElement stehen.
 import { describe, it, expect } from 'vitest';
@@ -85,17 +85,19 @@ describe('A · kein Milchglas', () => {
 });
 
 describe('B · Mindestschrift', () => {
-  it('der kleinste Schritt der Skala ist 13 px', () => {
-    expect(text.xs).toBe(13);
+  it('der kleinste Schritt der Skala ist 14 px', () => {
+    // Sophie 23.11.2026 (Rundgang Grössen/Weissraum, E2): Untergrenze 14, Lesetext 16.
+    expect(text.xs).toBe(14);
   });
 
   // Grafiken (SVG-Beschriftungen, Etiketten in Bildern) und Deko-Zeichen (Aufklapp-Pfeile der Auswahlfelder):
-  // Bestand vom 09.11.2026. Eine Zahl darf nur sinken. Grafiken werden einzeln am Bild bei 375 px gemessen.
+  // Bestand vom 09.11.2026, am 23.11.2026 bei 14 px nachgezählt (Baum3D, BergLandschaft, LohnEinordnung auf 0).
+  // Eine Zahl darf nur sinken. Grafiken werden einzeln am Bild bei 375 px gemessen.
   const BESTAND = {
-    'AblaufSchale.jsx': 2, 'Baum3D.jsx': 2, 'ChapterView.jsx': 1, 'SozialhilfeRechner.jsx': 1, 'VorsorgeRechner.jsx': 11,
-    'components/BergLandschaft.jsx': 2, 'components/FranchiseKreuz.jsx': 13, 'components/Gauge.jsx': 3,
+    'AblaufSchale.jsx': 2, 'ChapterView.jsx': 1, 'SozialhilfeRechner.jsx': 1, 'VorsorgeRechner.jsx': 11,
+    'components/FranchiseKreuz.jsx': 13, 'components/Gauge.jsx': 3,
     'components/Geldfluss.jsx': 1, 'components/Jahreskreis.jsx': 2, 'components/LebenslaufVorschau.jsx': 1,
-    'components/LeistungsKompass.jsx': 2, 'components/LohnEinordnung.jsx': 2, 'components/Pegel.jsx': 3,
+    'components/LeistungsKompass.jsx': 2, 'components/Pegel.jsx': 3,
   };
   const KLEIN = /fontSize:\s*(?:'(\d+(?:\.\d+)?)px'|(\d+(?:\.\d+)?)\b(?!\s*[-+*/])|text\.xs\s*-\s*\d+)/g;
   const zaehle = (s) => {
@@ -106,13 +108,13 @@ describe('B · Mindestschrift', () => {
       if (/aufklappZeichen/.test(zeile + (z[i + 1] || '')) || zeile.includes("'a')")) return;
       for (const m of zeile.matchAll(KLEIN)) {
         const v = m[1] ?? m[2];
-        if (v === undefined || Number(v) < 13) n++;
+        if (v === undefined || Number(v) < 14) n++;
       }
     });
     return n;
   };
 
-  it('keine Schrift unter 13 px ausserhalb des Grafik-Bestands', () => {
+  it('keine Schrift unter 14 px ausserhalb des Grafik-Bestands', () => {
     const zuviel = QUELLEN
       .map(({ datei, s }) => [datei, zaehle(s), BESTAND[datei] || 0])
       .filter(([, ist, darf]) => ist > darf)

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { monatsAusgaben, versicherungenSumme } from '../utils/monatsrechnung.js';
-import { betrag, zahl } from '../utils/geld.js';
+import { betrag, zahl, PROZENT } from '../utils/geld.js';
 import { schildOptionen, schildState, bvgAktiv } from '../data/schutzschild.js';
 import { betraegeFuer } from '../data/netzSchild.js';
 import { bereichsTon } from '../utils/lebensbereichFruechte.js';
@@ -122,7 +122,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
       h('div', { style: { position: 'absolute', top: '-4px', bottom: '-4px', left: (VERGLEICHSMARKE / skala) * 100 + '%', width: '2px', background: palette.text } })
     ),
     h('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
-      h('span', { style: { fontWeight: weight.semi, color: palette.text } }, zahl(anteil, { hoechstens: 1 }) + ' %'),
+      h('span', { style: { fontWeight: weight.semi, color: palette.text } }, zahl(anteil, { hoechstens: 1 }) + PROZENT),
       h('span', { style: { whiteSpace: 'nowrap' } }, h(LegendenMarke, { form: 'strich', color: palette.text, palette }), t('kkLast.marker'))
     ),
     h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t(kkLastBasisKey(daten))),

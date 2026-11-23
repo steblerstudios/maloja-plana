@@ -32,6 +32,17 @@ export function zahl(n, { stellen, hoechstens } = {}) {
   return (negativ ? MINUS : '') + gruppieren(ganz) + (rest ? '.' + rest : '');
 }
 
+// Prozent mit schmalem, nicht umbrechendem Leerzeichen (U+202F), Schweizer Satz «12 %».
+// Entscheid Sophie 23.11.2026 (Rundgang Grössen/Weissraum, E5): vorher stand ein normales
+// Leerzeichen oder keines («75%»), und «12» konnte am Zeilenende stehen bleiben, «%» darunter.
+// Lexend und Hanken führen U+202F (unicode-range U+2000-206F in tokens.css).
+// prozent(12.34, { hoechstens: 1 }) → "12.3 %"; mit Vorzeichen bauen die Aufrufer selbst und hängen PROZENT an.
+export const PROZENT = ' %';
+export function prozent(n, optionen) {
+  const z = zahl(n, optionen);
+  return z === '–' ? z : z + PROZENT;
+}
+
 // betragEcht(-1234)                 → "− CHF 1’234"
 // betragEcht(12.5, { stellen: 2 })  → "CHF 12.50"
 // Immer der wahre Betrag — für alles, was die App verlässt (Export, Dossier).

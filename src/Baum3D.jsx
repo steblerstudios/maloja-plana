@@ -1,4 +1,5 @@
-import { radius } from './config/tokens.js';
+import { radius, text } from './config/tokens.js';
+import { PROZENT } from './utils/geld.js';
 import React from 'react';
 import * as THREE from 'three';
 import { createRoot } from 'react-dom/client';
@@ -927,7 +928,7 @@ export default function Baum3D({
             style: {
               display: 'inline-flex', alignItems: 'center', gap: '4px',
               padding: '4px 8px 4px 4px', borderRadius: radius.full,
-              fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.3, whiteSpace: 'nowrap',
+              fontFamily: 'inherit', fontSize: text.xs, lineHeight: 1.3, whiteSpace: 'nowrap',
               // Hier entsteht die Tiefe: vorne der volle Text-Ton, hinten der
               // Sekundär-Ton. Beide sind in constants.js gegen `surface` geprüft
               // (≥4.5:1), der Unterschied bleibt trotzdem deutlich sichtbar.
@@ -959,7 +960,7 @@ export default function Baum3D({
             // unkontrolliert, eine geprüfte Farbe nicht.
             React.createElement('span', {
               style: { color: palette ? palette.mid : '#555', fontVariantNumeric: 'tabular-nums' },
-            }, b.pct + '%')
+            }, b.pct + PROZENT)
           )
         ),
         // Werkzeug-Früchte: am Baum hängen sie als kleine Früchte, hier stehen
@@ -982,7 +983,7 @@ export default function Baum3D({
             style: {
               display: 'inline-flex', alignItems: 'center', gap: '4px',
               padding: '2px 8px 2px 4px', borderRadius: radius.full,
-              fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.25, whiteSpace: 'nowrap',
+              fontFamily: 'inherit', fontSize: text.xs, lineHeight: 1.25, whiteSpace: 'nowrap',
               // Deckender Grund statt 8 % Farbschleier: dahinter liegt die
               // bewegte 3D-Szene, gegen die kein Kontrast garantiert wäre.
               color: palette ? palette.text : '#222',

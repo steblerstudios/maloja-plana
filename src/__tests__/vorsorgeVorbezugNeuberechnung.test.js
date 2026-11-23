@@ -55,7 +55,7 @@ describe('Vorsorge-Rechner: Vorbezug wird im Referenzalter neu berechnet (Merkbl
     expect(html).toContain(chf(1962) + ' / ' + t('vr.monat'));
     expect(html).toContain(ab65);
     expect(html).toContain(esc(t('vr.vorbezugNeuberechnung')));
-    expect(html).toContain(t('vr.vorbezug') + ': 13.6% = ' + chf(309) + ' / ' + t('vr.monat'));
+    expect(html).toContain(t('vr.vorbezug') + ': 13.6\u202f% = ' + chf(309) + ' / ' + t('vr.monat'));
     expect(html).toContain(esc(t('vr.beitragsjahreAngenommenVorbezug', { referenzalter: '65 ' + t('vr.jahre'), alter: '63 ' + t('vr.jahre'), jahre: 42, jahreRef: 44 })));
     expect(html).not.toContain(t('vr.fehlendeBeitragsjahre'));
   });

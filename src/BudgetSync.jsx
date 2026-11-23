@@ -16,7 +16,7 @@ import { text, weight, shadow, radius , leading , space } from './config/tokens.
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { inDays } from './utils/helpers.js';
-import { betrag } from './utils/geld.js';
+import { betrag, PROZENT } from './utils/geld.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 import { BudgetImport, BUDGET_IMPORT_ANKER } from './BudgetImport.jsx';
@@ -180,7 +180,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
 
   // Quiet BFS price-trend line (Faden 4 / 3b) — change since the index base, factual.
   // Signed whole-percent vs. the general index; lets the housing outlier speak for itself.
-  const fmtTrend = (n) => (n >= 0 ? '+' : '−') + Math.abs(Math.round(n)) + ' %';
+  const fmtTrend = (n) => (n >= 0 ? '+' : '−') + Math.abs(Math.round(n)) + PROZENT;
   const generalTrend = fmtTrend(BUDGET_PRICE_TREND.total - 100);
   const renderTrendLine = (index, key, groupLevel) => React.createElement('div', {
     key: 'tr-' + key,
@@ -245,7 +245,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   // Group percentage (only shown when income > 0 and group has values)
   const groupPercent = (total) => {
     if (budget.income <= 0 || total <= 0) return null;
-    return Math.round((total / budget.income) * 100) + '%';
+    return Math.round((total / budget.income) * 100) + PROZENT;
   };
 
   // Render a group section

@@ -238,7 +238,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
 
     // Quantil-Grenzen über dem Balken (p10 / p90) als belegte Zahlen an ihren Bubble-Kanten.
     React.createElement('div', {
-      style: { position: 'relative', height: '15px', marginBottom: '4px', fontSize: '11px', color: palette.soft },
+      style: { position: 'relative', height: '20px', marginBottom: '4px', fontSize: text.xs, color: palette.soft },
     },
       React.createElement('span', { style: { position: 'absolute', left: '25%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, betrag(LOHN_REFERENZ.p10)),
       React.createElement('span', { style: { position: 'absolute', left: '75%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, betrag(LOHN_REFERENZ.p90))
@@ -259,15 +259,15 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     // Zonen-Namen UNTER der jeweiligen Bubble (kategorial → gleich breit, kein Überlappen).
     // Rand-Zonen tragen zusätzlich das vertraute Klartext-Wort (Tieflohn / Spitzenlohn).
     React.createElement('div', {
-      style: { position: 'relative', height: '30px', marginTop: '4px', marginBottom: space.sm + 'px', fontSize: '10px' },
+      // Raster statt absoluter Lage (Schriftskala 23.11.2026, Untergrenze 14 px): gleiche Mitte je
+      // Zone wie zuvor, aber die Zeile wächst mit, wenn ein Name auf zwei Zeilen umbricht.
+      style: { display: 'grid', gridTemplateColumns: 'repeat(' + zones.length + ', minmax(0, 1fr))', columnGap: '2px', marginTop: '4px', marginBottom: space.sm + 'px', fontSize: text.xs },
     }, zones.map((z, i) => {
-      const center = ((i + 0.5) / zones.length) * 100;
       const isActive = z.key === activeZone.key;
       return React.createElement('div', {
         key: 'zl' + i,
         style: {
-          position: 'absolute', left: center + '%', transform: 'translateX(-50%)', top: 0,
-          textAlign: 'center', width: (100 / zones.length - 1) + '%',
+          textAlign: 'center', minWidth: 0, overflowWrap: 'break-word', hyphens: 'auto', WebkitHyphens: 'auto',
           color: isActive ? palette.text : palette.mid, fontWeight: isActive ? weight.medium : weight.regular,
           lineHeight: 1.25,
         },

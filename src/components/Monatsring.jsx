@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { text, weight, space, radius, duration, ease } from '../config/tokens.js';
-import { betrag } from '../utils/geld.js';
+import { betrag, PROZENT } from '../utils/geld.js';
 import { bereichsTon } from '../utils/lebensbereichFruechte.js';
 import { ausgabenPosten } from './Geldfluss.jsx';
 import { auswahlStil, KNOPF_RADIUS } from './PrimaryButton.jsx';
@@ -37,7 +37,7 @@ export const ringDaten = ({ data, t, palette, einkommen, verplant }) => {
 // Kleine Posten nicht als «0 %» (Säule 3a CHF 21 von 3’741).
 const anteil = (wert, basis) => {
   const p = (wert / basis) * 100;
-  return p > 0 && p < 1 ? '< 1 %' : Math.round(p) + ' %';
+  return p > 0 && p < 1 ? '< 1' + PROZENT : Math.round(p) + PROZENT;
 };
 
 const MASS = 220;

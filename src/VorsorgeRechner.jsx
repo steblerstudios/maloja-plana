@@ -13,7 +13,7 @@ import { useIsMobile } from './hooks/useIsMobile.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { giltAlsVerheiratet, warVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
-import { zahl, betrag, betragSpanne } from './utils/geld.js';
+import { zahl, betrag, betragSpanne, PROZENT } from './utils/geld.js';
 import { betragText, betragsZahl } from './components/BetragText.jsx';
 import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './utils/beitragsjahreAnnahme.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
@@ -805,7 +805,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               ? String(nAbsM / 12) + ' ' + t(nAbsM / 12 === 1 ? 'vr.szenarioJahr' : 'vr.szenarioJahre')
               : String(nAbsM) + ' ' + t(nAbsM === 1 ? 'vr.szenarioMonat' : 'vr.szenarioMonate');
             const pctVal = projektionAhv ? projektionAhv.vorbezugAufschub : 0;
-            const pct = (pctVal > 0 ? '+' : '') + pctVal.toFixed(1) + '%';
+            const pct = (pctVal > 0 ? '+' : '') + pctVal.toFixed(1) + PROZENT;
             const ahvBezug = Math.max(ahvMin, Math.min(70, ret));
             const referenzalter = fmtAlterMonate(refAlterMonate);
             const line = (txt, key) => React.createElement('div', { key, style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '4px' } }, txt);
@@ -865,7 +865,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           t('vr.fehlendeBeitragsjahre') + ': ' + ahvResult.fehlendeBeitragsjahre
         ),
         ahvResult.vorbezugAufschub !== 0 && React.createElement('div', null,
-          (ahvResult.vorbezugAufschub > 0 ? t('vr.aufschub') : t('vr.vorbezug')) + ': ' + Math.abs(ahvResult.vorbezugAufschub).toFixed(1) + '%'
+          (ahvResult.vorbezugAufschub > 0 ? t('vr.aufschub') : t('vr.vorbezug')) + ': ' + Math.abs(ahvResult.vorbezugAufschub).toFixed(1) + PROZENT
             + (ahvResult.kuerzungsbetrag > 0 ? ' = ' + betrag(ahvResult.kuerzungsbetrag) + ' / ' + t('vr.monat') : '')
         ),
         // Frauen JG 1961–1969 haben tiefere, einkommensabhängige Kürzungssätze (Merkblatt 3.04 Ziff. 4),
@@ -916,7 +916,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               t('vr.umwandlungssatzVorReferenzalter', { referenzalter: fmtAlterMonate(refAlterMonate) })),
           // Jahr nur bei einem festgelegten Satz; danach ist der Satz die Annahme (ahvRechner.js, BVG_MINDESTZINS_ANNAHME).
           React.createElement('div', null, t('vr.mindestzins')
-            + (bvgResult.zinsJahr && bvgResult.zinsJahr <= bvgResult.zinsBelegtBis ? ' ' + bvgResult.zinsJahr : '') + ': ' + bvgResult.zinssatz + '%'),
+            + (bvgResult.zinsJahr && bvgResult.zinsJahr <= bvgResult.zinsBelegtBis ? ' ' + bvgResult.zinsJahr : '') + ': ' + bvgResult.zinssatz + PROZENT),
           // Festgelegte Jahre mit ihrem Satz, danach vorsichtig die Annahme (Entscheid Stebler Studios 16.11.2026).
           bvgResult.zinsBelegtBis && React.createElement('div', { 'data-teil': 'mindestzins-annahme', style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '2px', lineHeight: 1.5 } },
             t('vr.mindestzinsAnnahme', { bisJahr: bvgResult.zinsBelegtBis, abJahr: bvgResult.zinsBelegtBis + 1, annahme: bvgResult.zinsAnnahme }))
@@ -953,7 +953,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
                     t('vr.abAlterKurz', { alter: fmtAlterMonate(refAlterMonate), betrag: fmt(row[feldRef]) }))
                 )),
               React.createElement('td', { style: row.bezugAlter === ahvBezugAlter ? s.tdActive : s.td },
-                row.anpassung === 0 ? '–' : (row.anpassung > 0 ? '+' : '') + row.anpassung.toFixed(1) + '%'
+                row.anpassung === 0 ? '–' : (row.anpassung > 0 ? '+' : '') + row.anpassung.toFixed(1) + PROZENT
               )
             )
           )

@@ -3,6 +3,7 @@ import Icons from '../IconKern.jsx';
 import { PageTitle } from './Heading.jsx';
 import { text, weight, radius, ease, duration, fontFamilyDisplay } from '../config/tokens.js';
 import { LIGHT_PALETTE, applyColorBlind } from '../config/constants.js';
+import { PROZENT } from '../utils/geld.js';
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 // Als eigene Datei, nicht im JS-Bündel: Vite legt sie mit Hash unter /assets/ ab, der
 // Service Worker liefert sie danach cache-first. Herkunft und Nachbau: assets/berge/_QUELLE.md
@@ -441,12 +442,12 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       // Pille: die Zahl steht im Kreis (Rückmeldung 25.09.2026), das Wort daneben.
       const pille = (key, testid, anteil, wert, wort, ref) => React.createElement('div', { key, ref, 'data-testid': testid, style: pilleStil },
         React.createElement(Kreis, { ui, anteil, mitte: wert, d: 42 }),
-        wort && React.createElement('span', { style: { fontSize: '12px', fontWeight: weight.medium, color: ui.mid } }, wort));
+        wort && React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.medium, color: ui.mid } }, wort));
       const scheibe = (key, testid, anteil, wert, wort, ref) => React.createElement('div', {
         key, ref, 'data-testid': testid, style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' },
       },
         wort && React.createElement('span', {
-          style: { fontSize: '10px', lineHeight: 1.15, color: ETIKETT_SCHRIFT, background: etikettGrund(ui.sageDeep), padding: '2px 8px', borderRadius: radius.sm, whiteSpace: 'nowrap', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' },
+          style: { fontSize: text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT, background: etikettGrund(ui.sageDeep), padding: '2px 8px', borderRadius: radius.sm, whiteSpace: 'nowrap', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' },
         }, wort),
         React.createElement('div', { style: { borderRadius: '50%', boxShadow: schatten } },
           React.createElement(Kreis, { ui, anteil, mitte: wert, d: 38 })));
@@ -460,7 +461,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       ].filter(Boolean).join(' · ');
       // Ab dem ersten begonnenen Kapitel immer da, auch bei 1 % (25.09.2026). Vorher, bei
       // «Ihr Weg beginnt hier», bleibt es beim ruhigen Satz — kein «0 %».
-      const prozentAngabe = prozent != null && begonnen > 0 && angabe('prozent', 'berg-prozent', prozent / 100, `${prozent}%`, kompakt ? null : L.ausgefuellt);
+      const prozentAngabe = prozent != null && begonnen > 0 && angabe('prozent', 'berg-prozent', prozent / 100, prozent + PROZENT, kompakt ? null : L.ausgefuellt);
       return React.createElement('div', {
         key: 'fortschritt', 'data-testid': 'berg-fortschritt',
         role: begonnen > 0 ? 'img' : undefined,

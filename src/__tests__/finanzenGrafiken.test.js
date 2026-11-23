@@ -49,10 +49,10 @@ describe('Monatsring: «Wofür geht es weg?»', () => {
     const html = renderToStaticMarkup(React.createElement(Monatsring, ring(profil())));
     const klar = html.replace(/<[^>]+>/g, '');
     expect(html).toContain('aria-hidden="true"');
-    expect(klar).toContain('Jeden Monat bleibenCHF 2’10042 %');
+    expect(klar).toContain('Jeden Monat bleibenCHF 2’10042 %');
     // Die Summe macht die Rechnung sichtbar: 5’000 − 2’900 = 2’100.
     expect(klar).toContain('Wofür geht es weg?CHF 2’900');
-    expect(klar).toContain('CHF 1’50030 %');
+    expect(klar).toContain('CHF 1’50030 %');
     expect(klar.indexOf('CHF 1’500')).toBeLessThan(klar.indexOf('CHF 600'));
     // Der Balken misst wie der Ring am Einkommen: 1’500 von 5’000.
     expect(html).toContain('width:30%');

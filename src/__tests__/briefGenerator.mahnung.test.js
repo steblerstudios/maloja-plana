@@ -84,7 +84,7 @@ describe('paymentReminder — selbst mahnen (OR Art. 102, 104)', () => {
   it('Mahnung: Zins nur VORBEHALTEN (kein berechneter Betrag), Betreibung als geprüfter Schritt', () => {
     const html = generateLetter('paymentReminder', person, t, { angaben: { ...a, stufe: 'mahnung' } });
     const k = koerper(html);
-    expect(k).toContain('Ich behalte mir vor, Verzugszins von 5 % pro Jahr zu verlangen (Art. 104 Abs. 1 OR).');
+    expect(k).toContain('Ich behalte mir vor, Verzugszins von 5 % pro Jahr zu verlangen (Art. 104 Abs. 1 OR).');
     expect(k).toContain('Betreibung');
     expect(betreff(html)).toMatch(/^Mahnung/);
     // Kein aufgelaufener Zinsbetrag: die App kennt weder Verzugsbeginn noch Verfalltag.
